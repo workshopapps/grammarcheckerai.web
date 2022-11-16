@@ -1,18 +1,46 @@
-import express from "express";
-import dotenv from 'dotenv';
-dotenv.config();
-const {PORT, HOST, NODE_ENV} = process.env;
-
+const express = require("express");
 const app = express();
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const connection = require("./database");
+const homeRoute = require("./routes/home");
 
-app.use(express.json());
-app.use('/', (req, res)=>{
-    res.status(200).json({message: 'welcome'})
-})
+//body-parser call
+app.use(bodyParser.urlencoded({ extended: false }));
 
+//cors call
+app.use(cors());
 
-
-app.listen(PORT, ()=>{ 
-    console.log(`server running on ${HOST}:${PORT} in ${NODE_ENV} mode`);
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
 });
-export default app;
+
+//middleware
+app.use(express.json());
+
+//database
+(async function db() {
+  connection();
+})();
+
+//Routes
+app.use("/", homeRoute);
+
+//404 error
+app.use((req, res, next) => {
+  res.status(404).json({
+    message: "Ohh you are lost, go back now!!!!",
+  });
+});
+
+module.exports = app;
