@@ -1,7 +1,7 @@
-import "./database/index.js"; //load databse
+require("./database/index.js"); //load databse
 
-import express from "express";
-import cors from "cors";
+const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
@@ -13,4 +13,4 @@ app.use('/', (req, res)=>{
 });
 
 
-export default app;
+exports.app = app;

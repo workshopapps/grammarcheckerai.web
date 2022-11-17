@@ -1,6 +1,7 @@
-import { v4 } from "uuid";
-import mongoose from "mongoose";
-import Joi from "joi";
+const { v4 } = require("uuid");
+const mongoose = require("mongoose");
+const Joi = require("joi");
+
 
 let schema = new mongoose.Schema(
   {
@@ -24,4 +25,4 @@ let schema = new mongoose.Schema(
   }
 );
 
-export const authCollection = mongoose.model("conversation", schema);
+exports.authCollection = mongoose.model("conversation", schema);

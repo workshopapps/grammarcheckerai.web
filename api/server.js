@@ -1,5 +1,5 @@
-import app from "./app.js";
-import { environment }from "./config/environment.js";
+const { app } = require("./app");
+const { environment } = require("./config/environment.js");
 
 const {PORT, HOST, NODE_ENV} = environment;
 

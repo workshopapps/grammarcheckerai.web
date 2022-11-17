@@ -1,6 +1,6 @@
-import { v4 } from "uuid";
-import mongoose from "mongoose";
-import Joi from "joi";
+const { v4 } = require("uuid");
+const mongoose = require("mongoose");
+const Joi = require("joi");
 
 let schema = new mongoose.Schema(
   {
@@ -32,7 +32,7 @@ let schema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true,
+    timestamps:true 
   }
 );
 
@@ -40,7 +40,7 @@ let schema = new mongoose.Schema(
  * Signup and login schema
  * The return value is a Joi object in all cases.
  */
-export const authValidatorSchema = Joi.object().keys({
+exports.authValidatorSchema = Joi.object().keys({
   email: Joi.string()
     .email({
       minDomainSegments: 2,
@@ -50,4 +50,4 @@ export const authValidatorSchema = Joi.object().keys({
     .required(),
 });
 
-export const userCollection = mongoose.model("user", schema);
+exports.userCollection = mongoose.model("user", schema);
