@@ -1,13 +1,13 @@
 {
-    "name": "databasesetup",
+    "name": "",
     "version": "1.0.0",
-    "description": "Setting up the mongodb and schema",
+    "description": "",
     "main": "app.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "nodemon app.js"
     },
-    "author": "Barry and Lyon Mike",
+    "author": "Team Grit Backend Team",
     "license": "ISC",
     "dependencies": {
         "cors": "^2.8.5",
@@ -16,5 +16,6 @@
         "joi": "^17.7.0",
         "mongoose": "^6.7.2",
         "uuid": "^9.0.0"
-    }
+    },
+    "type": "module"
 }
