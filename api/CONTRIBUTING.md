@@ -4,7 +4,7 @@
 
 ### Clone the repository.
 
-### Create a new branch from the develop branch and name it according to  the feature you are implementing example (orm_feature).
+### Create a new branch from the develop branch and name it according to the feature you are implementing example (orm_feature).
 
 ### When you're done with your feature, Pull from the develop branch
 
