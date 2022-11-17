@@ -13,7 +13,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .js,.jsx",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@tanstack/react-query": "^4.14.5",

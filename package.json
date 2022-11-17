@@ -6,9 +6,14 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "lerna run dev"
+    "dev": "lerna run dev",
+    "lint": "lerna run lint",
+    "new-version": "lerna version --conventional-commits --yes",
+    "prettier": "lerna run prettier",
+    "diff": "lerna diff"
   },
   "devDependencies": {
+    "husky": "^8.0.2",
     "lerna": "^6.0.3"
   }
 }
