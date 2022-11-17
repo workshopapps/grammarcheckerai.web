@@ -1,8 +1,7 @@
-import app from "./app";
-import dotenv from 'dotenv';
-dotenv.config();
+const { app } = require("./app");
+const { environment } = require("./config/environment.js");
 
-const {PORT, HOST, NODE_ENV} = process.env;
+const {PORT, HOST, NODE_ENV} = environment;
 
 app.listen(PORT, ()=>{ 
     console.log(`server running on ${HOST}:${PORT} in ${NODE_ENV} mode`);
