@@ -1,15 +1,35 @@
-require('dotenv').config()
-require('./database') // load database
-const { urlencoded } = require('express'),
-    {cors} = require('./utils/cors'),
-    {development} = require("./config/development")
-    express = require('express'),
-    app = express()
+<<<<<<< HEAD
+import "./database/index.js"; // load database
+import cors from "cors";
 
+import { environment } from "./config/environment.js";
 
+import express from "express";
+
+const app = express();
+
+app.use(express.json()).use(cors);
+
+app.get("/", (req, res) => res.send("Connected"));
+
+app.listen(environment.PORT, () =>
+  console.log(`App is running on port ${environment.PORT}`)
+);
+=======
+import "./database/index.js"; //load databse
+
+import express from "express";
+import cors from "cors";
+
+const app = express();
 
 app.use(express.json())
-    .use(cors) 
-    .use(express.urlencoded({ extended: false }))
-    .get('/', (req,res) => res.send('Connected'))
-    .listen(development.PORT, () =>  console.log(`App is running on port ${development.PORT}`)) 
+   .use(cors);
+   
+app.use('/', (req, res)=>{
+    res.status(200).json({message: 'welcome'})
+});
+
+
+export default app;
+>>>>>>> 56e3a4c (Quick fix database schema)
