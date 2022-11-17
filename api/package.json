@@ -1,24 +1,20 @@
 {
-    "name": "api",
+    "name": "databasesetup",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "type": "module",
+    "description": "Setting up the mongodb and schema",
+    "main": "app.js",
     "scripts": {
-        "dev": "nodemon server.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon app.js"
     },
-    "keywords": [],
-    "author": "",
+    "author": "Barry and Lyon Mike",
     "license": "ISC",
     "dependencies": {
         "cors": "^2.8.5",
         "dotenv": "^16.0.3",
         "express": "^4.18.2",
         "joi": "^17.7.0",
-        "mongoose": "^6.7.2"
-    },
-    "devDependencies": {
-        "nodemon": "^2.0.20"
+        "mongoose": "^6.7.2",
+        "uuid": "^9.0.0"
     }
 }

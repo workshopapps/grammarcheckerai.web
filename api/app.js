@@ -1,16 +1,15 @@
-import "./database/index.js"; //load databse
+require('dotenv').config()
+require('./database') // load database
+const { urlencoded } = require('express'),
+    {cors} = require('./utils/cors'),
+    {development} = require("./config/development")
+    express = require('express'),
+    app = express()
 
-import express from "express";
-import cors from "cors";
 
-const app = express();
 
 app.use(express.json())
-   .use(cors);
-   
-app.use('/', (req, res)=>{
-    res.status(200).json({message: 'welcome'})
-});
-
-
-export default app;
+    .use(cors) 
+    .use(express.urlencoded({ extended: false }))
+    .get('/', (req,res) => res.send('Connected'))
+    .listen(development.PORT, () =>  console.log(`App is running on port ${development.PORT}`)) 
