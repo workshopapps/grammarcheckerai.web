@@ -1,8 +1,8 @@
-import { config } from "dotenv";
+const { config } = require("dotenv");
 
 config();
 
-export const environment = {
+exports.environment = {
     PORT: process.env.PORT,
     HOST: process.env.HOST,
     DATABASE_URI: process.env.DATABASE_URI

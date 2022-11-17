@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
-import { MongoClient } from "mongodb";
-import { environment } from "../config/environment.js";
+const mongoose = require("mongoose");
+const { MongoClient } = require("mongodb");
+const { environment } = require("../config/environment.js");
 
 const uri = environment.DATABASE_URI;
 
-export const client = new MongoClient(uri);
+exports.client = new MongoClient(uri);
 
 // self-invocation database function
 

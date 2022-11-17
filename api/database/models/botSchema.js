@@ -1,25 +1,25 @@
-import { v4 } from "uuid";
-import mongoose from "mongoose";
-import Joi from "joi";
+const { v4 } = require("uuid");
+const mongoose = require("mongoose");
+const Joi = require("joi");
 
-let schema = new mongoose.Schema(
-  {
+
+let schema = new mongoose.Schema({
     _id: {
-      type: String,
-      default: () => v4(),
+        type: String,
+        default: () => v4()
     },
     response: {
-      type: String,
+        type: String,
+
     },
 
     language: {
-      type: String,
-      default: "English",
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
+        type: String,
+        default: "English"
+    }, 
+}, {
+    timestamps: true
+}
+)
 
-export const authCollection = mongoose.model("bot", schema);
+exports.authCollection = mongoose.model('bot', schema);
