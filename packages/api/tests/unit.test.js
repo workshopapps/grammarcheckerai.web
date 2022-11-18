@@ -7,6 +7,7 @@ describe("Login Test", () => {
     await request(app).post("/api/v1/login").send({}).expect(400);
   });
 });
+
 describe("Login Test", () => {
   it("returns true when a correct request is supplied", async () => {
     await request(app)

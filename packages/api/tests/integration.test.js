@@ -16,7 +16,7 @@ describe("Login Endpoint", () => {
   it("Tests login endpoint", async () => {
     await request(app)
       .post("/")
-      .expect("Content-Type", /json/)
+      .expect("Content-Type", "text/html; charset=utf-8")
       .expect(200)
       .then((response) => {
         expect(response.body.message).toBe("Welcome to Grit Grammarly 🙌");
