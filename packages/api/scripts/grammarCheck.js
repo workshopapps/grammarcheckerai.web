@@ -6,7 +6,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-const grammarCheckHandler = async (language, userResponseInTxt) => {
+const grammarCheckHandler = async (userResponseInTxt, language = "English") => {
   const prompt = `Correct this to standard ${language}:\n\n${userResponseInTxt}`;
   try {
     const response = await openai.createCompletion({
