@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+require('express-async-errors')
+require('dotenv').config()
 const login = require('./routes/loginRoute') //login
 const userRouter = require("./routes/userRouter"); // importing user routes
 
