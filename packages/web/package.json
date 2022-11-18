@@ -13,7 +13,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .js,.jsx",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "storybook": "start-storybook -p 6006"
   },
   "dependencies": {
     "@tanstack/react-query": "^4.14.5",
@@ -41,6 +42,8 @@
     "husky": "^8.0.2",
     "postcss": "^8.4.18",
     "tailwindcss": "^3.2.3",
-    "vite": "^3.2.3"
+    "vite": "^3.2.3",
+    "@storybook/builder-vite": "^0.2.5",
+    "@storybook/testing-library": "^0.0.13"
   }
 }
