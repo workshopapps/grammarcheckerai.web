@@ -10,8 +10,9 @@
     "lint": "lerna run lint",
     "new-version": "lerna version --conventional-commits --yes",
     "prettier": "lerna run prettier",
-    "storybook": "lerna run storybook",
+    "storybook": "lerna run storybook -p 6006",
     "diff": "lerna diff",
+    "prepack": "husky install",
     "build-storybook": "build-storybook"
   },
   "devDependencies": {
