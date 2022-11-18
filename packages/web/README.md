@@ -1,4 +1,4 @@
-# Gitty Grammar
+# Gritty Grammar
 
 This is Gritty Grammar frontend bootstrapped with [`react vite`](https://vitejs.dev/).
 
