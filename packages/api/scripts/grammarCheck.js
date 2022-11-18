@@ -27,6 +27,8 @@ const grammarCheckHandler = async (userResponseInTxt, language = "English") => {
     if (hasGrammaticalError.toLowerCase().includes("yes")) {
       prompt = `Correct this to standard ${language}:\n\n${userResponseInTxt}`;
       correctUserResponseInTxt = await GPT3(prompt); // makes the user response grammatically correct in the same language.
+    } else {
+      correctUserResponseInTxt = userResponseInTxt;
     }
     return {
       hasGrammaticalError,
