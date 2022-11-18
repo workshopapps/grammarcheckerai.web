@@ -6,6 +6,7 @@
     "packages/*"
   ],
   "scripts": {
+    "mode:dev": "lerna run mode:dev",
     "dev": "lerna run dev",
     "lint": "lerna run lint",
     "new-version": "lerna version --conventional-commits --yes",
@@ -26,11 +27,19 @@
     "@storybook/react": "^6.5.13",
     "babel-loader": "^8.3.0",
     "husky": "^8.0.2",
-    "lerna": "^6.0.3"
+    "lerna": "^6.0.3",
+    "nodemon": "^2.0.20"
   },
   "dependencies": {
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
-    "@storybook/testing-library": "^0.0.13"
+    "@storybook/testing-library": "^0.0.13",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "joi": "^17.7.0",
+    "mongodb": "^4.12.0",
+    "mongoose": "^6.7.2",
+    "uuid": "^9.0.0"
   }
 }

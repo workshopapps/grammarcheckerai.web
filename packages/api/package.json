@@ -1,15 +1,14 @@
 {
-    "name": "api",
+    "name": "gritty_grammar_api",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "nodemon server.js",
+        "mode:dev": "nodemon server.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
     "author": "",
-
     "license": "ISC",
     "dependencies": {
         "cors": "^2.8.5",
