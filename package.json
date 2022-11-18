@@ -13,7 +13,8 @@
     "prettier": "lerna run prettier",
     "storybook": "lerna run storybook",
     "diff": "lerna diff",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
