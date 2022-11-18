@@ -1,9 +1,11 @@
 import './App.css';
+import Transcribe from './modules/transcribe';
 
 function App() {
   return (
     <div className="App">
-      <p className="font-extrabold">Gritty Grammar</p>
+      <Transcribe />
+      {/* <p className="font-extrabold">Gritty Grammar</p> */}
     </div>
   );
 }
