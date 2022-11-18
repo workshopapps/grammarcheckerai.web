@@ -4,7 +4,7 @@ exports.login = async (req, res) => {
     // retrieve the email and password 
     const { email, password } = req.body;
 
-    const { error } = authValidatorSchema.validate({ email, password });
+    const { error } =  authValidatorSchema.validate({ email, password });
     if (error) return res.status(400).send(error.details[0].message);
 
 

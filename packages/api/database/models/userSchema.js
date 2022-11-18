@@ -1,6 +1,7 @@
 const { v4 } = require("uuid");
 const mongoose = require("mongoose");
 const Joi = require("joi");
+const bcrypt = require("bcrypt");
 
 let schema = new mongoose.Schema(
   {
@@ -29,7 +30,7 @@ let schema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 6,
-      maxlength: 1023
+      maxlength: 1023,
     },
     deviceID: {
       type: String,
@@ -37,21 +38,21 @@ let schema = new mongoose.Schema(
     },
   },
   {
-    timestamps:true 
+    timestamps: true,
   }
 );
 
 // Hashing the password
-schema.pre('save', async function() {
+schema.pre("save", async function () {
   const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt)
-})
+  this.password = await bcrypt.hash(this.password, salt);
+});
 
 // comparing the password
-schema.methods.comparePassword = async function(reqPassword) {
-  const correctPassword = await bcrypt.compare(reqPassword, this.password)
+schema.methods.comparePassword = async function (reqPassword) {
+  const correctPassword = await bcrypt.compare(reqPassword, this.password);
   return correctPassword;
-}
+};
 
 /**
  * Signup and login schema
@@ -65,7 +66,7 @@ exports.authValidatorSchema = Joi.object().keys({
     })
     .lowercase()
     .required(),
-  password: Joi.string().min(5).required()
+  password: Joi.string().min(5).required(),
 });
 
 exports.userCollection = mongoose.model("user", schema);
