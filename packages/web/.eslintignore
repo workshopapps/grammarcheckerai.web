@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.husky/
+.prettierrc.js
+.eslintrc.js
+env.d.ts
