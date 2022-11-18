@@ -7,4 +7,5 @@ exports.environment = {
   HOST: process.env.HOST,
   DATABASE_URI: process.env.DATABASE_URI,
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+  SESSION_SECRET: process.env.SESSION_SECRET,
 };
