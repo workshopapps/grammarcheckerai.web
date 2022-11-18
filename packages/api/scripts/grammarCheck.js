@@ -6,23 +6,30 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-const grammarCheckHandler = async (userResponseInTxt, language = "English") => {
-  const prompt = `Correct this to standard ${language}:\n\n${userResponseInTxt}`;
-  try {
-    const response = await openai.createCompletion({
-      model: "text-davinci-002",
-      prompt,
-      temperature: 0,
-      max_tokens: 60,
-      top_p: 1.0,
-      frequency_penalty: 0.0,
-      presence_penalty: 0.0,
-    });
-    const correctUserResponseInTxt = response.data.choices[0].text.trim(); // extracts the correctUserResponseInTxt and removes leading and trailing white space and line terminator characters.
+const GPT3 = async function (prompt) {
+  const response = await openai.createCompletion({
+    model: "text-davinci-002",
+    prompt,
+    temperature: 0,
+    max_tokens: 60,
+    top_p: 1.0,
+    frequency_penalty: 0.0,
+    presence_penalty: 0.0,
+  });
+  return response.data.choices[0].text.trim(); // extracts the "text" response and removes leading and trailing white space and line terminator characters.
+};
 
-    const hasGrammaticalError =
-      userResponseInTxt.toLowerCase() !==
-      correctUserResponseInTxt.toLowerCase(); // checks whether or not there is a grammatical error.
+const grammarCheckHandler = async (userResponseInTxt, language = "English") => {
+  let prompt, correctUserResponseInTxt;
+  prompt = `Is this grammatically incorrect? Respond with yes or no.:\n\n${userResponseInTxt}`;
+  try {
+    const hasGrammaticalError = await GPT3(prompt); // checks whether or not there is a grammatical error.
+    if (hasGrammaticalError.toLowerCase().includes("yes")) {
+      prompt = `Correct this to standard ${language}:\n\n${userResponseInTxt}`;
+      correctUserResponseInTxt = await GPT3(prompt); // makes the user response grammatically correct in the same language.
+    } else {
+      correctUserResponseInTxt = userResponseInTxt;
+    }
     return {
       hasGrammaticalError,
       userResponseInTxt,
