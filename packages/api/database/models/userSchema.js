@@ -41,12 +41,6 @@ let schema = new mongoose.Schema(
   }
 );
 
-// // jwt auth token
-// userSchema.methods.generateAuthToken = function() {
-//   const token = jwt.sign({_id: this._id, isAdmin: this.isAdmin}, config.get('jwtPrivateKey'), {expiresIn: '5h'});
-//   return token
-// }
-
 // Hashing the password
 schema.pre('save', async function() {
   const salt = await bcrypt.genSalt(10);
