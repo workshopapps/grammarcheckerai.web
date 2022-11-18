@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useToasts } from 'react-toast-notifications';
 import { ENDPOINTS } from '../lib/constants';
-import { secureRequest } from '../lib/utils/secureRequest';
+import { secureRequest } from '../lib/utils';
 
 const getMutationAction = (mutationData) => {
   const { endpoint, method, headers, isCreathorsApi = true } = mutationData;

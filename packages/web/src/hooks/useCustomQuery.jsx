@@ -1,5 +1,5 @@
 import { ENDPOINTS } from '../lib/constants';
-import { secureRequest } from '../lib/utils/secureRequest';
+import { secureRequest } from '../lib/utils';
 import { useQuery } from '@tanstack/react-query';
 
 export const getQueryAction = (payload) => {
