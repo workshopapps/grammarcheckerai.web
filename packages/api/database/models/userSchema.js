@@ -1,6 +1,8 @@
-const { v4 } = require("uuid");
-const mongoose = require("mongoose");
-const Joi = require("joi");
+const { v4 } = require('uuid');
+const mongoose = require('mongoose');
+const Joi = require('joi');
+const jwt = require('jsonwebtoken');
+const { environment } = require('../../config/environment');
 
 let schema = new mongoose.Schema(
   {
@@ -14,16 +16,20 @@ let schema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
-    firstName: {
+    name: {
       type: String,
       required: true,
     },
-    lastName: {
+    password: {
       type: String,
     },
+    displayName: {
+      type: String,
+    },
+
     language: {
       type: String,
-      default: "English",
+      default: 'English',
     },
 
     deviceID: {
@@ -32,22 +38,33 @@ let schema = new mongoose.Schema(
     },
   },
   {
-    timestamps:true 
+    timestamps: true,
   }
 );
 
 /**
  * Signup and login schema
  * The return value is a Joi object in all cases.
+ *
+ *
  */
+
+// jwt auth token
+schema.methods.generateAuthToken = function () {
+  const token = jwt.sign({ _id: this._id }, environment.JWT_SECRET, {
+    expiresIn: '3d',
+  });
+  return token;
+};
+
 exports.authValidatorSchema = Joi.object().keys({
   email: Joi.string()
     .email({
       minDomainSegments: 2,
-      tlds: { allow: ["com", "net", "xyz", "io", "co", "org"] },
+      tlds: { allow: ['com', 'net', 'xyz', 'io', 'co', 'org'] },
     })
     .lowercase()
     .required(),
 });
 
-exports.userCollection = mongoose.model("user", schema);
+exports.userCollection = mongoose.model('user', schema);
