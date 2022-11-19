@@ -9,11 +9,17 @@ import styles from './index.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAudioRecorder } from '@sarafhbk/react-audio-recorder';
 import { convertSecToMin } from '../../../lib/utils';
-import Chat from '../../../components/Chat';
+import { Configuration, OpenAIApi } from 'openai';
+import ChatContainer from './chat-container';
+
+const configuration = new Configuration({
+  apiKey: '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',
+});
+const openai = new OpenAIApi(configuration);
 
 function Conversation() {
   const {
-    audioResult,
+    // audioResult,
     timer,
     startRecording,
     stopRecording,
@@ -22,6 +28,21 @@ function Conversation() {
     resumeRecording,
     // errorMessage,
   } = useAudioRecorder();
+  const [chats, setChats] = React.useState([]);
+
+  const submitAudioHandler = async () => {
+    const response = await openai.createCompletion({
+      model: 'text-davinci-002',
+      temperature: 0,
+      max_tokens: 60,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
+      prompt: 'Correct this to standard English:\n\nShe no went to the market.',
+    });
+
+    console.log(response);
+  };
 
   return (
     <motion.div
@@ -36,20 +57,23 @@ function Conversation() {
           <img src={logoImg} alt="" className="max-w-full" />
         </div>
       </div>
-      <div className="w-full max-w-7xl mx-auto flex flex-col justify-center px-4 space-y-3">
-        <Chat isLastReply />
-        <Chat isBot />
-        <Chat isBot isCorrection isLastReply />
-      </div>
       <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4">
         <div className="text-center space-y-14">
-          <div className="mx-auto flex items-center justify-center min-w-fit">
-            <img src={botImg} alt="" className="max-w-full" />
-          </div>
-          <div className="space-y-4">
-            <h2 className="text-5xl text-[#262626] leading-relaxed">What would you like to say today?</h2>
-            <p className="text-slate-600 text-[19px]">Each conversation bring you closer to fluency.</p>
-          </div>
+          {chats.length === 0 ? (
+            <>
+              <div className="mx-auto flex items-center justify-center min-w-fit">
+                <img src={botImg} alt="" className="max-w-full" />
+              </div>
+              <div className="space-y-4">
+                <h2 className="text-xl text-[#262626] leading-relaxed sm:text-5xl">
+                  What would you like to say today?
+                </h2>
+                <p className="text-slate-600 text-md sm:text-[19px]">Each conversation bring you closer to fluency.</p>
+              </div>
+            </>
+          ) : (
+            <ChatContainer />
+          )}
           <div>
             <div className="mx-auto flex items-center justify-center">
               <button
@@ -88,7 +112,10 @@ function Conversation() {
                         >
                           <img src={pauseImg} alt="" className="w-full" />
                         </button>
-                        <button className="h-6 w-6 rounded-full flex justify-center items-center">
+                        <button
+                          className="h-6 w-6 rounded-full flex justify-center items-center"
+                          onClick={submitAudioHandler}
+                        >
                           <img src={sendImg} alt="" className="w-full" />
                         </button>
                       </div>
