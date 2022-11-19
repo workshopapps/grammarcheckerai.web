@@ -3,14 +3,14 @@ const router = express.Router();
 const passport = require('passport');
 
 router.get(
-  '/facebook',
+  '/',
   passport.authenticate('facebook', {
     scope: ['public_profile', 'email'],
   })
 );
 
 router.get(
-  '/facebook/callback',
+  '/callback',
   passport.authenticate('facebook', { failureRedirect: '/auth/failed' }),
   (req, res) => {
     // Successful authentication, redirect home.
