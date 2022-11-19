@@ -5,5 +5,7 @@ config();
 exports.environment = {
     PORT: process.env.PORT,
     HOST: process.env.HOST,
-    DATABASE_URI: process.env.DATABASE_URI
+    DATABASE_URI: process.env.DATABASE_URI,
+    NODE_ENV: process.env.NODE_ENV
 };
+
