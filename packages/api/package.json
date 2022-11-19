@@ -4,21 +4,22 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "mode:dev": "nodemon server",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "mode:dev": "nodemon server.js",
+        "test:script": "jest"
     },
     "keywords": [],
-    "author": "",
+    "author": "Team Carpenter Grit",
     "license": "ISC",
     "dependencies": {
         "bcrypt": "^5.1.0",
         "cors": "^2.8.5",
         "dotenv": "^16.0.3",
         "express": "^4.18.2",
-        "express-async-errors": "^3.1.1",
         "joi": "^17.7.0",
         "mongodb": "^4.12.0",
         "mongoose": "^6.7.2",
+        "prettier": "^2.7.1",
+        "supertest": "^6.3.1",
         "swagger-ui-express": "^4.6.0",
         "uuid": "^9.0.0"
     },
