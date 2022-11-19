@@ -1,0 +1,219 @@
+@import '../../../assets/styles/variables.scss';
+
+.email {
+    width: 100vw;
+    height: 100vh;
+    padding: 23px;
+    color: black;
+
+    &_nav {
+
+        &__btn {
+            width: inherit;
+            @include flexCenter(row);
+            justify-content: space-between;
+        }
+
+        &__logo {
+            display: none;
+        }
+    }
+
+    &_content {
+        padding-bottom: 50px;
+
+        &__bottom {
+            @include flexCenter(row);
+            justify-content: space-between;
+            height: 155px;
+
+            div {
+                height: 110px;
+                width: 204px;
+                @include flexCenter(column);
+
+                h4 {
+                    font-family: $fontFamily1;
+                    line-height: 31px;
+                    height: 99px;
+                    width: 196px;
+                    font-size: 18px;
+                    font-weight: 500;
+                    line-height: 23px;
+                    text-align: left;
+                }
+
+                p {
+                    width: 206px;
+                    height: 76px;
+                    font-family: $fontFamily2;
+                    font-weight: 400;
+                    font-size: 12px;
+                    line-height: 15px;
+                }
+            }
+        }
+
+        &__top {
+            margin-top: 52px;
+            background-color: $purpleBackground;
+            @include flexCenter(row);
+            justify-content: space-between;
+            border-radius: 10px 10px 0px 0px;
+            border: 1px solid $purpleBackground;
+            color: $white;
+
+            img {
+                border-radius: 50%;
+            }
+
+            div {
+                margin-top: 52px;
+                @include flexCenter(column);
+                height: 255px;
+                width: 383px;
+
+                h3 {
+                    width: 196px;
+                    font-family: $fontFamily1;
+                    font-size: 24px;
+                    font-weight: 700;
+                    line-height: 31px;
+                }
+
+                p {
+                    width: 206px;
+                    height: 76px;
+                    font-family: $fontFamily2;
+                    font-weight: 400;
+                    font-size: 12px;
+                    line-height: 15px;
+                }
+            }
+        }
+
+        &__btn {
+            width: 100%;
+            margin-top: 32px;
+            text-align: center;
+
+            button {
+                background-color: $btnColor;
+                padding: 16px 40px;
+                height: 51px;
+                border: 1px solid $btnColor;
+                border-radius: 12px;
+                outline: none;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 19px;
+                color: $white;
+                font-family: $fontFamily2;
+            }
+        }
+
+        &__links {
+            margin-top: 32px;
+            width: inherit;
+            @include flexCenter(row);
+            justify-content: space-around;
+        }
+    }
+}
+
+/**************** media queries **************************/
+
+@media (min-width: $md) {
+    .email {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 50px;
+    
+        &_nav {
+    
+            &__btn {
+                display: none;
+            }
+    
+            &__logo {
+                display: block;
+            }
+        }
+    
+        &_content {
+
+            &__bottom {
+                @include flexCenter(row);
+                justify-content: space-between;
+                height: 255px;
+    
+                img {
+                    width: 163px;
+                    height: 163px;
+                }
+
+                div {
+                    width: 323px;
+                    @include flexCenter(column);
+                    justify-content: space-around;
+    
+                    h4 {
+                        font-family: $fontFamily1;
+                        line-height: 31px;
+                        height: 99px;
+                        width: inherit;
+                        font-size: 30px;
+                        font-weight: 500;
+                        line-height: 23px;
+                        text-align: left;
+                    }
+    
+                    p {
+                        width: inherit;
+                        height: 76px;
+                        font-family: $fontFamily2;
+                        font-weight: 400;
+                        font-size: 16px;
+                        line-height: 20px;
+                    }
+                }
+            }
+    
+            &__top {
+                margin-top: 52px;
+
+                div {
+                    margin-top: 52px;
+                    width: 383px;
+                    text-align: left;
+    
+                    h3 {
+                        width: 250px;
+                        font-size: 24px;
+                        font-weight: 700;
+                        line-height: 31px;
+                    }
+    
+                    p {
+                        margin-top: 10px;
+                        width: 250px;
+                        font-size: 14px;
+                        line-height: 15px;
+                    }
+                }
+            }
+    
+            &__btn {
+                width: 100%;
+                margin-top: 32px;
+                text-align: center;
+            }
+    
+            &__links {
+                margin: 0 auto;
+                margin-top: 32px;
+                width: 400px;
+            }
+        }
+    }
+}
