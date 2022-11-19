@@ -1,0 +1,10 @@
+._quotes::before{
+    content: url('../assets/quotes.png');
+    position: absolute;
+top: -2em;
+}
+._btn{
+    padding: .5em 1em;
+    border-radius: 5px;
+    transition: all .4s ease-in-out;
+}
