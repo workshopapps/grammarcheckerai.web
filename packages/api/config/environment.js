@@ -8,5 +8,8 @@ exports.environment = {
     NODE_ENV: process.env.NODE_ENV,
     DATABASE_URI_PROD: process.env.DATABASE_URI_PROD,
     DATABASE_URI_TEST: process.env.DATABASE_URI_TEST,
-    DATABASE_URI_DEVELOP: process.env.DATABASE_URI_DEVELOP
+    DATABASE_URI_DEVELOP: process.env.DATABASE_URI_DEVELOP,
+    GOOGLE_CLIENT_ID: process.env.CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.CLIENT_SECRET,
+    SERVER_ROOT_URI: process.env.SERVER_ROOT_URI
 };
