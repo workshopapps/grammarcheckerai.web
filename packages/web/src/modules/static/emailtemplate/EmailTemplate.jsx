@@ -28,12 +28,11 @@ const EmailTemplate = () => {
       </div>
 
       <div className={styles.email_content}>
-
         <div className={styles.email_content__top}>
-            <div>
-                <img src={skill} alt="" />
-            </div>
-    
+          <div>
+            <img src={skill} alt="" />
+          </div>
+
           <div>
             <h3>Improve your speaking skill to the max</h3>
             <p>
@@ -71,15 +70,15 @@ const EmailTemplate = () => {
         </div>
 
         <div className={styles.email_content__btn}>
-           <button >Learn More</button> 
+          <button>Learn More</button>
         </div>
 
         <div className={styles.email_content__links}>
-            <img src={twitter} alt="" />
-            <img src={linkedin} alt="" />
-            <img src={facebook} alt="" />
-            <img src={instagram} alt="" />
-            <img src={youtube} alt="" />
+          <img src={twitter} alt="" />
+          <img src={linkedin} alt="" />
+          <img src={facebook} alt="" />
+          <img src={instagram} alt="" />
+          <img src={youtube} alt="" />
         </div>
       </div>
     </section>
