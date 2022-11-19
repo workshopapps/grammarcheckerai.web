@@ -2,7 +2,11 @@ import './App.css';
 import React from 'react';
 import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
-
+import Signup from './modules/auth/signup/step1/step1';
+import Signuptwo from './modules/auth/signup/step2/step2';
+import Signin from './modules/auth/login/login';
+import Forgotpassword from './modules/auth/forgot-password/forgot';
+import ResetLink from './modules/auth/reset-password/reset';
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,14 +24,15 @@ const router = createBrowserRouter(
       <Route
         element={
           <div>
-            <h2>AuthLayout</h2>
             <Outlet />
           </div>
         }
       >
-        <Route path="signin" element={<h2>Signin Page</h2>} />
-        <Route path="signup" element={<h2>Logout Page</h2>} />
-        <Route path="forgot-password" element={<h2>Forgot Password Page</h2>} />
+        <Route path="signin" element={<Signin />} />
+        <Route path="signup" element={<Signup />} exact />
+        <Route path="signup/step-two" element={<Signuptwo />} />
+        <Route path="forgot-password" element={<Forgotpassword />} />
+        <Route path="reset-password" element={<ResetLink />} />
       </Route>
       <Route
         path="/me"
