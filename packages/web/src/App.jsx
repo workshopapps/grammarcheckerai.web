@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react';
 import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
+import TermsOfUse from './modules/static/terms_of_use';
 
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
@@ -15,7 +16,7 @@ const router = createBrowserRouter(
       <Route path="contact" element={<h1>Contact Page</h1>} />
       <Route path="/newsletter" element={<h1>NewsLetter Page</h1>} />
       <Route path="/culture-career" element={<h1>Culture Page</h1>} />
-      <Route path="/terms-of-use" element={<h1>Terms of use Page</h1>} />
+      <Route path="/terms-of-use" element={<TermsOfUse/>} />
       <Route path="/api-status" element={<h1>Api status Page</h1>} />
       <Route
         element={
