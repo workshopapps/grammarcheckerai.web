@@ -2,6 +2,8 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import logoImg from '../../assets/images/logo.svg';
 import SidebarLink from '../SidebarLink';
+import { IoHomeOutline, IoSettingsOutline } from 'react-icons/io5';
+import { BsDownload, BsClock } from 'react-icons/bs';
 
 function DashboardLayout() {
   return (
@@ -11,10 +13,18 @@ function DashboardLayout() {
           <img src={logoImg} alt="" className="w-full" />
         </div>
         <div className="w-full space-y-3">
-          <SidebarLink to="/me/home">Home</SidebarLink>
-          <SidebarLink to="/me/history">History</SidebarLink>
-          <SidebarLink to="/me/import">Import</SidebarLink>
-          <SidebarLink to="/me/settings">Settings</SidebarLink>
+          <SidebarLink Icon={IoHomeOutline} to="/me/home">
+            Home
+          </SidebarLink>
+          <SidebarLink Icon={BsClock} to="/me/history">
+            History
+          </SidebarLink>
+          <SidebarLink Icon={BsDownload} to="/me/import">
+            Import
+          </SidebarLink>
+          <SidebarLink Icon={IoSettingsOutline} to="/me/settings">
+            Settings
+          </SidebarLink>
         </div>
       </div>
       <div className="w-full">
