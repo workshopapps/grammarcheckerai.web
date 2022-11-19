@@ -15,6 +15,8 @@ const {routeHandler} = require('./routes/index.route');
 app.use(passport.initialize());
 
 app.use(express.json()).use(cors());
+app.use(passport.initialize());
+require('./services/facebookStrategy');
 
 const sess = {
   secret: environment.SESSION_SECRET,
