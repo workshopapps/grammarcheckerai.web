@@ -7,12 +7,18 @@ let schema = new mongoose.Schema(
       type: String,
       default: () => v4(),
     },
-    userId: {
+    transcribedAudioText: {
       type: String,
-      ref: "user",
     },
-    audioURL: {
+    correctedText: {
       type: String,
+    },
+    botReply: {
+      type: String,
+    },
+    language: {
+      type: String,
+      default: "English",
     },
   },
   {
@@ -20,4 +26,4 @@ let schema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("userResponse", schema);
+module.exports = mongoose.model("botResponse", schema);

@@ -7,12 +7,17 @@ let schema = new mongoose.Schema(
       type: String,
       default: () => v4(),
     },
-    userId: {
+    conversationId: {
       type: String,
-      ref: "user",
+      ref: "conversation",
     },
-    audioURL: {
+    userResponseId: {
       type: String,
+      ref: "userResponse",
+    },
+    botResponseId: {
+      type: String,
+      ref: "botResponse",
     },
   },
   {
@@ -20,4 +25,4 @@ let schema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("userResponse", schema);
+module.exports = mongoose.model("message", schema);
