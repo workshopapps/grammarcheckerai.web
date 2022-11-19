@@ -9,7 +9,6 @@ async function deleteUser(req, res) {
     res.json({ message: "please provide user email and password" });
     return;
   }
-  k8;
 
   // checking for user in our database using the email provided
   let user;

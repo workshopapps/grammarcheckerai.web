@@ -25,7 +25,10 @@ let schema = new mongoose.Schema(
       type: String,
       default: "English",
     },
-
+    password: {
+      type: String,
+      required: true
+    },
     deviceID: {
       type: String,
       default: () => v4(),
