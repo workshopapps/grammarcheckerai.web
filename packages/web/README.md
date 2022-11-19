@@ -1,4 +1,4 @@
-# Gitty Grammar
+# Gritty Grammar
 
 This is Gritty Grammar frontend bootstrapped with [`react vite`](https://vitejs.dev/).
 
@@ -42,7 +42,7 @@ format on save for the eslint & prettier plugins in your editor 🙃
 
 ## Contributing
 
-All pull requests should be made to the `dev branch` addequate commit message must be use and has been enforced throght commitlint your commit messages should be in this form `{commit type}: {commit message}` eg `ci: setup eslint and prettier to ensure code linting and formatting` refer to our commit lint file [here](commitlint.config.js)
+All pull requests should be made to the `dev branch` adequate commit message must be use and has been enforced through commitlint your commit messages should be in this form `{commit type}: {commit message}` eg `ci: setup eslint and prettier to ensure code linting and formatting` refer to our commit lint file [here](commitlint.config.js)
 
 **Note pre-commit `npm run lint` is run.**
 
