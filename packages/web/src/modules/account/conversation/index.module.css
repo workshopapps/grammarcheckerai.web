@@ -1,0 +1,9 @@
+._convo {
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.99), rgba(255, 255, 255, 0.99)),
+    url('../../../assets/images/bg.png');
+  /* background-image: linear-gradient(to bottom, rgba(232, 221, 242, 0.99), rgba(232, 221, 242, 0.99)),
+    url('../../../assets/images/bg.PNG'); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}

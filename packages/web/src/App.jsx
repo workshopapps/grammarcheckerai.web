@@ -2,12 +2,14 @@ import './App.css';
 import React from 'react';
 import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
-
+import { ConversationPage } from './pages/';
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<h1>Will redirect to Landing Pages / Conversation Page</h1>} />
+      {/* <Route path="/" element={<h1>Will redirect to Landing Pages / Conversation Page</h1>} /> */}
+      <Route path="/" element={<ConversationPage />} />
+
       <Route path="/home" element={<h1>Landing Page</h1>} />
       <Route path="/about" element={<h1>About Page</h1>} />
       <Route path="/faq" element={<h1>FAQ Page</h1>} />
