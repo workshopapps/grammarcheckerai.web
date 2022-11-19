@@ -12,9 +12,10 @@ async function register(data) {
     };
     
     const user = await userCollection.create(newUser);
-    console.log(user);
+    
     return user;
   } catch (error) {
+    console.log(error.message);
     return false;
   }
 }

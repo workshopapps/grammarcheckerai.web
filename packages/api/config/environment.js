@@ -18,6 +18,7 @@ exports.environment = {
     DATABASE_URI: process.env.DATABASE_URI, 
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     SESSION_SECRET: process.env.SESSION_SECRET,
+    JWT_SECRET: process.env.JWT_SECRET,
     FILE_SIZE: process.env.FILE_SIZE,
     API_KEY: process.env.API_KEY,
     MODEL_KEY: process.env.MODEL_KEY

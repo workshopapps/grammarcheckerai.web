@@ -6,7 +6,6 @@ const {
 } = require("../utilities/validation/auth.validation");
 const {
   registerUser,
-  deleteUser,
 } = require("../controller/auth/user.controller"); //importing deleteuser controller
 const { googleAuthURL } = require("../controller/auth/google.user.controller");
 const { linkedin } = require("../routes/linkedin-auth");
@@ -18,7 +17,7 @@ auth.post("/signup", registerValidationRules(), validate, registerUser);
 auth.post("/google-auth", googleAuthURL);
 
 
-auth.get("/login", login);
+auth.post("/login", login);
 auth.get("/logout", logout);
 auth.get("/linkedin", linkedin);
 
