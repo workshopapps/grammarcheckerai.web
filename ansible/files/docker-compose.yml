@@ -10,7 +10,7 @@ services:
   frontend:
     image: asyncdeveloper/grammar-check-frontend
     ports:
-      - "5000:5173"
+      - "5000:5000"
     networks:
       - hng-internal
     depends_on:
