@@ -14,7 +14,7 @@ describe("Gets the home page", () => {
       .expect("Content-Type", /json/)
       .expect(200)
       .then((response) => {
-        expect(response.body.message).toBe("Welcome to Grit Grammarly 🙌");
+        expect(response.body.status).toBe("ok");
       });
   });
 });
@@ -25,7 +25,7 @@ describe("Login Endpoint", () => {
       .expect("Content-Type", "text/html; charset=utf-8")
       .expect(200)
       .then((response) => {
-        expect(response.body.status).toBe("Welcome to Grit Grammarly 🙌");
+        expect(response.body.status).toBe("ok");
       });
   });
 });
@@ -41,3 +41,16 @@ describe("Send Audio", () => {
       });
   });
 });
+
+describe("Send Audio", () => {
+  it("Tests if the endpoint works", async () => {
+    await request(app)
+      .get("/api/vi/getText")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((response) => {
+        expect(response.body.status).toBe("ok");
+      });
+  });
+});
+
