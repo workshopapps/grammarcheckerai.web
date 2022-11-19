@@ -9,17 +9,12 @@ import styles from './index.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAudioRecorder } from '@sarafhbk/react-audio-recorder';
 import { convertSecToMin } from '../../../lib/utils';
-import { Configuration, OpenAIApi } from 'openai';
+// import { Configuration, OpenAIApi } from 'openai';
 import ChatContainer from './chat-container';
-
-const configuration = new Configuration({
-  apiKey: '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',
-});
-const openai = new OpenAIApi(configuration);
 
 function Conversation() {
   const {
-    // audioResult,
+    audioResult,
     timer,
     startRecording,
     stopRecording,
@@ -31,17 +26,14 @@ function Conversation() {
   const [chats, setChats] = React.useState([]);
 
   const submitAudioHandler = async () => {
-    const response = await openai.createCompletion({
-      model: 'text-davinci-002',
-      temperature: 0,
-      max_tokens: 60,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
-      prompt: 'Correct this to standard English:\n\nShe no went to the market.',
-    });
-
-    console.log(response);
+    setChats((prev) => [
+      ...prev,
+      {
+        type: 'audio',
+        file: audioResult,
+      },
+    ]);
+    stopRecording();
   };
 
   return (
@@ -53,6 +45,8 @@ function Conversation() {
       className={`min-h-screen space-y-6 flex pb-10 flex-col ${styles._convo}`}
     >
       <div className="flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto">
+        {/*  eslint-disable-next-line jsx-a11y/media-has-caption */}
+        {/* <audio controls src={audioResult} /> */}
         <div className="w-36">
           <img src={logoImg} alt="" className="max-w-full" />
         </div>
