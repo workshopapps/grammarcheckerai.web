@@ -2,9 +2,8 @@ import './App.css';
 import React from 'react';
 import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
-import HomePage from './pages/home/homePage';
-import History from './pages/history/history';
-import Correction from './pages/history/correction';
+import DashboardLayout from './components/DashboardLayout';
+import { HomePage, History, Correction } from './pages';
 
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
@@ -34,20 +33,12 @@ const router = createBrowserRouter(
         <Route path="signup" element={<h2>Logout Page</h2>} />
         <Route path="forgot-password" element={<h2>Forgot Password Page</h2>} />
       </Route>
-      <Route
-        path="/me"
-        element={
-          <div>
-            <h2>Dashboard Layout</h2>
-            <Outlet />
-          </div>
-        }
-      >
+      <Route path="/me" element={<DashboardLayout />}>
         <Route
           path="home"
           element={
             <ProtectedRoute>
-              <h1>Home Page</h1>
+              <HomePage />
             </ProtectedRoute>
           }
         />
@@ -55,15 +46,15 @@ const router = createBrowserRouter(
           path="history"
           element={
             <ProtectedRoute>
-              <h1>History Page</h1>
+              <History />
             </ProtectedRoute>
           }
         />
         <Route
-          path="transcribe"
+          path="import"
           element={
             <ProtectedRoute>
-              <h1>Transcribe/import Page</h1>
+              <h1>Quick Transcribe/import Page</h1>
             </ProtectedRoute>
           }
         />
