@@ -9,8 +9,8 @@ const TeamFeedback = ({ img, feedback, name, role }) => {
       </div>
       <div className="w-full">
         <h4>&quot;{feedback}&quot;</h4>
-        <p className='text-xs font-light italic'>{name}</p>
-        <p className='text-xs font-light italic'>{role}</p>
+        <p className="text-xs font-light italic">{name}</p>
+        <p className="text-xs font-light italic">{role}</p>
       </div>
     </div>
   );

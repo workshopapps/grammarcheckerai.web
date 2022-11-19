@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 
 const SelectDropdown = ({ options, handleChange, value }) => {
-  const [isSearchable, setIsSearchable] = useState(true);
+  const [isSearchable] = useState(true);
 
   const modifiedOptions = options?.map((option) => {
     return typeof option !== 'object' ? { value: option, label: option } : option;

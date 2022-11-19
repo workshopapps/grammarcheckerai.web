@@ -62,13 +62,15 @@ const Careers = () => {
         </div>
       </div>
       <Culture />
-      <section className='text-center py-10'>
-        <p className='w-1/2 mx-auto py-6'>
+      <section className="text-center py-10">
+        <p className="w-1/2 mx-auto py-6">
           Every member of the team brings something unique to Gritty Grammar which strenghtens the team. We are growing
           and we would like you to join us. Do you think you have what it takes to join the team? Find out how you can
           add your talent and skills to our team and help us push forward our mission!
         </p>
-        <a href="/roles" className='bg-purple-800 text-white rounded-lg py-3 px-4'>Explore Open Roles</a>
+        <a href="/roles" className="bg-purple-800 text-white rounded-lg py-3 px-4">
+          Explore Open Roles
+        </a>
       </section>
     </div>
   );

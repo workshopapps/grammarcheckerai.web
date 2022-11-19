@@ -17,7 +17,7 @@ const Roles = () => {
   return (
     <div className=" py-10 space-y-6 px-72">
       <h3 className="font-bold text-green-800 text-4xl text-center">Open Roles</h3>
-      <p className='py-8'>
+      <p className="py-8">
         Gritty Grammar is excited to offer a 100% remote working model. Team members can work primarily remotely from
         anywhere in the world as long as you deliver your task on time. We believe this balanced, flexible approach
         gives our team members the best of both worlds: unlock creativity, fuels innovation and you also have time for
@@ -42,16 +42,16 @@ const Roles = () => {
           <div className="space-y-3 py-8">
             {['Analyst Relations Manager', 'Chief Marketing Officer'].map((role, idx) => (
               <div key={idx} className="flex justify-between items-center border-t py-4">
-                <div className='space-y-2'>
+                <div className="space-y-2">
                   <h4>{role}</h4>
                   <div className="flex gap-3">
                     <div className="flex gap-1">
                       <img src="/images/location.svg" alt="loaction" />
-                      <h4 className='text-sm'>100% remote</h4>
+                      <h4 className="text-sm">100% remote</h4>
                     </div>
                     <div className="flex gap-1">
                       <img src="/images/clock.svg" alt="clock" />
-                      <h4 className='text-sm'>Full-time</h4>
+                      <h4 className="text-sm">Full-time</h4>
                     </div>
                   </div>
                 </div>
