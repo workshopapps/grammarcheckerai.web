@@ -20,7 +20,7 @@ exports.login = async (req, res) => {
     const validPassword = user.comparePassword(password)
 
     if (!validPassword) {
-        return res.status(401).json({ msg: 'Invalid email or password' })https://meet.google.com/ixz-zikw-czu
+        return res.status(401).json({ msg: 'Invalid email or password' })
     }
 
     const token = user.generateAuthToken()
