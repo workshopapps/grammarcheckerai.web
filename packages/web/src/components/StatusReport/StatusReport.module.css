@@ -1,0 +1,56 @@
+.systemReport {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 6px;
+  border: 1px solid #d4d4d4;
+  border-top: transparent;
+  align-items: center;
+}
+
+.systemTitle {
+  grid-area: 1/1/1/2;
+  font-size: 1rem;
+  font-family: var(--Inter);
+  font-weight: 500;
+}
+
+.systemReportLogo {
+  grid-area: 1/2/3/3;
+  justify-self: end;
+}
+
+.systemStatus {
+  font-weight: 400;
+  font-family: var(--Inter);
+  font-size: 0.8rem;
+}
+
+.Operational {
+  color: var(--successColor);
+}
+
+.Outage {
+  color: var(--failedColor);
+}
+
+.Warning {
+  color: var(--warning);
+}
+
+@media screen and (min-width: 600px) {
+  .systemReport {
+    display: flex;
+    padding: 1.5rem 1rem;
+  }
+
+  .systemTitle {
+    font-size: 1.125rem;
+  }
+
+  .systemStatus {
+    font-size: 1rem;
+    margin-left: auto;
+    margin-right: 8px;
+  }
+}
