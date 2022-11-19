@@ -17,4 +17,5 @@ exports.environment = {
     SERVER_ROOT_URI: process.env.SERVER_ROOT_URI,
     DATABASE_URI: process.env.DATABASE_URI, 
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    SESSION_SECRET: process.env.SESSION_SECRET,
 };
