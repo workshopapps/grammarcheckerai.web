@@ -2,10 +2,9 @@ import './App.css';
 import React from 'react';
 import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
-import { ConversationPage } from './pages/';
 import TermsOfUse from './modules/static/terms_of_use';
 import DashboardLayout from './components/DashboardLayout';
-import { HomePage, History, Correction } from './pages';
+import { HomePage, History, Correction, ConversationPage } from './pages';
 
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
@@ -13,9 +12,8 @@ const router = createBrowserRouter(
     <>
       {/* <Route path="/" element={<h1>Will redirect to Landing Pages / Conversation Page</h1>} /> */}
       <Route path="/" element={<ConversationPage />} />
-      <Route path="/home" element={<HomePage />} />
-      <Route path="/history" element={<History />} />
-      <Route path="/correction" element={<Correction />} />
+      <Route path="/home" element={<h1>Home page</h1>} />
+      <Route path="/history" element={<h2>History</h2>} />
       <Route path="/about" element={<h1>About Page</h1>} />
       <Route path="/faq" element={<h1>FAQ Page</h1>} />
       <Route path="/blog" element={<h1>Blog Page</h1>} />
@@ -53,6 +51,8 @@ const router = createBrowserRouter(
             </ProtectedRoute>
           }
         />
+        <Route path="history/correction" element={<Correction />} />
+
         <Route
           path="import"
           element={
