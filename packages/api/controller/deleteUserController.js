@@ -1,15 +1,15 @@
-const { userCollection } = require("../database/models/userSchema");
-const { comparePassword } = require("../utilities/compare");
-// FOR DELETING A USER ACCOUNT
+const { userCollection } = require('../database/models/userSchema');
+const { comparePassword } = require('../utilities/compare');
+// FOR DELETING A USER ACCOUNT.
 //////////////////////////////////////////////////////////////////////////////////////////////////
 async function deleteUser(req, res) {
   try {
     const { email, password } = req.body;
 
-    // checking if all required field are provided
+    // checking if all required field are provided.
     if (!email || !password) {
       res.status(400);
-      res.json({ message: "please provide user email and password" });
+      res.json({ message: 'please provide user email and password' });
       return;
     }
 
@@ -19,7 +19,7 @@ async function deleteUser(req, res) {
     // if user does not exist
     if (!user) {
       res.status(404);
-      res.json({ message: "no user found with the email provided" });
+      res.json({ message: 'no user found with the email provided' });
       return;
     }
 
@@ -30,7 +30,7 @@ async function deleteUser(req, res) {
     // if password is not correct
     if (!isCorrect) {
       res.status(401);
-      res.json({ message: "you are not authorized to delete this account" });
+      res.json({ message: 'you are not authorized to delete this account' });
       return;
     }
 
@@ -38,11 +38,11 @@ async function deleteUser(req, res) {
     if (user && isCorrect) {
       await userCollection.deleteOne({ email });
       res.status(200);
-      res.json({ message: "you have successfully deleted your account" });
+      res.json({ message: 'you have successfully deleted your account' });
     }
   } catch (error) {
     res.status(500);
-    res.json({ message: "Something went wrong" });
+    res.json({ message: 'Something went wrong' });
   }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////
