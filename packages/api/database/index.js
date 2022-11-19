@@ -10,7 +10,7 @@ exports.client = new MongoClient(uri);
 
 (async function () {
   await mongoose
-    .connect(`${uri}/grittybot`, {
+    .connect(`${uri}`, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
