@@ -14,7 +14,7 @@ const Application = () => {
             Apply now
           </a>
         </div>
-        <p className='py-6'>
+        <p className="py-6">
           We are looking for an Analyst Relations Manager to join our Communications team. The Analyst Relations Manager
           will be critical in building awareness of and sustaining Gritty Grammar’s category leadership while driving a
           high-touch program that creates leverage for our ambitious vision. Working closely with Gritty Grammar’s Brand
