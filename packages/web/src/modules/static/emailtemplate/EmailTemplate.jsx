@@ -13,6 +13,7 @@ import youtube from '../../../assets/newsletterImages/youtube.png';
 import linkedin from '../../../assets/newsletterImages/linkedin.png';
 import twitter from '../../../assets/newsletterImages/twitter.png';
 import instagram from '../../../assets/newsletterImages/instagram.png';
+import text2speech from '../../../assets/newsletterImages/text2speech.png';
 
 const EmailTemplate = () => {
   return (
@@ -24,6 +25,7 @@ const EmailTemplate = () => {
         </div>
         <div className={styles.email_nav__logo}>
           <img src={logo} alt="" />
+          <h4>Gritty Grammar</h4> 
         </div>
       </div>
 
@@ -62,7 +64,7 @@ const EmailTemplate = () => {
         </div>
 
         <div className={styles.email_content__bottom}>
-          <img src={chatHistory} alt="" />
+          <img src={text2speech} alt="" />
           <div>
             <h4>Text-to-speech</h4>
             <p>This feature that allows you to hear written text, for those moments where you're unable to read it.</p>
@@ -73,12 +75,19 @@ const EmailTemplate = () => {
           <button>Learn More</button>
         </div>
 
+        <hr />
+
         <div className={styles.email_content__links}>
           <img src={twitter} alt="" />
           <img src={linkedin} alt="" />
           <img src={facebook} alt="" />
           <img src={instagram} alt="" />
           <img src={youtube} alt="" />
+        </div>
+
+        <div className={styles.email_content__policy}>
+          <p>You're receiving this email because you are a subscriber of Gritty Grammar</p> 
+          <p>If you feel you received it by mistake or wish to unsubscribe, click here</p>
         </div>
       </div>
     </section>

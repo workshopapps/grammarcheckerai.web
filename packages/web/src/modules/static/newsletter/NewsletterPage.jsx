@@ -1,11 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import styles from '../newsletter/NewsletterPage.module.scss';
-import arrow from '../../../assets/newsletterImages/arrow-left.png';
 import letter from '../../../assets/newsletterImages/letter.png';
-import logo from '../../../assets/newsletterImages/logo.png';
 import background from '../../../assets/newsletterImages/background.png';
 import close from '../../../assets/newsletterImages/close-square.png';
 import envelope1 from '../../../assets/newsletterImages/envelope1.png';
@@ -24,17 +21,7 @@ const NewsletterPage = () => {
 
   return (
     <section className={styles.newsletter}>
-      <div className={styles.newsletter_backBtn}>
-        <Link to="/">
-          <img src={arrow} alt="Arrow left" />
-        </Link>
-      </div>
-
       <aside className={styles.newsletter_left}>
-        <div className={styles.newsletter_left__logo}>
-          <img src={logo} alt="Gritty grammar logo" />
-        </div>
-
         <div className={styles.newsletter_left__text}>
           <img src={letter} alt="Email icon" />
 
@@ -65,17 +52,16 @@ const NewsletterPage = () => {
         <div className={styles.newsletter_success}>
           <div className={styles.newsletter_success__card}>
             <div onClick={() => setIsClosed(true)} className={styles.newsletter_success__card__close}>
-              <img src={close} alt="Close icon" />
+              <img className={styles.newsletter_success__card__close_img} src={close} alt="Close icon" />
             </div>
 
             <div className={styles.newsletter_success__card__text}>
-              <img id="mailIcon" src={envelope1} alt="" />
+              <img className={styles.newsletter_success__card__text_img} id="mailIcon" src={envelope1} alt="" />
               <h3>Thanks for your subscription</h3>
               <p>
                 We have sent an email to Grittygrammergmail.com to confirm the validity of our email address. after
                 receiving the email follow the link provided to complete your registration.
               </p>
-              <Link to="/">Home</Link>
             </div>
           </div>
         </div>

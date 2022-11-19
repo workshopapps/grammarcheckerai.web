@@ -3,27 +3,13 @@
 .newsletter {
   width: 100vw;
   height: 100vh;
-  @include flexCenter(row);
+  @include flexCenter(column);
   padding: 23px;
-
-  &_backBtn {
-    position: absolute;
-    top: 2.5em;
-    left: 23px;
-
-    img {
-      object-fit: contain;
-    }
-  }
 
   &_left {
     max-width: 488px;
     height: 474px;
     @include flexCenter(column);
-
-    &__logo {
-      display: none;
-    }
 
     &__text {
       width: inherit;
@@ -125,7 +111,7 @@
 
     &__card {
       background-color: $white;
-      height: 402px;
+      // height: 402px;
       width: 379px;
       border-radius: 16px;
       padding: 32px 24px;
@@ -136,7 +122,7 @@
         @include flexCenter(row);
         justify-content: flex-end;
 
-        img {
+        &_img {
           cursor: pointer;
           margin-right: 30px;
           object-fit: contain;
@@ -147,6 +133,7 @@
         margin-top: 20px;
         width: 300px;
         text-align: center;
+        @include flexCenter(column);
 
         h3 {
           margin-top: 16px;
@@ -165,13 +152,6 @@
           font-weight: 400;
           line-height: 17px;
         }
-
-        a {
-          display: none;
-          color: $greenColor;
-          height: 19px;
-          width: 45px;
-        }
       }
     }
   }
@@ -183,16 +163,8 @@
   .newsletter {
     padding: 50px;
 
-    &_backBtn {
-      top: 3em;
-      left: 3em;
-
-      img {
-        width: 3em;
-      }
-    }
-
     &_left {
+
       &__text {
         align-items: flex-start;
         text-align: left;
@@ -218,15 +190,18 @@
     &_success {
       &__card {
         border-radius: 16px;
-        height: 469px;
+        // height: 469px;
         width: 558px;
         padding: 36px;
 
         &__text {
-          width: auto;
+          width: 100%;
+          @include flexCenter(column);
+          align-items: flex-start;
           text-align: left;
 
           h3 {
+            width: auto;
             font-size: 32px;
             line-height: 41.66px;
           }
@@ -236,14 +211,6 @@
             color: $textColor;
             font-size: 18px;
             line-height: 22px;
-          }
-
-          a {
-            margin-left: 50px;
-            text-decoration: none;
-            margin-top: 48px;
-            font-family: $fontFamily2;
-            display: block;
           }
         }
       }
@@ -259,22 +226,12 @@
     grid-template-rows: 1fr;
     place-items: center;
 
-    &_backBtn {
-      display: none;
-    }
-
     &_left {
       padding: 30px;
       margin-top: 0px;
 
-      &__logo {
-        display: block;
-        position: absolute;
-        left: 100px;
-        top: 30px;
-      }
-
       &__text {
+
         img {
           width: 5em;
         }

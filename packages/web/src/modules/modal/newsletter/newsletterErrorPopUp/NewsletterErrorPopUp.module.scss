@@ -13,7 +13,7 @@
 
     &__card {
       background-color: $white;
-      height: 402px;
+      // height: 402px;
       width: 379px;
       border-radius: 16px;
       padding: 32px 24px;
@@ -32,7 +32,6 @@
       }
 
       &__text {
-        margin-top: 70px;
         width: 300px;
         text-align: center;
         @include flexCenter(column);
@@ -56,13 +55,6 @@
           line-height: 17px;
           // text-align: justify;
         }
-
-        a {
-          display: none;
-          color: $greenColor;
-          height: 19px;
-          width: 45px;
-        }
       }
     }
   }
@@ -75,7 +67,7 @@
     &_error {
       &__card {
         border-radius: 16px;
-        height: 469px;
+        // height: 469px;
         width: 558px;
         padding: 36px;
 
@@ -97,14 +89,6 @@
             color: $textColor;
             font-size: 18px;
             line-height: 22px;
-          }
-
-          a {
-            margin-left: 50px;
-            text-decoration: none;
-            margin-top: 48px;
-            font-family: $fontFamily2;
-            display: block;
           }
         }
       }
