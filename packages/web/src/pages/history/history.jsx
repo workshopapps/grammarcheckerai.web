@@ -13,7 +13,6 @@ const historyDays = [
 
 function History() {
   const [openId, setOpenId] = useState(null);
-  const [open, setOpen] = useState(false);
   return (
     <div className="flex flex-col pt-16 md:ml-[62px] md:mr-[9rem] sm:mx-[70px] mx-6">
       <div className="flex items-center sm:justify-between justify-end">
@@ -48,7 +47,6 @@ function History() {
                 <button
                   onClick={() => {
                     setOpenId(days.id === openId ? null : days.id);
-                    setOpen(!open);
                   }}
                 >
                   <img src={openId === days.id ? arrowUp : arrowDown} alt="" className="w-[35px] h-[7px]" />
