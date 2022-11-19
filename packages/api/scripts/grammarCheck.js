@@ -31,7 +31,9 @@ const grammarCheckHandler = async (userResponseInTxt, language = "English") => {
       correctUserResponseInTxt = userResponseInTxt;
     }
     return {
-      hasGrammaticalError,
+      hasGrammaticalError: hasGrammaticalError.toLowerCase().includes("yes")
+        ? true
+        : false,
       userResponseInTxt,
       correctUserResponseInTxt,
     };
