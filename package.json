@@ -6,6 +6,7 @@
     "packages/*"
   ],
   "scripts": {
+    "start": "nodemon /packages/api/app.js",
     "mode:dev": "lerna run mode:dev",
     "dev": "lerna run dev",
     "lint": "lerna run lint",

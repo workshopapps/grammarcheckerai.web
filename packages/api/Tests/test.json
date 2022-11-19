@@ -1,0 +1,275 @@
+{
+  "openapi": "3.0.0",
+  "x-stoplight": {
+    "id": "h1vuxh3bomktv"
+  },
+  "info": {
+    "title": "test",
+    "version": "1.0",
+    "description": "API endpoint test for the grammarcheckerai app"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Offline"
+    },
+    {
+      "url": "",
+      "description": "Online"
+    }
+  ],
+  "paths": {
+    "/api/v1/login": {
+      "post": {
+        "summary": "This Route Logs Existing User in",
+        "operationId": "post-api-v1-login",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "description": "Login to your account",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/apiv1login"
+        }
+      }
+    },
+    "/api/v1/singup": {
+      "post": {
+        "summary": "This Route creates new User",
+        "operationId": "post-api-v1-signup",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "description": "Create New User",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/apiv1signup"
+        }
+      },
+      "parameters": []
+    },
+    "/delete_user": {
+      "post": {
+        "summary": "This Route Deletes existing User",
+        "operationId": "post-api-v1-signup",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "description": "Delete exsiting user from the database",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/api_delete"
+        }
+      },
+      "parameters": []
+    },
+    "/update_user/:userId": {
+      "post": {
+        "summary": "This Route Updates the User Details in the database",
+        "operationId": "post-update_user-:userId",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "502": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "description": "updates user",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/api_update"
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "responses": {
+      "error": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "success": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "api_signup": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email",
+                "password",
+                "firstName"
+              ]
+            }
+          }
+        },
+        "description": ""
+      },
+      "api_login": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
+          }
+        }
+      },
+      "api_delete": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
+          }
+        }
+      },
+      "api_update": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "language": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "firstName",
+                "lastName",
+                "language"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
