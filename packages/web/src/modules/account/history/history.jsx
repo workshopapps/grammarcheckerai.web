@@ -41,7 +41,7 @@ function History() {
         <div className="w-full">
           {historyDays.map((days) => (
             <>
-              <div key={days.id} className="flex justify-between items-center mb-6">
+              <div key={days.date} className="flex justify-between items-center mb-6">
                 <p className="text-[#5A5A5A] sm:text-base text-[12px] font-normal leading-5 font-['Inter']">
                   {days.date}
                 </p>

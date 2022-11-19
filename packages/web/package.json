@@ -5,7 +5,6 @@
   "type": "module",
   "engines": {
     "node": ">=14.0.0",
-    "yarn": "please use npm",
     "npm": ">=7.0.0"
   },
   "scripts": {
@@ -24,12 +23,15 @@
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.6.0",
     "react-responsive": "^9.0.0",
     "react-router-dom": "^6.4.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
+    "@storybook/builder-vite": "^0.2.5",
+    "@storybook/testing-library": "^0.0.13",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
     "@vitejs/plugin-react": "^2.2.0",
@@ -42,8 +44,6 @@
     "husky": "^8.0.2",
     "postcss": "^8.4.18",
     "tailwindcss": "^3.2.3",
-    "vite": "^3.2.3",
-    "@storybook/builder-vite": "^0.2.5",
-    "@storybook/testing-library": "^0.0.13"
+    "vite": "^3.2.3"
   }
 }
