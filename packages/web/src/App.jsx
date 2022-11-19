@@ -51,10 +51,10 @@ const router = createBrowserRouter(
           }
         />
         <Route
-          path="transcribe"
+          path="import"
           element={
             <ProtectedRoute>
-              <h1>Transcribe/import Page</h1>
+              <h1>Quick Transcribe/import Page</h1>
             </ProtectedRoute>
           }
         />

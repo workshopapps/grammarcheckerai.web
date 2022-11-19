@@ -10,8 +10,11 @@ function DashboardLayout() {
         <div className="w-32 mx-auto py-20">
           <img src={logoImg} alt="" className="w-full" />
         </div>
-        <div className="w-full">
-          <SidebarLink to="home" />
+        <div className="w-full space-y-3">
+          <SidebarLink to="/me/home">Home</SidebarLink>
+          <SidebarLink to="/me/history">History</SidebarLink>
+          <SidebarLink to="/me/import">Import</SidebarLink>
+          <SidebarLink to="/me/settings">Settings</SidebarLink>
         </div>
       </div>
       <div className="w-full">
