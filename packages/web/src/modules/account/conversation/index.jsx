@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import logoImg from '../../../assets/images/logo.svg';
 import botImg from '../../../assets/images/bot.svg';
 import micImg from '../../../assets/images/mic.svg';
 import styles from './index.module.css';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useAudioRecorder } from '@sarafhbk/react-audio-recorder';
 
 function Conversation() {
-  const [record, setRecord] = useState(false);
+  const {
+    audioResult,
+    timer,
+    startRecording,
+    stopRecording,
+    pauseRecording,
+    status,
+    // errorMessage,
+  } = useAudioRecorder();
 
   return (
     <motion.div
@@ -32,9 +41,11 @@ function Conversation() {
           <div>
             <div className="mx-auto flex items-center justify-center">
               <button
-                onClick={() => setRecord(!record)}
+                onClick={() => {
+                  status === 'idle' ? startRecording() : stopRecording();
+                }}
                 className={`rounded-full h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
-                  record ? styles._bot_mic : ''
+                  status === 'recording' ? styles._bot_mic : ''
                 }`}
               >
                 <img src={micImg} alt="" className="max-w-full" />
@@ -44,8 +55,12 @@ function Conversation() {
                 <span style={{ '--i': 3 }}></span>
               </button>
             </div>
-            <div className="pt-8">
-              <p className="text-[#262626]">Tap the Microphone to begin</p>
+            <div className="pt-10">
+              <AnimatePresence mode="wait">
+                <motion.div key={status} e initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  <p className="text-[#262626]">Tap the Microphone to begin</p>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </div>
