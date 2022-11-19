@@ -2,6 +2,12 @@ const { response } = require("express");
 const request = require("supertest");
 const app = require("../app");
 
+describe("Testing if jest works", () => {
+  it("Testing if Jest works", () => {
+    expect(1).toEqual(1);
+  });
+});
+
 describe("Login Test", () => {
   it("fails when an empty request is supplied", async () => {
     await request(app).post("/api/v1/login").send({}).expect(400);

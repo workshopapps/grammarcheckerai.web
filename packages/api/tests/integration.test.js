@@ -1,6 +1,12 @@
 const request = require("supertest");
 const app = require("../app");
 
+describe("Testing if jest works", () => {
+  it("Testing if Jest works", () => {
+    expect(true).toBe(true);
+  });
+});
+
 describe("Gets the home page", () => {
   it("Tests home endpoint", async () => {
     await request(app)
@@ -19,7 +25,7 @@ describe("Login Endpoint", () => {
       .expect("Content-Type", "text/html; charset=utf-8")
       .expect(200)
       .then((response) => {
-        expect(response.body.message).toBe("Welcome to Grit Grammarly 🙌");
+        expect(response.body.status).toBe("Welcome to Grit Grammarly 🙌");
       });
   });
 });
@@ -35,4 +41,3 @@ describe("Send Audio", () => {
       });
   });
 });
-
