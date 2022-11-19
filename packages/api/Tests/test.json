@@ -43,7 +43,10 @@
         "description": "Login to your account",
         "requestBody": {
           "$ref": "#/components/requestBodies/api_login"
-        }
+        },
+        "tags": [
+          "User"
+        ]
       }
     },
     "/api/v1/singup": {
@@ -52,6 +55,9 @@
         "operationId": "post-api-v1-signup",
         "responses": {
           "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
             "$ref": "#/components/responses/success"
           },
           "400": {
@@ -70,7 +76,44 @@
         "description": "Create New User",
         "requestBody": {
           "$ref": "#/components/requestBodies/api_signup"
-        }
+        },
+        "tags": [
+          "User"
+        ]
+      },
+      "parameters": []
+    },
+    "/auth/singup": {
+      "post": {
+        "summary": "This Route creates new User",
+        "operationId": "post-api-v1-signup",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "description": "Create New User",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Auth_signup"
+        },
+        "tags": [
+          "FacebookAuth"
+        ]
       },
       "parameters": []
     },
@@ -101,7 +144,10 @@
         "description": "Delete exsiting user from the database",
         "requestBody": {
           "$ref": "#/components/requestBodies/api_delete"
-        }
+        },
+        "tags": [
+          "User"
+        ]
       },
       "parameters": []
     },
@@ -129,8 +175,386 @@
         "description": "updates user",
         "requestBody": {
           "$ref": "#/components/requestBodies/api_update"
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/getAudio - copy": {
+      "post": {
+        "summary": "",
+        "operationId": "post-getAudio",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "tags": [
+          "Conversation"
+        ],
+        "description": "Conversation Data",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Audio"
         }
       }
+    },
+    "/api/vi/sendAudio": {
+      "post": {
+        "summary": "",
+        "operationId": "post-getAudio",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "tags": [
+          "Conversation"
+        ],
+        "description": "Conversation Data",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/getAudio"
+        }
+      },
+      "parameters": []
+    },
+    "/getBot": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [
+          "Conversation"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "403": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "operationId": "get-getBot",
+        "description": "Converting Audio to text",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Audio"
+        }
+      }
+    },
+    "/auth/facebook": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "403": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "operationId": "get-getBot",
+        "description": "Converting Audio to text",
+        "tags": [
+          "FacebookAuth"
+        ]
+      },
+      "parameters": []
+    },
+    "/auth/facebook/callback": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "403": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "operationId": "get-getBot",
+        "description": "Converting Audio to text",
+        "tags": [
+          "FacebookAuth"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "Token",
+            "description": "A token generated from the token generation function"
+          }
+        ]
+      },
+      "parameters": []
+    },
+    "/auth/profile": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "403": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "operationId": "get-getBot",
+        "description": "Converting Audio to text",
+        "tags": [
+          "FacebookAuth"
+        ]
+      },
+      "parameters": []
+    },
+    "/auth/failed": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "403": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "operationId": "get-getBot",
+        "description": "Converting Audio to text",
+        "tags": [
+          "FacebookAuth"
+        ]
+      },
+      "parameters": []
+    },
+    "/getText": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [
+          "Conversation"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "403": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "operationId": "get-getText",
+        "description": "Get transcribed text from Whisper"
+      }
+    },
+    "/getConversation": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [
+          "Conversation"
+        ],
+        "responses": {},
+        "operationId": "get-getConversation"
+      }
+    },
+    "/request-reset-password": {
+      "post": {
+        "summary": "",
+        "operationId": "post-request-reset-password",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "403": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "description": "Request for reseting user password",
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/reset_password_request"
+        }
+      }
+    },
+    "/resetPassword": {
+      "post": {
+        "summary": "",
+        "operationId": "post-request-reset-password",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "403": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "description": "reseting password",
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/rest_password"
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "Token",
+            "description": "Get the user generated token"
+          }
+        ]
+      },
+      "parameters": []
     }
   },
   "components": {
@@ -196,6 +620,7 @@
               "required": [
                 "email",
                 "password",
+                "lastName",
                 "firstName"
               ]
             }
@@ -266,6 +691,123 @@
                 "lastName",
                 "language"
               ]
+            }
+          }
+        }
+      },
+      "getAudio": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "conversationId": {
+                  "type": "string"
+                },
+                "mp3File": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "reset_password_request": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email"
+              ]
+            }
+          }
+        }
+      },
+      "rest_password": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "userId",
+                "password"
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        }
+      },
+      "Auth_signup": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "confirmPassword": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email",
+                "name",
+                "password",
+                "confirmPassword",
+                "displayName"
+              ]
+            }
+          }
+        }
+      },
+      "Audio": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "uderId": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           }
         }
