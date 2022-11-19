@@ -10,4 +10,6 @@ exports.environment = {
   FB_CLIENT_SERECT: process.env.FB_CLIENT_SERECT,
   FB_CALLBACK_URL: process.env.FB_CALLBACK_URL,
   JWT_SECRET: process.env.JWT_SECRET,
+  NODE_ENV: process.env.NODE_ENV,
+  SESSION_SECRET: process.env.SESSION_SECRET,
 };

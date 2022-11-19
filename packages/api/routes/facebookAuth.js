@@ -18,20 +18,21 @@ router.get(
 
     const token = req.user.generateAuthToken();
     res.cookie('x-auth-cookie', token);
-    res.redirect('/auth/profile');
+    res.redirect('/auth/success');
   }
 );
 
 router.get('/failed', (req, res) => {
   return res.status(200).json({
     success: false,
-    info: JSON.stringify(req.user),
+    info: 'login failed',
   });
 });
 
-router.get('/profile', (req, res) => {
+router.get('/success', (req, res) => {
   return res.status(200).json({
     success: true,
+    info: 'login succesfully',
   });
 });
 
