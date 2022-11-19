@@ -13,7 +13,6 @@ const historyDays = [
 
 function History() {
   const [openId, setOpenId] = useState(null);
-  const [open, setOpen] = useState(false);
   return (
     <div className="flex flex-col pt-16 md:ml-[62px] md:mr-[9rem] sm:mx-[70px] mx-6">
       <div className="flex items-center sm:justify-between justify-end">
@@ -47,14 +46,13 @@ function History() {
                 </p>
                 <button
                   onClick={() => {
-                    setOpenId(days.id);
-                    setOpen(!open);
+                    setOpenId(days.id === openId ? null : days.id);
                   }}
                 >
-                  <img src={openId === days.id && open ? arrowUp : arrowDown} alt="" className="w-[35px] h-[7px]" />
+                  <img src={openId === days.id ? arrowUp : arrowDown} alt="" className="w-[35px] h-[7px]" />
                 </button>
               </div>
-              {openId === days.id && open && <Errors id={days.id} />}
+              {openId === days.id && <Errors id={days.id} />}
             </>
           ))}
         </div>
