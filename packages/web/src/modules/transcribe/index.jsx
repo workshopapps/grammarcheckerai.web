@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import FileUploadButton from '../../components/Button/FileUploadButton';
 import LoadingDots from '../../components/Loaders/LoadingDots';
 import ErrorIcon from '../../assets/error.svg';
 import ImportIcon from '../../assets/import.svg';
@@ -7,15 +6,18 @@ import { PropTypes } from 'prop-types';
 import SentAudio from '../../components/Audio/SentAudio';
 import React, { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
-import { hasSelectionSupport } from '@testing-library/user-event/dist/utils';
+
+const dummyBotMessages = [
+  {
+    id: 1,
+    botMsg: 'Hello there, click the icon on the top right to get a quick transcription',
+    userAudio: null,
+  },
+];
 
 const Transcribe = () => {
-  const dummnyBotMessages = [
-    {
-      id: 1,
-      botMsg: 'Hello there, click the icon on the top right to get a quick transcription',
-    },
-  ];
+  const [messages, setMessages] = useState(dummyBotMessages);
+
   const [isError, setIsError] = useState(false);
   const [isAudio, setIsAudio] = useState(false);
   const [uploadingAudio, setUploadingAudio] = useState(false);
@@ -23,7 +25,6 @@ const Transcribe = () => {
 
   const hiddenFileInput = useRef(null);
 
-  new Date().toISOString();
   const handleUploadClick = () => {
     hiddenFileInput.current.click();
   };
@@ -51,8 +52,17 @@ const Transcribe = () => {
 
       setIsAudio(true);
       setAudio(URL.createObjectURL(event.target.files[0]));
+      setMessages([
+        ...messages,
+        {
+          id: Math.random(),
+          botMsg: null,
+          userAudio: URL.createObjectURL(event.target.files[0]),
+        },
+      ]);
 
-      console.log('audio', audio);
+      console.log('audio', URL.createObjectURL(event.target.files[0]));
+      console.log('messgaes', messages);
     }
   };
 
@@ -84,24 +94,28 @@ const Transcribe = () => {
         </div>
 
         <div className={`${isError ? 'fixed bg-white brightness-50 w-full' : ''}`}>
-          {dummnyBotMessages.map((data, index) => (
+          {messages.map((data, index) => (
             <React.Fragment key={index}>
-              <div className="b  pb-20 md:pb-16 px-2 mt-5 relative">
-                <div className="ai__msg w-52">
-                  <h1 className="text-base font-medium ">Gritty Grammar</h1>
-                  <p className="bg-gray-100 font-normal leading-5 p-2 rounded">{data.botMsg}</p>
-                  <p className="mt-1 text-xs text-left">{new Date().toUTCString()}</p>
-                </div>
+              <div className="pb-20 md:pb-16 px-2 mt-5 relative">
+                {data.botMsg !== null ? (
+                  <div className="ai__msg w-52">
+                    <h1 className="text-base font-medium ">Gritty Grammar</h1>
+                    <p className="bg-gray-100 font-normal leading-5 p-2 rounded">{data.botMsg}</p>
+                    <p className="mt-1 text-xs text-left">{new Date().toLocaleTimeString()}</p>
+                  </div>
+                ) : null}
 
-                <div className="user__msg p-0 absolute mt-0 right-0 bottom-0">
-                  {uploadingAudio && (
-                    <div className="border-2 border-dashed border-green-300 bg-green-100 px-5 py-1 text-sm">
-                      <p>Audio file getting imported</p>
-                    </div>
-                  )}
+                {data.userAudio !== null ? (
+                  <div className="user__msg p-0 absolute mt-0 right-0 bottom-0">
+                    {uploadingAudio && (
+                      <div className="border-2 border-dashed border-green-300 bg-green-100 px-5 py-1 text-sm">
+                        <p>Audio file getting imported</p>
+                      </div>
+                    )}
 
-                  {isAudio && !uploadingAudio ? <SentAudio audio={audio} /> : null}
-                </div>
+                    {isAudio && !uploadingAudio ? <SentAudio audio={audio} /> : null}
+                  </div>
+                ) : null}
               </div>
             </React.Fragment>
           ))}
