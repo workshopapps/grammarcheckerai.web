@@ -14,6 +14,7 @@ exports.environment = {
     DATABASE_URI_DEVELOP: process.env.DATABASE_URI_DEVELOP,
     GOOGLE_CLIENT_ID: process.env.CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.CLIENT_SECRET,
-    SERVER_ROOT_URI: process.env.SERVER_ROOT_URI
+    SERVER_ROOT_URI: process.env.SERVER_ROOT_URI,
+    DATABASE_URI: process.env.DATABASE_URI, 
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
 };
-

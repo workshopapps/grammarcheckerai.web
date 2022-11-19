@@ -23,6 +23,7 @@
         "passport": "^0.6.0",
         "passport-apple": "^2.0.1",
         "passport-linkedin-oauth2": "^2.0.0",
+        "openai": "^3.1.0",
         "uuid": "^9.0.0"
     },
     "devDependencies": {
