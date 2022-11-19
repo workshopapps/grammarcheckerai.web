@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import HomePage from './pages/home/homePage';
 import History from './pages/history/history';
 import Correction from './pages/history/correction';
+import ApiStatus from './pages/api-status/api-status';
 
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
@@ -21,7 +22,7 @@ const router = createBrowserRouter(
       <Route path="/newsletter" element={<h1>NewsLetter Page</h1>} />
       <Route path="/culture-career" element={<h1>Culture Page</h1>} />
       <Route path="/terms-of-use" element={<h1>Terms of use Page</h1>} />
-      <Route path="/api-status" element={<h1>Api status Page</h1>} />
+      <Route path="/api-status" element={<ApiStatus />} />
       <Route
         element={
           <div>
