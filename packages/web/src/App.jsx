@@ -6,7 +6,6 @@ import HomePage from './pages/home/homePage';
 import History from './pages/history/history';
 import Correction from './pages/history/correction';
 
-import Testimonial from './modules/static/testimonials/Testimonial'
 
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
@@ -83,8 +82,8 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  //return <RouterProvider router={router} />;
-    return <Testimonial />
+  return <RouterProvider router={router} />;
+  
 }
 
 export default App;

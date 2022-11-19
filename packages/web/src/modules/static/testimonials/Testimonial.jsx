@@ -42,7 +42,7 @@ export default function Testimonial() {
     {
       id: 4,
       date: 'May 8, 2022',
-      name:'Paul',
+      name: 'Paul',
       heading: 'I like how fast it corrects my mistakes',
       testimony: `“I've never been a huge fan of grammar, but this app makes it fun to learn. I'm definitely
                 going to continue using it in the future. My friends keep telling me how much they like my new grammar
@@ -52,7 +52,7 @@ export default function Testimonial() {
     {
       id: 5,
       date: 'May 8, 2022',
-      name:'Edward Rose',
+      name: 'Edward Rose',
       heading: 'Good app for students',
       testimony: `“I am a teacher, and Gritty Grammar is the perfect app for students to use in class. It's
                 interactive and fun so that they don&apos;t even realize they are learning!” — Edward Rose`,
