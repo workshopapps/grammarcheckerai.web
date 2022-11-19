@@ -8,7 +8,7 @@ const app = express();
 
 app.use(express.json()).use(cors());
 
-app.delete("/user", userRouter);
+app.use("/", userRouter);
 
 app.use("/", (req, res) => {
   res.status(200).json({ message: "welcome" });

@@ -1,5 +1,5 @@
 const { userCollection } = require("../database/models/userSchema");
-const { compare } = require("../utilities ");
+const { comparePassword } = require("../utilities/compare");
 // FOR DELETING A USER ACCOUNT
 //////////////////////////////////////////////////////////////////////////////////////////////////
 async function deleteUser(req, res) {
@@ -25,7 +25,7 @@ async function deleteUser(req, res) {
 
     // verify that the user password is correct
     const hash = user.password;
-    const isCorrect = await compare(password, hash);
+    const isCorrect = await comparePassword(password, hash);
 
     // if password is not correct
     if (!isCorrect) {
