@@ -1,4 +1,5 @@
 const { userCollection } = require("../database/models/userSchema");
+const { compare } = require("../utilities ");
 // FOR DELETING A USER ACCOUNT
 //////////////////////////////////////////////////////////////////////////////////////////////////
 async function deleteUser(req, res) {
@@ -23,7 +24,9 @@ async function deleteUser(req, res) {
     }
 
     // verify that the user password is correct
-    let isCorrect;
+    const hash = user.password;
+    const isCorrect = await compare(password, hash);
+
     // if password is not correct
     if (!isCorrect) {
       res.status(401);
@@ -38,10 +41,8 @@ async function deleteUser(req, res) {
       res.json({ message: "you have successfully deleted your account" });
     }
   } catch (error) {
-    if (error) {
-      res.status(500);
-      res.json({ message: "Something went wrong" });
-    }
+    res.status(500);
+    res.json({ message: "Something went wrong" });
   }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////
