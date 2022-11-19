@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useToasts } from 'react-toast-notifications';
+import toast from 'react-hot-toast';
 import { ENDPOINTS } from '../lib/constants';
 import { secureRequest } from '../lib/utils';
 
@@ -30,26 +30,19 @@ function useCustomMutation(mutationData) {
   } = getMutationAction({
     ...mutationData,
   });
-  const { addToast } = useToasts();
   const mutatationResult = useMutation(mutationFn, {
     mutationKey: endpoint,
 
     onError: (err) => {
       if (showFailureToast) {
-        addToast(`${err.response?.data?.message} || Error`, {
-          appearance: 'error',
-          autoDismiss: true,
-        });
+        toast.error(`${err.response?.data?.message} || Error`);
       }
       mutatationResult.reset();
     },
     onSettled: (res, err) => {
       if (err) mutatationResult.reset();
       if (!err && showSuccessToast) {
-        addToast(`${res.data.message} || Error`, {
-          appearance: 'success',
-          autoDismiss: true,
-        });
+        toast.error(`${res.data.message} || Error`);
       }
       return;
     },

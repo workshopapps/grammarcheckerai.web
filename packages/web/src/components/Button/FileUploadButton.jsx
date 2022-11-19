@@ -1,9 +1,8 @@
 import { useRef } from 'react';
 import { PropTypes } from 'prop-types';
-import { useToasts } from 'react-toast-notifications';
+import toast from 'react-hot-toast';
 
 const FileUploadButton = ({ audio, setAudio, setIsAudio }) => {
-  const { addToast } = useToasts();
   const hiddenFileInput = useRef(null);
 
   new Date().toISOString();
@@ -16,7 +15,7 @@ const FileUploadButton = ({ audio, setAudio, setIsAudio }) => {
       const file = event.target.files[0];
 
       if (file.type !== 'audio/mpeg') {
-        addToast(`Please upload an audio file instead of a ${file.type} file`, { appearance: 'error' });
+        toast.error(`Please upload an audio file instead of a ${file.type} file`);
         return;
       }
 

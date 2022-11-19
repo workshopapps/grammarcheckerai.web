@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 const Transcribe = () => {
   const dummnyData = [
     {
+      id: 1,
       botMsg: 'Hello there, click the icon on the top right to get a quick transcription',
     },
   ];
