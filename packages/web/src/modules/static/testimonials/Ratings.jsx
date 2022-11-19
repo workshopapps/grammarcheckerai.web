@@ -50,14 +50,14 @@ export default function Ratings() {
   ];
 
   return (
-    <div className="mx-32">
+    <div className="mx-4 lg:mx-32">
       <h1 className="my-4">Ratings and Reviews</h1>
       <p className="text-xs">
         Ratings and reviews are verified and are from people who use the same type of device that you use
       </p>
       <section className="flex items-center my-12">
-        <div className="mr-6 space-y-2">
-          <h2 className="text-4xl">4.6</h2>
+        <div className="mr-2 lg:mr-6 space-y-2">
+          <h2 className="text-3xl">4.6</h2>
           <span className="flex">
             {[...Array(5)].map((it, index) => {
               return <img src={stars} key={index} alt="" />;
@@ -65,30 +65,30 @@ export default function Ratings() {
           </span>
           <p>10,0001</p>
         </div>
-        <div>
-          <div className="flex m-2 items-center space-x-4 text-lg">
+        <div className="w-2/3">
+          <div className="flex lg:m-2 items-center space-x-4 text-lg">
             <span> 5 </span>
             <img src={starbar5} alt="" className="h-2" />
           </div>
-          <div className="flex m-2 items-center space-x-4">
+          <div className="flex lg:m-2 items-center space-x-4">
             <span> 4 </span>
             <img src={starbar4} alt="" className="h-2" />
           </div>
-          <div className="flex m-2 items-center space-x-4">
+          <div className="flex lg:m-2 items-center space-x-4">
             <span> 3 </span>
             <img src={starbar3} alt="" className="h-2" />
           </div>
-          <div className="flex m-2 items-center space-x-4">
+          <div className="flex lg:m-2 items-center space-x-4">
             <span> 2 </span>
             <img src={starbar2} alt="" className="h-2" />
           </div>
-          <div className="flex m-2 items-center space-x-4">
+          <div className="flex lg:m-2 items-center space-x-4">
             <span> 1 </span>
             <img src={starbar2} alt="" className="h-2" />
           </div>
         </div>
       </section>
-      <main>
+      <main className="space-y-8 lg:space-y-4 my-12 lg:w-2/3">
         {ratingsData.map((rating) => {
           return (
             <section key={rating.id} className="space-y-2 my-6">
