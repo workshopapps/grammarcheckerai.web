@@ -1,9 +1,10 @@
 import './App.css';
+import Testimonial from './modules/static/testimonials/Testimonial';
 
 function App() {
   return (
     <div className="App">
-      <p className="font-extrabold">Gritty Grammar</p>
+      <Testimonial />
     </div>
   );
 }
