@@ -2,7 +2,9 @@ const banana = require('@banana-dev/banana-dev');
 const UserResponse = require('../database/models/userResponseSchema');
 const BotResponse = require('../database/models/botResponseSchema');
 const Message = require('../database/models/messageSchema');
-const { environment } = require('../config/environment')
+const { environment } = require('../config/environment');
+const grammarCheckHandler = require('../scripts/grammarCheck');
+const { chatHandler, appendConversationToChatLog } = require('../scripts/chat');
 
 const { API_KEY, MODEL_KEY } = environment;
 
@@ -34,10 +36,19 @@ async function getBotResponse(req, res) {
         }
 
         // Send audio transcription to Grammar Correction to get corrected text
-        let correctedText = "";
+        let { correctUserResponseInTxt } = await grammarCheckHandler(transcribedAudioText, "English");
 
+        let chatLog, botReply;
         // Send corrected text to GPT3 to get bot response
-        let botReply = "";
+        chatLog = req.session.chatLog;
+        const botRes = await chatHandler(correctUserResponseInTxt, chatLog);
+        botReply = botRes.slice(6);
+        chatLog = appendConversationToChatLog(
+            correctUserResponseInTxt,
+            botRes,
+            chatLog
+        );
+        req.session.chatLog = chatLog;
 
         // upload audio file to storage
         let audioURL = mp3File.originalname;
@@ -50,7 +61,7 @@ async function getBotResponse(req, res) {
 
         const botResponse = await BotResponse.create({
             transcribedAudioText,
-            correctedText,
+            correctedText: correctUserResponseInTxt,
             botReply
         })
 
