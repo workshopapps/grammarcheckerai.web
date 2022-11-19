@@ -9,6 +9,7 @@ import styles from './index.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAudioRecorder } from '@sarafhbk/react-audio-recorder';
 import { convertSecToMin } from '../../../lib/utils';
+import Chat from '../../../components/Chat';
 
 function Conversation() {
   const {
@@ -28,12 +29,17 @@ function Conversation() {
       animate={{ opacity: 1 }}
       transition={{ duration: 2 }}
       layout
-      className={`min-h-screen space-y-6 flex flex-col ${styles._convo}`}
+      className={`min-h-screen space-y-6 flex pb-10 flex-col ${styles._convo}`}
     >
       <div className="flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto">
         <div className="w-36">
           <img src={logoImg} alt="" className="max-w-full" />
         </div>
+      </div>
+      <div className="w-full max-w-7xl mx-auto flex flex-col justify-center px-4 space-y-3">
+        <Chat isLastReply />
+        <Chat isBot />
+        <Chat isBot isCorrection isLastReply />
       </div>
       <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4">
         <div className="text-center space-y-14">
@@ -42,7 +48,7 @@ function Conversation() {
           </div>
           <div className="space-y-4">
             <h2 className="text-5xl text-[#262626] leading-relaxed">What would you like to say today?</h2>
-            <p className="text-[#262626] text-[19px] opacity-80">Each conversation bring you closer to fluency.</p>
+            <p className="text-slate-600 text-[19px]">Each conversation bring you closer to fluency.</p>
           </div>
           <div>
             <div className="mx-auto flex items-center justify-center">
@@ -69,21 +75,21 @@ function Conversation() {
                   ) : (
                     <div>
                       <p>{convertSecToMin(timer)}</p>
-                      <div className="flex items-center justify-center space-x-4 pt-7">
+                      <div className="flex items-center justify-center space-x-6 pt-5">
                         <button
-                          className="h-10 w-10 rounded-full flex justify-center items-center"
+                          className="h-6 w-6 rounded-full flex justify-center items-center"
                           onClick={() => stopRecording()}
                         >
-                          <img src={trashImg} alt="" className="max-w-full" />
+                          <img src={trashImg} alt="" className="w-full" />
                         </button>
                         <button
-                          className="h-10 w-10 rounded-full flex justify-center items-center"
+                          className="h-6 w-6 rounded-full flex justify-center items-center"
                           onClick={() => (status === 'paused' ? resumeRecording() : pauseRecording())}
                         >
-                          <img src={pauseImg} alt="" className="max-w-full" />
+                          <img src={pauseImg} alt="" className="w-full" />
                         </button>
-                        <button className="h-10 w-10 rounded-full flex justify-center items-center">
-                          <img src={sendImg} alt="" className="max-w-full" />
+                        <button className="h-6 w-6 rounded-full flex justify-center items-center">
+                          <img src={sendImg} alt="" className="w-full" />
                         </button>
                       </div>
                     </div>
