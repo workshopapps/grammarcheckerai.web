@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import logoImg from '../../assets/images/logo.svg';
+import SidebarLink from '../SidebarLink';
 
 function DashboardLayout() {
   return (
@@ -9,7 +10,9 @@ function DashboardLayout() {
         <div className="w-32 mx-auto py-20">
           <img src={logoImg} alt="" className="w-full" />
         </div>
-        <div></div>
+        <div className="w-full">
+          <SidebarLink to="home" />
+        </div>
       </div>
       <div className="w-full">
         <div className="py-7 border-b border-slate-300 w-full"></div>
