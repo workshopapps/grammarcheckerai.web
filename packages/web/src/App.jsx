@@ -4,6 +4,9 @@ import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements, O
 import ProtectedRoute from './components/ProtectedRoute';
 
 // All routes/pages must be import from ./pages folder
+
+import { LegalPage } from './pages';
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -17,6 +20,7 @@ const router = createBrowserRouter(
       <Route path="/culture-career" element={<h1>Culture Page</h1>} />
       <Route path="/terms-of-use" element={<h1>Terms of use Page</h1>} />
       <Route path="/api-status" element={<h1>Api status Page</h1>} />
+      <Route path="/legal" element={<LegalPage />} />
       <Route
         element={
           <div>
