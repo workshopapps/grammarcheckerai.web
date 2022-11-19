@@ -23,11 +23,14 @@ exports.login = async (req, res) => {
         return res.status(401).json({ msg: 'Invalid email or password' })
     }
 
+    const token = user.generateAuthToken()
+
     return res.status(200).json({
         user: {
             pageTitle: "login endpoint",
             name: user.name,
-            message: "login successful"
+            message: "login successful",
+            token
         }
     })
 }
