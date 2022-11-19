@@ -4,8 +4,7 @@ config();
 
 exports.environment = {
     PORT: process.env.PORT,
-    HOST: process.env.HOST,
-    DATABASE_URI: process.env.DATABASE_URI,
+    HOST: process.env.HOST, 
     LINKEDIN_CLIENT_ID:process.env.LINKEDIN_CLIENT_ID,
     LINKEDIN_SECRET_ID:process.env.LINKEDIN_SECRET_ID,
     CALLBACK_URL: process.env.CALLBACK_URL,

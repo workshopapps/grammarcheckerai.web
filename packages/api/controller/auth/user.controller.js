@@ -1,6 +1,6 @@
 const { response } = require("../../utilities/response");
 const { hash } = require("../../utilities/encrypt.utilities");
-const { register } = require("../../repository/user.repository");
+const { register, findOne } = require("../../repository/user.repository");
 const { login } = require("../loginController");
 
 async function registerUser(req, res) {
@@ -17,7 +17,8 @@ async function registerUser(req, res) {
             message: "Comfirm your password",
           })
         );
-  const checkEmailExist = await userCollection.findOne({ email });
+
+  const checkEmailExist = await findOne("userCollection", email);
 
   if (checkEmailExist)
     return res
@@ -32,8 +33,9 @@ async function registerUser(req, res) {
     return res
       .status(500)
       .json(response({ success: false, message: "User not created" }));
-
-  return login(req, res);
+  console.log("k");
+  return res.status(201).json(user);
+  // return login(req, res);
 }
 // FOR DELETING A USER ACCOUNT
 //////////////////////////////////////////////////////////////////////////////////////////////////

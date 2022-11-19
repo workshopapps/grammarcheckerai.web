@@ -9,16 +9,17 @@ const {
   deleteUser,
 } = require("../controller/auth/user.controller"); //importing deleteuser controller
 const { googleAuthURL } = require("../controller/auth/google.user.controller");
-const { linkedinAuth } = require("../routes/linkedin-auth");
-const loginController = require('../controller/loginController')
-const logoutController = require('../controller/logoutcontroller')
+const { linkedin } = require("../routes/linkedin-auth");
+const {login} = require('../controller/loginController')
+const {logout} = require('../controller/logoutcontroller')
 const userProfileController = require('../controller/userProfileController')
 
 auth.post("/signup", registerValidationRules(), validate, registerUser);
 auth.post("/google-auth", googleAuthURL);
 
 
-auth.get("/login", loginController);
-auth.get("/logout", logoutController);
-auth.get("/linkedin", linkedinAuth);
+auth.get("/login", login);
+auth.get("/logout", logout);
+auth.get("/linkedin", linkedin);
+
 module.exports = { auth };

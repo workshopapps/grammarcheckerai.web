@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 require('express-async-errors')
-require('dotenv').config() 
+require('./database/index')
 const passport = require('passport');
 require('./services/linkedinStrategy') 
 const {routeHandler} = require('./routes/index.route');
