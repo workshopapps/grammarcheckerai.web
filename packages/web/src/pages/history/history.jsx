@@ -47,14 +47,14 @@ function History() {
                 </p>
                 <button
                   onClick={() => {
-                    setOpenId(days.id);
+                    setOpenId(days.id === openId ? null : days.id);
                     setOpen(!open);
                   }}
                 >
-                  <img src={openId === days.id && open ? arrowUp : arrowDown} alt="" className="w-[35px] h-[7px]" />
+                  <img src={openId === days.id ? arrowUp : arrowDown} alt="" className="w-[35px] h-[7px]" />
                 </button>
               </div>
-              {openId === days.id && open && <Errors id={days.id} />}
+              {openId === days.id && <Errors id={days.id} />}
             </>
           ))}
         </div>
