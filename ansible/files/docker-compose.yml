@@ -13,8 +13,6 @@ services:
       - "5000:5000"
     networks:
       - hng-internal
-    depends_on:
-      - backend
 
 networks:
   hng-internal:
