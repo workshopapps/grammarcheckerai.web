@@ -1,0 +1,24 @@
+[
+  {
+    "heading": "Professional Growth",
+    "img": "/images/growth.svg",
+    "content": "We provide our team with bi-annual workshops and trainings, Career coaching from senior colleagues and Learning & development support."
+  },
+  {
+    "heading": "Continuous Learning",
+    "img": "/images/learning.svg",
+    "content": "We always provide our team members with opportunities and the support they need to grow, We learn from our mistakes, value gfeedback from users, and strive to improve in all we do."
+  },
+  {
+    "heading": "Comprehensive Benefits ",
+    "img": "/images/benefits.svg",
+    "content": "We provide:",
+    "list": [
+      "Annual Compensation Review based on performance, ",
+      "Comprehensive health and insurance plans, ",
+      "Gym Allowances, ",
+      "Coffee, snacks & lunch for on-site workers, ",
+      "Paid work leave (20 days/year)"
+    ]
+  }
+]
