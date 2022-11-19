@@ -2,6 +2,9 @@ import './App.css';
 import React from 'react';
 import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
+import HomePage from './pages/home/homePage';
+import History from './pages/history/history';
+import Correction from './pages/history/correction';
 import TranscribePage from './pages/transcribe';
 
 // All routes/pages must be import from ./pages folder
@@ -9,7 +12,9 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<h1>Will redirect to Landing Pages / Conversation Page</h1>} />
-      <Route path="/home" element={<h1>Landing Page</h1>} />
+      <Route path="/home" element={<HomePage />} />
+      <Route path="/history" element={<History />} />
+      <Route path="/correction" element={<Correction />} />
       <Route path="/about" element={<h1>About Page</h1>} />
       <Route path="/faq" element={<h1>FAQ Page</h1>} />
       <Route path="/blog" element={<h1>Blog Page</h1>} />

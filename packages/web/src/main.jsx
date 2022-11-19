@@ -14,7 +14,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <App />
-        <Toaster />
       </AuthProvider>
     </QueryClientProvider>
   </React.StrictMode>,
