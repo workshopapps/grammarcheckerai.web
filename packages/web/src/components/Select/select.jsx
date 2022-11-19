@@ -27,6 +27,7 @@ const SelectDropdown = ({ options, handleChange, value }) => {
         options={modifiedOptions}
         onChange={onChange}
         value={value}
+        defaultValue={modifiedOptions[0]}
       />
     </div>
   );

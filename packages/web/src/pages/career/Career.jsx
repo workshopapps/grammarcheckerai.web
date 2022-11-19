@@ -36,7 +36,12 @@ const Careers = () => {
         <h1 className="text-4xl text-white font-bold sm:text-3xl sm:w-3/5 sm:mx-auto">
           A culture rooted in setting people up for success
         </h1>
-        <button className="bg-purple-100 text-dark-200 py-2 px-4 rounded-md">See Open roles</button>
+       <div>
+       <a href="/roles" className="bg-purple-100 text-dark-200 py-3 px-4 rounded-md">
+          See Open roles
+        </a>
+       </div>
+        
       </section>
       <div className="px-60 py-14 space-y-14 bg-gray-100 sm:px-2 sm:py-8">
         <h4 className="text-center text-xl font-bold text-dark-primary">

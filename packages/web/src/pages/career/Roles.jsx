@@ -2,13 +2,8 @@ import React, { useState } from 'react';
 import SelectDropdown from '../../components/Select/select';
 
 const Roles = () => {
-  const getInitialState = () => {
-    const value = '';
-    return value;
-  };
-
   const roles = ['Sales', 'Marketing'];
-  const [selectedRole, setSelectedRole] = useState(getInitialState);
+  const [selectedRole, setSelectedRole] = useState(roles[0]);
 
   const handleChange = (evt) => {
     setSelectedRole(evt.target.value);
@@ -55,7 +50,9 @@ const Roles = () => {
                     </div>
                   </div>
                 </div>
-                <button className="bg-purple-primary text-white p-2 rounded-lg px-8">Apply</button>
+                <a href="/apply" className="bg-purple-primary text-white p-2 rounded-lg px-8">
+                  Apply
+                </a>
               </div>
             ))}
             <hr />

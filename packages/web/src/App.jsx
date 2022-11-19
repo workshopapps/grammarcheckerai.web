@@ -1,11 +1,93 @@
 import './App.css';
+import React from 'react';
+import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Outlet } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
+import HomePage from './pages/home/homePage';
+import History from './pages/history/history';
+import Correction from './pages/history/correction';
+import Careers from './pages/career/Career';
+import Roles from './pages/career/Roles';
+import Application from './pages/career/Application';
+
+// All routes/pages must be import from ./pages folder
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route path="/" element={<h1>Will redirect to Landing Pages / Conversation Page</h1>} />
+      <Route path="/home" element={<HomePage />} />
+      <Route path="/history" element={<History />} />
+      <Route path="/correction" element={<Correction />} />
+      <Route path="/about" element={<h1>About Page</h1>} />
+      <Route path="/faq" element={<h1>FAQ Page</h1>} />
+      <Route path="/blog" element={<h1>Blog Page</h1>} />
+      <Route path="contact" element={<h1>Contact Page</h1>} />
+      <Route path="/newsletter" element={<h1>NewsLetter Page</h1>} />
+      <Route path="/career" element={<Careers />} />
+      <Route path="/roles" element={<Roles />} />
+      <Route path="/apply" element={<Application />} />
+
+      <Route path="/terms-of-use" element={<h1>Terms of use Page</h1>} />
+      <Route path="/api-status" element={<h1>Api status Page</h1>} />
+      <Route
+        element={
+          <div>
+            <h2>AuthLayout</h2>
+            <Outlet />
+          </div>
+        }
+      >
+        <Route path="signin" element={<h2>Signin Page</h2>} />
+        <Route path="signup" element={<h2>Logout Page</h2>} />
+        <Route path="forgot-password" element={<h2>Forgot Password Page</h2>} />
+      </Route>
+      <Route
+        path="/me"
+        element={
+          <div>
+            <h2>Dashboard Layout</h2>
+            <Outlet />
+          </div>
+        }
+      >
+        <Route
+          path="home"
+          element={
+            <ProtectedRoute>
+              <h1>Home Page</h1>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="history"
+          element={
+            <ProtectedRoute>
+              <h1>History Page</h1>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="transcribe"
+          element={
+            <ProtectedRoute>
+              <h1>Transcribe/import Page</h1>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="settings"
+          element={
+            <ProtectedRoute>
+              <h1>Settings Page</h1>
+            </ProtectedRoute>
+          }
+        />
+      </Route>
+    </>,
+  ),
+);
 
 function App() {
-  return (
-    <div className="App">
-      <h4>Gritty Grammar</h4>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

@@ -3,13 +3,18 @@ import FileUploader from '../../components/Careers/fileUpload';
 
 const Application = () => {
   return (
-    <div className="px-56 py-10 space-y-10 sm:px-0 sm:space-y-6">
+    <div className="px-56 py-10 space-y-20 sm:px-0 sm:space-y-6">
       <div className="sm:px-5 ">
-        <div className="flex justify-between py-3">
+        <div className="flex justify-between py-4">
           <h3 className="text-3xl font-bold text-green sm:text-xl ">Analyst Relations Manager</h3>
-          <button className="border-purple-500 border rounded-md py-3 px-6 sm:hidden">Apply now</button>
+          <a
+            className="border-purple-500 border rounded-md py-3 px-6 sm:hidden hover:bg-green transition-all hover:text-white"
+            href="#form"
+          >
+            Apply now
+          </a>
         </div>
-        <p>
+        <p className='py-6'>
           We are looking for an Analyst Relations Manager to join our Communications team. The Analyst Relations Manager
           will be critical in building awareness of and sustaining Gritty Grammar’s category leadership while driving a
           high-touch program that creates leverage for our ambitious vision. Working closely with Gritty Grammar’s Brand
@@ -17,7 +22,7 @@ const Application = () => {
           and grow our category through validation from major analyst firms, including Gartner and Forrester, as well as
           boutique firms.
         </p>
-        <div className="space-y-3">
+        <div className="space-y-3 py-4">
           <h4>We’re looking for someone who</h4>
           <ul className="list-disc space-y-1">
             <li>Embodies our EAGER values—is ethical, adaptable, gritty, empathetic, and remarkable.</li>
@@ -60,7 +65,7 @@ const Application = () => {
           <button className="bg-purple-500 text-white border rounded-md py-3 px-6 sm:block hidden ">Apply now</button>
         </div>
       </div>
-      <form className="grid bg-gray-100 w-1/2 mx-auto py-8 space-y-5 sm:w-full sm:px-2 sm:space-y-6 ">
+      <form className="grid bg-gray-100 w-1/2 mx-auto py-8 space-y-5 sm:w-full sm:px-2 sm:space-y-6 " id="form">
         <h3 className="text-center text-xl font-semibold">Apply for this Job</h3>
         <div className="px-14 space-y-5 sm:px-7">
           <label className="grid gap-y-1">
