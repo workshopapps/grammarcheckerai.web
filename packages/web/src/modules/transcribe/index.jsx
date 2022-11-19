@@ -75,7 +75,7 @@ const Transcribe = () => {
         Toggle Error Overlay
       </button> */}
 
-      <div className="px-3 md:px-10 relative">
+      <div className="px-3 md:px-10 relative mt-5">
         <div role="presentation" onClick={handleUploadClick} className="py-3 flex justify-end cursor-pointer">
           <img src={ImportIcon} alt="import audio" />
           <input

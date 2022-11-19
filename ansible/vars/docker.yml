@@ -1,0 +1,19 @@
+---
+docker_required_packages:
+  - "apt-transport-https"
+  - "ca-certificates"
+  - "curl"
+  - "gnupg-agent"
+  - "software-properties-common"
+  - "python3-pip"
+  - "python3-setuptools"
+docker_gpg_url: https://download.docker.com/linux/ubuntu/gpg
+docker_repo: deb https://download.docker.com/linux/ubuntu focal stable
+docker_packges:
+  - "docker-ce"
+  - "docker-ce-cli"
+  - "containerd.io"
+docker_compose_url: https://github.com/docker/compose/releases/download/1.28.2/docker-compose-Linux-x86_64
+ansible_python_interpreter: /usr/bin/python3
+ansible_host_key_checking: false
+ansible_stdout_callback: yaml
