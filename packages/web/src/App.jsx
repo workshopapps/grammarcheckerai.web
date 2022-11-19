@@ -5,12 +5,13 @@ import ProtectedRoute from './components/ProtectedRoute';
 import HomePage from './pages/home/homePage';
 import History from './pages/history/history';
 import Correction from './pages/history/correction';
+import Settings from './modules/setting/home-settings/Settings';
 
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<h1>Will redirect to Landing Pages / Conversation Page</h1>} />
+      <Route path="/" element={<Settings />} />
       <Route path="/home" element={<HomePage />} />
       <Route path="/history" element={<History />} />
       <Route path="/correction" element={<Correction />} />

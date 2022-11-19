@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { arrowRightIcon, infinityIcon, languageIcon, maximizeIcon, searchIcon } from '../../../assets';
 import FontAdjustment from './font-adjustment/font-adjustment';
 import HelpSupport from './help-support/help-support';
 import Languages from './language/languages';
-import { arrowRightIcon, infinityIcon, languageIcon, maximizeIcon, searchIcon } from '../../../assets';
 import SettingOption from './setting-list/setting-list';
+import LanguageOption from './language/language-option';
 
 function Settings() {
   const settingList = [
@@ -63,7 +64,7 @@ function Settings() {
           );
         })}
       </div>
-      {languageBar && <languageOption />}
+      {languageBar && <LanguageOption />}
     </div>
   );
 }
