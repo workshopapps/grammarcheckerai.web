@@ -14,12 +14,12 @@ import toast, { Toaster } from 'react-hot-toast';
 const index = () => {
   const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [existingUserName, setExistingUserName] = useLocalStorage('existingUserName', getStorageData('newUserName'));
+  const [existingUserName, setExistingUserName] = useLocalStorage('existingUserName', getStorageData(''));
   const [existingUserPassword, setExistingUserPassword] = useLocalStorage(
     'existingUserPassword',
     getStorageData('newUserPassword'),
   );
-  const [existingUserEmail, setExistingUserEmail] = useLocalStorage('existingUserEmail', getStorageData('createEmail'));
+  const [existingUserEmail, setExistingUserEmail] = useLocalStorage('existingUserEmail', getStorageData(''));
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
 

@@ -23,6 +23,10 @@ const index = () => {
   const handlePrev = () => {
     navigate('/signin');
   };
+  /* 
+    handleSaveNewPassword => resets the originally saved database password
+    to the new one when both inputs match
+  */
   const handleSaveNewPassword = () => {
     if ((userConfirmNewPassword !== userNewPassword && userConfirmNewPassword === '') || userNewPassword === '') {
       console.log(userConfirmNewPassword);
@@ -113,6 +117,7 @@ const index = () => {
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };
