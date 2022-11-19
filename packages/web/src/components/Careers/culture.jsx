@@ -12,7 +12,7 @@ const Culture = () => {
               <img src={item.img} alt={item.heading} />
             </div>
             <h4 className="text-2xl sm:text-xl">{item.heading}</h4>
-            <p >{item.content}</p>
+            <p>{item.content}</p>
             <ul>
               <li>{item.list}</li>
             </ul>

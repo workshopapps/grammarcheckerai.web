@@ -30,7 +30,7 @@ const Roles = () => {
         <h3 className="text-bold text-2xl">{selectedRole}</h3>
 
         {selectedRole === 'Sales' && (
-          <p className="text-center w-3/5 mx-auto py-16 text-gray-500">
+          <p className="text-center w-3/5 mx-auto py-16 text-gray-500 sm:w-full">
             Gritty Grammar does not have any open roles for sales at the moment. However, if you feel you have something
             to bring to the table - send an email to{' '}
             <a href="recruitment@grittygrammar.com" className="text-blue-500">
@@ -55,7 +55,7 @@ const Roles = () => {
                     </div>
                   </div>
                 </div>
-                <button className='bg-purple-primary text-white p-2 rounded-lg px-8'>Apply</button>
+                <button className="bg-purple-primary text-white p-2 rounded-lg px-8">Apply</button>
               </div>
             ))}
             <hr />

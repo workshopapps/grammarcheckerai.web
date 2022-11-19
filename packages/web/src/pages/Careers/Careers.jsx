@@ -13,20 +13,22 @@ const Careers = () => {
 
     return setCurrentIndex(currentIndex + 1);
   };
-  const previous = () => {
-    currentIndex != 0 && setCurrentIndex(currentIndex - 1);
-    console.log(currentIndex, 'prev');
-  };
-  const next = () => {
-    data.idx <= 2 && setCurrentIndex(currentIndex + 1);
-    console.log(currentIndex);
-  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       sliderScroll();
     }, 3000);
     return () => clearInterval(interval);
   });
+
+  const previous = () => {
+    currentIndex != 0 && setCurrentIndex(currentIndex - 1);
+  };
+
+  const next = () => {
+    currentIndex === 2 ? setCurrentIndex(0) : setCurrentIndex(currentIndex + 1);
+  };
+
   return (
     <div>
       <section className="bg-purple-500 py-14 text-center space-y-8 text-dark-200">

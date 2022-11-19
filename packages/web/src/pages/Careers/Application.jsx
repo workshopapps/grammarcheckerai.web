@@ -1,11 +1,12 @@
 import React from 'react';
+import FileUploader from '../../components/Careers/fileUpload';
 
 const Application = () => {
   return (
     <div className="px-56 py-10 space-y-10 sm:px-0 sm:space-y-6">
-      <div className='sm:px-5 '>
-        <div className="flex justify-between">
-          <h3 className="text-3xl font-bold text-green sm:text-xl">Analyst Relations Manager</h3>
+      <div className="sm:px-5 ">
+        <div className="flex justify-between py-3">
+          <h3 className="text-3xl font-bold text-green sm:text-xl ">Analyst Relations Manager</h3>
           <button className="border-purple-500 border rounded-md py-3 px-6 sm:hidden">Apply now</button>
         </div>
         <p>
@@ -59,48 +60,50 @@ const Application = () => {
           <button className="bg-purple-500 text-white border rounded-md py-3 px-6 sm:block hidden ">Apply now</button>
         </div>
       </div>
-      <form className="grid justify-center bg-gray-100 w-1/2 mx-auto py-8 space-y-5 sm:w-full sm:px-2 sm:space-y-6">
+      <form className="grid bg-gray-100 w-1/2 mx-auto py-8 space-y-5 sm:w-full sm:px-2 sm:space-y-6 ">
         <h3 className="text-center text-xl font-semibold">Apply for this Job</h3>
-        <label className="grid gap-y-1">
-          First Name
-          <input
-            type="text"
-            name="fname"
-            placeholder="First name"
-            className="border border-gray-300 p-2 rounded-md placeholder:text-sm"
-          />
-        </label>
-        <label className="grid gap-y-1">
-          Last Name
-          <input
-            type="text"
-            name="lname"
-            placeholder="Last name"
-            className="border border-gray-300 p-2 rounded-md placeholder:text-sm"
-          />
-        </label>
-        <label className="grid gap-y-1">
-          Email
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            className="border border-gray-300 p-2 rounded-md placeholder:text-sm"
-          />
-        </label>
-        <label className="grid gap-y-1">
-          Phone Number
-          <input
-            type="number"
-            name="number"
-            placeholder="Phone number"
-            className="border border-gray-300 p-2 rounded-md placeholder:text-sm"
-          />
-        </label>
-        <label className="grid gap-y-1">
-          Resume/CV
-          <input type="file" className="border border-gray-300 p-2 rounded-md placeholder:text-sm" />
-        </label>
+        <div className="px-14 space-y-5 sm:px-7">
+          <label className="grid gap-y-1">
+            First Name
+            <input
+              type="text"
+              name="fname"
+              placeholder="First name"
+              className="border border-gray-300 p-2 rounded-md placeholder:text-sm"
+            />
+          </label>
+          <label className="grid gap-y-1">
+            Last Name
+            <input
+              type="text"
+              name="lname"
+              placeholder="Last name"
+              className="border border-gray-300 p-2 rounded-md placeholder:text-sm"
+            />
+          </label>
+          <label className="grid gap-y-1">
+            Email
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              className="border border-gray-300 p-2 rounded-md placeholder:text-sm"
+            />
+          </label>
+          <label className="grid gap-y-1">
+            Phone Number
+            <input
+              type="number"
+              name="number"
+              placeholder="Phone number"
+              className="border border-gray-300 p-2 rounded-md placeholder:text-sm"
+            />
+          </label>
+          <label className="grid gap-y-1" htmlFor="upload">
+            Resume/CV
+            <FileUploader id="upload" placeholder="Attach Resume/CV" />
+          </label>
+        </div>
         <button className="bg-purple-500 rounded-md p-2 w-1/2 mx-auto py-3 text-white">Submit Application</button>
       </form>
     </div>

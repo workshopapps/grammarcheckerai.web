@@ -8,7 +8,7 @@ const TeamFeedback = ({ img, feedback, name, role }) => {
         <img src={img} alt={name} className=" cover rounded-full sm:w-40" />
       </div>
       <div className="w-full sm:text-center">
-        <h4 className='sm:py-2'>&quot;{feedback}&quot;</h4>
+        <h4 className="sm:py-2">&quot;{feedback}&quot;</h4>
         <p className="text-xs font-light italic">{name}</p>
         <p className="text-xs font-light italic">{role}</p>
       </div>
