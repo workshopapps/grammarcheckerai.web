@@ -1,4 +1,4 @@
-.systemReport {
+.statusReport {
   padding: 1rem;
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -8,19 +8,19 @@
   align-items: center;
 }
 
-.systemTitle {
+.statusTitle {
   grid-area: 1/1/1/2;
   font-size: 1rem;
   font-family: var(--Inter);
   font-weight: 500;
 }
 
-.systemReportLogo {
+.statusReportLogo {
   grid-area: 1/2/3/3;
   justify-self: end;
 }
 
-.systemStatus {
+.statusStatus {
   font-weight: 400;
   font-family: var(--Inter);
   font-size: 0.8rem;
@@ -39,16 +39,16 @@
 }
 
 @media screen and (min-width: 600px) {
-  .systemReport {
+  .statusReport {
     display: flex;
     padding: 1.5rem 1rem;
   }
 
-  .systemTitle {
+  .statusTitle {
     font-size: 1.125rem;
   }
 
-  .systemStatus {
+  .statusStatus {
     font-size: 1rem;
     margin-left: auto;
     margin-right: 8px;
