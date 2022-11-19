@@ -1,13 +1,16 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import FileUploadButton from '../../components/Button/FileUploadButton';
 import LoadingDots from '../../components/Loaders/LoadingDots';
-import './transcribe.module.css';
 import ErrorIcon from '../../assets/error.svg';
+import ImportIcon from '../../assets/import.svg';
 import { PropTypes } from 'prop-types';
 import SentAudio from '../../components/Audio/SentAudio';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import toast from 'react-hot-toast';
+import { hasSelectionSupport } from '@testing-library/user-event/dist/utils';
 
 const Transcribe = () => {
-  const dummnyData = [
+  const dummnyBotMessages = [
     {
       id: 1,
       botMsg: 'Hello there, click the icon on the top right to get a quick transcription',
@@ -15,7 +18,43 @@ const Transcribe = () => {
   ];
   const [isError, setIsError] = useState(false);
   const [isAudio, setIsAudio] = useState(false);
+  const [uploadingAudio, setUploadingAudio] = useState(false);
   const [audio, setAudio] = useState();
+
+  const hiddenFileInput = useRef(null);
+
+  new Date().toISOString();
+  const handleUploadClick = () => {
+    hiddenFileInput.current.click();
+  };
+
+  const fakeWaiting = (time) => {
+    return new Promise((resolve) => {
+      return setTimeout(() => {
+        resolve();
+      }, time);
+    });
+  };
+
+  const handleFileClick = async (event) => {
+    if (event.target.files[0]) {
+      const file = event.target.files[0];
+      setUploadingAudio(true);
+
+      if (file.type !== 'audio/mpeg') {
+        toast.error(`Please upload an audio file instead of a ${file.type} file`);
+        return;
+      }
+
+      await fakeWaiting(3000);
+      setTimeout(() => setUploadingAudio(false), 1000);
+
+      setIsAudio(true);
+      setAudio(URL.createObjectURL(event.target.files[0]));
+
+      console.log('audio', audio);
+    }
+  };
 
   return (
     <div>
@@ -27,24 +66,41 @@ const Transcribe = () => {
         Toggle Error Overlay
       </button> */}
 
-      <div className="p-8 relative  ">
+      <div className="px-3 md:px-10 relative">
+        <div role="presentation" onClick={handleUploadClick} className="py-3 flex justify-end cursor-pointer">
+          <img src={ImportIcon} alt="import audio" />
+          <input
+            ref={hiddenFileInput}
+            onChange={handleFileClick}
+            className="hidden"
+            type="file"
+            name="audio_file"
+            id="audio_file"
+          />
+        </div>
+
+        <div className="grid place-items-center md:hidden">
+          <h1>Quick Transcribe</h1>
+        </div>
+
         <div className={`${isError ? 'fixed bg-white brightness-50 w-full' : ''}`}>
-          {dummnyData.map((data, index) => (
+          {dummnyBotMessages.map((data, index) => (
             <React.Fragment key={index}>
-              <div className="b pb-10 px-2 mt-5 relative">
+              <div className="b  pb-20 md:pb-16 px-2 mt-5 relative">
                 <div className="ai__msg w-52">
                   <h1 className="text-base font-medium ">Gritty Grammar</h1>
-                  <p className="bg-gray-100 font-normal leading-5 p-2">{data.botMsg}</p>
-                  <p className="mt-1 text-xs">{new Date().toUTCString()}</p>
+                  <p className="bg-gray-100 font-normal leading-5 p-2 rounded">{data.botMsg}</p>
+                  <p className="mt-1 text-xs text-left">{new Date().toUTCString()}</p>
                 </div>
 
-                <div className="user__msg p-0 absolute mt-10 right-0 bottom-0">
-                  {/* <LoadingDots /> */}
-                  {isAudio ? (
-                    <SentAudio audio={audio} />
-                  ) : (
-                    <FileUploadButton setIsAudio={setIsAudio} setAudio={setAudio} audio={audio} />
+                <div className="user__msg p-0 absolute mt-0 right-0 bottom-0">
+                  {uploadingAudio && (
+                    <div className="border-2 border-dashed border-green-300 bg-green-100 px-5 py-1 text-sm">
+                      <p>Audio file getting imported</p>
+                    </div>
                   )}
+
+                  {isAudio && !uploadingAudio ? <SentAudio audio={audio} /> : null}
                 </div>
               </div>
             </React.Fragment>

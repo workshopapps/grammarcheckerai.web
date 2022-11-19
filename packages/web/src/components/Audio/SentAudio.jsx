@@ -51,6 +51,7 @@ const SentAudio = ({ audio }) => {
     >
       <div className=" w-9/12">
         <img src={SpeechIcon} alt="Uploaded Audio" />
+        <p className="mt-1 text-xs text-right">{new Date().toUTCString()}</p>
       </div>
     </div>
   );
