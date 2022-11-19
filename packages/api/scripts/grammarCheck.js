@@ -47,9 +47,5 @@ const grammarCheckHandler = async (userResponseInTxt, language = "English") => {
     }
   }
 };
-(async function () {
-  const res1 = await grammarCheckHandler("I doesn't believe you.", "English"); // It should be - I don't believe you.
-  const res3 = await grammarCheckHandler("I don't believe you.", "English"); // It should be - I don't believe you.
-  console.log(res1,res3);
-})();
+ 
 module.exports = grammarCheckHandler;
