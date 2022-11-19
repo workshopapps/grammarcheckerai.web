@@ -14,12 +14,12 @@ import toast, { Toaster } from 'react-hot-toast';
 const index = () => {
   const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [existingUserName, setExistingUserName] = useLocalStorage('existingUserName', getStorageData(''));
+  const [existingUserName, setExistingUserName] = useLocalStorage('existingUserName', getStorageData('demoData'));
   const [existingUserPassword, setExistingUserPassword] = useLocalStorage(
     'existingUserPassword',
-    getStorageData('newUserPassword'),
+    getStorageData('demoData'),
   );
-  const [existingUserEmail, setExistingUserEmail] = useLocalStorage('existingUserEmail', getStorageData(''));
+  const [existingUserEmail, setExistingUserEmail] = useLocalStorage('existingUserEmail', getStorageData('demoData'));
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
 
@@ -45,13 +45,15 @@ const index = () => {
     setExistingUserName(getStorageData('newUserName'));
     setExistingUserPassword(getStorageData('newUserPassword'));
     setExistingUserEmail(getStorageData('createEmail'));
-
     if ((userName === existingUserName) & (userPassword === existingUserPassword)) {
       console.log(existingUserEmail);
       success('Login Successful!');
       setTimeout(() => navigate('/me/home'), 2000);
     } else {
       error('Incorrect log in');
+      setExistingUserName(getStorageData('demoData'));
+      setExistingUserPassword(getStorageData('demoData'));
+      setExistingUserEmail(getStorageData('demoData'));
     }
   };
   const isTabletorMobile = useMediaQuery({

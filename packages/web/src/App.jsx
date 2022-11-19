@@ -1,7 +1,8 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
+import { useLocalStorage } from './hooks/useLocalStorage';
 import Signup from './modules/auth/signup/step1/step1';
 import Signuptwo from './modules/auth/signup/step2/step2';
 import Signin from './modules/auth/login/login';
@@ -81,6 +82,11 @@ const router = createBrowserRouter(
 );
 
 function App() {
+  const [demoData, setDemoData] = useLocalStorage('demoData', '');
+  useEffect(() => {
+    setDemoData('demo');
+  }, []);
+  console.log(demoData);
   return <RouterProvider router={router} />;
 }
 

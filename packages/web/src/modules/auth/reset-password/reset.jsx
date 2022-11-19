@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { getStorageData, useLocalStorage } from '../../../hooks/useLocalStorage';
@@ -13,8 +13,12 @@ const index = () => {
   const [userConfirmNewPassword, setUserConfirmNewPassword] = useState('');
   const [existingUserPassword, setExistingUserPassword] = useLocalStorage(
     'existingUserPassword',
-    getStorageData('newUserPassword'),
+    getStorageData('demoData'),
   );
+
+  useEffect(() => {
+    setExistingUserPassword(getStorageData('demoData'));
+  }, []);
 
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);

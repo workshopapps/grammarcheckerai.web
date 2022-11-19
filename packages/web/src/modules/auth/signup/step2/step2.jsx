@@ -12,7 +12,7 @@ import facebook from '../../../../assets/facebook.png';
 import { useLocalStorage, getStorageData } from '../../../../hooks/useLocalStorage';
 
 const index = () => {
-  const [newUserName, setNewUserName] = useLocalStorage('newUserName');
+  const [newUserName, setNewUserName] = useLocalStorage('newUserName', '');
   const [newUserFullName, setNewUserFullName] = useLocalStorage('newUserFullName', '');
   const [newUserPassword, setNewUserPassword] = useLocalStorage('newUserPassword', '');
   const [newUserConfirmPassword, setNewUserConfirmPassword] = useLocalStorage('newUserConfirmPassword', '');
