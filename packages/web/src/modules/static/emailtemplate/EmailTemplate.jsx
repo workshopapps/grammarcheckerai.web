@@ -25,7 +25,7 @@ const EmailTemplate = () => {
         </div>
         <div className={styles.email_nav__logo}>
           <img src={logo} alt="" />
-          <h4>Gritty Grammar</h4> 
+          <h4>Gritty Grammar</h4>
         </div>
       </div>
 
@@ -86,7 +86,7 @@ const EmailTemplate = () => {
         </div>
 
         <div className={styles.email_content__policy}>
-          <p>You're receiving this email because you are a subscriber of Gritty Grammar</p> 
+          <p>You're receiving this email because you are a subscriber of Gritty Grammar</p>
           <p>If you feel you received it by mistake or wish to unsubscribe, click here</p>
         </div>
       </div>

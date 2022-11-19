@@ -144,7 +144,7 @@
       &__logo {
         @include flexCenter(row);
         justify-content: flex-start;
-        
+
         h4 {
           margin-left: 18px;
           font-family: $headingColor;
@@ -249,7 +249,7 @@
         @include flexCenter(column);
         flex-wrap: wrap;
         background-color: $purpleBackground;
-        color: #CFCFCF;
+        color: #cfcfcf;
         font-family: $fontFamily2;
         font-size: 12px;
         font-weight: 400;
