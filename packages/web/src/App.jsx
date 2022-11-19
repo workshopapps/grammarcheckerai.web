@@ -6,6 +6,7 @@ import TermsOfUse from './modules/static/terms_of_use';
 import DashboardLayout from './components/DashboardLayout';
 import { HomePage, History, Correction } from './pages';
 
+
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -74,6 +75,7 @@ const router = createBrowserRouter(
 
 function App() {
   return <RouterProvider router={router} />;
+  
 }
 
 export default App;
