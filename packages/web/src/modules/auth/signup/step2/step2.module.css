@@ -9,23 +9,23 @@
 }
 /* width */
 ._gs2signupcol1::-webkit-scrollbar {
-    width: 0px;
-  }
-  
-  /* Track */
- ._gs2signupcol1::-webkit-scrollbar-track {
-    background: #ffffff;
-  }
-  
-  /* Handle */
+  width: 0px;
+}
+
+/* Track */
+._gs2signupcol1::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+/* Handle */
 ._gs2signupcol1::-webkit-scrollbar-thumb {
-    background: rgb(255, 255, 255);
-  }
-  
-  /* Handle on hover */
- ._gs2signupcol1::-webkit-scrollbar-thumb:hover {
-    background: rgb(255, 255, 255);
-  }
+  background: rgb(255, 255, 255);
+}
+
+/* Handle on hover */
+._gs2signupcol1::-webkit-scrollbar-thumb:hover {
+  background: rgb(255, 255, 255);
+}
 ._gs2signup {
   display: flex;
   width: 100%;
@@ -250,16 +250,16 @@
   display: flex;
   justify-content: center;
 }
-._gs2socialsignups{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    align-items: center;
-    padding: 20px 0;
+._gs2socialsignups {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  padding: 20px 0;
 }
-._gs2socialsignups button{
-    width: 30px;
-    margin: 20px;
+._gs2socialsignups button {
+  width: 30px;
+  margin: 20px;
 }
 @media only screen and (min-width: 849px) and (max-width: 1200px) {
   ._gs2mainsignupcol2images img:last-child {
@@ -278,14 +278,14 @@
   }
 }
 @media only screen and (max-width: 850px) {
-    ._gs2socialsignupcol {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  max-width: 100%;
-}
+  ._gs2socialsignupcol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 100%;
+  }
   ._gs2mainsignup {
     height: 100%;
     width: 100%;

@@ -137,7 +137,7 @@
   background-color: transparent;
   color: black;
 }
-._gs2logincheck{
+._gs2logincheck {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -284,8 +284,8 @@
   width: 30px;
   margin: 20px;
 }
-._gsloginforgot{
-    cursor: pointer;
+._gsloginforgot {
+  cursor: pointer;
 }
 @media only screen and (min-width: 849px) and (max-width: 1200px) {
   ._gs2mainlogincol2images img:last-child {
