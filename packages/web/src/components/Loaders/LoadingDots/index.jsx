@@ -1,4 +1,5 @@
-import styles from './LoadingDots.module.css';
+import styles from './index.module.css';
+
 const LoadingDots = () => {
   return (
     <div className="loading_dots bg-gray-200 flex space-x-1 py-2 px-2 justify-center rounded-md ">
@@ -8,9 +9,5 @@ const LoadingDots = () => {
     </div>
   );
 };
-
-// LoadingDots.propTypes = {
-//   color: PropTypes.string.isRequired,
-// };
 
 export default LoadingDots;

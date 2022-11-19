@@ -1,9 +1,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import LoadingDots from '../../components/Loaders/LoadingDots';
 import ErrorIcon from '../../assets/error.svg';
 import ImportIcon from '../../assets/import.svg';
 import { PropTypes } from 'prop-types';
-import SentAudio from '../../components/Audio/SentAudio';
+import SentAudio from '../../components/SentAudio/index';
 import React, { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
