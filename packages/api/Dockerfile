@@ -4,7 +4,6 @@ FROM node:15.14-buster
 # set working directory
 WORKDIR /api
 
-# install app dependencies
 #copies package.json and package-lock.json to Docker environment
 COPY package*.json ./
 
