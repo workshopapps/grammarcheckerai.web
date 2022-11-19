@@ -1,5 +1,5 @@
-import chirpy from '../../assets/chirpy.svg';
-import talk from '../../assets/talk.svg';
+import chirpy from '../../../assets/chirpy.svg';
+import talk from '../../../assets/talk.svg';
 
 function HomePage() {
   return (

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import back from '../../assets/arrow-left.svg';
-import trash from '../../assets/trash.svg';
+import back from '../../../assets/arrow-left.svg';
+import trash from '../../../assets/trash.svg';
 
 function Correction() {
   const history = useNavigate();
