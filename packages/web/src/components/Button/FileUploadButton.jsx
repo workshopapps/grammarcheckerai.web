@@ -1,6 +1,9 @@
 import { useRef } from 'react';
+import { PropTypes } from 'prop-types';
+import { useToasts } from 'react-toast-notifications';
 
-const FileUploadButton = () => {
+const FileUploadButton = ({ audio, setAudio, setIsAudio }) => {
+  const { addToast } = useToasts();
   const hiddenFileInput = useRef(null);
 
   new Date().toISOString();
@@ -9,9 +12,19 @@ const FileUploadButton = () => {
   };
 
   const handleFileClick = (event) => {
-    const file = event.target.files[0];
+    if (event.target.files[0]) {
+      const file = event.target.files[0];
 
-    console.log('File', file);
+      if (file.type !== 'audio/mpeg') {
+        addToast(`Please upload an audio file instead of a ${file.type} file`, { appearance: 'error' });
+        return;
+      }
+
+      setIsAudio(true);
+      setAudio(URL.createObjectURL(event.target.files[0]));
+
+      console.log('audio', audio);
+    }
   };
   return (
     <>
@@ -31,6 +44,13 @@ const FileUploadButton = () => {
       />
     </>
   );
+};
+
+FileUploadButton.propTypes = {
+  isAudio: PropTypes.bool,
+  setIsAudio: PropTypes.func,
+  setAudio: PropTypes.func,
+  audio: PropTypes.string,
 };
 
 export default FileUploadButton;

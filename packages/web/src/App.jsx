@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react';
 import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
+import TranscribePage from './pages/transcribe';
 
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
@@ -58,7 +59,7 @@ const router = createBrowserRouter(
           path="transcribe"
           element={
             <ProtectedRoute>
-              <h1>Transcribe/import Page</h1>
+              <TranscribePage />
             </ProtectedRoute>
           }
         />
