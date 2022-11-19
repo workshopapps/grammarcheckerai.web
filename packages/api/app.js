@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 app.use('/api/v1/login', login);
 app.use('/api/v1/logout', logout);
 app.use('/api/v1/user-profile/:id', profile);
+app.use('/api/v1/delete-user', deleteUser);
 app.delete('/user', userRoute);
 
 exports.app = app;
