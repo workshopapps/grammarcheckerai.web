@@ -15,7 +15,7 @@ function DashboardLayout() {
         </div>
       </div>
       <div className="w-full">
-        <div className="py-7 border-b border-slate-300 w-full"></div>
+        {/* <div className="py-7 border-b border-slate-300 w-full"></div> */}
         <Outlet />
       </div>
     </div>
