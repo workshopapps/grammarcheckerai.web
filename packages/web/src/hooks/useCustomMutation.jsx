@@ -32,7 +32,7 @@ function useCustomMutation(mutationData) {
   const mutatationResult = useMutation(mutationFn, {
     mutationKey: endpoint,
 
-    onError: (err) => {
+    onError: () => {
       if (showFailureToast) {
         // show failure
       }

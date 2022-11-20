@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Footer from '../../components/Careers/footer';
 import Header from '../../components/Careers/header';
 
 import SelectDropdown from '../../components/Select/select';
@@ -64,6 +65,7 @@ const Roles = () => {
           )}
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

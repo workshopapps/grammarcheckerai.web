@@ -9,10 +9,14 @@ import styles from './index.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAudioRecorder } from '@sarafhbk/react-audio-recorder';
 import { convertSecToMin } from '../../../lib/utils';
+import { useNavigate } from 'react-router-dom';
 // import { Configuration, OpenAIApi } from 'openai';
 import ChatContainer from './chat-container';
+import useSendAudioFile from '../../../hooks/account/useSendAudio';
 
 function Conversation() {
+  const navigate = useNavigate();
+  const sendAudio = useSendAudioFile();
   const {
     audioResult,
     timer,
@@ -26,6 +30,9 @@ function Conversation() {
   const [chats, setChats] = React.useState([]);
 
   const submitAudioHandler = async () => {
+    sendAudio.mutateAsync({
+      file: audioResult,
+    });
     setChats((prev) => [
       ...prev,
       {
@@ -41,7 +48,6 @@ function Conversation() {
       initial={{ opacity: 0.1 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2 }}
-      layout
       className={`min-h-screen space-y-6 flex pb-10 flex-col ${styles._convo}`}
     >
       <div className="flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto">
@@ -59,10 +65,10 @@ function Conversation() {
                 <img src={botImg} alt="" className="max-w-full" />
               </div>
               <div className="space-y-4">
-                <h2 className="text-xl text-[#262626] leading-relaxed sm:text-5xl">
+                <h2 className="sm:text-xl text-[#262626] leading-relaxed text-5xl">
                   What would you like to say today?
                 </h2>
-                <p className="text-slate-600 text-md sm:text-[19px]">Each conversation bring you closer to fluency.</p>
+                <p className="text-slate-600 sm:text-md text-[19px]">Each conversation bring you closer to fluency.</p>
               </div>
             </>
           ) : (
@@ -89,7 +95,18 @@ function Conversation() {
               <AnimatePresence mode="wait">
                 <motion.div key={status} e initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                   {status === 'idle' ? (
-                    <p className="text-[#262626]">Tap the Microphone to begin</p>
+                    <>
+                      {chats.length === 0 ? (
+                        <p className="text-[#262626]">Tap the Microphone to begin</p>
+                      ) : (
+                        <button
+                          className="px-7 rounded-xl py-2 border border-[#5D387F]"
+                          onClick={() => navigate('/signin')}
+                        >
+                          Exit
+                        </button>
+                      )}
+                    </>
                   ) : (
                     <div>
                       <p>{convertSecToMin(timer)}</p>

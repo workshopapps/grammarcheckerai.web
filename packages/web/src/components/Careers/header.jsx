@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <div className="flex justify-between py-4 px-20 items-center fixed top-0 w-full bg-white z-50">
+    <header className='flex justify-between py-4 px-20 items-center fixed top-0 w-full bg-white z-50 sm:px-3'>
       <div>
         <img src="images/grit.svg" alt="gritty" />
       </div>
@@ -21,7 +21,7 @@ const Header = () => {
         ))}
       </div>
       <button className="bg-purple-500 py-3 px-5 rounded-lg text-white ">Get started</button>
-    </div>
+    </header>
   );
 };
 
