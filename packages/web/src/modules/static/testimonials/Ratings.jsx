@@ -1,6 +1,4 @@
 import React from 'react';
-
-import { Link } from 'react-router-dom';
 import rater1 from '../../../assets/raters/rater1.png';
 import rater2 from '../../../assets/raters/rater2.png';
 import rater3 from '../../../assets/raters/rater3.png';
@@ -53,10 +51,6 @@ export default function Ratings() {
 
   return (
     <div className="mx-4 lg:mx-32">
-      <div className='flex justify-between'>
-        <Link to='/'  className='text-[#5D387F]'> &lt;   Back </Link>
-        <Link to='/testimonials' className='text-[#5D387F]'> Testimonials  &gt;</Link>
-      </div>
       <h1 className="my-4">Ratings and Reviews</h1>
       <p className="text-xs">
         Ratings and reviews are verified and are from people who use the same type of device that you use
