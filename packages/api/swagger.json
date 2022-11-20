@@ -1,0 +1,396 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Gritty Grammarly",
+      "description": "Gritty Grammarly Application API",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Users",
+        "description": "API for users in the system"
+      },
+      {
+        "name": "Bot",
+        "description": "API for bot instances in the system"
+      },
+      {
+        "name": "Audio",
+        "description": "API for sending and receiving audio files in the system"
+      },
+      {
+        "name": "Text",
+        "description": "API for sending error texts and receiving corrected text from Open AI"
+      }
+    ],
+    "schemes": [
+      "http",
+      "https"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/signUp": {
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "description": "Signup new User in system",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "User that we want to create",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New user is created",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        } 
+      },
+      "/login": {
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "description": "Login registered userm",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "User that we want to login",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "User is logged in ",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        } 
+      },
+      "/getAudio": {
+        "post": {
+          "tags": [
+            "Audio"
+          ],
+          "description": "Send audio file to Whisper",
+          "parameters": [
+            {
+              "name": "audio",
+              "in": "body",
+              "description": "Audio we want to send ",
+              "schema": {
+                "$ref": "#/definitions/Audio"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Audio is converted to textd",
+              "schema": {
+                "$ref": "#/definitions/Audio"
+              }
+            }
+          }
+        } 
+      },
+      "/getBot": {
+        "get": {
+          "tags": [
+            "Bot"
+          ],
+          "description": "Bot instance",
+          "parameters": [
+            {
+              "name": "bot",
+              "in": "body",
+              "description": "Bot session we want to get ",
+              "schema": {
+                "$ref": "#/definitions/Bot"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Audio is converted to textd",
+              "schema": {
+                "$ref": "#/definitions/Audio"
+              }
+            }
+          }
+        } 
+      },
+      "/getText": {
+        "get": {
+          "tags": [
+            "Text"
+          ],
+          "description": "Get transcribed text from Whisper",
+          "parameters": [
+            {
+              "name": "text",
+              "in": "body",
+              "description": "text we want to send to Open AI ",
+              "schema": {
+                "$ref": "#/definitions/Text"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Text is checked for grammar errors and sent back",
+              "schema": {
+                "$ref": "#/definitions/Text"
+              }
+            }
+          }
+        } 
+      },
+      "/getConversation": {
+        "get": {
+          "tags": [
+            "Conversation"
+          ],
+          "description": "Get Conversation between Bot and User",
+          "parameters": [
+            {
+              "name": "text",
+              "in": "body",
+              "description": "conversation between bot and user ",
+              "schema": {
+                "$ref": "#/definitions/Conversation"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get Conversation between Bot and User and send to user's email",
+              "schema": {
+                "$ref": "#/definitions/Conversation"
+              }
+            }
+          }
+        } 
+      },
+      "/users": {
+        "get": {
+            "tags": [
+              "Users"
+            ],
+            "summary": "Get all users in system",
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/Users"
+                }
+              }
+            }
+          }
+      },
+      "/user/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of user that we want to find",
+            "type": "integer"
+          }
+        ],
+        "delete": {
+          "summary": "Delete user with given ID",
+          "tags": [
+            "Users"
+          ],
+          "responses": {
+            "200": {
+              "description": "User is deleted",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update user with give ID",
+          "tags": [
+            "Users"
+          ],
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "User with new values of properties",
+              "schema": {
+                "$ref": "#/definitions/updateUser"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User is updated",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    
+    "definitions": {
+      "User": {
+        "required": [
+          "name",
+          "_id",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"    
+          },
+          "password": {
+            "type": "hashed"    
+          }
+         
+        }
+      },
+      "Conversation": {
+        "required": [
+          "_id",
+          "userId",
+          "botId"
+        ],
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "botId": {
+            "type": "uuid"                
+          },
+          "userId": {
+            "type": "uuid"
+   
+          },
+          "audioId": {
+            "type": "uuid"
+          },
+          "textId": {
+            "type": "uuid"
+   
+          }
+         
+        }
+      },
+      "Text": {
+        "required": [
+          "_id",
+          "userId",
+          "status"
+        ],
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type" : "string",
+            "enum": ["pending", "successful", "failed"]               
+          }
+         
+        }
+      },
+      "Bot": {
+        "required": [
+          "_id",
+          "userId",
+          "status"
+        ],
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type" : "string",
+            "enum": ["active", "inactive", "waiting"]               
+          }
+         
+        }
+      },
+      "Audio": {
+        "required": [
+          "_id",
+          "userId",
+          "status"
+        ],
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type" : "string",
+            "enum": ["corrected", "pending", "failed"]               
+          }
+         
+        }
+      }
+     
+     
+    }
+  }
+
+  
