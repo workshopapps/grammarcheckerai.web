@@ -1,0 +1,10 @@
+const routeHandler = require('express').Router()
+const {userHandler} = require('../routes/user.routes')
+const {auth} = require('../routes/auth.routes')
+const verify = require('../middlewares/authMiddleware')
+
+routeHandler.use('/auth', auth);
+routeHandler.use('/user', verify, userHandler);
+
+
+module.exports = {routeHandler}
