@@ -10,25 +10,34 @@ import Forgotpassword from './modules/auth/forgot-password/forgot';
 import ResetLink from './modules/auth/reset-password/reset';
 import TermsOfUse from './modules/static/terms_of_use';
 import DashboardLayout from './components/DashboardLayout';
-import { HomePage, History, Correction, ConversationPage } from './pages';
+import NewsletterPage from './modules/static/newsletter/NewsletterPage';
+import { HomePage, History, Correction, ConversationPage, LandingPage, LegalPage } from './pages';
+import Careers from './pages/career/Career';
+import Roles from './pages/career/Roles';
+import Application from './pages/career/Application';
 import ApiStatus from './pages/api-status/api-status';
 
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      {/* <Route path="/" element={<h1>Will redirect to Landing Pages / Conversation Page</h1>} /> */}
       <Route path="/" element={<ConversationPage />} />
-      <Route path="/home" element={<h1>Home page</h1>} />
       <Route path="/history" element={<h2>History</h2>} />
+      <Route path="/gritty-grammar" element={<LandingPage />} />
+      <Route path="/home" element={<HomePage />} />
+      <Route path="/history" element={<History />} />
+      <Route path="/correction" element={<Correction />} />
       <Route path="/about" element={<h1>About Page</h1>} />
       <Route path="/faq" element={<h1>FAQ Page</h1>} />
       <Route path="/blog" element={<h1>Blog Page</h1>} />
       <Route path="contact" element={<h1>Contact Page</h1>} />
-      <Route path="/newsletter" element={<h1>NewsLetter Page</h1>} />
-      <Route path="/culture-career" element={<h1>Culture Page</h1>} />
+      <Route path="/newsletter" element={<NewsletterPage />} />
+      <Route path="/career" element={<Careers />} />
+      <Route path="/roles" element={<Roles />} />
+      <Route path="/apply" element={<Application />} />
       <Route path="/terms-of-use" element={<TermsOfUse />} />
-      <Route path="/api-status" element={<ApiStatus />} />
+       <Route path="/api-status" element={<ApiStatus />} />
+      <Route path="/legal" element={<LegalPage />} />
       <Route
         element={
           <div>
