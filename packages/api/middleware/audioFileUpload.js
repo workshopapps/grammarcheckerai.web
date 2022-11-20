@@ -3,7 +3,7 @@ const path = require('path');
 const { environment } = require('../config/environment')
 
 const { FILE_SIZE } = environment;
-console.log(FILE_SIZE);
+
 // Multer middleware for file upload
 function uploadFile(req, res, next) {
     const storage = multer.memoryStorage();
