@@ -15,7 +15,7 @@
     "diff": "lerna diff",
     "build-storybook": "build-storybook",
     "prepare": "husky install",
-    "test:script": "lerna run test:script"
+    "test": "lerna run test"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",

@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.label {
+    @apply flex flex-col gap-1 text-[#344054]
+}
+._input {
+    @apply border-2 py-4 px-2 rounded focus:outline-none
+}
+._btnContainer {
+    @apply w-full flex flex-col md:flex-row lg:flex-row justify-end gap-5 mt-16
+}
