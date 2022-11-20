@@ -12,27 +12,30 @@ exports.home = async (req, res) => {
       }
     })
     .catch((err) => {
+      console.log(err.response.status);
       status.push({ home: { status: "down" } });
     });
   const loginPage = await axios
     .get("/api/v1/auth/login")
     .then((response) => {
-      if (response.status == 200) {
+      if (response.status != 404) {
         status.push({ loginPage: { status: "ok" } });
       }
     })
     .catch((err) => {
+      console.log(err.response.status);
       status.push({ loginPage: { status: "down" } });
     });
 
     const sendAudio = await axios
-      .get("/api/v1/sendAudio")
+      .post("/api/v1/sendAudio")
       .then((sendAudio) => {
-        if (sendAudio.status == 200) {
+        if (sendAudio.status != 404) {
           status.push({ sendAudio: { status: "ok" } });
         }
       })
       .catch((err) => {
+        console.log(err.response.status);
         status.push({ sendAudio: { status: "down" } });
       });
 
@@ -44,6 +47,7 @@ exports.home = async (req, res) => {
           }
         })
         .catch((err) => {
+          console.log(err.response.status);
           status.push({ logoutPage: { status: "down" } });
         });
 
@@ -55,6 +59,7 @@ exports.home = async (req, res) => {
             }
           })
           .catch((err) => {
+            console.log(err.response.status);
             status.push({ testPage: { status: "down" } });
           });
 
