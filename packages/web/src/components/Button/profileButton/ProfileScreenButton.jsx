@@ -7,13 +7,13 @@ const classes = {
     disabled: 'opacity-50 cursor-not-allowed',
     size: {
         small: 'px-2 py-1 text-sm',
-        normal: 'px-[40px] py-[16px] md:py-[20px]',
+        normal: 'px-[40px] py-[16px] md:py-[20px] lg:py-[20px]',
         large: 'px-[40px] py-[24px] text-xl'
     },
     variant: {
-        primary: 'text-lg md:text-xl bg-[#5d387f] text-white rounded-lg hover:bg-[#2f1c40]',
-        secondary: 'text-lg md:text-xl text-[black] border-2 rounded-lg border-[#d2d2d2] hover:bg-[#e8ddf2] hover:text-black',
-        danger: 'text-lg md:text-xl text-[#ec1b1b] border-2 rounded-lg border-[#ec2b1b] hover:bg-[#ec1b1b]/50 hover:text-black'
+        primary: 'text-lg md:text-xl lg:text-xl bg-[#5d387f] text-white rounded-lg hover:bg-[#2f1c40]',
+        secondary: 'text-lg md:text-xl lg:text-xl text-[black] border-2 rounded-lg border-[#d2d2d2] hover:bg-[#e8ddf2] hover:text-black',
+        danger: 'text-lg md:text-xl lg:text-xl text-[#ec1b1b] border-2 rounded-lg border-[#ec2b1b] hover:bg-[#ec1b1b]/50 hover:text-black'
     }
 }
 

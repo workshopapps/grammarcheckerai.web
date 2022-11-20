@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton'
 import successimg from '../../assets/success.svg';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -9,6 +10,7 @@ export default function ChangePassword() {
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
+    const history = useNavigate();
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -19,6 +21,9 @@ export default function ChangePassword() {
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
+        setTimeout(() => {
+            setIsSubmit(false)
+        }, 3000)
     };
 
     useEffect(() => {
@@ -48,12 +53,12 @@ export default function ChangePassword() {
     }
     
   return (
-    <div className='h-[100vh] w-[90%] md:w-[70%] m-auto'>
+    <div className='h-[100vh] w-[90%] md:w-[70%] lg:w-[70%] m-auto mt-24'>
         <h1 className='text-2xl text-[#393939] text-center md:text-start font-bold'>Change your password</h1>
 
         <form onSubmit={handleSubmit} className='mt-10 flex flex-col gap-5'>
             <label className='flex flex-col'>
-                <span className='font-bold text-base md:text-lg text-[#393939] mb-2'>Old password</span>
+                <span className='font-bold text-base md:text-lg lg:text-lg text-[#393939] mb-2'>Old password</span>
                 <input 
                     className={formErrors.password ? '_input border-[#c51717]' : '_input border-[#d2d2d2]'} 
                     type="password"
@@ -68,7 +73,7 @@ export default function ChangePassword() {
                     </p>
             </label>
             <label className='flex flex-col'>
-                <span className='font-bold text-base md:text-lg text-[#393939] mb-2'>New password</span>
+                <span className='font-bold text-base md:text-lg lg:text-lg text-[#393939] mb-2'>New password</span>
                 <input 
                     className={formErrors.newPassword ? '_input border-[#c51717]' : '_input border-[#d2d2d2]'} 
                     type="password" 
@@ -83,7 +88,7 @@ export default function ChangePassword() {
                     </p>
             </label>
             <label className='flex flex-col'>
-                <span className='font-bold text-base md:text-lg text-[#393939] mb-2'>Confirm new password</span>
+                <span className='font-bold text-base md:text-lg lg:text-lg text-[#393939] mb-2'>Confirm new password</span>
                 <input 
                     className={formErrors.confirmNewPassword ? '_input border-[#c51717]' : '_input border-[#d2d2d2]'} 
                     type="password" 
@@ -99,12 +104,12 @@ export default function ChangePassword() {
             </label>
 
             <div className="_btnContainer">
-                <ProfileScreenButton variant="secondary">{'Cancel'}</ProfileScreenButton>
+                <ProfileScreenButton onClick={() => history(-1)} variant="secondary">{'Cancel'}</ProfileScreenButton>
                 <ProfileScreenButton onClick={handleSubmit}>{'Reset'}</ProfileScreenButton>
             </div>
         </form>
 
-        {Object.keys(formErrors).length === 0 && isSubmit ? <div className='mt-5 text-[#393939] bg-[#f5f5f5] px-4 rounded flex justify-center gap-3 py-2 text-center w-[40%] m-auto'><img src={successimg} alt='success'/>Password changed successfully</div> : null}
+        {Object.keys(formErrors).length === 0 && isSubmit ? <div className='mt-5 text-[#393939] bg-[#f5f5f5] px-4 rounded flex justify-center gap-3 py-2 text-center w-[50%] m-auto'><img src={successimg} alt='success'/>Password changed successfully</div> : null}
     </div>
   )
 }

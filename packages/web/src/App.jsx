@@ -6,6 +6,10 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 import Signup from './modules/auth/signup/step1/step1';
 import Signuptwo from './modules/auth/signup/step2/step2';
 import Signin from './modules/auth/login/login';
+import ProfileScreen from './pages/profile/profileScreen';
+import ChangePassword from './pages/profile/ChangePassword';
+import DeleteAccount from './pages/profile/DeleteAccount';
+import ConfirmDeleteAccount from './pages/profile/ConfirmDeleteAccount';
 import Forgotpassword from './modules/auth/forgot-password/forgot';
 import ResetLink from './modules/auth/reset-password/reset';
 import TermsOfUse from './modules/static/terms_of_use';
@@ -69,7 +73,17 @@ const router = createBrowserRouter(
           }
         />
         <Route path="history/correction" element={<Correction />} />
-
+        <Route
+          path="profile"
+          element={
+            <ProtectedRoute>
+              <ProfileScreen />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="profile/changepassword" element={<ChangePassword />} />
+        <Route path="profile/deleteaccount" element={<DeleteAccount />} />
+        <Route path="profile/deleteaccount-step2" element={<ConfirmDeleteAccount />} />
         <Route
           path="import"
           element={
