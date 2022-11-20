@@ -24,7 +24,7 @@ const Ai = () => {
                     <div className="p-4 py-4">
                          <p className="font-normal text-base mb-3">
                     The ease with which we use computers substantially influences the likelihood that
-                    technology may disrupt a particular element of life or business. Computers were far less
+                    technology may disrupt a particular element of life or businesses. Computers were far less
                     user-friendly when we needed to enter code into a command line only to load a software.
                     However, the mouse and graphical user interfaces made things much simpler, and
                     computers grew from specialist goods to become commonplace. Touch advanced the
