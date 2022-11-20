@@ -53,9 +53,9 @@ export default function Ratings() {
 
   return (
     <div className="mx-4 lg:mx-32">
-      <div className='flex justify-between'>
-        <Link to='/'  className='text-[#5D387F]'> &lt;   Back </Link>
-        <Link to='/testimonials' className='text-[#5D387F]'> Testimonials  &gt;</Link>
+      <div className='flex justify-between my-6'>
+        <Link to='/'  className='text-[#5D387F] text-xs'> &lt;   Back </Link>
+        <Link to='/testimonials' className='text-[#5D387F] text-xs'> Testimonials  &gt;</Link>
       </div>
       <h1 className="my-4">Ratings and Reviews</h1>
       <p className="text-xs">

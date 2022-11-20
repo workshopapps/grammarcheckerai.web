@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import React, { useEffect } from 'react';
 import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
