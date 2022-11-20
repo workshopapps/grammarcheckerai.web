@@ -16,10 +16,6 @@ let schema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
-    name: {
-      type: String,
-      required: true,
-    },
     password: {
       type: String,
     },

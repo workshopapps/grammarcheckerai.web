@@ -4,7 +4,7 @@
     "id": "h1vuxh3bomktv"
   },
   "info": {
-    "title": "test",
+    "title": "GrittyGrammarly",
     "version": "1.0",
     "description": "API endpoint test for the grammarcheckerai app"
   },
@@ -19,7 +19,7 @@
     }
   ],
   "paths": {
-    "api/v1/auth/login": {
+    "/api/v1/auth/login": {
       "post": {
         "summary": "This Route Logs Existing User in",
         "operationId": "post-api-v1-login",
@@ -50,7 +50,7 @@
       },
       "parameters": []
     },
-    "api/v1/auth/singup": {
+    "/api/v1/auth/signup": {
       "post": {
         "summary": "This Route creates new User",
         "operationId": "post-api-v1-signup",
@@ -70,6 +70,9 @@
           "404": {
             "$ref": "#/components/responses/error"
           },
+          "422": {
+            "$ref": "#/components/responses/error"
+          },
           "500": {
             "$ref": "#/components/responses/error"
           }
@@ -84,7 +87,7 @@
       },
       "parameters": []
     },
-    "api/v1/user/delete_user": {
+    "/api/v1/user/delete_user": {
       "parameters": [],
       "delete": {
         "summary": "",
@@ -115,10 +118,21 @@
         },
         "tags": [
           "User"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Authorization",
+            "description": "Bearer Token",
+            "required": true
+          }
         ]
       }
     },
-    "api/v1/user/update_user/:userId": {
+    "/api/v1/user/update_user/:userId": {
       "post": {
         "summary": "This Route Updates the User Details in the database",
         "operationId": "post-update_user-:userId",
@@ -143,16 +157,26 @@
           }
         },
         "description": "update_user route enables registered and verified user to update their existing account",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/api_update"
-        },
         "tags": [
           "User"
-        ]
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "userId",
+            "description": "id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/api_update"
+        }
       },
       "parameters": []
     },
-    "/api/v1/user/user-profile/:id": {
+    "/api/v1/user/profile/": {
       "parameters": [],
       "get": {
         "summary": "Get all the user in the database",
@@ -186,8 +210,8 @@
               "type": "string"
             },
             "in": "query",
-            "name": "id",
-            "description": "User Id"
+            "description": "userId",
+            "name": "id"
           }
         ],
         "tags": [
@@ -196,7 +220,7 @@
         "description": "user_profile route gets registered and verified user tin the database"
       }
     },
-    "api/v1/auth/getBot": {
+    "/api/v1/auth/getBot": {
       "get": {
         "summary": "Unscripted Route",
         "responses": {
@@ -267,7 +291,7 @@
       },
       "parameters": []
     },
-    "api/v1/auth/getText": {
+    "/api/v1/auth/getText": {
       "get": {
         "summary": "Unscripted Route",
         "responses": {
@@ -301,7 +325,7 @@
       },
       "parameters": []
     },
-    "api/v1/sendAudio": {
+    "/api/v1/sendAudio": {
       "post": {
         "summary": "",
         "operationId": "post-getConversation",
@@ -335,7 +359,7 @@
       },
       "parameters": []
     },
-    "api/1/auth/request-reset-password": {
+    "/api/1/auth/request-reset-password": {
       "post": {
         "summary": "Unscripted Route",
         "operationId": "post-request-reset-password",
@@ -372,7 +396,7 @@
       },
       "parameters": []
     },
-    "api/1/auth/resetPassword": {
+    "/api/1/auth/resetPassword": {
       "post": {
         "summary": "Unscripted Route",
         "operationId": "post-request-reset-password",
@@ -419,7 +443,7 @@
       },
       "parameters": []
     },
-    "api/v1/auth/google": {
+    "/api/v1/auth/google": {
       "parameters": [],
       "get": {
         "summary": "Google Authentication",
@@ -463,7 +487,7 @@
         "description": "Get Google Auth Route"
       }
     },
-    "api/v1/auth/linkedin": {
+    "/api/v1/auth/linkedin": {
       "parameters": [],
       "get": {
         "summary": "LinkedIn Authentication",
@@ -497,7 +521,7 @@
         ]
       }
     },
-    "api/v1/auth/linkedin/callback": {
+    "/api/v1/auth/linkedin/callback": {
       "parameters": [],
       "get": {
         "summary": "LinkedIn Authentication",
@@ -531,7 +555,7 @@
         ]
       }
     },
-    "api/v1/auth/facebook": {
+    "/api/v1/auth/facebook": {
       "get": {
         "summary": "Facebook Authentication",
         "responses": {
@@ -568,7 +592,7 @@
       },
       "parameters": []
     },
-    "api/v1/auth/facebook/callback": {
+    "/api/v1/auth/facebook/callback": {
       "get": {
         "summary": "Facebook Authentication",
         "responses": {
@@ -662,7 +686,7 @@
                 "firstName": {
                   "type": "string"
                 },
-                "onfirm_password": {
+                "confirm_password": {
                   "type": "string"
                 },
                 "language": {
@@ -674,7 +698,8 @@
                 "password",
                 "lastName",
                 "firstName",
-                "onfirm_password"
+                "confirm_password",
+                "language"
               ]
             }
           }
@@ -867,6 +892,13 @@
           }
         },
         "description": "Parsed in the body form-data"
+      }
+    },
+    "securitySchemes": {
+      "token": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Detele User Bearer Token"
       }
     }
   }

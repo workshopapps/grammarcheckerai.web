@@ -5,8 +5,9 @@ const { comparePassword } = require('../utilities/compare');
 async function userProfile(req, res) {
     //gets user id
     const id = req.params.id;
+    console.log(id)
     try {
-        const user = await userCollection.findById(id);
+        const user = await userCollection.findOne({_id: id});
         if (!user) {
             return res.json({
                 status: 204,
