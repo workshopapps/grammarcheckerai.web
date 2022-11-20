@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AuthProvider from './lib/context/AuthContext';
-import { Toaster } from 'react-hot-toast';
-
+import '../src/assets/styles/styles.scss';
 import App from './App';
 
 const queryClient = new QueryClient();

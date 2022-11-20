@@ -2,19 +2,17 @@ version: "3"
 
 services:
   backend:
-    image: asyncdeveloper/grammar-check-backend
+    image: asyncdeveloper/grammar-check-backend:latest
     ports:
       - "3000:3000"
     networks:
       - hng-internal
   frontend:
-    image: asyncdeveloper/grammar-check-frontend
+    image: asyncdeveloper/grammar-check-frontend:latest
     ports:
       - "5000:5000"
     networks:
       - hng-internal
-    depends_on:
-      - backend
 
 networks:
   hng-internal:
