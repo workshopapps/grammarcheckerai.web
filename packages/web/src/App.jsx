@@ -12,16 +12,20 @@ import TermsOfUse from './modules/static/terms_of_use';
 import Testimonial from './modules/static/testimonials/Testimonial'
 import Ratings from './modules/static/testimonials/Ratings'
 import DashboardLayout from './components/DashboardLayout';
-import { HomePage, History, Correction, ConversationPage } from './pages';
+import { HomePage, History, Correction, ConversationPage, LandingPage } from './pages';
 
+
+import {LandingPage} from './pages';
 // All routes/pages must be import from ./pages folder
-const router = createBrowserRouter(
+const router = createBrowserRouter( 
   createRoutesFromElements(
     <>
-      {/* <Route path="/" element={<h1>Will redirect to Landing Pages / Conversation Page</h1>} /> */}
       <Route path="/" element={<ConversationPage />} />
-      <Route path="/home" element={<h1>Home page</h1>} />
       <Route path="/history" element={<h2>History</h2>} />
+      <Route path="/gritty-grammar" element={<LandingPage/>} /> 
+      <Route path="/home" element={<HomePage />} />
+      <Route path="/history" element={<History />} />
+      <Route path="/correction" element={<Correction />} />
       <Route path="/about" element={<h1>About Page</h1>} />
       <Route path="/faq" element={<h1>FAQ Page</h1>} />
       <Route path="/blog" element={<h1>Blog Page</h1>} />
