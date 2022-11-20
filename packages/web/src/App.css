@@ -9,3 +9,6 @@ h5,
 h6 {
   font-family: 'DM Sans', sans-serif;
 }
+html {
+  scroll-behavior: smooth;
+}
