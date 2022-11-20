@@ -46,9 +46,9 @@ const router = createBrowserRouter(
       <Route path="/roles" element={<Roles />} />
       <Route path="/apply" element={<Application />} />
       <Route path="/terms-of-use" element={<TermsOfUse />} />
+      <Route path="/app-status" element={<ApiStatus />} />
       <Route path="/testimonials" element={<Testimonial />} />
       <Route path="/ratings" element={<Ratings />} />
-      <Route path="/api-status" element={<h1>Api status Page</h1>} />
       <Route path="/legal" element={<LegalPage />} />
       <Route path="/emailtemplate" element={<EmailTemplate />} />
       <Route path="/errormodal" element={<NewsletterErrorPopUp />} />
