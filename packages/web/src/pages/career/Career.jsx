@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Culture from '../../components/Careers/culture';
+import Footer from '../../components/Careers/footer';
 import Header from '../../components/Careers/header';
 import TeamFeedback from '../../components/Careers/teamFeedback';
 import teamData from '../../data/careers/teamData.json';
@@ -33,6 +34,7 @@ const Careers = () => {
   return (
     <div>
       <Header />
+
       <section className="bg-purple-500 py-20 text-center space-y-14 text-dark-200 mt-24">
         <h4 className="text-white text-xl">Careers and Culture</h4>
         <h1 className="text-4xl text-white font-bold sm:text-3xl sm:w-3/5 sm:mx-auto">
@@ -72,8 +74,8 @@ const Careers = () => {
         </div>
       </div>
       <Culture />
-      <section className="text-center py-10">
-        <p className="w-1/2 mx-auto py-6 sm:w-full sm:px-8 sm:pb-10">
+      <section className="text-center py-10 ">
+        <p className="w-1/2 mx-auto py-6 sm:w-full sm:px-8 sm:pb-10 my-6">
           Every member of the team brings something unique to Gritty Grammar which strenghtens the team. We are growing
           and we would like you to join us. Do you think you have what it takes to join the team? Find out how you can
           add your talent and skills to our team and help us push forward our mission!
@@ -82,6 +84,7 @@ const Careers = () => {
           Explore Open Roles
         </a>
       </section>
+      <Footer />
     </div>
   );
 };

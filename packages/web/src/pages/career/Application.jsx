@@ -1,5 +1,6 @@
 import React from 'react';
 import FileUploader from '../../components/Careers/fileUpload';
+import Footer from '../../components/Careers/footer';
 import Header from '../../components/Careers/header';
 
 const Application = () => {
@@ -115,6 +116,7 @@ const Application = () => {
         <button className="bg-purple-500 rounded-md p-2 w-1/2 mx-auto py-3 text-white">Submit Application</button>
       </form>
     </div>
+    <Footer/>
  </div>
   );
 };
