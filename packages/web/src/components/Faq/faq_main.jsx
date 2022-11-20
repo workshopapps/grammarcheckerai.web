@@ -1,17 +1,21 @@
 import React, { useState } from 'react'
 import data from './faq_data';
 
-function faq_main() {
+import FaqFooter from './faq_footer';
+
+function FaqMain() {
     const [searchTerm, setsearchTerm] = useState("");
   return (
     <>
-            <div className="w-full h-full flex flex-col justify-between">
+
+
+            <div className='w-full h-full flex flex-col justify-between '>
 
                 <div className="mt-[82px] lg:h-[271px] h-[286px] md:h-[300px]  bg-[#8C54BF] grid place-items-center">
                 
                     <h3 className="lg:mt-[45px] mt-[55px] flex items-center justify-center text-[#ffffff80] font-semibold lg:leading-[24px] leading-[17px] md:leading-[20px] lg:text-[24px] md:text-[20px] text-[16px] font-[Inter]">FAQs</h3>
                     <h1 className="mt-[10px] lg:leading-[54px] leading-[38px] text-[#FFFFFF] font-semibold lg:text-[54px] md:text-[50px] text-[32px] flex items-center justify-center font-[Inter]">Ask us anything</h1>
-                    <p className="flex items-center justify-center mt-[21px] font-normal lg:text-[20px] md:text-[18px] text-[16px] leading-[24px] text-center lg:leading-[30px] text-[#FFFFFF] font-[Inter] w-[297px] lg:w-[758px]">Have any questions? we&apos;re here to assist you.</p>
+                    <p className="flex items-center justify-center mt-[21px] font-normal lg:text-[20px] md:text-[18px] text-[16px] leading-[24px] text-center lg:leading-[30px] text-[#FFFFFF] font-[Inter] w-[297px] lg:w-[758px]">Have any questions? We&apos;re here to assist you.</p>
 
                     <div className="relative text-[#0B303E] focus-within:text-[#0B303E] lg:w-[316px] lg:mb-[64px] w-[290px] lg:mt-[22px] mb-[55px] mt-[27px]">
                     <span className="absolute inset-y-0 left-0 flex items-center pl-2">
@@ -31,7 +35,7 @@ function faq_main() {
 
 
 
-            <div className="place-items-center">
+            <div className="place-items-center ">
             <div className="grid lg:grid-cols-3 md:grid-cols-2 lg:mt-[63px] place-items-center lg:gap-3 gap-5 items-center lg:m-15 justify-center m-5">
 
         {
@@ -63,9 +67,11 @@ function faq_main() {
     </div>       
             </div>
 
+            <FaqFooter/>
+
     </>
 
   )
 }
 
-export default faq_main
+export default FaqMain;
