@@ -14,7 +14,7 @@ const {logout} = require('../controller/logoutcontroller')
 const userProfileController = require('../controller/userProfileController')
 
 auth.post("/signup", registerValidationRules(), validate, registerUser);
-auth.post("/google-auth", googleAuthURL);
+auth.get("/google-auth", googleAuthURL);
 
 
 auth.post("/login", login);
