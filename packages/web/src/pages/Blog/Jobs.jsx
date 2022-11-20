@@ -1,6 +1,7 @@
-import React from 'react';
-import Image1 from '../blogimg/image 2.svg';
-import Cta from '../Blogcomponents/Cta';
+
+import React from "react"
+import Image1 from "../../assets/blogimg/image 2.svg"
+import Cta from "../../components/Blog/Cta"
 
 const Jobs = () => {
   return (

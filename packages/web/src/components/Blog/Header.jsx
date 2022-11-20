@@ -1,5 +1,5 @@
 import React from "react"
-import Headerimg from "../blogimg/Rectangle 4.svg"
+import Headerimg from "../../assets/blogimg/Rectangle 4.svg"
 
 const Header = () => {
      return(
