@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@700&family=Inter:wght@400;500&display=swap');
+
+/************* Colors **************************/
+
+$white: #ffffff;
+$headingColor: #0b0b0b;
+$textColor: #393939;
+$btnColor: #5d387f;
+$purpleBackground: #8c54bf;
+$greyColor: rgba(49, 49, 49, 0.8);
+$redColor: #c51717;
+$greenColor: #279371;
+
+/********** Font family********************************/
+
+$fontFamily1: 'DM Sans';
+$fontFamily2: 'Inter';
+
+/************ Breakpoints *****************************/
+
+$md: 768px;
+$lg: 1024px;
+
+/************* Mixins ******************************/
+
+@mixin flexCenter($direction) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin btn {
+  margin-top: 32px;
+  background-color: $btnColor;
+  padding: 16px 40px;
+  width: 156px;
+  height: 51px;
+  border: 1px solid $btnColor;
+  border-radius: 12px;
+  outline: none;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: $white;
+  font-family: $fontFamily2;
+}
