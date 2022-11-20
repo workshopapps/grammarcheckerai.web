@@ -9,12 +9,7 @@ describe("Testing if jest works", () => {
 
 describe("Testing All Endpoints", () => {
   it("Tests test endpoint", async () => {
-    await request(app)
-      .get("/api/v1/test")
-      .expect(200)
-      .then((response) => {
-        expect(response.body.message).toBe("working");
-      });
+    await request(app).get("/test").expect(200);
   });
   it("Tests home endpoint", async () => {
     await request(app)
@@ -27,9 +22,9 @@ describe("Testing All Endpoints", () => {
   it("Tests signup endpoint", async () => {
     await request(app).get("/api/v1/user/signup").expect(200);
   });
-   it("Tests login endpoint", async () => {
-     await request(app).get("/api/v1/user/login").expect(200);
-   });
+  it("Tests login endpoint", async () => {
+    await request(app).get("/api/v1/user/login").expect(200);
+  });
   it("Tests logout endpoint", async () => {
     await request(app).get("/api/v1/user/logout").expect(200);
   });

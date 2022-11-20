@@ -3,6 +3,6 @@ const {userProfile, deleteUser} = require('../controller/userProfileController')
 
  
 userHandler.get('/profile/:id', userProfile);
-userHandler.delete('/', deleteUser);
+userHandler.delete('/delete_user', deleteUser);
 
 module.exports = {userHandler}
