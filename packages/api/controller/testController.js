@@ -37,7 +37,7 @@ exports.home = async (req, res) => {
       });
 
       const logoutPage = await axios
-        .get("/api/v1/logout")
+        .get("/api/v1/auth/logout")
         .then((response) => {
           if (response.status == 200) {
             status.push({ logoutPage: { status: "ok" } });
