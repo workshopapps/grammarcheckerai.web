@@ -34,7 +34,7 @@ const Testimonials = () => {
     return (
         <section className='bg-[#f5f3f380] py-10 text-[#525252]'>
                 <h3 className='text-center mb-10 text-xl md:text-3xl'>See what our customers are saying</h3>
-            <div className='w-[90%] mx-auto flex flex-col gap-5 md:flex-row md:justify-center'>
+            <div className='w-[90%] mx-auto flex sm:flex-col gap-5 flex-row justify-center'>
                 {testimonyDetails.map((data) => {
                     return <article
                         key={data.name}

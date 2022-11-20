@@ -16,7 +16,7 @@ const Footer = () => {
     ]
   return (
       <footer className="bg-[#5D387F] text-white py-10">
-          <ul className=" w-[90%] mx-auto flex flex-col text-center opacity-90 md:flex-row md:gap-5 
+          <ul className=" w-[90%] mx-auto flex sm:flex-col text-center opacity-90 flex-row gap-5 
           md:justify-between">
               {footerTitles.map((link) => {
                   return <li key={link}><a href="/home"> { link}</a></li>

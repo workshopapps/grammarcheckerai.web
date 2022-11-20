@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import userimg from '../../assets/ProfileImage.png';
 import editicon from '../../assets/edit.svg';
 import coloredediticon from '../../assets/EditColored.svg';
@@ -8,13 +8,15 @@ import ProfileScreenButton from '../../components/Button/profileButton/ProfileSc
 
 
 export default function profileScreen() {
+    const navigate = useNavigate();
+
   return (
     <main className='bg-white mt-24'>
         <div className='h-[100vh] sm:w-[90%] md:w-[70%] lg:w-[70%] m-auto'>
             <div className='flex sm:flex-col flex-row justify-between items-center pb-3 sm:border-none border-b-[3px] border-[#d2d2d2]/50 relative'>
                 <h3 className='text-2xl font-bold'>User Profile</h3>
                 <span><img className='absolute bottom-1 md:hidden lg:hidden' src={coloredediticon} alt="edit" /></span>
-                <img className='sm:h-24 sm:mt-3 mt-0 h-12 w-12' src={userimg} alt="user-img" />
+                <img className='sm:h-24 sm:w-24 sm:mt-3 mt-0 h-12 w-12' src={userimg} alt="user-img" />
             </div>
             <div className='flex flex-col text-center md:hidden lg:hidden'>
                 <h1 className='text-xl font-bold text-[#393939]'>Oluwa Riri</h1>
@@ -49,11 +51,11 @@ export default function profileScreen() {
                 </div>
             </div>
 
-            <div className="_btnContainer">
-                <Link to='/me/profile/deleteaccount'>
-                    <ProfileScreenButton variant="danger" >{'Delete Account'}</ProfileScreenButton>
-                </Link>
-                <ProfileScreenButton>{'Sign Out'}</ProfileScreenButton>
+            <div className="_btnContainer">  
+                <ProfileScreenButton onClick={() => navigate('/me/profile/deleteaccount')}  variant="danger" >
+                    Delete Account
+                </ProfileScreenButton>
+                <ProfileScreenButton>Sign Out</ProfileScreenButton>
             </div>
         </div>
         
