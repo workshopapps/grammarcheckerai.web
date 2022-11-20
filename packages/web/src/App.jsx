@@ -13,6 +13,7 @@ import ConfirmDeleteAccount from './pages/profile/ConfirmDeleteAccount';
 import Forgotpassword from './modules/auth/forgot-password/forgot';
 import ResetLink from './modules/auth/reset-password/reset';
 import FaqMain from './components/Faq/faq_main';
+import Blog from './pages/Blog/Homepage';
 import TermsOfUse from './modules/static/terms_of_use';
 import Testimonial from './modules/static/testimonials/Testimonial';
 import Ratings from './modules/static/testimonials/Ratings';
@@ -39,7 +40,7 @@ const router = createBrowserRouter(
       <Route path="/correction" element={<Correction />} />
       <Route path="/about" element={<h1>About Page</h1>} />
       <Route path="/faq" element={<FaqMain />} />
-      <Route path="/blog" element={<h1>Blog Page</h1>} />
+      <Route path="/blog" element={<Homepage />} />
       <Route path="contact" element={<h1>Contact Page</h1>} />
       <Route path="/newsletter" element={<NewsletterPage />} />
       <Route path="/career" element={<Careers />} />
