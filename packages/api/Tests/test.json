@@ -149,11 +149,26 @@
     "/api/v1/user/user-profile/:id": {
       "parameters": [],
       "get": {
-        "summary": "",
+        "summary": "Get all the user in the database",
         "operationId": "get-api-v1-user-profile-:id",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
           }
         },
         "parameters": [
@@ -165,6 +180,9 @@
             "name": "id",
             "description": "User Id"
           }
+        ],
+        "tags": [
+          "User"
         ]
       }
     },
@@ -524,6 +542,17 @@
           }
         },
         "description": ""
+      }
+    },
+    "/facebook/callback": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [
+          "Facebook Auth"
+        ],
+        "responses": {},
+        "operationId": "get-facebook-callback",
+        "description": "Gets Facebook authentication route"
       }
     }
   },
