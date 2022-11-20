@@ -7,7 +7,7 @@ import background from '../../../assets/newsletterImages/background.png';
 import close from '../../../assets/newsletterImages/close-square.png';
 import envelope1 from '../../../assets/newsletterImages/envelope1.png';
 
-// Page should run when the newsletter link on the footer is clicked
+// Page should run when the newsletter link on the navbar/footer is clicked
 
 const NewsletterPage = () => {
   const [isSubmit, setIsSubmit] = useState(false);
@@ -35,7 +35,7 @@ const NewsletterPage = () => {
 
           <form onSubmit={handleSubmit}>
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="Email" placeholder="youremail@example.com" required />
+            <input type="email" id="email" name="Email" placeholder="Youremail@example.com" required />
             <button id="submit" value={isSubmit}>
               Subscribe
             </button>
