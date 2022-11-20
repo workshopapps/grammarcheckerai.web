@@ -6,7 +6,6 @@ function FontAdjustment() {
         <div className="w-full flex flex-col">
           <div className="flex justify-between items-end -translate-y-4 m-0 md:-translate-y-0">
             <p className="text-xs">A</p>
-            <p className="text-md hidden lg:block">A</p>
             <p className="text-5xl">A</p>
           </div>
           <input className="-translate-y-4 cursor-pointer md:-translate-y-0" type="range" />

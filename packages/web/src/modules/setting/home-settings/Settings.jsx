@@ -43,7 +43,7 @@ function Settings() {
   function subPage({ route }) {
     switch (route) {
       case 'help':
-        <Navigate to="/faq" />;
+        <Navigate to="/help and support" />;
         break;
 
       default:
