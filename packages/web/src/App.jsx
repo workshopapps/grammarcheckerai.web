@@ -33,6 +33,7 @@ const router = createBrowserRouter(
       <Route path="/gritty-grammar" element={<LandingPage />} />
       <Route path="/home" element={<HomePage />} />
       <Route path="/history" element={<History />} />
+      <Route path="/settings" element={<Settings />} />
       <Route path="/correction" element={<Correction />} />
       <Route path="/about" element={<h1>About Page</h1>} />
       <Route path="/faq" element={<FaqMain />} />
