@@ -5,7 +5,8 @@ const morgan = require("morgan");
 const login = require('./routes/loginRoute') //login
 const logout = require('./routes/logoutRoute') //logout
 const userRouter = require("./routes/userRouter"); // importing user routes
-const profile = require('./routes/userProfileRoute')// importing profile routes
+const profile = require("./routes/userProfileRoute")// Get user profile
+
 
 require("./database/index.js"); //load databse
 app.use(express.json()).use(cors());
