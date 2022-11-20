@@ -13,15 +13,19 @@ import Testimonial from './modules/static/testimonials/Testimonial'
 import Ratings from './modules/static/testimonials/Ratings'
 import DashboardLayout from './components/DashboardLayout';
 import NewsletterPage from './modules/static/newsletter/NewsletterPage';
-import { HomePage, History, Correction, ConversationPage, LandingPage } from './pages';
+import { HomePage, History, Correction, ConversationPage, LandingPage, LegalPage } from './pages';
+import Careers from './pages/career/Career';
+import Roles from './pages/career/Roles';
+import Application from './pages/career/Application';
+import ApiStatus from './pages/api-status/api-status';
 
 // All routes/pages must be import from ./pages folder
-const router = createBrowserRouter( 
+const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<ConversationPage />} />
       <Route path="/history" element={<h2>History</h2>} />
-      <Route path="/gritty-grammar" element={<LandingPage/>} /> 
+      <Route path="/gritty-grammar" element={<LandingPage />} />
       <Route path="/home" element={<HomePage />} />
       <Route path="/history" element={<History />} />
       <Route path="/correction" element={<Correction />} />
@@ -29,8 +33,10 @@ const router = createBrowserRouter(
       <Route path="/faq" element={<h1>FAQ Page</h1>} />
       <Route path="/blog" element={<h1>Blog Page</h1>} />
       <Route path="contact" element={<h1>Contact Page</h1>} />
-      <Route path="/newsletter" element={<NewsletterPage/>} />
-      <Route path="/culture-career" element={<h1>Culture Page</h1>} />
+      <Route path="/newsletter" element={<NewsletterPage />} />
+      <Route path="/career" element={<Careers />} />
+      <Route path="/roles" element={<Roles />} />
+      <Route path="/apply" element={<Application />} />
       <Route path="/terms-of-use" element={<TermsOfUse />} />
       <Route path="/testimonials" element={<Testimonial />} />
       <Route path="/ratings" element={<Ratings />} />
@@ -96,7 +102,6 @@ function App() {
   }, []);
   console.log(demoData);
   return <RouterProvider router={router} />;
-  
 }
 
 export default App;
