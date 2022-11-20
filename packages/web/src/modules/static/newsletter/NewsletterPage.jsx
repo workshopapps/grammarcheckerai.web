@@ -7,16 +7,12 @@ import background from '../../../assets/newsletterImages/background.png';
 import close from '../../../assets/newsletterImages/close-square.png';
 import envelope1 from '../../../assets/newsletterImages/envelope1.png';
 
-// Page should run when the newsletter link on the navbar/footer is clicked
-
 const NewsletterPage = () => {
   const [isSubmit, setIsSubmit] = useState(false);
-  const [isClosed, setIsClosed] = useState(false); // To close subscription success modal
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmit(true);
-    setIsClosed(false);
   };
 
   return (
@@ -36,7 +32,8 @@ const NewsletterPage = () => {
           <form onSubmit={handleSubmit}>
             <label htmlFor="email">Email</label>
             <input type="email" id="email" name="Email" placeholder="Youremail@example.com" required />
-            <button id="submit" value={isSubmit}>
+            <button 
+              id="submit" value={isSubmit}>
               Subscribe
             </button>
           </form>
@@ -47,11 +44,10 @@ const NewsletterPage = () => {
         <img src={background} alt="reminder icon" />
       </aside>
 
-      {isSubmit ? isClosed : null}
-      {isClosed ? null : (
+      {isSubmit &&
         <div className={styles.newsletter_success}>
           <div className={styles.newsletter_success__card}>
-            <div onClick={() => setIsClosed(true)} className={styles.newsletter_success__card__close}>
+            <div onClick={() => setIsSubmit(false)} className={styles.newsletter_success__card__close}>
               <img className={styles.newsletter_success__card__close_img} src={close} alt="Close icon" />
             </div>
 
@@ -65,7 +61,7 @@ const NewsletterPage = () => {
             </div>
           </div>
         </div>
-      )}
+      }
     </section>
   );
 };
