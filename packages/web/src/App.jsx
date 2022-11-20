@@ -15,6 +15,7 @@ import Careers from './pages/career/Career';
 import Roles from './pages/career/Roles';
 import Application from './pages/career/Application';
 
+
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,7 +30,6 @@ const router = createBrowserRouter(
       <Route path="contact" element={<h1>Contact Page</h1>} />
       <Route path="/newsletter" element={<h1>NewsLetter Page</h1>} />
       <Route path="/career" element={<Careers />} />
-      
       <Route path="/roles" element={<Roles />} />
       <Route path="/apply" element={<Application />} />
       <Route path="/terms-of-use" element={<TermsOfUse />} />
