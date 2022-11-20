@@ -1,8 +1,6 @@
-
-import React from "react"
-import Image3 from "../../assets/blogimg/image 2 (2).svg"
-import Cta from "../../components/Blog/Cta"
-
+import React from 'react';
+import Image3 from '../blogimg/image 2 (2).svg';
+import Cta from '../Blogcomponents/Cta';
 
 const Tips = () => {
   return (
