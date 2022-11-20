@@ -10,9 +10,10 @@ import Forgotpassword from './modules/auth/forgot-password/forgot';
 import ResetLink from './modules/auth/reset-password/reset';
 import TermsOfUse from './modules/static/terms_of_use';
 import DashboardLayout from './components/DashboardLayout';
-import NewsletterPage from './modules/static/newsletter/NewsletterPage';
 import { HomePage, History, Correction, ConversationPage, LandingPage } from './pages';
 
+
+import {LandingPage} from './pages';
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter( 
   createRoutesFromElements(
@@ -27,7 +28,7 @@ const router = createBrowserRouter(
       <Route path="/faq" element={<h1>FAQ Page</h1>} />
       <Route path="/blog" element={<h1>Blog Page</h1>} />
       <Route path="contact" element={<h1>Contact Page</h1>} />
-      <Route path="/newsletter" element={<NewsletterPage/>} />
+      <Route path="/newsletter" element={<h1>NewsLetter Page</h1>} />
       <Route path="/culture-career" element={<h1>Culture Page</h1>} />
       <Route path="/terms-of-use" element={<TermsOfUse />} />
       <Route path="/api-status" element={<h1>Api status Page</h1>} />
@@ -92,7 +93,6 @@ function App() {
   }, []);
   console.log(demoData);
   return <RouterProvider router={router} />;
-  
 }
 
 export default App;
