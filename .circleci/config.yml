@@ -56,6 +56,7 @@ jobs:
       - AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
       - AWS_REGION: $AWS_REGION
+
   deploy_docker_container:
     docker:
       - image: python:3.7-alpine
@@ -74,12 +75,12 @@ workflows:
   default:
     jobs:
       - build_docker_image:
-          filers:
+          filters:
             branches:
               only: develop
       - create_environment:
           requires:
-            - build_docker_images
+            - build_docker_image
           filters:
             branches:
               only: develop
