@@ -20,7 +20,6 @@ import DashboardLayout from './components/DashboardLayout';
 import NewsletterPage from './modules/static/newsletter/NewsletterPage';
 import EmailTemplate from './modules/static/emailtemplate/EmailTemplate';
 import NewsletterErrorPopUp from './modules/modal/newsletter/newsletterErrorPopUp/NewsletterErrorPopUp';
-import { HomePage, History, Correction, ConversationPage, LandingPage, LegalPage } from './pages';
 import { HomePage, History, Correction, ConversationPage, LandingPage, LegalPage, Settings } from './pages';
 import Careers from './pages/career/Career';
 import Roles from './pages/career/Roles';
@@ -51,8 +50,8 @@ const router = createBrowserRouter(
       <Route path="/ratings" element={<Ratings />} />
       <Route path="/api-status" element={<h1>Api status Page</h1>} />
       <Route path="/legal" element={<LegalPage />} />
-      <Route path="/emailtemplate" element={<EmailTemplate />}/>
-      <Route path="/errormodal" element={<NewsletterErrorPopUp />}/>
+      <Route path="/emailtemplate" element={<EmailTemplate />} />
+      <Route path="/errormodal" element={<NewsletterErrorPopUp />} />
       <Route
         element={
           <div>
