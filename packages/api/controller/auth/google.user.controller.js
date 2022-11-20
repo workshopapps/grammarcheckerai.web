@@ -1,6 +1,5 @@
 const { environment } = require("../../config/environment");
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, SERVER_ROOT_URI } = environment;
-const axios = require('axios');
 
 const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
 const { OAuth2Client } = require("google-auth-library");
