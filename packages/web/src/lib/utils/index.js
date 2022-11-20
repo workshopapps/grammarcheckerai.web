@@ -22,3 +22,7 @@ export const secureRequest = async ({ url, method = 'get', body = undefined, hea
 
   return axios[method](url, body, { headers });
 };
+
+export const convertSecToMin = (timer) => {
+  return new Date(timer * 1000).toISOString().substring(14, 19);
+};

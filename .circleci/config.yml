@@ -1,0 +1,92 @@
+# This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
+version: 2.1
+
+# Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
+# See: https://circleci.com/docs/2.0/orb-intro/
+orbs:
+  node: circleci/node@4.7
+
+jobs:
+  build_docker_image:
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - run:
+          name: Build and Push Frontend
+          command: |
+            cd ./packages/web
+            docker build -t asyncdeveloper/grammar-check-frontend:latest .
+            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            docker push asyncdeveloper/grammar-check-frontend:latest
+
+      - run:
+          name: Build and Push Backend
+          command: |
+            cd ./packages/api
+            docker build -t asyncdeveloper/grammar-check-backend:latest .
+            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            docker push asyncdeveloper/grammar-check-backend:latest
+
+  create_environment:
+    docker:
+      - image: circleci/node:16.13.1-bullseye
+    steps:
+      - checkout
+      - run:
+          name: Make terraform installer script executable
+          command: |
+            chmod +x ./terraform_install.sh
+
+      - run:
+          name: Install Terraform
+          command: |
+            ./terraform_install.sh
+
+      - run:
+          name: Initialize Terraform
+          command: |
+            cd ./terraform && terraform init -input=false
+
+      - run:
+          name: Build Infrastructure
+          command: |
+            cd ./terraform && terraform apply -auto-approve -input=false
+    environment:
+      - AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+      - AWS_REGION: $AWS_REGION
+
+  deploy_docker_container:
+    docker:
+      - image: python:3.7-alpine
+    steps:
+      - checkout
+      - run: apk add --update openssh-client git
+      - add_ssh_keys:
+          fingerprints:
+            - ""
+      - run: apk add --update ansible
+      - run:
+          name: Configure Infrastructure
+          command: |
+            ansible-playbook ansible/deploy-app.yml -i ansible/inventory.txt -vvv
+workflows:
+  default:
+    jobs:
+      - build_docker_image:
+          filters:
+            branches:
+              only: develop
+      - create_environment:
+          requires:
+            - build_docker_image
+          filters:
+            branches:
+              only: develop
+      - deploy_docker_container:
+          requires:
+            - create_environment
+          filters:
+            branches:
+              only: develop

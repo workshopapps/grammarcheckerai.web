@@ -1,0 +1,74 @@
+---
+- hosts: web
+  user: ubuntu
+  become: true
+  become_method: sudo
+  become_user: root
+  gather_facts: false
+  vars_files:
+    - vars/docker.yml
+
+  tasks:
+    - name: Install aptitude
+      become: true
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+    - name: Install required system packages
+      become: true
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+        state: latest
+        update_cache: true
+
+    - name: Add Docker GPG apt Key
+      become: true
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      become: true
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      become: true
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+
+    - name: Install Docker Module for Python
+      become: true
+      pip:
+        name: docker
+
+    - name: Update apt and install docker-compose
+      become: true
+      apt:
+        name: docker-compose
+        state: latest
+        update_cache: true
+
+    - name: copy docker-compose file from host to remote
+      become: true
+      copy:
+        src: docker-compose.yml
+        dest: /home/ubuntu/docker-compose.yml
+
+    - name: run docker-compose up
+      become: true
+      shell: |
+        docker system prune --all --force 
+        docker-compose pull 
+        docker-compose -f /home/ubuntu/docker-compose.yml up -d
