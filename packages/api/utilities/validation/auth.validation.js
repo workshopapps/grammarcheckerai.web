@@ -21,6 +21,12 @@ const registerValidationRules = () => {
       .withMessage("last name can not be empty")
       .isLength({ min: 1, max: 20 })
       .withMessage("Last name  must be between 1 and 20 characters"),
+    check("username")
+      .trim()
+      .notEmpty()
+      .withMessage("username can not be empty")
+      .isLength({ min: 1, max: 20 })
+      .withMessage("username  must be between 1 and 20 characters"),
     check("language")
       .trim()
       .notEmpty()

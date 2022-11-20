@@ -5,7 +5,7 @@ const { login } = require("../loginController");
 const { userCollection } = require("../../database/models/userSchema");
 
 async function registerUser(req, res) {
-  let { email, firstName, lastName, password, confirm_password, language } =
+  let { email, firstName, lastName, username, password, confirm_password, language } =
     req.body;
   //Check if the user already exist
   password =
@@ -26,7 +26,7 @@ async function registerUser(req, res) {
       .status(409)
       .json(response({ error: "User already exist", success: false }));
       
-  const data = { email, firstName, lastName, password, language };
+  const data = { email, firstName, lastName,username, password, language };
 
   const user = await register(data);
 
