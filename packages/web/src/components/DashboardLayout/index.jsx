@@ -7,8 +7,8 @@ import { BsDownload, BsClock } from 'react-icons/bs';
 
 function DashboardLayout() {
   return (
-    <div className="flex min-h-screen">
-      <div className="lg:w-90 md:w-80 w-0 h-full bg-[#F6F6F6] max-h-screen min-h-screen ">
+    <div className="flex min-h-screen z-10">
+      <div className="md:w-90 lg:w-80 h-full bg-[#F6F6F6] max-h-screen min-h-screen">
         <div className="w-32 mx-auto py-20">
           <img src={logoImg} alt="" className="w-full" />
         </div>

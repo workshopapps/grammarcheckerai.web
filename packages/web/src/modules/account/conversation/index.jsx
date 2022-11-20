@@ -59,10 +59,10 @@ function Conversation() {
                 <img src={botImg} alt="" className="max-w-full" />
               </div>
               <div className="space-y-4">
-                <h2 className="text-xl text-[#262626] leading-relaxed sm:text-5xl">
+                <h2 className="sm:text-xl text-[#262626] leading-relaxed text-5xl">
                   What would you like to say today?
                 </h2>
-                <p className="text-slate-600 text-md sm:text-[19px]">Each conversation bring you closer to fluency.</p>
+                <p className="text-slate-600 sm:text-md text-[19px]">Each conversation bring you closer to fluency.</p>
               </div>
             </>
           ) : (
