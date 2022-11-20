@@ -3,7 +3,7 @@ import editicon from '../../assets/edit.svg';
 import coloredediticon from '../../assets/EditColored.svg';
 
 //components
-import ProfileScreenButton from '../../components/Button/ProfileScreenButton'
+import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton'
 
 
 export default function profileScreen() {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import ProfileScreenButton from '../../components/Button/ProfileScreenButton';
+import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton';
 
 export default function DeleteAccount() {
     const [email, setEmail] = useState('');

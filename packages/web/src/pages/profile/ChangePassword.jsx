@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import ProfileScreenButton from '../../components/Button/ProfileScreenButton'
+import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton'
 import successimg from '../../assets/success.svg';
 
 
