@@ -32,6 +32,7 @@ const router = createBrowserRouter(
       <Route path="/culture-career" element={<h1>Culture Page</h1>} />
       <Route path="/terms-of-use" element={<TermsOfUse />} />
       <Route path="/api-status" element={<h1>Api status Page</h1>} />
+      <Route path="/legal" element={<LegalPage />} />
       <Route
         element={
           <div>
