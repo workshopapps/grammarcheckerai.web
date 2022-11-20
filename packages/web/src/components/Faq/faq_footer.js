@@ -7,7 +7,7 @@ function faq_footer() {
         <div className="grid  m-5">
             <div className="lg:mx-[50px]">
             <h4 className="lg:text-[24px] text-[18px] md:text-[20px]  lg:mt-[37px] mt-[27px] w-[297px] font-[Inter]">Still have questions?</h4>
-            <p className="font-[Inter] lg:w-full lg:mt-[9px] mt-[6px] lg:text-[18px] text-[14px] w-[240px] md:w-[450px] lg:leading-[28px] leading-[21px]">Can’t find the answer you’re looking for? Please chat to our friendly team.</p>                    
+            <p className="font-[Inter] lg:w-full lg:mt-[9px] mt-[6px] lg:text-[18px] text-[14px] w-[240px] md:w-[450px] lg:leading-[28px] leading-[21px]">Can&ldquo;t find the answer you&ldquo;re looking for? Please chat to our friendly team.</p>                    
             <button className="bg-[#5D387F] rounded-[9px] border border-[#FFFFFF] px-4 py-2 lg:mt-[27px] mt-[20px] lg:mb-[37px] mb-[27px]">Get in touch</button>
             </div>
         </div>
