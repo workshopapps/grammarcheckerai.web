@@ -1,7 +1,7 @@
 const { userCollection, authValidatorSchema } = require('../database/models/userSchema')
 const {  findOne } = require("../repository/user.repository");
 
-exports.login = async (req, res) => {
+ async function login (req, res) {
     // retrieve the email and password 
     const { email, password } = req.body;
 
@@ -14,7 +14,7 @@ exports.login = async (req, res) => {
     }
     
     let user = await userCollection.findOne({email});
-    console.log(user);
+    
     if (!user) {
         return res.status(401).json({ msg: 'Invalid email or password' })
     }
@@ -24,7 +24,9 @@ exports.login = async (req, res) => {
     if (!validPassword) {
         return res.status(401).json({ msg: 'Invalid email or password' })
     }
-
+    loginUser(user, res);
+}
+async function loginUser(user, res){
     const token = user.generateAuthToken()
 
     return res.status(200).json({
@@ -36,4 +38,4 @@ exports.login = async (req, res) => {
         }
     })
 }
-
+module.exports = {loginUser, login}
