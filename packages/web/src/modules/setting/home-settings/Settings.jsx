@@ -8,12 +8,19 @@ import SettingOption from './setting-list/setting-list';
 import LanguageOption from './language/language-option';
 
 function Settings() {
+  const [universalLanguage, setUniversalLanguage] = useState({});
+
+  const changeLanguage = (selected) => {
+    setUniversalLanguage(selected);
+    console.log(selected);
+  };
+
   const settingList = [
     {
       route: 'language',
       name: 'Language',
       icon: languageIcon,
-      child: <Languages />,
+      child: <Languages openBar={subPage} universalLanguage={universalLanguage} />,
     },
     {
       name: 'Font Size Adjustment',
@@ -64,7 +71,7 @@ function Settings() {
           );
         })}
       </div>
-      {languageBar && <LanguageOption />}
+      {languageBar && <LanguageOption openBar={subPage} setUniversalLanguage={changeLanguage} />}
     </div>
   );
 }
