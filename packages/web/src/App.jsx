@@ -18,7 +18,7 @@ import Testimonial from './modules/static/testimonials/Testimonial';
 import Ratings from './modules/static/testimonials/Ratings';
 import DashboardLayout from './components/DashboardLayout';
 import NewsletterPage from './modules/static/newsletter/NewsletterPage';
-import { HomePage, History, Correction, ConversationPage, LandingPage, LegalPage } from './pages';
+import { HomePage, History, Correction, ConversationPage, LandingPage, LegalPage, Settings } from './pages';
 import Careers from './pages/career/Career';
 import Roles from './pages/career/Roles';
 import Application from './pages/career/Application';
@@ -101,7 +101,7 @@ const router = createBrowserRouter(
           path="settings"
           element={
             <ProtectedRoute>
-              <h1>Settings Page</h1>
+              <Settings />
             </ProtectedRoute>
           }
         />
