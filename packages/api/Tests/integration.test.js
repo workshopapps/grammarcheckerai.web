@@ -24,31 +24,19 @@ describe("Testing All Endpoints", () => {
         expect(response.body.message).toBe("Welcome to Grit Grammarly 🙌");
       });
   });
-  it("Tests login endpoint", async () => {
-    await request(app).get("/api/v1/user/login").expect(200);
-    // .then((response) => {
-    //   expect(response.body.status).toBe("ok");
-    // });
+  it("Tests signup endpoint", async () => {
+    await request(app).get("/api/v1/user/signup").expect(200);
   });
-  it("Tests login endpoint", async () => {
+   it("Tests login endpoint", async () => {
+     await request(app).get("/api/v1/user/login").expect(200);
+   });
+  it("Tests logout endpoint", async () => {
     await request(app).get("/api/v1/user/logout").expect(200);
-    // .then((response) => {
-    //   expect(response.body.status).toBe("ok");
-    // });
   });
   it("Tests if the user sends an audio", async () => {
     await request(app).get("/api/v1/sendAudio").expect(200);
-    // .then((response) => {
-    //   expect(response.body.status).toBe("ok");
-    // });
   });
   it("Tests if the getText enpoint works", async () => {
-    await request(app)
-      .get("/api/vi/getText")
-      // .expect("Content-Type", /json/)
-      .expect(200);
-    // .then((response) => {
-    //   expect(response.body.status).toBe("ok");
-    // });
+    await request(app).get("/api/vi/getText").expect(200);
   });
 });
