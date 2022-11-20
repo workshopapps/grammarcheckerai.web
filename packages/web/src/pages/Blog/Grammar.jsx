@@ -1,6 +1,8 @@
-import React from 'react';
-import Image2 from '../blogimg/image 2 (1).svg';
-import Cta from '../Blogcomponents/Cta';
+
+import React from "react"
+import Image2 from "../../assets/blogimg/image 2 (1).svg"
+import Cta from "../../components/Blog/Cta"
+
 
 const Grammar = () => {
   return (
