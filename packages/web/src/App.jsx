@@ -11,6 +11,7 @@ import ResetLink from './modules/auth/reset-password/reset';
 import TermsOfUse from './modules/static/terms_of_use';
 import DashboardLayout from './components/DashboardLayout';
 import NewsletterPage from './modules/static/newsletter/NewsletterPage';
+import EmailTemplate from './modules/static/emailtemplate/EmailTemplate';
 import { HomePage, History, Correction, ConversationPage, LandingPage, LegalPage } from './pages';
 
 // All routes/pages must be import from ./pages folder
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
       <Route path="/terms-of-use" element={<TermsOfUse />} />
       <Route path="/api-status" element={<h1>Api status Page</h1>} />
       <Route path="/legal" element={<LegalPage />} />
+      <Route path="/emailtemplate" element={<EmailTemplate />}/>
       <Route
         element={
           <div>
