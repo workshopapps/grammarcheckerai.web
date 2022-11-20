@@ -1,5 +1,5 @@
 import React from "react"
-import Ctaimg from "../blogimg/cuate.svg"
+import Ctaimg from "../../assets/blogimg/cuate.svg"
 
 const Cta = () => {
      return(

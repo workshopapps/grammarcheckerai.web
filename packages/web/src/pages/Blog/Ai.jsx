@@ -1,6 +1,6 @@
 import React from "react"
-import Heroimg from "../blogimg/Frame 1000001903.svg"
-import Cta from "../Blogcomponents/Cta"
+import Heroimg from "../../assets/blogimg/Frame 1000001903.svg"
+import Cta from "../../components/Blog/Cta"
 
 const Ai = () => {
      return(

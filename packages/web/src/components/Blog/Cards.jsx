@@ -1,8 +1,8 @@
 import React from "react"
-import Image1 from "../blogimg/image 2.svg"
-import Image2 from "../blogimg/image 2 (1).svg"
-import Image3 from "../blogimg/image 2 (2).svg"
-import Icon from "../blogimg/arrow-down-circle-fill 1.png"
+import Image1 from "../../assets/blogimg/image 2.svg"
+import Image2 from "../../assets/blogimg/image 2 (1).svg"
+import Image3 from "../../assets/blogimg/image 2 (2).svg"
+import Icon from "../../assets/blogimg/arrow-down-circle-fill 1.png"
 import { Link } from "react-router-dom"
 
 const Cards = () => {
@@ -19,7 +19,7 @@ const Cards = () => {
 
                          <p className="text-cards font-normal text-sm mb-3 xl:text-base">Do you want to make money speaking English? if so, you're in luck!</p>
 
-                         <Link to="../Blog/Jobs" className="text-header text-sm font-bold mb-3 text-left">Read more</Link>
+                         <Link to="../../pages/Blog/Jobs" className="text-header text-sm font-bold mb-3 text-left">Read more</Link>
                     </div>
 
                     <div className="border-solid border border-card_border w-full p-2 md:max-w-sm md:p-4">
@@ -31,7 +31,7 @@ const Cards = () => {
 
                          <p className="text-cards font-normal text-sm mb-3 xl:text-base">Do you make these common grammar mistakes? Many people do...</p>
 
-                         <Link to="../Blog/Grammar" className="text-header text-sm font-bold mb-3 text-left">Read more</Link>
+                         <Link to="../../pages/Blog/Grammar" className="text-header text-sm font-bold mb-3 text-left">Read more</Link>
                     </div>
 
                     <div className="border-solid border border-card_border w-full p-2 md:max-w-sm md:p-4">
@@ -43,7 +43,7 @@ const Cards = () => {
 
                          <p className="text-cards font-normal text-sm mb-3 xl:text-base">We will discuss 10 tips that will help you improve your speaking skills in a short amount of time....</p>
 
-                         <Link to="../Blog/Tips" className="text-header text-sm font-bold mb-3 text-left">Read more</Link>
+                         <Link to="../../pages/Blog/Tips" className="text-header text-sm font-bold mb-3 text-left">Read more</Link>
                     </div>
 
                     <div className="flex justify-center items-center xl:hidden">
