@@ -9,6 +9,8 @@ import Signin from './modules/auth/login/login';
 import Forgotpassword from './modules/auth/forgot-password/forgot';
 import ResetLink from './modules/auth/reset-password/reset';
 import TermsOfUse from './modules/static/terms_of_use';
+import Testimonial from './modules/static/testimonials/Testimonial'
+import Ratings from './modules/static/testimonials/Ratings'
 import DashboardLayout from './components/DashboardLayout';
 import NewsletterPage from './modules/static/newsletter/NewsletterPage';
 import { HomePage, History, Correction, ConversationPage, LandingPage, LegalPage } from './pages';
@@ -36,7 +38,9 @@ const router = createBrowserRouter(
       <Route path="/roles" element={<Roles />} />
       <Route path="/apply" element={<Application />} />
       <Route path="/terms-of-use" element={<TermsOfUse />} />
-       <Route path="/api-status" element={<ApiStatus />} />
+      <Route path="/testimonials" element={<Testimonial />} />
+      <Route path="/ratings" element={<Ratings />} />
+      <Route path="/api-status" element={<h1>Api status Page</h1>} />
       <Route path="/legal" element={<LegalPage />} />
       <Route
         element={
