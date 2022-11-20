@@ -1,0 +1,390 @@
+._gs2mainsignup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+/* width */
+._gs2signupcol1::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Track */
+._gs2signupcol1::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+/* Handle */
+._gs2signupcol1::-webkit-scrollbar-thumb {
+  background: rgb(255, 255, 255);
+}
+
+/* Handle on hover */
+._gs2signupcol1::-webkit-scrollbar-thumb:hover {
+  background: rgb(255, 255, 255);
+}
+._gs2signup {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  height: 100%;
+}
+._gs2signupcol1 {
+  background-color: #fff;
+  width: 50%;
+  height: 100%;
+  padding: 2% 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+._authback {
+  padding: 20px 0 36px 0;
+}
+._authback svg {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+._gssignuptophead {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #9c9c9c;
+}
+._gs2signupcontent ._subtitle {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #5a5a5a;
+  width: 377px;
+  padding-bottom: 10px;
+}
+._gs2signupcontent > p span {
+  color: #2fb087;
+}
+._gs2signupcontent h2 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 42px;
+  color: #393939;
+  width: 387px;
+  padding: 9px 0 16px 0;
+}
+
+/* Sign up button and input styles  */
+._gs2signupinput {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+}
+._gs2signupinput span:first-child {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+}
+._gs2signupinput input {
+  margin: 8px 0;
+  padding: 12px 16px 12px 12px;
+  outline: none;
+  border: 1px solid #d7d7d7;
+  border-radius: 8px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  width: 90%;
+  max-width: 550px;
+}
+._gs2signupinput ._gs2signupvalidate {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ec1b1b;
+}
+._gs2signupcontinue {
+  width: 90%;
+  max-width: 550px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 0;
+}
+._gs2signupcontinue button {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding: 16px 40px;
+  color: #fff;
+  background: #5d387f;
+  border-radius: 12px;
+}
+._gs2signupsignin p {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  padding: 15px 0;
+}
+._gs2mainsignup p a {
+  color: #279371;
+  font-weight: 900;
+}
+._gs2signupcol2 {
+  background: #5d387f;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 50%;
+  height: 100%;
+  padding: 2% 4%;
+  position: fixed;
+  right: 0;
+}
+._gs2mainsignupcol2body {
+  margin-top: 12%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+._gs2mainsignupcol2images img:first-child {
+  width: 100%;
+  max-width: 418.72px;
+}
+._gs2mainsignupcol2images img:last-child {
+  margin: 20px 0 0 80px;
+  width: 100%;
+  max-width: 406.5px;
+}
+._gs2mainsignupcol2content {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  margin-top: 12%;
+  max-width: 486px;
+  width: 100%;
+}
+._gs2mainsignupcol2content h3 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 31px;
+  text-align: center;
+  margin: 20px 0;
+  color: #ffffff;
+}
+
+._gs2mainsignupcol2content p {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: #d5d5d5;
+}
+._gs2mainsignupcol2footer {
+  width: 100%;
+  height: 20px;
+}
+._gs2signupslider {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+._gs2signupslider svg {
+  fill: rgb(240, 240, 240);
+  width: 20px;
+  cursor: pointer;
+}
+._dots {
+  width: calc(100% - 40px);
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+._dots span:last-child {
+  width: 12px;
+  height: 12px;
+  border-radius: 60%;
+  margin: 0 5px;
+  background-color: white;
+}
+._dots span:first-child {
+  width: 12px;
+  height: 12px;
+  border-radius: 60%;
+  margin: 0 5px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+._gs2socialsignupcol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 90%;
+  max-width: 550px;
+}
+._gs2socialsignupcol p {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+}
+._gs2socialsignups {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  padding: 20px 0;
+}
+._gs2socialsignups button {
+  width: 30px;
+  margin: 20px;
+}
+@media only screen and (min-width: 849px) and (max-width: 1200px) {
+  ._gs2mainsignupcol2images img:last-child {
+    margin: 20px 0 0 10px;
+  }
+}
+@media only screen and (min-width: 849px) and (max-width: 1100px) {
+  ._gs2signupcontinue {
+    width: 90%;
+    justify-content: center;
+    flex-direction: column;
+  }
+  ._gs2signupcontinue button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+@media only screen and (max-width: 850px) {
+  ._gs2socialsignupcol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 100%;
+  }
+  ._gs2mainsignup {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  ._gs2signup {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-direction: column-reverse;
+    height: 100%;
+    padding-bottom: 20px;
+  }
+  ._gs2signupcol1 {
+    width: 100%;
+    height: 50%;
+  }
+  ._gs2signupcol2 {
+    width: 100%;
+    height: 500px;
+    justify-content: space-around;
+    position: relative;
+  }
+  ._gs2mainsignupcol2body {
+    margin-top: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  ._authback {
+    padding: 0 0 36px 0;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    margin: 15px 0 0 0;
+  }
+  ._gs2socialsignupcol {
+    justify-content: center;
+    width: 100%;
+  }
+  ._authback svg {
+    cursor: pointer;
+    color: white;
+  }
+  ._gs2signupslider svg {
+    visibility: hidden;
+  }
+  ._gs2signupinput input {
+    width: 100%;
+    max-width: 100%;
+  }
+  ._gs2signupcontinue {
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 100%;
+  }
+  ._gs2signupcontinue button {
+    width: 100%;
+    justify-content: center;
+  }
+  ._gs2signupinput {
+    padding: 25px 0;
+  }
+  ._gs2mainsignupcol2images img:first-child {
+    width: 100%;
+    max-width: 313.18px;
+  }
+  ._gs2mainsignupcol2images img:last-child {
+    width: 100%;
+    max-width: 298.15px;
+  }
+  ._gs2signupcontent h2 {
+    width: 100%;
+    max-width: 387px;
+    font-size: 24px;
+    line-height: 31px;
+    padding: 9px 0 16px 0;
+  }
+  ._gs2signupcontent ._subtitle {
+    width: 100%;
+    max-width: 377px;
+  }
+}
+@media only screen and (max-width: 410px) {
+  ._gs2mainsignupcol2images img:last-child {
+    margin: 20px 0 0 10%;
+  }
+  ._gs2mainsignupcol2images {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  ._gs2signupcol2 {
+    height: 432px;
+  }
+}

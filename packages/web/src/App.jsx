@@ -1,16 +1,29 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
-import HomePage from './pages/home/homePage';
-import History from './pages/history/history';
-import Correction from './pages/history/correction';
+import { useLocalStorage } from './hooks/useLocalStorage';
+import Signup from './modules/auth/signup/step1/step1';
+import Signuptwo from './modules/auth/signup/step2/step2';
+import Signin from './modules/auth/login/login';
+import Forgotpassword from './modules/auth/forgot-password/forgot';
+import ResetLink from './modules/auth/reset-password/reset';
+import TermsOfUse from './modules/static/terms_of_use';
+import DashboardLayout from './components/DashboardLayout';
+import NewsletterPage from './modules/static/newsletter/NewsletterPage';
+import { HomePage, History, Correction, ConversationPage, LandingPage, LegalPage } from './pages';
+import Careers from './pages/career/Career';
+import Roles from './pages/career/Roles';
+import Application from './pages/career/Application';
+import ApiStatus from './pages/api-status/api-status';
 
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<h1>Will redirect to Landing Pages / Conversation Page</h1>} />
+      <Route path="/" element={<ConversationPage />} />
+      <Route path="/history" element={<h2>History</h2>} />
+      <Route path="/gritty-grammar" element={<LandingPage />} />
       <Route path="/home" element={<HomePage />} />
       <Route path="/history" element={<History />} />
       <Route path="/correction" element={<Correction />} />
@@ -18,36 +31,32 @@ const router = createBrowserRouter(
       <Route path="/faq" element={<h1>FAQ Page</h1>} />
       <Route path="/blog" element={<h1>Blog Page</h1>} />
       <Route path="contact" element={<h1>Contact Page</h1>} />
-      <Route path="/newsletter" element={<h1>NewsLetter Page</h1>} />
-      <Route path="/culture-career" element={<h1>Culture Page</h1>} />
-      <Route path="/terms-of-use" element={<h1>Terms of use Page</h1>} />
-      <Route path="/api-status" element={<h1>Api status Page</h1>} />
+      <Route path="/newsletter" element={<NewsletterPage />} />
+      <Route path="/career" element={<Careers />} />
+      <Route path="/roles" element={<Roles />} />
+      <Route path="/apply" element={<Application />} />
+      <Route path="/terms-of-use" element={<TermsOfUse />} />
+       <Route path="/api-status" element={<ApiStatus />} />
+      <Route path="/legal" element={<LegalPage />} />
       <Route
         element={
           <div>
-            <h2>AuthLayout</h2>
             <Outlet />
           </div>
         }
       >
-        <Route path="signin" element={<h2>Signin Page</h2>} />
-        <Route path="signup" element={<h2>Logout Page</h2>} />
-        <Route path="forgot-password" element={<h2>Forgot Password Page</h2>} />
+        <Route path="signin" element={<Signin />} />
+        <Route path="signup" element={<Signup />} exact />
+        <Route path="signup/step-two" element={<Signuptwo />} />
+        <Route path="forgot-password" element={<Forgotpassword />} />
+        <Route path="reset-password" element={<ResetLink />} />
       </Route>
-      <Route
-        path="/me"
-        element={
-          <div>
-            <h2>Dashboard Layout</h2>
-            <Outlet />
-          </div>
-        }
-      >
+      <Route path="/me" element={<DashboardLayout />}>
         <Route
           path="home"
           element={
             <ProtectedRoute>
-              <h1>Home Page</h1>
+              <HomePage />
             </ProtectedRoute>
           }
         />
@@ -55,15 +64,17 @@ const router = createBrowserRouter(
           path="history"
           element={
             <ProtectedRoute>
-              <h1>History Page</h1>
+              <History />
             </ProtectedRoute>
           }
         />
+        <Route path="history/correction" element={<Correction />} />
+
         <Route
-          path="transcribe"
+          path="import"
           element={
             <ProtectedRoute>
-              <h1>Transcribe/import Page</h1>
+              <h1>Quick Transcribe/import Page</h1>
             </ProtectedRoute>
           }
         />
@@ -81,6 +92,11 @@ const router = createBrowserRouter(
 );
 
 function App() {
+  const [demoData, setDemoData] = useLocalStorage('demoData', '');
+  useEffect(() => {
+    setDemoData('demo');
+  }, []);
+  console.log(demoData);
   return <RouterProvider router={router} />;
 }
 
