@@ -13,10 +13,10 @@ router.get('/auth/linkedin',
     }
 ));
 
-router.get('/linkedin/callback',
+router.get('/auth/linkedin/callback',
     passport.authenticate('linkedin', {
-        successRedirect: '/profile',
-        failureRedirect: '/'
+        successRedirect: '/Profile',
+        failureRedirect: '/login'
     }
 ));
 

@@ -4,15 +4,17 @@ exports.login = async (req, res) => {
     // retrieve the email and password 
     const { email, password } = req.body;
 
+    if (!email || !password) {
+        return res.status(400).json({ msg: 'Please provide email and password' })
+    }
+    
     const { error } = authValidatorSchema.validate({ email, password });
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) return res.status(400).json({message: error.details[0].message});
 
     // check if the email and password exists
-    if (!email || !password) {
-        return res.status(404).json({ msg: 'Please provide email or password' })
-    }
 
     let user = await userCollection.findOne({ email })
+
     if (!user) {
         return res.status(401).json({ msg: 'Invalid email or password' })
     }
@@ -34,4 +36,3 @@ exports.login = async (req, res) => {
         }
     })
 }
-

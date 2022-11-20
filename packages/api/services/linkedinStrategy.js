@@ -19,7 +19,7 @@ passport.use(new LinkedInStrategy({
     callbackURL: environment.CALLBACK_URL,
     scope: ['r_emailaddress', 'r_liteprofile'],
   }, function (token, tokenSecret, profile, done) {
+    
     return done(null, profile);
   }
 ));
-
