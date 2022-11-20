@@ -9,19 +9,19 @@ import Testimonials from './Testimonials';
 import Utilise from './Utilise';
 
 const LandingPage = () => {
-    return (
-        <div className='bg-[#bbb8b81a]'>
-            <Hero />
-            <Charcters />
-            <HowToUse />
-            <Testimonials />
-            <Faq />
-            <Cta />
-            <Utilise />
-            <NewsLetter />
-            <Footer/>
-        </div>
-    );
-}
+  return (
+    <div className="bg-[#bbb8b81a]">
+      <Hero />
+      <Charcters />
+      <HowToUse />
+      <Testimonials />
+      <Faq />
+      <Cta />
+      <Utilise />
+      <NewsLetter />
+      <Footer />
+    </div>
+  );
+};
 
 export default LandingPage;

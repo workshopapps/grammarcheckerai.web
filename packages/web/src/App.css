@@ -20,6 +20,8 @@ h6 {
   --DM-font: 'DM Sans', sans-serif;
   --Inter: 'Inter', sans-serif;
   --greyScale100: #d7d7d7;
+}
+
 html {
   scroll-behavior: smooth;
 }

@@ -91,8 +91,7 @@ async function updateUser(req, res) {
     }
 
     // verify that the user password is correct
-    const hash = user.password;
-    const isCorrect = await comparePassword(password, hash);
+    const isCorrect = await user. comparePassword(password);
 
     // if password is not correct
     if (!isCorrect) {
