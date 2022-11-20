@@ -33,7 +33,7 @@ const router = createBrowserRouter(
       <Route path="/history" element={<History />} />
       <Route path="/correction" element={<Correction />} />
       <Route path="/about" element={<h1>About Page</h1>} />
-      <Route path="/faq" element={<FaqMain/>} />
+      <Route path="/faq" element={<FaqMain />} />
       <Route path="/blog" element={<h1>Blog Page</h1>} />
       <Route path="contact" element={<h1>Contact Page</h1>} />
       <Route path="/newsletter" element={<NewsletterPage />} />
@@ -41,7 +41,7 @@ const router = createBrowserRouter(
       <Route path="/roles" element={<Roles />} />
       <Route path="/apply" element={<Application />} />
       <Route path="/terms-of-use" element={<TermsOfUse />} />
-       <Route path="/api-status" element={<ApiStatus />} />
+      <Route path="/app-status" element={<ApiStatus />} />
       <Route path="/legal" element={<LegalPage />} />
       <Route
         element={
@@ -105,7 +105,6 @@ const router = createBrowserRouter(
     </>,
   ),
 );
-
 
 function App() {
   const [demoData, setDemoData] = useLocalStorage('demoData', '');
