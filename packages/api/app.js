@@ -1,23 +1,41 @@
 const express = require("express");
-const cors = require("cors");
-const login = require('./routes/loginRoute') //login
-const logout = require('./routes/logoutRoute') //logout
-const userRouter = require("./routes/userRouter"); // importing user routes
-const profile = require("./routes/userProfileRoute")// Get user profile
-
-
-require("./database/index.js"); //load databse
-
 const app = express();
+const cors = require("cors");
+const session = require("express-session");
+const { environment } = require("./config/environment");
+require("express-async-errors");
+require("./database/index");
+const passport = require("passport");
+require("./services/linkedinStrategy");
+const { routeHandler } = require("./routes/index.route");
+const testRoute = require("./routes/testRoutes");
 
-app.use(express.json()).use(cors());
+//Passport Initialized
+app.use(passport.initialize());
 
+app.use(express.json()).use(cors()); 
+
+const sess = {
+  secret: environment.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {},
+};
+
+
+if (app.get("env") === "production") {
+  app.set("trust proxy", 1); // trust first proxy
+  sess.cookie.secure = true; // serve secure cookies
+}
+
+app.use(session(sess));
+
+app.use("/api/v1/test", (req, res) => {
+  res.status(200).json({ message: "working" });
+});
+app.use("/test", testRoute);
+app.use("/api/v1", routeHandler);
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Welcome to Grit Grammarly 🙌" });
 });
-app.use('/api/v1/login', login)
-app.use('/api/v1/logout', logout)
-app.use('/api/v1/user-profile/:id', profile)
-app.delete("/user", userRouter);
-
-exports.app = app;
+module.exports = app;

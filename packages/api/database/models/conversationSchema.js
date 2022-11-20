@@ -1,7 +1,5 @@
 const { v4 } = require("uuid");
 const mongoose = require("mongoose");
-const Joi = require("joi");
-
 
 let schema = new mongoose.Schema(
   {
@@ -12,17 +10,9 @@ let schema = new mongoose.Schema(
     userId: {
       type: String,
       ref: "user",
-    },
-    userResponseId: {
-      type: String,
-    },
-    botResponseId: {
-      type: String,
-    },
+    }
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-exports.authCollection = mongoose.model("conversation", schema);
+module.exports = mongoose.model("conversation", schema);
