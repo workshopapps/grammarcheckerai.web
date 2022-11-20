@@ -12,15 +12,13 @@ import TermsOfUse from './modules/static/terms_of_use';
 import DashboardLayout from './components/DashboardLayout';
 import { HomePage, History, Correction, ConversationPage, LandingPage } from './pages';
 
-
-import {LandingPage} from './pages';
 // All routes/pages must be import from ./pages folder
-const router = createBrowserRouter( 
+const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<ConversationPage />} />
       <Route path="/history" element={<h2>History</h2>} />
-      <Route path="/gritty-grammar" element={<LandingPage/>} /> 
+      <Route path="/gritty-grammar" element={<LandingPage />} />
       <Route path="/home" element={<HomePage />} />
       <Route path="/history" element={<History />} />
       <Route path="/correction" element={<Correction />} />
