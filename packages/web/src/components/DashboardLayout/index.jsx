@@ -3,12 +3,12 @@ import { Outlet } from 'react-router-dom';
 import logoImg from '../../assets/images/logo.svg';
 import SidebarLink from '../SidebarLink';
 import { IoHomeOutline, IoSettingsOutline } from 'react-icons/io5';
-import { BsDownload, BsClock } from 'react-icons/bs';
+import { BsDownload, BsClock, BsFillPersonLinesFill } from 'react-icons/bs';
 
 function DashboardLayout() {
   return (
-    <div className="flex min-h-screen z-10">
-      <div className="md:w-90 lg:w-80 h-full bg-[#F6F6F6] max-h-screen min-h-screen">
+    <div className="flex min-h-screen">
+      <div className="lg:w-96 md:w-80 sm:hidden h-full bg-[#F6F6F6] max-h-screen min-h-screen ">
         <div className="w-32 mx-auto py-20">
           <img src={logoImg} alt="" className="w-full" />
         </div>
@@ -21,6 +21,9 @@ function DashboardLayout() {
           </SidebarLink>
           <SidebarLink Icon={BsDownload} to="/me/import">
             Import
+          </SidebarLink>
+          <SidebarLink Icon={BsFillPersonLinesFill} to="/me/profile">
+            Profile
           </SidebarLink>
           <SidebarLink Icon={IoSettingsOutline} to="/me/settings">
             Settings

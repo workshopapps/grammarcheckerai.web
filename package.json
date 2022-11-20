@@ -60,7 +60,6 @@
     "passport-linkedin-oauth2": "^2.0.0",
     "openai": "^3.1.0",
     "react-icons": "^4.6.0",
-    "react-select": "^5.6.1",
     "react-toast-notifications": "^2.5.1",
     "sass": "^1.56.1",
     "supertest": "^6.3.1",
