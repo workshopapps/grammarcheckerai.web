@@ -14,8 +14,8 @@ import Forgotpassword from './modules/auth/forgot-password/forgot';
 import ResetLink from './modules/auth/reset-password/reset';
 import FaqMain from './components/Faq/faq_main';
 import TermsOfUse from './modules/static/terms_of_use';
-import Testimonial from './modules/static/testimonials/Testimonial'
-import Ratings from './modules/static/testimonials/Ratings'
+import Testimonial from './modules/static/testimonials/Testimonial';
+import Ratings from './modules/static/testimonials/Ratings';
 import DashboardLayout from './components/DashboardLayout';
 import NewsletterPage from './modules/static/newsletter/NewsletterPage';
 import { HomePage, History, Correction, ConversationPage, LandingPage, LegalPage } from './pages';
@@ -35,7 +35,7 @@ const router = createBrowserRouter(
       <Route path="/history" element={<History />} />
       <Route path="/correction" element={<Correction />} />
       <Route path="/about" element={<h1>About Page</h1>} />
-      <Route path="/faq" element={<FaqMain/>} />
+      <Route path="/faq" element={<FaqMain />} />
       <Route path="/blog" element={<h1>Blog Page</h1>} />
       <Route path="contact" element={<h1>Contact Page</h1>} />
       <Route path="/newsletter" element={<NewsletterPage />} />
@@ -109,7 +109,6 @@ const router = createBrowserRouter(
     </>,
   ),
 );
-
 
 function App() {
   const [demoData, setDemoData] = useLocalStorage('demoData', '');
