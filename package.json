@@ -6,15 +6,16 @@
     "packages/*"
   ],
   "scripts": {
-    "mode:dev": "lerna run mode:dev",
-    "dev": "lerna run dev",
+    "dev": "lerna run mode:dev",
+    "mode:dev": "lerna run dev",
     "lint": "lerna run lint",
     "new-version": "lerna version --conventional-commits --yes",
     "prettier": "lerna run prettier",
     "storybook": "lerna run storybook",
     "diff": "lerna diff",
     "build-storybook": "build-storybook",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test:script": "lerna run test:script"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
@@ -29,21 +30,40 @@
     "babel-loader": "^8.3.0",
     "husky": "^8.0.2",
     "lerna": "^6.0.3",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.20"
   },
   "dependencies": {
+    "@banana-dev/banana-dev": "^4.0.0",
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
     "@storybook/testing-library": "^0.0.13",
+    "axios": "^1.1.3",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
+    "eslint-plugin-react": "^7.31.11",
     "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.14.2",
+    "google-auth-library": "^8.7.0",
     "joi": "^17.7.0",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.12.0",
     "mongoose": "^6.7.2",
+    "multer": "^1.4.5-lts.1",
+    "passport": "^0.6.0",
+    "passport-apple": "^2.0.1",
+    "passport-facebook": "^3.0.0",
+    "passport-linkedin-oauth2": "^2.0.0",
     "openai": "^3.1.0",
     "react-icons": "^4.6.0",
     "react-toast-notifications": "^2.5.1",
+    "sass": "^1.56.1",
+    "supertest": "^6.3.1",
+    "swagger-ui-express": "^4.6.0",
     "uuid": "^9.0.0"
   }
 }
