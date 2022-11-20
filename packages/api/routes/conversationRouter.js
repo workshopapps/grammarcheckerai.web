@@ -1,9 +1,9 @@
 const express = require('express');
 const conversationRouter = express.Router();
-const getBotResponse = require('../controller/sendAudioController');
+const getBotResponse = require('../controller/sendAudioController.js');
 const endConversation = require('../controller/endConversationController');
 const startConversation = require('../controller/startConversationController');
-const uploadFile = require('../middleware/audioFileUpload');
+const uploadFile = require('../middleware/audioFileUpload.js');
 
 conversationRouter.get('/start', startConversation);
 conversationRouter.get('/end', endConversation);

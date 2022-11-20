@@ -15,6 +15,7 @@ COPY . .
 
 # Expose the port 
 EXPOSE 3000
-# Containers run nginx with global directives and daemon off
+
+# Start the app
 CMD ["node", "server.js"]
 

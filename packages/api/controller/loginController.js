@@ -14,7 +14,7 @@ exports.login = async (req, res) => {
     }
     
     let user = await userCollection.findOne({email});
-    console.log(user);
+    
     if (!user) {
         return res.status(401).json({ msg: 'Invalid email or password' })
     }

@@ -8,7 +8,7 @@ const { response } = require("../../utilities/response");
 
 async function googleAuthURL(req, res) {
   const options = {
-    redirect_uri: `${SERVER_ROOT_URI}`,
+    redirect_uri: `${SERVER_ROOT_URI}/api/v1/auth/google`,
     client_id: GOOGLE_CLIENT_ID,
     access_type: "offline",
     response_type: "code",
@@ -19,6 +19,6 @@ async function googleAuthURL(req, res) {
     ].join(' '),
   };
   const querystring = new URLSearchParams(options);
-  res.status(200).json(response({error: `${rootUrl}?${querystring}1`}));
+  res.status(200).json(response({message: `${rootUrl}?${querystring}`}));
 }
 module.exports = { googleAuthURL };
