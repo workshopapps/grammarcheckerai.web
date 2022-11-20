@@ -22,4 +22,7 @@ exports.environment = {
   FB_CLIENT_ID: process.env.FB_CLIENT_ID,
   FB_CLIENT_SERECT: process.env.FB_CLIENT_SERECT,
   FB_CALLBACK_URL: process.env.FB_CALLBACK_URL,
+  FILE_SIZE: process.env.FILE_SIZE,
+  API_KEY: process.env.API_KEY,
+  MODEL_KEY: process.env.MODEL_KEY,
 };
