@@ -19,7 +19,7 @@
     }
   ],
   "paths": {
-    "/api/v1/login": {
+    "api/v1/auth/login": {
       "post": {
         "summary": "This Route Logs Existing User in",
         "operationId": "post-api-v1-login",
@@ -47,9 +47,10 @@
         "tags": [
           "User"
         ]
-      }
+      },
+      "parameters": []
     },
-    "/api/v1/singup": {
+    "api/v1/auth/singup": {
       "post": {
         "summary": "This Route creates new User",
         "operationId": "post-api-v1-signup",
@@ -73,7 +74,7 @@
             "$ref": "#/components/responses/error"
           }
         },
-        "description": "Create New User",
+        "description": "Create a New User",
         "requestBody": {
           "$ref": "#/components/requestBodies/api_signup"
         },
@@ -83,10 +84,11 @@
       },
       "parameters": []
     },
-    "/auth/singup": {
-      "post": {
-        "summary": "This Route creates new User",
-        "operationId": "post-api-v1-signup",
+    "api/v1/user/delete_user": {
+      "parameters": [],
+      "delete": {
+        "summary": "",
+        "operationId": "deleteapi-v1-user-delete_user",
         "responses": {
           "200": {
             "$ref": "#/components/responses/success"
@@ -107,51 +109,13 @@
             "$ref": "#/components/responses/error"
           }
         },
-        "description": "Create New User",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/Auth_signup"
-        },
-        "tags": [
-          "FacebookAuth"
-        ]
-      },
-      "parameters": []
-    },
-    "/user/delete_user": {
-      "post": {
-        "summary": "This Route Deletes existing User",
-        "operationId": "post-api-v1-signup",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/success"
-          },
-          "400": {
-            "$ref": "#/components/responses/error"
-          },
-          "401": {
-            "$ref": "#/components/responses/error"
-          },
-          "404": {
-            "$ref": "#/components/responses/error"
-          },
-          "500": {
-            "$ref": "#/components/responses/error"
-          },
-          "": {
-            "description": ""
-          }
-        },
         "description": "Delete exsiting user from the database",
         "requestBody": {
           "$ref": "#/components/requestBodies/api_delete"
-        },
-        "tags": [
-          "User"
-        ]
-      },
-      "parameters": []
+        }
+      }
     },
-    "/update_user/:userId": {
+    "api/v1/update_user/:userId": {
       "post": {
         "summary": "This Route Updates the User Details in the database",
         "operationId": "post-update_user-:userId",
@@ -179,14 +143,19 @@
         "tags": [
           "User"
         ]
-      }
+      },
+      "parameters": []
     },
-    "/api/v1/user-profile/:id": {
-      "post": {
-        "summary": "This Route gets the User Profile in the database",
-        "operationId": "post-update_user-:userId",
+    "/api/v1/user/user-profile/:id": {
+      "parameters": [],
+      "get": {
+        "summary": "Get all the user in the database",
+        "operationId": "get-api-v1-user-profile-:id",
         "responses": {
           "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
             "$ref": "#/components/responses/success"
           },
           "400": {
@@ -198,14 +167,10 @@
           "404": {
             "$ref": "#/components/responses/error"
           },
-          "502": {
+          "500": {
             "$ref": "#/components/responses/error"
           }
         },
-        "description": "Get user profile in the database ",
-        "tags": [
-          "User"
-        ],
         "parameters": [
           {
             "schema": {
@@ -215,76 +180,11 @@
             "name": "id",
             "description": "User Id"
           }
+        ],
+        "tags": [
+          "User"
         ]
-      },
-      "parameters": []
-    },
-    "/getAudio - copy": {
-      "post": {
-        "summary": "",
-        "operationId": "post-getAudio",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/success"
-          },
-          "201": {
-            "$ref": "#/components/responses/success"
-          },
-          "400": {
-            "$ref": "#/components/responses/error"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/error"
-          },
-          "500": {
-            "$ref": "#/components/responses/error"
-          }
-        },
-        "tags": [
-          "Conversation"
-        ],
-        "description": "Conversation Data",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/Audio"
-        }
       }
-    },
-    "/api/vi/sendAudio": {
-      "post": {
-        "summary": "",
-        "operationId": "post-getAudio",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/success"
-          },
-          "201": {
-            "$ref": "#/components/responses/success"
-          },
-          "400": {
-            "$ref": "#/components/responses/error"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/error"
-          },
-          "500": {
-            "$ref": "#/components/responses/error"
-          }
-        },
-        "tags": [
-          "Conversation"
-        ],
-        "description": "Conversation Data",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/getAudio"
-        }
-      },
-      "parameters": []
     },
     "/getBot": {
       "get": {
@@ -501,15 +401,39 @@
         "description": "Get transcribed text from Whisper"
       }
     },
-    "/getConversation": {
-      "get": {
-        "summary": "Your GET endpoint",
+    "api/v1/conversation/sendAudio": {
+      "post": {
+        "summary": "",
+        "operationId": "post-getConversation",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "description": "This end point sends audio file to the bot",
         "tags": [
           "Conversation"
         ],
-        "responses": {},
-        "operationId": "get-getConversation"
-      }
+        "requestBody": {
+          "$ref": "#/components/requestBodies/sendAudio"
+        }
+      },
+      "parameters": []
     },
     "/request-reset-password": {
       "post": {
@@ -593,6 +517,43 @@
         ]
       },
       "parameters": []
+    },
+    "/auth/google-auth": {
+      "parameters": [],
+      "get": {
+        "summary": "GoogleAuth",
+        "operationId": "get-auth-google-auth",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": ""
+      }
+    },
+    "/auth/linkedin": {
+      "parameters": [],
+      "get": {
+        "summary": "LinkedInAuth",
+        "operationId": "get-auth-google-auth",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": ""
+      }
+    },
+    "/facebook/callback": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [
+          "Facebook Auth"
+        ],
+        "responses": {},
+        "operationId": "get-facebook-callback",
+        "description": "Gets Facebook authentication route"
+      }
     }
   },
   "components": {
@@ -653,13 +614,20 @@
                 },
                 "firstName": {
                   "type": "string"
+                },
+                "onfirm_password": {
+                  "type": "string"
+                },
+                "language": {
+                  "type": "string"
                 }
               },
               "required": [
                 "email",
                 "password",
                 "lastName",
-                "firstName"
+                "firstName",
+                "onfirm_password"
               ]
             }
           }
@@ -729,23 +697,6 @@
                 "lastName",
                 "language"
               ]
-            }
-          }
-        }
-      },
-      "getAudio": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "conversationId": {
-                  "type": "string"
-                },
-                "mp3File": {
-                  "type": "string"
-                }
-              }
             }
           }
         }
@@ -827,25 +778,27 @@
           }
         }
       },
-      "Audio": {
+      "sendAudio": {
         "content": {
-          "application/json": {
+          "multipart/form-data": {
             "schema": {
               "type": "object",
               "properties": {
-                "_id": {
+                "file": {
                   "type": "string"
                 },
-                "uderId": {
+                "conversationId": {
                   "type": "string"
                 },
-                "status": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "userId": {
+                  "type": "string"
                 }
-              }
+              },
+              "required": [
+                "file",
+                "conversationId",
+                "userId"
+              ]
             }
           }
         }

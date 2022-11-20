@@ -1,5 +1,7 @@
 const { userCollection} = require('../database/models/userSchema')
 const { comparePassword } = require('../utilities/compare');
+
+
 async function userProfile(req, res) {
     //gets user id
     const id = req.params.id;
