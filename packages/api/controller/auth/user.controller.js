@@ -1,12 +1,19 @@
 const { response } = require("../../utilities/response");
-const { hash } = require("../../utilities/encrypt.utilities");
+const { getTokens } = require("./google.user.controller");
 const { register, findOne } = require("../../repository/user.repository");
 const { login } = require("../loginController");
 const { userCollection } = require("../../database/models/userSchema");
 
 async function registerUser(req, res) {
-  let { email, firstName, lastName, username, password, confirm_password, language } =
-    req.body;
+  let {
+    email,
+    firstName,
+    lastName,
+    username,
+    password,
+    confirm_password,
+    language,
+  } = req.body;
   //Check if the user already exist
   password =
     password === confirm_password
@@ -18,15 +25,15 @@ async function registerUser(req, res) {
             message: "Comfirm your password",
           })
         );
-        
-  const checkEmailExist = await userCollection.findOne({email});
+
+  const checkEmailExist = await userCollection.findOne({ email });
 
   if (checkEmailExist)
     return res
       .status(409)
       .json(response({ error: "User already exist", success: false }));
-      
-  const data = { email, firstName, lastName,username, password, language };
+
+  const data = { email, firstName, lastName, username, password, language };
 
   const user = await register(data);
 
@@ -34,8 +41,46 @@ async function registerUser(req, res) {
     return res
       .status(500)
       .json(response({ success: false, message: "User not created" }));
-  
+
   // return res.status(201).json(user);
   return login(req, res);
-} 
-module.exports = { registerUser };
+}
+async function googleAuthUserSignUp(req, res) {
+  const { name, email } = await getTokens(req);
+
+  console.log(name, email);
+
+  //Check if user already exist
+  const user = await userCollection.findOne({ email });
+ 
+  if (user) { 
+    //assign token
+    const token = user.generateAuthToken();
+
+    const data = {
+      firstname: user.firstName,
+      lastname: user.lastName,
+      username: user.username,
+      email: user.email, 
+       token,
+    };
+    return res.status(201).json(data);
+  } else {
+    const randomUserCode = codeGenerator(36);
+    const newName = name.split(" ");
+
+    const data = {
+      firstName: newName[0],
+      lastName: newName[1],
+      email: email,
+      username: slugify(name) + randomUserCode,
+      password: "",
+      role: "user",
+      isverified: true,
+    };
+    const user = await register(data);
+
+    return user;
+  }
+}
+module.exports = { registerUser, googleAuthUserSignUp };

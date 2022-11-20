@@ -3,7 +3,11 @@ const { userHandler } = require("../routes/user.routes.js");
 const { auth } = require("../routes/auth.routes");
 const conversationRouter = require("./conversationRouter");
 
+<<<<<<< HEAD
 const verify = require("../middlewares/authMiddleware");
+=======
+const verify = require("../middlewares/auth.middleware");
+>>>>>>> fd83e46af3400de4bf25f77d15bbf087dedb374e
 
 routeHandler.use("/auth", auth);
 routeHandler.use("/user", verify, userHandler);
