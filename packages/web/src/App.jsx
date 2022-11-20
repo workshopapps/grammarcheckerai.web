@@ -12,6 +12,10 @@ import TermsOfUse from './modules/static/terms_of_use';
 import DashboardLayout from './components/DashboardLayout';
 import NewsletterPage from './modules/static/newsletter/NewsletterPage';
 import { HomePage, History, Correction, ConversationPage, LandingPage, LegalPage } from './pages';
+import Careers from './pages/career/Career';
+import Roles from './pages/career/Roles';
+import Application from './pages/career/Application';
+
 
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
@@ -28,7 +32,9 @@ const router = createBrowserRouter(
       <Route path="/blog" element={<h1>Blog Page</h1>} />
       <Route path="contact" element={<h1>Contact Page</h1>} />
       <Route path="/newsletter" element={<NewsletterPage />} />
-      <Route path="/culture-career" element={<h1>Culture Page</h1>} />
+      <Route path="/career" element={<Careers />} />
+      <Route path="/roles" element={<Roles />} />
+      <Route path="/apply" element={<Application />} />
       <Route path="/terms-of-use" element={<TermsOfUse />} />
       <Route path="/api-status" element={<h1>Api status Page</h1>} />
       <Route path="/legal" element={<LegalPage />} />
