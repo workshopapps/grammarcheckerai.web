@@ -59,8 +59,11 @@
     "passport-facebook": "^3.0.0",
     "passport-linkedin-oauth2": "^2.0.0",
     "openai": "^3.1.0",
+    "react-select": "^5.6.1",
     "react-icons": "^4.6.0",
+    "react-select": "^5.6.1",
     "react-toast-notifications": "^2.5.1",
+    "sass": "^1.56.1",
     "supertest": "^6.3.1",
     "swagger-ui-express": "^4.6.0",
     "uuid": "^9.0.0"

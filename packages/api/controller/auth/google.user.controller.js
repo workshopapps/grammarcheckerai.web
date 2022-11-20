@@ -19,7 +19,7 @@ async function googleAuthURL(req, res) {
     ].join(" "),
   };
   const querystring = new URLSearchParams(options);
-  res.status(200).json(response({ message: `${rootUrl}?${querystring}` }));
+  res.status(200).json(response({message: `${rootUrl}?${querystring}`}));
 }
 async function getTokens(code) {
   try {

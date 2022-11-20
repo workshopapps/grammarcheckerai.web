@@ -29,6 +29,7 @@
         "passport-facebook": "^3.0.0",
         "passport-linkedin-oauth2": "^2.0.0",
         "react-speech-recognition": "^3.10.0",
+        "react-icons": "^4.6.0",
         "uuid": "^9.0.0"
     },
     "devDependencies": {
