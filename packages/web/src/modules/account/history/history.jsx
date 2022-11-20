@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Errors from './errors';
-import search from '../../assets/search.svg';
-import arrowDown from '../../assets/arrowDown.svg';
-import arrowUp from '../../assets/arrowUp.svg';
+import search from '../../../assets/search.svg';
+import arrowDown from '../../../assets/arrowDown.svg';
+import arrowUp from '../../../assets/arrowUp.svg';
 
 const historyDays = [
   { id: '1', date: 'Today - Thursday, 19 September 2022' },
