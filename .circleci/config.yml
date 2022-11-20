@@ -7,7 +7,7 @@ orbs:
   node: circleci/node@4.7
 
 jobs:
-  build_docker_images:
+  build_docker_image:
     docker:
       - image: docker:17.05.0-ce-git
     steps:
@@ -73,7 +73,7 @@ jobs:
 workflows:
   default:
     jobs:
-      - build_docker_images:
+      - build_docker_image:
           filers:
             branches:
               only: develop
