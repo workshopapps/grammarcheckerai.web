@@ -19,6 +19,6 @@ async function googleAuthURL(req, res) {
     ].join(' '),
   };
   const querystring = new URLSearchParams(options);
-  res.status(200).json(response({error: `${rootUrl}?${querystring}`}));
+  res.status(200).json(response({message: `${rootUrl}?${querystring}`}));
 }
 module.exports = { googleAuthURL };
