@@ -1,0 +1,25 @@
+.detail {
+  margin: 2rem 0 5rem 0;
+}
+
+.detailHeader {
+  padding: 1.5rem 1rem;
+  font-size: 1rem;
+  background-color: #eeeeee;
+  font-family: var(--Inter);
+  font-weight: 500;
+  color: var(--greyScale400);
+}
+
+@media screen and (min-width: 600px) {
+  .detail {
+    padding: 1.5rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-bottom: 5rem;
+  }
+
+  .detailHeader {
+    font-size: 1.25rem;
+  }
+}

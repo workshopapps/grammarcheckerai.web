@@ -31,7 +31,7 @@ function FaqFooter() {
                 </div>
             </div>
             <div className="p-5 lg:hidden">
-               <p className="text-[12px] lg:leading-[15px]  font-[Inter] block text-center justify-center grid place-items-center">@2022 Grittygrammar</p>                                  
+               <p className="text-[12px] lg:leading-[15px]  font-[Inter]  text-center justify-center grid place-items-center">@2022 Grittygrammar</p>                                  
             </div>
   
           </div>
