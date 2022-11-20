@@ -40,7 +40,7 @@ function Conversation() {
     <motion.div
       initial={{ opacity: 0.1 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 2 }}
+      transition={{ duration: 0.2 }}
       layout
       className={`min-h-screen space-y-6 flex pb-10 flex-col ${styles._convo}`}
     >
