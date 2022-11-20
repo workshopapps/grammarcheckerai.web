@@ -1,9 +1,7 @@
 const { environment } = require("../../config/environment");
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, SERVER_ROOT_URI } = environment;
-const axios = require('axios');
 
 const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
-const axios = require("axios");
 const { OAuth2Client } = require("google-auth-library");
 const { response } = require("../../utilities/response");
 
@@ -20,22 +18,21 @@ async function googleAuthURL(req, res) {
     ].join(" "),
   };
   const querystring = new URLSearchParams(options);
-  res.status(200).json(response({ message: `${rootUrl}?${querystring}` }));
+  res.status(200).json(response({message: `${rootUrl}?${querystring}`}));
 }
-async function getTokens(req) {
+async function getTokens(code) {
   try {
     /*
      * Uses the code to get tokens
      * that can be used to fetch the user's profile
-     */
-
-    const code = req.query.code;
+     */ 
     const client = new OAuth2Client(
       GOOGLE_CLIENT_ID,
       GOOGLE_CLIENT_SECRET,
-      SERVER_ROOT_URI
+      `${SERVER_ROOT_URI}/api/v1/auth/google`
     );
-    const { res } = await client.getToken(code);
+    
+    const {res} = await client.getToken(code);
 
     const data = {
       id_token: res.data.id_token,
@@ -52,7 +49,7 @@ async function getTokens(req) {
 
     return googleUser.data;
   } catch (error) {
-    throw new CustomError(`${error}`, 500);
+    return false
   }
 }
 module.exports = { googleAuthURL, getTokens };

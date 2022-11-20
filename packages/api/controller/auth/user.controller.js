@@ -1,8 +1,9 @@
 const { response } = require("../../utilities/response");
 const { getTokens } = require("./google.user.controller");
 const { register, findOne } = require("../../repository/user.repository");
-const { login } = require("../loginController");
+const { loginUser } = require("../loginController");
 const { userCollection } = require("../../database/models/userSchema");
+const { slugify } = require("../../utilities/compare");
 
 async function registerUser(req, res) {
   let {
@@ -43,10 +44,12 @@ async function registerUser(req, res) {
       .json(response({ success: false, message: "User not created" }));
 
   // return res.status(201).json(user);
-  return login(req, res);
+  return loginUser(user, res)
 }
+
 async function googleAuthUserSignUp(req, res) {
-  const { name, email } = await getTokens(req);
+    // console.log(req.query);
+  const {name, email} = await getTokens(req.query.code);
 
   console.log(name, email);
 
@@ -64,9 +67,9 @@ async function googleAuthUserSignUp(req, res) {
       email: user.email, 
        token,
     };
-    return res.status(201).json(data);
-  } else {
-    const randomUserCode = codeGenerator(36);
+    return loginUser(user, res)
+  } else { 
+    const randomUserCode = (Math.random() + 1).toString(36).substring(7);
     const newName = name.split(" ");
 
     const data = {
@@ -74,13 +77,16 @@ async function googleAuthUserSignUp(req, res) {
       lastName: newName[1],
       email: email,
       username: slugify(name) + randomUserCode,
-      password: "",
-      role: "user",
-      isverified: true,
+      password: "password"  
     };
     const user = await register(data);
 
-    return user;
+    if (!user)
+    return res
+      .status(500)
+      .json(response({ success: false, message: "User not created" }));
+
+    return loginUser(user, res)
   }
 }
 module.exports = { registerUser, googleAuthUserSignUp };
