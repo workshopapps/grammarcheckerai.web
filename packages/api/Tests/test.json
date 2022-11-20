@@ -40,12 +40,12 @@
             "$ref": "#/components/responses/error"
           }
         },
-        "description": "Login to your account",
+        "description": "Login route enables registered user to log into their account",
         "requestBody": {
           "$ref": "#/components/requestBodies/api_login"
         },
         "tags": [
-          "User"
+          "Auth"
         ]
       },
       "parameters": []
@@ -74,12 +74,12 @@
             "$ref": "#/components/responses/error"
           }
         },
-        "description": "Create a New User",
+        "description": "Signup route enables new user to regiter an account",
         "requestBody": {
           "$ref": "#/components/requestBodies/api_signup"
         },
         "tags": [
-          "User"
+          "Auth"
         ]
       },
       "parameters": []
@@ -109,18 +109,24 @@
             "$ref": "#/components/responses/error"
           }
         },
-        "description": "Delete exsiting user from the database",
+        "description": "delete_user route enables registered and verified user to delete their existing account",
         "requestBody": {
           "$ref": "#/components/requestBodies/api_delete"
-        }
+        },
+        "tags": [
+          "User"
+        ]
       }
     },
-    "api/v1/update_user/:userId": {
+    "api/v1/user/update_user/:userId": {
       "post": {
         "summary": "This Route Updates the User Details in the database",
         "operationId": "post-update_user-:userId",
         "responses": {
           "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "202": {
             "$ref": "#/components/responses/success"
           },
           "400": {
@@ -132,11 +138,11 @@
           "404": {
             "$ref": "#/components/responses/error"
           },
-          "502": {
+          "500": {
             "$ref": "#/components/responses/error"
           }
         },
-        "description": "updates user",
+        "description": "update_user route enables registered and verified user to update their existing account",
         "requestBody": {
           "$ref": "#/components/requestBodies/api_update"
         },
@@ -169,6 +175,9 @@
           },
           "500": {
             "$ref": "#/components/responses/error"
+          },
+          "502": {
+            "$ref": "#/components/responses/error"
           }
         },
         "parameters": [
@@ -183,15 +192,13 @@
         ],
         "tags": [
           "User"
-        ]
+        ],
+        "description": "user_profile route gets registered and verified user tin the database"
       }
     },
-    "/getBot": {
+    "api/v1/auth/getBot": {
       "get": {
-        "summary": "Your GET endpoint",
-        "tags": [
-          "Conversation"
-        ],
+        "summary": "Unscripted Route",
         "responses": {
           "200": {
             "$ref": "#/components/responses/success"
@@ -219,12 +226,16 @@
         "description": "Converting Audio to text",
         "requestBody": {
           "$ref": "#/components/requestBodies/Audio"
-        }
-      }
+        },
+        "tags": [
+          "Unscripted"
+        ]
+      },
+      "parameters": []
     },
-    "/auth/facebook": {
+    "auth/v1/auth/failed": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Unscripted Route",
         "responses": {
           "200": {
             "$ref": "#/components/responses/success"
@@ -251,129 +262,14 @@
         "operationId": "get-getBot",
         "description": "Converting Audio to text",
         "tags": [
-          "FacebookAuth"
+          "Unscripted"
         ]
       },
       "parameters": []
     },
-    "/auth/facebook/callback": {
+    "api/v1/auth/getText": {
       "get": {
-        "summary": "Your GET endpoint",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/success"
-          },
-          "201": {
-            "$ref": "#/components/responses/success"
-          },
-          "400": {
-            "$ref": "#/components/responses/error"
-          },
-          "401": {
-            "$ref": "#/components/responses/error"
-          },
-          "403": {
-            "$ref": "#/components/responses/error"
-          },
-          "404": {
-            "$ref": "#/components/responses/error"
-          },
-          "500": {
-            "$ref": "#/components/responses/error"
-          }
-        },
-        "operationId": "get-getBot",
-        "description": "Converting Audio to text",
-        "tags": [
-          "FacebookAuth"
-        ],
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "cookie",
-            "name": "Token",
-            "description": "A token generated from the token generation function"
-          }
-        ]
-      },
-      "parameters": []
-    },
-    "/auth/profile": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/success"
-          },
-          "201": {
-            "$ref": "#/components/responses/success"
-          },
-          "400": {
-            "$ref": "#/components/responses/error"
-          },
-          "401": {
-            "$ref": "#/components/responses/error"
-          },
-          "403": {
-            "$ref": "#/components/responses/error"
-          },
-          "404": {
-            "$ref": "#/components/responses/error"
-          },
-          "500": {
-            "$ref": "#/components/responses/error"
-          }
-        },
-        "operationId": "get-getBot",
-        "description": "Converting Audio to text",
-        "tags": [
-          "FacebookAuth"
-        ]
-      },
-      "parameters": []
-    },
-    "/auth/failed": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/success"
-          },
-          "201": {
-            "$ref": "#/components/responses/success"
-          },
-          "400": {
-            "$ref": "#/components/responses/error"
-          },
-          "401": {
-            "$ref": "#/components/responses/error"
-          },
-          "403": {
-            "$ref": "#/components/responses/error"
-          },
-          "404": {
-            "$ref": "#/components/responses/error"
-          },
-          "500": {
-            "$ref": "#/components/responses/error"
-          }
-        },
-        "operationId": "get-getBot",
-        "description": "Converting Audio to text",
-        "tags": [
-          "FacebookAuth"
-        ]
-      },
-      "parameters": []
-    },
-    "/getText": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [
-          "Conversation"
-        ],
+        "summary": "Unscripted Route",
         "responses": {
           "200": {
             "$ref": "#/components/responses/success"
@@ -398,10 +294,14 @@
           }
         },
         "operationId": "get-getText",
-        "description": "Get transcribed text from Whisper"
-      }
+        "description": "Get transcribed text from Whisper",
+        "tags": [
+          "Unscripted"
+        ]
+      },
+      "parameters": []
     },
-    "api/v1/conversation/sendAudio": {
+    "api/v1/sendAudio": {
       "post": {
         "summary": "",
         "operationId": "post-getConversation",
@@ -435,9 +335,9 @@
       },
       "parameters": []
     },
-    "/request-reset-password": {
+    "api/1/auth/request-reset-password": {
       "post": {
-        "summary": "",
+        "summary": "Unscripted Route",
         "operationId": "post-request-reset-password",
         "responses": {
           "200": {
@@ -463,17 +363,18 @@
           }
         },
         "description": "Request for reseting user password",
-        "tags": [
-          "User"
-        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/reset_password_request"
-        }
-      }
+        },
+        "tags": [
+          "Unscripted"
+        ]
+      },
+      "parameters": []
     },
-    "/resetPassword": {
+    "api/1/auth/resetPassword": {
       "post": {
-        "summary": "",
+        "summary": "Unscripted Route",
         "operationId": "post-request-reset-password",
         "responses": {
           "200": {
@@ -499,9 +400,6 @@
           }
         },
         "description": "reseting password",
-        "tags": [
-          "User"
-        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/rest_password"
         },
@@ -514,46 +412,195 @@
             "name": "Token",
             "description": "Get the user generated token"
           }
+        ],
+        "tags": [
+          "Unscripted "
         ]
       },
       "parameters": []
     },
-    "/auth/google-auth": {
+    "api/v1/auth/google": {
       "parameters": [],
       "get": {
-        "summary": "GoogleAuth",
+        "summary": "Google Authentication",
         "operationId": "get-auth-google-auth",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "403": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "description": "Get and Post to Google authentication Route",
+        "tags": [
+          "Google Auth"
+        ]
+      },
+      "post": {
+        "summary": "",
+        "operationId": "postapi-v1-auth-google",
         "responses": {
           "200": {
             "description": "OK"
           }
         },
-        "description": ""
+        "description": "Get Google Auth Route"
       }
     },
-    "/auth/linkedin": {
+    "api/v1/auth/linkedin": {
       "parameters": [],
       "get": {
-        "summary": "LinkedInAuth",
+        "summary": "LinkedIn Authentication",
         "operationId": "get-auth-google-auth",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/success"
+          },
+          "403": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/success"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
           }
         },
-        "description": ""
+        "description": "Get Linkedin authentication Route",
+        "tags": [
+          "Linkedin Auth"
+        ]
       }
     },
-    "/facebook/callback": {
+    "api/v1/auth/linkedin/callback": {
+      "parameters": [],
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "LinkedIn Authentication",
+        "operationId": "get-auth-google-auth",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "403": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "description": "Get Linkedin authentication callback Route",
+        "tags": [
+          "Linkedin Auth"
+        ]
+      }
+    },
+    "api/v1/auth/facebook": {
+      "get": {
+        "summary": "Facebook Authentication",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "403": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "405": {
+            "description": "Method Not Allowed"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "operationId": "get-facebook-callback",
+        "description": "Gets Facebook authentication route",
         "tags": [
           "Facebook Auth"
-        ],
-        "responses": {},
+        ]
+      },
+      "parameters": []
+    },
+    "api/v1/auth/facebook/callback": {
+      "get": {
+        "summary": "Facebook Authentication",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "403": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
         "operationId": "get-facebook-callback",
-        "description": "Gets Facebook authentication route"
-      }
+        "description": "Gets Facebook authentication callback route",
+        "tags": [
+          "Facebook Auth"
+        ]
+      },
+      "parameters": []
     }
   },
   "components": {
@@ -784,24 +831,42 @@
             "schema": {
               "type": "object",
               "properties": {
-                "file": {
-                  "type": "string"
-                },
                 "conversationId": {
                   "type": "string"
                 },
                 "userId": {
                   "type": "string"
+                },
+                "file": {
+                  "type": "string"
                 }
               },
               "required": [
-                "file",
                 "conversationId",
-                "userId"
+                "userId",
+                "file"
+              ]
+            }
+          },
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string"
+                },
+                "conversationId": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "userId",
+                "conversationId"
               ]
             }
           }
-        }
+        },
+        "description": "Parsed in the body form-data"
       }
     }
   }
