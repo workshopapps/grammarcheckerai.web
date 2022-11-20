@@ -8,7 +8,7 @@ const openai = new OpenAIApi(configuration);
 
 const restartSequence = "\nHuman:";
 const sessionPrompt =
-  "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nAI: Hi Name. How can I help you today?";
+  "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nAI: Hi, how can I help you today?";
 
 exports.appendConversationToChatLog = function (
   correctUserResponseInTxt,

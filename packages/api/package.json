@@ -26,6 +26,7 @@
         "openai": "^3.1.0",
         "passport": "^0.6.0",
         "passport-apple": "^2.0.1",
+        "passport-facebook": "^3.0.0",
         "passport-linkedin-oauth2": "^2.0.0",
         "uuid": "^9.0.0"
     },
