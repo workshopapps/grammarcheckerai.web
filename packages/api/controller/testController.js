@@ -15,9 +15,14 @@ exports.home = async (req, res) => {
       console.log(err.response.status);
       status.push({ home: { status: "down" } });
     });
-  const loginPage = await axios
-    .get("/api/v1/auth/login")
-    .then((response) => {
+  const loginPage = await axios({
+    method: "POST",
+    url: "/api/v1/auth/login",
+    data: {
+      email: "onijlo@mal.com",
+      password: "Password",
+    },
+  }).then((response) => {
       if (response.status != 404) {
         status.push({ loginPage: { status: "ok" } });
       }
