@@ -29,8 +29,8 @@ const router = createBrowserRouter(
       <Route path="/newsletter" element={<h1>NewsLetter Page</h1>} />
       <Route path="/culture-career" element={<h1>Culture Page</h1>} />
       <Route path="/terms-of-use" element={<TermsOfUse />} />
-      <Route path="/terestimonial" element={<Testimonial />} />
-      <Route path="/rating" element={<Ratings />} />
+      <Route path="/testimonials" element={<Testimonial />} />
+      <Route path="/ratings" element={<Ratings />} />
       <Route path="/api-status" element={<h1>Api status Page</h1>} />
       <Route
         element={
