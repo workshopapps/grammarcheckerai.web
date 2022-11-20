@@ -80,7 +80,7 @@ workflows:
               only: develop
       - create_environment:
           requires:
-            - build_docker_images
+            - build_docker_image
           filters:
             branches:
               only: develop
