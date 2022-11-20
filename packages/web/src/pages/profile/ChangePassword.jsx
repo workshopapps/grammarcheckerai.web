@@ -104,8 +104,8 @@ export default function ChangePassword() {
             </label>
 
             <div className="_btnContainer">
-                <ProfileScreenButton onClick={() => history(-1)} variant="secondary">{'Cancel'}</ProfileScreenButton>
-                <ProfileScreenButton onClick={handleSubmit}>{'Reset'}</ProfileScreenButton>
+                <ProfileScreenButton onClick={() => history(-1)} variant="secondary">Cancel</ProfileScreenButton>
+                <ProfileScreenButton onClick={handleSubmit}>Reset</ProfileScreenButton>
             </div>
         </form>
 

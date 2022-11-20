@@ -1,4 +1,4 @@
-import React from "react
+import React from "react"
 import Header from "../../components/Blog/Header"
 import Hero from "../../components/Blog/Hero"
 import Cards from "../../components/Blog/Cards"

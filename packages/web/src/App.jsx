@@ -40,7 +40,7 @@ const router = createBrowserRouter(
       <Route path="/correction" element={<Correction />} />
       <Route path="/about" element={<h1>About Page</h1>} />
       <Route path="/faq" element={<FaqMain />} />
-      <Route path="/blog" element={<Homepage />} />
+      <Route path="/blog" element={<Blog />} />
       <Route path="contact" element={<h1>Contact Page</h1>} />
       <Route path="/newsletter" element={<NewsletterPage />} />
       <Route path="/career" element={<Careers />} />
