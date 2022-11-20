@@ -1,6 +1,7 @@
 import {
   arrowRightIcon,
   BritishFlagIcon,
+  checkIcon,
   ChineseFlagIcon,
   FinnishFlagIcon,
   GermanyFlagIcon,
@@ -15,10 +16,10 @@ import {
   USAFlagIcon,
 } from '../../../../assets';
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function LanguageOption({ openBar, setUniversalLanguage }) {
-  const languageList = [
+  const [languageList, setLanguage] = useState([
     { name: 'Chinese', flag: ChineseFlagIcon },
     { name: 'British English', flag: BritishFlagIcon, selected: true },
     { name: 'Finnish', flag: FinnishFlagIcon },
@@ -31,7 +32,7 @@ function LanguageOption({ openBar, setUniversalLanguage }) {
     { name: 'German', flag: GermanyFlagIcon },
     { name: 'US English', flag: USAFlagIcon },
     { name: 'Arabic', flag: UAEFlagIcon },
-  ];
+  ]);
 
   useEffect(() => {
     var selected = languageList.filter((obj) => {
@@ -39,7 +40,18 @@ function LanguageOption({ openBar, setUniversalLanguage }) {
     });
 
     setUniversalLanguage(selected);
-  });
+  }, [languageList]);
+
+  const selectLanguage = (id) => {
+    setLanguage((arr) =>
+      arr.map((obj) => {
+        if (obj === id) {
+          return { ...obj, selected: true };
+        }
+        return { ...obj, selected: false };
+      }),
+    );
+  };
 
   return (
     <div className="absolute top-0 left-0 w-full bg-gray-100 px-6 max-w-screen-lg py-4">
@@ -60,12 +72,21 @@ function LanguageOption({ openBar, setUniversalLanguage }) {
       <div className="flex flex-col gap-8">
         {languageList.map((language, index) => {
           return (
-            <div key={index} className="flex justify-between items-center">
-              <label htmlFor={language.name} className="w-full flex items-center gap-3 font-normal">
+            <div key={index} className="relative flex justify-between items-center">
+              <button className="absolute w-full h-full" onClick={() => selectLanguage(language)}></button>
+              <div className="w-full flex items-center gap-3 font-normal">
                 <img src={language.flag} alt={language.name} />
                 <p>{language.name}</p>
-              </label>
-              <input type="radio" id={language.name} name="language" />
+              </div>
+              <div
+                className={
+                  language.selected
+                    ? 'w-6 h-6 rounded-full bg-purple-900 border-2 flex justify-center items-center'
+                    : 'w-6 h-6 rounded-full bg-white border-2 border-gray-300'
+                }
+              >
+                {language.selected && <img src={checkIcon} alt="check" />}
+              </div>
             </div>
           );
         })}

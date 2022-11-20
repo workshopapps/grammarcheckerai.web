@@ -16,6 +16,7 @@ import USAFlagIcon from './icon/usa.svg';
 import EditIcon from './icon/edit-2.svg';
 import arrowRightIcon from './icon/arrow-right.svg';
 import searchIcon from './icon/search-normal.svg';
+import checkIcon from './icon/check.svg';
 
 export {
   languageIcon,
@@ -36,4 +37,5 @@ export {
   FinnishFlagIcon,
   USAFlagIcon,
   searchIcon,
+  checkIcon,
 };

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { arrowRightIcon, infinityIcon, languageIcon, maximizeIcon, searchIcon } from '../../../assets';
+import { arrowRightIcon, BritishFlagIcon, infinityIcon, languageIcon, maximizeIcon, searchIcon } from '../../../assets';
 import FontAdjustment from './font-adjustment/font-adjustment';
 import HelpSupport from './help-support/help-support';
 import Languages from './language/languages';
@@ -8,11 +8,14 @@ import SettingOption from './setting-list/setting-list';
 import LanguageOption from './language/language-option';
 
 function Settings() {
-  const [universalLanguage, setUniversalLanguage] = useState({});
+  const [universalLanguage, setUniversalLanguage] = useState({
+    name: 'British English',
+    flag: BritishFlagIcon,
+    selected: true,
+  });
 
   const changeLanguage = (selected) => {
-    setUniversalLanguage(selected);
-    console.log(selected);
+    setUniversalLanguage(selected[0]);
   };
 
   const settingList = [
