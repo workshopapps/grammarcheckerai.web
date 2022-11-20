@@ -2,20 +2,16 @@ import './App.css';
 import React, { useEffect } from 'react';
 import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
-<<<<<<< HEAD
 import { useLocalStorage } from './hooks/useLocalStorage';
 import Signup from './modules/auth/signup/step1/step1';
 import Signuptwo from './modules/auth/signup/step2/step2';
 import Signin from './modules/auth/login/login';
 import Forgotpassword from './modules/auth/forgot-password/forgot';
 import ResetLink from './modules/auth/reset-password/reset';
-=======
 import TermsOfUse from './modules/static/terms_of_use';
 import DashboardLayout from './components/DashboardLayout';
 import { HomePage, History, Correction } from './pages';
 
-
->>>>>>> cf2e9c28846c583d4eeba1219a1591d7e8b02fbe
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
   createRoutesFromElements(
