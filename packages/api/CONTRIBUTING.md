@@ -1,13 +1,17 @@
-# Github workflow.
+# If you are implementing a backend feature;
 
-## All team members contributing to the code should carefully fellow the steps below
+## 1 Clone the dev branch with git clone <repo-link-here>
 
-### Clone the repository.
+## 2 checkout from dev branch to your new branch named this way git checkout -b feat/BE-15-process-script. In this example, BE-15 is the ticket number, process script is what it does.
 
-### Create a new branch from the develop branch and name it according to the feature you are implementing example (orm_feature).
+## 3 Add your changes to the new branch git add .
 
-### When you're done with your feature, Pull from the develop branch
+## 4 Commit changes git commit -m "feat(BE-15): added endpoints to process login scripts" . If it is a bug fix, replace featwith fix. If it is some basic chore like removing redundant code, replace with chore
 
-### Send a Pull request to develop branch.
+## 5 Now push your branch git push origin feat/BE-15-process-script
 
-### All code merges will be done by the team lead after he/she has made sure the newly implemented feature works as required.
+## 6 Go to github and make a PR to the dev branch. Add description stating what the PR achieves. Add your linear link to the PR description also.
+
+## 7 Request for review from your team leads or mentors in the PR.
+
+## 8 Now wait for it to be merged by the team leads or mentors
