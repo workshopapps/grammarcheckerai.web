@@ -6,17 +6,17 @@ const {
 } = require("../utilities/validation/auth.validation");
 const {
   registerUser,
-} = require("../controller/auth/user.controller"); //importing deleteuser controller
+} = require("../controller/auth/user.controller"); 
 const { googleAuthURL } = require("../controller/auth/google.user.controller");
 const { linkedin } = require("./linkedin-auth");
 const {login} = require('../controller/loginController')
-const {logout} = require('../controller/logoutcontroller')
-const userProfileController = require('../controller/userProfileController')
+const {logout} = require('../controller/logoutcontroller') 
 const facebookAuthRoutes = require('./facebookAuth');
  
 
 auth.post("/signup", registerValidationRules(), validate, registerUser);
-auth.post("/google-auth", googleAuthURL);
+auth.get("/google", googleAuthURL);
+auth.post("/google", googleAuthURL);
 
 
 auth.post("/login", login);
