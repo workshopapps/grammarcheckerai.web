@@ -1,4 +1,5 @@
 const banana = require('@banana-dev/banana-dev');
+
 const UserResponse = require('../database/models/userResponseSchema');
 const BotResponse = require('../database/models/botResponseSchema');
 const Message = require('../database/models/messageSchema');
@@ -10,15 +11,14 @@ const { API_KEY, MODEL_KEY } = environment;
 
 async function getBotResponse(req, res) {
     try {
-        // reading data from request body
-        const userId = req.body.userId;
         const conversationId = req.body.conversationId;
-        const mp3File = req.file;
+        const mp3File = req.file;   // retrieves file buffer and metadata set by multer
 
-        if (!userId || !conversationId || !mp3File) {
+        // checks if file is available
+        if (!mp3File) {
             return res.status(400).send({
-                status: "Bad Request",
-                message: "userId, conversationId and audio file must be provided"
+                success: false,
+                message: "file property can't be empty"
             });
         }
 
@@ -30,7 +30,7 @@ async function getBotResponse(req, res) {
         const transcribedAudioText = out?.modelOutputs[0]?.text;
         if (!transcribedAudioText) {
             return res.status(400).send({
-                status: "Bad Request",
+                success: false,
                 message: `OpenAI Whisper: ${out.modelOutputs[0].message}` || "OpenAI Whisper: Unknown error"
             });
         }
@@ -38,51 +38,73 @@ async function getBotResponse(req, res) {
         // Send audio transcription to Grammar Correction to get corrected text
         let { correctUserResponseInTxt } = await grammarCheckHandler(transcribedAudioText, "English");
 
+        // Send corrected text to GPT3 to get bot response and update chat log
         let chatLog, botReply;
-        // Send corrected text to GPT3 to get bot response
-        chatLog = req.session.chatLog;
+        chatLog = req.session.chatLog; // get chat log from session
         const botRes = await chatHandler(correctUserResponseInTxt, chatLog);
-        botReply = botRes.slice(6);
+        botReply = botRes.replace("AI:", "").trim();
         chatLog = appendConversationToChatLog(
             correctUserResponseInTxt,
             botRes,
             chatLog
         );
-        req.session.chatLog = chatLog;
+        req.session.chatLog = chatLog; // set updated chat log to session
 
-        // upload audio file to storage
+        // upload audio file to storage. TODO: update to url when amazon s3 bucket credentials is received
         let audioURL = mp3File.originalname;
 
-        // save userResponse, botResponse and message
-        const userResponse = await UserResponse.create({
-            userId,
-            audioURL
-        });
+        // construct response
+        let userResponse, botResponse;
 
-        const botResponse = await BotResponse.create({
-            transcribedAudioText,
-            correctedText: correctUserResponseInTxt,
-            botReply
-        })
+        // for not logged in users
+        if (!conversationId) {
+            userResponse = { 
+                audioURL,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
 
-        const messageDocument = await Message.create({
-            conversationId,
-            userResponseId: userResponse._id,
-            botResponseId: botResponse._id
-        })
+            botResponse = {
+                transcribedAudioText,
+                correctedText: correctUserResponseInTxt.trim(),
+                botReply,
+                language: "English",
+                createdAt: new Date(),
+                updatedAt: new Date()
+            }
 
-        res.status(201).send({
+        } else {
+            // for logged in users
+            userResponse = await UserResponse.create({
+                audioURL
+            });
+
+            botResponse = await BotResponse.create({
+                transcribedAudioText,
+                correctedText: correctUserResponseInTxt.trim(),
+                botReply
+            })
+
+            await Message.create({
+                conversationId,
+                userResponseId: userResponse._id,
+                botResponseId: botResponse._id
+            })
+        }
+
+        res.status(200).send({
+            success: true,
             message: "Message exchange successfully completed between user and bot",
             data: {
                 userResponse,
                 botResponse,
-                conversationId
+                conversationId: conversationId || null
             }
         });
 
     } catch (err) {
         return res.status(500).send({
-            status: "Internal server error",
+            success: false,
             message: err
         })
     }

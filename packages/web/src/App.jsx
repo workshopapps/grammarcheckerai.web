@@ -14,9 +14,11 @@ import Forgotpassword from './modules/auth/forgot-password/forgot';
 import ResetLink from './modules/auth/reset-password/reset';
 import FaqMain from './components/Faq/faq_main';
 import TermsOfUse from './modules/static/terms_of_use';
+import Testimonial from './modules/static/testimonials/Testimonial';
+import Ratings from './modules/static/testimonials/Ratings';
 import DashboardLayout from './components/DashboardLayout';
 import NewsletterPage from './modules/static/newsletter/NewsletterPage';
-import { HomePage, History, Correction, ConversationPage, LandingPage, LegalPage } from './pages';
+import { HomePage, History, Correction, ConversationPage, LandingPage, LegalPage, Settings } from './pages';
 import Careers from './pages/career/Career';
 import Roles from './pages/career/Roles';
 import Application from './pages/career/Application';
@@ -33,7 +35,7 @@ const router = createBrowserRouter(
       <Route path="/history" element={<History />} />
       <Route path="/correction" element={<Correction />} />
       <Route path="/about" element={<h1>About Page</h1>} />
-      <Route path="/faq" element={<FaqMain/>} />
+      <Route path="/faq" element={<FaqMain />} />
       <Route path="/blog" element={<h1>Blog Page</h1>} />
       <Route path="contact" element={<h1>Contact Page</h1>} />
       <Route path="/newsletter" element={<NewsletterPage />} />
@@ -41,7 +43,9 @@ const router = createBrowserRouter(
       <Route path="/roles" element={<Roles />} />
       <Route path="/apply" element={<Application />} />
       <Route path="/terms-of-use" element={<TermsOfUse />} />
-       <Route path="/api-status" element={<ApiStatus />} />
+      <Route path="/testimonials" element={<Testimonial />} />
+      <Route path="/ratings" element={<Ratings />} />
+      <Route path="/api-status" element={<h1>Api status Page</h1>} />
       <Route path="/legal" element={<LegalPage />} />
       <Route
         element={
@@ -97,7 +101,7 @@ const router = createBrowserRouter(
           path="settings"
           element={
             <ProtectedRoute>
-              <h1>Settings Page</h1>
+              <Settings />
             </ProtectedRoute>
           }
         />
@@ -105,7 +109,6 @@ const router = createBrowserRouter(
     </>,
   ),
 );
-
 
 function App() {
   const [demoData, setDemoData] = useLocalStorage('demoData', '');

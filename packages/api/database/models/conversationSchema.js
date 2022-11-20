@@ -10,11 +10,7 @@ let schema = new mongoose.Schema(
     userId: {
       type: String,
       ref: "user",
-    },
-    conversationName: {
-      type: String,
-      trim: true,
-    },
+    }
   },
   { timestamps: true }
 );
