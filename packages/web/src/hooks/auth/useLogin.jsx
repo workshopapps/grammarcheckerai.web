@@ -1,13 +1,19 @@
 import { ENDPOINTS } from '../../lib/constants';
 import useCustomMutation from '../useCustomMutation';
 
-const useInitiateSignup = () => {
+const useLogin = () => {
   return useCustomMutation({
     method: 'post',
-    endpoint: ENDPOINTS.API_INITIATE_SIGNUP,
-    queryKey: 'NAMESPACE.INITIATE_SIGNUP',
+    endpoint: ENDPOINTS.API_AUTH_LOGIN,
+    queryKey: 'login',
     showSuccessToast: false,
   });
 };
 
-export default useInitiateSignup;
+const login = useLogin();
+
+login.mutateAsync({
+  email: '',
+  password: '',
+});
+export default useLogin;
