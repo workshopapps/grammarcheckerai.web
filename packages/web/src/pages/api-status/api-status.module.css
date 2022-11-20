@@ -1,0 +1,93 @@
+.header {
+  padding: 1.5rem 1rem;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background-color: #ffffff;
+  border: 1px solid #d7d7d7;
+}
+
+.headerLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.status {
+  font-size: 25px;
+  border-left: 1px solid;
+  font-family: var(--DM-font);
+  font-weight: 500;
+  color: var(--greyScale400);
+  padding-left: 15px;
+}
+
+.grittyImg {
+  height: 30px;
+  display: block;
+}
+.mainContainer {
+  padding: 0 1rem;
+  margin-top: 7rem;
+}
+
+.mainHeader {
+  margin: 2rem 0;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: var(--DM-font);
+  line-height: 2.603rem;
+  color: var(--text-color);
+}
+
+.text {
+  margin-top: 9px;
+  font-family: var(--Inter);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--greyScale300);
+}
+
+@media screen and (min-width: 600px) {
+  .mainContainer {
+    margin-top: 8.5rem;
+  }
+  .mainHeader {
+    margin: 5rem;
+    margin-bottom: 2.5rem;
+  }
+  .title {
+    text-align: center;
+    font-size: 2.5rem;
+    line-height: auto;
+  }
+
+  .text {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 1.25rem;
+  }
+
+  .header {
+    padding: 2rem;
+  }
+
+  .grittyImg {
+    height: 40px;
+  }
+
+  .header {
+    padding: 1.5rem 2rem;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .title {
+    font-size: 3rem;
+  }
+}

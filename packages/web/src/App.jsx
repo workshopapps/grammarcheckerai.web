@@ -15,7 +15,7 @@ import { HomePage, History, Correction, ConversationPage, LandingPage, LegalPage
 import Careers from './pages/career/Career';
 import Roles from './pages/career/Roles';
 import Application from './pages/career/Application';
-
+import ApiStatus from './pages/api-status/api-status';
 
 // All routes/pages must be import from ./pages folder
 const router = createBrowserRouter(
@@ -36,7 +36,7 @@ const router = createBrowserRouter(
       <Route path="/roles" element={<Roles />} />
       <Route path="/apply" element={<Application />} />
       <Route path="/terms-of-use" element={<TermsOfUse />} />
-      <Route path="/api-status" element={<h1>Api status Page</h1>} />
+       <Route path="/api-status" element={<ApiStatus />} />
       <Route path="/legal" element={<LegalPage />} />
       <Route
         element={
