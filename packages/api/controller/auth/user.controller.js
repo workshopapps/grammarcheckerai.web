@@ -48,10 +48,7 @@ async function registerUser(req, res) {
 }
 
 async function googleAuthUserSignUp(req, res) {
-    // console.log(req.query);
   const {name, email} = await getTokens(req.query.code);
-
-  console.log(name, email);
 
   //Check if user already exist
   const user = await userCollection.findOne({ email });

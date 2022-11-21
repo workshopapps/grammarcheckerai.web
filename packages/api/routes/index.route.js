@@ -7,6 +7,6 @@ const verify = require("../middlewares/auth.middleware");
 
 routeHandler.use("/auth", auth);
 routeHandler.use("/user", verify, userHandler);
-routeHandler.use("/sendAudio", conversationRouter);
+routeHandler.use("/conversation", conversationRouter);
 
 module.exports = { routeHandler };
