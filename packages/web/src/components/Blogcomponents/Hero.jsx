@@ -1,6 +1,7 @@
 import React from "react"
 import Heroimg from "../../assets/blogimg/Frame 1000001903.svg"
 import { Link } from "react-router-dom"
+import Ai from "../../pages/Blog/Ai"
 
 const Hero = () => {
      return(
@@ -15,7 +16,7 @@ const Hero = () => {
 
                          <p className="font-normal text-sm mb-3 md:w-80">When we needed to punch code into a command line just to load a program, computers were far less user-friendly. But the mouse and graphical interfaces made things much easier, and computers blossomed from niche products into the mainstream.....</p>
                          
-                         <Link to="../../pages/Blog/Ai" className="text-header text-sm font-bold mb-3 text-left">Read more</Link>
+                         <Link to={Ai} className="text-header text-sm font-bold mb-3 text-left">Read more</Link>
                     </div>  
                </div>
                
