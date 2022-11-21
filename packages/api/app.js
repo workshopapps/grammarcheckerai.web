@@ -16,7 +16,12 @@ const testRoute = require('./routes/testRoutes')
 //Passport Initialized
 app.use(passport.initialize());
 
-app.use(express.json()).use(cors()); 
+app.use(cors({
+  origin: '*',
+  credentials: true
+}))
+
+app.use(express.json()); 
 
 const sess = {
   secret: environment.SESSION_SECRET,

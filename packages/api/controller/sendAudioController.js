@@ -27,7 +27,7 @@ async function getBotResponse(req, res) {
         const modelParameters = { "mp3BytesString": mp3 };
         const out = await banana.run(API_KEY, MODEL_KEY, modelParameters);
 
-        const transcribedAudioText = out?.modelOutputs[0]?.text;
+        const transcribedAudioText = out?.modelOutputs[0]?.text?.trim();
         if (!transcribedAudioText) {
             return res.status(400).send({
                 success: false,
