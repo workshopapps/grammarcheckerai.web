@@ -21,13 +21,6 @@ module.exports = {
           500: '#5D387F',
         },
       },
-      screens: {
-        sm: { min: '320px', max: '480px' },
-        md: { min: '481px', max: '768px' },
-        lg: { min: '769px' },
-      },
-
-
     },
   },
   plugins: [],

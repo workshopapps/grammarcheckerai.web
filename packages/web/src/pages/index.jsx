@@ -8,3 +8,4 @@ export { Settings } from '../modules/setting/';
 export { default as HomePage } from '../modules/account/home/homePage';
 export { default as History } from '../modules/account/history/history';
 export { default as Correction } from '../modules/account/history/correction';
+export { default as TranscribePage } from '../modules/transcribe/index';

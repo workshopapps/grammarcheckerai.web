@@ -8,7 +8,7 @@ import { BsDownload, BsClock, BsFillPersonLinesFill } from 'react-icons/bs';
 function DashboardLayout() {
   return (
     <div className="flex min-h-screen">
-      <div className="lg:w-96 md:w-80 sm:hidden h-full bg-[#F6F6F6] max-h-screen min-h-screen ">
+      <div className="lg:w-96 md:w-80  h-full bg-[#F6F6F6] max-h-screen min-h-screen sticky top-0">
         <div className="w-32 mx-auto py-20">
           <img src={logoImg} alt="" className="w-full" />
         </div>
@@ -30,7 +30,7 @@ function DashboardLayout() {
           </SidebarLink>
         </div>
       </div>
-      <div className="w-full">
+      <div className="w-full pt-5">
         {/* <div className="py-7 border-b border-slate-300 w-full"></div> */}
         <Outlet />
       </div>
