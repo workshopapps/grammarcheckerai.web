@@ -9,7 +9,7 @@ import styles from './index.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAudioRecorder } from '@sarafhbk/react-audio-recorder';
 import { convertSecToMin } from '../../../lib/utils';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import { Configuration, OpenAIApi } from 'openai';
 import ChatContainer from './chat-container';
 import useSendAudioFile from '../../../hooks/account/useSendAudio';
@@ -54,7 +54,9 @@ function Conversation() {
         {/*  eslint-disable-next-line jsx-a11y/media-has-caption */}
         {/* <audio controls src={audioResult} /> */}
         <div className="w-36">
-          <img src={logoImg} alt="" className="max-w-full" />
+          <Link to="/home">
+            <img src={logoImg} alt="" className="max-w-full" />
+          </Link>
         </div>
       </div>
       <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4">
@@ -65,10 +67,10 @@ function Conversation() {
                 <img src={botImg} alt="" className="max-w-full" />
               </div>
               <div className="space-y-4">
-                <h2 className="sm:text-xl text-[#262626] leading-relaxed text-5xl">
+                <h2 className="text-xl text-[#262626] leading-relaxed sm:text-5xl">
                   What would you like to say today?
                 </h2>
-                <p className="text-slate-600 sm:text-md text-[19px]">Each conversation bring you closer to fluency.</p>
+                <p className="text-slate-600 text-md sm:text-[19px]">Each conversation bring you closer to fluency.</p>
               </div>
             </>
           ) : (

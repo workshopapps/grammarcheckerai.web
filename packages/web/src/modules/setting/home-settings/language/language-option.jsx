@@ -81,7 +81,7 @@ function LanguageOption({ openBar, setUniversalLanguage }) {
               <div
                 className={
                   language.selected
-                    ? 'w-6 h-6 rounded-full bg-purple-900 border-2 flex justify-center items-center'
+                    ? 'w-6 h-6 rounded-full bg-purple-500 border-2 flex justify-center items-center'
                     : 'w-6 h-6 rounded-full bg-white border-2 border-gray-300'
                 }
               >

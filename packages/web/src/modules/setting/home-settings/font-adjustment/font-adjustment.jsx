@@ -1,3 +1,5 @@
+import styles from './font-adjustment.module.css';
+
 function FontAdjustment() {
   return (
     <div className="bg-gray-100 p-3 rounded-md">
@@ -6,12 +8,21 @@ function FontAdjustment() {
         <div className="w-full flex flex-col">
           <div className="flex justify-between items-end -translate-y-4 m-0 md:-translate-y-0">
             <p className="text-xs">A</p>
-            <p className="text-md hidden lg:block">A</p>
+            <p className="text-xl hidden lg:block">A</p>
             <p className="text-5xl">A</p>
           </div>
-          <input className="-translate-y-4 cursor-pointer md:-translate-y-0" type="range" />
+          <input
+            className={`${styles._font}} -translate-y-4 cursor-pointer md:-translate-y-0`}
+            min={16}
+            max={60}
+            value={35}
+            onInput="rangevalue.value=value"
+            type="range"
+          />
         </div>
-        <p className="-translate-y-4 md:-translate-y-0">94</p>
+        <output className="-translate-y-4 md:-translate-y-0" id="rangevalue">
+          35
+        </output>
       </div>
     </div>
   );

@@ -9,6 +9,15 @@ module.exports = {
         white: '#ffffff',
         black: '#000',
         green: '#185844',
+        btn: "#5d387f",
+        header: "#393939",
+        text: "#000",
+        span: "#c5a9df",
+        cards: "#5a5a5a",
+        card_border:"#D2D2D2",
+        input_border: "#e6e6e6",
+        input: "#f9f9f9",
+        blog: "#176b8b",
         dark: {
           primary: '#5A5A5A',
           100: '#F6F6F6',
@@ -21,13 +30,6 @@ module.exports = {
           500: '#5D387F',
         },
       },
-      screens: {
-        sm: { min: '320px', max: '480px' },
-        md: { min: '481px', max: '768px' },
-        lg: { min: '769px' },
-      },
-
-
     },
   },
   plugins: [],

@@ -41,10 +41,9 @@ exports.chatHandler = async function (
   } catch (error) {
     // next(error)
     if (error.response) {
-      console.log(error.response.status);
-      console.log(error.response.data);
+      throw new Error(error.response.data);
     } else {
-      console.log(error.message);
+      throw new Error(error.message);
     }
   }
 };

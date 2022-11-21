@@ -54,9 +54,9 @@ function Settings() {
 
   return (
     <div className="px-6 font-semibold max-w-screen-lg mx-auto relative">
-      <div className="sm:flex sm:flex-col gap-4 mb-7 flex-row justify-between items-center">
+      <div className="flex flex-col gap-4 mb-7 md:flex-row justify-between md:items-center">
         <h1 className="text-center sm:border-b border-gray-400 py-4 text-2xl font-semibold md:border-0">Settings</h1>
-        <div className="relative flex items-center w-3/4 ">
+        <div className="relative flex items-center w-3/4 md:w-1/3">
           <input
             type="text"
             placeholder="Search for a setting"
