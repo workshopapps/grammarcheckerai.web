@@ -18,7 +18,7 @@ const Cards = () => {
                          
                          <h1 className="text-header text-sm font-bold mb-3 xl:text-xl">7 Amazing Jobs That Will Pay You to Speak English</h1>
 
-                         <p className="text-cards font-normal text-sm mb-3 xl:text-base">Do you want to make money speaking English? if so, you're in luck!</p>
+                         <p className="text-cards font-normal text-sm mb-3 xl:text-base">Do you want to make money speaking English? if so, you`re in luck!</p>
 
                          <Link to="/jobs" className="text-header text-sm font-bold mb-3 text-left">Read more</Link>
                     </div>
@@ -28,7 +28,7 @@ const Cards = () => {
                          <img src={Image2} alt="" className="w-full object-cover" />
                          </div>
                          
-                         <h1 className="text-header text-sm  font-bold mb-3 xl:text-xl">10 Grammar Mistakes You're Probably Making (And How to Fix Them)</h1>
+                         <h1 className="text-header text-sm  font-bold mb-3 xl:text-xl">10 Grammar Mistakes You`re Probably Making (And How to Fix Them)</h1>
 
                          <p className="text-cards font-normal text-sm mb-3 xl:text-base">Do you make these common grammar mistakes? Many people do...</p>
 
