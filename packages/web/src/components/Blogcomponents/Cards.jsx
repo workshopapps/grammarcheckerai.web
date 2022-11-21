@@ -1,8 +1,8 @@
 import React from "react"
-import Image1 from "../blogimg/image 2.svg"
-import Image2 from "../blogimg/image 2 (1).svg"
-import Image3 from "../blogimg/image 2 (2).svg"
-import Icon from "../blogimg/arrow-down-circle-fill 1.png"
+ import Image1 from "../../assets/blogimg/image2.svg"
+import Image2 from "../../assets/blogimg/image 2 (1).svg"
+import Image3 from "../../assets/blogimg/image 2 (2).svg"
+import Icon from "../../assets/blogimg/arrow-down-circle-fill 1.png"
 import { Link } from "react-router-dom"
 
 const Cards = () => {
