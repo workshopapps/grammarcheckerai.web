@@ -12,7 +12,6 @@ exports.home = async (req, res) => {
       }
     })
     .catch((err) => {
-      console.log(err.response.status);
       status.push({ home: { status: "down" } });
     });
   const loginPage = await axios({
@@ -28,7 +27,6 @@ exports.home = async (req, res) => {
       }
     })
     .catch((err) => {
-      console.log(err.response.status);
       status.push({ loginPage: { status: "down" } });
     });
 
@@ -40,7 +38,6 @@ exports.home = async (req, res) => {
         }
       })
       .catch((err) => {
-        console.log(err.response.status);
         status.push({ sendAudio: { status: "down" } });
       });
 
@@ -52,7 +49,6 @@ exports.home = async (req, res) => {
           }
         })
         .catch((err) => {
-          console.log(err.response.status);
           status.push({ logoutPage: { status: "down" } });
         });
 
@@ -64,7 +60,6 @@ exports.home = async (req, res) => {
             }
           })
           .catch((err) => {
-            console.log(err.response.status);
             status.push({ testPage: { status: "down" } });
           });
 

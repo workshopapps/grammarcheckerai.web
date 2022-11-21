@@ -36,7 +36,16 @@ async function getBotResponse(req, res) {
         }
 
         // Send audio transcription to Grammar Correction to get corrected text
-        let { correctUserResponseInTxt } = await grammarCheckHandler(transcribedAudioText, "English");
+        let grammarCheckResponse = await grammarCheckHandler(transcribedAudioText, "English");
+        
+        // Handling OpenAI Error
+        if (!grammarCheckResponse) {
+            return res.status(500).send({
+                success: false,
+                message: "OpenAI internal error"
+            });
+        }
+        let { correctUserResponseInTxt } = grammarCheckResponse;
 
         // Send corrected text to GPT3 to get bot response and update chat log
         let chatLog, botReply;

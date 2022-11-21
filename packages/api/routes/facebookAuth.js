@@ -14,7 +14,6 @@ router.get(
   passport.authenticate('facebook', { failureRedirect: '/auth/failed' }),
   (req, res) => {
     // Successful authentication, redirect home.
-    // console.log(req.user.generateAuthToken());
 
     const token = req.user.generateAuthToken();
     res.cookie('x-auth-cookie', token);
