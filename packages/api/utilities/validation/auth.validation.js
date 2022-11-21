@@ -90,7 +90,6 @@ const validate = (req, res, next) => {
   errors.array().map((err) => resultErrors.push({ [err.param]: err.msg }));
 
   const errorObject = Object.assign({}, ...resultErrors);
-  console.log(errorObject);
   return res
     .status(422)
     .json(

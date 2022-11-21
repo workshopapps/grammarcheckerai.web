@@ -4,15 +4,40 @@ services:
   backend:
     image: asyncdeveloper/grammar-check-backend:latest
     ports:
-      - "3000:3000"
+      - "3000:5000"
     networks:
       - hng-internal
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - HOST=127.0.0.1
+      - DATABASE_URI_DEVELOP=mongodb://localhost:27017/grammerly
+      - DATABASE_URI_PROD=
+      - DATABASE_URI_TEST=mongodb://localhost:27017/
+      - CLIENT_ID=978033281049-hrkp6grkg6mo2cmm2rc9vkvvbr0722ls.apps.googleusercontent.com
+      - CLIENT_SECRET=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
+      - SERVER_ROOT_URI=https://grittygrammar.hng.tech/me/home
+      - LINKEDIN_SECRET_ID=4QAmvQlLTao6DAmV
+      - LINKEDIN_CLIENT_ID=77bvokl0d80r4u
+      - CALLBACK_URL=http://localhost:5000/api/v1/linkedin/callback
+      - OPENAI_API_KEY=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
+      - SESSION_SECRET=this is randoo
+      - JWT_SECRET=thisiswhole
+      - JWT_OPTION=24hr
+      - FB_CLIENT_ID=468368708698228
+      - FB_CLIENT_SERECT=b5e329203566deb6061247dd8272a67b
+      - FB_CALLBACK_URL=http://localhost:3000/auth/facebook/callback
+      - MODEL_KEY=103b378d-495b-4430-80d8-0c6c490525b7
+      - API_KEY=c5d2f9b9-9869-41be-bd24-e274452504cf
+      - FILE_SIZE=104857
   frontend:
     image: asyncdeveloper/grammar-check-frontend:latest
     ports:
       - "5000:5000"
     networks:
       - hng-internal
+    restart: always
 
 networks:
   hng-internal:
