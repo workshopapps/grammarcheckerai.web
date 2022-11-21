@@ -7,12 +7,12 @@ const Application = () => {
   return (
  <div>
   <Header/>
-     <div className="px-56 py-10 space-y-20 sm:px-0 sm:space-y-6 mt-24">
-      <div className="sm:px-5 ">
+     <div className="px-56 py-10 space-y-20 max-[480px]:px-0 max-[480px]:space-y-6 mt-20">
+      <div className="max-[480px]:px-5 ">
         <div className="flex justify-between py-4">
-          <h3 className="text-3xl font-bold text-green sm:text-xl ">Analyst Relations Manager</h3>
+          <h3 className="text-3xl font-bold text-green max-[480px]:text-xl ">Analyst Relations Manager</h3>
           <a
-            className="border-purple-500 border rounded-md py-3 px-6 sm:hidden hover:bg-green transition-all hover:text-white"
+            className="border-purple-500 border rounded-md py-3 px-6 max-[480px]:hidden hover:bg-green transition-all hover:text-white"
             href="#form"
           >
             Apply now
@@ -66,12 +66,12 @@ const Application = () => {
               Can clearly and effectively articulate ideas and feedback verbally and through written communication.
             </li>
           </ul>
-          <button className="bg-purple-500 text-white border rounded-md py-3 px-6 sm:block hidden ">Apply now</button>
+          <button className="bg-purple-500 text-white border rounded-md py-3 px-6 max-[480px]:block hidden ">Apply now</button>
         </div>
       </div>
-      <form className="grid bg-gray-100 w-1/2 mx-auto py-8 space-y-5 sm:w-full sm:px-2 sm:space-y-6 " id="form">
+      <form className="grid bg-gray-100 w-1/2 mx-auto py-8 space-y-5 max-[480px]:w-full max-[480px]:px-2 max-[480px]:space-y-6 " id="form">
         <h3 className="text-center text-xl font-semibold">Apply for this Job</h3>
-        <div className="px-14 space-y-5 sm:px-7">
+        <div className="px-14 space-y-5 max-[480px]:px-7">
           <label className="grid gap-y-1">
             First Name
             <input

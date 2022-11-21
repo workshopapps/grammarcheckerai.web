@@ -10,7 +10,7 @@ const Navbar = () => {
       </div>
       <div className="sm:flex space-x-12 hidden ">
         {[
-          { title: 'Converse', to: '/' },
+          { title: 'Converse', to: '/converse' },
           { title: 'About', to: '/about' },
           { title: 'FAQ', to: '/faq' },
           { title: 'Blog', to: '/blog' },
