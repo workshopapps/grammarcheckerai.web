@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Outlet } from 'react-router-dom';
+import { Route, Routes, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import Signup from './modules/auth/signup/step1/step1';
 import Signuptwo from './modules/auth/signup/step2/step2';
@@ -37,9 +37,10 @@ import ApiStatus from './pages/api-status/api-status';
 import LandingLayout from './components/LandingLayout.jsx';
 
 // All routes/pages must be import from ./pages folder
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <>
+
+function App() {
+  return (
+    <Routes>
       <Route path="/converse" element={<ConversationPage />} />
       <Route path="/history" element={<h2>History</h2>} />
       <Route element={<LandingLayout />}>
@@ -120,12 +121,8 @@ const router = createBrowserRouter(
           }
         />
       </Route>
-    </>,
-  ),
-);
-
-function App() {
-  return <RouterProvider router={router} />;
+    </Routes>
+  );
 }
 
 export default App;
