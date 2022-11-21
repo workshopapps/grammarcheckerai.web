@@ -3,11 +3,11 @@ import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <header className="flex justify-between py-4 sm:px-10 items-center z-10 fixed top-0 w-full bg-white px-3 shadow-sm">
+    <header className="flex justify-between py-4 max-[480px]:px-3 items-center z-10 fixed top-0 w-full bg-white px-10 shadow-sm">
       <div>
         <img src="images/grit.svg" alt="gritty" />
       </div>
-      <div className="sm:flex space-x-12 hidden ">
+      <div className="flex space-x-12 max-[480px]:hidden ">
         {[
           { title: 'Home', to: '/' },
           { title: 'About', to: '/about' },
