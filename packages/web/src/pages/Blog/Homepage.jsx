@@ -1,9 +1,9 @@
 
 import React from 'react';
-import Header from '../Blogcomponents/Header';
-import Hero from '../Blogcomponents/Hero';
-import Cards from '../Blogcomponents/Cards';
-import Cta from '../Blogcomponents/Cta';
+import Header from '../../components/Blogcomponents/Header';
+import Hero from '../../components/Blogcomponents/Hero';
+import Cards from '../../components/Blogcomponents/Cards';
+import Cta from '../../components/Blogcomponents/Cta';
 
 const Homepage = () => {
   return (
