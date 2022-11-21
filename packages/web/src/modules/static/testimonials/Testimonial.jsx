@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import stars from '../../../assets/raters/star.png';
 import testimonial1 from '../../../assets/raters/testimonials/testimonial1.png';
@@ -61,6 +62,12 @@ export default function Testimonial() {
   ];
   return (
     <div className="mx-6 lg:mx-32">
+      <div className="">
+        <Link to="/testimonials" className="text-[#5D387F]">
+          {' '}
+          &lt; Back{' '}
+        </Link>
+      </div>
       <h1 className="text-center mt-12 text-lg lg:text-4xl">Users Love What We Do</h1>
       <p className="text-center my-4 text-sm lg:text-lg">
         Read the stories of our users who have relied on our product to improve their grammar

@@ -1,98 +1,98 @@
-name: Docker Image CI
+# name: Docker Image CI
 
-on:
-  push:
-    branches: ["develop"]
-  # pull_request:
-  #   branches: ["develop"]
+# # on:
+# #   push:
+# #     branches: ["develop"]
+# # pull_request:
+# #   branches: ["develop"]
 
-jobs:
-  build_and_push_docker_image:
-    runs-on: ubuntu-latest
+# jobs:
+#   build_and_push_docker_image:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      - name: Build and push Backend
-        uses: docker/build-push-action@v3
-        with:
-          context: ./packages/api
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: |
-            asyncdeveloper/grammar-check-backend:latest
-      - name: Build and push frontend
-        uses: docker/build-push-action@v3
-        with:
-          context: ./packages/web
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: |
-            asyncdeveloper/grammar-check-frontend:latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v3
+#       - name: Set up QEMU
+#         uses: docker/setup-qemu-action@v2
+#       - name: Set up Docker Buildx
+#         uses: docker/setup-buildx-action@v2
+#       - name: Login to Docker Hub
+#         uses: docker/login-action@v2
+#         with:
+#           username: ${{ secrets.DOCKERHUB_USER }}
+#           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+#       - name: Build and push Backend
+#         uses: docker/build-push-action@v3
+#         with:
+#           context: ./packages/api
+#           platforms: linux/amd64,linux/arm64
+#           push: true
+#           tags: |
+#             asyncdeveloper/grammar-check-backend:latest
+#       - name: Build and push frontend
+#         uses: docker/build-push-action@v3
+#         with:
+#           context: ./packages/web
+#           platforms: linux/amd64,linux/arm64
+#           push: true
+#           tags: |
+#             asyncdeveloper/grammar-check-frontend:latest
 
-  create_dev_envirtonment:
-    needs: build_and_push_docker_image
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+#   create_dev_envirtonment:
+#     needs: build_and_push_docker_image
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
 
-      - name: Make install script Executable
-        run: chmod +x ./terraform_install.sh
+#       - name: Make install script Executable
+#         run: chmod +x ./terraform_install.sh
 
-      - name: Install Terraform
-        run: ./terraform_install.sh
+#       - name: Install Terraform
+#         run: ./terraform_install.sh
 
-      - name: Cd into root directory and initialize terraform
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.REGION }}
-        run: cd ./terraform && terraform init -input=false
+#       - name: Cd into root directory and initialize terraform
+#         env:
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           AWS_REGION: ${{ secrets.REGION }}
+#         run: cd ./terraform && terraform init -input=false
 
-      - name: Build Infrastructure
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.REGION }}
-        run: cd ./terraform && terraform apply -auto-approve -input=false
+#       - name: Build Infrastructure
+#         env:
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           AWS_REGION: ${{ secrets.REGION }}
+#         run: cd ./terraform && terraform apply -auto-approve -input=false
 
-      - name: Get Public IP
-        run: cd ./terraform && echo "PublicIP=$(terraform output PublicIp)" >> $GITHUB_ENV
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.REGION }}
+#       - name: Get Public IP
+#         run: cd ./terraform && echo "PublicIP=$(terraform output PublicIp)" >> $GITHUB_ENV
+#         env:
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           AWS_REGION: ${{ secrets.REGION }}
 
-      - name: Copy IP into inventory file
-        run: cd ./terraform && echo "$(terraform output PublicIp)" >> ../ansible/inventory.txt
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.REGION }}
+#       - name: Copy IP into inventory file
+#         run: cd ./terraform && echo "$(terraform output PublicIp)" >> ../ansible/inventory.txt
+#         env:
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           AWS_REGION: ${{ secrets.REGION }}
 
-  deploy_docker_container:
-    needs: create_dev_envirtonment
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: install ansible
-        run: sudo apt update && sudo apt install software-properties-common && sudo apt-add-repository --yes --update ppa:ansible/ansible && sudo apt install -y ansible
-      - name: Output SSH key to file
-        run: |
-          mkdir ~/.ssh
-          echo "${{secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/id_rsa
-          chmod 400 ~/.ssh/id_rsa
+#   deploy_docker_container:
+#     needs: create_dev_envirtonment
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: install ansible
+#         run: sudo apt update && sudo apt install software-properties-common && sudo apt-add-repository --yes --update ppa:ansible/ansible && sudo apt install -y ansible
+#       - name: Output SSH key to file
+#         run: |
+#           mkdir ~/.ssh
+#           echo "${{secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/id_rsa
+#           chmod 400 ~/.ssh/id_rsa
 
-      - name: Deploy via ansible
-        run: ansible-playbook --private-key=~/.ssh/id_rsa ./ansible/deploy-app.yml -i ./ansible/inventory.txt -vvv
-        env:
-          ANSIBLE_HOST_KEY_CHECKING: false
+#       - name: Deploy via ansible
+#         run: ansible-playbook --private-key=~/.ssh/id_rsa ./ansible/deploy-app.yml -i ./ansible/inventory.txt -vvv
+#         env:
+#           ANSIBLE_HOST_KEY_CHECKING: false
