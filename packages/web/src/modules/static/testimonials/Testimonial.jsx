@@ -62,8 +62,8 @@ export default function Testimonial() {
   ];
   return (
     <div className="mx-6 lg:mx-32">
-      <div className="">
-        <Link to="/testimonials" className="text-[#5D387F]">
+      <div className="text-xs my-6">
+        <Link to="/ratings" className="text-[#5D387F]">
           {' '}
           &lt; Back{' '}
         </Link>

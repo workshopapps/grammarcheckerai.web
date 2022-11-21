@@ -6,7 +6,9 @@ const { JWT_SECRET } =  environment;
 // if there is no token, it will exit the function.
 
 function verify(req, res, next) {
-  const token = req.header("Authorization").split(" ")[1];
+   
+  const token = req.header("Authorization")?.split(" ")[1];
+  
   
   if (!token) return res.status(401).send("Access denied. No token Provided"); 
   

@@ -1,8 +1,10 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const session = require("express-session");
+const session = require('express-session')
+
 const { environment } = require("./config/environment");
+const testRoute = require('./routes/testRoutes')
 require('express-async-errors')
 require('./database/index')
 const passport = require('passport');
@@ -10,7 +12,6 @@ require('./services/linkedinStrategy')
 const {routeHandler} = require('./routes/index.route'),
     swaggerUi = require('swagger-ui-express'),
     swaggerDocument = require('./Tests/test.json')
-const testRoute = require('./routes/testRoutes')
 
 
 //Passport Initialized
