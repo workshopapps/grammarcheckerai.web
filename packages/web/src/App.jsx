@@ -13,6 +13,7 @@ import Forgotpassword from './modules/auth/forgot-password/forgot';
 import ResetLink from './modules/auth/reset-password/reset';
 import FaqMain from './components/Faq/faq_main';
 import Blog from './pages/Blog/Homepage';
+import About from './pages/about/About';
 import TermsOfUse from './modules/static/terms_of_use';
 import Testimonial from './modules/static/testimonials/Testimonial';
 import Ratings from './modules/static/testimonials/Ratings';
@@ -45,7 +46,7 @@ const router = createBrowserRouter(
       <Route element={<LandingLayout />}>
         <Route path="/home" element={<LandingPage />} />
         <Route path="/faq" element={<FaqMain />} />
-        <Route path="/about" element={<h1>About Page</h1>} />
+        <Route path="/about" element={<About/>} />
         <Route path="/blog" element={<Blog />} />
         <Route path="contact" element={<h1>Contact Page</h1>} />
         <Route path="/terms-of-use" element={<TermsOfUse />} />
