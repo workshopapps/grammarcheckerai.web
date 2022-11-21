@@ -11,7 +11,7 @@ function HistoryModal({ open, onClose, setHistory }) {
           <div className="flex justify-center items-center my-6">
             <img src={deleteIcon} alt="deleteIcon" />
           </div>
-          <h3 className="font-['Inter'] text-[ #393939] font-normal text-center sm:text-2xl text-[16px]">
+          <h3 className="font-['Inter'] text-[#393939] font-normal text-center sm:text-2xl text-[16px]">
             Are you sure you want to delete all conversation?
           </h3>
           <button
