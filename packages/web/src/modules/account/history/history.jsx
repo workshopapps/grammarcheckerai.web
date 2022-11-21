@@ -19,10 +19,10 @@ function History() {
   const [history, setHistory] = useState(historyDays);
   if (history?.length) {
     return (
-      <div className="flex flex-col pt-16 xl:ml-[62px] xl:mr-[9rem] lg:ml-[52px] lg:mx-[4rem] md:mx-[42px] sm:mx-[30px] mx-6">
+      <div className="flex flex-col pt-16 xl:ml-[62px] xl:mr-[9rem] lg:ml-[52px] 2xl:ml-[7rem] 2xl:mr-[13rem] lg:mx-[4rem] md:mx-[42px] sm:mx-[30px] mx-6">
         <div className="flex items-center sm:justify-between justify-end">
           <h1 className="text-[#393939] sm:text-[32px] text-[24px] font-bold font-['DM_Sans'] leading-10">History</h1>
-          <div className="sm:flex-[.95] flex-[.7] w-full relative">
+          <div className="sm:flex-[.95] lg:flex-[.9] 2xl:flex-[.85] flex-[.7] w-full relative">
             <input
               type="search"
               name="search"
