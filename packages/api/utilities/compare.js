@@ -1,9 +1,6 @@
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcryptjs');
 async function comparePassword(password, hash) {
-  const isCorrect = await bcrypt.compare(password, hash);
-  
-  return isCorrect;
+  return await bcrypt.compare(password, hash);
 }
 
 module.exports = { comparePassword };
-
