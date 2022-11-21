@@ -5,7 +5,11 @@ import userImg from '../../assets/images/user.svg';
 
 function Chat({ isBot, isCorrection, timestamp = '11:20 AM', isLastReply }) {
   return (
-    <div className={`flex max-w-md items-center align-text-bottom space-x-1 ${isBot ? 'mr-auto' : 'ml-auto '}`}>
+    <div
+      className={`flex max-w-md items-center align-text-bottom space-x-1 ${isBot ? 'mr-auto' : 'ml-auto '} ${
+        isLastReply ? 'pl-0' : 'pl-14'
+      }`}
+    >
       <div className="order-1">
         <div
           className={`p-4 rounded-xl  border border-[#5D387F] space-y-4 ${
@@ -18,7 +22,7 @@ function Chat({ isBot, isCorrection, timestamp = '11:20 AM', isLastReply }) {
             too easily ”
           </p>
         </div>
-        <p className={`text-sm mb-2 text-slate-800 pt-1 ${isBot ? 'text-right' : ''}`}>{timestamp}</p>
+        <p className={`text-sm mb-2 text-slate-800 pt-1 ${isBot ? 'text-right' : 'text-left'}`}>{timestamp}</p>
       </div>
 
       {isLastReply && (
