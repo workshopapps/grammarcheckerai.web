@@ -15,13 +15,13 @@ function HistoryModal({ open, onClose, setHistory }) {
             Are you sure you want to delete all conversation?
           </h3>
           <button
-            className="flex bg-[#EC1B1B] my-8 justify-center items-center py-3 outline-none w-full rounded-xl text-white sm:text-base text-[15px]"
+            className="flex bg-[#EC1B1B] my-6 justify-center items-center py-3 outline-none w-full rounded-xl text-white sm:text-base text-[15px]"
             onClick={setHistory}
           >
             Delete
           </button>
           <button
-            className="flex bg-transparent my-8 border-[1px]  justify-center py-3 items-center outline-none w-full rounded-lg text-[ #393939] sm:text-base text-[15px] border-[#00000060]"
+            className="flex bg-transparent my-6 border-[1px]  justify-center py-3 items-center outline-none w-full rounded-lg text-[ #393939] sm:text-base text-[15px] border-[#00000060]"
             onClick={onClose}
           >
             Cancel
