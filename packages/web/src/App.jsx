@@ -40,10 +40,10 @@ import LandingLayout from './components/LandingLayout.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<HomePage />} />
       <Route path="/converse" element={<ConversationPage />} />
       <Route path="/history" element={<h2>History</h2>} />
       <Route element={<LandingLayout />}>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<LandingPage />} />
         <Route path="/faq" element={<FaqMain />} />
         <Route path="/about" element={<h1>About Page</h1>} />
