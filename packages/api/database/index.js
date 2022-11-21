@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { MongoClient } = require('mongodb');
 const { environment } = require('../config/environment.js');
 
-const { NODE_ENV, DATABASE_URI_DEVELOP, DATABASE_URI_TEST, DATABASE_URI_PROD } =
+const { NODE_ENV, DATABASE_URI_DEVELOP, DATABASE_URI_TEST, ME_CONFIG_MONGODB_URL } =
   environment;
 
   const db = (URi) => {
@@ -47,5 +47,5 @@ if (NODE_ENV === "test") {
 }
 if (NODE_ENV === "production") {
   console.log(`DB running in ${NODE_ENV} mode`);
-  module.exports = db(DATABASE_URI_PROD);
+  module.exports = db(ME_CONFIG_MONGODB_URL);
 }
