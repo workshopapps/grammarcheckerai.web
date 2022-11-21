@@ -15,8 +15,7 @@ const { routeHandler } = require("./routes/index.route"),
 
 //Passport Initialized
 app.use(passport.initialize());
-
-app.use(express.json()).use(cors()); 
+app.use(express.json()).use(cors());
 
 const sess = {
   secret: environment.SESSION_SECRET,
@@ -25,15 +24,14 @@ const sess = {
   cookie: {},
 };
 
-
 if (app.get("env") === "production") {
   app.set("trust proxy", 1); // trust first proxy
   sess.cookie.secure = true; // serve secure cookies
 }
 
-app.use(session(sess))
-   .use('/docsapi-', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-
+app
+  .use(session(sess))
+  .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/test", testRoute);
 app.use("/v1", routeHandler);
