@@ -5,5 +5,5 @@ async function comparePassword(password, hash) {
   return isCorrect;
 }
 
-module.exports = { slugify };
+module.exports = { comparePassword };
 
