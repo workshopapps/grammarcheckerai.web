@@ -75,8 +75,8 @@ export default function DeleteAccount() {
                 </label>
 
                 <div className="_btnContainer">
-                    <ProfileScreenButton onClick={() => history(-1)} variant="secondary">{'Cancel'}</ProfileScreenButton>
-                    <ProfileScreenButton disabled={btnActive} onClick={handleSubmit}>{'Continue'}</ProfileScreenButton>
+                    <ProfileScreenButton onClick={() => history(-1)} variant="secondary">Cancel</ProfileScreenButton>
+                    <ProfileScreenButton disabled={btnActive} onClick={handleSubmit}>Continue</ProfileScreenButton>
                 </div>
             </form>
     </div>

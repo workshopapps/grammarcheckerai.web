@@ -68,10 +68,10 @@ export default function ConfirmDeleteAccount() {
 
         <div className="_btnContainer">
             <ProfileScreenButton onClick={() => history(-1)} variant="secondary">
-                {'Cancel'}
+                Cancel
             </ProfileScreenButton>
             <ProfileScreenButton disabled={Object.keys(reasons).length === 0 ? true : false} >
-                {'Submit'}
+                Submit
             </ProfileScreenButton>
         </div>
     </div>

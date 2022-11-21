@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
-import { useLocalStorage } from './hooks/useLocalStorage';
 import Signup from './modules/auth/signup/step1/step1';
 import Signuptwo from './modules/auth/signup/step2/step2';
 import Signin from './modules/auth/login/login';
@@ -13,6 +12,7 @@ import ConfirmDeleteAccount from './pages/profile/ConfirmDeleteAccount';
 import Forgotpassword from './modules/auth/forgot-password/forgot';
 import ResetLink from './modules/auth/reset-password/reset';
 import FaqMain from './components/Faq/faq_main';
+import Blog from './pages/Blog/Homepage';
 import TermsOfUse from './modules/static/terms_of_use';
 import Testimonial from './modules/static/testimonials/Testimonial';
 import Ratings from './modules/static/testimonials/Ratings';
@@ -45,21 +45,19 @@ const router = createBrowserRouter(
       <Route element={<LandingLayout />}>
         <Route path="/home" element={<LandingPage />} />
         <Route path="/faq" element={<FaqMain />} />
+        <Route path="/about" element={<h1>About Page</h1>} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="contact" element={<h1>Contact Page</h1>} />
+        <Route path="/terms-of-use" element={<TermsOfUse />} />
+        <Route path="/testimonials" element={<Testimonial />} />
+        <Route path="/ratings" element={<Ratings />} />
+        <Route path="/legal" element={<LegalPage />} />
       </Route>
-      <Route path="/settings" element={<Settings />} />
-      <Route path="/correction" element={<Correction />} />
-      <Route path="/about" element={<h1>About Page</h1>} />
-      <Route path="/blog" element={<h1>Blog Page</h1>} />
-      <Route path="contact" element={<h1>Contact Page</h1>} />
       <Route path="/newsletter" element={<NewsletterPage />} />
       <Route path="/career" element={<Careers />} />
       <Route path="/roles" element={<Roles />} />
       <Route path="/apply" element={<Application />} />
-      <Route path="/terms-of-use" element={<TermsOfUse />} />
       <Route path="/app-status" element={<ApiStatus />} />
-      <Route path="/testimonials" element={<Testimonial />} />
-      <Route path="/ratings" element={<Ratings />} />
-      <Route path="/legal" element={<LegalPage />} />
       <Route path="/emailtemplate" element={<EmailTemplate />} />
       <Route path="/errormodal" element={<NewsletterErrorPopUp />} />
       <Route
