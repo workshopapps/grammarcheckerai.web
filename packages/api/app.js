@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const session = require("express-session");
 const { environment } = require("./config/environment");
+const testRoute = require('./routes/testRoutes')
 require('express-async-errors')
 require('./database/index')
 const passport = require('passport');
