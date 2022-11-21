@@ -13,7 +13,7 @@ services:
       - PORT=5000
       - HOST=127.0.0.1
       - DATABASE_URI_DEVELOP=mongodb://localhost:27017/grammerly
-      - DATABASE_URI_PROD=
+      - DATABASE_URI_PROD=mongodb+srv://ogmaro:OFujwMKQ2AumDMUC@gritty.gccua7c.mongodb.net/grittygrammar
       - DATABASE_URI_TEST=mongodb://localhost:27017/
       - CLIENT_ID=978033281049-hrkp6grkg6mo2cmm2rc9vkvvbr0722ls.apps.googleusercontent.com
       - CLIENT_SECRET=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
