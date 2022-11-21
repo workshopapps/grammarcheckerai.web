@@ -27,7 +27,7 @@ async function getBotResponse(req, res) {
         const modelParameters = { "mp3BytesString": mp3 };
         const out = await banana.run(API_KEY, MODEL_KEY, modelParameters);
 
-        const transcribedAudioText = out?.modelOutputs[0]?.text;
+        const transcribedAudioText = out?.modelOutputs[0]?.text?.trim();
         if (!transcribedAudioText) {
             return res.status(400).send({
                 success: false,
@@ -36,7 +36,16 @@ async function getBotResponse(req, res) {
         }
 
         // Send audio transcription to Grammar Correction to get corrected text
-        let { correctUserResponseInTxt } = await grammarCheckHandler(transcribedAudioText, "English");
+        let grammarCheckResponse = await grammarCheckHandler(transcribedAudioText, "English");
+        
+        // Handling OpenAI Error
+        if (!grammarCheckResponse) {
+            return res.status(500).send({
+                success: false,
+                message: "OpenAI internal error"
+            });
+        }
+        let { correctUserResponseInTxt } = grammarCheckResponse;
 
         // Send corrected text to GPT3 to get bot response and update chat log
         let chatLog, botReply;
