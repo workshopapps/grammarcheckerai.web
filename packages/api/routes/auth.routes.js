@@ -20,7 +20,7 @@ auth.post("/google", googleAuthUserSignUp);
 
 
 auth.post("/login", login);
-auth.get("/logout", logout);
+auth.post("/logout", logout);
 auth.use("/linkedin", linkedin);
 auth.use('/facebook', facebookAuthRoutes);
 
