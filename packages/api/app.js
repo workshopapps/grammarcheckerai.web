@@ -1,7 +1,11 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const session = require("express-session");
+const login = require('./routes/loginRoute') //login
+const logout = require('./routes/logoutRoute') //logout
+const userRouter = require("./routes/userRouter"); // importing user routes
+const correction_history = require('./routes/correctionHistoryRoute')//correction history route
+
 const { environment } = require("./config/environment");
 const testRoute = require('./routes/testRoutes')
 require('express-async-errors')
