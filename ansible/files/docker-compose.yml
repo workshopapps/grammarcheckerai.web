@@ -4,7 +4,7 @@ services:
   backend:
     image: asyncdeveloper/grammar-check-backend:latest
     ports:
-      - "3000:3000"
+      - "3000:5000"
     networks:
       - hng-internal
     restart: always
