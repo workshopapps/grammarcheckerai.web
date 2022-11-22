@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import './App.css';
+import Fallback from './components/Fallback/Fallback';
 import { Route, Routes, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 const SignupPage = lazy(() => import('./modules/auth/signup/step1/step1'));
@@ -39,11 +40,7 @@ const LandingLayoutPage = lazy(() => import('./components/LandingLayout.jsx'));
 const DashboardLayout = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Dashboard />
@@ -53,11 +50,7 @@ const DashboardLayout = () => (
 const Signup = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <SignupPage />
@@ -67,11 +60,7 @@ const Signup = () => (
 const Signuptwo = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <SignupTwoPage />
@@ -81,11 +70,7 @@ const Signuptwo = () => (
 const Signin = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <SigninPage />
@@ -95,11 +80,7 @@ const Signin = () => (
 const ProfileScreen = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <ProfilePage />
@@ -108,11 +89,7 @@ const ProfileScreen = () => (
 const ChangePassword = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <PasswordPage />
@@ -121,11 +98,7 @@ const ChangePassword = () => (
 const DeleteAccount = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <DeletePage />
@@ -134,11 +107,7 @@ const DeleteAccount = () => (
 const ConfirmDeleteAccount = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <ConfirmDeletePage />
@@ -147,11 +116,7 @@ const ConfirmDeleteAccount = () => (
 const Forgotpassword = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <ForgotPage />
@@ -160,11 +125,7 @@ const Forgotpassword = () => (
 const ResetLink = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <ResetPage />
@@ -173,11 +134,7 @@ const ResetLink = () => (
 const FaqMain = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <FaqPagenupTwo />
@@ -186,11 +143,7 @@ const FaqMain = () => (
 const Blog = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <BlogView />
@@ -199,11 +152,7 @@ const Blog = () => (
 const TermsOfUse = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <TandC />
@@ -212,11 +161,7 @@ const TermsOfUse = () => (
 const Testimonial = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Review />
@@ -225,11 +170,7 @@ const Testimonial = () => (
 const Ratings = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Rates />
@@ -239,11 +180,7 @@ const Ratings = () => (
 const NewsletterPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Newsletter />
@@ -253,11 +190,7 @@ const NewsletterPage = () => (
 const EmailTemplate = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <EmailTemp />
@@ -267,9 +200,18 @@ const EmailTemplate = () => (
 const NewsletterErrorPopUp = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
+      <div className="flex items-center justify-center w-full h-full">
+        <div className="flex justify-center items-center space-x-1 text-sm text-gray-700 w-full h-full">
+          <svg fill="none" className="w-6 h-6 animate-spin" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path
+              clipRule="evenodd"
+              d="M15.165 8.53a.5.5 0 01-.404.58A7 7 0 1023 16a.5.5 0 011 0 8 8 0 11-9.416-7.874.5.5 0 01.58.404z"
+              fill="currentColor"
+              fillRule="evenodd"
+            />
+          </svg>
+
+          <div>Loading ...</div>
         </div>
       </div>
     }
@@ -281,11 +223,7 @@ const NewsletterErrorPopUp = () => (
 const HomePage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <HomePages />
@@ -295,11 +233,7 @@ const HomePage = () => (
 const History = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <HistoryPage />
@@ -309,11 +243,7 @@ const History = () => (
 const Correction = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <CorrectionPage />
@@ -323,11 +253,7 @@ const Correction = () => (
 const ConversationPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Conversation />
@@ -337,11 +263,7 @@ const ConversationPage = () => (
 const LandingPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Landing />
@@ -351,11 +273,7 @@ const LandingPage = () => (
 const LegalPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Legal />
@@ -365,11 +283,7 @@ const LegalPage = () => (
 const Settings = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <SettingsPage />
@@ -379,11 +293,7 @@ const Settings = () => (
 const TranscribePage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Transcribe />
@@ -393,11 +303,7 @@ const TranscribePage = () => (
 const Careers = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <CareerPage />
@@ -407,11 +313,7 @@ const Careers = () => (
 const Roles = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <RolesPage />
@@ -421,11 +323,7 @@ const Roles = () => (
 const Application = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <ApplicationPage />
@@ -435,11 +333,7 @@ const Application = () => (
 const ApiStatus = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <ApiPage />
@@ -449,11 +343,7 @@ const ApiStatus = () => (
 const LandingLayout = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <LandingLayoutPage />
