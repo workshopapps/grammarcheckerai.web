@@ -53,9 +53,5 @@ if (NODE_ENV === "test") {
 }
 if (NODE_ENV === "production") {
   console.log(`DB running in ${NODE_ENV} mode`);
-  module.exports = db(
-    `mongodb://${encodeURIComponent(
-      ME_CONFIG_MONGODB_ADMINUSERNAME
-    )}://${encodeURIComponent(ME_CONFIG_MONGODB_ADMINPASSWORD)}@mongo:27017/`
-  );
+  module.exports = db(`mongodb://mongo:27017/grittygrammar`);
 }
