@@ -1,10 +1,73 @@
-._quotes::before{
-    content: url('../assets/quotes.png');
-    position: absolute;
-top: -2em;
+._quotes::before {
+  content: url('../assets/quotes.png');
+  position: absolute;
+  top: -2em;
 }
-._btn{
-    padding: .5em 1em;
-    border-radius: 5px;
-    transition: all .4s ease-in-out;
+._btn {
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  transition: all 0.4s ease-in-out;
+}
+.ff_inter {
+  font-family: 'Inter', sans-serif;
+  /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+}
+.font_w {
+  font-weight: 900;
+}
+.errors::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 69px;
+  border-bottom: 7px solid red;
+  opacity: 0.5;
+}
+.hero_img__container::before {
+  content: url('../assets/hero/tap-mic.png');
+  transform: scale(0.6);
+  position: absolute;
+  left: -5.6em;
+  top: 3.5em;
+}
+.hero_img__container::after {
+  content: url('../assets/hero/error.png');
+  transform: scale(0.6);
+  position: absolute;
+  left: -8.5em;
+  top: 8.5em;
+}
+.correction::after {
+  content: url('../assets/hero/correction.png');
+  transform: scale(0.6);
+  position: absolute;
+  right: -1.614em;
+  bottom: -7em;
+  z-index: 2;
+}
+@media only screen and (min-width: 768px) {
+  .correction::before {
+    content: url('../assets/hero/ellipse.png');
+    /* transform: scale(0.6); */
+    position: absolute;
+    right: -1.614em;
+    bottom: -7em;
+    z-index: -1;
+  }
+  .correction::after {
+    content: url('../assets/hero/correction.png');
+    transform: scale(.8);
+ 
+  }
+  .hero_img__container::before {
+    content: url('../assets/hero/tap-mic.png');
+    transform: scale(.8);
+   
+  }
+  .hero_img__container::after {
+    content: url('../assets/hero/error.png');
+    transform: scale(.8);
+   
+  }
 }
