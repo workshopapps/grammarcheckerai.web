@@ -1,5 +1,5 @@
 import React from 'react';
-import Image1 from '../../assets/blogimg/image 2.svg';
+import Image1 from "../../assets/blogimg/image2.svg"
 import Cta from '../../components/Blogcomponents/Cta';
 
 const Jobs = () => {

@@ -34,6 +34,10 @@ const RolesPage = lazy(() => import('./pages/career/Roles'));
 const ApplicationPage = lazy(() => import('./pages/career/Application'));
 const ApiPage = lazy(() => import('./pages/api-status/api-status'));
 const LandingLayoutPage = lazy(() => import('./components/LandingLayout.jsx'));
+const Jobs = lazy(() => import('./pages/Blog/Jobs'));
+const Ai = lazy(() => import('./pages/Blog/Ai'));
+const Grammar = lazy(() => import('./pages/Blog/Grammar'));
+const Tips = lazy(() => import('./pages/Blog/Tips'));
 
 // All routes/pages must be import from ./pages folder
 
@@ -280,6 +284,62 @@ const LegalPage = () => (
   </Suspense>
 );
 
+const JobsPage = () => (
+  <Suspense
+    fallback={
+      <div className="flex justify-center items-center">
+        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    }
+  >
+    <Jobs />
+  </Suspense>
+);
+
+const AiPage = () => (
+  <Suspense
+    fallback={
+      <div className="flex justify-center items-center">
+        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    }
+  >
+    <Ai />
+  </Suspense>
+);
+
+const GrammarPage = () => (
+  <Suspense
+    fallback={
+      <div className="flex justify-center items-center">
+        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    }
+  >
+    <Grammar />
+  </Suspense>
+);
+
+const TipsPage = () => (
+  <Suspense
+    fallback={
+      <div className="flex justify-center items-center">
+        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    }
+  >
+    <Tips />
+  </Suspense>
+);
+
 const Settings = () => (
   <Suspense
     fallback={
@@ -362,6 +422,10 @@ function App() {
         <Route path="/about" element={<h1>About Page</h1>} />
         <Route path="/blog" element={<Blog />} />
         <Route path="contact" element={<h1>Contact Page</h1>} />
+        <Route path="/jobs" element={<JobsPage />} />
+        <Route path="/grammar" element={<GrammarPage />} />
+        <Route path="/ai" element={<AiPage />} />
+        <Route path="/tips" element={<TipsPage />} />
         <Route path="/terms-of-use" element={<TermsOfUse />} />
         <Route path="/testimonials" element={<Testimonial />} />
         <Route path="/ratings" element={<Ratings />} />
