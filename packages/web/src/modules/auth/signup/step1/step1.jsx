@@ -23,6 +23,9 @@ const index = () => {
       navigate('/signup/step-two');
     }
   };
+  const handleHome = () => {
+    navigate('/');
+  };
   const isTabletorMobile = useMediaQuery({
     query: '(min-width: 850px)',
   });
@@ -31,9 +34,9 @@ const index = () => {
       <div className={styles._gcsignup}>
         <div className={styles._gcsignupcol1}>
           {isTabletorMobile && (
-            <div className={styles._gcsignuplogo}>
+            <button className={styles._gcsignuplogo} onClick={handleHome}>
               <img src={Logo} alt="Grammar Checker Logo" />
-            </div>
+            </button>
           )}
           <div className={styles._gcsignupcontent}>
             {isTabletorMobile && (
