@@ -50,7 +50,8 @@ services:
 
     networks:
       - hng-internal
-    volumes: mongodb-internal:/data/db
+    volumes:
+      - mongodb-internal:/data/db
 
 networks:
   hng-internal:
