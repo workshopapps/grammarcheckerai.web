@@ -40,7 +40,7 @@ const Testimonials = () => {
       <div className="w-[90%] mx-auto flex flex-col gap-5 sm:flex-row justify-center">
         {testimonyDetails.map((data) => {
           return (
-            <article key={data.name} className="bg-white px-4 py-12 shadow-sm max-w-sm rounded-lg mx-auto">
+            <article key={data.name} className="bg-white px-4 py-12 shadow-xl max-w-sm rounded-lg mx-auto">
               <p className={`${styles._quotes} relative`}>{data.testimony}</p>
               <div className="flex gap-3 items-cente mt-6">
                 <img src={data.img} alt={data.name} className="w-10 h-10" />

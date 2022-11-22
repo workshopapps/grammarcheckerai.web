@@ -11,7 +11,7 @@ const NewsLetter = () => {
             <div className='relative'>
                 <input type='email'
                     placeholder='Your email address'
-                    className='py-4 px-3 w-[100%] rounded-md shadow-sm'
+                    className={`${styles.subscribe} py-4 px-3 w-[100%] rounded-md shadow-sm`}
                 />
                 <button
                     type="submit"

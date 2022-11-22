@@ -5,14 +5,16 @@ import { Link } from 'react-router-dom';
 const Hero = () => {
     return (
         <section className={`bg-white `}>
-            <div className='max-w-[1220px] w-[90%] mx-auto py-16 text-center text-[#262626] flex flex-col justify-center items-center gap-32 md:flex-row md:text-left md:justify-between lg:gap-96'>
-                <div className='max-w-xl'>
-                    <h2 className={`pb-2 text-4xl ${styles.font_w} ${styles.ff_inter} md:text-7xl whitespace-nowrap`}>Gritty Grammar.</h2>
-                    <p className='font-bold text-2xl italic my-4'>Corrects all grammar <span className={`${styles.errors} relative`}>errors</span></p>
+            <div className='max-w-[1220px] w-[90%] mx-auto py-16 text-center text-[#262626] flex flex-col justify-center items-center gap-32 md:flex-row md:text-left  lg:gap-96'>
+                <div className='max-w-2xl relative'>
+                    <div className={` ${styles.hero__header} relative z-10 max-w-xs md:max-w-xl mx-auto `}>
+                        <h2 className={`pb-2 text-4xl text-white ${styles.font_w} ${styles.ff_inter} md:text-5xl whitespace-nowrap`}>Gritty Grammar.</h2>
+                    </div>
+                    <p className='font-bold text-2xl my-4'>Corrects all grammatical errors.</p>
                     <p className={`mb-10 text-lg`}>Tired of making grammer mistakes while you speak?
                         Do you find it hard to constuct correct sentences in the new language you're learning?</p>
                     <Link
-                        to='/converse'
+                        to='/signup'
                         className=' text-white bg-[#5D387F] py-4 px-3 rounded-lg'>Try Gritty Grammar For Free!</Link>
                 </div>
 

@@ -1,8 +1,3 @@
-._quotes::before {
-  content: url('../assets/quotes.png');
-  position: absolute;
-  top: -2em;
-}
 ._btn {
   padding: 0.5em 1em;
   border-radius: 5px;
@@ -15,14 +10,30 @@
 .font_w {
   font-weight: 900;
 }
+._quotes::before {
+  content: url('../assets/quotes.png');
+  position: absolute;
+  top: -2em;
+}
 .errors::after {
   content: '';
   position: absolute;
-  left: 0;
+  left: 8em;
   bottom: 0;
   width: 69px;
   border-bottom: 7px solid red;
   opacity: 0.5;
+}
+.hero__header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0em;
+  width: 19.2em;
+  height: 3em;
+  transform: rotate(358deg);
+  background: rgb(0, 0, 0);
+  z-index: -1;
 }
 .hero_img__container::before {
   content: url('../assets/hero/tap-mic.png');
@@ -35,7 +46,7 @@
   content: url('../assets/hero/error.png');
   transform: scale(0.6);
   position: absolute;
-  left: -8.5em;
+  left: -7.5em;
   top: 8.5em;
 }
 .correction::after {
@@ -46,7 +57,17 @@
   bottom: -7em;
   z-index: 2;
 }
+.accordion__btn {
+  transition: height 4.4s ease-in-out;
+}
+.subscribe:focus {
+  outline: 1px solid rgb(207, 207, 235);
+}
 @media only screen and (min-width: 768px) {
+  .hero__header::after {
+    width: 26.2em;
+    left: -15px;
+  }
   .correction::before {
     content: url('../assets/hero/ellipse.png');
     /* transform: scale(0.6); */
@@ -57,17 +78,14 @@
   }
   .correction::after {
     content: url('../assets/hero/correction.png');
-    transform: scale(.8);
- 
+    transform: scale(0.8);
   }
   .hero_img__container::before {
     content: url('../assets/hero/tap-mic.png');
-    transform: scale(.8);
-   
+    transform: scale(0.8);
   }
   .hero_img__container::after {
     content: url('../assets/hero/error.png');
-    transform: scale(.8);
-   
+    transform: scale(0.8);
   }
 }
