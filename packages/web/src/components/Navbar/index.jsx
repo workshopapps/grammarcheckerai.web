@@ -1,13 +1,13 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import logoImg from '../../assets/images/grit-white.svg';
+import logoImg from '../../assets/images/grit-white.webp';
 
 const Navbar = () => {
   const navigate = useNavigate();
   return (
     <header className="flex justify-between py-4 sm:px-10 items-center z-50 fixed top-0 w-full bg-[#5D387F] px-20">
-      <div>
-        <img src={logoImg} alt="gritty" className="salu\" />
+      <div className="w-32">
+        <img src={logoImg} alt="gritty" className="salu" />
       </div>
       <div className="sm:flex space-x-12 hidden ">
         {[

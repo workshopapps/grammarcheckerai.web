@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import botImg from '../../assets/images/bot.svg';
+import botImg from '../../assets/images/bot.webp';
 import userImg from '../../assets/images/user.svg';
 
 function Chat({ isBot, isCorrection, timestamp = '11:20 AM', isLastReply }) {
