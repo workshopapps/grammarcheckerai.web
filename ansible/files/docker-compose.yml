@@ -48,9 +48,9 @@ services:
     ports:
       - "27017:27017"
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: grittygrammar
-      MONGO_INITDB_ROOT_PASSWORD: grittypass
+    # environment:
+    # MONGO_INITDB_ROOT_USERNAME: grittygrammar
+    # MONGO_INITDB_ROOT_PASSWORD: grittypass
     networks:
       - hng-internal
 
