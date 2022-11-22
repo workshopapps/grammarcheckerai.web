@@ -12,8 +12,8 @@ const LandingPage = () => {
   return (
     <div className="bg-[#bbb8b81a]">
       <Hero />
-      <Charcters />
       <HowToUse />
+      <Charcters />
       <Testimonials />
       <Faq />
       <Cta />

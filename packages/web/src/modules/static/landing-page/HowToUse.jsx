@@ -42,7 +42,7 @@ const HowToUse = () => {
     return (
         <section className="bg-[#f5f3f380] py-10">
             <div className='w-[80%] mx-auto my-6 '>
-                <h3 className='text-xl text-center md:text-3xl'>How You Can Use Gritty Grammer In Three Tiny Steps</h3>
+                <h3 className='text-xl text-center md:text-3xl font-black'>How You Can Use Gritty Grammar In Three Tiny Steps</h3>
                 <div className='md:flex md:justify-between md:items-center mt-12'>
                     <div className='flex flex-col max-w-xs my-9 gap-4 border-l-[1px] border-[#afc1ca]'>
                         {btns.map((btn, idx) => {

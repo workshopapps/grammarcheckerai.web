@@ -5,7 +5,7 @@ const Faq = () => {
         <div className='bg-[#f5f3f380] py-8'>
             <div className='w-[90%] max-w-xl mx-auto my-7'>
                 <div className='text-center'>
-                    <h4 className='text-center text-3xl'>FAQ</h4>
+                    <h4 className='text-center text-3xl font-black'>FAQ</h4>
                     <p className='mb-7'>If you have further questions, please contact us</p>
                 </div>
                 <FaqBox question='How does Gritty grammer work?' />
