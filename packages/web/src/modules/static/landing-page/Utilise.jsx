@@ -8,7 +8,7 @@ const Utilise = () => {
             <img src={robot} alt='robot' className='absolute -top-9 w-20 left-5 md:w-40' />
             <div className='max-w-sm'>
                 <h4 className='text-2xl mb-4'>Utilise the power of AI</h4>
-                <p>Use Gritty grammer speech correcton bot and never
+                <p>Use Gritty Grammar speech correcton bot and never
                     worry about your speech again.</p>
             </div>
             <button type='button' className={`${styles._btn} bg-[#E8DDF2] whitespace-nowrap text-[#263238] `}>Download the App</button>
