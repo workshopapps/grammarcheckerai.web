@@ -3,12 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import logoImg from '../../assets/images/grit-white.svg';
 
 const Navbar = () => {
-  let navigate = useNavigate();
-
-  const handleGetStarted = () => {
-    navigate('/signup');
-  };
-
+  const navigate = useNavigate();
   return (
     <header className="flex justify-between py-4 sm:px-10 items-center z-50 fixed top-0 w-full bg-[#5D387F] px-20">
       <div>
@@ -27,7 +22,9 @@ const Navbar = () => {
           </NavLink>
         ))}
       </div>
-      <button className="bg-purple-500 py-3 px-5 rounded-lg text-white " onClick={handleGetStarted}>Get started</button>
+      <button className="bg-purple-500 py-3 px-5 rounded-lg text-white " onClick={() => navigate('/signin')}>
+        Get started
+      </button>
     </header>
   );
 };
