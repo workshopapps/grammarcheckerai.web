@@ -22,7 +22,7 @@ const Navbar = () => {
           </NavLink>
         ))}
       </div>
-      <button className="bg-purple-500 py-3 px-5 rounded-lg text-white " onClick={() => navigate('/signin')}>
+      <button className="bg-purple-500 py-3 px-5 rounded-lg text-white " onClick={() => navigate('/signup')}>
         Get started
       </button>
     </header>
