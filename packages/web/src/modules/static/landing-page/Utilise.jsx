@@ -11,7 +11,7 @@ const Utilise = () => {
                 <p>Use Gritty Grammar speech correcton bot and never
                     worry about your speech again.</p>
             </div>
-            <button type='button' className={`${styles._btn} bg-[#E8DDF2] whitespace-nowrap text-[#263238] `}>Download the App</button>
+            <button type='button' className={`${styles._btn} bg-[#E8DDF2] whitespace-nowrap text-[#263238] hover:bg-[#c9a3f0] hover:text-black transition-colors`}>Download the App</button>
         </section>
     );
 }

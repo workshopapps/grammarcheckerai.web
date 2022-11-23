@@ -1,5 +1,5 @@
 import React from 'react';
-import GrittyLogo from '../../assets/Grit Grammar 1.png';
+import GrittyLogo from '../../assets/images/logo.webp';
 import style from './api-status.module.css';
 import Detail from './Report/ReportDetail';
 
@@ -12,10 +12,8 @@ const ApiStatus = () => {
             src={GrittyLogo}
             alt="gritty grammar logo"
             className={style.grittyImg}
-            width="113px"
-            style={{ width: '100%', height: 'auto' }} // prevent image Jank
+           // prevent image Jank
           />
-          <span className={style.status}>Status</span>
         </a>
       </div>
 

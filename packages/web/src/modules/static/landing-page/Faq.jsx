@@ -1,5 +1,6 @@
 import FaqBox from './FaqBox';
 import { Link } from 'react-router-dom';
+import styles from './styles/index.module.css';
 
 const Faq = () => {
     return (
@@ -9,6 +10,8 @@ const Faq = () => {
                     <h4 className='text-center text-3xl font-black'>FAQ</h4>
                     <p className='mb-7'>If you have further questions, please contact us</p>
                 </div>
+                
+                <div className='mb-9'>
                 <FaqBox
                     question='How does Gritty Grammar work?'
                     details='Download the app, Sign up and get started! 
@@ -25,7 +28,12 @@ const Faq = () => {
                     details='Gritty Grammar has efficient algorithms designed to identify 
                     mistakes and correct them appriopriately.'
                 />
-                <Link to='/faq' className='text-[#5D387F]' >See more...</Link>
+                </div>
+                <Link to='/faq'
+                    className={`${styles._btn} bg-[#5D387F] text-[#f1eef3] hover:bg-[#392150] hover:text-white transition-colors`}
+                >
+                    See more...
+                </Link>
             </div>
         </div>
     );

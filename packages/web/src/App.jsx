@@ -20,7 +20,6 @@ const Rates = lazy(() => import('./modules/static/testimonials/Ratings'));
 const Dashboard = lazy(() => import('./components/DashboardLayout'));
 const Newsletter = lazy(() => import('./modules/static/newsletter/NewsletterPage'));
 const EmailTemp = lazy(() => import('./modules/static/emailtemplate/EmailTemplate'));
-const ErrorNews = lazy(() => import('./modules/modal/newsletter/newsletterErrorPopUp/NewsletterErrorPopUp'));
 const HomePages = lazy(() => import('./modules/account/home/homePage'));
 const HistoryPage = lazy(() => import('./modules/account/history/history'));
 const CorrectionPage = lazy(() => import('./modules/account/history/correction'));
@@ -30,6 +29,7 @@ const Legal = lazy(() => import('./pages/Legal/index'));
 const SettingsPage = lazy(() => import('./modules/setting/home-settings/Settings'));
 const Transcribe = lazy(() => import('./modules/transcribe/index'));
 const CareerPage = lazy(() => import('./pages/career/Career'));
+const AboutPage = lazy(() => import('./pages/about/About'));
 const RolesPage = lazy(() => import('./pages/career/Roles'));
 const ApplicationPage = lazy(() => import('./pages/career/Application'));
 const ApiPage = lazy(() => import('./pages/api-status/api-status'));
@@ -201,29 +201,6 @@ const EmailTemplate = () => (
   </Suspense>
 );
 
-const NewsletterErrorPopUp = () => (
-  <Suspense
-    fallback={
-      <div className="flex items-center justify-center w-full h-full">
-        <div className="flex justify-center items-center space-x-1 text-sm text-gray-700 w-full h-full">
-          <svg fill="none" className="w-6 h-6 animate-spin" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-            <path
-              clipRule="evenodd"
-              d="M15.165 8.53a.5.5 0 01-.404.58A7 7 0 1023 16a.5.5 0 011 0 8 8 0 11-9.416-7.874.5.5 0 01.58.404z"
-              fill="currentColor"
-              fillRule="evenodd"
-            />
-          </svg>
-
-          <div>Loading ...</div>
-        </div>
-      </div>
-    }
-  >
-    <ErrorNews />
-  </Suspense>
-);
-
 const HomePage = () => (
   <Suspense
     fallback={
@@ -287,11 +264,7 @@ const LegalPage = () => (
 const JobsPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Jobs />
@@ -301,11 +274,7 @@ const JobsPage = () => (
 const AiPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Ai />
@@ -315,11 +284,7 @@ const AiPage = () => (
 const GrammarPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Grammar />
@@ -329,11 +294,7 @@ const GrammarPage = () => (
 const TipsPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Tips />
@@ -419,7 +380,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<LandingPage />} />
         <Route path="/faq" element={<FaqMain />} />
-        <Route path="/about" element={<h1>About Page</h1>} />
+        <Route path="/about" element={<AboutPage/>} />
         <Route path="/blog" element={<Blog />} />
         <Route path="contact" element={<h1>Contact Page</h1>} />
         <Route path="/jobs" element={<JobsPage />} />
@@ -437,7 +398,6 @@ function App() {
       <Route path="/apply" element={<Application />} />
       <Route path="/app-status" element={<ApiStatus />} />
       <Route path="/emailtemplate" element={<EmailTemplate />} />
-      <Route path="/errormodal" element={<NewsletterErrorPopUp />} />
       <Route
         element={
           <div>
