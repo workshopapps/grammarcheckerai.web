@@ -12,10 +12,8 @@ const ApiStatus = () => {
             src={GrittyLogo}
             alt="gritty grammar logo"
             className={style.grittyImg}
-            width="113px"
-            style={{ width: '100%', height: 'auto' }} // prevent image Jank
+           // prevent image Jank
           />
-          <span className={style.status}>Status</span>
         </a>
       </div>
 
