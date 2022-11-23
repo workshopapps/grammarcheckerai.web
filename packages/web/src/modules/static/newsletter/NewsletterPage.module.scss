@@ -1,156 +1,170 @@
 @import '../../../assets/styles/variables.scss';
 
-.newsletter {
+.newsletterPage {
   width: 100vw;
   height: 100vh;
-  @include flexCenter(column);
-  padding: 23px;
+  @include flexCenter(row);
+  overflow: hidden;
 
-  &_left {
-    max-width: 488px;
-    height: 474px;
+  .newsletter {
+    height: inherit;
+    width: inherit;
     @include flexCenter(column);
+    padding: 23px;
 
-    &__text {
-      width: inherit;
-      height: inherit;
+    &_left {
+      height: 100vh;
+      width: auto;
       @include flexCenter(column);
-      text-align: center;
+      justify-content: space-around;
 
-      img {
-        object-fit: contain;
-      }
-
-      div {
-        h3 {
-          color: $headingColor;
-          font-family: $fontFamily1;
-          font-size: 24px;
-          font-weight: 700;
-          line-height: 31px;
-          margin-bottom: 8px;
-          margin-top: 24px;
-        }
-
-        p {
-          margin-bottom: 23px;
-          color: $textColor;
-          height: 57px;
-          font-family: $fontFamily2;
-          font-size: 16px;
-          font-weight: 400;
-          line-height: 19px;
-        }
-      }
-
-      form {
-        height: 156px;
+      &__logo {
+        height: 5vh;
         width: 100%;
-        @include flexCenter(column);
-        text-align: left;
-
-        label {
-          color: $headingColor;
-          font-family: $fontFamily1;
-          width: inherit;
-          font-size: 14px;
-          text-align: left;
-          margin-bottom: 8px;
-        }
-
-        input[type='email'] {
-          width: inherit;
-          padding: 12px 16px;
-          height: 48px;
-          background: $white;
-          border: 1px solid #d7d7d7;
-          border-radius: 8px;
-          outline: none;
-
-          &::placeholder {
-            font-family: $fontFamily2;
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 17px;
-            color: #d7d7d7;
-          }
-        }
-
-        button {
-          margin-top: 32px;
-          background-color: $btnColor;
-          padding: 16px 40px;
-          width: 156px;
-          height: 51px;
-          border: 1px solid $btnColor;
-          border-radius: 12px;
-          outline: none;
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 19px;
-          color: $white;
-          font-family: $fontFamily2;
-        }
-      }
-    }
-  }
-
-  &_right {
-    display: none;
-  }
-
-  &_success {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    background-color: $greyColor;
-    left: 0;
-    top: 0;
-    @include flexCenter(row);
-    z-index: 2;
-
-    &__card {
-      background-color: $white;
-      // height: 402px;
-      width: 379px;
-      border-radius: 16px;
-      padding: 32px 24px;
-      @include flexCenter(column);
-
-      &__close {
-        width: inherit;
-        @include flexCenter(row);
-        justify-content: flex-end;
-
-        &_img {
-          cursor: pointer;
-          margin-right: 30px;
-          object-fit: contain;
-        }
       }
 
       &__text {
-        margin-top: 20px;
-        width: 300px;
-        text-align: center;
+        height: 90vh;
+        max-width: 488px;
         @include flexCenter(column);
+        text-align: center;
 
-        h3 {
-          margin-top: 16px;
-          color: $greenColor;
-          font-family: $fontFamily1;
-          font-size: 24px;
-          font-weight: 700;
-          line-height: 31px;
+        img {
+          object-fit: contain;
         }
 
-        p {
-          margin-top: 8px;
-          color: $textColor;
-          font-family: $fontFamily2;
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 17px;
+        div {
+
+          h3 {
+            color: $headingColor;
+            font-family: $fontFamily1;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 31px;
+            margin-bottom: 8px;
+            margin-top: 24px;
+          }
+
+          p {
+            margin-bottom: 23px;
+            color: $textColor;
+            height: 57px;
+            font-family: $fontFamily2;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 19px;
+          }
+        }
+
+        form {
+          height: 156px;
+          width: 100%;
+          @include flexCenter(column);
+          text-align: left;
+
+          label {
+            color: $headingColor;
+            font-family: $fontFamily1;
+            width: inherit;
+            font-size: 14px;
+            text-align: left;
+            margin-bottom: 8px;
+          }
+
+          input[type='email'] {
+            width: inherit;
+            padding: 12px 16px;
+            height: 48px;
+            background: $white;
+            border: 1px solid #d7d7d7;
+            border-radius: 8px;
+            outline: none;
+
+            &::placeholder {
+              font-family: $fontFamily2;
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 17px;
+              color: #d7d7d7;
+            }
+          }
+
+          button {
+            margin-top: 32px;
+            background-color: $btnColor;
+            padding: 16px 40px;
+            width: 156px;
+            height: 51px;
+            border: 1px solid $btnColor;
+            border-radius: 12px;
+            outline: none;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 19px;
+            color: $white;
+            font-family: $fontFamily2;
+          }
+        }
+      }
+    }
+
+    &_right {
+      display: none;
+    }
+
+    &_success {
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      background-color: $greyColor;
+      left: 0;
+      top: 0;
+      @include flexCenter(row);
+      z-index: 2;
+
+      &__card {
+        background-color: $white;
+        // height: 402px;
+        width: 379px;
+        border-radius: 16px;
+        padding: 32px 24px;
+        @include flexCenter(column);
+
+        &__close {
+          width: inherit;
+          @include flexCenter(row);
+          justify-content: flex-end;
+
+          &_img {
+            cursor: pointer;
+            margin-right: 30px;
+            object-fit: contain;
+          }
+        }
+
+        &__text {
+          margin-top: 20px;
+          width: 300px;
+          text-align: center;
+          @include flexCenter(column);
+
+          h3 {
+            margin-top: 16px;
+            color: $greenColor;
+            font-family: $fontFamily1;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 31px;
+          }
+
+          p {
+            margin-top: 8px;
+            color: $textColor;
+            font-family: $fontFamily2;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 17px;
+          }
         }
       }
     }
@@ -160,56 +174,59 @@
 /*************** Media queries *************************/
 
 @media (min-width: $md) {
-  .newsletter {
-    padding: 50px;
+  .newsletterPage {
+    .newsletter {
+      padding: 50px;
 
-    &_left {
-      &__text {
-        align-items: flex-start;
-        text-align: left;
-
-        div {
-          h3 {
-            font-size: 32px;
-            line-height: 42px;
-            margin-top: 10px;
-          }
-
-          p {
-            margin-bottom: 32px;
-          }
-        }
-
-        form {
-          align-items: flex-start;
-        }
-      }
-    }
-
-    &_success {
-      &__card {
-        border-radius: 16px;
-        // height: 469px;
-        width: 558px;
-        padding: 36px;
+      &_left {
 
         &__text {
-          width: 100%;
-          @include flexCenter(column);
           align-items: flex-start;
           text-align: left;
 
-          h3 {
-            width: auto;
-            font-size: 32px;
-            line-height: 41.66px;
+          div {
+            h3 {
+              font-size: 32px;
+              line-height: 42px;
+              margin-top: 10px;
+            }
+
+            p {
+              margin-bottom: 32px;
+            }
           }
 
-          p {
-            margin-top: 8px;
-            color: $textColor;
-            font-size: 18px;
-            line-height: 22px;
+          form {
+            align-items: flex-start;
+          }
+        }
+      }
+
+      &_success {
+        &__card {
+          border-radius: 16px;
+          // height: 469px;
+          width: 558px;
+          padding: 36px;
+
+          &__text {
+            width: 100%;
+            @include flexCenter(column);
+            align-items: flex-start;
+            text-align: left;
+
+            h3 {
+              width: auto;
+              font-size: 32px;
+              line-height: 41.66px;
+            }
+
+            p {
+              margin-top: 8px;
+              color: $textColor;
+              font-size: 18px;
+              line-height: 22px;
+            }
           }
         }
       }
@@ -218,52 +235,63 @@
 }
 
 @media (min-width: $lg) {
-  .newsletter {
-    padding: 0px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
-    place-items: center;
+  .newsletterPage {
+    .newsletter {
+      padding: 0px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: 1fr;
+      place-items: center;
 
-    &_left {
-      padding: 30px;
-      margin-top: 0px;
+      &_left {
+        height: 100%;
+        padding: 30px;
+        margin-top: 0px;
+        @include flexCenter(column);
+        padding-bottom: 150px;
 
-      &__text {
-        img {
-          width: 5em;
+        &__logo {
+          height: 10%;
         }
 
-        div {
-          h3 {
-            font-size: 28px;
-            line-height: 31px;
-            margin-bottom: 8px;
-            margin-top: 15px;
+        &__text {
+          height: 100%;
+
+          img {
+            width: 5em;
           }
 
-          p {
-            width: 100%;
-            margin-bottom: 20px;
-            height: 57px;
-            font-size: 14px;
-            line-height: 19.36px;
-          }
-        }
+          div {
+            h3 {
+              font-size: 28px;
+              line-height: 31px;
+              margin-bottom: 8px;
+              margin-top: 15px;
+            }
 
-        form {
-          button {
-            margin-top: 25px;
+            p {
+              width: 100%;
+              margin-bottom: 20px;
+              height: 57px;
+              font-size: 14px;
+              line-height: 19.36px;
+            }
+          }
+
+          form {
+            button {
+              margin-top: 25px;
+            }
           }
         }
       }
-    }
 
-    &_right {
-      display: block;
+      &_right {
+        display: block;
 
-      img {
-        width: 100%;
+        img {
+          width: 100%;
+        }
       }
     }
   }
