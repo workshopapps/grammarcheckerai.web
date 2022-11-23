@@ -54,7 +54,7 @@ function LanguageOption({ openBar, setUniversalLanguage }) {
   };
 
   return (
-    <div className="absolute top-0 left-0 w-full bg-gray-100 px-6 max-w-screen-lg py-4">
+    <div className="absolute -top-5 left-0 w-full h-screen bg-dark-100 px-6 max-w-screen-lg py-5 overflow-y-auto">
       <div className="flex items-center mb-5">
         <button onClick={() => openBar('language')}>
           <img className="-rotate-180" src={arrowRightIcon} alt="Go back" />
@@ -69,7 +69,7 @@ function LanguageOption({ openBar, setUniversalLanguage }) {
         />
         <img className="absolute right-3 block" src={searchIcon} alt="Find a language" />
       </div>
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-8 h-6/12">
         {languageList.map((language, index) => {
           return (
             <div key={index} className="relative flex justify-between items-center">
