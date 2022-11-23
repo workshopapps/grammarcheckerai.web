@@ -42,7 +42,7 @@ const HowToUse = () => {
                   key={btn.step}
                   type="button"
                   className={`${
-                    btn.step === active.step ? 'text-[#5D387F]' : 'transparent'
+                    btn.step === active.step ? 'text-[#8C54BF]' : 'transparent'
                   }  hover:border-[#5D387F] text-left pl-7 min-h-max relative h-28`}
                   onClick={() => setActive(btn)}
                 >
@@ -56,7 +56,7 @@ const HowToUse = () => {
             })}
           </div>
 
-          <div className="bg-[#5D387F] py-6 px-6 w-[21em] mx-auto md:w-[39em] max-w-3xl rounded-lg overflow-hidden">
+          <div className="bg-[#8C54BF] py-6 px-6 w-[21em] mx-auto md:w-[39em] max-w-3xl rounded-lg overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={active.title}

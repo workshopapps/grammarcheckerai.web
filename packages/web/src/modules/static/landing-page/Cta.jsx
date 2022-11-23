@@ -9,7 +9,7 @@ const Cta = () => {
         <p>Set up your personal account, free forever and never worry about an error in your speech again.</p>
         <Link
           to='/signup'
-          className={`${styles._btn} bg-[#5D387F] text-[#E8DDF2]`} type="button">
+          className={`${styles._btn} bg-[#5D387F] text-[#E8DDF2] hover:bg-[#392150] hover:text-white transition-colors `} type="button">
           Get Started
         </Link>
       </div>
