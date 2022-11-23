@@ -61,7 +61,7 @@ function FaqMain() {
             })
             .map((val) => {
               return (
-                <div className="lg:h-72 md:h-[298px] h-full lg:w-full md:w-72 w-[242px] block px-6 rounded-lg shadow-lg bg-white max-w-sm m-5" key={val.id}>
+                <div className="lg:h-[300px] md:h-[298px] h-full lg:w-full md:w-72 w-[302px] block lg:px-6 px-8 md:px-6 rounded-lg shadow-lg bg-white max-w-sm m-5" key={val.id}>
                   <div className="lg:w-[56px] lg:h-[56px] w-[46px] h-[46px]  bg-[#E8DDF2] hover:bg-[#fff] hover:shadow-[#E8DDF2] hover:shadow-md rounded-full mt-3">
                     <img
                       src={val.img}
@@ -70,10 +70,10 @@ function FaqMain() {
                     />
                   </div>
                   
-                  <h2 className="text-[#393939] text-[19px] lg:text-[22px] mt-[14px] leading-[22px]  lg:leading-[30px] font-[600px] lg:w-auto w-[223px] md:w-60  font-[Inter]">
+                  <h2 className="text-[#393939] text-[19px] lg:text-[22px] mt-[14px] leading-[22px]  lg:leading-[30px] font-[600px] lg:w-auto w-[253px] md:w-60  font-[Inter]">
                     {val.title}
                   </h2>
-                  <p className="text-[#53686A] text-[16px] lg:text-[18px] mt-7 md:mt-5 lg:mt-[10px] leading-[20px] lg:leading-[25px] font-normal w-[212px] lg:w-auto  md:w-[250px] h-auto  font-[Inter]">
+                  <p className="text-[#53686A] text-[16px] lg:text-[18px] mt-7 md:mt-5 lg:mt-[10px] leading-[20px] lg:leading-[25px] font-normal w-[232px] lg:w-auto  md:w-[250px] h-auto  font-[Inter]">
                     {val.para}
                   </p>
                 </div>
