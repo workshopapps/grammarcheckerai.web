@@ -49,7 +49,7 @@ if (NODE_ENV === "development") {
 }
 if (NODE_ENV === "test") {
   console.log(`DB running in ${NODE_ENV} mode`);
-  module.exports = db(DATABASE_URI_TEST);
+  module.exports = db(`mongodb://mongo:27017/grittygrammartest`);
 }
 if (NODE_ENV === "production") {
   console.log(`DB running in ${NODE_ENV} mode`);

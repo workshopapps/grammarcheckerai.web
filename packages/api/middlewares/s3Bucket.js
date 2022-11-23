@@ -20,7 +20,6 @@ const credentials = {
 // Create an Amazon S3 service client object.
 const s3 = new S3Client( credentials );
 
-
 const uploadAudio = multer({
   storage: multerS3({
     s3: s3,
@@ -33,5 +32,6 @@ const uploadAudio = multer({
     }
   })
 })
-
+// User name,Password,Access key ID,Secret access key,Console login link
+// backend-bucket,,AKIAVLHM4HMARVIKKN25,dCa3nhDhpdy667Ws8NEVPKodEWevajD6Cx0TYjsx,https://367716481793.signin.aws.amazon.com/console
 module.exports = uploadAudio
