@@ -1,16 +1,15 @@
 import React from 'react';
-import { BsArrowRight,BsThreeDots } from 'react-icons/bs';
+import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
 import IMG from '../../assets/abt_images/frame1.jpg';
 import { Values, Teams } from '../../pages/about/data/data';
 import IMG3 from '../../assets/abt_images/Mavenir - jpeg.png';
 import IMG2 from '../../assets/abt_images/Sauce Labs - jpeg (1).png';
 
-
 const About = () => {
   return (
     <div className=" flex flex-col items-center justify-center">
-    <div className="flex flex-col items-center justify-center bg-firstcolor md:p-5 lg:w-full  relative">
-    <svg width="192" height="70" viewBox="0 0 192 70" fill="none" xmlns="http://www.w3.org/2000/svg" className='absolute right-0 top-0'>
+      <div className="flex flex-col items-center justify-center bg-firstcolor md:p-5 lg:w-full  relative">
+        {/* <svg width="192" height="70" viewBox="0 0 192 70" fill="none" xmlns="http://www.w3.org/2000/svg" className='absolute right-0 top-0'>
     <path opacity="0.1" d="M191.569 25.3664C191.569 73.6213 135.628 69.8354 87.3732 69.8354C39.1183 69.8354 0 30.7171 0 -17.5378C0 -65.7927 69.6337 -95 117.889 -95C166.144 -95 191.569 -22.8885 191.569 25.3664Z" fill="url(#paint0_radial_822_7406)"/>
     <defs>
     <radialGradient id="paint0_radial_822_7406" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(87.3732 -17.5378) rotate(90) scale(87.3732 87.3732)">
@@ -34,12 +33,15 @@ const About = () => {
     <circle cx="65.3444" cy="64.6554" r="41.8323" stroke="#185A71" strokeWidth="1.68679"/>
     <circle cx="65" cy="65" r="26.7164" stroke="#185A71" strokeWidth="1.07727"/>
     </g>
-    </svg>
-     
-    <div className='flex flex-col items-center justify-center'>
-    <p className='font-semibold text-textColor mt-5 mb-5  lg:text-4xl lg:h-[48px] lg:mt-20'>ABOUT US</p>
-    <p className='text-cartBg text-center mb-8 p-3 md:px-16 lg:text-base lg:mx-60 lg:h-64'>AI-powered grammar checker backed by an automatic speech recognition system trained with over 650,000 hours of multilingual speech data collected from all over the internet</p>
-  </div>
+    </svg> */}
+
+        <div className="flex flex-col items-center justify-center">
+          <p className="font-semibold text-textColor mt-5 mb-5  lg:text-4xl lg:h-[48px] lg:mt-20">ABOUT US</p>
+          <p className="text-cartBg text-center mb-8 p-3 md:px-16 lg:text-base lg:mx-60 lg:h-64">
+            AI-powered grammar checker backed by an automatic speech recognition system trained with over 650,000 hours
+            of multilingual speech data collected from all over the internet
+          </p>
+        </div>
       </div>
       <div className="hidden md:block flex-col items-center justify-center bg-cartTotal w-full mt-14 p-4">
         <p className="text-center text-lighttextGray text-lg ">Trusted by top brands</p>
@@ -133,7 +135,14 @@ const About = () => {
           </p>
         </div>
         <div className=" mt-5 lg:pr-20">
-          <svg width="212" height="228" viewBox="0 0 218 228" fill="none" xmlns="http://www.w3.org/2000/svg" className=' md:hidden'>
+          <svg
+            width="212"
+            height="228"
+            viewBox="0 0 218 228"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className=" md:hidden"
+          >
             <path
               d="M31.3882 132.836C-10.1982 154.614 -10.1934 189.9 31.3882 211.668C72.9697 233.436 140.395 233.446 181.981 211.668C223.567 189.89 223.562 154.605 181.981 132.836C140.399 111.068 72.9745 111.058 31.3882 132.836Z"
               fill="#FAFAFA"
@@ -1533,7 +1542,14 @@ const About = () => {
               fill="white"
             />
           </svg>
-          <svg width="600" height="440" viewBox="0 0 218 228" fill="none" xmlns="http://www.w3.org/2000/svg" className='hidden md:block'>
+          <svg
+            width="600"
+            height="440"
+            viewBox="0 0 218 228"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="hidden md:block"
+          >
             <path
               d="M31.3882 132.836C-10.1982 154.614 -10.1934 189.9 31.3882 211.668C72.9697 233.436 140.395 233.446 181.981 211.668C223.567 189.89 223.562 154.605 181.981 132.836C140.399 111.068 72.9745 111.058 31.3882 132.836Z"
               fill="#FAFAFA"
@@ -2933,7 +2949,6 @@ const About = () => {
               fill="white"
             />
           </svg>
-        
         </div>
       </div>
 
@@ -4433,7 +4448,6 @@ const About = () => {
           </div>
         </div>
         <div className=" mt-6 w-[517] h-[568] relative bg-NumBg ">
-          
           <img src={IMG} alt="" className=" w-full bg-NumBg " />
         </div>
       </div>
@@ -4452,7 +4466,7 @@ const About = () => {
               </div>
             ))}
         </div>
-        <BsThreeDots className=' text-3xl font-bold text-primary'/>
+        <BsThreeDots className=" text-3xl font-bold text-primary" />
       </div>
       <div className="flex flex-col items-center justify-center bg-primary py-6 px-8 mb-14 md:w-full">
         <p className=" text-white  text-center text-lg">Try Quick Transcribe for free</p>
