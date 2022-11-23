@@ -1,5 +1,4 @@
-const { S3Client } = require('@aws-sdk/client-s3')
-const express = require('express')
+const { S3Client } = require('@aws-sdk/client-s3') 
 const multer = require('multer')
 const multerS3 = require('multer-s3')
 const { environment } = require('../config/environment')
@@ -32,6 +31,4 @@ const uploadAudio = multer({
     }
   })
 })
-// User name,Password,Access key ID,Secret access key,Console login link
-// backend-bucket,,AKIAVLHM4HMARVIKKN25,dCa3nhDhpdy667Ws8NEVPKodEWevajD6Cx0TYjsx,https://367716481793.signin.aws.amazon.com/console
 module.exports = uploadAudio
