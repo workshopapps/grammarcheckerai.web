@@ -1,0 +1,85 @@
+._header{
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(10, 10, 10);
+    align-items: center;
+    color: white;
+    z-index: 9999;
+}
+._header::before{
+    z-index: 999;
+}
+._nvlogo{
+    height: 70px;
+    width: 25%;
+}
+._nvlogo img{
+    height: 90%;
+}
+._nvmenu{
+    width: 60%;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+}
+._nvnav{
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+}
+._nvnav a{
+    padding: 0 5px;
+}
+._nvstarted{
+    width: 15%;
+    z-index: 999;
+}
+._nvstarted button{
+    background-color: #531f85;
+    padding: 10px;
+    border-radius: 10px;
+}
+._nvstarted button:hover{
+    background-color: #69309e;
+}
+._mobilenav{
+    background-color: transparent !important;
+}
+._mobilenav svg{
+    width: 40px;
+    fill: white;
+    margin: 0 5px;
+    border: #531f85 1px solid;
+    padding: 5px;
+}
+@media only screen and (max-width: 1000px) {
+    ._nvlogo{
+        height: 70px;
+        width: 45%;
+    }
+    ._nvstarted{
+        width: 55%;
+        z-index: 999;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: row-reverse;
+    }
+    ._nvnav{
+        display: flex;
+        flex-direction: column;
+        width: 250px;
+    }
+    ._nvnav a{
+        padding: 15px 5px;
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    ._nvlogo{
+        height: 70px;
+        width: 100%;
+    }
+}
