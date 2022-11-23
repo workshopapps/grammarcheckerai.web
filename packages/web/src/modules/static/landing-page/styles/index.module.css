@@ -65,7 +65,7 @@
 }
 @media only screen and (min-width: 768px) {
   .hero__header::after {
-    width: 26.2em;
+    width: 20.2em;
     left: -15px;
   }
   .correction::before {

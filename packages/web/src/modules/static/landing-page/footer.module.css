@@ -33,11 +33,11 @@
   margin: 5px;
   color: white;
   background-color: #531f85;
+  transition: all .4s ease-in-out;
 }
-._ftstarted p button:hover {
+._ftstarted p a:hover {
   border: 1px solid #5d387f;
-  color: #5d387f;
-  background-color: #ffffff;
+  background-color: #390d5e;
 }
 ._lpfooter {
   border-top: 1px solid grey;
@@ -68,6 +68,7 @@
 ._ftcol2content a,
 ._ftcol3content a {
   padding: 5px 0;
+  transition: all .3s ease-in-out;
 }
 ._ftcol1content a:hover,
 ._ftcol2content a:hover,
