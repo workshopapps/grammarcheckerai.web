@@ -29,6 +29,7 @@ const Legal = lazy(() => import('./pages/Legal/index'));
 const SettingsPage = lazy(() => import('./modules/setting/home-settings/Settings'));
 const Transcribe = lazy(() => import('./modules/transcribe/index'));
 const CareerPage = lazy(() => import('./pages/career/Career'));
+const AboutPage = lazy(() => import('./pages/about/About'));
 const RolesPage = lazy(() => import('./pages/career/Roles'));
 const ApplicationPage = lazy(() => import('./pages/career/Application'));
 const ApiPage = lazy(() => import('./pages/api-status/api-status'));
@@ -395,7 +396,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<LandingPage />} />
         <Route path="/faq" element={<FaqMain />} />
-        <Route path="/about" element={<h1>About Page</h1>} />
+        <Route path="/about" element={<AboutPage/>} />
         <Route path="/blog" element={<Blog />} />
         <Route path="contact" element={<h1>Contact Page</h1>} />
         <Route path="/jobs" element={<JobsPage />} />
