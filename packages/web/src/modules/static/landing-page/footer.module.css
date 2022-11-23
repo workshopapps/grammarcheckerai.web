@@ -1,6 +1,6 @@
 ._footer {
   background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.8)),
-  url('../../../assets/footerart.png');
+    url('../../../assets/footerart.png');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -25,7 +25,8 @@
   padding: 25px 5px;
   color: white;
 }
-._ftstarted p button {
+._ftstarted p a {
+  text-decoration: none;
   padding: 5px 10px;
   border: 1px solid white;
   border-radius: 15px;
@@ -113,5 +114,4 @@
     text-align: center;
     height: 80px;
   }
-  
 }

@@ -28,35 +28,35 @@ const Footer = () => {
           <div className={styles._ftcol3}>
             <div className={styles._ftcol3title}>More</div>
             <div className={styles._ftcol3content}>
-              <Link to='/signup'>Sign Up</Link>
-              <Link to='/signin'>Sign In</Link>
-              <Link to='/legal'>Legal</Link>
-              <Link to='/terms-of-use'>Terms of use</Link>
+              <Link to="/signup">Sign Up</Link>
+              <Link to="/signin">Sign In</Link>
+              <Link to="/legal">Legal</Link>
+              <Link to="/terms-of-use">Terms of use</Link>
             </div>
           </div>
           <div className={styles._ftcol2}>
             <div className={styles._ftcol2title}>Useful Links</div>
             <div className={styles._ftcol2content}>
-              <Link>FAQ</Link>
-              <Link>Careers and Culture</Link>
-              <Link>Newsletter</Link>
-              <Link>Api Status</Link>
+              <Link to="/faq">FAQ</Link>
+              <Link to="career">Careers and Culture</Link>
+              <Link to="/newsletter">Newsletter</Link>
+              <Link to='/app-status'>Api Status</Link>
             </div>
           </div>
           <div className={styles._ftcol1}>
             <div className={styles._ftcol1title}>General</div>
             <div className={styles._ftcol1content}>
-              <Link to='/home'>Home</Link>
-              <Link to='/about'>About</Link>
-              <Link to='/blog'>Blog</Link>
-              <Link>Testimonial</Link>
+              <Link to="/home">Home</Link>
+              <Link to="/about">About</Link>
+              <Link to="/blog">Blog</Link>
+              <Link to="/testimonials">Testimonial</Link>
             </div>
           </div>
           <div className={styles._ftsidebar}></div>
         </div>
         <div className={styles._ftstarted}>
           <p>
-            Get Started for Free <button>Sign Up</button>
+            Get Started for Free <Link to="/signup">Sign Up</Link>
           </p>
         </div>
         <div className={styles._ftcopyright}>
