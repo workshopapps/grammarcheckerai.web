@@ -2,19 +2,15 @@ import React, { useState } from 'react';
 import { NavLink, useNavigate, Link } from 'react-router-dom';
 import logoImg from '../../assets/images/grit-white.webp';
 import styles from './navbar.module.css';
-import { useMediaQuery } from 'react-responsive';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { Drawer } from '@mui/material';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  const isTabletOrMobile = useMediaQuery({
-    query: '(max-width: 1000px)',
-  });
-  const ismobile = useMediaQuery({
-    query: '(max-width: 700px)',
-  });
+  const isTabletOrMobile = useMediaQuery('(max-width: 1000px)');
+  const ismobile = useMediaQuery('(max-width: 700px)');
 
   return (
     <header className={styles._header}>

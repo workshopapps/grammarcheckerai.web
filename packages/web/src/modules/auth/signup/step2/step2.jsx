@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMediaQuery } from 'react-responsive';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './step2.module.css';
 import Logo from '../../../../assets/signup-logo.png';
@@ -53,9 +53,7 @@ const index = () => {
       error('Error creating account\nPlease try again!');
     }
   };
-  const isTabletorMobile = useMediaQuery({
-    query: '(min-width: 850px)',
-  });
+  const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div className={styles._gs2mainsignup}>
       <div className={styles._gs2signup}>
