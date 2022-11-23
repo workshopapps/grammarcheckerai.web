@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './step2.module.css';
@@ -134,7 +134,7 @@ const index = () => {
                 <button type="submit">Create Account</button>
                 <div className={styles._gs2signupsignin}>
                   <p>
-                    Have an account? <Link to="/signin">Login</Link>
+                    Have an account? <a href="/signin">Login</a>
                   </p>
                 </div>
               </div>
