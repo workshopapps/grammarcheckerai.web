@@ -2,9 +2,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const session = require("express-session");
-
 const { environment } = require("./config/environment");
-const testRoute = require("./routes/testRoutes");
+
 require("express-async-errors");
 require("./database/index");
 const passport = require("passport");
@@ -33,7 +32,6 @@ app
   .use(session(sess))
   .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use("/test", testRoute);
 app.use("/v1", routeHandler);
 app.get("*", (req, res) => {
   res.status(200).json({ message: "Welcome to Grit Grammarly 🙌" });
