@@ -1,6 +1,6 @@
 import React from 'react';
-import Image3 from '../blogimg/image 2 (2).svg';
-import Cta from '../Blogcomponents/Cta';
+import Image3 from '../../assets/blogimg/image 2 (2).svg';
+import Cta from '../../components/Blogcomponents/Cta';
 
 const Tips = () => {
   return (

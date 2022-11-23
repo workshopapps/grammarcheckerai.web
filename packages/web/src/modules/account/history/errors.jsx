@@ -33,7 +33,7 @@ function Errors({ id }) {
           <button
             className=" mt-4 outline-none text-[#279371] font-normal sm:text-base text-sm font-['DM_Sans']"
             onClick={() => {
-              navigate('/correction');
+              navigate('correction');
             }}
           >
             Check

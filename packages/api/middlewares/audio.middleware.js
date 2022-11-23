@@ -12,13 +12,13 @@ function uploadFile(req, res, next) {
         storage: storage,
         fileFilter: (req, file, callback) => {
             let fileExt = path.extname(file.originalname);
-            if (fileExt === '.mp3' || fileExt === '.m4a') {
+            if (fileExt === '.mp3' || fileExt === '.m4a' || fileExt === '.aac') {
                 return callback(null, true);
             }
 
             return res.status(400).send({
                 success: false,
-                message: "Only .mp3 and .m4a audio files are allowed"
+                message: "Only .mp3, .m4a and .aac audio files are allowed"
             })
         },
         limits: {

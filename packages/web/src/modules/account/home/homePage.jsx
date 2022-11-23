@@ -3,7 +3,7 @@ import talk from '../../../assets/talk.svg';
 
 function HomePage() {
   return (
-    <div className="flex flex-col pt-16 md:ml-[62px] md:mr-[9rem] sm:mx-[70px] mx-8">
+    <div className="flex flex-col pt-16 lg:ml-[62px] lg:mr-[9rem] sm:mx-[70px] mx-8">
       <div className="heading flex justify-between items-center font-['DM_Sans']">
         <h3 className=" text-[#393939] sm:text-[32px] font-normal text-[24px] leading-10">
           Hello <b>Riri,</b>
