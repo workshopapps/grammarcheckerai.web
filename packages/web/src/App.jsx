@@ -201,6 +201,16 @@ const EmailTemplate = () => (
   </Suspense>
 );
 
+const NewsletterErrorPopUp = () => (
+  <Suspense
+    fallback={
+      <Fallback />
+    }
+  >
+    <ErrorNews />
+  </Suspense>
+);
+
 const HomePage = () => (
   <Suspense
     fallback={
@@ -264,11 +274,7 @@ const LegalPage = () => (
 const JobsPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Jobs />
@@ -278,11 +284,7 @@ const JobsPage = () => (
 const AiPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Ai />
@@ -292,11 +294,7 @@ const AiPage = () => (
 const GrammarPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Grammar />
@@ -306,11 +304,7 @@ const GrammarPage = () => (
 const TipsPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Tips />

@@ -46,6 +46,9 @@ const index = () => {
     setExistingUserPassword(getStorageData('newUserPassword'));
     setExistingUserEmail(getStorageData('createEmail'));
     if ((userName === existingUserName) & (userPassword === existingUserPassword)) {
+      setExistingUserName(getStorageData('newUserName'));
+      setExistingUserPassword(getStorageData('newUserPassword'));
+      setExistingUserEmail(getStorageData('createEmail'));
       console.log(existingUserEmail);
       success('Login Successful!');
       setTimeout(() => navigate('/me/home'), 2000);
