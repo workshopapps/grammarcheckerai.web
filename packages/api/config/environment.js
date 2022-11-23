@@ -1,8 +1,7 @@
-const { config } = require("dotenv");
+ require("dotenv").config();
 
-config();
 
-exports.environment = {
+const environment = {
   PORT: process.env.PORT,
   HOST: process.env.HOST,
   LINKEDIN_CLIENT_ID: process.env.LINKEDIN_CLIENT_ID,
@@ -27,4 +26,9 @@ exports.environment = {
   MODEL_KEY: process.env.MODEL_KEY,
   ME_CONFIG_MONGODB_ADMINPASSWORD: process.env.ME_CONFIG_MONGODB_ADMINPASSWORD,
   ME_CONFIG_MONGODB_ADMINUSERNAME: process.env.ME_CONFIG_MONGODB_ADMINUSERNAME,
+  ACCESSKEYID: process.env.ACCESSKEYID,
+  S3SECRETEKEY: process.env.S3SECRETEKEY,
+  GRITTYBUCKETNAME: process.env.GRITTYBUCKETNAME
 };
+
+module.exports = {environment}
