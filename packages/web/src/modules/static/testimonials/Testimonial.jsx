@@ -8,6 +8,7 @@ import testimonial3 from '../../../assets/raters/testimonials/testimonial3.png';
 import testimonial4 from '../../../assets/raters/testimonials/testimonial4.png';
 import testimonial5 from '../../../assets/raters/testimonials/testimonial5.png';
 import ornament2 from '../../../assets/raters/testimonials/ornament2.png';
+import Footer from '../landing-page/Footer';
 
 export default function Testimonial() {
   const testimonials = [
@@ -61,76 +62,79 @@ export default function Testimonial() {
     },
   ];
   return (
-    <div className="mx-6 lg:mx-32">
-      <div className="text-xs my-6">
-        <Link to="/ratings" className="text-[#5D387F]">
-          {' '}
-          &lt; Back{' '}
-        </Link>
-      </div>
-      <h1 className="text-center mt-12 text-lg lg:text-4xl">Users Love What We Do</h1>
-      <p className="text-center my-4 text-sm lg:text-lg">
-        Read the stories of our users who have relied on our product to improve their grammar
-      </p>
-      <main className="lg:grid space-y-6 lg:space-y-0 grid-cols-3 gap-8 my-14">
-        {testimonials.map((testimony) => {
-          return (
-            <section
-              key={testimony.id}
-              className={`lg:flex px-4 py-6 lg:p-0 shadow-md rounded-xl col-span-2 lg:h-56 ${
-                testimony.id % 2 === 0 ? 'col-start-2' : ''
-              }`}
-            >
-              <div className="flex items-center lg:w-52 lg:relative">
-                <img
-                  src={ornament2}
-                  alt=""
-                  className={`hidden lg:block float-left lg:absolute z-10  ${
-                    testimony.id % 2 === 0 ? 'hidden' : 'bottom-32 left-0'
-                  }`}
-                />
-                <img
-                  src={testimony.image}
-                  alt=""
-                  className="h-20 w-20 rounded-full lg:relative lg:h-full lg:w-full lg:rounded-none z-30"
-                />
-                <div className="lg:hidden ml-6">
-                  <p className="font-bold">{testimony.name}</p>
-                  <span className="flex float-right ml-4">
-                    {[...Array(5)].map((it, index) => {
-                      return <img src={stars} key={index} alt="" />;
-                    })}
-                  </span>
-                  <span className="text-xs">May 8, 2022</span>
-                </div>
-              </div>
-              <div className="lg:w-2/3 space-y-4 lg:relative ">
-                <div className="space-y-4 p-4 lg:relative z-40 lg:h-full bg-white">
-                  <div className="hidden lg:block">
-                    <span className="flex lg:float-right">
+    <div>
+      <div className="mx-6 lg:mx-32">
+        <div className="text-xs my-6">
+          <Link to="/ratings" className="text-[#5D387F]">
+            {' '}
+            &lt; Back{' '}
+          </Link>
+        </div>
+        <h1 className="text-center mt-12 text-lg lg:text-4xl">Users Love What We Do</h1>
+        <p className="text-center my-4 text-sm lg:text-lg">
+          Read the stories of our users who have relied on our product to improve their grammar
+        </p>
+        <main className="lg:grid space-y-6 lg:space-y-0 grid-cols-3 gap-8 my-14">
+          {testimonials.map((testimony) => {
+            return (
+              <section
+                key={testimony.id}
+                className={`lg:flex px-4 py-6 lg:p-0 shadow-md rounded-xl col-span-2 lg:h-56 ${
+                  testimony.id % 2 === 0 ? 'col-start-2' : ''
+                }`}
+              >
+                <div className="flex items-center lg:w-52 lg:relative">
+                  <img
+                    src={ornament2}
+                    alt=""
+                    className={`hidden lg:block float-left lg:absolute z-10  ${
+                      testimony.id % 2 === 0 ? 'hidden' : 'bottom-32 left-0'
+                    }`}
+                  />
+                  <img
+                    src={testimony.image}
+                    alt=""
+                    className="h-20 w-20 rounded-full lg:relative lg:h-full lg:w-full lg:rounded-none z-30"
+                  />
+                  <div className="lg:hidden ml-6">
+                    <p className="font-bold">{testimony.name}</p>
+                    <span className="flex float-right ml-4">
                       {[...Array(5)].map((it, index) => {
                         return <img src={stars} key={index} alt="" />;
                       })}
                     </span>
                     <span className="text-xs">May 8, 2022</span>
                   </div>
-                  <div>
-                    <h3 className="my-4 text-center lg:text-left">{testimony.heading}</h3>
-                    <p className="text-xs">{testimony.testimony}</p>
-                  </div>
                 </div>
-                <img
-                  src={ornament2}
-                  alt=""
-                  className={`hidden lg:absolute z-10 ${
-                    testimony.id % 2 === 0 ? 'lg:block top-28 right-0 rotate-180 ' : 'hidden'
-                  }`}
-                />
-              </div>
-            </section>
-          );
-        })}
-      </main>
+                <div className="lg:w-2/3 space-y-4 lg:relative ">
+                  <div className="space-y-4 p-4 lg:relative z-40 lg:h-full bg-white">
+                    <div className="hidden lg:block">
+                      <span className="flex lg:float-right">
+                        {[...Array(5)].map((it, index) => {
+                          return <img src={stars} key={index} alt="" />;
+                        })}
+                      </span>
+                      <span className="text-xs">May 8, 2022</span>
+                    </div>
+                    <div>
+                      <h3 className="my-4 text-center lg:text-left">{testimony.heading}</h3>
+                      <p className="text-xs">{testimony.testimony}</p>
+                    </div>
+                  </div>
+                  <img
+                    src={ornament2}
+                    alt=""
+                    className={`hidden lg:absolute z-10 ${
+                      testimony.id % 2 === 0 ? 'lg:block top-28 right-0 rotate-180 ' : 'hidden'
+                    }`}
+                  />
+                </div>
+              </section>
+            );
+          })}
+        </main>
+      </div>
+      <Footer />
     </div>
   );
 }
