@@ -204,20 +204,7 @@ const EmailTemplate = () => (
 const NewsletterErrorPopUp = () => (
   <Suspense
     fallback={
-      <div className="flex items-center justify-center w-full h-full">
-        <div className="flex justify-center items-center space-x-1 text-sm text-gray-700 w-full h-full">
-          <svg fill="none" className="w-6 h-6 animate-spin" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-            <path
-              clipRule="evenodd"
-              d="M15.165 8.53a.5.5 0 01-.404.58A7 7 0 1023 16a.5.5 0 011 0 8 8 0 11-9.416-7.874.5.5 0 01.58.404z"
-              fill="currentColor"
-              fillRule="evenodd"
-            />
-          </svg>
-
-          <div>Loading ...</div>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <ErrorNews />
@@ -287,11 +274,7 @@ const LegalPage = () => (
 const JobsPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Jobs />
@@ -301,11 +284,7 @@ const JobsPage = () => (
 const AiPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Ai />
@@ -315,11 +294,7 @@ const AiPage = () => (
 const GrammarPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Grammar />
@@ -329,11 +304,7 @@ const GrammarPage = () => (
 const TipsPage = () => (
   <Suspense
     fallback={
-      <div className="flex justify-center items-center">
-        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      <Fallback />
     }
   >
     <Tips />
