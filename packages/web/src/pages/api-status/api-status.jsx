@@ -1,5 +1,5 @@
 import React from 'react';
-import GrittyLogo from '../../assets/Grit Grammar 1.png';
+import GrittyLogo from '../../assets/images/logo.webp';
 import style from './api-status.module.css';
 import Detail from './Report/ReportDetail';
 
