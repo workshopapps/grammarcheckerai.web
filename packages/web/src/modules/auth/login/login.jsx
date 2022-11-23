@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMediaQuery } from 'react-responsive';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import styles from './login.module.css';
 import Logo from '../../../assets/signup-logo.png';
 import Image2 from '../../../assets/Correction 1.png';
@@ -59,9 +59,7 @@ const index = () => {
       setExistingUserEmail(getStorageData('demoData'));
     }
   };
-  const isTabletorMobile = useMediaQuery({
-    query: '(min-width: 850px)',
-  });
+  const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div className={styles._gs2mainlogin}>
       <div className={styles._gs2login}>
