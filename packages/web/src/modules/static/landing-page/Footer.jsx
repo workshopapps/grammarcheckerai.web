@@ -3,19 +3,6 @@ import styles from './footer.module.css';
 import Logo from '../../../assets/images/grit-white.webp';
 
 const Footer = () => {
-  // const footerTitles = [
-  //   { name: `home`, to: '/home' },
-  //   { name: `About`, to: '/about' },
-  //   { name: `API Status`, to: '/app-status' },
-  //   { name: `Blog`, to: '/blog' },
-  //   { name: `Copyright`, to: '/copyright' },
-  //   { name: `Contact Us`, to: '/contact' },
-  //   { name: `Careers and Culture`, to: '/career' },
-  //   { name: `FAQ`, to: '/faq' },
-  //   { name: `NewsLetter`, to: '/newsletter' },
-  //   { name: `Legal`, to: '/legal' },
-  //   { name: `Terms of Use`, to: '/terms-of-use' },
-  // ];
   return (
     <footer className={styles._lpfooter}>
       <div className={styles._footer}>
@@ -37,10 +24,10 @@ const Footer = () => {
           <div className={styles._ftcol2}>
             <div className={styles._ftcol2title}>Useful Links</div>
             <div className={styles._ftcol2content}>
-              <Link>FAQ</Link>
-              <Link>Careers and Culture</Link>
-              <Link>Newsletter</Link>
-              <Link>Api Status</Link>
+              <Link to="/faq">FAQ</Link>
+              <Link to="/career">Careers and Culture</Link>
+              <Link to="/newsletter">Newsletter</Link>
+              <Link to='/app-status'>Api Status</Link>
             </div>
           </div>
           <div className={styles._ftcol1}>
