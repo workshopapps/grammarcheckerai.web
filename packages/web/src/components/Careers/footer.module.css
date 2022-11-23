@@ -1,0 +1,118 @@
+._footer {
+    background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.8)),
+      url('../../assets/footerart.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  ._lpfooter {
+    background-color: rgb(10, 10, 10);
+  }
+  ._ftcopyright {
+    background-color: black;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: white;
+  }
+  ._ftstarted {
+    background-color: rgb(10, 10, 10);
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 5px;
+    color: white;
+  }
+  ._ftstarted p a {
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid white;
+    border-radius: 15px;
+    margin: 5px;
+    color: white;
+    background-color: #531f85;
+  }
+  ._ftstarted p button:hover {
+    border: 1px solid #5d387f;
+    color: #5d387f;
+    background-color: #ffffff;
+  }
+  ._lpfooter {
+    border-top: 1px solid grey;
+  }
+  ._ftcolumns {
+    background-color: transparent;
+    border-bottom: 1px solid rgb(85, 85, 85);
+    color: white;
+    padding: 30px 10%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row-reverse;
+  }
+  ._ftcol1title,
+  ._ftcol2title,
+  ._ftcol3title {
+    color: grey;
+    padding: 5px 0;
+  }
+  ._ftcol1content,
+  ._ftcol2content,
+  ._ftcol3content {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+  }
+  ._ftcol1content a,
+  ._ftcol2content a,
+  ._ftcol3content a {
+    padding: 5px 0;
+  }
+  ._ftcol1content a:hover,
+  ._ftcol2content a:hover,
+  ._ftcol3content a:hover {
+    color: #6c1cb6;
+  }
+  ._ftcolLogo {
+    width: 25%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  ._ftcol1 {
+    width: 25%;
+  }
+  ._ftcol2 {
+    width: 25%;
+  }
+  ._ftcol3 {
+    width: 25%;
+  }
+  ._ftcolcontentImage {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  @media only screen and (max-width: 750px) {
+    ._ftcolumns {
+      flex-direction: column-reverse;
+      background-color: transparent;
+      border-bottom: 1px solid rgb(85, 85, 85);
+      color: white;
+      padding: 20px;
+      display: flex;
+    }
+    ._ftcol1,
+    ._ftcol2,
+    ._ftcol3 {
+      padding: 15px 0;
+      width: fit-content;
+    }
+    ._ftstarted {
+      padding: 20px 0;
+      text-align: center;
+      height: 80px;
+    }
+  }
+  
