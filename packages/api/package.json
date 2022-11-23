@@ -12,6 +12,7 @@
     "author": "Team Carpenter Grit",
     "license": "ISC",
     "dependencies": {
+        "@aws-sdk/client-s3": "^3.216.0",
         "@banana-dev/banana-dev": "^4.0.0",
         "aws-sdk": "^2.1260.0",
         "axios": "^1.2.0",
