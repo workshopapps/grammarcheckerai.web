@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import NewsletterErrorPopUp from '../../modal/newsletter/newsletterErrorPopUp/NewsletterErrorPopUp';
 import styles from '../newsletter/NewsletterPage.module.scss';
 import letter from '../../../assets/newsletterImages/letter.png';
 import background from '../../../assets/newsletterImages/background.png';
@@ -8,10 +9,25 @@ import close from '../../../assets/newsletterImages/close-square.png';
 import envelope1 from '../../../assets/newsletterImages/envelope1.png';
 
 const NewsletterPage = () => {
+  const email = useRef();
   const [isSubmit, setIsSubmit] = useState(false);
+  const [ isError, setIsError ] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+
+  const user = localStorage.getItem('emailData');
+  // console.log(user);
+
+  useEffect(() => {
+    if(user === userEmail) {
+      setIsError(true);
+    }
+  }, [userEmail]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(email.current.value !== '') {
+      localStorage.setItem('emailData', email.current.value)
+    }
     setIsSubmit(true);
   };
 
@@ -31,9 +47,16 @@ const NewsletterPage = () => {
 
           <form onSubmit={handleSubmit}>
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="Email" placeholder="Youremail@example.com" required />
-            <button 
-              id="submit" value={isSubmit}>
+            <input
+              type="email"
+              ref={email}
+              onChange={(event) => setUserEmail(event.target.value)}
+              id="email"
+              name="Email"
+              placeholder="Youremail@example.com"
+              required
+            />
+            <button id="submit" value={isSubmit}>
               Subscribe
             </button>
           </form>
@@ -44,7 +67,7 @@ const NewsletterPage = () => {
         <img src={background} alt="reminder icon" />
       </aside>
 
-      {isSubmit &&
+      {isSubmit && (
         <div className={styles.newsletter_success}>
           <div className={styles.newsletter_success__card}>
             <div onClick={() => setIsSubmit(false)} className={styles.newsletter_success__card__close}>
@@ -61,7 +84,8 @@ const NewsletterPage = () => {
             </div>
           </div>
         </div>
-      }
+      )}
+      {isError && <NewsletterErrorPopUp setIsError={setIsError}/>}
     </section>
   );
 };

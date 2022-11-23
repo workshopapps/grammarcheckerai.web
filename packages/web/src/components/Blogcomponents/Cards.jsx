@@ -5,6 +5,7 @@ import Image3 from "../../assets/blogimg/image 2 (2).svg"
 import Icon from "../../assets/blogimg/arrow-down-circle-fill 1.png"
 import { Link } from "react-router-dom"
 
+
 const Cards = () => {
      return (
           <section>
@@ -17,9 +18,9 @@ const Cards = () => {
                          
                          <h1 className="text-header text-sm font-bold mb-3 xl:text-xl">7 Amazing Jobs That Will Pay You to Speak English</h1>
 
-                         <p className="text-cards font-normal text-sm mb-3 xl:text-base">Do you want to make money speaking English? if so, you're in luck!</p>
+                         <p className="text-cards font-normal text-sm mb-3 xl:text-base">Do you want to make money speaking English? if so, you`re in luck!</p>
 
-                         <Link to="../../pages/Blog/Jobs" className="text-header text-sm font-bold mb-3 text-left">Read more</Link>
+                         <Link to="/jobs" className="text-header text-sm font-bold mb-3 text-left">Read more</Link>
                     </div>
 
                     <div className="border-solid border border-card_border w-full p-2 md:max-w-sm md:p-4">
@@ -27,11 +28,11 @@ const Cards = () => {
                          <img src={Image2} alt="" className="w-full object-cover" />
                          </div>
                          
-                         <h1 className="text-header text-sm  font-bold mb-3 xl:text-xl">10 Grammar Mistakes You're Probably Making (And How to Fix Them)</h1>
+                         <h1 className="text-header text-sm  font-bold mb-3 xl:text-xl">10 Grammar Mistakes You`re Probably Making (And How to Fix Them)</h1>
 
                          <p className="text-cards font-normal text-sm mb-3 xl:text-base">Do you make these common grammar mistakes? Many people do...</p>
 
-                         <Link to="../../pages/Blog/Grammar" className="text-header text-sm font-bold mb-3 text-left">Read more</Link>
+                         <Link to="/grammar" className="text-header text-sm font-bold mb-3 text-left">Read more</Link>
                     </div>
 
                     <div className="border-solid border border-card_border w-full p-2 md:max-w-sm md:p-4">
@@ -43,7 +44,7 @@ const Cards = () => {
 
                          <p className="text-cards font-normal text-sm mb-3 xl:text-base">We will discuss 10 tips that will help you improve your speaking skills in a short amount of time....</p>
 
-                         <Link to="../../pages/Blog/Tips" className="text-header text-sm font-bold mb-3 text-left">Read more</Link>
+                         <Link to="/tips" className="text-header text-sm font-bold mb-3 text-left">Read more</Link>
                     </div>
 
                     <div className="flex justify-center items-center xl:hidden">

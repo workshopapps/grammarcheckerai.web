@@ -7,13 +7,14 @@ services:
       - "3000:5000"
     networks:
       - hng-internal
+    container_name: gritty-backend
     restart: always
     environment:
       - NODE_ENV=production
       - PORT=5000
       - HOST=127.0.0.1
       - DATABASE_URI_DEVELOP=mongodb://localhost:27017/grammerly
-      - DATABASE_URI_PROD=
+      - DATABASE_URI_PROD=mongodb+srv://ogmaro:OFujwMKQ2AumDMUC@gritty.gccua7c.mongodb.net/grittygrammar
       - DATABASE_URI_TEST=mongodb://localhost:27017/
       - CLIENT_ID=978033281049-hrkp6grkg6mo2cmm2rc9vkvvbr0722ls.apps.googleusercontent.com
       - CLIENT_SECRET=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
@@ -31,13 +32,29 @@ services:
       - MODEL_KEY=103b378d-495b-4430-80d8-0c6c490525b7
       - API_KEY=c5d2f9b9-9869-41be-bd24-e274452504cf
       - FILE_SIZE=104857
+    depends_on:
+      - mongo
   frontend:
     image: asyncdeveloper/grammar-check-frontend:latest
     ports:
       - "5000:5000"
+    container_name: gritty-frontend
     networks:
       - hng-internal
     restart: always
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    restart: always
+
+    networks:
+      - hng-internal
+    volumes:
+      - mongodb-internal:/data/db
 
 networks:
   hng-internal:
+
+volumes:
+  mongodb-internal:

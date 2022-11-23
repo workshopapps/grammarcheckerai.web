@@ -1,15 +1,14 @@
-const { config } = require("dotenv");
+ require("dotenv").config();
 
-config();
 
-exports.environment = {
+const environment = {
   PORT: process.env.PORT,
   HOST: process.env.HOST,
   LINKEDIN_CLIENT_ID: process.env.LINKEDIN_CLIENT_ID,
   LINKEDIN_SECRET_ID: process.env.LINKEDIN_SECRET_ID,
   CALLBACK_URL: process.env.CALLBACK_URL,
   NODE_ENV: process.env.NODE_ENV,
-  DATABASE_URI_PROD: process.env.DATABASE_URI_PROD,
+  ME_CONFIG_MONGODB_URL: process.env.ME_CONFIG_MONGODB_URL,
   DATABASE_URI_TEST: process.env.DATABASE_URI_TEST,
   DATABASE_URI_DEVELOP: process.env.DATABASE_URI_DEVELOP,
   GOOGLE_CLIENT_ID: process.env.CLIENT_ID,
@@ -25,4 +24,11 @@ exports.environment = {
   FILE_SIZE: process.env.FILE_SIZE,
   API_KEY: process.env.API_KEY,
   MODEL_KEY: process.env.MODEL_KEY,
+  ME_CONFIG_MONGODB_ADMINPASSWORD: process.env.ME_CONFIG_MONGODB_ADMINPASSWORD,
+  ME_CONFIG_MONGODB_ADMINUSERNAME: process.env.ME_CONFIG_MONGODB_ADMINUSERNAME,
+  ACCESSKEYID: process.env.ACCESSKEYID,
+  S3SECRETEKEY: process.env.S3SECRETEKEY,
+  GRITTYBUCKETNAME: process.env.GRITTYBUCKETNAME
 };
+
+module.exports = {environment}
