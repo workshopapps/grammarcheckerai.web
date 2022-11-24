@@ -14,12 +14,9 @@ const { routeHandler } = require("./routes/index.route"),
   swaggerDocument = require("./Tests/test.json");
 
 //Passport Initialized
-app.use(passport.initialize());
-app.use(express.json()).use(cors(
-  {
-    origin: ['http://localhost:5000', 'https://grittygrammar.hng.tech']
-  }
-));
+app.use(passport.initialize())
+   .use(express.json())
+   .use(cors())
 
 const sess = {
   secret: environment.SESSION_SECRET,
