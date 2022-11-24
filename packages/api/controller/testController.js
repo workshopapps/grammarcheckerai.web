@@ -36,7 +36,6 @@ exports.home = async (req, res) => {
     .post("/v1/sendAudio")
     .then((sendAudio) => {
       if (sendAudio.status != 404) {
-        console.log(sendAudio.status);
         status.push({ sendAudio: { status: "ok" } });
       }
     })
@@ -51,7 +50,6 @@ exports.home = async (req, res) => {
       .get("/api-docs")
       .then((apiDocs) => {
         if (apiDocs.status === 200) {
-          console.log(apiDocs.status);
           status.push({ apiDocs: { status: "ok" } });
         }
       })

@@ -1,8 +1,5 @@
-const { config } = require("dotenv");
-
-config();
-
-exports.environment = {
+ require("dotenv").config();
+const environment = {
   PORT: process.env.PORT,
   HOST: process.env.HOST,
   LINKEDIN_CLIENT_ID: process.env.LINKEDIN_CLIENT_ID,
@@ -27,4 +24,11 @@ exports.environment = {
   MODEL_KEY: process.env.MODEL_KEY,
   ME_CONFIG_MONGODB_ADMINPASSWORD: process.env.ME_CONFIG_MONGODB_ADMINPASSWORD,
   ME_CONFIG_MONGODB_ADMINUSERNAME: process.env.ME_CONFIG_MONGODB_ADMINUSERNAME,
+  SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
+  ACCESSKEYID: process.env.ACCESSKEYID,
+  S3SECRETEKEY: process.env.S3SECRETEKEY,
+  GRITTYBUCKETNAME: process.env.GRITTYBUCKETNAME,
+  BASE_URL: process.env.BASE_URL
 };
+
+module.exports = {environment}
