@@ -20,6 +20,8 @@ const Rates = lazy(() => import('./modules/static/testimonials/Ratings'));
 const Dashboard = lazy(() => import('./components/DashboardLayout'));
 const Newsletter = lazy(() => import('./modules/static/newsletter/NewsletterPage'));
 const EmailTemp = lazy(() => import('./modules/static/emailtemplate/EmailTemplate'));
+const NewsletterEmailTemplate = lazy(() => import('./modules/static/emailtemplate/newsletterTemplate'));
+const SignInEmailTemplate = lazy(() => import('./modules/static/emailtemplate/signInTemplate'));
 const HomePages = lazy(() => import('./modules/account/home/homePage'));
 const HistoryPage = lazy(() => import('./modules/account/history/history'));
 const CorrectionPage = lazy(() => import('./modules/account/history/correction'));
@@ -132,6 +134,17 @@ const EmailTemplate = () => (
     <EmailTemp />
   </Suspense>
 );
+const NewsletterTemplate = () => (
+  <Suspense fallback={<Fallback />}>
+    <NewsletterEmailTemplate />
+  </Suspense>
+);
+const SignInTemplate = () => (
+  <Suspense fallback={<Fallback />}>
+    <SignInEmailTemplate />
+  </Suspense>
+);
+
 
 const HomePage = () => (
   <Suspense fallback={<Fallback />}>
@@ -262,6 +275,9 @@ function App() {
       <Route path="/apply" element={<Application />} />
       <Route path="/app-status" element={<ApiStatus />} />
       <Route path="/emailtemplate" element={<EmailTemplate />} />
+      <Route path="/newsletter-template" element={<NewsletterTemplate />} />
+      <Route path="/signin-template" element={<SignInTemplate />} />
+
       <Route
         element={
           <div>
