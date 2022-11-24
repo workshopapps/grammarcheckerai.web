@@ -67,21 +67,18 @@ async function deleteUser(req, res) {
 
 //Updates a User profile.
 async function updateUser(req, res) {
-  console.log(req.user._id);
-  await userCollection
-    .findByIdAndUpdate(req.user._id, req.body, { new: true })
-    .then((user) => {
-      if (!user) {
-        //If user was not found.
-        return res
-          .status(401)
-          .json({ message: 'No user found with the provided credentials.' });
-      }
-      res.status(200).json({ message: 'user updated successfully.' });
-    })
-    .catch((err) => {
-      res.status(401).json({ message: 'an error occurred' });
-    });
+  await userCollection.findByIdAndUpdate(req.user._id, req.body, {new:true})
+       .then(user=>{
+           
+           if(!user){
+             //If user was not found. 
+             return res.status(401).json({message: 'No user found with the provided credentials.'});
+           }
+           res.status(200).json({message: 'user updated successfully.'});
+       })
+       .catch(err=>{ 
+           res.status(401).json({message:'an error occurred'});
+       });
 }
 
 module.exports = { deleteUser, userProfile, updateUser };
