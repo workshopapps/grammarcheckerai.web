@@ -1,27 +1,30 @@
 const sgMail = require("@sendgrid/mail");
-const enviroment = require("../config/environment.js");
-const { SENDGRID_API_KEY } = enviroment;
+const { environment } = require("../config/environment.js");
+const { SENDGRID_API_KEY, BASE_URL } = environment;
+
 const welcome = require("../utilities/email");
 sgMail.setApiKey(SENDGRID_API_KEY);
 
 class Email {
-  constructor(to, name, subject, actionurl) {
+  constructor(to, name, subject, path) {
     this.to = to;
     this.subject = subject;
     this.name = name;
-    this.actionurl = actionurl;
+    this.path = path;
   }
   async send() {
     try {
+      const signinPath = `${BASE_URL}/${this.path}`;
       const msg = {
         to: this.to,
         from: "Gritty Grammer <akan.otong@pmt.ng>", // Use the email address or domain you verified above
         subject: this.subject,
-        html: welcome(this.name, this.actionurl),
+        html: welcome(this.name, signinPath),
       };
+
       return await sgMail.send(msg);
     } catch (error) {
-      console.error(error);
+      return false;
     }
   }
 }
