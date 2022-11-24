@@ -24,18 +24,12 @@ const {  findOne } = require("../repository/user.repository");
     if (!validPassword) {
         return res.status(401).json({ msg: 'Invalid email or password' })
     }
-    loginUser(user, res);
+    return res.status(201).json(
+        response({
+          success: true,
+          message: "User login successfully",
+          data: user,
+        })
+      );
 }
-async function loginUser(user, res){
-    const token = user.generateAuthToken()
-
-    return res.status(200).json({
-        user: {
-            pageTitle: "login endpoint",
-            name: user.name,
-            message: "login successful",
-            token
-        }
-    })
-}
-module.exports = {loginUser, login}
+module.exports = {login}
