@@ -15,7 +15,6 @@ const {login} = require('../controller/loginController')
 const {logout} = require('../controller/logoutcontroller') 
 const facebook = require('./facebookAuth');
 const { requestForgotPassword, resetPassword } = require("../controller/forgotPasswordController");
- 
 
 auth.post("/signup", registerValidationRules(), validate, registerUser);
 auth.get("/google", googleAuthURL);
