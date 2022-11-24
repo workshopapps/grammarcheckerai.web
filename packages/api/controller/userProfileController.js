@@ -1,6 +1,5 @@
-const { userCollection} = require('../database/models/userSchema')
+const { userCollection } = require('../database/models/userSchema');
 const { comparePassword } = require('../utilities/compare');
-
 
 async function userProfile(req, res) {
     //gets user id
@@ -12,10 +11,12 @@ async function userProfile(req, res) {
                 status: 204,
                 error: "No user with that id",
             });
-        } 
-        res.status(200).json({Detail: user});
+        }
+        res.json({Detail: user});
+        res.status(200);
     } catch (error) {
-        res.status(400).json(error); 
+        res.status(400);
+        res.json(error);
     }
 }
 
@@ -66,7 +67,7 @@ async function deleteUser(req, res) {
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Updates a User profile. 
+//Updates a User profile.
 async function updateUser(req, res) {
   await userCollection.findByIdAndUpdate(req.user._id, req.body, {new:true})
        .then(user=>{
@@ -77,10 +78,10 @@ async function updateUser(req, res) {
            }
            res.status(200).json({message: 'user updated successfully.'});
        })
-       .catch(err=>{ 
+       .catch(err=>{
+           console.log(err);
            res.status(401).json({message:'an error occurred'});
        });
 }
-
 
 module.exports = { deleteUser, userProfile, updateUser };
