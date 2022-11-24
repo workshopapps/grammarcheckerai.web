@@ -1,6 +1,6 @@
 const { response } = require("../utilities/response");
 const { register, findOne } = require("../repository/user.repository");
-const { userCollection } = require("../database/models/userSchema.js");
+const { userCollection } = require("../database/models/userSchema");
 const Email = require("../services/email.service");
 const { generateToken, verifyJWTToken } = require("../utilities/generateToken");
 
