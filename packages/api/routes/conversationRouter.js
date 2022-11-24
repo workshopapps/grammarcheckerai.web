@@ -3,11 +3,11 @@ const conversationRouter = express.Router();
 const getBotResponse = require('../controller/sendAudioController.js');
 const endConversation = require('../controller/endConversationController');
 const startConversation = require('../controller/startConversationController');
-const uploadFile = require('../middlewares/audio.middleware.js');
 
 const create = require ("../middlewares/s3.js");
 const uploadAudio = require('../middlewares/s3Bucket.js');
 const saveAudio = require('../controller/uploadAudioController.js');
+const uploadFile = require('../middlewares/audio.middleware.js');
 
 
 conversationRouter.post('/createBucket', create);
