@@ -2,20 +2,22 @@ const { userCollection } = require('../database/models/userSchema');
 const { comparePassword } = require('../utilities/compare');
 
 async function userProfile(req, res) {
-  //gets user id
-  const id = req.params.id;
-  try {
-    const user = await userCollection.findOne({ _id: id });
-    if (!user) {
-      return res.json({
-        status: 204,
-        error: 'No user with that id',
-      });
+    //gets user id
+    const id = req.params.id;
+    try {
+        const user = await userCollection.findOne({_id: id});
+        if (!user) {
+            return res.json({
+                status: 204,
+                error: "No user with that id",
+            });
+        }
+        res.json({Detail: user});
+        res.status(200);
+    } catch (error) {
+        res.status(400);
+        res.json(error);
     }
-    res.status(200).json({ Detail: user });
-  } catch (error) {
-    res.status(400).json(error);
-  }
 }
 
 // FOR DELETING A USER ACCOUNT.
@@ -67,21 +69,19 @@ async function deleteUser(req, res) {
 
 //Updates a User profile.
 async function updateUser(req, res) {
-  console.log(req.user._id);
-  await userCollection
-    .findByIdAndUpdate(req.user._id, req.body, { new: true })
-    .then((user) => {
-      if (!user) {
-        //If user was not found.
-        return res
-          .status(401)
-          .json({ message: 'No user found with the provided credentials.' });
-      }
-      res.status(200).json({ message: 'user updated successfully.' });
-    })
-    .catch((err) => {
-      res.status(401).json({ message: 'an error occurred' });
-    });
+  await userCollection.findByIdAndUpdate(req.user._id, req.body, {new:true})
+       .then(user=>{
+           
+           if(!user){
+             //If user was not found. 
+             return res.status(401).json({message: 'No user found with the provided credentials.'});
+           }
+           res.status(200).json({message: 'user updated successfully.'});
+       })
+       .catch(err=>{
+           console.log(err);
+           res.status(401).json({message:'an error occurred'});
+       });
 }
 
 module.exports = { deleteUser, userProfile, updateUser };
