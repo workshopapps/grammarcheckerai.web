@@ -104,7 +104,7 @@ const emailValidationRules = () => {
 const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
-    return next();
+    return next;
   }
 
   const resultErrors = [];
