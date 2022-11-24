@@ -12,12 +12,10 @@ async function userProfile(req, res) {
                 status: 204,
                 error: "No user with that id",
             });
-        }
-        res.json({Detail: user});
-        res.status(200);
+        } 
+        res.status(200).json({Detail: user});
     } catch (error) {
-        res.status(400);
-        res.json(error);
+        res.status(400).json(error); 
     }
 }
 
@@ -79,8 +77,7 @@ async function updateUser(req, res) {
            }
            res.status(200).json({message: 'user updated successfully.'});
        })
-       .catch(err=>{
-           console.log(err);
+       .catch(err=>{ 
            res.status(401).json({message:'an error occurred'});
        });
 }

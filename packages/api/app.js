@@ -4,6 +4,7 @@ const cors = require("cors");
 const session = require("express-session");
 const { environment } = require("./config/environment");
 
+
 require("express-async-errors");
 require("./database/index");
 const passport = require("passport");
@@ -38,6 +39,9 @@ app
 
 app.use("/v1", routeHandler);
 app.get("*", (req, res) => {
-  res.status(200).json({ message: "Welcome to Grit Grammarly 🙌" });
+  res.status(200).json({ 
+              message: "Welcome to Grit Grammarly 🙌",
+              user: 'CORS enabled' 
+            });
 });
 module.exports = app;
