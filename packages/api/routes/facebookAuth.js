@@ -1,15 +1,15 @@
 const express = require('express');
-const router = express.Router();
+const facebook = express.Router();
 const passport = require('passport');
 
-router.get(
+facebook.get(
   '/',
   passport.authenticate('facebook', {
     scope: ['public_profile', 'email'],
   })
 );
 
-router.get(
+facebook.get(
   '/callback',
   passport.authenticate('facebook', { failureRedirect: '/auth/failed' }),
   (req, res) => {
@@ -21,18 +21,18 @@ router.get(
   }
 );
 
-router.get('/failed', (req, res) => {
+facebook.get('/failed', (req, res) => {
   return res.status(200).json({
     success: false,
     info: 'login failed',
   });
 });
 
-router.get('/success', (req, res) => {
+facebook.get('/success', (req, res) => {
   return res.status(200).json({
     success: true,
     info: 'login succesfully',
   });
 });
 
-module.exports = router;
+module.exports = facebook;

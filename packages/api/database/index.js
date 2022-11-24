@@ -1,15 +1,8 @@
-const mongoose = require("mongoose");
-const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose"); 
 const { environment } = require("../config/environment.js");
 
-const {
-  NODE_ENV,
-  DATABASE_URI_DEVELOP,
-  DATABASE_URI_TEST,
-  ME_CONFIG_MONGODB_URL,
-  ME_CONFIG_MONGODB_ADMINUSERNAME,
-  ME_CONFIG_MONGODB_ADMINPASSWORD,
-} = environment;
+const { NODE_ENV, DATABASE_URI_DEVELOP, DATABASE_URI_TEST, DATABASE_URI_PROD } =
+  environment;
 
 const db = (URi) => {
   mongoose
@@ -53,5 +46,5 @@ if (NODE_ENV === "test") {
 }
 if (NODE_ENV === "production") {
   console.log(`DB running in ${NODE_ENV} mode`);
-  module.exports = db(`mongodb://mongo:27017/grittygrammar`);
+  module.exports = db(DATABASE_URI_PROD);
 }
