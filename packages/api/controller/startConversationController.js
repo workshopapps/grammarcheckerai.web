@@ -1,14 +1,10 @@
 const Conversation = require("../database/models/conversationSchema");
 const Message = require("../database/models/messageSchema");
-const { userCollection } = require("../database/models/userSchema");
 
 async function startConversation(req, res) {
   try {
-    let userId = req.query.userId;
-
-    // Making sure it's a valid user Id
-    const user = await userCollection.findById(userId);
-    userId = user?._id;
+    let user = req.user;
+    let userId = user?._id;
 
     let conversation, messageHistory;
     conversation = await Conversation.findOne({ userId });
@@ -52,7 +48,7 @@ async function startConversation(req, res) {
         messageHistory,
         botInitialMessage: req.session.chatLog
           ? null
-          : "Hi, how can I help you today?",
+          : `Hi ${user.firstName}, how can I help you today?`,
       },
     });
   } catch (err) {
