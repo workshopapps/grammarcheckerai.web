@@ -83,7 +83,7 @@ exports.home = async (req, res) => {
       }
     });
     const conversation = await axios
-      .get("/v1/conversation/start")
+      .post("/v1/conversation/start")
       .then((response) => {
         if (response.status == 200) {
           status.push({ conversation: { status: "ok" } });
