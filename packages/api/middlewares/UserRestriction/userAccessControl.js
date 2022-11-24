@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const { environment } = require('../../config/environment');
 const { JWT_SECRET } = environment;
 const { userCollection } = require('../../database/models/userSchema');
+
 async function getUser(req, res) {
   const authHeader = req.headers.authorization;
 
@@ -31,7 +32,7 @@ async function userprofileAccess(req, res, next) {
     }
     if (id !== user._id) {
       res.status(401);
-      res.json({ message: 'you are not authorized to view this route' });
+      res.json({ message: 'you are not authorized to fetch this resource' });
     }
   }
 
@@ -42,7 +43,7 @@ async function userprofileAccess(req, res, next) {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// FOR RESTRICTING ACCESS TO UPDATE USER ROUTE
+// FOR RESTRICTING ACCESS TO DELETE USER ROUTE
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 async function deleteUserAccess(req, res, next) {
   const user = await getUser(req, res);
@@ -69,6 +70,22 @@ async function deleteUserAccess(req, res, next) {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// FOR RESTRICTING USER ACCESS TO UPDATE USER ROUTE
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+async function updateUserAccess(req, res, next) {
+  const user = await getUser(req, res);
+  if (user.role === 'user') {
+    next();
+  }
+  if (user.role === 'admin') {
+    const { userid } = req.query;
+    await userCollection.findByIdAndUpdate(userid, req.body, { new: true });
+    res.status(200);
+    res.json({ message: 'user updated successfully.' });
+  }
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // FOR RESTRICTING USER ACCESS TO CONVERSATION ROUTE
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 async function userConversationAccess(req, res, next) {
@@ -88,7 +105,7 @@ async function userConversationAccess(req, res, next) {
     if (user.role !== userId) {
       res.status(401);
       res.json({
-        message: 'you do not have authorization to access this resource ',
+        message: 'you do not have authorization to fetch this resource',
       });
     }
   }
@@ -103,4 +120,5 @@ module.exports = {
   userprofileAccess,
   deleteUserAccess,
   userConversationAccess,
+  updateUserAccess,
 };
