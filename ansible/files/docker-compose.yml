@@ -13,25 +13,34 @@ services:
       - NODE_ENV=production
       - PORT=5000
       - HOST=127.0.0.1
-      - DATABASE_URI_DEVELOP=mongodb://localhost:27017/grammerly
-      - DATABASE_URI_PROD=mongodb+srv://ogmaro:OFujwMKQ2AumDMUC@gritty.gccua7c.mongodb.net/grittygrammar
-      - DATABASE_URI_TEST=mongodb://localhost:27017/
+      - BASE_URL=https://grittygrammar.hng.tech
+      - DATABASE_URI_DEVELOP=mongodb://localhost:27017/grittygrammardev
+      - DATABASE_URI_PROD=mongodb://mongo:27017/grittygrammar
+      - DATABASE_URI_TEST=mongodb://localhost:27017/test
       - CLIENT_ID=978033281049-hrkp6grkg6mo2cmm2rc9vkvvbr0722ls.apps.googleusercontent.com
       - CLIENT_SECRET=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
       - SERVER_ROOT_URI=https://grittygrammar.hng.tech/me/home
       - LINKEDIN_SECRET_ID=4QAmvQlLTao6DAmV
       - LINKEDIN_CLIENT_ID=77bvokl0d80r4u
       - CALLBACK_URL=http://localhost:5000/api/v1/linkedin/callback
-      - OPENAI_API_KEY=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
+      - OPENAI_API_KEY=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
       - SESSION_SECRET=this is randoo
       - JWT_SECRET=thisiswhole
       - JWT_OPTION=24hr
       - FB_CLIENT_ID=468368708698228
       - FB_CLIENT_SERECT=b5e329203566deb6061247dd8272a67b
       - FB_CALLBACK_URL=http://localhost:3000/auth/facebook/callback
-      - MODEL_KEY=103b378d-495b-4430-80d8-0c6c490525b7
+      - MODEL_KEY=c8aa6761-7acd-4ffc-abc9-080a9ffe6708
       - API_KEY=c5d2f9b9-9869-41be-bd24-e274452504cf
       - FILE_SIZE=104857
+      - SENDGRID_HOST=smtp.sendgrid.net
+      - SENDGRID_USER=apikey
+      - SENDGRID_API_KEY=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
+      - SENDGRID_PORT=587
+      - ACCESSKEYID=AKIAVLHM4HMARVIKKN25
+      - S3SECRETEKEY=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
+      - GRITTYBUCKETNAME=backend-bucket
+      - ASSEMBLYAI_API_KEY=fb09bd54c5d447c387f379fdcf5c070a
     depends_on:
       - mongo
   frontend:
@@ -52,6 +61,13 @@ services:
       - hng-internal
     volumes:
       - mongodb-internal:/data/db
+  mongo_dev:
+    image: mongo
+    ports:
+      - "27018:27017"
+    restart: always
+    networks:
+      - hng-internal
 
 networks:
   hng-internal:
