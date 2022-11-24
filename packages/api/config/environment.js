@@ -1,4 +1,4 @@
- require("dotenv").config();
+require("dotenv").config();
 const environment = {
   PORT: process.env.PORT,
   HOST: process.env.HOST,
@@ -6,13 +6,12 @@ const environment = {
   LINKEDIN_SECRET_ID: process.env.LINKEDIN_SECRET_ID,
   CALLBACK_URL: process.env.CALLBACK_URL,
   NODE_ENV: process.env.NODE_ENV,
-  ME_CONFIG_MONGODB_URL: process.env.ME_CONFIG_MONGODB_URL,
   DATABASE_URI_TEST: process.env.DATABASE_URI_TEST,
+  DATABASE_URI_PROD: process.env.DATABASE_URI_PROD,
   DATABASE_URI_DEVELOP: process.env.DATABASE_URI_DEVELOP,
   GOOGLE_CLIENT_ID: process.env.CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.CLIENT_SECRET,
   SERVER_ROOT_URI: process.env.SERVER_ROOT_URI,
-  DATABASE_URI: process.env.DATABASE_URI,
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   SESSION_SECRET: process.env.SESSION_SECRET,
   JWT_SECRET: process.env.JWT_SECRET,
@@ -22,14 +21,12 @@ const environment = {
   FILE_SIZE: process.env.FILE_SIZE,
   API_KEY: process.env.API_KEY,
   MODEL_KEY: process.env.MODEL_KEY,
-  ME_CONFIG_MONGODB_ADMINPASSWORD: process.env.ME_CONFIG_MONGODB_ADMINPASSWORD,
-  ME_CONFIG_MONGODB_ADMINUSERNAME: process.env.ME_CONFIG_MONGODB_ADMINUSERNAME,
   SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
   ACCESSKEYID: process.env.ACCESSKEYID,
   S3SECRETEKEY: process.env.S3SECRETEKEY,
   GRITTYBUCKETNAME: process.env.GRITTYBUCKETNAME,
   BASE_URL: process.env.BASE_URL,
-  ASSEMBLYAI_API_KEY: process.env.ASSEMBLYAI_API_KEY
+  ASSEMBLYAI_API_KEY: process.env.ASSEMBLYAI_API_KEY,
 };
 
-module.exports = {environment}
+module.exports = { environment };
