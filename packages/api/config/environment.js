@@ -1,6 +1,4 @@
  require("dotenv").config();
-
-
 const environment = {
   PORT: process.env.PORT,
   HOST: process.env.HOST,
@@ -26,13 +24,11 @@ const environment = {
   MODEL_KEY: process.env.MODEL_KEY,
   ME_CONFIG_MONGODB_ADMINPASSWORD: process.env.ME_CONFIG_MONGODB_ADMINPASSWORD,
   ME_CONFIG_MONGODB_ADMINUSERNAME: process.env.ME_CONFIG_MONGODB_ADMINUSERNAME,
-  SENDGRID_PORT: process.env.SENDGRID_PORT,
   SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
-  SENDGRID_USER: process.env.SENDGRID_USER,
-  SENDGRID_HOST: process.env.SENDGRID_HOST,
   ACCESSKEYID: process.env.ACCESSKEYID,
   S3SECRETEKEY: process.env.S3SECRETEKEY,
-  GRITTYBUCKETNAME: process.env.GRITTYBUCKETNAME
+  GRITTYBUCKETNAME: process.env.GRITTYBUCKETNAME,
+  BASE_URL: process.env.BASE_URL
 };
 
 module.exports = {environment}
