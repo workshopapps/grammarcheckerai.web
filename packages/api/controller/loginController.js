@@ -1,5 +1,6 @@
 const { userCollection, authValidatorSchema } = require('../database/models/userSchema')
 const {  findOne } = require("../repository/user.repository");
+const {response} = require("../utilities/response")
 
  async function login (req, res) {
     // retrieve the email and password 
