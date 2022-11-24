@@ -5,6 +5,8 @@ const { loginUser } = require("../loginController");
 const { userCollection } = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
 const Email = require("../../services/email.service");
+const emailService = require("../../services/email.service");
+const dynamicTemplates = require("../../utilities/dynamicTemplates");
 
 async function registerUser(req, res) {
   let {
@@ -37,14 +39,17 @@ async function registerUser(req, res) {
 
   const data = { email, firstName, lastName, username, password, language };
 
-  const SendWelcomeEmail = new Email(
-    email,
-    firstName,
-    "Welcome to Gritty Grammer",
-    "/signin"
-  );
+	await emailService({
+		to: email,
+		from: 'akan.otong@pmt.ng',
+		subject: 'Password Reset',
+		templateId: dynamicTemplates.SIGNUP,
+		data: {
+			name: firstName,
+			action_url: "/signin"
+		},
+	});
 
-  await SendWelcomeEmail.send();
 
   const user = await register(data);
 

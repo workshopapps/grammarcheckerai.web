@@ -1,8 +1,10 @@
 const { response } = require("../utilities/response");
 const { register, findOne } = require("../repository/user.repository");
-const { userCollection } = require("../../database/models/userSchema");
+const { userCollection } = require("../database/models/userSchema");
 const Email = require("../services/email.service");
 const { generateToken, verifyJWTToken } = require("../utilities/generateToken");
+const emailService = require("../services/email.service");
+const dynamicTemplates = require("../utilities/dynamicTemplates");
 
 exports.requestForgotPassword = async(req, res) => {
 	const { email } = req.body;
@@ -18,12 +20,16 @@ exports.requestForgotPassword = async(req, res) => {
 	const token = generateToken({ email });
 
 	const reset_password_url = `${process.env.MISC_URL}/reset_password?token=${token}`;
-	const send_reset_email = new Email(
-    email,
-    firstName,
-    "Welcome to Gritty Grammer",
-    reset_password_url
-  );
+	await emailService({
+		to: email,
+		from: 'noreply@sycamore.ng',
+		subject: 'Password Reset',
+		templateId: dynamicTemplates.RESET_PASSWORD,
+		data: {
+			name: checkEmailExist.firstName,
+			action_url: reset_password_url
+		},
+	});
 
   await send_reset_email.send();
 	return res.status(200).json(response({ message: 'A mail was just sent to this email address', success: true }));
