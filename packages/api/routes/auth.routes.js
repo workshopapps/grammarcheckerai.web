@@ -7,7 +7,7 @@ const {
 const {
   registerUser, googleAuthUserSignUp
 } = require("../controller/auth/user.controller"); 
-const { googleAuthURL, getTokens } = require("../controller/auth/google.user.controller");
+const { googleAuthURL } = require("../controller/auth/google.user.controller");
 const { linkedin } = require("./linkedin-auth");
 const {login} = require('../controller/loginController')
 const {logout} = require('../controller/logoutcontroller') 
