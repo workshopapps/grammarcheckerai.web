@@ -2,7 +2,7 @@ const { Configuration, OpenAIApi } = require("openai");
 const { environment } = require("../config/environment");
 
 const configuration = new Configuration({
-  apiKey: environment.OPENAI_API_KEY,
+  apiKey: environment.OPENAI_API_KEY ,
 });
 const openai = new OpenAIApi(configuration);
 
@@ -31,19 +31,20 @@ const grammarCheckHandler = async (userResponseInTxt, language = "English") => {
       correctUserResponseInTxt = userResponseInTxt;
     }
     return {
-      hasGrammaticalError,
+      hasGrammaticalError: hasGrammaticalError.toLowerCase().includes("yes")
+        ? true
+        : false,
       userResponseInTxt,
       correctUserResponseInTxt,
     };
   } catch (error) {
     // next(error)
     if (error.response) {
-      console.log(error.response.status);
-      console.log(error.response.data);
+      throw new Error(error.response.data);
     } else {
-      console.log(error.message);
+      throw new Error(error.message);
     }
   }
 };
-
+ 
 module.exports = grammarCheckHandler;

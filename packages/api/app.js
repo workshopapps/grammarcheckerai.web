@@ -1,26 +1,28 @@
 const express = require("express");
+const app = express();
 const cors = require("cors");
-const login = require("./routes/loginRoute"); //login
-const logout = require("./routes/logoutRoute"); //logout
 const session = require("express-session");
+const Memorystore = require("memorystore")(session);
 
 const { environment } = require("./config/environment");
-const userRouter = require("./routes/userRouter"); // importing user routes
-const profile = require("./routes/userProfileRoute"); // Get user profile
+const testRoute = require("./routes/testRoutes");
+require("express-async-errors");
+require("./database/index");
+const passport = require("passport");
+require("./services/linkedinStrategy");
+const { routeHandler } = require("./routes/index.route"),
+  swaggerUi = require("swagger-ui-express"),
+  swaggerDocument = require("./Tests/test.json");
 
-require("./database/index.js"); //load databse
-
-const app = express();
-
+//Passport Initialized
+app.use(passport.initialize());
 app.use(express.json()).use(cors());
 
-app.get("/", (req, res) => {
-  res.status(200).json({ message: "Welcome to Grit Grammarly 🙌" });
-});
-app.use("/api/v1/login", login);
-app.use("/api/v1/logout", logout);
-app.use("/api/v1/user-profile/:id", profile);
 const sess = {
+  store: new Memorystore({
+    checkPeriod: 86400000, // prune expired entries every 24h
+  }),
+  maxAge: 60000,
   secret: environment.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
@@ -32,8 +34,13 @@ if (app.get("env") === "production") {
   sess.cookie.secure = true; // serve secure cookies
 }
 
-app.use(session(sess));
+app
+  .use(session(sess))
+  .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.delete("/user", userRouter);
-
-exports.app = app;
+app.use("/test", testRoute);
+app.use("/v1", routeHandler);
+app.get("*", (req, res) => {
+  res.status(200).json({ message: "Welcome to Grit Grammarly 🙌" });
+});
+module.exports = app;

@@ -14,7 +14,8 @@ RUN npm install
 COPY . .
 
 # Expose the port 
-EXPOSE 3000
-# Containers run nginx with global directives and daemon off
+EXPOSE 5000
+
+# Start the app
 CMD ["node", "server.js"]
 

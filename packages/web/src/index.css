@@ -1,3 +1,17 @@
+/* Google font: Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.label {
+    @apply flex flex-col gap-1 text-[#344054]
+}
+._input {
+    @apply border-2 py-4 px-2 rounded focus:outline-none
+}
+._btnContainer {
+    @apply w-full flex flex-col md:flex-row lg:flex-row justify-end gap-5 mt-16
+}
