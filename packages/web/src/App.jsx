@@ -20,6 +20,7 @@ const Rates = lazy(() => import('./modules/static/testimonials/Ratings'));
 const Dashboard = lazy(() => import('./components/DashboardLayout'));
 const Newsletter = lazy(() => import('./modules/static/newsletter/NewsletterPage'));
 const EmailTemp = lazy(() => import('./modules/static/emailtemplate/EmailTemplate'));
+
 const HomePages = lazy(() => import('./modules/account/home/homePage'));
 const HistoryPage = lazy(() => import('./modules/account/history/history'));
 const CorrectionPage = lazy(() => import('./modules/account/history/correction'));
@@ -38,335 +39,212 @@ const Jobs = lazy(() => import('./pages/Blog/Jobs'));
 const Ai = lazy(() => import('./pages/Blog/Ai'));
 const Grammar = lazy(() => import('./pages/Blog/Grammar'));
 const Tips = lazy(() => import('./pages/Blog/Tips'));
+const Contact = lazy(() => import('./pages/contact/index'));
+
 
 // All routes/pages must be import from ./pages folder
 
 const DashboardLayout = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <Dashboard />
   </Suspense>
 );
 
 const Signup = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <SignupPage />
   </Suspense>
 );
 
 const Signuptwo = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <SignupTwoPage />
   </Suspense>
 );
 
 const Signin = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <SigninPage />
   </Suspense>
 );
 
 const ProfileScreen = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <ProfilePage />
   </Suspense>
 );
 const ChangePassword = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <PasswordPage />
   </Suspense>
 );
 const DeleteAccount = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <DeletePage />
   </Suspense>
 );
 const ConfirmDeleteAccount = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <ConfirmDeletePage />
   </Suspense>
 );
 const Forgotpassword = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <ForgotPage />
   </Suspense>
 );
 const ResetLink = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <ResetPage />
   </Suspense>
 );
 const FaqMain = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <FaqPagenupTwo />
   </Suspense>
 );
 const Blog = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <BlogView />
   </Suspense>
 );
 const TermsOfUse = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <TandC />
   </Suspense>
 );
 const Testimonial = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <Review />
   </Suspense>
 );
 const Ratings = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <Rates />
   </Suspense>
 );
 
 const NewsletterPage = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <Newsletter />
   </Suspense>
 );
 
 const EmailTemplate = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <EmailTemp />
   </Suspense>
 );
+const NewsletterTemplate = () => (
+  <Suspense fallback={<Fallback />}>
+    <NewsletterEmailTemplate />
+  </Suspense>
+);
+const SignInTemplate = () => (
+  <Suspense fallback={<Fallback />}>
+    <SignInEmailTemplate />
+  </Suspense>
+);
+
 
 const HomePage = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <HomePages />
   </Suspense>
 );
 
 const History = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <HistoryPage />
   </Suspense>
 );
 
 const Correction = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <CorrectionPage />
   </Suspense>
 );
 
 const ConversationPage = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <Conversation />
   </Suspense>
 );
 
 const LandingPage = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <Landing />
   </Suspense>
 );
 
 const LegalPage = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <Legal />
   </Suspense>
 );
 
 const JobsPage = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <Jobs />
   </Suspense>
 );
 
 const AiPage = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <Ai />
   </Suspense>
 );
 
 const GrammarPage = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <Grammar />
   </Suspense>
 );
 
 const TipsPage = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <Tips />
   </Suspense>
 );
 
 const Settings = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <SettingsPage />
   </Suspense>
 );
 
 const TranscribePage = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <Transcribe />
   </Suspense>
 );
 
 const Careers = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <CareerPage />
   </Suspense>
 );
 
 const Roles = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <RolesPage />
   </Suspense>
 );
 
 const Application = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <ApplicationPage />
   </Suspense>
 );
 
 const ApiStatus = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <ApiPage />
   </Suspense>
 );
 
 const LandingLayout = () => (
-  <Suspense
-    fallback={
-      <Fallback />
-    }
-  >
+  <Suspense fallback={<Fallback />}>
     <LandingLayoutPage />
   </Suspense>
 );
@@ -380,9 +258,9 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<LandingPage />} />
         <Route path="/faq" element={<FaqMain />} />
-        <Route path="/about" element={<AboutPage/>} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/blog" element={<Blog />} />
-        <Route path="contact" element={<h1>Contact Page</h1>} />
+        <Route path="contact" element={<Contact/>} />
         <Route path="/jobs" element={<JobsPage />} />
         <Route path="/grammar" element={<GrammarPage />} />
         <Route path="/ai" element={<AiPage />} />
@@ -398,6 +276,9 @@ function App() {
       <Route path="/apply" element={<Application />} />
       <Route path="/app-status" element={<ApiStatus />} />
       <Route path="/emailtemplate" element={<EmailTemplate />} />
+      <Route path="/newsletter-template" element={<NewsletterTemplate />} />
+      <Route path="/signin-template" element={<SignInTemplate />} />
+
       <Route
         element={
           <div>
