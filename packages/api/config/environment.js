@@ -1,4 +1,4 @@
-require("dotenv").config();
+ require("dotenv").config();
 const environment = {
   PORT: process.env.PORT,
   HOST: process.env.HOST,
@@ -29,4 +29,4 @@ const environment = {
   ASSEMBLYAI_API_KEY: process.env.ASSEMBLYAI_API_KEY,
 };
 
-module.exports = { environment };
+module.exports = {environment}
