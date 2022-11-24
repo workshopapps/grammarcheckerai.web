@@ -1,5 +1,4 @@
 const app = require("../app");
-const express = require("express");
 const axios = require("./axios");
 
 exports.home = async (req, res) => {
@@ -12,61 +11,92 @@ exports.home = async (req, res) => {
       }
     })
     .catch((err) => {
-      console.log(err.response.status);
       status.push({ home: { status: "down" } });
     });
-  const loginPage = await axios({
+  const updateUser = await axios({
     method: "POST",
-    url: "/api/v1/auth/login",
+    url: "v1/user/profile/update",
     data: {
       email: "onijlo@mal.com",
       password: "Password",
     },
-  }).then((response) => {
+  })
+    .then((response) => {
       if (response.status != 404) {
+        status.push({ updateUser: { status: "ok" } });
+      }
+    })
+    .catch((err) => {
+      if (err.response.status != 404) {
+        status.push({ updateUser: { status: "ok" } });
+      }
+    });
+
+  const sendAudio = await axios
+    .post("/v1/sendAudio")
+    .then((sendAudio) => {
+      if (sendAudio.status != 404) {
+        console.log(sendAudio.status);
+        status.push({ sendAudio: { status: "ok" } });
+      }
+    })
+    .catch((err) => {
+      if (err.response.status != 404) {
+        console.log(err.response.status)
+        status.push({ sendAudio: { status: "ok" } });
+      }
+    });
+
+    const apiDocs = await axios
+      .get("/api-docs")
+      .then((apiDocs) => {
+        if (apiDocs.status === 200) {
+          console.log(apiDocs.status);
+          status.push({ apiDocs: { status: "ok" } });
+        }
+      })
+      .catch((err) => {
+        if (err.response.status != 404) {
+          status.push({ apiDocs: { status: "ok" } });
+        }
+      });
+
+  const logoutPage = await axios
+    .get("v1/auth/logout")
+    .then((response) => {
+      if (response.status == 200) {
+        status.push({ logoutPage: { status: "ok" } });
+      }
+    })
+    .catch((err) => {
+      status.push({ logoutPage: { status: "down" } });
+    });
+
+  const loginPage = await axios
+    .post("/v1/auth/login")
+    .then((response) => {
+      if (response.status == 200) {
         status.push({ loginPage: { status: "ok" } });
       }
     })
     .catch((err) => {
-      console.log(err.response.status);
-      status.push({ loginPage: { status: "down" } });
+      if(err.response.status != 404){
+      status.push({ loginPage: { status: "ok" } });
+      }
     });
-
-    const sendAudio = await axios
-      .post("/api/v1/sendAudio")
-      .then((sendAudio) => {
-        if (sendAudio.status != 404) {
-          status.push({ sendAudio: { status: "ok" } });
+    const conversation = await axios
+      .get("/v1/conversation/start")
+      .then((response) => {
+        if (response.status == 200) {
+          status.push({ conversation: { status: "ok" } });
         }
       })
       .catch((err) => {
-        console.log(err.response.status);
-        status.push({ sendAudio: { status: "down" } });
+        if (err.response.status != 404) {
+          console.log(err.response.status)
+          status.push({ conversation: { status: "ok" } });
+        }
       });
-
-      const logoutPage = await axios
-        .get("/api/v1/auth/logout")
-        .then((response) => {
-          if (response.status == 200) {
-            status.push({ logoutPage: { status: "ok" } });
-          }
-        })
-        .catch((err) => {
-          console.log(err.response.status);
-          status.push({ logoutPage: { status: "down" } });
-        });
-
-        const test = await axios
-          .get("/api/v1/test")
-          .then((response) => {
-            if (response.status == 200) {
-              status.push({ testPage: { status: "ok" } });
-            }
-          })
-          .catch((err) => {
-            console.log(err.response.status);
-            status.push({ testPage: { status: "down" } });
-          });
 
   return res.status(200).send(status);
 };

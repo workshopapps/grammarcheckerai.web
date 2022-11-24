@@ -1,6 +1,6 @@
 import React from 'react';
-import Image3 from '../blogimg/image 2 (2).svg';
-import Cta from '../Blogcomponents/Cta';
+import Image3 from '../../assets/blogimg/image 2 (2).svg';
+import Cta from '../../components/Blogcomponents/Cta';
 
 const Tips = () => {
   return (
@@ -18,7 +18,7 @@ const Tips = () => {
         </div>
 
         <div className="p-4 mb-10 md:w-full md:h-full md:mb-10">
-          <img src={Image3} alt="improve your english speaking skills" className="w-full md:h-full" />
+          <img src={Image3} alt="improve your english speaking skills" className="w-full md:h-full rounded" />
         </div>
 
         <div className="p-4 py-4">
@@ -26,19 +26,19 @@ const Tips = () => {
             If you want to learn how to speak English like a native, you need to start with the basics. In this blog
             post, we will discuss 10 tips that will help you improve your speaking skills in a short amount of time!
             These tips are based on years of experience teaching English as a second language. Follow these tips and
-            you'll be speaking like a pro in no time!
+            you&apos;ll be speaking like a pro in no time!
           </p>
 
           <p className="font-normal text-base mb-3">
             1. Listen to English podcasts - Listening to podcasts is a great way to get accustomed to proper
             pronunciation and natural dialogue in English. There are many free and paid options available, so find one
-            that resonates with you and start listening. The main benefit of this exercise is that you'll get to hear
+            that resonates with you and start listening. The main benefit of this exercise is that you&apos;ll get to hear
             how native English speakers talk and interact with each other.
           </p>
 
           <p className="font-normal text-base mb-3">
             2. Watch movies or TV shows in English - Watching movies or TV shows in their original language is a great
-            way to get familiar with common phrases and conversation topics. Plus, it's entertaining at the same time.
+            way to get familiar with common phrases and conversation topics. Plus, it&apos;s entertaining at the same time.
             if you watch English movies, you will also get to experience different accents from all over the world.
           </p>
 
@@ -51,8 +51,8 @@ const Tips = () => {
 
           <p className="font-normal text-base mb-3">
             4. Read books in English - Reading is a great way to learn new words and expressions. If possible, try to
-            find books that are written for native English speakers. This way, you'll get used to the language at its
-            most natural level. Read books that are interesting to you and don't be afraid to look up words you don't
+            find books that are written for native English speakers. This way, you&apos;ll get used to the language at its
+            most natural level. Read books that are interesting to you and don&apos;t be afraid to look up words you don&apos;t
             know.
           </p>
           <p className="font-normal text-base mb-3">
@@ -70,7 +70,7 @@ const Tips = () => {
           <p className="font-normal text-base mb-3">
             7. Use English as much as possible - Make a conscious effort to use English in your everyday conversations.
             This will help you become more comfortable speaking the language and also give you practice with
-            pronunciation and grammar. Even if you make mistakes, don't be afraid to keep trying!
+            pronunciation and grammar. Even if you make mistakes, don&apos;t be afraid to keep trying!
           </p>
 
           <p className="font-normal text-base mb-3">
@@ -95,7 +95,7 @@ const Tips = () => {
 
           <p className="font-normal text-base mb-3">
             These are just a few suggestions for how to practice speaking English and improve in a short time. With a
-            little bit of determination and hard work, you'll be an English-speaking pro in no time! Good luck!
+            little bit of determination and hard work, you&apos;ll be an English-speaking pro in no time! Good luck!
           </p>
         </div>
       </div>
