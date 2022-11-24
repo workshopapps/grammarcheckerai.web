@@ -1,6 +1,6 @@
 import React from 'react';
-import logoImg from '../../../assets/images/logo.svg';
-import botImg from '../../../assets/images/bot.svg';
+import logoImg from '../../../assets/images/logo.webp';
+import botImg from '../../../assets/images/bot.webp';
 import micImg from '../../../assets/images/mic.svg';
 import trashImg from '../../../assets/images/trash.svg';
 import sendImg from '../../../assets/images/send.svg';
@@ -47,7 +47,7 @@ function Conversation() {
     <motion.div
       initial={{ opacity: 0.1 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.3 }}
       className={`min-h-screen space-y-6 flex pb-10 flex-col ${styles._convo}`}
     >
       <div className="flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto">
@@ -63,7 +63,7 @@ function Conversation() {
         <div className="text-center space-y-14">
           {chats.length === 0 ? (
             <>
-              <div className="mx-auto flex items-center justify-center min-w-fit">
+              <div className="mx-auto w-36 flex items-center justify-center">
                 <img src={botImg} alt="" className="max-w-full" />
               </div>
               <div className="space-y-4">
