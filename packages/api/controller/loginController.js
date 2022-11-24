@@ -24,7 +24,7 @@ const {  findOne } = require("../repository/user.repository");
     if (!validPassword) {
         return res.status(401).json({ msg: 'Invalid email or password' })
     }
-    return res.status(201).json(
+    return res.status(200).json(
         response({
           success: true,
           message: "User login successfully",
