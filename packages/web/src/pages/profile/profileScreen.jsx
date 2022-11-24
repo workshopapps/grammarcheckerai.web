@@ -11,8 +11,8 @@ export default function profileScreen() {
     const navigate = useNavigate();
 
   return (
-    <main className='bg-white mt-24'>
-        <div className='h-[100vh] w-[90%] md:w-[80%] m-auto'>
+    <main className='bg-white h-screen pt-2 sm:pt-16'>
+        <div className='w-[90%] md:w-[80%] h-full flex flex-col m-auto'>
             <div className='flex flex-col sm:flex-row justify-between items-center pb-3 border-none sm:border-b-[3px] border-[#d2d2d2]/50 relative'>
                 <h3 className='text-2xl font-bold'>User Profile</h3>
                 <span><img className='absolute bottom-1 sm:hidden' src={coloredediticon} alt="edit" /></span>

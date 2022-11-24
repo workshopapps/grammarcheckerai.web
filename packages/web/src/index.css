@@ -10,10 +10,10 @@
     @apply flex flex-col gap-1 text-[#344054]
 }
 ._input {
-    @apply border-2 py-4 px-2 rounded focus:outline-none
+    @apply border-2 py-3 px-2 rounded focus:outline-none
 }
 ._btnContainer {
-    @apply w-full flex flex-col md:flex-row lg:flex-row justify-end gap-5 mt-16
+    @apply w-full mt-auto sm:mt-24 pb-8 flex flex-col sm:flex-row sm:justify-end gap-4
 }
 .no-space_{
     margin: 0 !important;

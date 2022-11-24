@@ -53,10 +53,10 @@ export default function ChangePassword() {
     }
     
   return (
-    <div className='h-[100vh] w-[90%] md:w-[70%] lg:w-[70%] m-auto mt-24'>
-        <h1 className='text-2xl text-[#393939] text-center md:text-start font-bold'>Change your password</h1>
+    <div className='h-screen w-[90%] md:w-[70%] lg:w-[70%] m-auto pt-2 sm:pt-16'>
+        <h1 className='text-xl sm:text-2xl text-[#393939] text-center md:text-start font-bold'>Change your password</h1>
 
-        <form onSubmit={handleSubmit} className='mt-10 flex flex-col gap-5'>
+        <form onSubmit={handleSubmit} className='mt-10 h-[90%] flex flex-col gap-5'>
             <label className='flex flex-col'>
                 <span className='font-bold text-base md:text-lg lg:text-lg text-[#393939] mb-2'>Old password</span>
                 <input 
