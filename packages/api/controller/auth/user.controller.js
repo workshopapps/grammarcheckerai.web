@@ -4,6 +4,7 @@ const { register, findOne } = require("../../repository/user.repository");
 const { loginUser } = require("../loginController");
 const { userCollection } = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
+const Email = require("../../services/email.service");
 
 async function registerUser(req, res) {
   let {
@@ -32,9 +33,18 @@ async function registerUser(req, res) {
   if (checkEmailExist)
     return res
       .status(409)
-      .json(response({ error: "User already exist", success: false }));
+      .json(response({ message: "User already exist", success: false }));
 
   const data = { email, firstName, lastName, username, password, language };
+
+  const SendWelcomeEmail = new Email(
+    email,
+    firstName,
+    "Welcome to Gritty Grammer",
+    "/signin"
+  );
+
+  await SendWelcomeEmail.send();
 
   const user = await register(data);
 
@@ -43,29 +53,40 @@ async function registerUser(req, res) {
       .status(500)
       .json(response({ success: false, message: "User not created" }));
 
-  // return res.status(201).json(user);
-  return loginUser(user, res)
+  return res.status(201).json(
+    response({
+      success: true,
+      message: "User created successfully",
+      data: user,
+    })
+  );
 }
 
 async function googleAuthUserSignUp(req, res) {
-  const {name, email} = await getTokens(req.query.code);
+  const { name, email } = await getTokens(req.query.code);
 
   //Check if user already exist
   const user = await userCollection.findOne({ email });
- 
+
   if (user) { 
-    //assign token
-    const token = user.generateAuthToken();
 
     const data = {
+      _id: user._id,
       firstname: user.firstName,
       lastname: user.lastName,
       username: user.username,
-      email: user.email, 
-       token,
+      email: user.email,
+      language: user.language,
+      token: user.generateAuthToken(),
     };
-    return loginUser(user, res)
-  } else { 
+    return res.status(200).json(
+      response({
+        success: true,
+        message: "User logged in Sucessfully",
+        data: data,
+      })
+    );
+  } else {
     const randomUserCode = (Math.random() + 1).toString(36).substring(7);
     const newName = name.split(" ");
 
@@ -74,16 +95,24 @@ async function googleAuthUserSignUp(req, res) {
       lastName: newName[1],
       email: email,
       username: slugify(name) + randomUserCode,
-      password: "password"  
+      password: "password",
     };
     const user = await register(data);
 
     if (!user)
-    return res
-      .status(500)
-      .json(response({ success: false, message: "User not created" }));
+      return res
+        .status(500)
+        .json(response({ success: false, message: "User not created" }));
 
-    return loginUser(user, res)
+        return res
+        .status(201)
+        .json(
+          response({
+            success: true,
+            message: "User created successfully",
+            data: user,
+          })
+        );
   }
 }
 module.exports = { registerUser, googleAuthUserSignUp };
