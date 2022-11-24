@@ -26,7 +26,7 @@ const environment = {
   S3SECRETEKEY: process.env.S3SECRETEKEY,
   GRITTYBUCKETNAME: process.env.GRITTYBUCKETNAME,
   BASE_URL: process.env.BASE_URL,
-  ASSEMBLYAI_API_KEY: process.env.ASSEMBLYAI_API_KEY,
+  ASSEMBLYAI_API_KEY: process.env.ASSEMBLYAI_API_KEY
 };
 
 module.exports = {environment}
