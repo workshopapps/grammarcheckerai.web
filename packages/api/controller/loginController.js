@@ -1,4 +1,5 @@
 const { userCollection, authValidatorSchema } = require('../database/models/userSchema')
+const {  findOne } = require("../repository/user.repository");
 
 exports.login = async (req, res) => {
     // retrieve the email and password 
@@ -12,9 +13,8 @@ exports.login = async (req, res) => {
     if (error) return res.status(400).json({message: error.details[0].message});
 
     // check if the email and password exists
-
-    let user = await userCollection.findOne({ email })
-
+    let user = await userCollection.findOne({email});
+    
     if (!user) {
         return res.status(401).json({ msg: 'Invalid email or password' })
     }
@@ -29,9 +29,6 @@ exports.login = async (req, res) => {
 
     return res.status(200).json({
         user: {
-            pageTitle: "login endpoint",
-            name: user.name,
-            message: "login successful",
             token
         }
     })

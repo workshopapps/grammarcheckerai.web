@@ -1,28 +1,28 @@
 const passport = require('passport');
-const router = require('express').Router()
+const linkedin = require('express').Router()
 
-router.get('/failed', (req, res) => res.send('You Failed to log in!'))
+linkedin.get('/failed', (req, res) => res.send('You Failed to log in!'))
   
-router.get('/good',  (req, res) => {
+linkedin.get('/good',  (req, res) => {
     return res.status(200).json({message: 'successful'})
 })
 
-router.get('/auth/linkedin', 
+linkedin.get('/', 
     passport.authenticate('linkedin', {
     scope : ['r_emailaddress', 'r_liteprofile'] 
     }
 ));
 
-router.get('/auth/linkedin/callback',
+linkedin.get('/callback',
     passport.authenticate('linkedin', {
         successRedirect: '/Profile',
         failureRedirect: '/login'
     }
 ));
 
-router.get('/logout', function(req, res) {
+linkedin.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
 });
 
-module.exports = router;
+module.exports = {linkedin};
