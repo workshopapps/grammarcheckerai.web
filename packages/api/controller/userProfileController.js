@@ -2,20 +2,22 @@ const { userCollection } = require('../database/models/userSchema');
 const { comparePassword } = require('../utilities/compare');
 
 async function userProfile(req, res) {
-  //gets user id
-  const id = req.params.id;
-  try {
-    const user = await userCollection.findOne({ _id: id });
-    if (!user) {
-      return res.json({
-        status: 204,
-        error: 'No user with that id',
-      });
+    //gets user id
+    const id = req.params.id;
+    try {
+        const user = await userCollection.findOne({_id: id});
+        if (!user) {
+            return res.json({
+                status: 204,
+                error: "No user with that id",
+            });
+        }
+        res.json({Detail: user});
+        res.status(200);
+    } catch (error) {
+        res.status(400);
+        res.json(error);
     }
-    res.status(200).json({ Detail: user });
-  } catch (error) {
-    res.status(400).json(error);
-  }
 }
 
 // FOR DELETING A USER ACCOUNT.
