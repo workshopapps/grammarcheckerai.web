@@ -1,5 +1,4 @@
-const { S3Client } = require('@aws-sdk/client-s3')
-const express = require('express')
+const { S3Client } = require('@aws-sdk/client-s3') 
 const multer = require('multer')
 const multerS3 = require('multer-s3')
 const { environment } = require('../config/environment')
@@ -7,7 +6,7 @@ const { ACCESSKEYID, S3SECRETEKEY, GRITTYBUCKETNAME } = environment;
 
 
 // Set the AWS Region.
-const REGION = "eu-west-1";
+const REGION = "us-east-1";
 
 const credentials = {
     region: REGION,
@@ -19,7 +18,6 @@ const credentials = {
 
 // Create an Amazon S3 service client object.
 const s3 = new S3Client( credentials );
-
 
 const uploadAudio = multer({
   storage: multerS3({
@@ -33,5 +31,4 @@ const uploadAudio = multer({
     }
   })
 })
-
 module.exports = uploadAudio
