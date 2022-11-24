@@ -21,7 +21,7 @@ auth.post("/signup", registerValidationRules(), validate, registerUser);
 auth.get("/google", googleAuthURL);
 auth.post("/google", googleAuthUserSignUp);
 auth.post("/request-password-reset",validate(request_reset_password), requestForgotPassword)
-auth.post("/password-reset",validate(reset_password), resetPassword)
+auth.post("/password-reset",validate(reset_password), resetPassword) 
 
 auth.post("/login", login);
 auth.post("/logout", logout);

@@ -2,7 +2,7 @@ const { response } = require("../utilities/response");
 const { register, findOne } = require("../repository/user.repository");
 const { userCollection } = require("../../database/models/userSchema");
 const Email = require("../services/email.service");
-const { generateToken } = require("../utilities/generateToken");
+const { generateToken, verifyJWTToken } = require("../utilities/generateToken");
 
 exports.requestForgotPassword = async(req, res) => {
 	const { email } = req.body;
@@ -38,16 +38,11 @@ exports.resetPassword = async(req, res) => {
 	
 	try {
 		//Check if the user already exist
-		password =
-    password === confirm_password
-      ? password
-      : res.status(422).json(
-          response({
-            success: false,
-            error: "Password mismatch",
-            message: "Comfirm your password",
-          })
-        );
+		if(new_password !== confirm_password) {
+			res.status(422).json(response({	success: false,error: "Password mismatch", message: "Comfirm your password" })
+			);
+		}
+
 		const decodeToken = await verifyJWTToken(user_token);
 		if (!decodeToken) {
 			return res.status(401).json(response({ message: "Invalid Token", success: false }));
