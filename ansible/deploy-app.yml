@@ -69,6 +69,7 @@
     - name: run docker-compose up
       become: true
       shell: |
+        source ./gritty_env.sh
         docker system prune --all --force 
         docker-compose pull 
         docker-compose -f /home/ubuntu/docker-compose.yml up -d
