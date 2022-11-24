@@ -15,8 +15,12 @@ const { routeHandler } = require("./routes/index.route"),
 
 //Passport Initialized
 app.use(passport.initialize())
-   .use(express.json())
-   .use(cors())
+  .use(express.json())
+  .use(cors(
+    {
+      origin: '*'
+    }
+  ))
 
 const sess = {
   secret: environment.SESSION_SECRET,
@@ -36,9 +40,9 @@ app
 
 app.use("/v1", routeHandler);
 app.get("*", (req, res) => {
-  res.status(200).json({ 
-              message: "Welcome to Grit Grammarly 🙌",
-              user: 'CORS enabled' 
-            });
+  res.status(200).json({
+    message: "Welcome to Grit Grammarly 🙌",
+    user: 'CORS enabled'
+  });
 });
 module.exports = app;
