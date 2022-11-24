@@ -18,7 +18,6 @@ const credentials = {
 
 // Create an Amazon S3 service client object.
 const s3 = new S3Client( credentials );
-
 const uploadAudio = multer({
   storage: multerS3({
     s3: s3,
