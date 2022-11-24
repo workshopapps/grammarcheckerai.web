@@ -38,6 +38,8 @@
     "@banana-dev/banana-dev": "^4.0.0",
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@storybook/testing-library": "^0.0.13",
     "aws-sdk": "^2.1260.0",
     "axios": "^1.1.3",

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MobileNav from './mobileNav';
 import { Outlet } from 'react-router-dom';
-import logoImg from '../../assets/images/logo.svg';
+import logoImg from '../../assets/images/logo.webp';
 import hamburger from '../../assets/hamburger.png';
 import SidebarLink from '../SidebarLink';
 import { IoHomeOutline, IoSettingsOutline } from 'react-icons/io5';
@@ -12,10 +12,10 @@ function DashboardLayout() {
 
   return (
     <div className="flex min-h-screen">
-      <button onClick={() => setNav(!nav)} className='absolute sm:hidden top-4 left-4'>
+      <button onClick={() => setNav(!nav)} className="absolute sm:hidden top-4 left-4">
         <img src={hamburger} alt="hamburger" />
       </button>
-      <div className='md:w-80 h-full bg-[#F6F6F6] max-h-screen min-h-screen z-[100] hidden sm:block sm:sticky top-0'>
+      <div className="md:w-80 h-full bg-[#F6F6F6] max-h-screen min-h-screen z-[100] hidden sm:block sm:sticky top-0">
         <div className="w-32 mx-auto py-20">
           <img src={logoImg} alt="" className="w-full" />
         </div>

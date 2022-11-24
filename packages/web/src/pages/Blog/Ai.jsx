@@ -18,7 +18,7 @@ const Ai = () => {
           <span className="text-blog">The Time Is Now for Conversational AI</span>
         </div>
         <div className="p-4 mb-10 md:w-full md:h-full md:mb-10 xl:w-full">
-          <img src={Heroimg} alt="" className="md:w-full md:h-full" />
+          <img src={Heroimg} alt="" className="md:w-full md:h-full rounded" />
         </div>
 
         <div className="p-4 py-4">
@@ -33,17 +33,17 @@ const Ai = () => {
           </p>
           <p className="font-normal text-base mb-3">
             You may believe that voice interfaces are nothing new because talkative smartphone assistants have been
-            available for more than a decade. But you've probably noticed that those assistants have improved in terms
+            available for more than a decade. But you&apos;ve probably noticed that those assistants have improved in terms
             of listening skills, conversational skills, and overall usefulness. This is due to a number of technological
             advancements that have taken place in the background that have improved smartphone experiences as well as
             the integration of AI-powered voice technologies into a number of new products and use cases.
           </p>
           <p className="font-normal text-base mb-3">
             For instance, BERT, a method for natural language processing that makes speech models more context-aware and
-            easier and faster to train, was open-sourced by Google AI researchers. One of Google's Alphabet siblings,
+            easier and faster to train, was open-sourced by Google AI researchers. One of Google&apos;s Alphabet siblings,
             DeepMind, also unveiled WaveNet, which replaced phonetic models with ones that utilize waveforms to forecast
             which sounds are likely to follow one another in order to produce substantially more realistic-sounding
-            synthetic voices. Both technologies are now deeply embedded and they’re just a few among many examples of
+            synthetic voices. Both technologies are now deeply embedded and they&apos;re just a few among many examples of
             advances that help computers not only interact with us more naturally, but also act on our requests more
             effectively.
           </p>

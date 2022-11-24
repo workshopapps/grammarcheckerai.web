@@ -7,7 +7,7 @@ const Grammar = () => {
     <section className="mb-10">
       <div className="mt-10 md:max-w-3xl md:mx-auto xl:max-w-5xl">
         <h1 className="text-header text-xl font-bold mb-4 text-center xl:text-3xl">
-          10 Grammar Mistakes You're Probably Making (And How to Fix Them)
+          10 Grammar Mistakes You&apos;re Probably Making (And How to Fix Them)
         </h1>
 
         <div className="text-header text-sm font-bold mb-4 text-center p-4">
@@ -15,96 +15,96 @@ const Grammar = () => {
           <span className="mr-3">&gt;&gt;&gt;</span>
           <span className="mr-3">Blog</span>
           <span className="mr-3">&gt;&gt;&gt;</span>
-          <span className="text-blog">10 Grammar Mistakes You're Probably Making (And How to Fix Them)</span>
+          <span className="text-blog">10 Grammar Mistakes You&apos;re Probably Making (And How to Fix Them)</span>
         </div>
         <div className="p-4 mb-10 md:w-full md:h-full md:mb-10">
-          <img src={Image2} alt="Grammar check" className="w-full md:h-full" />
+          <img src={Image2} alt="Grammar check" className="w-full md:h-full rounded" />
         </div>
 
         <div className="p-4 py-4">
           <p className="font-normal text-base mb-3">
-            Do you make these common grammar mistakes? Many people do, and it's easy to see why. English is a complex
+            Do you make these common grammar mistakes? Many people do, and it&apos;s easy to see why. English is a complex
             language to learn, and many rules seem confusing. This blog post will discuss ten common grammar mistakes
             people make and how to fix them!
           </p>
           <p className="font-normal text-base mb-3">
-            <span className="mb-4 block">1. Incorrect: "I seen it with my own two eyes!"</span>
-            <span className="mb-4 block">Correction: "I saw it with my own two eyes!"</span>
-            The main verb in this sentence is "seen," which is incorrect. The correct verb is "saw." This mistake is
-            often made because the incorrect verb, "seen," sounds similar to the correct verb. To avoid this mistake, be
+            <span className="mb-4 block">1. Incorrect: &quot;I seen it with my own two eyes!&quot;</span>
+            <span className="mb-4 block">Correction: &quot;I saw it with my own two eyes!&quot;</span>
+            The main verb in this sentence is &quot;seen,&quot; which is incorrect. The correct verb is &quot;saw.&quot; This mistake is
+            often made because the incorrect verb, &quot;seen,&quot; sounds similar to the correct verb. To avoid this mistake, be
             careful to listen to yourself and ensure you use the correct verb form.
           </p>
 
           <p className="font-normal text-base mb-3">
-            <span className="mb-4 block">2. Incorrect: "He done it!"</span>
-            <span className="mb-4 block">Correction: "He did it!"</span>
-            This is another incorrect use of the verb "done." The correct verb in this sentence is "did." This mistake
-            is often made because the incorrect verb, "done," sounds similar to the correct verb. To avoid this mistake,
+            <span className="mb-4 block">2. Incorrect: &quot;He done it!&quot;</span>
+            <span className="mb-4 block">Correction: &quot;He did it!&quot;</span>
+            This is another incorrect use of the verb &quot;done.&quot; The correct verb in this sentence is &quot;did.&quot; This mistake
+            is often made because the incorrect verb, &quot;done,&quot;sounds similar to the correct verb. To avoid this mistake,
             be careful to listen to yourself and ensure you use the correct verb form.
           </p>
 
           <p className="font-normal text-base mb-3">
-            <span className="mb-4 block">3. Incorrect: "I done it!"</span>
-            <span className="mb-4 block">Correction: "I did it!"</span>
-            This is another incorrect use of the verb "done." The correct verb in this sentence is "did." This mistake
-            is often made because the incorrect verb, "done," sounds similar to the correct verb. To avoid this mistake,
+            <span className="mb-4 block">3. Incorrect: &quot;I done it!&quot;</span>
+            <span className="mb-4 block">Correction: &quot;I did it!</span>
+            This is another incorrect use of the verb &quot;done.&quot; The correct verb in this sentence is &quot;did.&quot; This mistake
+            is often made because the incorrect verb, &quot;done,&quot; sounds similar to the correct verb. To avoid this mistake,
             be careful to listen to yourself and ensure you use the correct verb form.
           </p>
 
           <p className="font-normal text-base mb-3">
-            <span className="mb-4 block">4. Incorrect: "He was walking down the street, and he seen a cat."</span>
-            <span className="mb-4 block">Correction: "He was walking down the street, and he saw a cat."</span>
-            This sentence contains two incorrect uses of the verb "seen." The first incorrect use is in the main verb of
-            the sentence. The correct verb is "saw." The second incorrect use is in the subordinate clause. The correct
-            verb is "saw." This mistake is often made because the incorrect verb, "seen," sounds similar to the correct
+            <span className="mb-4 block">4. Incorrect: &quot;He was walking down the street, and he seen a cat.&quot;</span>
+            <span className="mb-4 block">Correction: &quot;He was walking down the street, and he saw a cat.&quot;</span>
+            This sentence contains two incorrect uses of the verb &quot;seen.&quot; The first incorrect use is in the main verb of
+            the sentence. The correct verb is &quot;saw.&quot; The second incorrect use is in the subordinate clause. The correct
+            verb is &quot;saw.&quot;This mistake is often made because the incorrect verb, &quot;seen,&quot; sounds similar to the correct
             verb. To avoid this mistake, be careful to listen to yourself and ensure you use the correct verb form.
           </p>
 
           <p className="font-normal text-base mb-3">
-            <span className="mb-4 block">5. Incorrect: "I have went to the store."</span>
-            <span className="mb-4 block">Correction: "I have gone to the store."</span>
-            This sentence uses the incorrect verb form "went." The correct verb form is "gone." This mistake is often
-            made because the incorrect verb, "went," sounds and ensure you use the correct verb form.
+            <span className="mb-4 block">5. Incorrect: &quot;I have went to the store.&quot;</span>
+            <span className="mb-4 block">Correction: &quot;I have gone to the store.&quot;</span>
+            This sentence uses the incorrect verb form &quot;went.&quot; The correct verb form is &quot;gone.&quot; This mistake is often
+            made because the incorrect verb, &quot;went,&quot; sounds and ensure you use the correct verb form.
           </p>
 
           <p className="font-normal text-base mb-3">
-            <span className="mb-4 block">6. Incorrect: "I done it good."</span>
-            <span className="mb-4 block">Correction: "I did it well."</span>
-            This sentence uses the incorrect verb form "done." The correct verb form is "did." This mistake is often
-            made because the incorrect verb, "done," sounds similar to the correct verb. To avoid this mistake, be
+            <span className="mb-4 block">6. Incorrect: &quot&quot;I done it good.&quot;</span>
+            <span className="mb-4 block">Correction: &quot;I did it well.&quot;</span>
+            This sentence uses the incorrect verb form &quot;done.&quot; The correct verb form is &quot;did.&quot; This mistake is often
+            made because the incorrect verb, &quot;one,&quot; sounds similar to the correct verb. To avoid this mistake, be
             careful to listen to yourself and ensure you use the correct verb form.
           </p>
           <p className="font-normal text-base mb-3">
-            <span className="mb-4 block">7. Incorrect: "I have done it good."</span>
-            <span className="mb-4 block">Correction: "I have done it well."</span>
-            This sentence uses the incorrect verb form "done." The correct verb form is "did." This mistake is often
-            made because the incorrect verb, "done," sounds similar to the correct verb. To avoid this mistake, be
+            <span className="mb-4 block">7. Incorrect: &quot;I have done it good.&quot;</span>
+            <span className="mb-4 block">Correction: &quot;I have done it well.&quot;</span>
+            This sentence uses the incorrect verb form &quot;done.&quot; The correct verb form is &quot;did.&quot; This mistake is often
+            made because the incorrect verb, &quot;done,&quot; sounds similar to the correct verb. To avoid this mistake, be
             careful to listen to yourself and ensure you use the correct verb form.
           </p>
 
           <p className="font-normal text-base mb-3">
-            <span className="mb-4 block">8. Incorrect: "I have done it better then you."</span>
-            <span className="mb-4 block">Correction: "I have done it better than you."</span>
-            This sentence uses the incorrect verb form "done." The correct verb form is "did." This mistake is often
-            made because the incorrect verb, "done," sounds similar to the correct verb. To avoid this mistake, be
+            <span className="mb-4 block">8. Incorrect: &quot;I have done it better then you.&quot;</span>
+            <span className="mb-4 block">Correction: &quot;I have done it better than you.&quot;</span>
+            This sentence uses the incorrect verb form &quot;done.&quot; The correct verb form is &quot;did.&quot; This mistake is often
+            made because the incorrect verb, &quot;one,&quot; sounds similar to the correct verb. To avoid this mistake, be
             careful to listen to yourself and ensure you use the correct verb form.
           </p>
 
           <p className="font-normal text-base mb-3">
             <span className="mb-4 block">
-              9. Incorrect: "Which one is your favorite, the green one or the blue one?"
+              9. Incorrect: &quot;Which one is your favorite, the green one or the blue one?&quot;
             </span>
-            <span className="mb-4 block">Correction: "Which one is your favorite, the green one or the blue one?"</span>
-            This sentence is incorrect because it uses the incorrect form of the pronoun "one." The correct pronoun in
-            this sentence is "ones." This mistake is often made because the incorrect pronoun " one" sounds similar to
+            <span className="mb-4 block">Correction: &quot;Which one is your favorite, the green one or the blue one?&quot;</span>
+            This sentence is incorrect because it uses the incorrect form of the pronoun &quot;one&quot; The correct pronoun in
+            this sentence is &quot;ones.&quot; This mistake is often made because the incorrect pronoun &quot;one&quot;sounds similar to
             the correct one. To avoid this mistake, be careful to listen to yourself and use the correct pronoun form.
           </p>
 
           <p className="font-normal text-base mb-3">
-            <span className="mb-4 block">10. Incorrect: "I is going to the store."</span>
-            <span className="mb-4 block">Correction: "I am going to the store."</span>
-            This sentence uses the incorrect verb form "is." The correct verb form is "am." This mistake is often made
-            because the incorrect verb, "is," sounds similar to the correct verb. To avoid this mistake, be careful to
+            <span className="mb-4 block">10. Incorrect: &quot;I is going to the store.&quot;</span>
+            <span className="mb-4 block">Correction: &quot;I am going to the store.&quot;</span>
+            This sentence uses the incorrect verb form &quot;is.&quot; The correct verb form is &quot;am.&quot; This mistake is often made
+            because the incorrect verb, &quot;is,&quot; sounds similar to the correct verb. To avoid this mistake, be careful to
             listen to yourself and ensure you use the correct verb form.
           </p>
           <p className="font-normal text-base mb-3">
