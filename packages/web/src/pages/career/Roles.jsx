@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Footer from '../../components/Careers/footer';
-import Header from '../../components/Careers/header';
+import Navbar from '../../components/Navbar';
 
 import SelectDropdown from '../../components/Select/select';
 
@@ -14,8 +14,8 @@ const Roles = () => {
 
   return (
     <div>
-       <Header />
-      <div className=" py-10 space-y-6 px-72 max-[480px]:px-4 text-dark-200 mt-20">
+       <Navbar />
+      <div className=" py-10 space-y-6 px-72 max-[480px]:px-4 text-dark-200">
         <h3 className="font-bold text-purple-500 text-4xl text-center">Open Roles</h3>
         <p className="py-8 text-dark-200">
           Gritty Grammar is excited to offer a 100% remote working model. Team members can work primarily remotely from

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
+import Footer from '../../modules/static/landing-page/Footer';
 import data from './faq_data';
-
-import FaqFooter from './faq_footer';
 
 function FaqMain() {
   const [searchTerm, setsearchTerm] = useState('');
@@ -84,7 +83,7 @@ function FaqMain() {
         </div>
       </div>
 
-      <FaqFooter />
+      <Footer />
     </>
   );
 }

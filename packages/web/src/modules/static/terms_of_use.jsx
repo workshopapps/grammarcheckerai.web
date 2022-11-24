@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
+import Footer from './landing-page/Footer';
 import './terms_of_use.css';
 
 const TermsOfUse = () => {
@@ -71,7 +72,7 @@ const TermsOfUse = () => {
         </p>
         <br></br>
       </div>
-      <div>{/*This is where the footer goes*/}</div>
+      <Footer />
     </div>
   );
 };

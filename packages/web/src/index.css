@@ -15,3 +15,6 @@
 ._btnContainer {
     @apply w-full flex flex-col md:flex-row lg:flex-row justify-end gap-5 mt-16
 }
+.no-space_{
+    margin: 0 !important;
+}

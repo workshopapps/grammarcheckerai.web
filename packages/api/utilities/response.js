@@ -4,11 +4,10 @@
  * @param {*} data Data to be returned
  * @param {boolean} success Status of the request
  */
- const response = ({ success, message, error, data }) => {
+ const response = ({ success, message, data }) => {
     return {
         success: success == null ? true : success,
-        message: formatMessage(message),
-        error: formatMessage(error) ,
+        message: formatMessage(message), 
         count: typeof data === 'object' ? data.length : undefined,
         data: data || undefined,
     };

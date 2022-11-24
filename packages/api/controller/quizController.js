@@ -19,7 +19,6 @@ app.use(
 exports.getQuiz = async (req, res) => {
   let sess = req.session;
   sess.user = req.user;
-  console.log(req);
   await axios
     .get("https://the-trivia-api.com/api/questions?limit=1")
     .then((quiz) => {
@@ -29,7 +28,6 @@ exports.getQuiz = async (req, res) => {
       sess.options = question.incorrectAnswers;
       sess.answer = question.correctAnswer;
       question.incorrectAnswers.push(question.correctAnswer);
-      console.log(sess);
       res.status(200).send(question);
     })
     .catch((err) => {
@@ -46,7 +44,10 @@ exports.sendAnswer = async (req, res) => {
   var message = "";
   if (answer == sess.answer) {
     message = { message: "Correct answer, weldone!" };
-  } else message = { message: "Incorrect answer, please try again!" };
+  } else
+    message = {
+      message: `Incorrect answer, Correct answer is: ${sess.answer}, please try again!`,
+    };
   res.status(200).send(message);
   req.session.destroy();
 };

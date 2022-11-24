@@ -13,7 +13,7 @@ const Cta = () => {
 
                          <div className="w-80 mx-auto">
                               <input type="text" className="border border-solid border-input_border bg-input p-2 w-2/3 rounded-l outline-none " placeholder="Your email" />
-                              <button className="bg-btn p-2 text-white w-1/3 rounded-r">Subscribe</button>
+                              <button className="bg-btn p-2 text-white w-1/3 rounded-r hover:bg-[#3d1762]">Subscribe</button>
                          </div>
                     </div>
 
