@@ -78,7 +78,8 @@ async function updateUser(req, res) {
            }
            res.status(200).json({message: 'user updated successfully.'});
        })
-       .catch(err=>{ 
+       .catch(err=>{
+           console.log(err);
            res.status(401).json({message:'an error occurred'});
        });
 }
