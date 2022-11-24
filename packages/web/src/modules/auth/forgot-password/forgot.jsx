@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMediaQuery } from 'react-responsive';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { getStorageData } from '../../../hooks/useLocalStorage';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './forgot.module.css';
@@ -29,9 +29,7 @@ const index = () => {
   const handleOpenMail = () => {
     navigate('/reset-password');
   };
-  const isTabletorMobile = useMediaQuery({
-    query: '(min-width: 850px)',
-  });
+  const isTabletorMobile = useMediaQuery('(min-width: 850px)');
   return (
     <div className={styles._gcmainforgot}>
       <div className={styles._gcforgot}>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Culture from '../../components/Careers/culture';
 import Footer from '../../components/Careers/footer';
-import Header from '../../components/Careers/header';
 import TeamFeedback from '../../components/Careers/teamFeedback';
+import Navbar from '../../components/Navbar';
 import teamData from '../../data/careers/teamData.json';
 
 const Careers = () => {
@@ -33,9 +33,9 @@ const Careers = () => {
 
   return (
     <div>
-      <Header />
+      <Navbar />
 
-      <section className="bg-purple-500 py-20 text-center space-y-14 text-dark-200 mt-20">
+      <section className="bg-purple-500 py-20 text-center space-y-14 text-dark-200">
         <h4 className="text-white text-xl">Careers and Culture</h4>
         <h1 className="text-4xl text-white font-bold max-[480px]:text-3xl max-[480px]:w-3/5 max-[480px]:mx-auto">
           A culture rooted in setting people up for success

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMediaQuery } from 'react-responsive';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { getStorageData, useLocalStorage } from '../../../hooks/useLocalStorage';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './reset.module.css';
@@ -43,9 +43,7 @@ const index = () => {
       setTimeout(() => navigate('/signin'), 3000);
     }
   };
-  const isTabletorMobile = useMediaQuery({
-    query: '(min-width: 850px)',
-  });
+  const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div className={styles._gs2mainlogin}>
       <div className={styles._gs2login}>
