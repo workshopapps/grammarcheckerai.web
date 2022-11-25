@@ -1,24 +1,15 @@
 const { userCollection } = require("../database/models/userSchema");
-
+const { authResponse } = require("../utilities/response");
 async function register(data) {
-  try {    
-    const userData = await userCollection.create(data);
+  try {
+    const user = await userCollection.create(data);
 
-    const user = {
-      _id: userData._id,
-      firstName: userData.firstName,
-      lastName:userData.lastName,
-      username: userData.username,
-      email: userData.email,
-      language:userData.language,
-      token: userData.generateAuthToken()
-    } 
-    return user;
-  } catch (error) { 
+    return authResponse(user);
+  } catch (error) {
     return false;
   }
-} 
+}
 
 module.exports = {
-  register 
+  register
 };
