@@ -41,7 +41,6 @@ app
 app.use("/v1", routeHandler);
 
 
-
 app.get("*", (req, res) => {
   res.status(200).json({
     message: "Welcome to Grit Grammarly 🙌",
