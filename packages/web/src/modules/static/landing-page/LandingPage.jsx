@@ -18,7 +18,7 @@ const LandingPage = () => {
     setInterval(() => {
       setShowQuiz(true);
     }, 4000)
-  }, []);
+  }, [setShowQuiz]);
 
   return (
     <div className="bg-[#bbb8b81a]">
