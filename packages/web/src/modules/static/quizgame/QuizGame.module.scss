@@ -1,32 +1,41 @@
 @import '../../../assets/styles/variables.scss';
 
 .quizgame {
+    margin-top: 0px;
     width: 100vw;
-    height: 100vh;
     @include flexCenter(column);
-    background-color: black;
-    color: $white;
+    color: black;
     padding: 20px;
 
-    &__card {
+    &_card {
         @include flexCenter(column);
-        border: 1px solid $greyColor;
-        border-radius: 10px;
+        justify-content: space-between;
         padding: 8px;
 
-        &__back {
-            width: inherit;
-            @include flexCenter(row);
-            justify-content: space-between;
-            cursor: pointer;
-        }
+        // &__back {
+        //     width: 100%;
+        //     @include flexCenter(row);
+        //     justify-content: flex-start;
+        //     cursor: pointer;
+
+        //     a {
+        //         width: inherit;
+
+        //         svg {
+        //             height: 5rem;
+        //             width: 3rem;
+        //         }
+        //     }
+        // }
 
         &__content {
+            @include flexCenter(column);
             width: inherit;
             text-align: center;
 
             &__heading {
-                text-shadow: 3px 5px 10px $purpleBackground;
+                color: $greyColor;
+                text-shadow: 1px 15px 5px #e8ddf2;
                 font-size: 44px;
                 font-family: $fontFamily1;
                 font-weight: 700;
@@ -35,8 +44,8 @@
 
             &__question {
                 font-family: $fontFamily2;
-                margin-bottom: 10px;
-                font-size: 16px;
+                margin: 15px 0px;
+                font-size: 24px;
                 width: inherit;
                 letter-spacing: -1px;
                 word-spacing: 3px;
@@ -44,12 +53,17 @@
 
             &__answers {
                 width: inherit;
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: repeat(2, 1fr);
-                grid-column-gap: 10px;
-                grid-row-gap: 10px;
+                // display: grid;
+                // grid-template-columns: repeat(2, 1fr);
+                // grid-template-rows: repeat(2, 1fr);
+                // grid-column-gap: 10px;
+                // grid-row-gap: 10px;
                 text-align: center;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 1fr);
+                grid-column-gap: 0px;
+                grid-row-gap: 10px;
 
                 li {
                     font-family: $fontFamily2;
