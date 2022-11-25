@@ -67,7 +67,7 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
 
               {answer ? (
                 <div className={styles.quiz_card__check}>
-                  <p>Great job!</p>
+                  <p>✨ Great job! ✨</p>
                   <div className={styles.quiz_card__check__btn}>
                     <button className={styles.quiz_card__check__btn1} onClick={removePopUp}>
                       Cancel
