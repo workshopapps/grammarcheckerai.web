@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from '../quizpopup/QuizPopUp.module.scss';
 import { GrClose } from 'react-icons/gr';
 
@@ -73,8 +73,7 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
                       Cancel
                     </button>
                     <button className={styles.quiz_card__check__btn2}>
-                      Continue?
-                      {/* <Link to="/quizgame">Continue?</Link> */}
+                      <Link to="/quizgame">Continue?</Link>
                     </button>
                   </div>
                 </div>
@@ -94,7 +93,7 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
                     <li value={trivia.incorrectAnswers[3]} onClick={handleAnswer}>
                       {trivia.incorrectAnswers[3]}
                     </li> */}
-                    {trivia.incorrectAnswers.map((element) => {
+                    {trivia.incorrectAnswers && trivia.incorrectAnswers.map((element) => {
                       return <li onClick={handleAnswer} key={element}>{element}</li>;
                     })}
                   </ul>

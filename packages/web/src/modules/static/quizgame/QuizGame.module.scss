@@ -6,31 +6,17 @@
     @include flexCenter(column);
     color: black;
     padding: 20px;
+    overflow: hidden;
 
     &_card {
+        width: inherit;
         @include flexCenter(column);
         justify-content: space-between;
         padding: 8px;
 
-        // &__back {
-        //     width: 100%;
-        //     @include flexCenter(row);
-        //     justify-content: flex-start;
-        //     cursor: pointer;
-
-        //     a {
-        //         width: inherit;
-
-        //         svg {
-        //             height: 5rem;
-        //             width: 3rem;
-        //         }
-        //     }
-        // }
-
         &__content {
             @include flexCenter(column);
-            width: inherit;
+            width: 100%;
             text-align: center;
 
             &__heading {
@@ -52,32 +38,87 @@
             }
 
             &__answers {
-                width: inherit;
-                // display: grid;
-                // grid-template-columns: repeat(2, 1fr);
-                // grid-template-rows: repeat(2, 1fr);
-                // grid-column-gap: 10px;
-                // grid-row-gap: 10px;
+                width: 100%;
                 text-align: center;
                 display: grid;
                 grid-template-columns: 1fr;
                 grid-template-rows: repeat(4, 1fr);
                 grid-column-gap: 0px;
                 grid-row-gap: 10px;
+                place-items: center;
 
                 li {
+                    width: 90%;
                     font-family: $fontFamily2;
                     cursor: pointer;
                     list-style: none;
                     border: 1px solid #e8ddf2;
                     border-radius: 8px;
                     background-color: #e8ddf2;
-                    padding: 8px 0px;
-                    font-size: 12px;
+                    padding: 15px;
+                    font-size: 20px;
 
                     &:hover {
                         color: $greyColor;
                         background-color: $white;
+                    }
+                }
+            }
+        }
+
+        &__score {
+            margin-top: 50px;
+            width: 100%;
+            font-size: 30px;
+            font-weight: 700;
+            color: $greyColor;
+        }
+    }
+
+    &__btn {
+        margin-top: 80px;
+        width: 100%;
+
+        button {
+            background-color: $purpleBackground;
+            border: 1px solid $purpleBackground;
+            border-radius: 8px;
+            width: 200px;
+            font-size: 24px;
+            font-weight: 500;
+            color: $white;
+            padding: 10px;
+        }
+    }
+}
+
+
+/*************** media queries ***************************/
+
+@media(min-width: $lg) {
+    .quizgame {
+        overflow-x: hidden;
+
+        &_card {
+            &__content {
+                height: 500px;
+                justify-content: space-between;
+
+                &__answers {
+                    width: 100%;
+                    text-align: center;
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    grid-template-rows: repeat(2, 1fr);
+                    grid-column-gap: 10px;
+                    grid-row-gap: 50px;
+                    place-items: center;
+
+                    li {
+                        width: 70%;
+                        padding: 15px;
+                        @include flexCenter(row);
+                        flex-wrap: wrap;
                     }
                 }
             }
