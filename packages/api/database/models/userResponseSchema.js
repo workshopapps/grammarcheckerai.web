@@ -10,6 +10,9 @@ let schema = new mongoose.Schema(
     audioURL: {
       type: String,
     },
+     textInput:{
+      type: String,
+    }
   },
   {
     timestamps: true,
