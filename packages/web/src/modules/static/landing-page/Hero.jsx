@@ -2,16 +2,27 @@ import purpleWoman from './assets/hero/purple-woman.png';
 import styles from './styles/index.module.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Hero = () => {
-
+const [status, setStatus] = useState([]);
     const getRes = async () => {
         const data = await axios.get('https://grittygrammar.hng.tech/v1/quiz')
         console.log(data.data)
      }
+
+     const apiTest = async () => {
+        const data = await axios.get('https://grittygrammar.hng.tech/api/v1/test')
+        console.log(data.data,'API status')
+        setStatus(data.data)
+        status.map((item, index) => 
+        console.log(Object.keys(item) + ' Status: '+ item[Object.keys(item)].status)
+    )
+     }
+
     useEffect(() => {
        getRes()
+    apiTest()
    }, [])
     return (
         <section className={`bg-white -mt-20 `}>
@@ -37,6 +48,16 @@ const Hero = () => {
                         />
                     </div>
                 </div>
+                {/* <div>
+                {status?.map((item, index) => {
+                    return (
+                        <div key={index}>
+                            {console.log(item[Object.keys(item)].status)}
+                            <p>{Object.keys(item)} Status: {item[Object.keys(item)].status}</p>
+                        </div>
+                    )
+                })}
+              </div> */}
             </div>
         </section>
     );
