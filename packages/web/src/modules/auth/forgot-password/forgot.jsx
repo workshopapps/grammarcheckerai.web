@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { getStorageData } from '../../../hooks/useLocalStorage';
+import axios from "axios";
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './forgot.module.css';
 import Logo from '../../../assets/signup-logo.png';
@@ -12,18 +13,34 @@ const index = () => {
   const [resetLink, setResetLink] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const error = (message) => toast.error(message);
+  const success = (message) => toast.success(message);
 
   let navigate = useNavigate();
   const handleBack = () => {
     setResetLink(true);
     navigate('/signin');
   };
+
+  const url = "http://grittygrammar.hng.tech/api/request-password-reset";
+
   const handleSendResetLink = (e) => {
     e.preventDefault();
     if (userEmail !== getStorageData('existingUserEmail')) {
       error('user Does not Exist, check updated email...');
     } else {
-      setResetLink(true);
+      axios.post(url, {
+        userEmail
+      })
+      .then((response) => {
+        console.log(response)
+        success("Email sent successfully")
+        setResetLink(true);
+      })
+      .catch((err) => {
+        console.log(err)
+        error("Time out...try again!")
+      })
+      // setResetLink(true);
     }
   };
   const handleOpenMail = () => {
