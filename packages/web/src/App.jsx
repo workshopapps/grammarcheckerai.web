@@ -2,8 +2,8 @@ import React, { lazy, Suspense } from 'react';
 import './App.css';
 import Fallback from './components/Fallback/Fallback';
 import { Route, Routes, Outlet } from 'react-router-dom';
+import QuizGame from './modules/static/quizgame/QuizGame';
 import ProtectedRoute from './components/ProtectedRoute';
-// import QuizGame from './modules/static/quizgame/QuizGame';
 const SignupPage = lazy(() => import('./modules/auth/signup/step1/step1'));
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
 const SigninPage = lazy(() => import('./modules/auth/login/login'));
@@ -271,6 +271,7 @@ function App() {
         <Route path="/testimonials" element={<Testimonial />} />
         <Route path="/ratings" element={<Ratings />} />
         <Route path="/legal" element={<LegalPage />} />
+        <Route path='/quizgame' element={<QuizGame />}></Route>
       </Route>
       <Route path="/newsletter" element={<NewsletterPage />} />
       <Route path="/career" element={<Careers />} />
@@ -280,7 +281,6 @@ function App() {
       <Route path="/emailtemplate" element={<EmailTemplate />} />
       <Route path="/newsletter-template" element={<NewsletterTemplate />} />
       <Route path="/signin-template" element={<SignInTemplate />} />
-      {/* <Route path='/quizgame' element={<QuizGame/>}></Route> */}
       <Route
         element={
           <div>
