@@ -2,13 +2,16 @@ import { useState, useEffect } from 'react'
 import {  useNavigate } from 'react-router-dom';
 import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton';
 
+
 export default function DeleteAccount() {
+    const data = JSON.parse(localStorage.getItem("userData"));
     const [email, setEmail] = useState('');
     const [btnActive, setBtnActive] = useState(true);
     const [formErrors, setFormErrors] =useState({});
     const history = useNavigate();
     const navigate = useNavigate();
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -36,6 +39,8 @@ export default function DeleteAccount() {
         return errors;
     }
 
+    //console.log(new Date(), data.createdAt.slice(0,10));
+
 
   return (
     <div className='h-[100vh] w-[90%] md:w-[80%] lg:w-[70%] m-auto pt-2 sm:pt-16'>
@@ -47,11 +52,11 @@ export default function DeleteAccount() {
         <div className='sm:border-[1px] mt-10 border-[#d7d7d7] rounded-lg px-5'>
             <div className='flex flex-col sm:flex-row justify-between sm:text-lg text-base px-2 py-2 border-b-[1px] border-[#d7d7d7]'>
                 <span className='text-[#9c9c9c]'>Email</span>
-                <p className='font-bold text-[#393939]'>riri@gmail.com</p>
+                <p className='font-bold text-[#393939]'>{data.email}</p>
             </div>
             <div className='flex flex-col sm:flex-row mt-2 sm:mt-0 border-b-[1px] sm:text-lg text-base sm:border-none border-[#d7d7d7] justify-between px-2 py-2'>
-                <span className='text-[#9c9c9c]'>I`ve been with Gritty Grammar for</span>
-                <p className='font-bold text-[#393939]'>11 months</p>
+                <span className='text-[#9c9c9c]'>I`ve been with Gritty Grammar since</span>
+                <p className='font-bold text-[#393939]'>{data.createdAt.slice(0,10)}</p>
             </div>
 
         </div>
@@ -79,6 +84,7 @@ export default function DeleteAccount() {
                     <ProfileScreenButton disabled={btnActive} onClick={handleSubmit}>Continue</ProfileScreenButton>
                 </div>
             </form>
+            
     </div>
   )
 }

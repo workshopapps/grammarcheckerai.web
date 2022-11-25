@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton'
-import successimg from '../../assets/success.svg';
 import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 
@@ -9,30 +9,71 @@ export default function ChangePassword() {
     const initialValues = {password: "", newPassword: "", confirmNewPassword: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
+    const [btnActive, setBtnActive] = useState(true);
+    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
     const history = useNavigate();
+    const navigate = useNavigate();
+    const data = JSON.parse(localStorage.getItem("userData"));
+    const url = "https://grittygrammar.hng.tech/api/v1/user/profile/";
+    const error = (message) => toast.error(message);
+    const success = (message) => toast.success(message);
+
+    const headersList = {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1NjM0MWU5OC1iMDdjLTQzNzQtYmZjYy1kZGY3NjZhNTIzMjIiLCJpYXQiOjE2NjkzNjc0NTEsImV4cCI6MTY2OTYyNjY1MX0.YoGPwsqNt6zXSmabkkv7eRCq7le0CSD-VkyjpDk7l5w"
+    }
+
+    const updateUserData = async () => {
+        let bodyContent = {
+            "email": data.email,
+            "firstName": data.firstName,
+            "lastName": data.lastName,
+            "language": data.language,
+            "username": data.username,
+            "password": formValues.newPassword,
+            "confirm_password": formValues.confirmNewPassword,
+        }
+        try {
+            const response = await fetch(url + "update", {
+            method: "POST",
+            body: JSON.stringify(bodyContent),
+            headers: {...headersList, "Content-Type": "application/json; charset=utf-8"}
+            });
+            const data = await response.json();
+            console.log(data);
+            success('password updated!');
+            setTimeout(() => navigate('/me/profile'), 3000);
+      
+        } catch (err) {
+            console.log(err);
+            error('error updating password.')
+        }
+    }
 
     const handleChange = (e) => {
         const {name, value} = e.target;
         setFormValues({...formValues, [name]: value});
+        
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setFormErrors(validate(formValues));
-        setIsSubmit(true);
-        setTimeout(() => {
-            setIsSubmit(false)
-        }, 3000)
+        updateUserData();
     };
 
     useEffect(() => {
-        Object.keys(formErrors).length === 0 && setFormValues({password: "", newPassword: "", confirmNewPassword: ""});
-    },[formErrors])
+        setFormErrors(validate(formValues));
+        if(regex.test(formValues.confirmNewPassword)) {
+            setBtnActive(false);
+        } else {
+            setBtnActive(true)
+        }
+    },[formValues.confirmNewPassword, formValues])
+
+    
 
     const validate = (values) => {
         const errors = {};
-        const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+        
 
         if(!values.password) {
             errors.password= "Please enter your old password";
@@ -42,6 +83,9 @@ export default function ChangePassword() {
         }
         if(!values.confirmNewPassword) {
             errors.confirmNewPassword= "Please enter your new password again";
+        }
+        if (values.password !== data.password) {
+            errors.password= "incorrect password";
         }
         if(!regex.test(values.newPassword)) {
             errors.newPassword = "new password must be between 6 to 20 characters,contain at least one numeric digit, one uppercase and one lowercase letter"
@@ -105,11 +149,11 @@ export default function ChangePassword() {
 
             <div className="_btnContainer">
                 <ProfileScreenButton onClick={() => history(-1)} variant="secondary">Cancel</ProfileScreenButton>
-                <ProfileScreenButton onClick={handleSubmit}>Reset</ProfileScreenButton>
+                <ProfileScreenButton disabled={btnActive} onClick={handleSubmit}>Reset</ProfileScreenButton>
             </div>
         </form>
-
-        {Object.keys(formErrors).length === 0 && isSubmit ? <div className='mt-5 text-[#393939] bg-[#f5f5f5] px-4 rounded flex justify-center gap-3 py-2 text-center w-[50%] m-auto'><img src={successimg} alt='success'/>Password changed successfully</div> : null}
+        <Toaster />
+       
     </div>
   )
 }
