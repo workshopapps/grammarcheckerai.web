@@ -187,6 +187,12 @@
   justify-content: center;
   align-items: center;
 }
+._gs2mainsignupcol2images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 ._gs2mainsignupcol2images img:first-child {
   width: 100%;
   max-width: 418.72px;

@@ -12,6 +12,7 @@ import Image1 from '../../../../assets/error 1.png';
 import google from '../../../../assets/google.png';
 import apple from '../../../../assets/apple.png';
 import facebook from '../../../../assets/facebook.png';
+import Carousel from 'nuka-carousel';
 
 const index = () => {
   const [newUserName, setNewUserName] = useState('');
@@ -243,10 +244,16 @@ const index = () => {
         </div>
         <div className={styles._gs2signupcol2}>
           <div className={styles._gs2mainsignupcol2body}>
-            <div className={styles._gs2mainsignupcol2images}>
-              <img src={Image1} alt="column1" />
-              <img src={Image2} alt="column1" />
-            </div>
+            <Carousel autoplay={true} autoplayInterval={5000} withoutControls={true} autoplayReverse={true}>
+              <div className={styles._gs2mainsignupcol2images}>
+                <img src={Image1} alt="column1" />
+                <img src={Image2} alt="column1" />
+              </div>
+              <div className={styles._gs2mainsignupcol2images}>
+                <img src={Image1} alt="column1" />
+                <img src={Image2} alt="column1" />
+              </div>
+            </Carousel>
             {isTabletorMobile && (
               <div className={styles._gs2mainsignupcol2content}>
                 <h3>Learn, Unlearn & Relearn</h3>

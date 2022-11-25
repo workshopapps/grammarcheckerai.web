@@ -49,8 +49,8 @@ const index = () => {
           email: userEmail,
           password: userPassword,
         })
-        .then(() => {
-          console.log(authLogin);
+        .then((res) => {
+          console.log(res);
           success('Login Successful! Redirecting in 5 seconds');
           // setTimeout(() => navigate('/me/home'), 5000);
         })

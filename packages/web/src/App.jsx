@@ -4,6 +4,7 @@ import Fallback from './components/Fallback/Fallback';
 import { Route, Routes, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import { getStorageData } from './hooks/useLocalStorage';
+import { useState } from 'react';
 // import QuizGame from './modules/static/quizgame/QuizGame';
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
 const SigninPage = lazy(() => import('./modules/auth/login/login'));
@@ -42,7 +43,6 @@ const Ai = lazy(() => import('./pages/Blog/Ai'));
 const Grammar = lazy(() => import('./pages/Blog/Grammar'));
 const Tips = lazy(() => import('./pages/Blog/Tips'));
 const Contact = lazy(() => import('./pages/contact/index'));
-
 
 // All routes/pages must be import from ./pages folder
 
@@ -245,7 +245,7 @@ const LandingLayout = () => (
 );
 
 function App() {
-  const [isUserSignedIn, setIsUserSignedIn] = getStorageData('grittyUserLoggedIn');
+  const [isUserSignedIn, setIsUserSignedIn] = useState('');
   return (
     <Routes>
       <Route path="/converse" element={<ConversationPage />} />
@@ -256,7 +256,7 @@ function App() {
         <Route path="/faq" element={<FaqMain />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/blog" element={<Blog />} />
-        <Route path="contact" element={<Contact/>} />
+        <Route path="contact" element={<Contact />} />
         <Route path="/jobs" element={<JobsPage />} />
         <Route path="/grammar" element={<GrammarPage />} />
         <Route path="/ai" element={<AiPage />} />
