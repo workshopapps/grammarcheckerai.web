@@ -3,7 +3,7 @@ const { userCollection } = require("../database/models/userSchema");
 const { environment } = require("../config/environment.js");
 const { verifyJWTToken } = require("../utilities/generateToken");
 const emailService = require("../services/email.service");
-const bcrypt = require("bcryptjs");
+
 const { BASE_URL, RESET_PASSWORD_TEMPLATE_ID } = environment;
 
 exports.requestForgotPassword = async (req, res) => {
@@ -39,11 +39,7 @@ exports.requestForgotPassword = async (req, res) => {
     return res.status(200).json(
       response({
         message: "A mail was just sent to this email address",
-        success: true,
-        data: {
-          name: user.firstName,
-          action_url: reset_password_url,
-        },
+        success: true, 
       })
     );
   } catch (error) {
