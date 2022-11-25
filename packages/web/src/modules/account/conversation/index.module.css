@@ -25,6 +25,9 @@
   animation: pulseAnimate 4s ease-out infinite;
   animation-delay: calc(1s * var(--i));
 }
+._bot_mic ._f2DT8 span {
+  position: relative;
+}
 
 @keyframes pulseAnimate {
   100% {
