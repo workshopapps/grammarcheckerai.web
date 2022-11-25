@@ -6,11 +6,11 @@ const generateToken = (payload, expiresIn = '30m') => {
   return token;
 };
 
-
 const verifyJWTToken = (token) => {
   return new Promise((resolve) => {
-    JWT.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (!err) {
+				console.log(decoded)
         resolve(decoded);
       } else {
         resolve(false);
