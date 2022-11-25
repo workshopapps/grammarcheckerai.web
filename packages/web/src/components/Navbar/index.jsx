@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { NavLink, useNavigate, Link } from 'react-router-dom';
 import logoImg from '../../assets/images/grit-white.webp';
 import styles from './navbar.module.css';
+// eslint-disable-next-line import/no-unresolved
 import useMediaQuery from '@mui/material/useMediaQuery';
+// eslint-disable-next-line import/no-unresolved
 import { Drawer } from '@mui/material';
 
 const Navbar = () => {
