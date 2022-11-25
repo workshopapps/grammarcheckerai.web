@@ -14,14 +14,7 @@ const { routeHandler } = require('./routes/index.route'),
   swaggerDocument = require('./Tests/test.json');
 
 //Passport Initialized
-app
-  .use(passport.initialize())
-  .use(express.json())
-  .use(
-    cors({
-      origin: '*',
-    })
-  );
+app.use(passport.initialize()).use(express.json()).use(cors());
 
 const sess = {
   secret: environment.SESSION_SECRET,
@@ -40,13 +33,6 @@ app
   .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/v1', routeHandler);
-
-//404 error
-app.use((req, res, next) => {
-  res.status(404).json({
-    message: 'Ohh you are lost, go back now!!!!',
-  });
-});
 
 app.get('*', (req, res) => {
   res.status(200).json({

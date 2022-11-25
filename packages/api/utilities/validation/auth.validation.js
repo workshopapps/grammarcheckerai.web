@@ -1,4 +1,4 @@
-const { body, check, validationResult } = require("express-validator");
+const { body, check, validationResult, query } = require("express-validator");
 const { response } = require("../../utilities/response");
 
 const validate = (req, res, next) => {
@@ -139,7 +139,7 @@ const reset_password = () => {
       .withMessage("Password can not be empty")
       .isLength({ min: 6, max: 16 })
       .withMessage("Password must be between 6 and 16 characters"),
-    body("user_token")
+    query("token")
       .exists()
       .withMessage("user token is required")
       .isString()
@@ -149,7 +149,7 @@ const reset_password = () => {
     body().custom((body) =>
       checkAllowedFields(body, [
         "new_password",
-        "confirm_passowrd",
+        "confirm_password",
         "user_token",
       ])
     ),

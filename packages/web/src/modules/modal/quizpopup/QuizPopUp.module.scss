@@ -1,0 +1,111 @@
+@import '../../../assets/styles/variables.scss';
+
+.quiz {
+    background-color: $white;
+    border: 1px dotted #e8ddf2;
+    border-radius: 30px 30px 30px 0px;
+    box-shadow: 1px 1px 0px 0px $purpleBackground;
+    width: 250px;
+    z-index: 10;
+    padding: 15px;
+    bottom: 50px;
+    right: 30px;
+    position: fixed;
+    color: $greyColor;
+
+    &_card {
+
+        &__check {
+            width: inherit;
+            @include flexCenter(column);
+            
+            p {
+                color: $greenColor;
+                margin-bottom: 20px;
+            }
+
+            &__btn {
+                width: 100%;
+                @include flexCenter(row);
+                justify-content: space-between;
+
+                &1 {
+                    color: red;
+                    border-radius: 8px;
+                    padding: 10px;
+                    background-color: #e8ddf2;
+                }
+
+                &2 {
+                    color: $greenColor;
+                    border-radius: 8px;
+                    padding: 10px;
+                    background-color: #e8ddf2;
+
+                    a {
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+
+        &__close {
+            width: inherit;
+            @include flexCenter(row);
+            justify-content: flex-end;
+            cursor: pointer;
+        }
+
+        &__content {
+            width: inherit;
+            text-align: center;
+
+            &__heading {
+                text-shadow: 3px 5px 10px $purpleBackground;
+                font-size: 24px;
+                font-family: $fontFamily1;
+                font-weight: 700;
+                margin-bottom: 10px;
+            }
+
+            &__question {
+                font-family: $fontFamily2;
+                margin-bottom: 10px;
+                font-size: 16px;
+                width: inherit;
+                letter-spacing: -1px;
+                word-spacing: 3px;
+            }
+
+            &__answers {
+                width: inherit;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                grid-column-gap: 10px;
+                grid-row-gap: 10px;
+                text-align: center;
+
+                li {
+                    @include flexCenter(row);
+                    flex-wrap: wrap;
+                    max-height: 50px;
+                    overflow-y: hidden;
+                    font-family: $fontFamily2;
+                    cursor: pointer;
+                    list-style: none;
+                    border: 1px solid #e8ddf2;
+                    border-radius: 8px;
+                    background-color: #e8ddf2;
+                    padding: 8px 0px;
+                    font-size: 12px;
+
+                    &:hover {
+                        color: $greyColor;
+                        background-color: $white;
+                    }
+                }
+            }
+        }
+    }
+}

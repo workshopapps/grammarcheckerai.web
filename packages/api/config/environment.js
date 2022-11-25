@@ -22,12 +22,15 @@ const environment = {
   FILE_SIZE: process.env.FILE_SIZE,
   API_KEY: process.env.API_KEY,
   MODEL_KEY: process.env.MODEL_KEY,
-  SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
   ACCESSKEYID: process.env.ACCESSKEYID,
   S3SECRETEKEY: process.env.S3SECRETEKEY,
   GRITTYBUCKETNAME: process.env.GRITTYBUCKETNAME,
   BASE_URL: process.env.BASE_URL,
   ASSEMBLYAI_API_KEY: process.env.ASSEMBLYAI_API_KEY,
+  SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
+  EMAIL_FROM: process.env.EMAIL_FROM,
+  SIGNUP_TEMPLATE_ID: process.env.SIGNUP_TEMPLATE_ID,
+  RESET_PASSWORD_TEMPLATE_ID: process.env.RESET_PASSWORD_TEMPLATE_ID
 };
 
 module.exports = { environment };

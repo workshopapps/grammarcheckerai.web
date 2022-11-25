@@ -1,28 +1,26 @@
-const sgMail = require("@sendgrid/mail");
+const sendgrid = require("@sendgrid/mail");
 const { environment } = require("../config/environment.js");
-const { SENDGRID_API_KEY, BASE_URL } = environment;
+const { SENDGRID_API_KEY, EMAIL_FROM } = environment;
 
-const welcome = require("../utilities/email");
-sgMail.setApiKey(SENDGRID_API_KEY);
+sendgrid.setApiKey(SENDGRID_API_KEY);
 
-const emailService = async ({ to, from = 'akan.otong@pmt.ng', subject, body, templateId, data }) => {
+const emailService = async ({ to, subject, body, templateId, data }) => {
   return new Promise(async (resolve, reject) => {
     try {
-      // if(process.env.NODE_ENV === "production"){
-      const response = await sendgrid.send({
-        from: `Gritty Grammer <${from}>`,
+      await sendgrid.send({
+        from: `Speak Better <${EMAIL_FROM}>`,
         to,
         text: body,
         subject,
         templateId,
-        dynamicTemplateData: data
+        dynamicTemplateData: data,
       });
 
-      resolve(true)
+      resolve(true);
     } catch (err) { 
-      resolve(false)
+      resolve(false);
     }
-  })
+  });
 };
 
 module.exports = emailService;
