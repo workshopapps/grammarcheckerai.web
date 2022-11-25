@@ -1,10 +1,8 @@
 const { response } = require("../../utilities/response");
 const { getTokens } = require("./google.user.controller");
-const { register, findOne } = require("../../repository/user.repository");
-const { loginUser } = require("../loginController");
+const { register } = require("../../repository/user.repository"); 
 const { userCollection } = require("../../database/models/userSchema");
-const { slugify } = require("../../utilities/compare");
-const Email = require("../../services/email.service");
+const { slugify } = require("../../utilities/compare"); 
 const emailService = require("../../services/email.service");
 const { environment } = require("../../config/environment");
 const { SIGNUP_TEMPLATE_ID } = environment;
