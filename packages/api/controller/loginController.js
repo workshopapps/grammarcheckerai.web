@@ -1,6 +1,5 @@
 const {
-  userCollection,
-  authValidatorSchema,
+  userCollection, 
 } = require("../database/models/userSchema");
 const { findOne } = require("../repository/user.repository");
 const { response, authResponse } = require("../utilities/response");
