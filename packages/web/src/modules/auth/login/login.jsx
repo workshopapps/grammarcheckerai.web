@@ -10,6 +10,7 @@ import apple from '../../../assets/apple.png';
 import facebook from '../../../assets/facebook.png';
 import { getStorageData, useLocalStorage } from '../../../hooks/useLocalStorage';
 import toast, { Toaster } from 'react-hot-toast';
+import useLogin from '../../../hooks/auth/useLogin';
 
 const index = () => {
   const [userName, setUserName] = useState('');
@@ -19,6 +20,7 @@ const index = () => {
     'existingUserPassword',
     getStorageData('demoData'),
   );
+  const authLogin = useLogin();
   const [existingUserEmail, setExistingUserEmail] = useLocalStorage('existingUserEmail', getStorageData('demoData'));
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
@@ -58,6 +60,10 @@ const index = () => {
       setExistingUserPassword(getStorageData('demoData'));
       setExistingUserEmail(getStorageData('demoData'));
     }
+    authLogin.mutateAsync({
+      email: 'okoloc100@gmail.com',
+      password: 'ddhdhhshshsg',
+    });
   };
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
