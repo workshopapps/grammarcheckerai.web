@@ -3,6 +3,7 @@ import { Recorder } from 'react-voice-recorder';
 import useSendAudioFile from '../../../hooks/account/useSendAudio';
 import styles from './index.module.css';
 import micImg from '../../../assets/images/mic.svg';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function CustomRecorder() {
   const sendAudio = useSendAudioFile();
@@ -20,6 +21,9 @@ export default function CustomRecorder() {
       },
     },
   });
+
+  const success = (message) => toast.success(message);
+  const error = (message) => toast.error(message);
 
   const handleAudioStop = (data) => {
     console.log(data, 'data');
@@ -39,8 +43,15 @@ export default function CustomRecorder() {
 
     const soln = new FormData();
     soln.append('file', data.blob);
-    sendAudio.mutateAsync(soln).then((res) => console.log(res));
+    sendAudio
+      .mutateAsync(soln)
+      .then((res) => console.log(res))
+      .catch((err) => {
+        error(err?.response?.data?.message ?? 'Error');
+        console.log(err);
+      });
   };
+
   const handleAudioUpload = (file) => {
     console.log(file, 'file');
   };
@@ -62,28 +73,31 @@ export default function CustomRecorder() {
   const recorderHandler = () => setRecording((prev) => !prev);
 
   return (
-    <button
-      className={`rounded-full relative h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
-        isRecording ? styles._bot_mic : ''
-      }`}
-    >
-      <button className="w-16 absolute top-0 left-0" onClick={() => recorderHandler()}>
-        {isRecording && <img src={micImg} alt="" style={{ opacity: 0 }} />}
-        <Recorder
-          record={false}
-          title={'New recording'}
-          audioURL={state.audioDetails.url}
-          showUIAudio={isRecording}
-          handleAudioStop={(data) => handleAudioStop(data)}
-          handleAudioUpload={(data) => handleAudioUpload(data)}
-          handleReset={() => handleReset()}
-        />
-      </button>
+    <>
+      <button
+        className={`rounded-full relative h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
+          isRecording ? styles._bot_mic : ''
+        }`}
+      >
+        <button className="w-16 absolute top-0 left-0" onClick={() => recorderHandler()}>
+          {isRecording && <img src={micImg} alt="" style={{ opacity: 0 }} />}
+          <Recorder
+            record={false}
+            title={'New recording'}
+            audioURL={state.audioDetails.url}
+            showUIAudio={isRecording}
+            handleAudioStop={(data) => handleAudioStop(data)}
+            handleAudioUpload={(data) => handleAudioUpload(data)}
+            handleReset={() => handleReset()}
+          />
+        </button>
 
-      <span style={{ '--i': 0 }}></span>
-      <span style={{ '--i': 1 }}></span>
-      <span style={{ '--i': 2 }}></span>
-      <span style={{ '--i': 3 }}></span>
-    </button>
+        <span style={{ '--i': 0 }}></span>
+        <span style={{ '--i': 1 }}></span>
+        <span style={{ '--i': 2 }}></span>
+        <span style={{ '--i': 3 }}></span>
+      </button>
+      <Toaster />
+    </>
   );
 }
