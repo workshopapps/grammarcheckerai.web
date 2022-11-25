@@ -35,9 +35,6 @@
   background: rgb(0, 0, 0);
   z-index: -1;
 }
-.hero__header[hero-head-theme='dark']::after{
-  background: var(--bg-light);
-}
 .hero_img__container::before {
   content: url('../assets/hero/tap-mic.png');
   transform: scale(0.6);
@@ -65,13 +62,6 @@
 }
 .subscribe:focus {
   outline: 1px solid rgb(207, 207, 235);
-}
-.step_active{
-  color: #8C54BF;
-}
-[step-theme='dark'].step_active{
-  color: rgb(71, 10, 90);
-  transition: all .4s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 @media only screen and (min-width: 768px) {
   .hero__header::after {

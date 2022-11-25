@@ -1,12 +1,9 @@
-import useTheme from '../../../hooks/useTheme';
 import ade from './assets/ade.png';
 import sarah from './assets/sarah.png';
 import chris from './assets/chris.png';
 
 import styles from './styles/index.module.css';
-
 const Testimonials = () => {
-  const context = useTheme();
   const testimonyDetails = [
     {
       testimony:
@@ -38,8 +35,8 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className={`${context.theme === 'dark' ? 'bg-[#f5f3f30a]' : 'bg-[#f5f3f380]'} py-16 text-[#525252]`}>
-      <h3 className={`text-center ${context.theme === 'dark' ? 'text-[white]' : null} mb-10 text-xl md:text-3xl font-black`}>See what our customers are saying</h3>
+    <section className="bg-[#f5f3f380] py-10 text-[#525252]">
+      <h3 className="text-center mb-10 text-xl md:text-3xl font-black">See what our customers are saying</h3>
       <div className="w-[90%] mx-auto flex flex-col gap-5 sm:flex-row justify-center">
         {testimonyDetails.map((data) => {
           return (

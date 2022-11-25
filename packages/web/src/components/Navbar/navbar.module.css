@@ -3,17 +3,11 @@
     display: flex;
     position: relative;
     justify-content: space-between;
-    background-color: #0F0E0E;
+    background-color: rgb(10, 10, 10);
     align-items: center;
     color: white;
     z-index: 9999;
     width: 100%;
-}
-[nav-theme='light']{
-    background-color: #0F0E0E;
-}
-[nav-theme='dark']{
-    background-color: rgb(216, 178, 233);  
 }
 ._header::before{
     z-index: 999;
@@ -25,15 +19,7 @@
 ._nvlogo img{
     height: 90%;
 }
-._themeswitch{
-    /* background: #f5f4f7;
-    background: #493f72; */
-    padding: 5px;
-    border-radius: 9px;
-    transition: all .4s cubic-bezier(0.23, 1, 0.320, 1);
-}
 ._nvmenu{
-    position: relative;
     width: 60%;
     z-index: 999;
     display: flex;
@@ -66,6 +52,7 @@
     width: 40px;
     fill: white;
     margin: 0 5px;
+    border: #531f85 1px solid;
     padding: 5px;
 }
 @media only screen and (max-width: 1000px) {
@@ -85,7 +72,6 @@
         display: flex;
         flex-direction: column;
         width: 250px;
-        margin-top: 6em;
     }
     ._nvnav a{
         padding: 15px 5px;

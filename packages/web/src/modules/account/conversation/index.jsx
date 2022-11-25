@@ -1,5 +1,4 @@
 import React from 'react';
-import useTheme from '../../../hooks/useTheme';
 import logoImg from '../../../assets/images/logo.webp';
 import botImg from '../../../assets/images/bot.webp';
 import micImg from '../../../assets/images/mic.svg';
@@ -16,7 +15,6 @@ import ChatContainer from './chat-container';
 import useSendAudioFile from '../../../hooks/account/useSendAudio';
 
 function Conversation() {
-  const context = useTheme();
   const navigate = useNavigate();
   const sendAudio = useSendAudioFile();
   const {
@@ -50,9 +48,9 @@ function Conversation() {
       initial={{ opacity: 0.1 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className={`min-h-screen space-y-6 flex pb-10 flex-col ${styles._convo} ${context.theme === 'dark' ? styles.convo_theme : null} `}
+      className={`min-h-screen space-y-6 flex pb-10 flex-col ${styles._convo}`}
     >
-      <div className=" flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto">
+      <div className="flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto">
         {/*  eslint-disable-next-line jsx-a11y/media-has-caption */}
         {/* <audio controls src={audioResult} /> */}
         <div className="w-36">
@@ -69,10 +67,10 @@ function Conversation() {
                 <img src={botImg} alt="" className="max-w-full" />
               </div>
               <div className="space-y-4">
-                <h2 className={`text-xl ${context.theme === 'dark' ? 'text-[#ffffff]' : 'text-[#262626]'}  leading-relaxed sm:text-5xl`}>
+                <h2 className="text-xl text-[#262626] leading-relaxed sm:text-5xl">
                   What would you like to say today?
                 </h2>
-                <p className={` ${context.theme === 'dark' ? 'text-[#ffffff]' : 'text-slate-600'} text-md sm:text-[19px]`}>Each conversation bring you closer to fluency.</p>
+                <p className="text-slate-600 text-md sm:text-[19px]">Each conversation bring you closer to fluency.</p>
               </div>
             </>
           ) : (

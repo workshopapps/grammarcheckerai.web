@@ -1,5 +1,4 @@
 import React from 'react';
-import useTheme from '../../../../hooks/useTheme';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useLocalStorage, getStorageData } from '../../../../hooks/useLocalStorage';
@@ -10,7 +9,6 @@ import Image1 from '../../../../assets/steponeframeone.png';
 import Image2 from '../../../../assets/steponeframetwo.png';
 
 const index = () => {
-  const context = useTheme();
   const [userEmail, setUserEmail] = useLocalStorage('createEmail', '');
   const error = (message) => toast.error(message);
 
@@ -32,9 +30,7 @@ const index = () => {
   return (
     <div className={styles._gcmainsignup}>
       <div className={styles._gcsignup}>
-        <div
-          step-theme={context.theme}
-          className={styles._gcsignupcol1}>
+        <div className={styles._gcsignupcol1}>
           {isTabletorMobile && (
             <button className={styles._gcsignuplogo} onClick={handleHome}>
               <img src={Logo} alt="Grammar Checker Logo" />
@@ -42,14 +38,12 @@ const index = () => {
           )}
           <div className={styles._gcsignupcontent}>
             {isTabletorMobile && (
-              <p step-theme={context.theme}>
+              <p>
                 STEP <span>1</span> OUT OF <span>2</span>
               </p>
             )}
-            <h2 step-theme={context.theme}>Get Started with Gritty Grammar today!</h2>
-            <p
-              step-theme={context.theme}
-              className={styles._subtitle}>Start your learning journey today, you can skip this process for later.</p>
+            <h2>Get Started with Gritty Grammar today!</h2>
+            <p className={styles._subtitle}>Start your learning journey today, you can skip this process for later.</p>
             <form onSubmit={handleNext} className={styles._gcsignupform}>
               <div className={styles._gcsignupinput}>
                 <span>Enter Your Email</span>

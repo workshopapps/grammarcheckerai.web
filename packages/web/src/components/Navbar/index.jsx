@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react';
-import { ThemeContext } from '../../lib/context/DarkThemeContext';
+import React, { useState } from 'react';
 import { NavLink, useNavigate, Link } from 'react-router-dom';
 import logoImg from '../../assets/images/grit-white.webp';
 import styles from './navbar.module.css';
@@ -7,36 +6,19 @@ import styles from './navbar.module.css';
 import useMediaQuery from '@mui/material/useMediaQuery';
 // eslint-disable-next-line import/no-unresolved
 import { Drawer } from '@mui/material';
-import { FaMoon } from 'react-icons/fa';
-import { BsSunFill } from 'react-icons/bs';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  const context = useContext(ThemeContext);
-  localStorage.setItem('theme', context.theme);
-  const toggleDarkMode = () => {
-      context.toggle();
-  }
-  const light = context.theme === 'light';
-
-
   const isTabletOrMobile = useMediaQuery('(max-width: 1000px)');
   const ismobile = useMediaQuery('(max-width: 700px)');
 
   return (
-    <header className={styles._header} nav-theme={context.theme}>
+    <header className={styles._header}>
       <button className={styles._nvlogo} onClick={() => navigate('/home')}>
         <img src={logoImg} alt="gritty" />
       </button>
-      <button
-        
-        className={`${styles._themeswitch} ${light ? 'bg-[#493f72]' : 'bg-[#f5f4f7]'} `}
-        onClick={toggleDarkMode}>
-        {light ? <FaMoon /> : <BsSunFill className='text-[#ff9100] transition-all' />}
-      </button>
-
       <div className={styles._nvmenu}>
         {!isTabletOrMobile && (
           <div className={styles._nvnav}>

@@ -1,5 +1,4 @@
 import React from 'react';
-import useTheme from '../../../../hooks/useTheme';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import toast, { Toaster } from 'react-hot-toast';
@@ -13,7 +12,6 @@ import facebook from '../../../../assets/facebook.png';
 import { useLocalStorage, getStorageData } from '../../../../hooks/useLocalStorage';
 
 const index = () => {
-  const context = useTheme();
   const [newUserName, setNewUserName] = useLocalStorage('newUserName', '');
   const [newUserFullName, setNewUserFullName] = useLocalStorage('newUserFullName', '');
   const [newUserPassword, setNewUserPassword] = useLocalStorage('newUserPassword', '');
@@ -57,13 +55,9 @@ const index = () => {
   };
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
-    <div
-    step-theme={context.theme}
-      className={styles._gs2mainsignup}>
+    <div className={styles._gs2mainsignup}>
       <div className={styles._gs2signup}>
-        <div
-          step-theme={context.theme}
-          className={styles._gs2signupcol1}>
+        <div className={styles._gs2signupcol1}>
           {isTabletorMobile && (
             <div className={styles._gs2signuplogo}>
               <img src={Logo} alt="Grammar Checker Logo" />
@@ -83,16 +77,12 @@ const index = () => {
               </svg>
             </div>
             {isTabletorMobile && (
-              <p
-              step-theme={context.theme}
-                className={styles._gssignuptophead}>
+              <p className={styles._gssignuptophead}>
                 STEP <span>2</span> OUT OF <span>2</span>
               </p>
             )}
-            <h2 step-theme={context.theme}>You&rsquo;re almost there!</h2>
-            <p
-              step-theme={context.theme}
-              className={styles._subtitle}>Start your learning journey today, you can skip this process for later.</p>
+            <h2>You&rsquo;re almost there!</h2>
+            <p className={styles._subtitle}>Start your learning journey today, you can skip this process for later.</p>
             <form className={styles._gs2signupform} onSubmit={handleSignUp}>
               <div className={styles._gs2signupinput}>
                 <span>Username</span>

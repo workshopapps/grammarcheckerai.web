@@ -2,10 +2,9 @@ import cheeryToby from './assets/cheery-toby.png';
 import chirpyBob from './assets/chirpy-bob.png';
 import dotingPiper from './assets/doting-piper.png';
 import pensiveMark from './assets/pensive-mark.png';
-import useTheme from '../../../hooks/useTheme';
+
 
 const Charcters = () => {
-    const context = useTheme();
     const charactersInfo = [
         {
             img: cheeryToby,
@@ -38,7 +37,7 @@ const Charcters = () => {
        
     ]
     return (
-        <section className={`${context.theme === 'dark' ? 'bg-[#E8DDF2]' : 'bg-[#ffff]'} py-10`}>
+        <section className='bg-[#ffff] py-10'>
             <div className='w-[90%] mx-auto max-w-[1220px] '>
                 <header className=' text-[#263238] py-7 max-w-md'>
                     <h2 className='mb-4 text-xl md:text-2xl font-black md:whitespace-nowrap'>Talk to our AI bot in different characters</h2>
