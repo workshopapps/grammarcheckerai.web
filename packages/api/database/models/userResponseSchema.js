@@ -7,13 +7,12 @@ let schema = new mongoose.Schema(
       type: String,
       default: () => v4(),
     },
-    userId: {
-      type: String,
-      ref: "user",
-    },
     audioURL: {
       type: String,
     },
+     textInput:{
+      type: String,
+    }
   },
   {
     timestamps: true,

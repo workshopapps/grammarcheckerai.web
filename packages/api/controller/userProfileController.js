@@ -1,12 +1,11 @@
-const { userCollection} = require('../database/models/userSchema')
+const { userCollection } = require('../database/models/userSchema');
 const { comparePassword } = require('../utilities/compare');
-
 
 async function userProfile(req, res) {
     //gets user id
     const id = req.params.id;
     try {
-        const user = await userCollection.findById(id);
+        const user = await userCollection.findOne({_id: id});
         if (!user) {
             return res.json({
                 status: 204,
@@ -68,4 +67,21 @@ async function deleteUser(req, res) {
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-module.exports = { deleteUser,userProfile };
+//Updates a User profile.
+async function updateUser(req, res) {
+  await userCollection.findByIdAndUpdate(req.user._id, req.body, {new:true})
+       .then(user=>{
+           
+           if(!user){
+             //If user was not found. 
+             return res.status(401).json({message: 'No user found with the provided credentials.'});
+           }
+           res.status(200).json({message: 'user updated successfully.'});
+       })
+       .catch(err=>{
+           console.log(err);
+           res.status(401).json({message:'an error occurred'});
+       });
+}
+
+module.exports = { deleteUser, userProfile, updateUser };

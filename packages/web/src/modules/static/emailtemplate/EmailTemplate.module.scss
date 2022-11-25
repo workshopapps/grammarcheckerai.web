@@ -1,0 +1,261 @@
+@import '../../../assets/styles/variables.scss';
+
+.email {
+  width: 100vw;
+  height: 100vh;
+  padding: 23px;
+  color: black;
+
+  &_nav {
+    &__btn {
+      width: inherit;
+      @include flexCenter(row);
+      justify-content: space-between;
+    }
+
+    &__logo {
+      display: none;
+    }
+  }
+
+  &_content {
+    padding-bottom: 50px;
+
+    &__bottom {
+      @include flexCenter(row);
+      justify-content: space-between;
+      height: 155px;
+
+      div {
+        height: 110px;
+        width: 204px;
+        @include flexCenter(column);
+
+        h4 {
+          font-family: $fontFamily1;
+          line-height: 31px;
+          height: 99px;
+          width: 196px;
+          font-size: 18px;
+          font-weight: 500;
+          line-height: 23px;
+          text-align: left;
+        }
+
+        p {
+          width: 206px;
+          height: 76px;
+          font-family: $fontFamily2;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 15px;
+        }
+      }
+    }
+
+    &__top {
+      margin-top: 52px;
+      background-color: $purpleBackground;
+      @include flexCenter(row);
+      justify-content: space-between;
+      border-radius: 10px 10px 0px 0px;
+      border: 1px solid $purpleBackground;
+      color: $white;
+
+      img {
+        border-radius: 50%;
+      }
+
+      div {
+        margin-top: 52px;
+        @include flexCenter(column);
+        height: 255px;
+        width: 383px;
+
+        h3 {
+          width: 196px;
+          font-family: $fontFamily1;
+          font-size: 24px;
+          font-weight: 700;
+          line-height: 31px;
+        }
+
+        p {
+          width: 206px;
+          height: 76px;
+          font-family: $fontFamily2;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 15px;
+        }
+      }
+    }
+
+    &__btn {
+      width: 100%;
+      margin-top: 32px;
+      text-align: center;
+
+      button {
+        background-color: $btnColor;
+        padding: 16px 40px;
+        height: 51px;
+        border: 1px solid $btnColor;
+        border-radius: 12px;
+        outline: none;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        color: $white;
+        font-family: $fontFamily2;
+      }
+    }
+
+    hr {
+      display: none;
+    }
+
+    &__links {
+      margin-top: 32px;
+      width: inherit;
+      @include flexCenter(row);
+      justify-content: space-around;
+    }
+
+    &__policy {
+      display: none;
+    }
+  }
+}
+
+/**************** media queries **************************/
+
+@media (min-width: $md) {
+  .email {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 50px;
+
+    &_nav {
+      &__btn {
+        display: none;
+      }
+
+      &__logo {
+        @include flexCenter(row);
+        justify-content: flex-start;
+
+        h4 {
+          margin-left: 18px;
+          font-family: $headingColor;
+          font-size: 18px;
+          font-weight: 500;
+          line-height: 23px;
+          text-align: left;
+        }
+      }
+    }
+
+    &_content {
+      &__bottom {
+        @include flexCenter(row);
+        justify-content: space-between;
+        height: 255px;
+        padding: 50px;
+
+        img {
+          border-radius: 50%;
+          width: 163px;
+          height: 163px;
+        }
+
+        div {
+          width: 323px;
+          @include flexCenter(column);
+          // justify-content: space-around;
+
+          h4 {
+            width: inherit;
+            font-family: $fontFamily1;
+            line-height: 31px;
+            height: 99px;
+            width: inherit;
+            font-size: 30px;
+            font-weight: 500;
+            line-height: 23px;
+            text-align: left;
+          }
+
+          p {
+            width: inherit;
+            height: 76px;
+            font-family: $fontFamily2;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 20px;
+          }
+        }
+      }
+
+      &__top {
+        margin-top: 52px;
+
+        div {
+          margin-top: 52px;
+          width: 383px;
+          text-align: left;
+
+          h3 {
+            text-align: left;
+            width: 250px;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 31px;
+          }
+
+          p {
+            margin-top: 10px;
+            width: 250px;
+            font-size: 14px;
+            line-height: 15px;
+          }
+        }
+      }
+
+      &__btn {
+        width: 100%;
+        margin-top: 32px;
+        text-align: center;
+      }
+
+      hr {
+        display: block;
+        margin-top: 50px;
+        background-color: $purpleBackground;
+        height: 30px;
+      }
+
+      &__links {
+        padding: 20px 0px;
+        margin: 0 auto;
+        margin-top: 32px;
+        width: 400px;
+      }
+
+      &__policy {
+        margin-top: 50px;
+        height: 71px;
+        border-radius: 10px;
+        @include flexCenter(column);
+        flex-wrap: wrap;
+        background-color: $purpleBackground;
+        color: #cfcfcf;
+        font-family: $fontFamily2;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 15px;
+        text-align: left;
+      }
+    }
+  }
+}

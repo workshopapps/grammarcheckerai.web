@@ -7,50 +7,31 @@ describe("Testing if jest works", () => {
   });
 });
 
-describe("Gets the home page", () => {
+describe("Testing All Endpoints", () => {
+  it("Tests test endpoint", async () => {
+    await request(app).get("/test").expect(200);
+  });
   it("Tests home endpoint", async () => {
     await request(app)
       .get("/")
-      .expect("Content-Type", /json/)
       .expect(200)
       .then((response) => {
-        expect(response.body.status).toBe("ok");
+        expect(response.body.message).toBe("Welcome to Grit Grammarly 🙌");
       });
   });
-});
-describe("Login Endpoint", () => {
+  it("Tests signup endpoint", async () => {
+    await request(app).get("/api/v1/user/signup").expect(200);
+  });
   it("Tests login endpoint", async () => {
-    await request(app)
-      .post("/api/v1/login")
-      .expect("Content-Type", "text/html; charset=utf-8")
-      .expect(200)
-      .then((response) => {
-        expect(response.body.status).toBe("ok");
-      });
+    await request(app).get("/api/v1/user/login").expect(200);
   });
-});
-
-describe("Send Audio", () => {
+  it("Tests logout endpoint", async () => {
+    await request(app).get("/api/v1/user/logout").expect(200);
+  });
   it("Tests if the user sends an audio", async () => {
-    await request(app)
-      .post("/api/vi/sendAudio")
-      .expect("Content-Type", "text/html; charset=utf-8")
-      .expect(200)
-      .then((response) => {
-        expect(response.body.status).toBe("ok");
-      });
+    await request(app).get("/api/v1/sendAudio").expect(200);
+  });
+  it("Tests if the getText enpoint works", async () => {
+    await request(app).get("/api/vi/getText").expect(200);
   });
 });
-
-describe("Send Audio", () => {
-  it("Tests if the endpoint works", async () => {
-    await request(app)
-      .get("/api/vi/getText")
-      .expect("Content-Type", /json/)
-      .expect(200)
-      .then((response) => {
-        expect(response.body.status).toBe("ok");
-      });
-  });
-});
-

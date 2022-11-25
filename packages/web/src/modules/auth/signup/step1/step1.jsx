@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMediaQuery } from 'react-responsive';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useLocalStorage, getStorageData } from '../../../../hooks/useLocalStorage';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './step1.module.css';
@@ -23,17 +23,18 @@ const index = () => {
       navigate('/signup/step-two');
     }
   };
-  const isTabletorMobile = useMediaQuery({
-    query: '(min-width: 850px)',
-  });
+  const handleHome = () => {
+    navigate('/');
+  };
+  const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div className={styles._gcmainsignup}>
       <div className={styles._gcsignup}>
         <div className={styles._gcsignupcol1}>
           {isTabletorMobile && (
-            <div className={styles._gcsignuplogo}>
+            <button className={styles._gcsignuplogo} onClick={handleHome}>
               <img src={Logo} alt="Grammar Checker Logo" />
-            </div>
+            </button>
           )}
           <div className={styles._gcsignupcontent}>
             {isTabletorMobile && (

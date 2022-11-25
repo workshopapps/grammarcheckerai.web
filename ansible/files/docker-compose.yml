@@ -4,15 +4,73 @@ services:
   backend:
     image: asyncdeveloper/grammar-check-backend:latest
     ports:
-      - "3000:3000"
+      - "3000:5000"
     networks:
       - hng-internal
+    container_name: gritty-backend
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - HOST=127.0.0.1
+      - BASE_URL=https://grittygrammar.hng.tech
+      - DATABASE_URI_DEVELOP=${DATABASE_URI_DEVELOP}
+      - DATABASE_URI_PROD=${DATABASE_URI_PROD}
+      - DATABASE_URI_TEST=${DATABASE_URI_TEST}
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+      - SERVER_ROOT_URI=https://grittygrammar.hng.tech/me/home
+      - LINKEDIN_SECRET_ID=${LINKEDIN_SECRET_ID}
+      - LINKEDIN_CLIENT_ID=${LINKEDIN_CLIENT_ID}
+      - CALLBACK_URL=${CALLBACK_URL}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SESSION_SECRET=${SESSION_SECRET}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_OPTION=${JWT_OPTION}
+      - FB_CLIENT_ID=${FB_CLIENT_ID}
+      - FB_CLIENT_SERECT=${FB_CLIENT_SERECT}
+      - FB_CALLBACK_URL=${FB_CALLBACK_URL}
+      - MODEL_KEY=${MODEL_KEY}
+      - API_KEY=${API_KEY}
+      - FILE_SIZE=104857
+      - SENDGRID_HOST=smtp.sendgrid.net
+      - SENDGRID_USER=${SENDGRID_USER}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      - SENDGRID_PORT=${SENDGRID_PORT}
+      - ACCESSKEYID=${ACCESSKEYID}
+      - S3SECRETEKEY=${S3SECRETEKEY}
+      - GRITTYBUCKETNAME=${GRITTYBUCKETNAME}
+      - ASSEMBLYAI_API_KEY=${ASSEMBLYAI_API_KEY}
+    depends_on:
+      - mongo
   frontend:
     image: asyncdeveloper/grammar-check-frontend:latest
     ports:
       - "5000:5000"
+    container_name: gritty-frontend
+    networks:
+      - hng-internal
+    restart: always
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    restart: always
+
+    networks:
+      - hng-internal
+    volumes:
+      - mongodb-internal:/data/db
+  mongo_dev:
+    image: mongo
+    ports:
+      - "27018:27017"
+    restart: always
     networks:
       - hng-internal
 
 networks:
   hng-internal:
+
+volumes:
+  mongodb-internal:

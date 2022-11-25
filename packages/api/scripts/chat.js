@@ -8,7 +8,7 @@ const openai = new OpenAIApi(configuration);
 
 const restartSequence = "\nHuman:";
 const sessionPrompt =
-  "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nAI: Hi Name. How can I help you today?";
+  "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nAI: Hi, how can I help you today?";
 
 exports.appendConversationToChatLog = function (
   correctUserResponseInTxt,
@@ -41,10 +41,9 @@ exports.chatHandler = async function (
   } catch (error) {
     // next(error)
     if (error.response) {
-      console.log(error.response.status);
-      console.log(error.response.data);
+      throw new Error(error.response.data);
     } else {
-      console.log(error.message);
+      throw new Error(error.message);
     }
   }
 };

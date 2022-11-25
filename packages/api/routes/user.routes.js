@@ -1,8 +1,17 @@
 const userHandler = require('express').Router();
-const {userProfile, deleteUser} = require('../controller/userProfileController')
+const {
+  userProfile,
+  deleteUser,
+  updateUser,
+} = require('../controller/userProfileController');
+const {
+  userprofileAccess,
+  deleteUserAccess,
+  updateUserAccess,
+} = require('../middlewares/UserRestriction/userAccessControl');
 
- 
-userHandler.get('/profile/:id', userProfile);
-userHandler.delete('/', deleteUser);
+userHandler.get('/profile/:id', userprofileAccess, userProfile);
+userHandler.delete('/', deleteUserAccess, deleteUser);
+userHandler.post('/profile/update', updateUserAccess, updateUser);
 
-module.exports = {userHandler}
+module.exports = { userHandler };

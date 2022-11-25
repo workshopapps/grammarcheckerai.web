@@ -2,18 +2,18 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const session = require("express-session");
-
 const { environment } = require("./config/environment");
-require('express-async-errors')
-require('./database/index')
-const passport = require('passport');
-require('./services/linkedinStrategy') 
-const {routeHandler} = require('./routes/index.route');
+const expressFileUpload = require('express-fileupload');
+
 
 //Passport Initialized
-app.use(passport.initialize());
-
-app.use(express.json()).use(cors()); 
+app.use(passport.initialize())
+  .use(express.json())
+  .use(cors(
+    {
+      origin: '*'
+    }
+  ))
 
 const sess = {
   secret: environment.SESSION_SECRET,
@@ -26,14 +26,21 @@ if (app.get("env") === "production") {
   app.set("trust proxy", 1); // trust first proxy
   sess.cookie.secure = true; // serve secure cookies
 }
+app.use(expressFileUpload());
+app.use(express.urlencoded({
+  extended: true
+}));
 
-app.use(session(sess));
+app
+  .use(session(sess))
+  .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
-app.use('/api/api/v1/test', (req, res)=>{
+app.use('/api/v1/test',(req, res)=>{
   res.status(200).json({message: 'working'})
 })
-app.use('/api/api/v1', routeHandler);
+
+app.use('/api/v1', routeHandler);
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Welcome to Grit Grammarly 🙌" });

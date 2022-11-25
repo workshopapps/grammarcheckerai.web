@@ -2,24 +2,24 @@ const { userCollection } = require("../database/models/userSchema");
 
 async function register(data) {
   try {    
-    const user = await userCollection.create(data);
-    
+    const userData = await userCollection.create(data);
+
+    const user = {
+      _id: userData._id,
+      firstName: userData.firstName,
+      lastName:userData.lastName,
+      username: userData.username,
+      email: userData.email,
+      language:userData.language,
+      token: userData.generateAuthToken()
+    }
+    console.log(user);
     return user;
-  } catch (error) {
-    console.log(error.message);
+  } catch (error) { 
     return false;
   }
-}
-async function findOne(Collection, value) {
-  try {
-    const row = await Collection.findOne({ value });
-    return row;
-  } catch (error) {
-    return false;
-  }
-}
+} 
 
 module.exports = {
-  register,
-  findOne,
+  register 
 };

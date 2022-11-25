@@ -28,12 +28,12 @@ function Errors({ id }) {
   return (
     <div className="my-6">
       {grammerErrors[id].map((err, idx) => (
-        <div key={idx} className="bg-[#F6F6F6] rounded-lg pt-4 pb-3 px-4 my-3">
+        <div key={idx} className="bg-[#F6F6F6] rounded-lg pt-4 pb-3 px-4 my-[18px]">
           <p className="text-[#393939] sm:font-base font-normal font-['Inter'] leading-5 text-sm">{err}</p>
           <button
             className=" mt-4 outline-none text-[#279371] font-normal sm:text-base text-sm font-['DM_Sans']"
             onClick={() => {
-              navigate('/correction');
+              navigate('correction');
             }}
           >
             Check
