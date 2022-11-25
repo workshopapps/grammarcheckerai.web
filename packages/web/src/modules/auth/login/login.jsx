@@ -8,20 +8,17 @@ import Image1 from '../../../assets/error 1.png';
 import google from '../../../assets/google.png';
 import apple from '../../../assets/apple.png';
 import facebook from '../../../assets/facebook.png';
-import { getStorageData, useLocalStorage } from '../../../hooks/useLocalStorage';
+import { UseLogin } from '../../../hooks/auth/useLogin';
+
 import toast, { Toaster } from 'react-hot-toast';
 
 const index = () => {
-  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [existingUserName, setExistingUserName] = useLocalStorage('existingUserName', getStorageData('demoData'));
-  const [existingUserPassword, setExistingUserPassword] = useLocalStorage(
-    'existingUserPassword',
-    getStorageData('demoData'),
-  );
-  const [existingUserEmail, setExistingUserEmail] = useLocalStorage('existingUserEmail', getStorageData('demoData'));
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
+
+  const authLogin = UseLogin();
 
   let navigate = useNavigate();
 
@@ -41,24 +38,26 @@ const index = () => {
     -----------------------------
     If user input is unsuccesful, shows an error notification and keeps the user on the page.
   */
-  const handlelogin = () => {
-    setExistingUserName(getStorageData('newUserName'));
-    setExistingUserPassword(getStorageData('newUserPassword'));
-    setExistingUserEmail(getStorageData('createEmail'));
-    if ((userName === existingUserName) & (userPassword === existingUserPassword)) {
-      setExistingUserName(getStorageData('newUserName'));
-      setExistingUserPassword(getStorageData('newUserPassword'));
-      setExistingUserEmail(getStorageData('createEmail'));
-      console.log(existingUserEmail);
-      success('Login Successful!');
-      setTimeout(() => navigate('/me/home'), 2000);
-    } else {
-      error('Incorrect log in');
-      setExistingUserName(getStorageData('demoData'));
-      setExistingUserPassword(getStorageData('demoData'));
-      setExistingUserEmail(getStorageData('demoData'));
-    }
-  };
+    const handlelogin = (e) => {
+      e.preventDefault();
+      if ((userEmail !== '') & (userPassword !== '')) {
+        authLogin
+          .mutateAsync({
+            email: userEmail,
+            password: userPassword,
+          })
+          .then(() => {
+            console.log(authLogin.value);
+            success('Login Successful!');
+          })
+          .catch((err) => {
+            error(err);
+          });
+        // setTimeout(() => navigate('/me/home'), 5000);
+      } else {
+        error('Incorrect log in');
+      }
+    };
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div className={styles._gs2mainlogin}>
@@ -90,11 +89,12 @@ const index = () => {
                 <input
                   type="text"
                   placeholder="meisieshalom"
-                  defaultValue={userName}
+                  defaultValue={userEmail}
                   id="userName"
                   required
-                  pattern="[A-Za-z_-]{1,32}"
-                  onChange={(e) => setUserName(e.target.value)}
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                  title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
+                  onChange={(e) => setUserEmail(e.target.value)}
                 />
               </div>
               <div className={styles._gs2logininput}>
