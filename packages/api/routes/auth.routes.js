@@ -5,6 +5,7 @@ const {
   registerValidationRules,
   reset_password,
   request_reset_password,
+  loginValidationRules,
 } = require('../utilities/validation/auth.validation');
 const {
   registerUser,
@@ -31,7 +32,7 @@ auth.post(
 );
 auth.post('/password-reset', reset_password(), validate, resetPassword);
 
-auth.post('/login', login);
+auth.post('/login', loginValidationRules(), validate, login);
 auth.post('/logout', logout);
 auth.use('/linkedin', linkedin);
 auth.use('/facebook', facebook);

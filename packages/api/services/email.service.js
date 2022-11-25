@@ -19,8 +19,7 @@ const emailService = async ({ to, from = 'akan.otong@pmt.ng', subject, body, tem
       });
 
       resolve(true)
-    } catch (err) {
-      await errorHandler(err);
+    } catch (err) { 
       resolve(false)
     }
   })
