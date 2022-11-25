@@ -9,7 +9,7 @@ import Footer from '../../modules/static/landing-page/Footer';
 const Homepage = () => {
   const context = useTheme();
   return (
-    <div className={`${context.theme === 'dark' ? 'bg-black text-white' : null}`}>
+    <div className={`${context.theme === 'dark' ? 'bg-black text-white' : null} transition-all`}>
       <Header />
       <Hero />
       <Cards />
