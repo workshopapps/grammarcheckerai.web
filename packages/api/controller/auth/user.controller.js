@@ -24,14 +24,13 @@ async function registerUser(req, res) {
       ? password
       : res.status(422).json(
           response({
-            success: false,
-            error: "Password mismatch",
-            message: "Comfirm your password",
+            success: false, 
+            message: "Password mismatch, Comfirm your password",
           })
         );
 
   const checkEmailExist = await userCollection.findOne({ email });
-
+  console.log(checkEmailExist);
   if (checkEmailExist)
     return res
       .status(409)
@@ -39,17 +38,16 @@ async function registerUser(req, res) {
 
   const data = { email, firstName, lastName, username, password, language };
 
-	await emailService({
-		to: email,
-		from: 'akan.otong@pmt.ng',
-		subject: 'Password Reset',
-		templateId: dynamicTemplates.SIGNUP,
-		data: {
-			name: firstName,
-			action_url: "/signin"
-		},
-	});
-
+  await emailService({
+    to: email,
+    from: "akan.otong@pmt.ng",
+    subject: "Password Reset",
+    templateId: dynamicTemplates.SIGNUP,
+    data: {
+      name: firstName,
+      action_url: "/signin",
+    },
+  });
 
   const user = await register(data);
 
@@ -73,8 +71,7 @@ async function googleAuthUserSignUp(req, res) {
   //Check if user already exist
   const user = await userCollection.findOne({ email });
 
-  if (user) { 
-
+  if (user) {
     const data = {
       _id: user._id,
       firstname: user.firstName,
@@ -109,15 +106,13 @@ async function googleAuthUserSignUp(req, res) {
         .status(500)
         .json(response({ success: false, message: "User not created" }));
 
-        return res
-        .status(201)
-        .json(
-          response({
-            success: true,
-            message: "User created successfully",
-            data: user,
-          })
-        );
+    return res.status(201).json(
+      response({
+        success: true,
+        message: "User created successfully",
+        data: user,
+      })
+    );
   }
 }
 module.exports = { registerUser, googleAuthUserSignUp };

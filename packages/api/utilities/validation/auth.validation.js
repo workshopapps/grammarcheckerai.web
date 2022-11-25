@@ -177,5 +177,5 @@ module.exports = {
   registerValidationRules,
   loginValidationRules,
   request_reset_password,
-  reset_password,
+  reset_password, 
 };
