@@ -42,14 +42,13 @@ async function registerUser(req, res) {
 	await emailService({
 		to: email,
 		from: 'akan.otong@pmt.ng',
-		subject: 'Password Reset',
+		subject: 'Welcome TO Speak Better',
 		templateId: dynamicTemplates.SIGNUP,
 		data: {
 			name: firstName,
 			action_url: "/signin"
 		},
 	});
-
 
   const user = await register(data);
 

@@ -149,7 +149,7 @@ const reset_password = () => {
     body().custom((body) =>
       checkAllowedFields(body, [
         "new_password",
-        "confirm_passowrd",
+        "confirm_password",
         "user_token",
       ])
     ),
