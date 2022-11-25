@@ -33,21 +33,20 @@ const index = () => {
     navigate('/signup');
   };
 
-useEffect(() => {
-  authLogin
-        .mutateAsync({
-          email: "tshalom01@gmail.com",
-          password: "userPassword",
-        })
-        .then(() => {
-          console.log(authLogin.value);
-          success('Login Successful!');
-        })
-        .catch((err) => {
-          error(err);
-        });
-}, [])
-
+  useEffect(() => {
+    authLogin
+      .mutateAsync({
+        email: 'tshalom01@gmail.com',
+        password: 'userPassword',
+      })
+      .then(() => {
+        console.log(authLogin.value);
+        success('Login Successful!');
+      })
+      .catch((err) => {
+        error(err);
+      });
+  }, []);
 
   /* 
     handleLogin logs the user in on a succesful input.
@@ -61,8 +60,8 @@ useEffect(() => {
     if ((userEmail !== '') & (userPassword !== '')) {
       authLogin
         .mutateAsync({
-          email: "tshalom01@gmail.com",
-          password: "userPassword",
+          email: 'tshalom01@gmail.com',
+          password: 'userPassword',
         })
         .then(() => {
           console.log(authLogin.value);
@@ -75,6 +74,10 @@ useEffect(() => {
     } else {
       error('Incorrect log in');
     }
+    authLogin.mutateAsync({
+      email: 'okoloc100@gmail.com',
+      password: 'ddhdhhshshsg',
+    });
   };
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
