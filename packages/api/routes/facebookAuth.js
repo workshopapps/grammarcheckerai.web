@@ -1,38 +1,40 @@
 const express = require('express');
-const router = express.Router();
-const passport = require('passport');
 
-router.get(
+const facebook = express.Router();
+const passport = require('passport');
+const { environment } = require('../config/environment');
+const { BASE_URL, NODE_ENV } = environment;
+
+facebook.get(
   '/',
   passport.authenticate('facebook', {
     scope: ['public_profile', 'email'],
   })
 );
 
-router.get(
+const clientUrl = NODE_ENV === 'development' ? '/' : BASE_URL;
+
+facebook.get(
   '/callback',
-  passport.authenticate('facebook', { failureRedirect: '/auth/failed' }),
+  passport.authenticate('facebook', {
+    failureRedirect: '/',
+    session: false,
+  }),
   (req, res) => {
     // Successful authentication, redirect home.
 
     const token = req.user.generateAuthToken();
     res.cookie('x-auth-cookie', token);
-    res.redirect('/auth/success');
+    res.redirect(clientUrl);
   }
 );
 
-router.get('/failed', (req, res) => {
-  return res.status(200).json({
-    success: false,
-    info: 'login failed',
+facebook.get('/logout', function (req, res, next) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/');
   });
 });
-
-router.get('/success', (req, res) => {
-  return res.status(200).json({
-    success: true,
-    info: 'login succesfully',
-  });
-});
-
-module.exports = router;
+module.exports = { facebook };
