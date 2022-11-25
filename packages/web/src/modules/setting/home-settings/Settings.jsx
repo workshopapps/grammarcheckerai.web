@@ -1,39 +1,98 @@
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { arrowRightIcon, BritishFlagIcon, infinityIcon, languageIcon, maximizeIcon, searchIcon } from '../../../assets';
+import { useNavigate } from 'react-router-dom';
+import {
+  arrowRightIcon,
+  BritishFlagIcon,
+  FrenchFlagIcon,
+  SpanishFlagIcon,
+  RussianFlagIcon,
+  infinityIcon,
+  languageIcon,
+  maximizeIcon,
+  searchIcon,
+  ChineseFlagIcon,
+  GermanyFlagIcon,
+  ItalianFlagIcon,
+} from '../../../assets';
 import FontAdjustment from './font-adjustment/font-adjustment';
 import HelpSupport from './help-support/help-support';
 import Languages from './language/languages';
 import SettingOption from './setting-list/setting-list';
 import LanguageOption from './language/language-option';
 import axios from 'axios';
+// import { useLocalStorage } from '../../../hooks/useLocalStorage';
 
 function Settings() {
-  const [universalLanguage, setUniversalLanguage] = useState({
-    name: 'British English',
-    flag: BritishFlagIcon,
-    selected: true,
-  });
+  const [languageList, setLanguage] = useState([
+    { name: 'English', flag: BritishFlagIcon },
+    { name: 'French', flag: FrenchFlagIcon },
+    { name: 'Spanish', flag: SpanishFlagIcon },
+    { name: 'German', flag: GermanyFlagIcon },
+    { name: 'Russian', flag: RussianFlagIcon },
+    { name: 'Italian', flag: ItalianFlagIcon },
+    { name: 'Chinese', flag: ChineseFlagIcon },
+  ]);
+
+  // const [userData, updateUserData] = useLocalStorage('grittyUserSignedIn');
+  // Get User details but its not done yet
 
   // Axios Call to the backend to get the user language
+  const config = {
+    headers: {
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIzYjgyZDNiYi1iN2U4LTRmYTYtYWJhNy05NGI4YWYzNjk5NDIiLCJpYXQiOjE2NjkzNzExNDcsImV4cCI6MTY2OTYzMDM0N30.DaE1P0kXmk7QshwouDeABhvEK6XqbaPzP6QKEgX3oSg', // I added my token here
+    },
+  };
+  let UserDetails;
 
-  // useEffect(() => {
-  //   axios
-  //     .post('http://localhost:5000/v1/user/profile/update', {
-  //       id: '629f4141b11cbcd395f2b82e',
-  //       email: 'demo@mail.com',
-  //       firstName: 'first name',
-  //       lastName: 'last name',
-  //       username: 'Demo-Kid',
-  //       language: 'Portugese',
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //     });
-  // }, []);
+  const getLanguage = async () => {
+    await axios
+      .get('http://grittygrammar.hng.tech/api/v1/user/profile/3b82d3bb-b7e8-4fa6-aba7-94b8af369942', config) // Used my login details ID here as well
+      .then((response) => {
+        UserDetails = response.data.Detail;
+        const userLanguage = response.data.Detail.language;
+
+        setLanguage((prev) =>
+          prev.map((obj) => {
+            if (obj.name === userLanguage) {
+              return { ...obj, selected: true };
+            }
+            return { ...obj, selected: false };
+          }),
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getLanguage();
+  }, [languageList]);
 
   const changeLanguage = (selected) => {
-    setUniversalLanguage(selected[0]);
+    setLanguage((prev) =>
+      prev.map((obj) => {
+        if (obj === selected) {
+          return { ...obj, selected: true };
+        }
+        return { ...obj, selected: false };
+      }),
+    );
+
+    axios
+      .post(
+        'http://grittygrammar.hng.tech/api/v1/user/profile/update',
+        { ...UserDetails, language: selected.name },
+        config,
+      )
+      .then(() => {
+        subPage();
+        // updateUserData((prev) => ({ ...prev, language: selected.name }));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const settingList = [
@@ -41,7 +100,7 @@ function Settings() {
       route: 'language',
       name: 'Language',
       icon: languageIcon,
-      child: <Languages openBar={subPage} universalLanguage={universalLanguage} />,
+      child: <Languages openBar={subPage} universalLanguage={languageList} />,
     },
     {
       name: 'Font Size Adjustment',
@@ -57,11 +116,12 @@ function Settings() {
   ];
 
   const [languageBar, setLanguageBar] = useState(false);
+  let navigate = useNavigate();
 
-  function subPage({ route }) {
+  function subPage(route) {
     switch (route) {
       case 'help':
-        <Navigate to="/faq" />;
+        navigate('/faq');
         break;
 
       default:
@@ -96,7 +156,7 @@ function Settings() {
           );
         })}
       </div>
-      {languageBar && <LanguageOption openBar={subPage} setUniversalLanguage={changeLanguage} />}
+      {languageBar && <LanguageOption openBar={subPage} languageList={languageList} changeLanguage={changeLanguage} />}
     </div>
   );
 }
