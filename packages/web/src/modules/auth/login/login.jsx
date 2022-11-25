@@ -8,7 +8,7 @@ import Image1 from '../../../assets/error 1.png';
 import google from '../../../assets/google.png';
 import apple from '../../../assets/apple.png';
 import facebook from '../../../assets/facebook.png';
-import { UseLogin } from '../../../hooks/auth/useLogin';
+import UseLogin from '../../../hooks/auth/useLogin';
 
 import toast, { Toaster } from 'react-hot-toast';
 
