@@ -4,8 +4,6 @@ import Fallback from './components/Fallback/Fallback';
 import { Route, Routes, Outlet } from 'react-router-dom';
 import QuizGame from './modules/static/quizgame/QuizGame';
 import ProtectedRoute from './components/ProtectedRoute';
-import { getStorageData } from './hooks/useLocalStorage';
-import { useState } from 'react';
 // import QuizGame from './modules/static/quizgame/QuizGame';
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
 const SigninPage = lazy(() => import('./modules/auth/login/login'));
@@ -246,7 +244,6 @@ const LandingLayout = () => (
 );
 
 function App() {
-  const [isUserSignedIn, setIsUserSignedIn] = useState('');
   return (
     <Routes>
       <Route path="/converse" element={<ConversationPage />} />

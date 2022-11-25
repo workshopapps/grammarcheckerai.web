@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import toast, { Toaster } from 'react-hot-toast';
@@ -9,6 +9,8 @@ import styles from './step2.module.css';
 import Logo from '../../../../assets/signup-logo.png';
 import Image2 from '../../../../assets/Correction 1.png';
 import Image1 from '../../../../assets/error 1.png';
+import Image3 from '../../../../assets/steponeframeone.png';
+import Image4 from '../../../../assets/steponeframetwo.png';
 import google from '../../../../assets/google.png';
 import apple from '../../../../assets/apple.png';
 import facebook from '../../../../assets/facebook.png';
@@ -22,6 +24,8 @@ const index = () => {
   const [newUserConfirmPassword, setNewUserConfirmPassword] = useState('');
   const [isSamePassword, setIsSamePassword] = useState(true);
   const [newUserEmail, setNewUserEmail] = useState('');
+  const [userId, setUserId] = useState('');
+  const [userToken, setUserToken] = useState('');
 
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
@@ -40,8 +44,15 @@ const index = () => {
     -------------------------
     After a successful attempt at creating the new user => the function navigates to the sign in page.
     This is done using a setTimeout after user account creation
+
+    User is given a token on account creation which monitors their existing session
     
   */
+  useEffect(() => {
+    localStorage.setItem('grittyuserid', userId);
+    localStorage.setItem('grittyusertoken', userToken);
+  }, [userId, userToken]);
+
   const handleSignUp = (e) => {
     e.preventDefault();
     if (
@@ -62,17 +73,31 @@ const index = () => {
           password: newUserPassword,
           confirm_password: newUserConfirmPassword,
         })
-        .then(() => {
+        .then((res) => {
           success("Account Created Succesfully!\nYou'll be redirected to the Dashboard in 5 seconds...");
+          const resId = res.data.data._id;
+          const resToken = res.data.data.token;
+          setUserId(resId);
+          setUserToken(resToken);
+          localStorage.setItem('grittyuserid', userId);
+          localStorage.setItem('grittyusertoken', userToken);
           setTimeout(() => navigate('/me/home'), 5000);
         })
         .catch((err) => {
-          error(err.message);
+          error(err.response.data.message);
         });
     } else if (newUserPassword !== newUserConfirmPassword) {
       setIsSamePassword(false);
     }
   };
+
+  /* 
+    handleGoogleAuth handles the Google social login. 
+
+    This redirects to the endpoint which gets a usertoken from google
+    Then redirects to the provided URL token for account creation
+
+  */
 
   const handleGoogleAuth = () => {
     var requestOptions = {
@@ -85,8 +110,16 @@ const index = () => {
         const oBJ = JSON.parse(result);
         window.location.href = oBJ.message;
       })
-      .catch((error) => console.log('error', error));
+      .catch((err) => error(err.message));
   };
+
+  /* 
+    handleGoogleAuth handles the Facebook social login. 
+
+    This redirects to the endpoint which gets a usertoken from facebook
+    Then redirects to the provided URL token for account creation
+
+  */
 
   const handleFacebookAuth = () => {
     var requestOptions = {
@@ -99,8 +132,16 @@ const index = () => {
         const oBJ = JSON.parse(result);
         window.location.href = oBJ.message;
       })
-      .catch((error) => console.log('error', error));
+      .catch((err) => error(err.message));
   };
+
+  /* 
+    handleGoogleAuth handles the LinkedIn social login. 
+
+    This redirects to the endpoint which gets a usertoken from linkedin
+    Then redirects to the provided URL token for account creation
+
+  */
 
   const handleLinkedInAuth = () => {
     var requestOptions = {
@@ -113,7 +154,7 @@ const index = () => {
         const oBJ = JSON.parse(result);
         window.location.href = oBJ.message;
       })
-      .catch((error) => console.log('error', error));
+      .catch((err) => error(err.message));
   };
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
@@ -145,7 +186,7 @@ const index = () => {
             )}
             <h2>Get Started with Gritty Grammar today!</h2>
             <p className={styles._subtitle}>Start your learning journey today, you can skip this process for later.</p>
-            <form className={styles._gs2signupform} onSubmit={handleSignUp}>
+            <form className={styles._gs2signupform} onSubmit={(e) => handleSignUp(e)}>
               <div className={styles._gs2signupinput}>
                 <span>Enter Your Email</span>
                 <input
@@ -244,14 +285,14 @@ const index = () => {
         </div>
         <div className={styles._gs2signupcol2}>
           <div className={styles._gs2mainsignupcol2body}>
-            <Carousel autoplay={true} autoplayInterval={5000} withoutControls={true} autoplayReverse={true}>
+            <Carousel autoplay={true} autoplayInterval={5000} withoutControls={true}>
               <div className={styles._gs2mainsignupcol2images}>
                 <img src={Image1} alt="column1" />
                 <img src={Image2} alt="column1" />
               </div>
-              <div className={styles._gs2mainsignupcol2images}>
-                <img src={Image1} alt="column1" />
-                <img src={Image2} alt="column1" />
+              <div className={styles._gcmainsignupcol2images}>
+                <img src={Image3} alt="column1" />
+                <img src={Image4} alt="column1" />
               </div>
             </Carousel>
             {isTabletorMobile && (
@@ -263,14 +304,6 @@ const index = () => {
                 </p>
               </div>
             )}
-          </div>
-          <div className={styles._gs2mainsignupcol2footer}>
-            <div className={styles._gs2signupslider}>
-              <div className={styles._dots}>
-                <span></span>
-                <span></span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
