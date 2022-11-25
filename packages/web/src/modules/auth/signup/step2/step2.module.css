@@ -11,7 +11,6 @@
 ._gs2signupcol1::-webkit-scrollbar {
   width: 0px;
 }
-
 /* Track */
 ._gs2signupcol1::-webkit-scrollbar-track {
   background: #ffffff;
@@ -42,6 +41,14 @@
   justify-content: space-between;
   overflow-y: auto;
   overflow-x: hidden;
+}
+._gs2signupcol1[step-theme='dark'],
+._gs2mainsignup[step-theme='dark'],
+._gs2signupcontent h2[step-theme='dark'],
+._gs2signupcontent ._subtitle[step-theme='dark'],
+._gssignuptophead[step-theme='dark']{
+  background-color: var(--bg-dark);
+  color: rgb(233, 227, 227);
 }
 ._authback {
   padding: 20px 0 36px 0;

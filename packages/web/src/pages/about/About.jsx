@@ -1,4 +1,5 @@
 import React from 'react';
+import useTheme from '../../hooks/useTheme';
 import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
 import { Values, Teams } from '../../pages/about/data/data';
 import figma from '../../assets/abt_images/figma.png';
@@ -14,6 +15,8 @@ import mavenir from '../../assets/abt_images/mavenir.png';
 import Footer from '../../modules/static/landing-page/Footer';
 
 const About = () => {
+  const context = useTheme();
+  const dark = context.theme === 'dark';
   return (
     <>
       <div className="no-space_">
