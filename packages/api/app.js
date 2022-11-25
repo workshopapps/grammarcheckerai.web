@@ -3,7 +3,7 @@ const app = express();
 const cors = require("cors");
 const session = require("express-session");
 const { environment } = require("./config/environment");
-
+const expressFileUpload = require('express-fileupload');
 require("express-async-errors");
 require("./database/index");
 const passport = require("passport");
@@ -32,6 +32,10 @@ app
   .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/v1", routeHandler);
+app.use(expressFileUpload());
+app.use(express.urlencoded({
+  extended: true
+}));
 
 app.get("*", (req, res) => {
   res.status(200).json({
