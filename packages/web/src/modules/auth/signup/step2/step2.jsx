@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import useTheme from '../../../../hooks/useTheme';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import toast, { Toaster } from 'react-hot-toast';
@@ -26,6 +27,7 @@ const index = () => {
   const [newUserEmail, setNewUserEmail] = useState('');
   const [userId, setUserId] = useState('');
   const [userToken, setUserToken] = useState('');
+  const context = useTheme();
 
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
@@ -158,9 +160,9 @@ const index = () => {
   };
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
-    <div className={styles._gs2mainsignup}>
+    <div step-theme={context.theme} className={styles._gs2mainsignup}>
       <div className={styles._gs2signup}>
-        <div className={styles._gs2signupcol1}>
+        <div step-theme={context.theme} className={styles._gs2signupcol1}>
           {isTabletorMobile && (
             <div className={styles._gs2signuplogo}>
               <img src={Logo} alt="Grammar Checker Logo" />
@@ -180,12 +182,14 @@ const index = () => {
               </svg>
             </div>
             {isTabletorMobile && (
-              <p className={styles._gssignuptophead}>
+              <p step-theme={context.theme} className={styles._gssignuptophead}>
                 STEP <span>1</span> OUT OF <span>1</span>
               </p>
             )}
-            <h2>Get Started with Gritty Grammar today!</h2>
-            <p className={styles._subtitle}>Start your learning journey today, you can skip this process for later.</p>
+            <h2 step-theme={context.theme}>Get Started with Gritty Grammar today!</h2>
+            <p step-theme={context.theme} className={styles._subtitle}>
+              Start your learning journey today, you can skip this process for later.
+            </p>
             <form className={styles._gs2signupform} onSubmit={(e) => handleSignUp(e)}>
               <div className={styles._gs2signupinput}>
                 <span>Enter Your Email</span>

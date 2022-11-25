@@ -263,7 +263,10 @@ function App() {
         <Route path="/testimonials" element={<Testimonial />} />
         <Route path="/ratings" element={<Ratings />} />
         <Route path="/legal" element={<LegalPage />} />
+<<<<<<< HEAD
         <Route path="/quizgame" element={<QuizGame />}></Route>
+=======
+>>>>>>> b04c345e95693837e5348460ffbf8d322dee42a9
       </Route>
       <Route path="/newsletter" element={<NewsletterPage />} />
       <Route path="/career" element={<Careers />} />
@@ -273,6 +276,7 @@ function App() {
       <Route path="/emailtemplate" element={<EmailTemplate />} />
       <Route path="/newsletter-template" element={<NewsletterTemplate />} />
       <Route path="/signin-template" element={<SignInTemplate />} />
+      <Route path='/quizgame' element={<QuizGame />}></Route>
       <Route
         element={
           <div>
