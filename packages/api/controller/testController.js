@@ -33,31 +33,31 @@ exports.home = async (req, res) => {
     });
 
   const sendAudio = await axios
-    .post("/v1/sendAudio")
+    .get("/v1/conversation/sendAudio")
     .then((sendAudio) => {
-      if (sendAudio.status != 404) {
+      if (sendAudio.status == 200) {
         status.push({ sendAudio: { status: "ok" } });
       }
     })
     .catch((err) => {
       if (err.response.status != 404) {
-        console.log(err.response.status)
+        console.log(err.response);
         status.push({ sendAudio: { status: "ok" } });
       }
     });
 
-    const apiDocs = await axios
-      .get("/api-docs")
-      .then((apiDocs) => {
-        if (apiDocs.status === 200) {
-          status.push({ apiDocs: { status: "ok" } });
-        }
-      })
-      .catch((err) => {
-        if (err.response.status != 404) {
-          status.push({ apiDocs: { status: "ok" } });
-        }
-      });
+  const apiDocs = await axios
+    .get("/api-docs")
+    .then((apiDocs) => {
+      if (apiDocs.status === 200) {
+        status.push({ apiDocs: { status: "ok" } });
+      }
+    })
+    .catch((err) => {
+      if (err.response.status != 404) {
+        status.push({ apiDocs: { status: "ok" } });
+      }
+    });
 
   const logoutPage = await axios
     .get("v1/auth/logout")
@@ -78,23 +78,21 @@ exports.home = async (req, res) => {
       }
     })
     .catch((err) => {
-      if(err.response.status != 404){
-      status.push({ loginPage: { status: "ok" } });
+      if (err.response.status != 404) {
+        status.push({ loginPage: { status: "ok" } });
       }
     });
-    const conversation = await axios
-      .get("/v1/conversation/start")
-      .then((response) => {
-        if (response.status == 200) {
-          status.push({ conversation: { status: "ok" } });
-        }
-      })
-      .catch((err) => {
-        if (err.response.status != 404) {
-          console.log(err.response.status)
-          status.push({ conversation: { status: "ok" } });
-        }
-      });
-
+  const conversation = await axios
+    .post("/v1/conversation/start")
+    .then((response) => {
+      if (response.status == 200) {
+        status.push({ conversation: { status: "ok" } });
+      }
+    })
+    .catch((err) => {
+      if (err.response.status != 404) {
+        status.push({ conversation: { status: "ok" } });
+      }
+    });
   return res.status(200).send(status);
 };
