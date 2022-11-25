@@ -1,37 +1,36 @@
 const { response } = require("../utilities/response");
-const { register, findOne } = require("../repository/user.repository");
 const { userCollection } = require("../database/models/userSchema");
-const Email = require("../services/email.service");
+const { environment } = require("../config/environment.js");
 const { generateToken, verifyJWTToken } = require("../utilities/generateToken");
 const emailService = require("../services/email.service");
 const dynamicTemplates = require("../utilities/dynamicTemplates");
+const bcrypt = require('bcryptjs');
+const { BASE_URL } = environment;
 
 exports.requestForgotPassword = async(req, res) => {
 	const { email } = req.body;
 
 	try {
-		const checkEmailExist = await userCollection.findOne({ email });
+		const user = await userCollection.findOne({ email });
 
-	if (!checkEmailExist) {
+	if (!user) {
 		return res.status(409).json(response({ message: "Email does not exist", success: false }));
 	}
-    
-	
-	const token = generateToken({ email });
 
-	const reset_password_url = `${process.env.MISC_URL}/reset_password?token=${token}`;
+	const token = generateToken({ email });
+	const reset_password_url = `${BASE_URL}reset_password?token=${token}`;
+
 	await emailService({
 		to: email,
 		from: 'noreply@sycamore.ng',
 		subject: 'Password Reset',
 		templateId: dynamicTemplates.RESET_PASSWORD,
 		data: {
-			name: checkEmailExist.firstName,
+			name: user.firstName,
 			action_url: reset_password_url
 		},
 	});
 
-  await send_reset_email.send();
 	return res.status(200).json(response({ message: 'A mail was just sent to this email address', success: true }));
 	
 	} catch (error) {
@@ -50,20 +49,20 @@ exports.resetPassword = async(req, res) => {
 		}
 
 		const decodeToken = await verifyJWTToken(user_token);
+
 		if (!decodeToken) {
 			return res.status(401).json(response({ message: "Invalid Token", success: false }));
 		}
 
 		const { email } = decodeToken;
-
 		const checkEmailExist = await userCollection.findOne({ email });
 		if (!checkEmailExist) {
 			return res.status(409).json(response({ message: "User does not exist", success: false }));
 		}
 
-		await checkEmailExist.update({
-			password: new_password,
-			confirm_password
+		const salt = await bcrypt.genSalt(10);
+		await checkEmailExist.updateOne({
+			password: await bcrypt.hash(new_password, salt)
 		})
 
 		return res.status(200).json(response({ message: 'Your password was reset successfully', success: true }));
