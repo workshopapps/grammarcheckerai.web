@@ -20,7 +20,6 @@ import Languages from './language/languages';
 import SettingOption from './setting-list/setting-list';
 import LanguageOption from './language/language-option';
 import axios from 'axios';
-// import { useLocalStorage } from '../../../hooks/useLocalStorage';
 
 function Settings() {
   const [languageList, setLanguage] = useState([
@@ -33,23 +32,23 @@ function Settings() {
     { name: 'Chinese', flag: ChineseFlagIcon },
   ]);
 
-  // const [userData, updateUserData] = useLocalStorage('grittyUserSignedIn');
-  // Get User details but its not done yet
+  const userId = localStorage.getItem('grittyuserid'); // Get user ID
+  const userToken = localStorage.getItem('grittyusertoken'); // Get bearer token
 
   // Axios Call to the backend to get the user language
   const config = {
     headers: {
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIzYjgyZDNiYi1iN2U4LTRmYTYtYWJhNy05NGI4YWYzNjk5NDIiLCJpYXQiOjE2NjkzNzExNDcsImV4cCI6MTY2OTYzMDM0N30.DaE1P0kXmk7QshwouDeABhvEK6XqbaPzP6QKEgX3oSg', // I added my token here
+      Authorization: `Bearer ${userToken}`, // Token Authorization
     },
   };
-  let UserDetails;
+  let userDetails;
 
   const getLanguage = async () => {
+    console.log(userId, userToken);
     await axios
-      .get('http://grittygrammar.hng.tech/api/v1/user/profile/3b82d3bb-b7e8-4fa6-aba7-94b8af369942', config) // Used my login details ID here as well
+      .get(`http://grittygrammar.hng.tech/api/v1/user/profile/${userId}`, config) // Used my login details ID here as well
       .then((response) => {
-        UserDetails = response.data.Detail;
+        userDetails = response.data.Detail;
         const userLanguage = response.data.Detail.language;
 
         setLanguage((prev) =>
@@ -83,12 +82,11 @@ function Settings() {
     axios
       .post(
         'http://grittygrammar.hng.tech/api/v1/user/profile/update',
-        { ...UserDetails, language: selected.name },
+        { ...userDetails, language: selected.name },
         config,
       )
       .then(() => {
         subPage();
-        // updateUserData((prev) => ({ ...prev, language: selected.name }));
       })
       .catch((err) => {
         console.log(err);
