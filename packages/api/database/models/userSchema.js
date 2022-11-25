@@ -4,6 +4,7 @@ const Joi = require("joi");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { environment } = require("../../config/environment");
+const { JWT_SECRET } = environment;
 let schema = new mongoose.Schema(
   {
     _id: {
@@ -20,9 +21,9 @@ let schema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    lastName: { 
+    lastName: {
       type: String,
-      required: true
+      required: true,
     },
     password: {
       type: String,
@@ -33,7 +34,10 @@ let schema = new mongoose.Schema(
     username: {
       type: String,
     },
-
+    role: {
+      type: String,
+      default: "user",
+    },
     language: {
       type: String,
       default: "English",
@@ -47,7 +51,6 @@ let schema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
 
 // Hashing the password
 schema.pre("save", async function () {
@@ -70,10 +73,15 @@ schema.methods.comparePassword = async function (reqPassword) {
 
 // jwt auth token
 schema.methods.generateAuthToken = function () {
-  const token = jwt.sign({ _id: this._id }, environment.JWT_SECRET, {
+  const token = jwt.sign({ _id: this._id, email: this.email }, JWT_SECRET, {
     expiresIn: "3d",
   });
   return token;
+};
+
+schema.methods.generateHash = async(reqPassword)=>{ 
+  const salt = await bcrypt.genSalt(10);
+  return await bcrypt.hash(reqPassword, salt);
 };
 
 exports.authValidatorSchema = Joi.object().keys({

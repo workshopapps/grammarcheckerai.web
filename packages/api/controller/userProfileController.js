@@ -1,6 +1,5 @@
-const { userCollection} = require('../database/models/userSchema')
+const { userCollection } = require('../database/models/userSchema');
 const { comparePassword } = require('../utilities/compare');
-
 
 async function userProfile(req, res) {
     //gets user id
@@ -68,7 +67,7 @@ async function deleteUser(req, res) {
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Updates a User profile. 
+//Updates a User profile.
 async function updateUser(req, res) {
   await userCollection.findByIdAndUpdate(req.user._id, req.body, {new:true})
        .then(user=>{
@@ -84,6 +83,5 @@ async function updateUser(req, res) {
            res.status(401).json({message:'an error occurred'});
        });
 }
-
 
 module.exports = { deleteUser, userProfile, updateUser };

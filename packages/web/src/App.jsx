@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import './App.css';
 import Fallback from './components/Fallback/Fallback';
 import { Route, Routes, Outlet } from 'react-router-dom';
+import QuizGame from './modules/static/quizgame/QuizGame';
 import ProtectedRoute from './components/ProtectedRoute';
 const SignupPage = lazy(() => import('./modules/auth/signup/step1/step1'));
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
@@ -20,6 +21,8 @@ const Rates = lazy(() => import('./modules/static/testimonials/Ratings'));
 const Dashboard = lazy(() => import('./components/DashboardLayout'));
 const Newsletter = lazy(() => import('./modules/static/newsletter/NewsletterPage'));
 const EmailTemp = lazy(() => import('./modules/static/emailtemplate/EmailTemplate'));
+const NewsletterEmailTemplate = lazy(() => import('./modules/static/emailtemplate/newsletterTemplate'));
+const SignInEmailTemplate = lazy(() => import('./modules/static/emailtemplate/signInTemplate'));
 const HomePages = lazy(() => import('./modules/account/home/homePage'));
 const HistoryPage = lazy(() => import('./modules/account/history/history'));
 const CorrectionPage = lazy(() => import('./modules/account/history/correction'));
@@ -39,6 +42,8 @@ const Jobs = lazy(() => import('./pages/Blog/Jobs'));
 const Ai = lazy(() => import('./pages/Blog/Ai'));
 const Grammar = lazy(() => import('./pages/Blog/Grammar'));
 const Tips = lazy(() => import('./pages/Blog/Tips'));
+const Contact = lazy(() => import('./pages/contact/index'));
+
 
 // All routes/pages must be import from ./pages folder
 
@@ -133,6 +138,17 @@ const EmailTemplate = () => (
     <EmailTemp />
   </Suspense>
 );
+const NewsletterTemplate = () => (
+  <Suspense fallback={<Fallback />}>
+    <NewsletterEmailTemplate />
+  </Suspense>
+);
+const SignInTemplate = () => (
+  <Suspense fallback={<Fallback />}>
+    <SignInEmailTemplate />
+  </Suspense>
+);
+
 
 const HomePage = () => (
   <Suspense fallback={<Fallback />}>
@@ -255,7 +271,7 @@ function App() {
         <Route path="/faq" element={<FaqMain />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/blog" element={<Blog />} />
-        <Route path="contact" element={<h1>Contact Page</h1>} />
+        <Route path="contact" element={<Contact/>} />
         <Route path="/jobs" element={<JobsPage />} />
         <Route path="/grammar" element={<GrammarPage />} />
         <Route path="/ai" element={<AiPage />} />
@@ -271,6 +287,9 @@ function App() {
       <Route path="/apply" element={<Application />} />
       <Route path="/app-status" element={<ApiStatus />} />
       <Route path="/emailtemplate" element={<EmailTemplate />} />
+      <Route path="/newsletter-template" element={<NewsletterTemplate />} />
+      <Route path="/signin-template" element={<SignInTemplate />} />
+      <Route path='/quizgame' element={<QuizGame />}></Route>
       <Route
         element={
           <div>

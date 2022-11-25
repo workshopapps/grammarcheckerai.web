@@ -2,9 +2,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const session = require("express-session");
-
 const { environment } = require("./config/environment");
-const testRoute = require("./routes/testRoutes");
+
 require("express-async-errors");
 require("./database/index");
 const passport = require("passport");
@@ -14,8 +13,7 @@ const { routeHandler } = require("./routes/index.route"),
   swaggerDocument = require("./Tests/test.json");
 
 //Passport Initialized
-app.use(passport.initialize());
-app.use(express.json()).use(cors());
+app.use(passport.initialize()).use(express.json()).use(cors());
 
 const sess = {
   secret: environment.SESSION_SECRET,
@@ -33,9 +31,12 @@ app
   .use(session(sess))
   .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use("/test", testRoute);
 app.use("/v1", routeHandler);
+
 app.get("*", (req, res) => {
-  res.status(200).json({ message: "Welcome to Grit Grammarly 🙌" });
+  res.status(200).json({
+    message: "Welcome to Grit Grammarly 🙌",
+    user: "CORS enabled",
+  });
 });
 module.exports = app;

@@ -12,7 +12,10 @@ import { getStorageData, useLocalStorage } from '../../../hooks/useLocalStorage'
 import toast, { Toaster } from 'react-hot-toast';
 import useLogin from '../../../hooks/auth/useLogin';
 
+import useTheme from '../../../hooks/useTheme';
+
 const index = () => {
+  const context = useTheme();
   const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [existingUserName, setExistingUserName] = useLocalStorage('existingUserName', getStorageData('demoData'));
@@ -67,9 +70,13 @@ const index = () => {
   };
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
-    <div className={styles._gs2mainlogin}>
+    <div
+      signup-theme={context.theme}
+      className={styles._gs2mainlogin}>
       <div className={styles._gs2login}>
-        <div className={styles._gs2logincol1}>
+        <div className={styles._gs2logincol1}
+          gs2logincol1-theme={context.theme}
+        >
           {isTabletorMobile && (
             <div className={styles._gs2loginlogo}>
               <img src={Logo} alt="Grammar Checker Logo" />
@@ -88,8 +95,11 @@ const index = () => {
                 />
               </svg>
             </div>
-            <h2>Welcome Back</h2>
-            <p className={styles._subtitle}>Start your learning journey today, you can skip this process for later.</p>
+            <h2 signup-theme={context.theme}
+            >Welcome Back</h2>
+            <p
+              signup-theme={context.theme}
+              className={styles._subtitle}>Start your learning journey today, you can skip this process for later.</p>
             <div className={styles._gs2loginform}>
               <div className={styles._gs2logininput}>
                 <span>Username</span>
@@ -120,8 +130,11 @@ const index = () => {
                   <input type="checkbox" id="userRememberPassword" />
                   <span>Keep me signed in</span>
                 </div>
-                <div className={styles._gs2loginsignin}>
-                  <button className={styles._gsloginforgot} onClick={handleForgotPassword}>
+                <div className={styles._gs2loginsignin}
+                >
+                  <button className={`${styles._gsloginforgot} `}
+                    signup-theme={context.theme}
+                    onClick={handleForgotPassword}>
                     Forgot Password?
                   </button>
                 </div>
@@ -129,7 +142,10 @@ const index = () => {
               <div className={styles._gs2logincontinue}>
                 <button onClick={handlelogin}>Login</button>
                 <div className={styles._gs2loginsignin}>
-                  <button className={styles._gsloginforgot} onClick={handleCreateAccount}>
+                  <button
+                    signup-theme={context.theme}
+                    className={styles._gsloginforgot}
+                    onClick={handleCreateAccount}>
                     Create New Account
                   </button>
                 </div>

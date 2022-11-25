@@ -1,15 +1,15 @@
 const { userCollection } = require("../database/models/userSchema");
-
+const { authResponse } = require("../utilities/response");
 async function register(data) {
-  try {    
+  try {
     const user = await userCollection.create(data);
-    
-    return user;
-  } catch (error) { 
+
+    return authResponse(user);
+  } catch (error) {
     return false;
   }
-} 
+}
 
 module.exports = {
-  register 
+  register
 };
