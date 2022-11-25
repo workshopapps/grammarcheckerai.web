@@ -32,7 +32,7 @@ const index = () => {
     handleSaveNewPassword => resets the originally saved database password
     to the new one when both inputs match
   */
-    const url = "http://grittygrammar.hng.tech/api/password-reset";
+    const url = "http://grittygrammar.hng.tech/password-reset";
 
   const handleSaveNewPassword = () => {
     if ((userConfirmNewPassword !== userNewPassword && userConfirmNewPassword === '') || userNewPassword === '') {
