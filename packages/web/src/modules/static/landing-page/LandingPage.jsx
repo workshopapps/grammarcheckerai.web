@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Charcters from './Charcters';
 import Cta from './Cta';
 import Faq from './Faq';
@@ -7,8 +8,18 @@ import HowToUse from './HowToUse';
 import NewsLetter from './NewsLetter';
 import Testimonials from './Testimonials';
 import Utilise from './Utilise';
+import QuizPopUp from '../../modal/quizpopup/QuizPopUp';
 
 const LandingPage = () => {
+
+  const [showQuiz, setShowQuiz] = useState(false);
+
+  useEffect(() => {
+    setInterval(() => {
+      setShowQuiz(true);
+    }, 4000)
+  }, [setShowQuiz]);
+
   return (
     <div className="bg-[#bbb8b81a]">
       <Hero />
@@ -20,6 +31,7 @@ const LandingPage = () => {
       <Utilise />
       <NewsLetter />
       <Footer />
+      <QuizPopUp showQuiz={showQuiz} setShowQuiz={setShowQuiz} />
     </div>
   );
 };
