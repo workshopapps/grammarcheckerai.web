@@ -104,6 +104,12 @@
   font-size: 14px;
   line-height: 17px;
 }
+._gs2logininput div {
+  margin: 8px 0;
+  outline: none;
+  width: 90%;
+  max-width: 550px;
+}
 ._gs2logininput input {
   margin: 8px 0;
   padding: 12px 16px 12px 12px;
@@ -116,9 +122,13 @@
   line-height: 17px;
   width: 90%;
   max-width: 550px;
+  color: #393939;
 }
-._gs2logininput input[type='text'] {
-  color: #999ca0;
+._gs2logininput a {
+  border-radius: 2% !important;
+  background-color: #fff !important;
+  color: #5d387f !important;
+  font-size: 13px;
 }
 ._gs2logincontinue {
   width: 90%;
@@ -141,7 +151,29 @@
   background: #5d387f;
   border-radius: 12px;
 }
-._gs2loginsignin button {
+._gs2logincontinue button:hover {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding: 16px 40px;
+  color: #fff;
+  background: #5d387f;
+  border-radius: 12px;
+}
+._gs2loginsignin a {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  padding: 15px 0;
+  background-color: transparent;
+  color: black;
+}
+._gs2loginsignin a:hover {
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
@@ -182,12 +214,13 @@
   right: 0;
 }
 ._gs2mainlogincol2body {
-  margin-top: 12%;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 12% 5%;
+  height: 100%;
 }
 @media (min-height: 729px) {
   ._gcmainforgotcol2body {
@@ -301,6 +334,44 @@
 ._gsloginforgot {
   cursor: pointer;
 }
+._gs2mainsignupcol2images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+._gs2mainsignupcol2images img:first-child {
+  width: 100%;
+  max-width: 418.72px;
+}
+._gs2mainsignupcol2images img:last-child {
+  margin: 20px 0 0 80px;
+  width: 100%;
+  max-width: 406.5px;
+}
+@media only screen and (min-width: 849px) and (max-width: 1200px) {
+  ._gs2mainsignupcol2images img:last-child {
+    margin: 20px 0 0 10px;
+  }
+}
+._gcmainsignupcol2images img:first-child {
+  width: 456_75px;
+}
+._gcmainsignupcol2images img:last-child {
+  margin: -60px 0 0 80px;
+  width: 434_84px;
+}
+@media only screen and (min-width: 849px) and (max-width: 1200px) {
+  ._gcmainsignupcol2images img:last-child {
+    margin: -60px 0 0 10px;
+  }
+}
+._gcmainsignupcol2images {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 @media only screen and (min-width: 849px) and (max-width: 1200px) {
   ._gs2mainlogincol2images img:last-child {
     margin: 20px 0 0 10px;
@@ -318,6 +389,22 @@
   }
 }
 @media only screen and (max-width: 850px) {
+  ._gs2mainsignupcol2images img:first-child {
+    width: 100%;
+    max-width: 313.18px;
+  }
+  ._gs2mainsignupcol2images img:last-child {
+    width: 100%;
+    max-width: 298.15px;
+  }
+  ._gcmainsignupcol2images img:first-child {
+    width: 100%;
+    max-width: 313.18px;
+  }
+  ._gcmainsignupcol2images img:last-child {
+    width: 100%;
+    max-width: 298.15px;
+  }
   ._gs2sociallogincol {
     display: flex;
     flex-direction: column;
@@ -377,6 +464,10 @@
   ._gs2loginslider svg {
     visibility: hidden;
   }
+  ._gs2logininput div {
+    width: 100%;
+    max-width: 100%;
+  }
   ._gs2logininput input {
     width: 100%;
     max-width: 100%;
@@ -415,6 +506,16 @@
   }
 }
 @media only screen and (max-width: 410px) {
+  ._gs2mainsignupcol2images img:last-child {
+    margin: 20px 0 0 10%;
+  }
+  ._gs2mainsignupcol2images {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
   ._gs2mainlogincol2images img:last-child {
     margin: 20px 0 0 10%;
   }
@@ -427,5 +528,21 @@
   }
   ._gs2logincol2 {
     height: 432px;
+  }
+  ._gcmainsignupcol2images {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  ._gcmainsignupcol2images img:last-child {
+    margin: -45px 0 0 10%;
+  }
+  ._gcmainsignupcol2images {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 }
