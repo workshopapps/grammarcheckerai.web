@@ -1,5 +1,4 @@
 const express = require('express');
-
 const facebook = express.Router();
 const passport = require('passport');
 const { environment } = require('../config/environment');
@@ -29,12 +28,4 @@ facebook.get(
   }
 );
 
-facebook.get('/logout', function (req, res, next) {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect('/');
-  });
-});
 module.exports = { facebook };
