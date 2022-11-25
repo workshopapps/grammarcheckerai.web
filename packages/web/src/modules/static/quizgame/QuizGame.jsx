@@ -8,6 +8,21 @@ import { BsArrowLeft } from 'react-icons/bs';
 
 const QuizGame = () => {
   const [trivia, setTrivia] = useState({});
+  const [answer, setAnswer] = useState(false);
+
+  const handleAnswer = (e) => {
+    // console.log(e.target.value);
+    console.log(trivia.correctAnswer);
+    let option = e.target.innerText;
+    console.log(e);
+    console.log(e.target.innerText);
+    let tick = trivia.correctAnswer;
+    
+    if(tick === option) {
+      console.log('hey');
+      setAnswer(true);
+    }
+  };
 
   const getQuestions = async () => {
     try {
@@ -36,17 +51,19 @@ const QuizGame = () => {
 
           <h3 className={styles.quizgame_card__content__question}>{trivia.question}</h3>
 
-          <ul className={styles.quizgame_card__content__answers}>
-            {/* <li>{trivia.incorrectAnswers[0]}</li>
-            <li>{trivia.incorrectAnswers[1]}</li>
-            <li>{trivia.incorrectAnswers[2]}</li>
-            <li>{trivia.incorrectAnswers[3]}</li> */}
-            {
-              Object.keys(trivia.incorrectAnswers).map((element) => {
-                return <li key={element}>{element}</li>
-              })
-            }
-          </ul>
+          {
+            answer ? 
+              <div className={styles.quiz_card__check}>
+                <Link to='/quizgame'>Great job! <BsArrowLeft /></Link>
+              </div>
+                 :
+              <ul className={styles.quiz_card__content__answers}>
+                <li onClick={handleAnswer}>{trivia.incorrectAnswers[0]}</li>
+                <li onClick={handleAnswer}>{trivia.incorrectAnswers[1]}</li>
+                <li onClick={handleAnswer}>{trivia.incorrectAnswers[2]}</li>
+                <li value={trivia.incorrectAnswers} onClick={handleAnswer}>{trivia.incorrectAnswers[3]}</li>
+              </ul>
+              }
         </div>
       </div>
     </section>
