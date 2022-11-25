@@ -8,9 +8,10 @@ import Image1 from '../../../assets/error 1.png';
 import google from '../../../assets/google.png';
 import apple from '../../../assets/apple.png';
 import facebook from '../../../assets/facebook.png';
-import UseLogin from '../../../hooks/auth/useLogin';
+import useLogin from '../../../hooks/auth/useLogin';
 
 import toast, { Toaster } from 'react-hot-toast';
+import { useEffect } from 'react';
 
 const index = () => {
   const [userEmail, setUserEmail] = useState('');
@@ -18,7 +19,7 @@ const index = () => {
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
 
-  const authLogin = UseLogin();
+  const authLogin = useLogin();
 
   let navigate = useNavigate();
 
@@ -31,6 +32,23 @@ const index = () => {
   const handleCreateAccount = () => {
     navigate('/signup');
   };
+
+useEffect(() => {
+  authLogin
+        .mutateAsync({
+          email: "tshalom01@gmail.com",
+          password: "userPassword",
+        })
+        .then(() => {
+          console.log(authLogin.value);
+          success('Login Successful!');
+        })
+        .catch((err) => {
+          error(err);
+        });
+}, [])
+
+
   /* 
     handleLogin logs the user in on a succesful input.
     It checks if the user is found in the database and finds the password for the user as well.
@@ -38,26 +56,26 @@ const index = () => {
     -----------------------------
     If user input is unsuccesful, shows an error notification and keeps the user on the page.
   */
-    const handlelogin = (e) => {
-      e.preventDefault();
-      if ((userEmail !== '') & (userPassword !== '')) {
-        authLogin
-          .mutateAsync({
-            email: userEmail,
-            password: userPassword,
-          })
-          .then(() => {
-            console.log(authLogin.value);
-            success('Login Successful!');
-          })
-          .catch((err) => {
-            error(err);
-          });
-        // setTimeout(() => navigate('/me/home'), 5000);
-      } else {
-        error('Incorrect log in');
-      }
-    };
+  const handlelogin = (e) => {
+    e.preventDefault();
+    if ((userEmail !== '') & (userPassword !== '')) {
+      authLogin
+        .mutateAsync({
+          email: "tshalom01@gmail.com",
+          password: "userPassword",
+        })
+        .then(() => {
+          console.log(authLogin.value);
+          success('Login Successful!');
+        })
+        .catch((err) => {
+          error(err);
+        });
+      // setTimeout(() => navigate('/me/home'), 5000);
+    } else {
+      error('Incorrect log in');
+    }
+  };
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div className={styles._gs2mainlogin}>
@@ -85,15 +103,14 @@ const index = () => {
             <p className={styles._subtitle}>Start your learning journey today, you can skip this process for later.</p>
             <div className={styles._gs2loginform}>
               <div className={styles._gs2logininput}>
-                <span>Username</span>
+                <span>Email</span>
                 <input
-                  type="text"
-                  placeholder="meisieshalom"
-                  defaultValue={userEmail}
+                  type="email"
+                  placeholder="shalomtaiwo@example.com"
+                  defaultValue=""
                   id="userName"
                   required
-                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                  title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                   onChange={(e) => setUserEmail(e.target.value)}
                 />
               </div>
@@ -101,7 +118,7 @@ const index = () => {
                 <span>Password</span>
                 <input
                   type="password"
-                  defaultValue={userPassword}
+                  defaultValue=""
                   id="userPassword"
                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                   title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"

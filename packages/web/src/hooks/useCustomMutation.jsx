@@ -1,12 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 import { ENDPOINTS } from '../lib/constants';
 import { secureRequest } from '../lib/utils';
-
 const getMutationAction = (mutationData) => {
   const { endpoint, method, headers, isCreathorsApi = true } = mutationData;
-
   const url = isCreathorsApi ? ENDPOINTS.API_BASE_URL + endpoint : endpoint;
-
   return {
     mutationFn: (body) =>
       secureRequest({
@@ -18,7 +15,6 @@ const getMutationAction = (mutationData) => {
     ...mutationData,
   };
 };
-
 function useCustomMutation(mutationData) {
   const {
     mutationFn,
@@ -31,7 +27,6 @@ function useCustomMutation(mutationData) {
   });
   const mutatationResult = useMutation(mutationFn, {
     mutationKey: endpoint,
-
     onError: () => {
       if (showFailureToast) {
         // show failure
@@ -49,8 +44,6 @@ function useCustomMutation(mutationData) {
     refetchOnWindowFocus: false,
     ...others,
   });
-
-  return { ...mutatationResult, value: mutatationResult?.data?.data };
+  return { ...mutatationResult, value: mutatationResult?.data };
 }
-
 export default useCustomMutation;
