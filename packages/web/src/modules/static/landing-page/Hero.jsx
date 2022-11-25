@@ -11,18 +11,10 @@ const [status, setStatus] = useState([]);
         console.log(data.data)
      }
 
-     const apiTest = async () => {
-        const data = await axios.get('https://grittygrammar.hng.tech/api/v1/test')
-        console.log(data.data,'API status')
-        setStatus(data.data)
-        status.map((item, index) => 
-        console.log(Object.keys(item) + ' Status: '+ item[Object.keys(item)].status)
-    )
-     }
+
 
     useEffect(() => {
        getRes()
-    apiTest()
    }, [])
     return (
         <section className={`bg-white -mt-20 `}>
@@ -48,16 +40,6 @@ const [status, setStatus] = useState([]);
                         />
                     </div>
                 </div>
-                {/* <div>
-                {status?.map((item, index) => {
-                    return (
-                        <div key={index}>
-                            {console.log(item[Object.keys(item)].status)}
-                            <p>{Object.keys(item)} Status: {item[Object.keys(item)].status}</p>
-                        </div>
-                    )
-                })}
-              </div> */}
             </div>
         </section>
     );
