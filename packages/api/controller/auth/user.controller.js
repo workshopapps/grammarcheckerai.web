@@ -6,7 +6,8 @@ const { userCollection } = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
 const Email = require("../../services/email.service");
 const emailService = require("../../services/email.service");
-const dynamicTemplates = require("../../utilities/dynamicTemplates");
+const { environment } = require("../../config/environment");
+const { SIGNUP_TEMPLATE_ID } = environment;
 
 async function registerUser(req, res) {
   let {
@@ -24,13 +25,13 @@ async function registerUser(req, res) {
       ? password
       : res.status(422).json(
           response({
-            success: false, 
+            success: false,
             message: "Password mismatch, Comfirm your password",
           })
         );
 
   const checkEmailExist = await userCollection.findOne({ email });
-  console.log(checkEmailExist);
+
   if (checkEmailExist)
     return res
       .status(409)
@@ -39,10 +40,9 @@ async function registerUser(req, res) {
   const data = { email, firstName, lastName, username, password, language };
 
   await emailService({
-    to: email,
-    from: "akan.otong@pmt.ng",
-    subject: "Welcome to speak better",
-    templateId: dynamicTemplates.SIGNUP,
+    to: email, 
+    subject: "Welcome to Speak Better",
+    templateId: SIGNUP_TEMPLATE_ID,
     data: {
       name: firstName,
       action_url: "/signin",
