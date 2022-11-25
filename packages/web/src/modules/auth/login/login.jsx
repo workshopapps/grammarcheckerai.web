@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import LoadingButton from '@mui/lab/LoadingButton';
 import styles from './login.module.css';
 import Logo from '../../../assets/signup-logo.png';
 import Image2 from '../../../assets/Correction 1.png';
@@ -9,13 +10,13 @@ import google from '../../../assets/google.png';
 import apple from '../../../assets/apple.png';
 import facebook from '../../../assets/facebook.png';
 import useLogin from '../../../hooks/auth/useLogin';
-
 import toast, { Toaster } from 'react-hot-toast';
-import { useEffect } from 'react';
+import PasswordMask from 'react-password-mask';
 
 const index = () => {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
+
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
 
@@ -33,21 +34,6 @@ const index = () => {
     navigate('/signup');
   };
 
-  useEffect(() => {
-    authLogin
-      .mutateAsync({
-        email: 'tshalom01@gmail.com',
-        password: 'userPassword',
-      })
-      .then(() => {
-        console.log(authLogin.value);
-        success('Login Successful!');
-      })
-      .catch((err) => {
-        error(err);
-      });
-  }, []);
-
   /* 
     handleLogin logs the user in on a succesful input.
     It checks if the user is found in the database and finds the password for the user as well.
@@ -60,25 +46,20 @@ const index = () => {
     if ((userEmail !== '') & (userPassword !== '')) {
       authLogin
         .mutateAsync({
-          email: 'tshalom01@gmail.com',
-          password: 'userPassword',
+          email: userEmail,
+          password: userPassword,
         })
         .then(() => {
-          console.log(authLogin.value);
-          success('Login Successful!');
+          console.log(authLogin);
+          success('Login Successful! Redirecting in 5 seconds');
+          // setTimeout(() => navigate('/me/home'), 5000);
         })
         .catch((err) => {
-          error(err);
+          error(err.message);
         });
-      // setTimeout(() => navigate('/me/home'), 5000);
-    } else {
-      error('Incorrect log in');
     }
-    authLogin.mutateAsync({
-      email: 'okoloc100@gmail.com',
-      password: 'ddhdhhshshsg',
-    });
   };
+
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div className={styles._gs2mainlogin}>
@@ -104,7 +85,7 @@ const index = () => {
             </div>
             <h2>Welcome Back</h2>
             <p className={styles._subtitle}>Start your learning journey today, you can skip this process for later.</p>
-            <div className={styles._gs2loginform}>
+            <form onSubmit={handlelogin} className={styles._gs2loginform}>
               <div className={styles._gs2logininput}>
                 <span>Email</span>
                 <input
@@ -119,9 +100,9 @@ const index = () => {
               </div>
               <div className={styles._gs2logininput}>
                 <span>Password</span>
-                <input
+                <PasswordMask
                   type="password"
-                  defaultValue=""
+                  value={userPassword}
                   id="userPassword"
                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                   title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
@@ -135,34 +116,36 @@ const index = () => {
                   <span>Keep me signed in</span>
                 </div>
                 <div className={styles._gs2loginsignin}>
-                  <button className={styles._gsloginforgot} onClick={handleForgotPassword}>
+                  <button type="button" className={styles._gsloginforgot} onClick={handleForgotPassword}>
                     Forgot Password?
                   </button>
                 </div>
               </div>
               <div className={styles._gs2logincontinue}>
-                <button onClick={handlelogin}>Login</button>
+                <LoadingButton size="small" type="submit" loading={authLogin.isLoading} variant="contained">
+                  Login
+                </LoadingButton>
                 <div className={styles._gs2loginsignin}>
-                  <button className={styles._gsloginforgot} onClick={handleCreateAccount}>
+                  <a href="#/" className={styles._gsloginforgot} onClick={handleCreateAccount}>
                     Create New Account
-                  </button>
+                  </a>
                 </div>
               </div>
               <div className={styles._gs2sociallogincol}>
                 <p>Alternatively, you can sign up with:</p>
                 <div className={styles._gs2sociallogins}>
-                  <button className={styles._google}>
+                  <button type="button" className={styles._google}>
                     <img src={google} alt="google authentication" />
                   </button>
-                  <button className={styles._facebook}>
+                  <button type="button" className={styles._facebook}>
                     <img src={facebook} alt="facebook authentication" />
                   </button>
-                  <button className={styles._apple}>
+                  <button type="button" className={styles._apple}>
                     <img src={apple} alt="apple authentication" />
                   </button>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
         <div className={styles._gs2logincol2}>

@@ -91,6 +91,12 @@
   font-size: 14px;
   line-height: 17px;
 }
+._gs2logininput div {
+  margin: 8px 0;
+  outline: none;
+  width: 90%;
+  max-width: 550px;
+}
 ._gs2logininput input {
   margin: 8px 0;
   padding: 12px 16px 12px 12px;
@@ -103,9 +109,13 @@
   line-height: 17px;
   width: 90%;
   max-width: 550px;
+  color: #393939;
 }
-._gs2logininput input[type='text'] {
-  color: #999ca0;
+._gs2logininput a {
+  border-radius: 2% !important;
+  background-color: #fff !important;
+  color: #5d387f !important;
+  font-size: 13px;
 }
 ._gs2logincontinue {
   width: 90%;
@@ -128,7 +138,29 @@
   background: #5d387f;
   border-radius: 12px;
 }
-._gs2loginsignin button {
+._gs2logincontinue button:hover {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding: 16px 40px;
+  color: #fff;
+  background: #5d387f;
+  border-radius: 12px;
+}
+._gs2loginsignin a {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  padding: 15px 0;
+  background-color: transparent;
+  color: black;
+}
+._gs2loginsignin a:hover {
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
@@ -362,6 +394,10 @@
   }
   ._gs2loginslider svg {
     visibility: hidden;
+  }
+  ._gs2logininput div {
+    width: 100%;
+    max-width: 100%;
   }
   ._gs2logininput input {
     width: 100%;
