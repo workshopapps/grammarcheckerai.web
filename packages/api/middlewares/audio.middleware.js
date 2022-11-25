@@ -10,17 +10,17 @@ function uploadFile(req, res, next) {
     const storage = multer.memoryStorage();
     const upload = multer({
         storage: storage,
-        fileFilter: (req, file, callback) => {
-            let fileExt = path.extname(file.originalname);
-            if (fileExt === '.mp3' || fileExt === '.m4a' || fileExt === '.aac') {
-                return callback(null, true);
-            }
+        // fileFilter: (req, file, callback) => {
+        //     let fileExt = path.extname(file.originalname);
+        //     if (fileExt === '.mp3' || fileExt === '.m4a' || fileExt === '.aac') {
+        //         return callback(null, true);
+        //     }
 
-            return res.status(400).send({
-                success: false,
-                message: "Only .mp3, .m4a and .aac audio files are allowed"
-            })
-        },
+        //     return res.status(400).send({
+        //         success: false,
+        //         message: "Only .mp3, .m4a and .aac audio files are allowed"
+        //     })
+        // },
         limits: {
             fileSize: parseInt(FILE_SIZE)
         }
