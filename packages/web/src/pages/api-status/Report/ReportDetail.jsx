@@ -5,32 +5,32 @@ import StatusReport from '../../../components/StatusReport/StatusReport';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const report = [
-  {
-    title: 'Testing/swagger GUI',
-    status: ValidateStatus(SUCCESS),
-  },
-  {
-    title: 'Login/SSO',
-    status: ValidateStatus(SUCCESS),
-  },
-  {
-    title: 'Audio to whisper script',
-    status: ValidateStatus(FAILED),
-  },
-  {
-    title: 'Audio Transcribing',
-    status: ValidateStatus(SUCCESS),
-  },
-  {
-    title: 'Reset & forgotten password',
-    status: ValidateStatus(WARNING),
-  },
-  {
-    title: 'Notifications',
-    status: ValidateStatus(FAILED),
-  },
-];
+// const report = [
+//   {
+//     title: 'Testing/swagger GUI',
+//     status: ValidateStatus(SUCCESS),
+//   },
+//   {
+//     title: 'Login/SSO',
+//     status: ValidateStatus(SUCCESS),
+//   },
+//   {
+//     title: 'Audio to whisper script',
+//     status: ValidateStatus(FAILED),
+//   },
+//   {
+//     title: 'Audio Transcribing',
+//     status: ValidateStatus(SUCCESS),
+//   },
+//   {
+//     title: 'Reset & forgotten password',
+//     status: ValidateStatus(WARNING),
+//   },
+//   {
+//     title: 'Notifications',
+//     status: ValidateStatus(FAILED),
+//   },
+// ];
 
 
 const Detail = () => {
