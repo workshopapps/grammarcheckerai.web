@@ -24,3 +24,6 @@ h6 {
 html {
   scroll-behavior: smooth;
 }
+.slide {
+  padding: 30px !important;
+}
