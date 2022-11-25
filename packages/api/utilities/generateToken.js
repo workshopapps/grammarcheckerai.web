@@ -1,17 +1,14 @@
 const  jwt = require('jsonwebtoken');
+const { environment } = require('../config/environment');
 require('dotenv');
-
-const generateToken = (payload, expiresIn = '30m') => {
-  const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn});
-  return token;
-};
-
+const {JWT_SECRET} = environment;
 
 const verifyJWTToken = (token) => {
   return new Promise((resolve) => {
-    JWT.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, JWT_SECRET, (err, decoded) => {
       if (!err) {
-        resolve(decoded);
+        
+				resolve(decoded)
       } else {
         resolve(false);
       }
@@ -19,4 +16,4 @@ const verifyJWTToken = (token) => {
   });
 };
 
-module.exports = { generateToken, verifyJWTToken }
+module.exports = {  verifyJWTToken }

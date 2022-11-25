@@ -1,71 +1,229 @@
 @import '../../../assets/styles/variables.scss';
 
 .quizgame {
+    margin-top: 0px;
     width: 100vw;
-    height: 100vh;
+    // height: 100vh;
     @include flexCenter(column);
-    background-color: black;
-    color: $white;
-    padding: 20px;
+    justify-content: space-between;
+    color: black;
+    padding: 10px 20px;
 
-    &__card {
-        @include flexCenter(column);
-        border: 1px solid $greyColor;
-        border-radius: 10px;
-        padding: 8px;
+    &__img {
+        width: 100%;
+        @include flexCenter(row);
+        justify-content: flex-start;
 
-        &__back {
-            width: inherit;
-            @include flexCenter(row);
-            justify-content: space-between;
-            cursor: pointer;
+        a {
+            text-decoration: none;
         }
+    }
+
+    &_card {
+        width: inherit;
+        @include flexCenter(column);
+        justify-content: space-between;
+        padding: 10px;
 
         &__content {
-            width: inherit;
+
+            margin-top: 50px;
+            @include flexCenter(column);
+            width: 100%;
             text-align: center;
 
             &__heading {
-                text-shadow: 3px 5px 10px $purpleBackground;
-                font-size: 44px;
+                color: $greyColor;
+                text-shadow: 1px 15px 5px #e8ddf2;
+                font-size: 35px;
                 font-family: $fontFamily1;
                 font-weight: 700;
-                margin-bottom: 10px;
             }
 
             &__question {
                 font-family: $fontFamily2;
-                margin-bottom: 10px;
-                font-size: 16px;
+                margin: 20px 0px;
+                font-size: 24px;
                 width: inherit;
                 letter-spacing: -1px;
                 word-spacing: 3px;
             }
 
             &__answers {
-                width: inherit;
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: repeat(2, 1fr);
-                grid-column-gap: 10px;
-                grid-row-gap: 10px;
+                width: 100%;
                 text-align: center;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 1fr);
+                grid-column-gap: 0px;
+                grid-row-gap: 10px;
+                place-items: center;
 
                 li {
+                    width: 90%;
                     font-family: $fontFamily2;
                     cursor: pointer;
                     list-style: none;
                     border: 1px solid #e8ddf2;
                     border-radius: 8px;
                     background-color: #e8ddf2;
-                    padding: 8px 0px;
-                    font-size: 12px;
+                    padding: 15px;
+                    font-size: 20px;
 
                     &:hover {
                         color: $greyColor;
                         background-color: $white;
                     }
                 }
+            }
+        }
+
+        &__score {
+            width: 100%;
+            @include flexCenter(row);
+            justify-content: flex-start;
+            margin-top: 30px;
+
+            p {
+                width: 250px;
+                font-size: 30px;
+                font-weight: 700;
+                color: $greyColor;
+            }
+
+            button {
+                margin-left: 80px;
+                width: 100px;
+                background-color: red;
+                border: 1px solid red;
+                padding: 10px;
+                border-radius: 10px;
+
+                a {
+                    width: inherit;
+                    font-weight: 500;
+                    color: $white;
+
+                }
+            }
+        }
+    }
+
+    &__btn {
+        margin-top: 20px;
+        width: 100%;
+
+        button {
+            background-color: $purpleBackground;
+            border: 1px solid $purpleBackground;
+            border-radius: 8px;
+            width: 150px;
+            font-size: 20px;
+            font-weight: 500;
+            color: $white;
+            padding: 10px;
+        }
+    }
+}
+
+
+/*************** media queries ***************************/
+
+@media (min-width: $md) {
+    .quizgame {
+        padding: 20px 50px;
+        overflow: hidden;
+
+        &_card {
+            max-width: 800px;
+
+            &__content {
+
+                &__heading {
+                    font-size: 44px;
+                }
+
+                &__question {
+                    margin-bottom: 50px;
+                }
+
+                &__answers {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: repeat(4, 1fr);
+                    grid-row-gap: 50px;
+                    place-items: center;
+                    margin-bottom: 30px;
+
+                    li {
+                        padding: 15px;
+                        @include flexCenter(row);
+                        flex-wrap: wrap;
+                        overflow-y: hidden;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(min-width: $lg) {
+    .quizgame {
+        height: 100vh;
+        overflow: hidden;
+        justify-content: space-around;
+
+        &_card {
+            max-width: 800px;
+            margin-top: 0px;
+
+            &__content {
+                margin-top: 0px;
+
+                &__heading {
+                    font-size: 44px;
+                    margin-top: 0px;
+                }
+
+                &__question {
+                    margin-bottom: 20px;
+                }
+
+                &__answers {
+                    width: 100%;
+                    text-align: center;
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    grid-template-rows: repeat(2, 1fr);
+                    grid-row-gap: 20px;
+                    place-items: center;
+
+                    li {
+                        margin-bottom: 0px;
+                        max-height: 100px;
+                        width: 70%;
+                        padding: 15px;
+                        @include flexCenter(row);
+                        flex-wrap: wrap;
+                        overflow-y: hidden;
+                    }
+                }
+            }
+        }
+
+        &__btn {
+            margin-top: 0px;
+            width: 100%;
+
+            button {
+                background-color: $purpleBackground;
+                border: 1px solid $purpleBackground;
+                border-radius: 8px;
+                width: 150px;
+                font-size: 20px;
+                font-weight: 500;
+                color: $white;
+                padding: 10px;
             }
         }
     }
