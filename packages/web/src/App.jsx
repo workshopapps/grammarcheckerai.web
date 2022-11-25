@@ -3,8 +3,8 @@ import './App.css';
 import Fallback from './components/Fallback/Fallback';
 import { Route, Routes, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
+import { getStorageData } from './hooks/useLocalStorage';
 // import QuizGame from './modules/static/quizgame/QuizGame';
-const SignupPage = lazy(() => import('./modules/auth/signup/step1/step1'));
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
 const SigninPage = lazy(() => import('./modules/auth/login/login'));
 const ProfilePage = lazy(() => import('./pages/profile/profileScreen'));
@@ -47,12 +47,6 @@ const Tips = lazy(() => import('./pages/Blog/Tips'));
 const DashboardLayout = () => (
   <Suspense fallback={<Fallback />}>
     <Dashboard />
-  </Suspense>
-);
-
-const Signup = () => (
-  <Suspense fallback={<Fallback />}>
-    <SignupPage />
   </Suspense>
 );
 
@@ -145,7 +139,6 @@ const SignInTemplate = () => (
     <SignInEmailTemplate />
   </Suspense>
 );
-
 
 const HomePage = () => (
   <Suspense fallback={<Fallback />}>
@@ -250,6 +243,7 @@ const LandingLayout = () => (
 );
 
 function App() {
+  const [isUserSignedIn, setIsUserSignedIn] = getStorageData('grittyUserLoggedIn');
   return (
     <Routes>
       <Route path="/converse" element={<ConversationPage />} />
@@ -287,8 +281,7 @@ function App() {
         }
       >
         <Route path="signin" element={<Signin />} />
-        <Route path="signup" element={<Signup />} exact />
-        <Route path="signup/step-two" element={<Signuptwo />} />
+        <Route path="signup" element={<Signuptwo />} />
         <Route path="forgot-password" element={<Forgotpassword />} />
         <Route path="reset-password" element={<ResetLink />} />
       </Route>
