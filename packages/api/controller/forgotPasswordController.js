@@ -1,68 +1,106 @@
 const { response } = require("../utilities/response");
-const { register, findOne } = require("../repository/user.repository");
 const { userCollection } = require("../database/models/userSchema");
-const Email = require("../services/email.service");
-const { generateToken, verifyJWTToken } = require("../utilities/generateToken");
+const { environment } = require("../config/environment.js");
+const { verifyJWTToken } = require("../utilities/generateToken");
+const emailService = require("../services/email.service");
 
-exports.requestForgotPassword = async(req, res) => {
-	const { email } = req.body;
+const { BASE_URL, RESET_PASSWORD_TEMPLATE_ID } = environment;
 
-	try {
-		const checkEmailExist = await userCollection.findOne({ email });
+exports.requestForgotPassword = async (req, res) => {
+  const { email } = req.body;
 
-	if (!checkEmailExist) {
-		return res.status(409).json(response({ message: "Email does not exist", success: false }));
-	}
+  try {
+    const user = await userCollection.findOne({ email });
+
+    if (!user) {
+      return res
+        .status(409)
+        .json(
+          response({
+            message: `User with email ${email} does not exist`,
+            success: false,
+          })
+        );
+    }
+
+    const token = user.generateAuthToken();
+    const reset_password_url = `${BASE_URL}/v1/auth/password-reset?token=${token}`;
+
+    await emailService({
+      to: email,
+      subject: "Password Reset",
+      templateId: RESET_PASSWORD_TEMPLATE_ID,
+      data: {
+        name: user.firstName,
+        action_url: reset_password_url,
+      },
+    });
+
+    return res.status(200).json(
+      response({
+        message: "A mail was just sent to this email address",
+        success: true, 
+      })
+    );
+  } catch (error) {
+    return res.status(500).json(
+      response({
+        message: "Something went wrong wile processing this request",
+        success: false,
+      })
+    );
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  const { new_password, confirm_password } = req.body;
+  const { token } = req.query;
+
+  try {
+    //Check if the user already exist
+    if (new_password !== confirm_password) {
+      return res.status(422).json(
+        response({
+          success: false,
+          message: "Password mismatch, Comfirm your password",
+        })
+      );
+    }
+
+    const decodeToken = await verifyJWTToken(token);
     
+    if (!decodeToken) {
+      return res
+        .status(401)
+        .json(response({ message: "Invalid Token", success: false }));
+    }
+
+    const { email } = decodeToken;
+    const user = await userCollection.findOne({ email });
+    if (!user) {
+      return res
+        .status(409)
+        .json(response({ message: "User does not exist", success: false }));
+    }
+
+    const password = await user.generateHash(new_password);
 	
-	const token = generateToken({ email });
+    await user.updateOne({
+      password,
+    });
 
-	const reset_password_url = `${process.env.MISC_URL}/reset_password?token=${token}`;
-	const send_reset_email = new Email(
-    email,
-    firstName,
-    "Welcome to Gritty Grammer",
-    reset_password_url
-  );
-
-  await send_reset_email.send();
-	return res.status(200).json(response({ message: 'A mail was just sent to this email address', success: true }));
-	
-	} catch (error) {
-		return res.status(500).json(response({ message: "Something went wrong wile processing this request", success: false }));
-	}
-}
-
-exports.resetPassword = async(req, res) => {
-	const { new_password, confirm_password, user_token } = req.body;
-	
-	try {
-		//Check if the user already exist
-		if(new_password !== confirm_password) {
-			res.status(422).json(response({	success: false,error: "Password mismatch", message: "Comfirm your password" })
-			);
-		}
-
-		const decodeToken = await verifyJWTToken(user_token);
-		if (!decodeToken) {
-			return res.status(401).json(response({ message: "Invalid Token", success: false }));
-		}
-
-		const { email } = decodeToken;
-
-		const checkEmailExist = await userCollection.findOne({ email });
-		if (!checkEmailExist) {
-			return res.status(409).json(response({ message: "User does not exist", success: false }));
-		}
-
-		await checkEmailExist.update({
-			password: new_password,
-			confirm_password
-		})
-
-		return res.status(200).json(response({ message: 'Your password was reset successfully', success: true }));
-	} catch (error) {
-		return res.status(500).json(response({ message: "Something went wrong wile processing this request", success: false }));
-	}
-}
-
+    return res.status(200).json(
+      response({
+        message: "Your password was reset successfully",
+        success: true,
+      })
+    );
+  } catch (error) { 
+    return res.status(500).json(
+      response({
+        message: "Something went wrong wile processing this request",
+        success: false,
+      })
+    );
+  }
+};

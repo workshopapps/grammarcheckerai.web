@@ -41,6 +41,9 @@ const Jobs = lazy(() => import('./pages/Blog/Jobs'));
 const Ai = lazy(() => import('./pages/Blog/Ai'));
 const Grammar = lazy(() => import('./pages/Blog/Grammar'));
 const Tips = lazy(() => import('./pages/Blog/Tips'));
+const Contact = lazy(() => import('./pages/contact/index'));
+
+
 // All routes/pages must be import from ./pages folder
 
 const DashboardLayout = () => (
@@ -259,7 +262,7 @@ function App() {
         <Route path="/faq" element={<FaqMain />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/blog" element={<Blog />} />
-        <Route path="contact" element={<h1>Contact Page</h1>} />
+        <Route path="contact" element={<Contact/>} />
         <Route path="/jobs" element={<JobsPage />} />
         <Route path="/grammar" element={<GrammarPage />} />
         <Route path="/ai" element={<AiPage />} />

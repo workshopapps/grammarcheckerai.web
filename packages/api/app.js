@@ -39,6 +39,14 @@ app
   .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/v1", routeHandler);
+
+//404 error
+app.use((req, res, next) => {
+  res.status(404).json({
+    message: "Ohh you are lost, go back now!!!!",
+  });
+});
+
 app.get("*", (req, res) => {
   res.status(200).json({
     message: "Welcome to Grit Grammarly 🙌",
