@@ -82,7 +82,7 @@ exports.home = async (req, res) => {
         status.push({ loginPage: { status: "ok" } });
       }
     });
-    const conversation = await axios
+  const conversation = await axios
     .post("/v1/conversation/start")
     .then((response) => {
       if (response.status == 200) {
