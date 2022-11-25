@@ -1,4 +1,5 @@
 import React from 'react';
+import useTheme from '../../hooks/useTheme';
 import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
 import IMG from '../../assets/abt_images/frame1.jpg';
 import { Values, Teams } from '../../pages/about/data/data';
@@ -7,9 +8,11 @@ import IMG2 from '../../assets/abt_images/Sauce Labs - jpeg (1).png';
 import Footer from '../../modules/static/landing-page/Footer';
 
 const About = () => {
+  const context = useTheme();
+  const dark = context.theme === 'dark';
   return (
     <div className='no-space_'>
-      <div className=" flex flex-col items-center justify-center">
+      <div className={` ${dark && 'bg-[#0f0e0e] text-white'} flex flex-col items-center justify-center transition-all`}>
         <div className="flex flex-col items-center justify-center bg-firstcolor md:p-5 lg:w-full  relative">
           <svg
             width="192"
@@ -88,6 +91,7 @@ const About = () => {
             </p>
           </div>
         </div>
+        {/* ### Brands*/}
         <div className="hidden md:block flex-col items-center justify-center bg-cartTotal w-full mt-14 p-4">
           <p className="text-center text-lighttextGray text-lg ">Trusted by top brands</p>
           <div className="flex flex-row items-center justify-between">
@@ -174,8 +178,8 @@ const About = () => {
         >
           <div className="flex flex-col items-center justify-center m-5  md:items-start lg:p-24 ">
             <p className=" text-lineColor ">Our Mission </p>
-            <p className=" text-cartBg font-bold mt-1 mb-2 text-xl">Why we are here</p>
-            <p className=" text-textColor text-center md:text-left text-lg">
+            <p className={`${dark ? 'text-[#9307ca]' : 'text-cartBg'} font-bold mt-1 mb-2 text-xl`}>Why we are here</p>
+            <p className={` ${dark ? 'text-white' : 'text-textColor'}  text-center md:text-left text-lg`}>
               To aid human comunication by creating a grammatically correct population
             </p>
           </div>
@@ -3035,9 +3039,9 @@ const About = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center mt-7 lg:p-20 bg-card md:bg-white ">
-          <p className=" text-cartBg font-bold text-lg mt-6 md:hidden">Our Core Values</p>
-          <p className=" hidden text-cartBg font-bold text-2xl my-3 md:block">Our Unique Values</p>
+        <div className={`${dark ? 'bg-[#000] md:bg-[#000]' : 'bg-card md:bg-white' } flex flex-col items-center justify-center mt-7 lg:p-20 `}>
+          <p className={` ${dark && 'text-[#9307ca]'} text-cartBg font-bold text-lg mt-6 md:hidden`}>Our Core Values</p>
+          <p className={` ${dark && 'text-[#9307ca]'} hidden text-cartBg font-bold text-2xl my-3 md:block`}>Our Unique Values</p>
           <div className="flex flex-col items-center justify-center md:flex-row  md:items-start  ">
             <div className="hidden md:block md:mt-14 ">
               <svg
@@ -3781,7 +3785,7 @@ const About = () => {
                         <div className="w-5 h-5 bg-lineColor absolute -left-10 transform -translate-x-2/4 rounded-full z-10 -mt-2 md:mt-0"></div>
                         <div className="w-10 h-1 bg-lineColor absolute -left-10 z-0"></div>
                         <div className="flex-auto " key={idx}>
-                          <h1 className=" font-normal text-textColor">
+                          <h1 className={`${dark && 'text-[#e9e3e3]'} font-normal text-textColor`}>
                             {value.message.length > 120
                               ? `${value.message.slice(0, 120)}.... Read more`
                               : value.message}
@@ -4518,9 +4522,9 @@ const About = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 justify-between  m-5 p-5  bg-NumBg  md:grid-cols-2">
+        <div className={`grid grid-cols-1 gap-4 justify-between  m-5 p-5 ${dark && 'bg-[#8d99ae]'}  bg-NumBg  md:grid-cols-2`}>
           <div className="flex flex-col items-center justify-center mt-4 md:p-8">
-            <p className=" text-lineColor">About Our Technology</p>
+            <p className={` ${dark && 'text-[#9307ca]'} text-lineColor`}>About Our Technology</p>
             <p className=" font-bold  text-cartBg text-lg mt-2 mb-3"> What we are building</p>
             <p className=" text-left text-textColor">
               Gritty Grammar is an AI-powered grammar checker designed to check and correct grammar for multiple

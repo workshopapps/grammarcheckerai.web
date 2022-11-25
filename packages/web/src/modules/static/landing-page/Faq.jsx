@@ -1,12 +1,14 @@
+import useTheme from '../../../hooks/useTheme';
 import FaqBox from './FaqBox';
 import { Link } from 'react-router-dom';
 import styles from './styles/index.module.css';
 
 const Faq = () => {
+    const context = useTheme();
     return (
         <div className='bg-[#f5f3f380] py-8'>
             <div className='w-[90%] max-w-xl mx-auto my-7'>
-                <div className='text-center'>
+                <div className={`${context.theme === 'dark' ? 'text-[#ffffff]' : null} text-center`}>
                     <h4 className='text-center text-3xl font-black'>FAQ</h4>
                     <p className='mb-7'>If you have further questions, please contact us</p>
                 </div>

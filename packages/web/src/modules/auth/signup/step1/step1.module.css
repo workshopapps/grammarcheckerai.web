@@ -21,6 +21,13 @@
   flex-direction: column;
   justify-content: space-between;
 }
+._gcsignupcol1[step-theme='dark'],
+._gcsignupcontent p:first-child[step-theme='dark'],
+._gcsignupcontent h2[step-theme='dark'],
+._gcsignupcontent ._subtitle[step-theme='dark'] {
+  background-color: var(--bg-dark);
+  color: rgb(233, 227, 227);
+}
 ._gcsignupcontent p:first-child {
   font-weight: 400;
   font-size: 12px;

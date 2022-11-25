@@ -1,3 +1,4 @@
+import useTheme from '../../../hooks/useTheme';
 import Charcters from './Charcters';
 import Cta from './Cta';
 import Faq from './Faq';
@@ -8,9 +9,13 @@ import NewsLetter from './NewsLetter';
 import Testimonials from './Testimonials';
 import Utilise from './Utilise';
 
+
 const LandingPage = () => {
+  const context = useTheme();
   return (
-    <div className="bg-[#bbb8b81a]">
+    <div
+    data-theme={context.theme}
+      className={` bg-[#bbb8b81a] `}>
       <Hero />
       <HowToUse />
       <Charcters />

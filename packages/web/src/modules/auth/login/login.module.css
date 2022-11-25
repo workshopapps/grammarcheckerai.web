@@ -7,6 +7,9 @@
   overflow-x: hidden;
   overflow-y: scroll;
 }
+._gs2mainlogin[signup-theme='dark']{
+  background-color: var(--bg-dark);
+}
 /* width */
 ._gs2logincol1::-webkit-scrollbar {
   width: 0px;
@@ -43,6 +46,11 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+[gs2logincol1-theme='dark']{
+  background-color: var(--bg-dark);
+  color: rgb(233, 227, 227);
+}
+
 ._authback {
   padding: 30px 0 36px 0;
 }
@@ -77,6 +85,11 @@
   color: #393939;
   width: 387px;
   padding: 9px 0 16px 0;
+}
+._gs2logincontent h2[signup-theme='dark'],
+._gs2logincontent p[signup-theme='dark'],
+._gs2loginsignin button[signup-theme='dark']{
+  color: rgb(233, 227, 227);
 }
 
 /* Sign up button and input styles  */
@@ -137,6 +150,7 @@
   background-color: transparent;
   color: black;
 }
+
 ._gs2logincheck {
   display: flex;
   align-items: center;
