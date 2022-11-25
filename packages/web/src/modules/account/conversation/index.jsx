@@ -1,6 +1,6 @@
 import React from 'react';
 import logoImg from '../../../assets/images/logo.webp';
-import botImg from '../../../assets/images/bot.webp';
+// import botImg from '../../../assets/images/bot.webp';
 import micImg from '../../../assets/images/mic.svg';
 import trashImg from '../../../assets/images/trash.svg';
 import sendImg from '../../../assets/images/send.svg';
@@ -13,6 +13,7 @@ import { Link, useNavigate } from 'react-router-dom';
 // import { Configuration, OpenAIApi } from 'openai';
 import ChatContainer from './chat-container';
 import useSendAudioFile from '../../../hooks/account/useSendAudio';
+import RiveBot from '../../../components/RiveBot';
 
 function Conversation() {
   const navigate = useNavigate();
@@ -64,7 +65,8 @@ function Conversation() {
           {chats.length === 0 ? (
             <>
               <div className="mx-auto w-36 flex items-center justify-center">
-                <img src={botImg} alt="" className="max-w-full" />
+                {/* <img src={botImg} alt="" className="max-w-full" /> */}
+                <RiveBot />
               </div>
               <div className="space-y-4">
                 <h2 className="text-xl text-[#262626] leading-relaxed sm:text-5xl">
