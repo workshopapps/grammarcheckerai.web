@@ -27,8 +27,8 @@ const Navbar = () => {
               { title: 'Converse', to: '/converse' },
               { title: 'About', to: '/about' },
               { title: 'Blog', to: '/blog' },
-              // { title: 'Contact', to: '/contact' },
-              { title: 'Log in', to: '/signin' },
+              { title: 'Contact', to: '/contact' },
+              // { title: 'Log in', to: '/signin' },
             ].map((item) => (
               <NavLink to={item.to} key={item.title}>
                 {item.title}
@@ -53,9 +53,9 @@ const Navbar = () => {
               { title: 'Converse', to: '/converse' },
               { title: 'About', to: '/about' },
               { title: 'Blog', to: '/blog' },
-              // { title: 'Contact', to: '/contact' },
+              { title: 'Contact', to: '/contact' },
               { title: 'Log in', to: '/signin' },
-              { title: 'Sign Up', to: '/signup' },
+              // { title: 'Sign Up', to: '/signup' },
             ].map((item) => (
               <NavLink to={item.to} key={item.title}>
                 {item.title}
