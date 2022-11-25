@@ -1,10 +1,13 @@
+import useTheme from '../../../hooks/useTheme';
 import { useState } from 'react';
 import step1Img from './assets/step-1.png';
 import step2Img from './assets/step-2.png';
 import step3Img from './assets/step-3.png';
 import { motion, AnimatePresence } from 'framer-motion';
+import styles from './styles/index.module.css';
 
 const HowToUse = () => {
+  const context = useTheme();
   const btns = [
     {
       step: 1,
@@ -29,9 +32,9 @@ const HowToUse = () => {
   const [active, setActive] = useState(btns[0]);
 
   return (
-    <section className="bg-[#f5f3f380] py-10">
+    <section className="bg-[#f5f3f380] py-10 transition-all">
       <div className="w-[80%] mx-auto my-6 space-y-24">
-        <h3 className="text-xl text-center md:text-3xl font-black">
+        <h3 className={`text-xl text-center ${context.theme === 'dark' ? 'text-[#ffffff]' : null} md:text-3xl font-black`}>
           How You Can Use Gritty Grammar In Three Tiny Steps
         </h3>
         <div className="md:flex md:justify-between md:items-center mt-12">
@@ -42,9 +45,10 @@ const HowToUse = () => {
                   key={btn.step}
                   type="button"
                   className={`${
-                    btn.step === active.step ? 'text-[#8C54BF]' : 'transparent'
+                    btn.step === active.step ? styles.step_active : 'transparent'
                   }  hover:border-[#5D387F] text-left pl-7 min-h-max relative h-28`}
                   onClick={() => setActive(btn)}
+                  step-theme={context.theme}
                 >
                   <span className="block font-black text-lg">Step {btn.step} </span>
                   {btn.title}

@@ -7,20 +7,21 @@ import '../src/assets/styles/styles.scss';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import ScrollToTop from './ScrollToTop';
-
+import DarkThemeContext from './lib/context/DarkThemeContext';
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        
+    <DarkThemeContext>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
           <BrowserRouter>
-          <ScrollToTop>
-            <App />
+            <ScrollToTop>
+              <App />
             </ScrollToTop>
           </BrowserRouter>
-      </AuthProvider>
-    </QueryClientProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </DarkThemeContext>
   </React.StrictMode>,
 );

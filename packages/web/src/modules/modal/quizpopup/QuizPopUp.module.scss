@@ -16,15 +16,44 @@
     &_card {
 
         &__check {
+            width: inherit;
             @include flexCenter(column);
-            color: $greenColor;
+            
+            p {
+                color: $greenColor;
+                margin-bottom: 20px;
+            }
 
-            a {
-                text-decoration: none;
+            &__btn {
+                width: 100%;
+                @include flexCenter(row);
+                justify-content: space-between;
 
-                svg {
-                    width: 5rem;
-                    height: 3rem;
+                &1 {
+                    color: $greyColor;
+                    font-weight: 500;
+                    
+
+                    &:hover {
+                        transition: 1.3s;
+                        color: red;
+                        text-decoration: underline;
+                    }
+                }
+
+                &2 {
+                    color: $greyColor;
+                    font-weight: 500;
+
+                    &:hover {
+                        transition: 1.3s;
+                        color: $greenColor;
+                        text-decoration: underline;
+                    }
+
+                    a {
+                        text-decoration: none;
+                    }
                 }
             }
         }
@@ -67,8 +96,10 @@
                 text-align: center;
 
                 li {
-                    max-height: 80px;
-                    overflow: hidden;
+                    @include flexCenter(row);
+                    flex-wrap: wrap;
+                    max-height: 50px;
+                    overflow-y: hidden;
                     font-family: $fontFamily2;
                     cursor: pointer;
                     list-style: none;

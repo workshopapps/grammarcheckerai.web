@@ -1,9 +1,10 @@
-const { v4 } = require('uuid');
-const mongoose = require('mongoose');
-const Joi = require('joi');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { environment } = require('../../config/environment');
+const { v4 } = require("uuid");
+const mongoose = require("mongoose");
+const Joi = require("joi");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { environment } = require("../../config/environment");
+const { JWT_SECRET } = environment;
 let schema = new mongoose.Schema(
   {
     _id: {
@@ -35,11 +36,11 @@ let schema = new mongoose.Schema(
     },
     role: {
       type: String,
-      default: 'user',
+      default: "user",
     },
     language: {
       type: String,
-      default: 'English',
+      default: "English",
     },
     deviceID: {
       type: String,
@@ -52,7 +53,7 @@ let schema = new mongoose.Schema(
 );
 
 // Hashing the password
-schema.pre('save', async function () {
+schema.pre("save", async function () {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
@@ -72,21 +73,26 @@ schema.methods.comparePassword = async function (reqPassword) {
 
 // jwt auth token
 schema.methods.generateAuthToken = function () {
-  const token = jwt.sign({ _id: this._id }, environment.JWT_SECRET, {
-    expiresIn: '3d',
+  const token = jwt.sign({ _id: this._id, email: this.email }, JWT_SECRET, {
+    expiresIn: "3d",
   });
   return token;
+};
+
+schema.methods.generateHash = async(reqPassword)=>{ 
+  const salt = await bcrypt.genSalt(10);
+  return await bcrypt.hash(reqPassword, salt);
 };
 
 exports.authValidatorSchema = Joi.object().keys({
   email: Joi.string()
     .email({
       minDomainSegments: 2,
-      tlds: { allow: ['com', 'net', 'xyz', 'io', 'co', 'org'] },
+      tlds: { allow: ["com", "net", "xyz", "io", "co", "org"] },
     })
     .lowercase()
     .required(),
   password: Joi.string().min(5).required(),
 });
 
-exports.userCollection = mongoose.model('user', schema);
+exports.userCollection = mongoose.model("user", schema);
