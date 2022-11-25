@@ -3,7 +3,7 @@ const BotResponse = require('../database/models/botResponseSchema');
 const Message = require('../database/models/messageSchema');
 const grammarCheckHandler = require('../scripts/grammarCheck');
 const { chatHandler, appendConversationToChatLog } = require('../scripts/chat');
-const { uploadFileForURL, uploadFileUrlToInitiateTranscription, getTranscriptionFromAssembly } = require('../scripts/assemblyAi');
+const { uploadFileForURL, uploadFileUrlToInitiateTranscription, getTranscriptionFromAssembly } = require('../scripts/assemblyAI.js');
 
 
 async function getBotResponse(req, res) {
@@ -24,7 +24,7 @@ async function getBotResponse(req, res) {
         const assemblyAIAudioUrl = await uploadFileForURL(audioFile.buffer) // upload file and get url
         const preTranscriptId = await uploadFileUrlToInitiateTranscription(assemblyAIAudioUrl); // upload url and initiate transcription
         const transcribedAudioText = await getTranscriptionFromAssembly(preTranscriptId); // process and download transcript
-
+        
         if (!transcribedAudioText) {
             return res.status(400).send({
                 success: false,

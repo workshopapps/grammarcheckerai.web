@@ -3,6 +3,7 @@ import './App.css';
 import Fallback from './components/Fallback/Fallback';
 import { Route, Routes, Outlet } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
+// import QuizGame from './modules/static/quizgame/QuizGame';
 const SignupPage = lazy(() => import('./modules/auth/signup/step1/step1'));
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
 const SigninPage = lazy(() => import('./modules/auth/login/login'));
@@ -40,6 +41,8 @@ const Jobs = lazy(() => import('./pages/Blog/Jobs'));
 const Ai = lazy(() => import('./pages/Blog/Ai'));
 const Grammar = lazy(() => import('./pages/Blog/Grammar'));
 const Tips = lazy(() => import('./pages/Blog/Tips'));
+const Contact = lazy(() => import('./pages/contact/index'));
+
 
 // All routes/pages must be import from ./pages folder
 
@@ -259,7 +262,7 @@ function App() {
         <Route path="/faq" element={<FaqMain />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/blog" element={<Blog />} />
-        <Route path="contact" element={<h1>Contact Page</h1>} />
+        <Route path="contact" element={<Contact/>} />
         <Route path="/jobs" element={<JobsPage />} />
         <Route path="/grammar" element={<GrammarPage />} />
         <Route path="/ai" element={<AiPage />} />
@@ -277,7 +280,7 @@ function App() {
       <Route path="/emailtemplate" element={<EmailTemplate />} />
       <Route path="/newsletter-template" element={<NewsletterTemplate />} />
       <Route path="/signin-template" element={<SignInTemplate />} />
-
+      {/* <Route path='/quizgame' element={<QuizGame/>}></Route> */}
       <Route
         element={
           <div>

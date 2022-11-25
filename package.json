@@ -14,7 +14,7 @@
     "storybook": "lerna run storybook",
     "diff": "lerna diff",
     "build-storybook": "build-storybook",
-    "prepare": "husky install",
+
     "test": "lerna run test"
   },
   "devDependencies": {
