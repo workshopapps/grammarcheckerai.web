@@ -12,8 +12,7 @@ async function register(data) {
       email: userData.email,
       language:userData.language,
       token: userData.generateAuthToken()
-    }
-    console.log(user);
+    } 
     return user;
   } catch (error) { 
     return false;
