@@ -1,69 +1,28 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import useTheme from '../../../hooks/useTheme';
 import logoImg from '../../../assets/images/logo.webp';
 import botImg from '../../../assets/images/bot.webp';
-import micImg from '../../../assets/images/mic.svg';
-import trashImg from '../../../assets/images/trash.svg';
-import sendImg from '../../../assets/images/send.svg';
-import pauseImg from '../../../assets/images/pause.svg';
 import styles from './index.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useAudioRecorder } from '@sarafhbk/react-audio-recorder';
-import { convertSecToMin } from '../../../lib/utils';
 import { Link, useNavigate } from 'react-router-dom';
 import ChatContainer from './chat-container';
-import useSendAudioFile from '../../../hooks/account/useSendAudio';
 import SeletedLanguage from '../../../components/SelectedLanguage';
+import CustomRecorder from './chat';
 
 function Conversation() {
   const context = useTheme();
   const navigate = useNavigate();
-  const sendAudio = useSendAudioFile();
-  const { audioResult, timer, startRecording, stopRecording, pauseRecording, status, resumeRecording } =
-    useAudioRecorder();
   const [chats, setChats] = React.useState([]);
+  const chatRef = useRef(null);
 
-  const submitAudioHandler = async () => {
-    let f = new File([audioResult], 'test.wav', { lastModified: new Date().getTime(), type: 'audio/wav' });
-    console.log(audioResult.type);
+  useEffect(() => {
+    handleScroll();
+  }, [chats]);
 
-    // const reader = new window.FileReader();
-    // reader.readAsDataURL(audioBlob);
-    // reader.onloadend = () => {
-    //   let base64 = reader.result + '';
-    //   base64 = base64.split(',')[1];
-    //   const ab = new ArrayBuffer(base64.length);
-    //   const buff = new Buffer.from(base64, 'base64');
-    //   const view = new Uint8Array(ab);
-    //   for (let i = 0; i < buff.length; ++i) {
-    //     view[i] = buff[i];
-    //   }
-    //   const context = new AudioContext();
-    //   context.decodeAudioData(ab, (buffer) => {
-    //   const wavFile = toWav(buffer);
-    //   const blob = new window.Blob([ new DataView(wavFile) ], {
-    //     type: 'audio/wav'
-    //   });
-    //   const anchor = document.createElement('a');
-    //   document.body.appendChild(anchor);
-    //   anchor.style = 'display: none';
-    //   const url = window.URL.createObjectURL(blob);
-    //   anchor.href = url;
-    //   anchor.download = 'audio.wav';
-    //   anchor.click();
-    //   window.URL.revokeObjectURL(url);
-    // }
-    sendAudio.mutateAsync({
-      file: f,
-    });
-    setChats((prev) => [
-      ...prev,
-      {
-        type: 'audio',
-        file: audioResult,
-      },
-    ]);
-    stopRecording();
+  const handleScroll = () => {
+    setTimeout(() => {
+      chatRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 600);
   };
 
   return (
@@ -75,9 +34,7 @@ function Conversation() {
         context.theme === 'dark' ? styles.convo_theme : null
       } `}
     >
-      <div className=" flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto">
-        {/*  eslint-disable-next-line jsx-a11y/media-has-caption */}
-        {/* <audio controls src={audioResult} /> */}
+      <div className=" flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto justify-between">
         <div className="w-36">
           <Link to="/home">
             <img src={logoImg} alt="" className="max-w-full" />
@@ -85,7 +42,7 @@ function Conversation() {
         </div>
         <SeletedLanguage />
       </div>
-      <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4">
+      <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4 scroll-smooth">
         <div className="text-center space-y-14">
           {chats.length === 0 ? (
             <>
@@ -110,24 +67,11 @@ function Conversation() {
               </div>
             </>
           ) : (
-            <ChatContainer />
+            <ChatContainer chats={chats} />
           )}
           <div>
-            <div className="mx-auto flex items-center justify-center">
-              <button
-                onClick={() => {
-                  status === 'idle' ? startRecording() : status === 'paused' ? resumeRecording() : pauseRecording();
-                }}
-                className={`rounded-full h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
-                  status === 'recording' ? styles._bot_mic : ''
-                }`}
-              >
-                <img src={micImg} alt="" className="max-w-full" />
-                <span style={{ '--i': 0 }}></span>
-                <span style={{ '--i': 1 }}></span>
-                <span style={{ '--i': 2 }}></span>
-                <span style={{ '--i': 3 }}></span>
-              </button>
+            <div className="mx-auto flex items-center justify-center" ref={chatRef}>
+              <CustomRecorder setChats={setChats} />
             </div>
             <div className="pt-14 h-28">
               <AnimatePresence mode="wait">
@@ -135,7 +79,7 @@ function Conversation() {
                   {status === 'idle' ? (
                     <>
                       {chats.length === 0 ? (
-                        <p className="text-[#262626]">Tap the Microphone to begin</p>
+                        <p className="text-[#262626]"></p>
                       ) : (
                         <button
                           className="px-7 rounded-xl py-2 border border-[#5D387F]"
@@ -145,31 +89,7 @@ function Conversation() {
                         </button>
                       )}
                     </>
-                  ) : (
-                    <div>
-                      <p>{convertSecToMin(timer)}</p>
-                      <div className="flex items-center justify-center space-x-6 pt-5">
-                        <button
-                          className="h-6 w-6 rounded-full flex justify-center items-center"
-                          onClick={() => stopRecording()}
-                        >
-                          <img src={trashImg} alt="" className="w-full" />
-                        </button>
-                        <button
-                          className="h-6 w-6 rounded-full flex justify-center items-center"
-                          onClick={() => (status === 'paused' ? resumeRecording() : pauseRecording())}
-                        >
-                          <img src={pauseImg} alt="" className="w-full" />
-                        </button>
-                        <button
-                          className="h-6 w-6 rounded-full flex justify-center items-center"
-                          onClick={submitAudioHandler}
-                        >
-                          <img src={sendImg} alt="" className="w-full" />
-                        </button>
-                      </div>
-                    </div>
-                  )}
+                  ) : null}
                 </motion.div>
               </AnimatePresence>
             </div>
