@@ -15,12 +15,14 @@ export default function profileScreen() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const url = "https://grittygrammar.hng.tech/api/v1/user/profile/";
-    const id = "56341e98-b07c-4374-bfcc-ddf766a52322";
+    //const id = "56341e98-b07c-4374-bfcc-ddf766a52322";
     const error = (message) => toast.error(message);
     const success = (message) => toast.success(message);
+    const token = localStorage.getItem("grittyusertoken");
+    const id = localStorage.getItem("grittyuserid");
 
     const headersList = {
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1NjM0MWU5OC1iMDdjLTQzNzQtYmZjYy1kZGY3NjZhNTIzMjIiLCJpYXQiOjE2NjkzNjc0NTEsImV4cCI6MTY2OTYyNjY1MX0.YoGPwsqNt6zXSmabkkv7eRCq7le0CSD-VkyjpDk7l5w"
+        "Authorization": `Bearer ${token}`
     }
 
     const getProfileData = async () => {

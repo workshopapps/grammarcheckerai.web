@@ -6,7 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 
 export default function ChangePassword() {
-    const initialValues = {password: "", newPassword: "", confirmNewPassword: "" };
+    const initialValues = {newPassword: "", confirmNewPassword: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [btnActive, setBtnActive] = useState(true);
@@ -15,11 +15,12 @@ export default function ChangePassword() {
     const navigate = useNavigate();
     const data = JSON.parse(localStorage.getItem("userData"));
     const url = "https://grittygrammar.hng.tech/api/v1/user/profile/";
+    const token = localStorage.getItem("grittyusertoken");
     const error = (message) => toast.error(message);
     const success = (message) => toast.success(message);
 
     const headersList = {
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1NjM0MWU5OC1iMDdjLTQzNzQtYmZjYy1kZGY3NjZhNTIzMjIiLCJpYXQiOjE2NjkzNjc0NTEsImV4cCI6MTY2OTYyNjY1MX0.YoGPwsqNt6zXSmabkkv7eRCq7le0CSD-VkyjpDk7l5w"
+        "Authorization": `Bearer ${token}`
     }
 
     const updateUserData = async () => {
@@ -74,18 +75,11 @@ export default function ChangePassword() {
     const validate = (values) => {
         const errors = {};
         
-
-        if(!values.password) {
-            errors.password= "Please enter your old password";
-        }
         if(!values.newPassword) {
             errors.newPassword= "Please enter a new password";
         }
         if(!values.confirmNewPassword) {
             errors.confirmNewPassword= "Please enter your new password again";
-        }
-        if (values.password !== data.password) {
-            errors.password= "incorrect password";
         }
         if(!regex.test(values.newPassword)) {
             errors.newPassword = "new password must be between 6 to 20 characters,contain at least one numeric digit, one uppercase and one lowercase letter"
@@ -101,21 +95,7 @@ export default function ChangePassword() {
         <h1 className='text-xl sm:text-2xl text-[#393939] text-center md:text-start font-bold'>Change your password</h1>
 
         <form onSubmit={handleSubmit} className='mt-10 h-[90%] flex flex-col gap-5'>
-            <label className='flex flex-col'>
-                <span className='font-bold text-base md:text-lg lg:text-lg text-[#393939] mb-2'>Old password</span>
-                <input 
-                    className={formErrors.password ? '_input border-[#c51717]' : '_input border-[#d2d2d2]'} 
-                    type="password"
-                    name="password" 
-                    id="password" 
-                    placeholder='Enter your old password'
-                    value={formValues.password} 
-                    onChange={handleChange}
-                    />
-                    <p className="mt-2 text-[#c51717] text-lg">
-                     {formErrors.password}
-                    </p>
-            </label>
+            
             <label className='flex flex-col'>
                 <span className='font-bold text-base md:text-lg lg:text-lg text-[#393939] mb-2'>New password</span>
                 <input 
