@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { getStorageData } from '../../../hooks/useLocalStorage';
 import axios from "axios";
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './forgot.module.css';
@@ -11,7 +10,7 @@ import Image2 from '../../../assets/steponeframetwo.png';
 
 const index = () => {
   const [resetLink, setResetLink] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
+  const [userEmail, setUserEmail] = useState("")
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
 
@@ -22,19 +21,23 @@ const index = () => {
   };
 
   const url = "http://grittygrammar.hng.tech/request-password-reset";
-
+  
   const handleSendResetLink = (e) => {
     e.preventDefault();
-    if (userEmail !== getStorageData('existingUserEmail')) {
-      error('user Does not Exist, check updated email...');
-    } else {
+    if ((userEmail === "")){
+      error("Invalid email!")
+    }
+    else if ((userEmail !== localStorage.getItem('email', userEmail))){
+      error('User does not exist!');
+    } 
+    else {
       axios.post(url, {
         userEmail
       })
       .then((response) => {
         console.log(response)
-        success("Email sent successfully")
         setResetLink(true);
+        success("Email sent successfully")
       })
       .catch((err) => {
         console.log(err)
@@ -78,7 +81,6 @@ const index = () => {
                     type="email"
                     placeholder="shalomtaiwo@example.com"
                     onChange={(e) => setUserEmail(e.target.value)}
-                    required
                     id="forgotEmail"
                   />
                   <span className={styles._gcforgotvalidate}>Email is available</span>
