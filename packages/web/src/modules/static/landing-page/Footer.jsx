@@ -11,7 +11,6 @@ const Footer = () => {
             <div className={styles._ftcolcontentImage}>
               <img src={Logo} alt="footer logo" width={200} />
             </div>
-            
           </div>
           <div className={styles._ftcol3}>
             <div className={styles._ftcol3title}>More</div>
@@ -28,7 +27,7 @@ const Footer = () => {
               <Link to="/faq">FAQ</Link>
               <Link to="/career">Careers and Culture</Link>
               <Link to="/newsletter">Newsletter</Link>
-              <Link to='/app-status'>Api Status</Link>
+              <Link to="/app-status">Api Status</Link>
             </div>
           </div>
           <div className={styles._ftcol1}>

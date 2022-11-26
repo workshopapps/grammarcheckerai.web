@@ -7,7 +7,7 @@ function FaqMain() {
   return (
     <>
       <div className="w-full h-full flex flex-col justify-between ">
-        <div className="mt-[82px] lg:h-[271px] h-[286px] md:h-[300px]  bg-[#8C54BF] grid place-items-center">
+        <div className="lg:h-[300px] h-[296px] md:h-[320px]  bg-[#8C54BF] grid place-items-center">
           <h3 className="lg:mt-[45px] mt-[55px] flex items-center justify-center text-[#ffffff80] font-semibold lg:leading-[24px] leading-[17px] md:leading-[20px] lg:text-[24px] md:text-[20px] text-[16px] font-[Inter]">
             FAQs
           </h3>
@@ -48,8 +48,8 @@ function FaqMain() {
         </div>
       </div>
 
-      <div className="place-items-center ">
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 lg:mt-[63px] place-items-center lg:gap-3 gap-5 items-center lg:m-15 justify-center m-5">
+      <div className="place-items-center">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 lg:mt-[43px] place-items-center  lg:gap-20 md:gap-10 gap-5 items-center lg:m-10 justify-center m-5">
           {data
             .filter((val) => {
               if (searchTerm === '') {
@@ -60,22 +60,20 @@ function FaqMain() {
             })
             .map((val) => {
               return (
-                <div className="h-full" key={val.id}>
-                  <div className="w-[46px] h-[46px]  bg-[#E8DDF2] rounded-full  lg:mt-[64px]">
+                <div className="lg:h-[300px] md:h-[298px] h-full lg:w-full md:w-72 w-[302px] block lg:px-6 px-8 md:px-6 rounded-lg shadow-lg bg-white max-w-sm m-5" key={val.id}>
+                  <div className="lg:w-[56px] lg:h-[56px] w-[46px] h-[46px]  bg-[#E8DDF2] hover:bg-[#fff] hover:shadow-[#E8DDF2] hover:shadow-md rounded-full mt-3">
                     <img
                       src={val.img}
-                      className="text-[#5D387F] place-items-center w-[45px] h-[45px] text-x  mx-2 px-3 py-3 ml-[-1px] flex items-center justify-center"
+                      className="text-[#5D387F] place-items-center lg:w-[55px] lg:h-[55px] w-[45px] h-[45px] text-x  mx-2 px-3 py-3 ml-[-1px] flex items-center justify-center"
                       alt="tag"
                     />
                   </div>
-                  <h2 className="text-[#393939] text-[16px] lg:text-[22px] mt-[14px] leading-[22px] lg:leading-[30px] font-[500px] lg:w-[433px] w-[323px] font-[Inter]">
+                  
+                  <h2 className="text-[#393939] text-[19px] lg:text-[22px] mt-[14px] leading-[22px]  lg:leading-[30px] font-[600px] lg:w-auto w-[253px] md:w-60  font-[Inter]">
                     {val.title}
                   </h2>
-                  <p className="text-[#53686A] text-[13px] lg:text-[18px] mt-5 lg:mt-[10px] leading-[18px] lg:leading-[24px] font-normal w-[282px] lg:w-[403px]  md:w-[350px] lg:h-[71px] lg:[403px] font-[Inter]">
+                  <p className="text-[#53686A] text-[16px] lg:text-[18px] mt-7 md:mt-5 lg:mt-[10px] leading-[20px] lg:leading-[25px] font-normal w-[232px] lg:w-auto  md:w-[250px] h-auto  font-[Inter]">
                     {val.para}
-                  </p>
-                  <p className=" text-[#53686A] text-[16px]  leading-[18px] font-normal w-[282px] lg:w-[403px]  md:w-[350px] lg:h-[71px] lg:mt-[30px] mt-[10px]">
-                    {val.para2}
                   </p>
                 </div>
               );
