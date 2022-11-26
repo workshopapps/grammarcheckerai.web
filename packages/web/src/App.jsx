@@ -1,9 +1,10 @@
-import React, { lazy, Suspense } from 'react';
+import React, { useEffect, lazy, Suspense, useState } from 'react';
 import './App.css';
 import Fallback from './components/Fallback/Fallback';
-import { Route, Routes, Outlet } from 'react-router-dom';
+import { Route, Routes, Outlet, Navigate } from 'react-router-dom';
 import QuizGame from './modules/static/quizgame/QuizGame';
 import ProtectedRoute from './components/ProtectedRoute';
+// import QuizGame from './modules/static/quizgame/QuizGame';
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
 const SigninPage = lazy(() => import('./modules/auth/login/login'));
 const ProfilePage = lazy(() => import('./pages/profile/profileScreen'));
@@ -243,6 +244,14 @@ const LandingLayout = () => (
 );
 
 function App() {
+  const [isLoggedin, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem('grittyuserid') !== null && localStorage.getItem('grittyuserid') !== '') {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
     <Routes>
       <Route path="/converse" element={<ConversationPage />} />
@@ -272,7 +281,6 @@ function App() {
       <Route path="/emailtemplate" element={<EmailTemplate />} />
       <Route path="/newsletter-template" element={<NewsletterTemplate />} />
       <Route path="/signin-template" element={<SignInTemplate />} />
-      <Route path="/quizgame" element={<QuizGame />}></Route>
       <Route
         element={
           <div>
@@ -280,8 +288,8 @@ function App() {
           </div>
         }
       >
-        <Route path="signin" element={<Signin />} />
-        <Route path="signup" element={<Signuptwo />} />
+        <Route path="signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
+        <Route path="signup" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signuptwo />} />
         <Route path="forgot-password" element={<Forgotpassword />} />
         <Route path="reset-password" element={<ResetLink />} />
       </Route>

@@ -166,8 +166,10 @@ const index = () => {
                 />
               </svg>
             </div>
-            <h2>Welcome Back</h2>
-            <p className={styles._subtitle}>Start your learning journey today, you can skip this process for later.</p>
+            <h2 signup-theme={context.theme}>Welcome Back</h2>
+            <p signup-theme={context.theme} className={styles._subtitle}>
+              Start your learning journey today, you can skip this process for later.
+            </p>
             <form onSubmit={(e) => handlelogin(e)} className={styles._gs2loginform}>
               <div className={styles._gs2logininput}>
                 <span>Email</span>
@@ -199,7 +201,12 @@ const index = () => {
                   <span>Keep me signed in</span>
                 </div>
                 <div className={styles._gs2loginsignin}>
-                  <button type="button" className={styles._gsloginforgot} onClick={handleForgotPassword}>
+                  <button
+                    signup-theme={context.theme}
+                    type="button"
+                    className={styles._gsloginforgot}
+                    onClick={handleForgotPassword}
+                  >
                     Forgot Password?
                   </button>
                 </div>
@@ -209,7 +216,12 @@ const index = () => {
                   Login
                 </LoadingButton>
                 <div className={styles._gs2loginsignin}>
-                  <a href="#/" className={styles._gsloginforgot} onClick={handleCreateAccount}>
+                  <a
+                    href="#/"
+                    signup-theme={context.theme}
+                    className={styles._gsloginforgot}
+                    onClick={handleCreateAccount}
+                  >
                     Create New Account
                   </a>
                 </div>

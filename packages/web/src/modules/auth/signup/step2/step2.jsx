@@ -182,13 +182,26 @@ const index = () => {
               </svg>
             </div>
             {isTabletorMobile && (
-              <p className={styles._gssignuptophead}>
-                STEP <span>2</span> OUT OF <span>2</span>
+              <p step-theme={context.theme} className={styles._gssignuptophead}>
+                STEP <span>1</span> OUT OF <span>1</span>
               </p>
             )}
-            <h2>You&rsquo;re almost there!</h2>
-            <p className={styles._subtitle}>Start your learning journey today, you can skip this process for later.</p>
-            <form className={styles._gs2signupform} onSubmit={handleSignUp}>
+            <h2 step-theme={context.theme}>Get Started with Gritty Grammar today!</h2>
+            <p step-theme={context.theme} className={styles._subtitle}>
+              Start your learning journey today, you can skip this process for later.
+            </p>
+            <form className={styles._gs2signupform} onSubmit={(e) => handleSignUp(e)}>
+              <div className={styles._gs2signupinput}>
+                <span>Enter Your Email</span>
+                <input
+                  type="email"
+                  onChange={(e) => setNewUserEmail(e.target.value)}
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                  placeholder="shalomtaiwo@example.com"
+                  id="signupEmail"
+                  required
+                />
+              </div>
               <div className={styles._gs2signupinput}>
                 <span>Username</span>
                 <input

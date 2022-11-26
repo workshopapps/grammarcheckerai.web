@@ -17,9 +17,9 @@ const QuizGame = () => {
     // console.log(e.target.innerText);
     let tick = trivia.correctAnswer;
     if (tick === option) {
-      setScore(score + 1);
+      setScore(score + 5);
     } else {
-      setScore(score - 0);
+      setScore(score - 1);
     }
   };
 

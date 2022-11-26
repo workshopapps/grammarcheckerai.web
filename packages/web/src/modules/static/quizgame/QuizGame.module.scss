@@ -2,8 +2,9 @@
 
 .quizgame {
     margin-top: 0px;
-    width: 100vw;
+    width: 100%;
     // height: 100vh;
+    overflow: hidden;
     @include flexCenter(column);
     justify-content: space-between;
     color: black;
