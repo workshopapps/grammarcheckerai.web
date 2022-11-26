@@ -4,10 +4,13 @@ const cors = require("cors");
 const session = require("express-session");
 const { environment } = require("./config/environment");
 const expressFileUpload = require('express-fileupload');
+const { SESSION_SECRET } = environment;
+
 require("express-async-errors");
 require("./database/index");
 const passport = require("passport");
 require("./services/linkedinStrategy");
+require("./services/facebookStrategy");
 const { routeHandler } = require("./routes/index.route"),
   swaggerUi = require("swagger-ui-express"),
   swaggerDocument = require("./Tests/test.json");
@@ -16,7 +19,7 @@ const { routeHandler } = require("./routes/index.route"),
 app.use(passport.initialize()).use(express.json()).use(cors());
 
 const sess = {
-  secret: environment.SESSION_SECRET,
+  secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {},

@@ -1,101 +1,87 @@
-._header{
-    height: 80px;
-    display: flex;
-    position: relative;
-    justify-content: space-between;
-    background-color: #0F0E0E;
-    align-items: center;
-    color: white;
-    z-index: 9999;
-    width: 100%;
+._header {
+  height: 80px;
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  background-color: rgb(10, 10, 10);
+  align-items: center;
+  color: white;
+  z-index: 9999;
+  width: 100%;
 }
-[nav-theme='light']{
-    background-color: #0F0E0E;
+._header::before {
+  z-index: 999;
 }
-[nav-theme='dark']{
-    background-color: rgb(216, 178, 233);  
+._nvlogo {
+  height: 70px;
+  width: 25%;
 }
-._header::before{
-    z-index: 999;
+._nvlogo img {
+  height: 90%;
 }
-._nvlogo{
-    height: 70px;
-    width: 25%;
+._nvmenu {
+  width: 60%;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
 }
-._nvlogo img{
-    height: 90%;
+._nvnav {
+  width: 80%;
+  display: flex;
+  justify-content: space-evenly;
 }
-._themeswitch{
-    /* background: #f5f4f7;
-    background: #493f72; */
-    padding: 5px;
-    border-radius: 9px;
-    transition: all .4s cubic-bezier(0.23, 1, 0.320, 1);
+._nvnav a {
+  padding: 0 5px;
 }
-._nvmenu{
-    position: relative;
-    width: 60%;
-    z-index: 999;
-    display: flex;
-    justify-content: center;
+._nvstarted {
+  width: 15%;
+  z-index: 999;
 }
-._nvnav{
-    width: 80%;
-    display: flex;
-    justify-content: space-evenly;
+._nvstarted button {
+  background-color: #531f85;
+  padding: 10px;
+  border-radius: 10px;
 }
-._nvnav a{
-    padding: 0 5px;
+._nvstarted button:hover {
+  background-color: #69309e;
 }
-._nvstarted{
-    width: 15%;
-    z-index: 999;
+._mobilenav {
+  background-color: transparent !important;
 }
-._nvstarted button{
-    background-color: #531f85;
-    padding: 10px;
-    border-radius: 10px;
-}
-._nvstarted button:hover{
-    background-color: #69309e;
-}
-._mobilenav{
-    background-color: transparent !important;
-}
-._mobilenav svg{
-    width: 40px;
-    fill: white;
-    margin: 0 5px;
-    padding: 5px;
+._mobilenav svg {
+  width: 40px;
+  fill: white;
+  margin: 0 5px;
+  border: #531f85 1px solid;
+  padding: 5px;
 }
 @media only screen and (max-width: 1000px) {
-    ._nvlogo{
-        height: 70px;
-        width: 45%;
-    }
-    ._nvstarted{
-        width: 55%;
-        z-index: 999;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        flex-direction: row-reverse;
-    }
-    ._nvnav{
-        display: flex;
-        flex-direction: column;
-        width: 250px;
-        margin-top: 6em;
-    }
-    ._nvnav a{
-        padding: 15px 5px;
-        text-align: center;
-    }
+  ._nvlogo {
+    height: 70px;
+    width: 45%;
+  }
+  ._nvstarted {
+    width: 55%;
+    z-index: 999;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row-reverse;
+  }
+  ._nvnav {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+  }
+  ._nvnav a {
+    padding: 15px 5px;
+    text-align: center;
+  }
 }
 
 @media only screen and (max-width: 700px) {
-    ._nvlogo{
-        height: 70px;
-        width: 100%;
-    }
+  ._nvlogo {
+    height: 70px;
+    width: 100%;
+  }
 }

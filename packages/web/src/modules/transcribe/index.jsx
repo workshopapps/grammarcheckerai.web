@@ -83,6 +83,7 @@ const Transcribe = () => {
             onChange={handleFileClick}
             className="hidden"
             type="file"
+            accept="audio/*"
             name="audio_file"
             id="audio_file"
           />

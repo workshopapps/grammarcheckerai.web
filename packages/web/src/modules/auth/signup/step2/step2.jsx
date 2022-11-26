@@ -1,32 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import useTheme from '../../../../hooks/useTheme';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import toast, { Toaster } from 'react-hot-toast';
+import useSignup from '../../../../hooks/auth/useSignup';
+import LoadingButton from '@mui/lab/LoadingButton';
+import PasswordMask from 'react-password-mask';
 import styles from './step2.module.css';
 import Logo from '../../../../assets/signup-logo.png';
 import Image2 from '../../../../assets/Correction 1.png';
 import Image1 from '../../../../assets/error 1.png';
+import Image3 from '../../../../assets/steponeframeone.png';
+import Image4 from '../../../../assets/steponeframetwo.png';
 import google from '../../../../assets/google.png';
 import apple from '../../../../assets/apple.png';
 import facebook from '../../../../assets/facebook.png';
-import { useLocalStorage, getStorageData } from '../../../../hooks/useLocalStorage';
+import Carousel from 'nuka-carousel';
 
 const index = () => {
+  const [newUserName, setNewUserName] = useState('');
+  const [newUserFirstName, setNewUserFirstName] = useState('');
+  const [newUserLastName, setNewUserLastName] = useState('');
+  const [newUserPassword, setNewUserPassword] = useState('');
+  const [newUserConfirmPassword, setNewUserConfirmPassword] = useState('');
+  const [isSamePassword, setIsSamePassword] = useState(true);
+  const [newUserEmail, setNewUserEmail] = useState('');
+  const [userId, setUserId] = useState('');
+  const [userToken, setUserToken] = useState('');
   const context = useTheme();
-  const [newUserName, setNewUserName] = useLocalStorage('newUserName', '');
-  const [newUserFullName, setNewUserFullName] = useLocalStorage('newUserFullName', '');
-  const [newUserPassword, setNewUserPassword] = useLocalStorage('newUserPassword', '');
-  const [newUserConfirmPassword, setNewUserConfirmPassword] = useLocalStorage('newUserConfirmPassword', '');
-
-  const [newRegisteredUser, setNewRegisteredUser] = useLocalStorage('userCreated', false);
 
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
 
+  const authSignup = useSignup();
+
   let navigate = useNavigate();
   const handlePrev = () => {
-    navigate('/signup');
+    navigate('/home');
   };
 
   /* 
@@ -36,34 +46,123 @@ const index = () => {
     -------------------------
     After a successful attempt at creating the new user => the function navigates to the sign in page.
     This is done using a setTimeout after user account creation
+
+    User is given a token on account creation which monitors their existing session
+    
   */
+  useEffect(() => {
+    localStorage.setItem('grittyuserid', userId);
+    localStorage.setItem('grittyusertoken', userToken);
+  }, [userId, userToken]);
+
   const handleSignUp = (e) => {
     e.preventDefault();
-    console.log(newRegisteredUser);
-    if (newUserName === getStorageData('existingUserName')) {
-      error('Username exists!!');
-    } else if (
+    if (
       (newUserName !== '') &
-      (newUserFullName !== '') &
+      (newUserFirstName !== '') &
+      (newUserLastName !== '') &
       (newUserPassword !== '') &
+      (newUserEmail !== '') &
       (newUserConfirmPassword === newUserPassword)
     ) {
-      success("Account Created Succesfully!\nYou'll be redirected to the login in 5 seconds...");
-      setNewRegisteredUser(true);
-      setTimeout(() => navigate('/signin'), 5000);
-    } else {
-      error('Error creating account\nPlease try again!');
+      authSignup
+        .mutateAsync({
+          email: newUserEmail,
+          firstName: newUserFirstName,
+          lastName: newUserLastName,
+          username: newUserName,
+          language: 'English',
+          password: newUserPassword,
+          confirm_password: newUserConfirmPassword,
+        })
+        .then((res) => {
+          success("Account Created Succesfully!\nYou'll be redirected to the Dashboard in 5 seconds...");
+          const resId = res.data.data._id;
+          const resToken = res.data.data.token;
+          setUserId(resId);
+          setUserToken(resToken);
+          localStorage.setItem('grittyuserid', userId);
+          localStorage.setItem('grittyusertoken', userToken);
+          setTimeout(() => navigate('/me/home'), 5000);
+        })
+        .catch((err) => {
+          error(err.response.data.message);
+        });
+    } else if (newUserPassword !== newUserConfirmPassword) {
+      setIsSamePassword(false);
     }
+  };
+
+  /* 
+    handleGoogleAuth handles the Google social login. 
+
+    This redirects to the endpoint which gets a usertoken from google
+    Then redirects to the provided URL token for account creation
+
+  */
+
+  const handleGoogleAuth = () => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
+    fetch('https://grittygrammar.hng.tech/api/v1/auth/google', requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        window.location.href = oBJ.message;
+      })
+      .catch((err) => error(err.message));
+  };
+
+  /* 
+    handleGoogleAuth handles the Facebook social login. 
+
+    This redirects to the endpoint which gets a usertoken from facebook
+    Then redirects to the provided URL token for account creation
+
+  */
+
+  const handleFacebookAuth = () => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
+    fetch('https://grittygrammar.hng.tech/api/v1/auth/facebook', requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        window.location.href = oBJ.message;
+      })
+      .catch((err) => error(err.message));
+  };
+
+  /* 
+    handleGoogleAuth handles the LinkedIn social login. 
+
+    This redirects to the endpoint which gets a usertoken from linkedin
+    Then redirects to the provided URL token for account creation
+
+  */
+
+  const handleLinkedInAuth = () => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
+    fetch('https://grittygrammar.hng.tech/api/v1/auth/linkedin', requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        window.location.href = oBJ.message;
+      })
+      .catch((err) => error(err.message));
   };
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
-    <div
-    step-theme={context.theme}
-      className={styles._gs2mainsignup}>
+    <div step-theme={context.theme} className={styles._gs2mainsignup}>
       <div className={styles._gs2signup}>
-        <div
-          step-theme={context.theme}
-          className={styles._gs2signupcol1}>
+        <div step-theme={context.theme} className={styles._gs2signupcol1}>
           {isTabletorMobile && (
             <div className={styles._gs2signuplogo}>
               <img src={Logo} alt="Grammar Checker Logo" />
@@ -83,17 +182,26 @@ const index = () => {
               </svg>
             </div>
             {isTabletorMobile && (
-              <p
-              step-theme={context.theme}
-                className={styles._gssignuptophead}>
-                STEP <span>2</span> OUT OF <span>2</span>
+              <p step-theme={context.theme} className={styles._gssignuptophead}>
+                STEP <span>1</span> OUT OF <span>1</span>
               </p>
             )}
-            <h2 step-theme={context.theme}>You&rsquo;re almost there!</h2>
-            <p
-              step-theme={context.theme}
-              className={styles._subtitle}>Start your learning journey today, you can skip this process for later.</p>
-            <form className={styles._gs2signupform} onSubmit={handleSignUp}>
+            <h2 step-theme={context.theme}>Get Started with Gritty Grammar today!</h2>
+            <p step-theme={context.theme} className={styles._subtitle}>
+              Start your learning journey today, you can skip this process for later.
+            </p>
+            <form className={styles._gs2signupform} onSubmit={(e) => handleSignUp(e)}>
+              <div className={styles._gs2signupinput}>
+                <span>Enter Your Email</span>
+                <input
+                  type="email"
+                  onChange={(e) => setNewUserEmail(e.target.value)}
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                  placeholder="shalomtaiwo@example.com"
+                  id="signupEmail"
+                  required
+                />
+              </div>
               <div className={styles._gs2signupinput}>
                 <span>Username</span>
                 <input
@@ -106,40 +214,56 @@ const index = () => {
                 />
               </div>
               <div className={styles._gs2signupinput}>
-                <span>Full Name</span>
+                <span>First Name</span>
                 <input
                   type="text"
                   required
-                  placeholder="Shalom Taiwo"
-                  onChange={(e) => setNewUserFullName(e.target.value)}
-                  id="signupFullName"
+                  placeholder="Shalom"
+                  onChange={(e) => setNewUserFirstName(e.target.value)}
+                  id="signupFirstName"
+                />
+              </div>
+              <div className={styles._gs2signupinput}>
+                <span>Last Name</span>
+                <input
+                  type="text"
+                  required
+                  placeholder="Taiwo"
+                  onChange={(e) => setNewUserLastName(e.target.value)}
+                  id="signupLastName"
                 />
               </div>
               <div className={styles._gs2signupinput}>
                 <span>Create a password</span>
-                <input
+                <PasswordMask
                   type="password"
                   required
-                  onChange={(e) => setNewUserConfirmPassword(e.target.value)}
+                  onChange={(e) => setNewUserPassword(e.target.value)}
                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                  value={newUserPassword}
                   title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
                   id="signupCreatePassword"
                 />
               </div>
               <div className={styles._gs2signupinput}>
                 <span>Confirm password</span>
-                <input
+                <PasswordMask
                   type="password"
                   required
-                  onChange={(e) => setNewUserPassword(e.target.value)}
+                  value={newUserConfirmPassword}
+                  onChange={(e) => setNewUserConfirmPassword(e.target.value)}
                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                   title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
                   id="signupConfirmPassword"
                 />
-                <span className={styles._gs2signupvalidate}>Passwords must be the same</span>
+                <span className={styles._gs2signupvalidate}>
+                  {isSamePassword === false ? 'Passwords must be the same' : ''}
+                </span>
               </div>
               <div className={styles._gs2signupcontinue}>
-                <button type="submit">Create Account</button>
+                <LoadingButton size="small" type="submit" loading={authSignup.isLoading} variant="contained">
+                  Create Account
+                </LoadingButton>
                 <div className={styles._gs2signupsignin}>
                   <p>
                     Have an account? <a href="/signin">Login</a>
@@ -149,13 +273,13 @@ const index = () => {
               <div className={styles._gs2socialsignupcol}>
                 <p>Alternatively, you can sign up with:</p>
                 <div className={styles._gs2socialsignups}>
-                  <button className={styles._google}>
+                  <button type="button" className={styles._google} onClick={handleGoogleAuth}>
                     <img src={google} alt="google authentication" />
                   </button>
-                  <button className={styles._facebook}>
+                  <button type="button" className={styles._facebook} onClick={handleFacebookAuth}>
                     <img src={facebook} alt="facebook authentication" />
                   </button>
-                  <button className={styles._apple}>
+                  <button type="button" className={styles._apple} onClick={handleLinkedInAuth}>
                     <img src={apple} alt="apple authentication" />
                   </button>
                 </div>
@@ -165,10 +289,16 @@ const index = () => {
         </div>
         <div className={styles._gs2signupcol2}>
           <div className={styles._gs2mainsignupcol2body}>
-            <div className={styles._gs2mainsignupcol2images}>
-              <img src={Image1} alt="column1" />
-              <img src={Image2} alt="column1" />
-            </div>
+            <Carousel autoplay={true} autoplayInterval={5000} withoutControls={true}>
+              <div className={styles._gs2mainsignupcol2images}>
+                <img src={Image1} alt="column1" />
+                <img src={Image2} alt="column1" />
+              </div>
+              <div className={styles._gcmainsignupcol2images}>
+                <img src={Image3} alt="column1" />
+                <img src={Image4} alt="column1" />
+              </div>
+            </Carousel>
             {isTabletorMobile && (
               <div className={styles._gs2mainsignupcol2content}>
                 <h3>Learn, Unlearn & Relearn</h3>
@@ -178,14 +308,6 @@ const index = () => {
                 </p>
               </div>
             )}
-          </div>
-          <div className={styles._gs2mainsignupcol2footer}>
-            <div className={styles._gs2signupslider}>
-              <div className={styles._dots}>
-                <span></span>
-                <span></span>
-              </div>
-            </div>
           </div>
         </div>
       </div>

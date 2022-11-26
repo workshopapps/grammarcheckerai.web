@@ -30,17 +30,26 @@
                 justify-content: space-between;
 
                 &1 {
-                    color: red;
-                    border-radius: 8px;
-                    padding: 10px;
-                    background-color: #e8ddf2;
+                    color: $greyColor;
+                    font-weight: 500;
+                    
+
+                    &:hover {
+                        transition: 1.3s;
+                        color: red;
+                        text-decoration: underline;
+                    }
                 }
 
                 &2 {
-                    color: $greenColor;
-                    border-radius: 8px;
-                    padding: 10px;
-                    background-color: #e8ddf2;
+                    color: $greyColor;
+                    font-weight: 500;
+
+                    &:hover {
+                        transition: 1.3s;
+                        color: $greenColor;
+                        text-decoration: underline;
+                    }
 
                     a {
                         text-decoration: none;

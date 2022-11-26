@@ -9,7 +9,7 @@ import { Link } from "react-router-dom"
 const Cards = () => {
      return (
           <section>
-               <div className="p-4 grid grid-cols-2 gap-4 gap-y-8 mb-10 md:max-w-3xl mx-auto xl:grid-cols-3 xl:max-w-5xl">
+               <div className="p-4 grid grid-cols-2 gap-12 gap-y-8 mb-10 md:max-w-3xl mx-auto xl:grid-cols-3 xl:max-w-6xl">
 
                     <div className="border-solid border border-card_border w-full rounded-tl-3xl rounded-br-3xl bg-[#E8DDF2] p-4 md:max-w-sm md:p-4 xl:">
                          <div className="mb-3">

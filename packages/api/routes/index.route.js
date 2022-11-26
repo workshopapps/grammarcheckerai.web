@@ -4,7 +4,7 @@ const { auth } = require('../routes/auth.routes');
 const conversationRouter = require('./conversationRouter');
 const testRoute = require('./testRoutes');
 const quizRoute = require('./quizRoutes');
-const contactRoute = require ('./contactRoutes')
+const contactRoute = require('./contactRoutes')
 const verify = require('../middlewares/auth.middleware');
 const newsletter = require('../routes/newsLetterRoute')
 
@@ -16,4 +16,3 @@ routeHandler.use('/quiz', quizRoute);
 routeHandler.use("/contact", contactRoute)
 routeHandler.use('/newsletter', newsletter);
 module.exports = { routeHandler };
-

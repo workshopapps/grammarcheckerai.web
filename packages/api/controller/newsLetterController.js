@@ -1,6 +1,6 @@
 const sgMail = require('@sendgrid/mail');
 const sgClient = require('@sendgrid/client');
-const { environment}= require('../config/environment')
+const { environment } = require('../config/environment')
 
 sgMail.setApiKey(environment.SENDGRID_API_KEY);
 sgClient.setApiKey(environment.SENDGRID_API_KEY);
@@ -9,7 +9,7 @@ sgClient.setApiKey(environment.SENDGRID_API_KEY);
 exports.postSignup = async (req, res) => {
   const confNum = randNum();
   const params = new URLSearchParams({
-    conf_num: confNum, 
+    conf_num: confNum,
     email: req.body.email,
   });
   const confirmationURL = req.protocol + '://' + req.headers.host + '/confirm/?' + params;
@@ -19,27 +19,27 @@ exports.postSignup = async (req, res) => {
     subject: `Confirm your subscription to our newsletter`,
     html: `Hello ${req.body.email},<br>Thank you for subscribing to our newsletter. Please complete and confirm your subscription by <a href="${confirmationURL}"> clicking here</a>.`
   }
-    await addContact(req.body.email, confNum);
-    await sgMail.send(msg);
-    return res.status(200).json({ message: 'Thank you for signing up for our newsletter! Please complete the process by confirming the subscription in your email inbox.' });
+  await addContact(req.body.email, confNum);
+  await sgMail.send(msg);
+  return res.status(200).json({ message: 'Thank you for signing up for our newsletter! Please complete the process by confirming the subscription in your email inbox.' });
 };
 
-exports.getConfirm =  async (req, res) => {
+exports.getConfirm = async (req, res) => {
   try {
     const contact = await getContactByEmail(req.query.email);
-    if(contact === null) {
-        throw `Contact not found.`;
+    if (contact == null) {
+      throw `Contact not found.`;
     }
-    if (contact.custom_fields.conf_num ==  req.query.conf_num) {
+    if (contact.custom_fields.conf_num == req.query.conf_num) {
       const listID = await getListID('Newsletter Subscribers');
       await addContactToList(req.query.email, listID);
     } else {
       throw 'Confirmation number does not match';
     }
-    return res.status(200).json( 
-    { 
-      message: 'You are now subscribed to our newsletter. We can\'t wait for you to hear from us!' 
-    });
+    return res.status(200).json(
+      {
+        message: 'You are now subscribed to our newsletter. We can\'t wait for you to hear from us!'
+      });
   } catch (error) {
     console.error(error);
     return res.status(400).json({ message: 'Subscription was unsuccessful. Please try again' });
@@ -47,12 +47,12 @@ exports.getConfirm =  async (req, res) => {
 };
 
 exports.postUpload = async (req, res) => {
-    const listID = await getListID('Newsletter Subscribers');
-    const htmlNewsletter = req.files.newsletter.data.toString();
-    await sendNewsletterToList(req, htmlNewsletter, listID)
-    return res.status(200).json({
-      message: 'Newsletter has been sent to all subscribers.'
-    });
+  const listID = await getListID('Newsletter Subscribers');
+  const htmlNewsletter = req.files.newsletter.data.toString();
+  await sendNewsletterToList(req, htmlNewsletter, listID)
+  return res.status(200).json({
+    message: 'Newsletter has been sent to all subscribers.'
+  });
 };
 
 function randNum() {
@@ -64,7 +64,7 @@ async function addContact(email, confNum) {
   const data = {
     "contacts": [{
       "email": email,
-       "custom_fields": {}
+      "custom_fields": {}
     }]
   };
 
@@ -129,7 +129,7 @@ async function sendNewsletterToList(req, htmlNewsletter, listID) {
     });
     const unsubscribeURL = req.protocol + '://' + req.headers.host + '/delete/?' + params;
     const msg = {
-      to: subscriber.email, 
+      to: subscriber.email,
       from: 'SENDER_EMAIL', // Change to your verified sender
       subject: req.body.subject,
       html: htmlNewsletter + `<a href="${unsubscribeURL}"> Unsubscribe here</a>`,
@@ -159,6 +159,6 @@ async function getContactByEmail(email) {
     body: data
   }
   const response = await sgClient.request(request);
-  if(response[1].result[email]) return response[1].result[email].contact;
+  if (response[1].result[email]) return response[1].result[email].contact;
   else return null;
 }

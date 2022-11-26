@@ -1,42 +1,80 @@
 import { useState, useEffect } from 'react'
 import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton'
-import successimg from '../../assets/success.svg';
 import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 
 export default function ChangePassword() {
-    const initialValues = {password: "", newPassword: "", confirmNewPassword: "" };
+    const initialValues = {newPassword: "", confirmNewPassword: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
+    const [btnActive, setBtnActive] = useState(true);
+    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
     const history = useNavigate();
+    const navigate = useNavigate();
+    const data = JSON.parse(localStorage.getItem("userData"));
+    const url = "https://grittygrammar.hng.tech/api/v1/user/profile/";
+    const token = localStorage.getItem("grittyusertoken");
+    const error = (message) => toast.error(message);
+    const success = (message) => toast.success(message);
+
+    const headersList = {
+        "Authorization": `Bearer ${token}`
+    }
+
+    const updateUserData = async () => {
+        let bodyContent = {
+            "email": data.email,
+            "firstName": data.firstName,
+            "lastName": data.lastName,
+            "language": data.language,
+            "username": data.username,
+            "password": formValues.newPassword,
+            "confirm_password": formValues.confirmNewPassword,
+        }
+        try {
+            const response = await fetch(url + "update", {
+            method: "POST",
+            body: JSON.stringify(bodyContent),
+            headers: {...headersList, "Content-Type": "application/json; charset=utf-8"}
+            });
+            const data = await response.json();
+            console.log(data);
+            success('password updated!');
+            setTimeout(() => navigate('/me/profile'), 3000);
+      
+        } catch (err) {
+            console.log(err);
+            error('error updating password.')
+        }
+    }
 
     const handleChange = (e) => {
         const {name, value} = e.target;
         setFormValues({...formValues, [name]: value});
+        
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setFormErrors(validate(formValues));
-        setIsSubmit(true);
-        setTimeout(() => {
-            setIsSubmit(false)
-        }, 3000)
+        updateUserData();
     };
 
     useEffect(() => {
-        Object.keys(formErrors).length === 0 && setFormValues({password: "", newPassword: "", confirmNewPassword: ""});
-    },[formErrors])
+        setFormErrors(validate(formValues));
+        if(regex.test(formValues.confirmNewPassword)) {
+            setBtnActive(false);
+        } else {
+            setBtnActive(true)
+        }
+    },[formValues.confirmNewPassword, formValues])
+
+    
 
     const validate = (values) => {
         const errors = {};
-        const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
-
-        if(!values.password) {
-            errors.password= "Please enter your old password";
-        }
+        
         if(!values.newPassword) {
             errors.newPassword= "Please enter a new password";
         }
@@ -53,25 +91,11 @@ export default function ChangePassword() {
     }
     
   return (
-    <div className='h-[100vh] w-[90%] md:w-[70%] lg:w-[70%] m-auto mt-24'>
-        <h1 className='text-2xl text-[#393939] text-center md:text-start font-bold'>Change your password</h1>
+    <div className='h-screen w-[90%] md:w-[70%] lg:w-[70%] m-auto pt-2 sm:pt-16'>
+        <h1 className='text-xl sm:text-2xl text-[#393939] text-center md:text-start font-bold'>Change your password</h1>
 
-        <form onSubmit={handleSubmit} className='mt-10 flex flex-col gap-5'>
-            <label className='flex flex-col'>
-                <span className='font-bold text-base md:text-lg lg:text-lg text-[#393939] mb-2'>Old password</span>
-                <input 
-                    className={formErrors.password ? '_input border-[#c51717]' : '_input border-[#d2d2d2]'} 
-                    type="password"
-                    name="password" 
-                    id="password" 
-                    placeholder='Enter your old password'
-                    value={formValues.password} 
-                    onChange={handleChange}
-                    />
-                    <p className="mt-2 text-[#c51717] text-lg">
-                     {formErrors.password}
-                    </p>
-            </label>
+        <form onSubmit={handleSubmit} className='mt-10 h-[90%] flex flex-col gap-5'>
+            
             <label className='flex flex-col'>
                 <span className='font-bold text-base md:text-lg lg:text-lg text-[#393939] mb-2'>New password</span>
                 <input 
@@ -105,11 +129,11 @@ export default function ChangePassword() {
 
             <div className="_btnContainer">
                 <ProfileScreenButton onClick={() => history(-1)} variant="secondary">Cancel</ProfileScreenButton>
-                <ProfileScreenButton onClick={handleSubmit}>Reset</ProfileScreenButton>
+                <ProfileScreenButton disabled={btnActive} onClick={handleSubmit}>Reset</ProfileScreenButton>
             </div>
         </form>
-
-        {Object.keys(formErrors).length === 0 && isSubmit ? <div className='mt-5 text-[#393939] bg-[#f5f5f5] px-4 rounded flex justify-center gap-3 py-2 text-center w-[50%] m-auto'><img src={successimg} alt='success'/>Password changed successfully</div> : null}
+        <Toaster />
+       
     </div>
   )
 }
