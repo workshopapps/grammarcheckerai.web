@@ -1,6 +1,13 @@
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const { environment } = require('../config/environment.js');
+const {
+  FB_CALLBACK_URL,
+  FB_CALLBACK_URL_DEV,
+  FB_CLIENT_ID,
+  FB_CLIENT_SERECT,
+  NODE_ENV,
+} = environment;
 const User = require('../database/models/userSchema.js');
 
 // used to serialize the user for the session
@@ -12,14 +19,17 @@ passport.serializeUser(function (user, cb) {
 passport.deserializeUser(function (obj, cb) {
   cb(null, obj);
 });
+const fbCallbackUrl =
+  NODE_ENV === 'development' ? FB_CALLBACK_URL_DEV : FB_CALLBACK_URL;
 
 //facebook strategy
 passport.use(
   new FacebookStrategy(
     {
-      clientID: environment.FB_CLIENT_ID,
-      clientSecret: environment.FB_CLIENT_SERECT,
-      callbackURL: environment.FB_CALLBACK_URL,
+      clientID: FB_CLIENT_ID,
+      clientSecret: FB_CLIENT_SERECT,
+      callbackURL: fbCallbackUrl,
+
       profileFields: [
         'id',
         'displayName',
@@ -44,12 +54,16 @@ passport.use(
 
       // register user
       try {
-        const newUser = await new User.userCollection({
+        const newUser = new User.userCollection({
           provider: 'facebook',
           username: `user${profile.id}`,
           email: profile.emails[0].value,
-          name: profile.displayName,
-        }).save();
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
+          password: 'password',
+        });
+
+        await newUser.save();
 
         done(null, newUser);
       } catch (err) {
