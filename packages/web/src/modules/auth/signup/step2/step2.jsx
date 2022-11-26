@@ -101,12 +101,12 @@ const index = () => {
 
   */
 
-  const handleGoogleAuth = () => {
+  const useFetch = (url) => {
     var requestOptions = {
       method: 'GET',
       redirect: 'follow',
     };
-    fetch('https://grittygrammar.hng.tech/api/v1/auth/google', requestOptions)
+    fetch(url, requestOptions)
       .then((response) => response.text())
       .then((result) => {
         const oBJ = JSON.parse(result);
@@ -115,8 +115,12 @@ const index = () => {
       .catch((err) => error(err.message));
   };
 
+  const handleGoogleAuth = () => {
+    useFetch('https://grittygrammar.hng.tech/api/v1/auth/google');
+  };
+
   /* 
-    handleGoogleAuth handles the Facebook social login. 
+    handleFacebookAuth handles the Facebook social login. 
 
     This redirects to the endpoint which gets a usertoken from facebook
     Then redirects to the provided URL token for account creation
@@ -124,21 +128,11 @@ const index = () => {
   */
 
   const handleFacebookAuth = () => {
-    var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-    fetch('https://grittygrammar.hng.tech/api/v1/auth/facebook', requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        const oBJ = JSON.parse(result);
-        window.location.href = oBJ.message;
-      })
-      .catch((err) => error(err.message));
+    useFetch('https://grittygrammar.hng.tech/api/v1/auth/facebook');
   };
 
   /* 
-    handleGoogleAuth handles the LinkedIn social login. 
+    handleLinkedInAuth handles the LinkedIn social login. 
 
     This redirects to the endpoint which gets a usertoken from linkedin
     Then redirects to the provided URL token for account creation
@@ -146,18 +140,9 @@ const index = () => {
   */
 
   const handleLinkedInAuth = () => {
-    var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-    fetch('https://grittygrammar.hng.tech/api/v1/auth/linkedin', requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        const oBJ = JSON.parse(result);
-        window.location.href = oBJ.message;
-      })
-      .catch((err) => error(err.message));
+    useFetch('https://grittygrammar.hng.tech/api/v1/auth/linkedin');
   };
+
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div step-theme={context.theme} className={styles._gs2mainsignup}>

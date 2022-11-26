@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState , useEffect } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import './App.css';
 import Fallback from './components/Fallback/Fallback';
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom';
