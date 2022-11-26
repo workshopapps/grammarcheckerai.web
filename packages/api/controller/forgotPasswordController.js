@@ -1,32 +1,39 @@
 const { response } = require("../utilities/response");
-const { register, findOne } = require("../repository/user.repository");
 const { userCollection } = require("../database/models/userSchema");
-const Email = require("../services/email.service");
-const { generateToken, verifyJWTToken } = require("../utilities/generateToken");
+const { environment } = require("../config/environment.js");
+const { verifyJWTToken } = require("../utilities/generateToken");
+const emailService = require("../services/email.service");
+
+const { BASE_URL, RESET_PASSWORD_TEMPLATE_ID } = environment;
 
 exports.requestForgotPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
-    const checkEmailExist = await userCollection.findOne({ email });
+    const user = await userCollection.findOne({ email });
 
-    if (!checkEmailExist) {
-      return res
-        .status(409)
-        .json(response({ message: "Email does not exist", success: false }));
+    if (!user) {
+      return res.status(409).json(
+        response({
+          message: `User with email ${email} does not exist`,
+          success: false,
+        })
+      );
     }
 
-    const token = generateToken({ email });
+    const token = user.generateAuthToken();
+    const reset_password_url = `${BASE_URL}/v1/auth/password-reset?token=${token}`;
 
-    const reset_password_url = `${process.env.MISC_URL}/reset_password?token=${token}`;
-    const send_reset_email = new Email(
-      email,
-      firstName,
-      "Welcome to Gritty Grammer",
-      reset_password_url
-    );
+    await emailService({
+      to: email,
+      subject: "Password Reset",
+      templateId: RESET_PASSWORD_TEMPLATE_ID,
+      data: {
+        name: user.firstName,
+        action_url: reset_password_url,
+      },
+    });
 
-    await send_reset_email.send();
     return res.status(200).json(
       response({
         message: "A mail was just sent to this email address",
@@ -44,21 +51,22 @@ exports.requestForgotPassword = async (req, res) => {
 };
 
 exports.resetPassword = async (req, res) => {
-  const { new_password, confirm_password, user_token } = req.body;
+  const { new_password, confirm_password } = req.body;
+  const { token } = req.query;
 
   try {
     //Check if the user already exist
     if (new_password !== confirm_password) {
-      res.status(422).json(
+      return res.status(422).json(
         response({
           success: false,
-          error: "Password mismatch",
-          message: "Comfirm your password",
+          message: "Password mismatch, Comfirm your password",
         })
       );
     }
 
-    const decodeToken = await verifyJWTToken(user_token);
+    const decodeToken = await verifyJWTToken(token);
+
     if (!decodeToken) {
       return res
         .status(401)
@@ -66,17 +74,17 @@ exports.resetPassword = async (req, res) => {
     }
 
     const { email } = decodeToken;
-
-    const checkEmailExist = await userCollection.findOne({ email });
-    if (!checkEmailExist) {
+    const user = await userCollection.findOne({ email });
+    if (!user) {
       return res
         .status(409)
         .json(response({ message: "User does not exist", success: false }));
     }
 
-    await checkEmailExist.update({
-      password: new_password,
-      confirm_password,
+    const password = await user.generateHash(new_password);
+
+    await user.updateOne({
+      password,
     });
 
     return res.status(200).json(

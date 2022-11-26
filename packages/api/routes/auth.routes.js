@@ -5,6 +5,7 @@ const {
   registerValidationRules,
   reset_password,
   request_reset_password,
+  loginValidationRules,
 } = require("../utilities/validation/auth.validation");
 const {
   registerUser,
@@ -14,7 +15,7 @@ const { googleAuthURL } = require("../controller/auth/google.user.controller");
 const { linkedin } = require("./linkedin-auth");
 const { login } = require("../controller/loginController");
 const { logout } = require("../controller/logoutcontroller");
-const facebook = require("./facebookAuth");
+const { facebook } = require("./facebookAuth");
 const {
   requestForgotPassword,
   resetPassword,
@@ -31,7 +32,7 @@ auth.post(
 );
 auth.post("/password-reset", reset_password(), validate, resetPassword);
 
-auth.post("/login", login);
+auth.post("/login", loginValidationRules(), validate, login);
 auth.post("/logout", logout);
 auth.use("/linkedin", linkedin);
 auth.use("/facebook", facebook);
