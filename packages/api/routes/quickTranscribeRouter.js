@@ -6,3 +6,4 @@ const uploadFile = require('../middlewares/audio.middleware.js');
 router.post('/', uploadFile, quickTranscribe);
 
 module.exports = router;
+
