@@ -1,9 +1,8 @@
 const sgMail = require('@sendgrid/mail');
 const sgClient = require('@sendgrid/client');
 const { environment } = require('../config/environment')
-
-sgMail.setApiKey(environment.SENDGRID_API_KEY);
-sgClient.setApiKey(environment.SENDGRID_API_KEY);
+const {SENDGRID_API_KEY} =environment;
+sgMail.setApiKey(SENDGRID_API_KEY); 
 
 // Routes
 exports.postSignup = async (req, res) => {
