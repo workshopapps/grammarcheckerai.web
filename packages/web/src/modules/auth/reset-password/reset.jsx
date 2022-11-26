@@ -35,10 +35,14 @@ const index = () => {
     const url = "http://grittygrammar.hng.tech/password-reset";
 
   const handleSaveNewPassword = () => {
-    if ((userConfirmNewPassword !== userNewPassword && userConfirmNewPassword === '') || userNewPassword === '') {
+    if ((userConfirmNewPassword !== userNewPassword)) {
       console.log(userConfirmNewPassword);
       console.log(userNewPassword);
-      error('Passwords are incorrect');
+      error("Passwords do not match!");
+    }
+
+    else if ((userConfirmNewPassword === "" ) && (userNewPassword === "" )){
+      error("Password cannot be empty!")
     }
     else {
       axios.post(url, {
