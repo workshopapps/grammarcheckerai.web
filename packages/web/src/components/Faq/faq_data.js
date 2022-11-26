@@ -10,9 +10,7 @@ const data = [
     id: 2,
     img: 'https://res.cloudinary.com/dpokiomqq/image/upload/v1668864588/tag_yrgahs.png',
     title: 'Contact Gritty Grammar Support?',
-    para: 'Gritty Grammar’s support team is here to help with any questions or concerns you might have. Send an email to Support@GrittyGrammar.com',
-    para2:
-      'Tip: Please include as much information to describe your issue, so the team can promptly help you find you a solution.',
+    para: 'Gritty Grammar’s support team is here to help with any questions or concerns you might have. Send an email to Support@GrittyGrammar.com ',
   },
 
   {
