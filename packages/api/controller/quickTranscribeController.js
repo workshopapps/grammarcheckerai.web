@@ -9,8 +9,7 @@ const quickTranscribe = async (req, res) => {
   try {
     const audioFile = req.file; // retrieves file buffer and metadata set by multer
     const dummyAudioUrl = req.file.originalname; // TODO: use aws s3 bucket file upload url
-
-    console.log(audioFile);
+ 
     // checks if file is available
     if (!audioFile) {
       return res.status(400).send({
@@ -40,9 +39,7 @@ const quickTranscribe = async (req, res) => {
       transcribedAudioText,
       'English'
     );
-
-    // console.log(grammarCheckResponse.correctUserResponseInTxt);
-
+ 
     // Handling OpenAI Grammar Correction Error
     if (!grammarCheckResponse) {
       return res.status(500).send({
@@ -52,13 +49,6 @@ const quickTranscribe = async (req, res) => {
     }
 
     const { correctUserResponseInTxt } = grammarCheckResponse;
-
-    // return res.status(200).json({
-    //   mgs: 'trans',
-    //   test: transcribedAudioText,
-    //   correct: transcribedAudioText,
-    //   //   correct: grammarCheckResponse.correctUserResponseInTxt,
-    // });
 
     res.status(200).json({
       success: true,
@@ -74,10 +64,7 @@ const quickTranscribe = async (req, res) => {
       message: err,
     });
   }
-
-  //   return res.status(200).json({
-  //     mgs: 'Quick test',
-  //   });
+ 
 };
 
 module.exports = quickTranscribe;
