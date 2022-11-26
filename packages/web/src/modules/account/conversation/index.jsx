@@ -6,18 +6,14 @@ import styles from './index.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import ChatContainer from './chat-container';
-import useSendAudioFile from '../../../hooks/account/useSendAudio';
 import SeletedLanguage from '../../../components/SelectedLanguage';
 import CustomRecorder from './chat';
-
-// import lamejs from 'lamejs';
 
 function Conversation() {
   const context = useTheme();
   const navigate = useNavigate();
   const [chats, setChats] = React.useState([]);
   const chatRef = useRef(null);
-  const sendAudio = useSendAudioFile();
 
   useEffect(() => {
     handleScroll();
@@ -25,7 +21,9 @@ function Conversation() {
   }, [chats]);
 
   const handleScroll = () => {
-    chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    setTimeout(() => {
+      chatRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 1000);
   };
 
   return (
@@ -33,7 +31,6 @@ function Conversation() {
       initial={{ opacity: 0.1 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      ref={chatRef}
       className={`min-h-screen scroll-smooth space-y-6 flex pb-10 flex-col ${styles._convo} ${
         context.theme === 'dark' ? styles.convo_theme : null
       } `}
@@ -76,7 +73,7 @@ function Conversation() {
             <ChatContainer chats={chats} />
           )}
           <div>
-            <div className="mx-auto flex items-center justify-center">
+            <div className="mx-auto flex items-center justify-center" ref={chatRef}>
               <CustomRecorder setChats={setChats} />
             </div>
             <div className="pt-14 h-28">

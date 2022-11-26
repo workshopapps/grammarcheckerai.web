@@ -67,7 +67,7 @@ export default function CustomRecorder({ setChats }) {
       });
   };
 
-  const handleAudioUpload = (file) => {
+  const handleAudioUpload = () => {
     // console.log(file, 'file');
   };
 
