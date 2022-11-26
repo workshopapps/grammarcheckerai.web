@@ -9,10 +9,13 @@ import { BsDownload, BsClock, BsFillPersonLinesFill } from 'react-icons/bs';
 
 function DashboardLayout() {
   const [nav, setNav] = useState(false);
+  const toggleNav = () => {
+    setNav(!nav)
+  }
 
   return (
     <div className="flex min-h-screen">
-      <button onClick={() => setNav(!nav)} className="absolute sm:hidden top-4 left-4">
+      <button onClick={() => setNav(!nav)} className="absolute z-[100] sm:hidden top-4 left-4">
         <img src={hamburger} alt="hamburger" />
       </button>
       <div className="md:w-80 h-full bg-[#F6F6F6] max-h-screen min-h-screen z-[100] hidden sm:block sm:sticky top-0">
@@ -37,7 +40,7 @@ function DashboardLayout() {
           </SidebarLink>
         </div>
       </div>
-      <MobileNav nav={nav} setNav={setNav} />
+      <MobileNav nav={nav} toggleNav={toggleNav} />
       <div className="w-full pt-5">
         {/* <div className="py-7 border-b border-slate-300 w-full"></div> */}
         <Outlet />
