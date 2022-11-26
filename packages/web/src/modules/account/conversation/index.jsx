@@ -17,13 +17,12 @@ function Conversation() {
 
   useEffect(() => {
     handleScroll();
-    console.log('something changed');
   }, [chats]);
 
   const handleScroll = () => {
     setTimeout(() => {
       chatRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 1000);
+    }, 600);
   };
 
   return (
@@ -35,9 +34,7 @@ function Conversation() {
         context.theme === 'dark' ? styles.convo_theme : null
       } `}
     >
-      <div className=" flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto">
-        {/*  eslint-disable-next-line jsx-a11y/media-has-caption */}
-        {/* <audio controls src={audioResult} /> */}
+      <div className=" flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto justify-between">
         <div className="w-36">
           <Link to="/home">
             <img src={logoImg} alt="" className="max-w-full" />
