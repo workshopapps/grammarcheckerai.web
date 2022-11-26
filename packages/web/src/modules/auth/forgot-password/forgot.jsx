@@ -21,7 +21,7 @@ const index = () => {
     navigate('/signin');
   };
 
-  const url = "http://grittygrammar.hng.tech/api/request-password-reset";
+  const url = "http://grittygrammar.hng.tech/request-password-reset";
 
   const handleSendResetLink = (e) => {
     e.preventDefault();

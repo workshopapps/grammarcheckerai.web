@@ -31,11 +31,11 @@ function Conversation() {
       initial={{ opacity: 0.1 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className={`min-h-screen scroll-smooth space-y-6 flex pb-10 flex-col ${styles._convo} ${
+      className={`min-h-screen space-y-6 flex pb-10 flex-col ${styles._convo} ${
         context.theme === 'dark' ? styles.convo_theme : null
       } `}
     >
-      <div className="flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto items-center justify-between">
+      <div className=" flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto">
         {/*  eslint-disable-next-line jsx-a11y/media-has-caption */}
         {/* <audio controls src={audioResult} /> */}
         <div className="w-36">

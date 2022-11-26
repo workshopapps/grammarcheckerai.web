@@ -1,4 +1,7 @@
 import empty from '../../../assets/empty.svg';
+
+
+
 function HistoryEmpty() {
   return (
     <div className="flex justify-center items-center flex-col sm:px-0 px-4 min-h-screen">
