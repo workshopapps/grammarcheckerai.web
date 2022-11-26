@@ -4,6 +4,7 @@ const {
   getTranscriptionFromAssembly,
 } = require('../scripts/assemblyAi');
 const grammarCheckHandler = require('../scripts/grammarCheck');
+const { response } = require('../utilities/response');
 
 const quickTranscribe = async (req, res) => {
   try {
@@ -59,10 +60,10 @@ const quickTranscribe = async (req, res) => {
       },
     });
   } catch (err) {
-    return res.status(500).json({
+    return res.status(500).json(response({
       success: false,
       message: err,
-    });
+    }));
   }
  
 };
