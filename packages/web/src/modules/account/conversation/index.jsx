@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import useTheme from '../../../hooks/useTheme';
 import logoImg from '../../../assets/images/logo.webp';
 import botImg from '../../../assets/images/bot.webp';
@@ -15,15 +15,26 @@ import CustomRecorder from './chat';
 function Conversation() {
   const context = useTheme();
   const navigate = useNavigate();
-  const sendAudio = useSendAudioFile();
   const [chats, setChats] = React.useState([]);
+  const chatRef = useRef(null);
+  const sendAudio = useSendAudioFile();
+
+  useEffect(() => {
+    handleScroll();
+    console.log('something changed');
+  }, [chats]);
+
+  const handleScroll = () => {
+    chatRef.current.scrollTop = chatRef.current.scrollHeight;
+  };
 
   return (
     <motion.div
       initial={{ opacity: 0.1 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className={`min-h-screen space-y-6 flex pb-10 flex-col ${styles._convo} ${
+      ref={chatRef}
+      className={`min-h-screen scroll-smooth space-y-6 flex pb-10 flex-col ${styles._convo} ${
         context.theme === 'dark' ? styles.convo_theme : null
       } `}
     >
@@ -37,7 +48,7 @@ function Conversation() {
         </div>
         <SeletedLanguage />
       </div>
-      <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4">
+      <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4 scroll-smooth">
         <div className="text-center space-y-14">
           {chats.length === 0 ? (
             <>
@@ -62,53 +73,29 @@ function Conversation() {
               </div>
             </>
           ) : (
-            <ChatContainer />
+            <ChatContainer chats={chats} />
           )}
           <div>
             <div className="mx-auto flex items-center justify-center">
-              <CustomRecorder />
+              <CustomRecorder setChats={setChats} />
             </div>
             <div className="pt-14 h-28">
               <AnimatePresence mode="wait">
                 <motion.div key={status} e initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                  {
-                    status === 'idle' ? (
-                      <>
-                        {chats.length === 0 ? (
-                          <p className="text-[#262626]"></p>
-                        ) : (
-                          <button
-                            className="px-7 rounded-xl py-2 border border-[#5D387F]"
-                            onClick={() => navigate('/signin')}
-                          >
-                            Exit
-                          </button>
-                        )}
-                      </>
-                    ) : null
-                    // <div>
-                    //   <div className="flex items-center justify-center space-x-6 pt-5">
-                    //     <button
-                    //       className="h-6 w-6 rounded-full flex justify-center items-center"
-                    //       onClick={() => stopRecording()}
-                    //     >
-                    //       <img src={trashImg} alt="" className="w-full" />
-                    //     </button>
-                    //     <button
-                    //       className="h-6 w-6 rounded-full flex justify-center items-center"
-                    //       onClick={() => (status === 'paused' ? resumeRecording() : pauseRecording())}
-                    //     >
-                    //       <img src={pauseImg} alt="" className="w-full" />
-                    //     </button>
-                    //     <button
-                    //       className="h-6 w-6 rounded-full flex justify-center items-center"
-                    //       onClick={submitAudioHandler}
-                    //     >
-                    //       <img src={sendImg} alt="" className="w-full" />
-                    //     </button>
-                    //   </div>
-                    // </div>
-                  }
+                  {status === 'idle' ? (
+                    <>
+                      {chats.length === 0 ? (
+                        <p className="text-[#262626]"></p>
+                      ) : (
+                        <button
+                          className="px-7 rounded-xl py-2 border border-[#5D387F]"
+                          onClick={() => navigate('/signin')}
+                        >
+                          Exit
+                        </button>
+                      )}
+                    </>
+                  ) : null}
                 </motion.div>
               </AnimatePresence>
             </div>

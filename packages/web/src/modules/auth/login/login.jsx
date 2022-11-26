@@ -15,7 +15,6 @@ import useLogin from '../../../hooks/auth/useLogin';
 import useTheme from '../../../hooks/useTheme';
 
 const index = () => {
-  const context = useTheme();
   const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [existingUserName, setExistingUserName] = useLocalStorage('existingUserName', getStorageData('demoData'));
