@@ -9,15 +9,15 @@ sgClient.setApiKey(environment.SENDGRID_API_KEY);
 exports.postSignup = async (req, res) => {
   const confNum = randNum();
   const params = new URLSearchParams({
-    conf_num: confNum,
+    conf_num: confNum, 
     email: req.body.email,
   });
   const confirmationURL = req.protocol + '://' + req.headers.host + '/confirm/?' + params;
   const msg = {
     to: req.body.email, // Change to your recipient
-    from: 'SENDER_EMAIL', // Change to your verified sender
+    from: 'akan.otong@pmt.ng', // Change to your verified sender
     subject: `Confirm your subscription to our newsletter`,
-    html: `Hello ${req.body.firstname},<br>Thank you for subscribing to our newsletter. Please complete and confirm your subscription by <a href="${confirmationURL}"> clicking here</a>.`
+    html: `Hello ${req.body.email},<br>Thank you for subscribing to our newsletter. Please complete and confirm your subscription by <a href="${confirmationURL}"> clicking here</a>.`
   }
     await addContact(req.body.email, confNum);
     await sgMail.send(msg);
@@ -27,7 +27,7 @@ exports.postSignup = async (req, res) => {
 exports.getConfirm =  async (req, res) => {
   try {
     const contact = await getContactByEmail(req.query.email);
-    if(contact == null) {
+    if(contact === null) {
         throw `Contact not found.`;
     }
     if (contact.custom_fields.conf_num ==  req.query.conf_num) {
