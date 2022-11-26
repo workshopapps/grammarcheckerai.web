@@ -7,13 +7,13 @@ const {
   uploadFileForURL,
   uploadFileUrlToInitiateTranscription,
   getTranscriptionFromAssembly,
-} = require("../scripts/assemblyAi");
+} = require("../scripts/assemblyAI.js");
 
 async function getBotResponse(req, res) {
   try {
     const conversationId = req.body.conversationId;
     const audioFile = req.file; // retrieves file buffer and metadata set by multer
-    const dummyAudioUrl = req.file.originalname; // TODO: use aws s3 bucket file upload url
+    const dummyAudioUrl = req.file?.originalname; // TODO: use aws s3 bucket file upload url
 
     // checks if file is available
     if (!audioFile) {
@@ -114,6 +114,7 @@ async function getBotResponse(req, res) {
       },
     });
   } catch (err) {
+    throw err;
     return res.status(500).send({
       success: false,
       message: err,

@@ -28,8 +28,6 @@ async function login(req, res) {
   if (!validPassword) {
     return res.status(401).json({ msg: "Invalid email or password" });
   }
-  // const token = user.generateAuthToken();
-  // console.log(token);
   return res.status(200).json(
     response({
       success: true,

@@ -35,6 +35,7 @@ exports.uploadFileForURL = async function (bufferData) {
         body: bufferData,
         method: 'POST'
     };
+    
 
     try {
         let response = await fetch(url, params);

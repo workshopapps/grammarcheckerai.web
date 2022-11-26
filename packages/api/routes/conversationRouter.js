@@ -6,6 +6,7 @@ const startConversation = require("../controller/startConversationController");
 const {
   userConversationAccess,
 } = require("../middlewares/UserRestriction/userAccessControl");
+const textResponse = require("../controller/sendTextController");
 
 const create = require("../middlewares/s3.js");
 const uploadAudio = require("../middlewares/s3Bucket.js");
@@ -17,5 +18,6 @@ conversationRouter.post("/uploadAudio", uploadAudio.single("file"), saveAudio);
 conversationRouter.get("/start", userConversationAccess, startConversation);
 conversationRouter.get("/end", endConversation);
 conversationRouter.post("/sendAudio", uploadFile, getBotResponse);
+conversationRouter.post("/sendText", textResponse);
 
 module.exports = conversationRouter;
