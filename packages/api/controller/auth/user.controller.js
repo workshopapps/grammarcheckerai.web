@@ -1,10 +1,11 @@
 const { response } = require("../../utilities/response");
 const { getTokens } = require("./google.user.controller");
-const { register, findOne } = require("../../repository/user.repository");
-const { loginUser } = require("../loginController");
+const { register } = require("../../repository/user.repository"); 
 const { userCollection } = require("../../database/models/userSchema");
-const { slugify } = require("../../utilities/compare");
-const Email = require("../../services/email.service");
+const { slugify } = require("../../utilities/compare"); 
+const emailService = require("../../services/email.service");
+const { environment } = require("../../config/environment");
+const { SIGNUP_TEMPLATE_ID } = environment;
 
 async function registerUser(req, res) {
   let {
@@ -23,8 +24,7 @@ async function registerUser(req, res) {
       : res.status(422).json(
           response({
             success: false,
-            error: "Password mismatch",
-            message: "Comfirm your password",
+            message: "Password mismatch, Comfirm your password",
           })
         );
 
@@ -37,14 +37,15 @@ async function registerUser(req, res) {
 
   const data = { email, firstName, lastName, username, password, language };
 
-  const SendWelcomeEmail = new Email(
-    email,
-    firstName,
-    "Welcome to Gritty Grammer",
-    "/signin"
-  );
-
-  await SendWelcomeEmail.send();
+  await emailService({
+    to: email, 
+    subject: "Welcome to Speak Better",
+    templateId: SIGNUP_TEMPLATE_ID,
+    data: {
+      name: firstName,
+      action_url: "/signin",
+    },
+  });
 
   const user = await register(data);
 
@@ -68,8 +69,7 @@ async function googleAuthUserSignUp(req, res) {
   //Check if user already exist
   const user = await userCollection.findOne({ email });
 
-  if (user) { 
-
+  if (user) {
     const data = {
       _id: user._id,
       firstname: user.firstName,
@@ -104,15 +104,13 @@ async function googleAuthUserSignUp(req, res) {
         .status(500)
         .json(response({ success: false, message: "User not created" }));
 
-        return res
-        .status(201)
-        .json(
-          response({
-            success: true,
-            message: "User created successfully",
-            data: user,
-          })
-        );
+    return res.status(201).json(
+      response({
+        success: true,
+        message: "User created successfully",
+        data: user,
+      })
+    );
   }
 }
 module.exports = { registerUser, googleAuthUserSignUp };

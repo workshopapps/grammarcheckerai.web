@@ -7,7 +7,7 @@ const classes = {
     disabled: 'opacity-50 cursor-not-allowed',
     size: {
         small: 'px-2 py-1 text-sm',
-        normal: 'px-[40px] py-[16px] md:py-[20px] lg:py-[20px]',
+        normal: 'h-[56px] px-[25px]',
         large: 'px-[40px] py-[24px] text-xl'
     },
     variant: {

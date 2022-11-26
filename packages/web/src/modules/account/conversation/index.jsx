@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import useTheme from '../../../hooks/useTheme';
 import logoImg from '../../../assets/images/logo.webp';
 // import botImg from '../../../assets/images/bot.webp';
 import micImg from '../../../assets/images/mic.svg';
@@ -7,41 +8,26 @@ import sendImg from '../../../assets/images/send.svg';
 import pauseImg from '../../../assets/images/pause.svg';
 import styles from './index.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useAudioRecorder } from '@sarafhbk/react-audio-recorder';
-import { convertSecToMin } from '../../../lib/utils';
 import { Link, useNavigate } from 'react-router-dom';
-// import { Configuration, OpenAIApi } from 'openai';
 import ChatContainer from './chat-container';
-import useSendAudioFile from '../../../hooks/account/useSendAudio';
+import SeletedLanguage from '../../../components/SelectedLanguage';
+import CustomRecorder from './chat';
 import RiveBot from '../../../components/RiveBot';
 
 function Conversation() {
+  const context = useTheme();
   const navigate = useNavigate();
-  const sendAudio = useSendAudioFile();
-  const {
-    audioResult,
-    timer,
-    startRecording,
-    stopRecording,
-    pauseRecording,
-    status,
-    resumeRecording,
-    // errorMessage,
-  } = useAudioRecorder();
   const [chats, setChats] = React.useState([]);
+  const chatRef = useRef(null);
 
-  const submitAudioHandler = async () => {
-    sendAudio.mutateAsync({
-      file: audioResult,
-    });
-    setChats((prev) => [
-      ...prev,
-      {
-        type: 'audio',
-        file: audioResult,
-      },
-    ]);
-    stopRecording();
+  useEffect(() => {
+    handleScroll();
+  }, [chats]);
+
+  const handleScroll = () => {
+    setTimeout(() => {
+      chatRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 600);
   };
 
   return (
@@ -49,18 +35,19 @@ function Conversation() {
       initial={{ opacity: 0.1 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className={`min-h-screen space-y-6 flex pb-10 flex-col ${styles._convo}`}
+      className={`min-h-screen space-y-6 flex pb-10 flex-col ${styles._convo} ${
+        context.theme === 'dark' ? styles.convo_theme : null
+      } `}
     >
-      <div className="flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto">
-        {/*  eslint-disable-next-line jsx-a11y/media-has-caption */}
-        {/* <audio controls src={audioResult} /> */}
+      <div className=" flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto justify-between">
         <div className="w-36">
           <Link to="/home">
             <img src={logoImg} alt="" className="max-w-full" />
           </Link>
         </div>
+        <SeletedLanguage />
       </div>
-      <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4">
+      <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4 scroll-smooth">
         <div className="text-center space-y-14">
           {chats.length === 0 ? (
             <>
@@ -69,31 +56,28 @@ function Conversation() {
                 <RiveBot />
               </div>
               <div className="space-y-4">
-                <h2 className="text-xl text-[#262626] leading-relaxed sm:text-5xl">
+                <h2
+                  className={`text-xl ${
+                    context.theme === 'dark' ? 'text-[#ffffff]' : 'text-[#262626]'
+                  }  leading-relaxed sm:text-5xl`}
+                >
                   What would you like to say today?
                 </h2>
-                <p className="text-slate-600 text-md sm:text-[19px]">Each conversation bring you closer to fluency.</p>
+                <p
+                  className={` ${
+                    context.theme === 'dark' ? 'text-[#ffffff]' : 'text-slate-600'
+                  } text-md sm:text-[19px]`}
+                >
+                  Each conversation bring you closer to fluency.
+                </p>
               </div>
             </>
           ) : (
-            <ChatContainer />
+            <ChatContainer chats={chats} />
           )}
           <div>
-            <div className="mx-auto flex items-center justify-center">
-              <button
-                onClick={() => {
-                  status === 'idle' ? startRecording() : status === 'paused' ? resumeRecording() : pauseRecording();
-                }}
-                className={`rounded-full h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
-                  status === 'recording' ? styles._bot_mic : ''
-                }`}
-              >
-                <img src={micImg} alt="" className="max-w-full" />
-                <span style={{ '--i': 0 }}></span>
-                <span style={{ '--i': 1 }}></span>
-                <span style={{ '--i': 2 }}></span>
-                <span style={{ '--i': 3 }}></span>
-              </button>
+            <div className="mx-auto flex items-center justify-center" ref={chatRef}>
+              <CustomRecorder setChats={setChats} />
             </div>
             <div className="pt-14 h-28">
               <AnimatePresence mode="wait">
@@ -101,7 +85,7 @@ function Conversation() {
                   {status === 'idle' ? (
                     <>
                       {chats.length === 0 ? (
-                        <p className="text-[#262626]">Tap the Microphone to begin</p>
+                        <p className="text-[#262626]"></p>
                       ) : (
                         <button
                           className="px-7 rounded-xl py-2 border border-[#5D387F]"
@@ -111,31 +95,7 @@ function Conversation() {
                         </button>
                       )}
                     </>
-                  ) : (
-                    <div>
-                      <p>{convertSecToMin(timer)}</p>
-                      <div className="flex items-center justify-center space-x-6 pt-5">
-                        <button
-                          className="h-6 w-6 rounded-full flex justify-center items-center"
-                          onClick={() => stopRecording()}
-                        >
-                          <img src={trashImg} alt="" className="w-full" />
-                        </button>
-                        <button
-                          className="h-6 w-6 rounded-full flex justify-center items-center"
-                          onClick={() => (status === 'paused' ? resumeRecording() : pauseRecording())}
-                        >
-                          <img src={pauseImg} alt="" className="w-full" />
-                        </button>
-                        <button
-                          className="h-6 w-6 rounded-full flex justify-center items-center"
-                          onClick={submitAudioHandler}
-                        >
-                          <img src={sendImg} alt="" className="w-full" />
-                        </button>
-                      </div>
-                    </div>
-                  )}
+                  ) : null}
                 </motion.div>
               </AnimatePresence>
             </div>
