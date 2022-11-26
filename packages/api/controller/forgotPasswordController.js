@@ -13,14 +13,12 @@ exports.requestForgotPassword = async (req, res) => {
     const user = await userCollection.findOne({ email });
 
     if (!user) {
-      return res
-        .status(409)
-        .json(
-          response({
-            message: `User with email ${email} does not exist`,
-            success: false,
-          })
-        );
+      return res.status(409).json(
+        response({
+          message: `User with email ${email} does not exist`,
+          success: false,
+        })
+      );
     }
 
     const token = user.generateAuthToken();
@@ -39,7 +37,7 @@ exports.requestForgotPassword = async (req, res) => {
     return res.status(200).json(
       response({
         message: "A mail was just sent to this email address",
-        success: true, 
+        success: true,
       })
     );
   } catch (error) {
@@ -68,7 +66,7 @@ exports.resetPassword = async (req, res) => {
     }
 
     const decodeToken = await verifyJWTToken(token);
-    
+
     if (!decodeToken) {
       return res
         .status(401)
@@ -84,7 +82,7 @@ exports.resetPassword = async (req, res) => {
     }
 
     const password = await user.generateHash(new_password);
-	
+
     await user.updateOne({
       password,
     });
@@ -95,7 +93,7 @@ exports.resetPassword = async (req, res) => {
         success: true,
       })
     );
-  } catch (error) { 
+  } catch (error) {
     return res.status(500).json(
       response({
         message: "Something went wrong wile processing this request",
