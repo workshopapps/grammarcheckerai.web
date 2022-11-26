@@ -32,12 +32,8 @@ const report = [
   },
 ];
 
-
 const Detail = () => {
-  const [status, setStatus] = useState([]);
-
-
-
+  const [status, setStatus] = useState([]); 
   const apiTest = async () => {
     const data = await axios.get('https://grittygrammar.hng.tech/api/v1/test')
 
