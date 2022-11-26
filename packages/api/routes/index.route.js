@@ -7,6 +7,7 @@ const quizRoute = require("./quizRoutes");
 const contactRoute = require("./contactRoutes");
 const verify = require("../middlewares/auth.middleware");
 const quickTranscribe = require("./quickTranscribeRouter");
+const newsletter = require('../routes/newsLetterRoute')
 
 routeHandler.use("/auth", auth);
 routeHandler.use("/user", verify, userHandler);
@@ -15,5 +16,6 @@ routeHandler.use("/test", testRoute);
 routeHandler.use("/quiz", quizRoute);
 routeHandler.use("/quickTranscribe", quickTranscribe);
 routeHandler.use("/contact", contactRoute);
+routeHandler.use("/newsletter", newsletter)
 
 module.exports = { routeHandler };
