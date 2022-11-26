@@ -1,4 +1,4 @@
- require("dotenv").config();
+require('dotenv').config();
 const environment = {
   PORT: process.env.PORT,
   HOST: process.env.HOST,
@@ -18,6 +18,7 @@ const environment = {
   FB_CLIENT_ID: process.env.FB_CLIENT_ID,
   FB_CLIENT_SERECT: process.env.FB_CLIENT_SERECT,
   FB_CALLBACK_URL: process.env.FB_CALLBACK_URL,
+  FB_CALLBACK_URL_DEV: process.env.FB_CALLBACK_URL_DEV,
   FILE_SIZE: process.env.FILE_SIZE,
   API_KEY: process.env.API_KEY,
   MODEL_KEY: process.env.MODEL_KEY,
@@ -32,4 +33,4 @@ const environment = {
   RESET_PASSWORD_TEMPLATE_ID: process.env.RESET_PASSWORD_TEMPLATE_ID
 };
 
-module.exports = {environment}
+module.exports = { environment };
