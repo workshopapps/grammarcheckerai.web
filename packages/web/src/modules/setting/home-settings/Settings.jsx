@@ -44,7 +44,6 @@ function Settings() {
   let userDetails;
 
   const getLanguage = async () => {
-    console.log(userId, userToken);
     await axios
       .get(`http://grittygrammar.hng.tech/api/v1/user/profile/${userId}`, config) // Used my login details ID here as well
       .then((response) => {
