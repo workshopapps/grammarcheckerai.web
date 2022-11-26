@@ -4,12 +4,27 @@
     box-sizing: border-box;
 }
 
+
 .container{
     width: 90%;
     margin: auto;
+    margin-top: -8em;
+    padding-top: 8em;
+}
+.main_container[contact-theme='dark'],
+.container p[contact-theme='dark'],
+.element1 label[contact-theme='dark'],
+.element2 label[contact-theme='dark'],
+.element3 label[contact-theme='dark'],
+.element4 label[contact-theme='dark'],
+.boxes[contact-theme='dark']{
+    background: var(--bg-dark) ;
+    color: #e9e3e3 ;
+}
+.boxes[contact-theme='dark']{
+    color: #393939;;
 }
 .p1{
-    margin-top: 130px;
     font-weight: 700;
     font-size: 24px;
     line-height: 31px;

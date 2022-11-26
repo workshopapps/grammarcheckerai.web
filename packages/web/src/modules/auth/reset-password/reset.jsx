@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import axios from "axios";
 import { getStorageData, useLocalStorage } from '../../../hooks/useLocalStorage';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './reset.module.css';
@@ -31,16 +32,30 @@ const index = () => {
     handleSaveNewPassword => resets the originally saved database password
     to the new one when both inputs match
   */
+    const url = "http://grittygrammar.hng.tech/password-reset";
+
   const handleSaveNewPassword = () => {
     if ((userConfirmNewPassword !== userNewPassword && userConfirmNewPassword === '') || userNewPassword === '') {
       console.log(userConfirmNewPassword);
       console.log(userNewPassword);
       error('Passwords are incorrect');
-    } else {
-      success('Password reset Successful!');
-      setExistingUserPassword(userNewPassword);
-      console.log(existingUserPassword);
-      setTimeout(() => navigate('/signin'), 3000);
+    }
+    else {
+      axios.post(url, {
+        userNewPassword,
+        userConfirmNewPassword
+      })
+      .then((response) => {
+        console.log(response)
+        setExistingUserPassword(userNewPassword);
+        console.log(existingUserPassword);
+        setTimeout(() => navigate('/signin'), 3000);
+        success('Password reset Successful!');
+      })
+      .catch((err) => {
+        console.log(err)
+        error("Time out...try again!")
+      })
     }
   };
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
