@@ -129,29 +129,31 @@ function Settings() {
 
   return (
     <div className="px-6 font-semibold max-w-screen-lg mx-auto">
-      <div className="flex flex-col gap-4 mb-7 md:flex-row justify-between md:items-center">
-        <h1 className="text-center sm:border-b border-gray-400 py-4 text-2xl font-semibold md:border-0">Settings</h1>
-        <label
-          htmlFor="search"
-          className="relative flex items-center w-3/4 md:w-1/3 border border-gray-200 rounded-md pr-3"
-        >
-          <input
-            type="text"
-            id="search"
-            placeholder="Search for a setting"
-            className="w-full outline-0 border-0 px-3 py-2 font-normal"
-          />
-          <img className="" src={searchIcon} alt="search for a setting" />
-        </label>
-      </div>
-      <div className="flex flex-col gap-6">
-        {settingList.map((option, index) => {
-          return (
-            <SettingOption key={index} option={option} arrowRight={arrowRightIcon} openBar={subPage}>
-              {option.child}
-            </SettingOption>
-          );
-        })}
+      <div className="z-[150] relative">
+        <div className="flex flex-col gap-4 mb-7 md:flex-row justify-between md:items-center">
+          <h1 className="text-center sm:border-b border-gray-400 py-4 text-2xl font-semibold md:border-0">Settings</h1>
+          <label
+            htmlFor="search"
+            className="relative flex items-center w-3/4 md:w-1/3 border border-gray-200 rounded-md pr-3"
+          >
+            <input
+              type="text"
+              id="search"
+              placeholder="Search for a setting"
+              className="w-full outline-0 border-0 px-3 py-2 font-normal"
+            />
+            <img className="" src={searchIcon} alt="search for a setting" />
+          </label>
+        </div>
+        <div className="flex flex-col gap-6">
+          {settingList.map((option, index) => {
+            return (
+              <SettingOption key={index} option={option} arrowRight={arrowRightIcon} openBar={subPage}>
+                {option.child}
+              </SettingOption>
+            );
+          })}
+        </div>
       </div>
       {languageBar && <LanguageOption openBar={subPage} languageList={languageList} changeLanguage={changeLanguage} />}
     </div>
