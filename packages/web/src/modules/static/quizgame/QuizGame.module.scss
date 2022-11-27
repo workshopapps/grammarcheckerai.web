@@ -125,6 +125,29 @@
             padding: 10px;
         }
     }
+
+    &__err {
+        margin: 100px auto;
+
+        h3 {
+            color: red;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 30px;
+        }
+
+        a {
+            border: 1px solid $greyColor;
+            border-radius: 8px;
+            background-color: $greyColor;
+            color: $white;
+            padding: 10px;
+        }
+    }
 }
 
 

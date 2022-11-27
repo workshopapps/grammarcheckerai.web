@@ -6,7 +6,7 @@
   background-color: rgb(10, 10, 10);
   align-items: center;
   color: white;
-  z-index: 9999;
+  z-index: 1100;
   width: 100%;
 }
 ._header::before {
