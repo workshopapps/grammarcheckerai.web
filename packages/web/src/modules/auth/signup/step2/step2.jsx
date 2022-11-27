@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import useTheme from '../../../../hooks/useTheme';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import toast, { Toaster } from 'react-hot-toast';
@@ -16,6 +15,8 @@ import google from '../../../../assets/google.png';
 import apple from '../../../../assets/apple.png';
 import facebook from '../../../../assets/facebook.png';
 import Carousel from 'nuka-carousel';
+
+import useTheme from '../../../../hooks/useTheme';
 
 const index = () => {
   const [newUserName, setNewUserName] = useState('');
@@ -83,6 +84,7 @@ const index = () => {
           setUserToken(resToken);
           localStorage.setItem('grittyuserid', userId);
           localStorage.setItem('grittyusertoken', userToken);
+          localStorage.setItem('isdashboard', true);
           setTimeout(() => navigate('/me/home'), 5000);
         })
         .catch((err) => {

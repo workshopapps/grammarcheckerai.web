@@ -19,7 +19,7 @@ import Carousel from 'nuka-carousel';
 
 import useTheme from '../../../hooks/useTheme';
 
-const index = () => {
+const Index = () => {
   const context = useTheme();
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -73,6 +73,7 @@ const index = () => {
           setUserToken(resToken);
           localStorage.setItem('grittyuserid', userId);
           localStorage.setItem('grittyusertoken', userToken);
+          localStorage.setItem('isdashboard', true);
           setTimeout(() => navigate('/me/home'), 5000);
         })
         .catch((err) => {
@@ -258,4 +259,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
