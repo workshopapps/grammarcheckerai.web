@@ -74,7 +74,10 @@ const Index = () => {
           localStorage.setItem('grittyuserid', userId);
           localStorage.setItem('grittyusertoken', userToken);
           localStorage.setItem('isdashboard', true);
-          setTimeout(() => navigate('/me/home'), 5000);
+          setTimeout(() => {
+            window.location.replace('/me/home');
+            navigate('/me/home', { replace: true });
+          }, 5000);
         })
         .catch((err) => {
           error(err.message);

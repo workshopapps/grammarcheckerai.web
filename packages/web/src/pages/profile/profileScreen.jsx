@@ -81,6 +81,7 @@ export default function profileScreen() {
 
   const onSignOut = () => {
     localStorage.clear();
+    window.location.replace('/signin');
     location.reload();
   };
 
