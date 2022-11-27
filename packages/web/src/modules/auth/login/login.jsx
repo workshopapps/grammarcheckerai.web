@@ -16,7 +16,6 @@ import useLogin from '../../../hooks/auth/useLogin';
 import toast, { Toaster } from 'react-hot-toast';
 import PasswordMask from 'react-password-mask';
 import Carousel from 'nuka-carousel';
-
 import useTheme from '../../../hooks/useTheme';
 
 const Index = () => {

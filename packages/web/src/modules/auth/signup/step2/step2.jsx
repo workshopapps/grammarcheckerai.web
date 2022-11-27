@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -19,6 +20,7 @@ import Carousel from 'nuka-carousel';
 import useTheme from '../../../../hooks/useTheme';
 
 const index = () => {
+  const context = useTheme();
   const [newUserName, setNewUserName] = useState('');
   const [newUserFirstName, setNewUserFirstName] = useState('');
   const [newUserLastName, setNewUserLastName] = useState('');
@@ -28,7 +30,6 @@ const index = () => {
   const [newUserEmail, setNewUserEmail] = useState('');
   const [userId, setUserId] = useState('');
   const [userToken, setUserToken] = useState('');
-  const context = useTheme();
 
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
