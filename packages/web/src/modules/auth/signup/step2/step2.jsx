@@ -85,7 +85,7 @@ const index = () => {
           localStorage.setItem('grittyuserid', userId);
           localStorage.setItem('grittyusertoken', userToken);
           localStorage.setItem('isdashboard', true);
-          setTimeout(() => navigate('/me/home'), 5000);
+          setTimeout(() => navigate('/me/home', { replace: true }), 5000);
         })
         .catch((err) => {
           error(err.response.data.message);
