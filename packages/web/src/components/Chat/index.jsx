@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import botImg from '../../assets/images/bot.webp';
 import userImg from '../../assets/images/user.svg';
 import dayjs from 'dayjs';
+import RiveBot from '../RiveBot';
 
 function Chat({ isBot, isCorrection, createdAt = '11:20 AM', text, isLastReply }) {
   return (
@@ -27,7 +27,7 @@ function Chat({ isBot, isCorrection, createdAt = '11:20 AM', text, isLastReply }
 
       {isLastReply && (
         <div className={`mt-auto ${isBot ? 'w-16' : 'order-1 w-12'} `}>
-          <img src={isBot ? botImg : userImg} alt="" className="max-w-full" />
+          {isBot ? <RiveBot size="small" /> : <img src={userImg} alt="" className="max-w-full" />}
         </div>
       )}
     </div>
