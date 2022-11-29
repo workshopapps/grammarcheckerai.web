@@ -1,9 +1,20 @@
 const Sequelize = require('sequelize');
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   return conversation.init(sequelize, DataTypes);
 }
 
 class conversation extends Sequelize.Model {
+	static associate(models) {
+		conversation.belongsTo(models.user, {
+			foreignKey: "userId"
+		}),
+
+		conversation.hasMany(models.message, {
+			foreignKey: "id"
+		})
+	}
+
   static init(sequelize, DataTypes) {
   return super.init({
     id: {

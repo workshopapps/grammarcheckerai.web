@@ -1,9 +1,25 @@
 const Sequelize = require('sequelize');
+const { Model } = require('sequelize');
+const Joi = require("joi");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { environment } = require("../config/environment");
+const { JWT_SECRET } = environment;
+
 module.exports = (sequelize, DataTypes) => {
   return users.init(sequelize, DataTypes);
 }
 
 class users extends Sequelize.Model {
+	static associate(models) {
+		users.hasMany(models.conversation, {
+			foreignKey: "id"
+		}),
+
+		users.hasMany(models.message, {
+			foreignKey: "id"
+		})
+	}
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -80,3 +96,11 @@ class users extends Sequelize.Model {
   });
   }
 }
+
+users.afterCreate(async (user) => {
+	const salt = await bcrypt.genSalt(10);
+	let password = await bcrypt.hash(user.password, salt);
+	await user.update({
+		password: password
+	}, { where: { password: password } })
+})

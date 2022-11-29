@@ -28,7 +28,7 @@ async function registerUser(req, res) {
           })
         );
 
-  const checkEmailExist = await userCollection.findOne({ email });
+  const checkEmailExist = await user.findOne({ email });
 
   if (checkEmailExist)
     return res

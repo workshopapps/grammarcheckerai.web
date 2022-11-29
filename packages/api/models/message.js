@@ -4,6 +4,19 @@ module.exports = (sequelize, DataTypes) => {
 }
 
 class message extends Sequelize.Model {
+	static associate(models) {
+		message.belongsTo(models.users, {
+			foreignKey: "userResponseId"
+		}),
+
+		message.belongsTo(models.botresponse, {
+			foreignKey: "botResponseId"
+		}),
+
+		message.belongsTo(models.conversation, {
+			foreignKey: "conversationId"
+		})
+	}
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
