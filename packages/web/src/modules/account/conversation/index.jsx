@@ -1,13 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import useTheme from '../../../hooks/useTheme';
 import logoImg from '../../../assets/images/logo.webp';
-import botImg from '../../../assets/images/bot.webp';
+// import micImg from '../../../assets/images/mic.svg';
+// import trashImg from '../../../assets/images/trash.svg';
+// import sendImg from '../../../assets/images/send.svg';
+// import pauseImg from '../../../assets/images/pause.svg';
 import styles from './index.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import ChatContainer from './chat-container';
 import SeletedLanguage from '../../../components/SelectedLanguage';
 import CustomRecorder from './chat';
+import RiveBot from '../../../components/RiveBot';
 
 function Conversation() {
   const context = useTheme();
@@ -49,7 +53,8 @@ function Conversation() {
           {chats.length === 0 ? (
             <>
               <div className="mx-auto w-36 flex items-center justify-center">
-                <img src={botImg} alt="" className="max-w-full" />
+                {/* <img src={botImg} alt="" className="max-w-full" /> */}
+                <RiveBot size="large" />
               </div>
               <div className="space-y-4">
                 <h2
