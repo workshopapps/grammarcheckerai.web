@@ -7,7 +7,7 @@ pipeline {
 
 			steps {
 
-				sh "cd packages/web && npm install && npm run build"
+				sh "cd packages/web && npm install --force && npm run build"
 			}
 
 		
