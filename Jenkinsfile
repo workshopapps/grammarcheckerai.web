@@ -9,7 +9,7 @@ pipeline {
 				sh "cd packages/web"
 				sh "npm cache clean --force"
 
-				sh "npm i --force && npm run build"
+				sh "cd packages/web && npm i --force && npm run build"
 			} 
 
 		
