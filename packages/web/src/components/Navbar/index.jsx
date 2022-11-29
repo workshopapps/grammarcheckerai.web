@@ -12,6 +12,10 @@ import { BsSunFill } from 'react-icons/bs';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [activeNav, setActiveNav] = useState('Home');
+  
+
+
   const navigate = useNavigate();
 
   const context = useContext(ThemeContext);
@@ -30,11 +34,8 @@ const Navbar = () => {
       <button className={styles._nvlogo} onClick={() => navigate('/home')}>
         <img src={logoImg} alt="gritty" />
       </button>
-      <button
-        
-        className={`${styles._themeswitch} ${light ? 'bg-[#493f72]' : 'bg-[#f5f4f7]'} `}
-        onClick={toggleDarkMode}>
-        {light ? <FaMoon /> : <BsSunFill className='text-[#ff9100] transition-all' />}
+      <button className={`${styles._themeswitch} ${light ? 'bg-[#493f72]' : 'bg-[#f5f4f7]'} `} onClick={toggleDarkMode}>
+        {light ? <FaMoon /> : <BsSunFill className="text-[#ff9100] transition-all" />}
       </button>
 
       <div className={styles._nvmenu}>
@@ -48,7 +49,12 @@ const Navbar = () => {
               { title: 'Contact', to: '/contact' },
               // { title: 'Log in', to: '/signin' },
             ].map((item) => (
-              <NavLink to={item.to} key={item.title}>
+              <NavLink
+                to={item.to}
+                key={item.title}
+                onClick={(e) => setActiveNav(e.target.innerText)}
+                className={`${activeNav === item.title ? 'font-bold ' : ''} `}
+              >
                 {item.title}
               </NavLink>
             ))}
@@ -75,7 +81,12 @@ const Navbar = () => {
               { title: 'Log in', to: '/signin' },
               // { title: 'Sign Up', to: '/signup' },
             ].map((item) => (
-              <NavLink to={item.to} key={item.title}>
+              <NavLink
+                to={item.to}
+                key={item.title}
+                onClick={(e) => setActiveNav(e.target.innerText)}
+                className={`${activeNav === item.title ? 'font-bold ' : ''} `}
+              >
                 {item.title}
               </NavLink>
             ))}
