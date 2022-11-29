@@ -8,8 +8,8 @@ pipeline {
 			steps {
 
 				sh "cd packages/web"
-				sh "sudo npm install"
-				sh "sudo npm run build"
+				sh "npm install"
+				sh "npm run build"
 			}
 
 		
