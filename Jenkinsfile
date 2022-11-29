@@ -6,8 +6,10 @@ pipeline {
 		stage("build frontend"){
 
 			steps {
+				sh "cd packages/web"
+				sh "npm cache clean --force"
 
-				sh "cd packages/web && npm i --force && sudo npm i -g vite && npm run build"
+				sh "npm i --force && npm run build"
 			} 
 
 		
