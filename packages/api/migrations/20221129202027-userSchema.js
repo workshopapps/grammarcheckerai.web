@@ -10,13 +10,16 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING,
-				unique: true
+				unique: true,
+				allowNull: false
       },
       firstName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+				allowNull: false
       },
 			lastName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+				allowNull: false
       },
       password: {
         type: Sequelize.STRING
@@ -25,10 +28,12 @@ module.exports = {
         type: Sequelize.STRING
       },
       role: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+				defaultValue: "user"
       },
       language: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+				defaultValue: "English"
       },
       deviceID: {
         type: Sequelize.STRING
