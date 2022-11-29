@@ -21,12 +21,13 @@ pipeline {
 				sh "sudo cp -r ${WORKSPACE}/packages/web/dist/	/home/devineer/frontend"
 				sh "pm2 kill"
 				sh "cd /home/devineer && pm2 serve frontend 3333"
-
-	}
-			dir("/home/devineer/backend"){
+				dir("/home/devineer/backend"){
 				sh "c npm install && pm2 start server.js -- --port 5555"
 			
 			}
+
+	}
+			
 	}
 
 
