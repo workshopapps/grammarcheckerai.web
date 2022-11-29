@@ -4,7 +4,6 @@ const cors = require("cors");
 const session = require("express-session");
 const Memorystore = require("memorystore")(session);
 const { environment } = require("./config/environment");
-const { SESSION_SECRET } = environment;
 const expressFileUpload = require("express-fileupload");
 require("express-async-errors");
 require("./database/index");
@@ -14,6 +13,8 @@ require("./services/facebookStrategy");
 const { routeHandler } = require("./routes/index.route"),
   swaggerUi = require("swagger-ui-express"),
   swaggerDocument = require("./Tests/test.json");
+const { SESSION_SECRET } = environment;
+const Models = require('./models')
 
 //Passport Initialized
 app.use(passport.initialize()).use(express.json()).use(cors());
@@ -45,10 +46,12 @@ app.use(
     extended: true,
   })
 );
+
 app.get("*", (req, res) => {
   res.status(200).json({
     message: "Welcome to Grit Grammarly 🙌",
     user: "CORS enabled",
   });
 });
+
 module.exports = app;
