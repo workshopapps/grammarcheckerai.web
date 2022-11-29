@@ -2,13 +2,18 @@ pipeline {
 
 	agent any
 	stages {
+		
+		
 
 		stage("build frontend"){
+			
+			steps {
+			git "https://github.com/workshopapps/grammarcheckerai.web.git"
+			
+			}
 
 			steps {
 				sh "cd packages/web"
-				sh "npm cache clean --force"
-
 				sh "cd packages/web && npm i --force && npm run build"
 			} 
 
