@@ -7,8 +7,8 @@ pipeline {
 
 			steps {
 
-				sh "cd packages/web && npm i --force && npm run build"
-			}
+				sh "cd packages/web && npm i --force && npm i -g vite && npm run build"
+			} 
 
 		
 			}
