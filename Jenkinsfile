@@ -6,15 +6,10 @@ pipeline {
 		
 
 		stage("build frontend"){
-			
-			steps {
-			git "https://github.com/workshopapps/grammarcheckerai.web.git"
-			
-			}
 
 			steps {
 				sh "cd packages/web"
-				sh "cd packages/web && npm i --force && npm run build"
+				sh "cd packages/web && npm i --force && npm fund && npm run build"
 			} 
 
 		
