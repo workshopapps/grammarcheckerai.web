@@ -56,8 +56,9 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
 
   return (
     <>
-      {
-        errorMsg ? setShowQuiz(false) :
+      {errorMsg ? (
+        setShowQuiz(false)
+      ) : (
         <>
           {showQuiz ? (
             <div className={styles.quiz}>
@@ -97,9 +98,14 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
                         <li value={trivia.incorrectAnswers[3]} onClick={handleAnswer}>
                           {trivia.incorrectAnswers[3]}
                         </li> */}
-                        {trivia.incorrectAnswers && trivia.incorrectAnswers.map((element) => {
-                          return <li onClick={handleAnswer} key={element}>{element}</li>;
-                        })}
+                        {trivia.incorrectAnswers &&
+                          trivia.incorrectAnswers.map((element) => {
+                            return (
+                              <li onClick={handleAnswer} key={element}>
+                                {element}
+                              </li>
+                            );
+                          })}
                       </ul>
                     </>
                   )}
@@ -108,9 +114,9 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
             </div>
           ) : (
             ''
-          )} 
+          )}
         </>
-      }
+      )}
     </>
   );
 };
