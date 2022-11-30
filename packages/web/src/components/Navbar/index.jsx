@@ -87,17 +87,13 @@ const Navbar = () => {
       <button className={styles._nvlogo} onClick={() => navigate('/home')}>
         <img src={logoImg} alt="gritty" />
       </button>
-      {/* <button
-        
-        className={`${styles._themeswitch} ${light ? 'bg-[#493f72]' : 'bg-[#f5f4f7]'} `}
-        onClick={toggleDarkMode}>
-        {light ? <FaMoon /> : <BsSunFill className='text-[#ff9100] transition-all' />}
-      </button> */}
+
 
 <FormGroup>
       <FormControlLabel
+              className={`${styles._themeswitch} `}
+              onClick={toggleDarkMode}
         control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
-        label="MUI switch"
       />
     </FormGroup>
 
