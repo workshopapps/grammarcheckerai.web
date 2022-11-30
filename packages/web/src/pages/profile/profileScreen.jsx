@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import editicon from '../../assets/edit.svg';
 import toast, { Toaster } from 'react-hot-toast';
+import { ENDPOINTS } from '../../lib/constants';
 
 //components
 import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton';
@@ -13,7 +14,8 @@ export default function profileScreen() {
   const [newUsername, setNewUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const url = 'https://grittygrammar.hng.tech/api/v1/user/profile/';
+  const endpoint = ENDPOINTS.API_BASE_URL;
+  const url = endpoint + 'user/profile/';
   //const id = "56341e98-b07c-4374-bfcc-ddf766a52322";
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
@@ -132,12 +134,12 @@ export default function profileScreen() {
                   />
                 </form>
               )}
-              <span
+              <button
                 onClick={() => setOpenEdit(!openEdit)}
                 className={openEdit ? 'hidden' : 'absolute bottom-2 right-0 cursor-pointer'}
               >
                 <img src={editicon} alt="edit" />
-              </span>
+              </button>
             </div>
 
             <div className="hidden sm:block  border-b-[3px] border-[#d2d2d2]/50">
