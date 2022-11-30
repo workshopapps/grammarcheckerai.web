@@ -46,7 +46,7 @@
 ._gs2mainsignup[step-theme='dark'],
 ._gs2signupcontent h2[step-theme='dark'],
 ._gs2signupcontent ._subtitle[step-theme='dark'],
-._gssignuptophead[step-theme='dark']{
+._gssignuptophead[step-theme='dark'] {
   background-color: var(--bg-dark);
   color: rgb(233, 227, 227);
 }
@@ -149,6 +149,7 @@
   color: #fff;
   background: #5d387f;
   border-radius: 12px;
+  text-transform: lowercase;
 }
 ._gs2signupcontinue button:hover {
   font-style: normal;

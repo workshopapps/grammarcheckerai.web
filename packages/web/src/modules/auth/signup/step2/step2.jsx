@@ -250,7 +250,7 @@ const index = () => {
               </div>
               <div className={styles._gs2signupcontinue}>
                 <LoadingButton size="small" type="submit" loading={authSignup.isLoading} variant="contained">
-                  Create Account
+                  create account
                 </LoadingButton>
                 <div className={styles._gs2signupsignin}>
                   <p>
