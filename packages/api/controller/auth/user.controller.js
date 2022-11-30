@@ -1,11 +1,12 @@
 const { response } = require("../../utilities/response");
 const { getTokens } = require("./google.user.controller");
-const { register } = require("../../repository/user.repository");
-const { userCollection } = require("../../database/models/userSchema");
-const { slugify } = require("../../utilities/compare");
+const { register } = require("../../repository/user.repository"); 
+const { users } = require("../../models");
+const { slugify } = require("../../utilities/compare"); 
 const emailService = require("../../services/email.service");
 const { environment } = require("../../config/environment");
-const { SIGNUP_TEMPLATE_ID, BASE_URL } = environment;
+const { SIGNUP_TEMPLATE_ID } = environment;
+const bcrypt = require("bcryptjs");
 
 async function registerUser(req, res) {
   let {
@@ -28,31 +29,33 @@ async function registerUser(req, res) {
           })
         );
 
-  const checkEmailExist = await userCollection.findOne({ email });
+  const checkEmailExist = await users.findOne({  where: { email } });
 
   if (checkEmailExist)
     return res
       .status(409)
       .json(response({ message: "User already exist", success: false }));
 
-  const data = { email, firstName, lastName, username, password, language };
+	const salt = await bcrypt.genSalt(10);
+	password = await bcrypt.hash(password, salt);
 
-  sendMail = emailService({
-    to: email,
-    subject: "Welcome to Speak Better",
-    templateId: SIGNUP_TEMPLATE_ID,
-    body: "New User Signup",
-    data: {
-      name: firstName,
-      url: `/signin`,
-    },
-  });
-  const user = await register(data);
+  const data = { email, firstName, lastName, username, password, language };
+	const user = await register(data);
 
   if (!user)
     return res
       .status(500)
       .json(response({ success: false, message: "User not created" }));
+
+	await emailService({
+    to: email,
+    subject: "Welcome to Speak Better",
+    templateId: SIGNUP_TEMPLATE_ID,
+    data: {
+      name: firstName,
+      url: "https://speakbetter.hng.tech/signin",
+    },
+  });
 
   return res.status(201).json(
     response({
@@ -67,7 +70,7 @@ async function googleAuthUserSignUp(req, res) {
   const { name, email } = await getTokens(req.query.code);
 
   //Check if user already exist
-  const user = await userCollection.findOne({ email });
+  const user = await users.findOne({  where: { email } });
 
   if (user) {
     const data = {

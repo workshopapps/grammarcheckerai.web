@@ -16,4 +16,35 @@ const verifyJWTToken = (token) => {
   });
 };
 
-module.exports = {  verifyJWTToken }
+
+// // jwt auth token
+const generateAuthToken = (payload) => {
+	const token = jwt.sign( payload, JWT_SECRET, {
+		expiresIn: "1h",
+	});
+	return token;
+};
+
+const generateHash = async (reqPassword) => {
+	const salt = await bcrypt.genSalt(10);
+	return await bcrypt.hash(reqPassword, salt);
+};
+
+// comparing the password
+const comparePassword = async function (reqPassword) {
+	const correctPassword = await bcrypt.compare(reqPassword, this.password);
+	return correctPassword;
+};
+
+// exports.authValidatorSchema = Joi.object().keys({
+// 	email: Joi.string()
+// 		.email({
+// 			minDomainSegments: 2,
+// 			tlds: { allow: ["com", "net", "xyz", "io", "co", "org"] },
+// 		})
+// 		.lowercase()
+// 		.required(),
+// 	password: Joi.string().min(5).required(),
+// });
+
+module.exports = { verifyJWTToken, generateAuthToken, generateHash, comparePassword }

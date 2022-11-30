@@ -1,14 +1,15 @@
-const { userCollection } = require("../database/models/userSchema");
+const { users } = require("../models");
 const { findOne } = require("../repository/user.repository");
+const { comparePassword } = require("../utilities/generateToken");
 const { response, authResponse } = require("../utilities/response");
 
 async function login(req, res) {
   // retrieve the email and password
   const { email, password } = req.body;
 
-  let user = await userCollection.findOne({ email });
+  let user = await users.findOne({ where: { email } });
   // comparing password
-  const validPassword = await user.comparePassword(password);
+  const validPassword = await comparePassword(password);
 
   if (!validPassword) {
     return res.status(401).json({ msg: "Invalid email or password" });

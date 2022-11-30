@@ -1,11 +1,11 @@
-const { userCollection } = require('../database/models/userSchema');
-const { comparePassword } = require('../utilities/compare');
+const { users } = require('../models');
+const { comparePassword } = require('../utilities/generateToken');
 
 async function userProfile(req, res) {
     //gets user id
     const id = req.params.id;
     try {
-        const user = await userCollection.findOne({_id: id});
+        const user = await users.findOne({ where: { id }});
         if (!user) {
             return res.json({
                 status: 204,
@@ -34,7 +34,7 @@ async function deleteUser(req, res) {
     }
 
     // checking for user in our database using the email provided
-    const user = await userCollection.findOne({ email });
+    const user = await users.findOne({ where: { email } });
 
     // if user does not exist
     if (!user) {
@@ -45,7 +45,7 @@ async function deleteUser(req, res) {
 
     // verify that the user password is correct
     const hash = user.password;
-    const isCorrect = await comparePassword(password, hash);
+    const isCorrect = await comparePassword (password, hash);
 
     // if password is not correct
     if (!isCorrect) {
@@ -56,7 +56,7 @@ async function deleteUser(req, res) {
 
     // if user exist and password is correct
     if (user && isCorrect) {
-      await userCollection.deleteOne({ email });
+      await users.destory({ where: { email } });
       res.status(200);
       res.json({ message: 'you have successfully deleted your account' });
     }
@@ -69,7 +69,7 @@ async function deleteUser(req, res) {
 
 //Updates a User profile.
 async function updateUser(req, res) {
-  await userCollection.findByIdAndUpdate(req.user._id, req.body, {new:true})
+  await users.findByIdAndUpdate(req.user._id, req.body, {new:true})
        .then(user=>{
            
            if(!user){

@@ -1,10 +1,10 @@
-const Contact = require("../database/models/contactUsSchema");
+const { contact } = require("../models");
 
 //contact us
 async function contactUsController (req, res) {
   try {
     //create a new contact
-    const contact = await Contact.create({
+    const contact = await contact.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,

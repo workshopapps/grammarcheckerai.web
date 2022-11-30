@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
 const { response } = require("../utilities/response");
-const { userCollection } = require("../database/models/userSchema");
+const { users } = require("../models");
 const { environment } = require("../config/environment.js");
-const { verifyJWTToken } = require("../utilities/generateToken");
+const { verifyJWTToken, generateHash } = require("../utilities/generateToken");
 const emailService = require("../services/email.service");
 const bodyParser = require("body-parser");
 
@@ -16,48 +16,39 @@ const { BASE_URL, RESET_PASSWORD_TEMPLATE_ID, PASSWORD_CHANGED_TEMPLATE_ID } =
 exports.requestForgotPassword = async (req, res) => {
   const { email } = req.body;
 
-  const user = await userCollection.findOne({ email });
+  try {
+    const user = await users.findOne({ where: { email } });
 
-  if (!user) {
-    return res.status(409).json(
+    if (!user) {
+      return res.status(409).json(
+        response({
+          message: `User with email ${email} does not exist`,
+          success: false,
+        })
+      );
+    }
+
+    const token = user.generateAuthToken();
+    const reset_password_url = `${BASE_URL}/v1/auth/password-reset?token=${token}`;
+    emailService({
+      to: email,
+      subject: "Password Reset",
+      body: "sample text",
+      templateId: RESET_PASSWORD_TEMPLATE_ID,
+      data: {
+        name: user.firstName,
+        url: reset_password_url,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json(
       response({
-        message: `User with email ${email} does not exist`,
+        message: "Something went wrong while processing this request",
         success: false,
       })
     );
   }
-
-  const token = user.generateAuthToken();
-  const reset_password_url = `${BASE_URL}/v1/auth/password-reset?token=${token}`;
-  await emailService({
-    to: email,
-    subject: "Password Reset",
-    body: "sample text",
-    templateId: RESET_PASSWORD_TEMPLATE_ID,
-    data: {
-      name: user.firstName,
-      url: reset_password_url,
-    },
-  })
-    .then(() => {
-      return res.status(200).json(
-        response({
-          message: "A mail was just sent to this email address",
-          success: true,
-        })
-      );
-    })
-    .catch((error) => {
-      console.log(error);
-      return res.status(500).json(
-        response({
-          message: "Something went wrong while processing this request",
-          success: false,
-        })
-      );
-    });
-};
-
+}
 exports.resetPassword = async (req, res) => {
   const { new_password, confirm_password } = req.body;
   const { token } = req.query;
@@ -81,15 +72,15 @@ exports.resetPassword = async (req, res) => {
         .json(response({ message: "Invalid Token", success: false }));
     }
 
-    const email = req.body.email;
-    const user = await userCollection.findOne({ email });
+    const { email } = decodeToken;
+    const user = await users.findOne({ where: { email } });
     if (!user) {
       return res
         .status(409)
         .json(response({ message: "User does not exist", success: false }));
     }
 
-    const password = await user.generateHash(new_password);
+    const password = await generateHash(new_password);
 
     await user.updateOne({
       password,
@@ -119,3 +110,4 @@ exports.resetPassword = async (req, res) => {
     );
   }
 };
+

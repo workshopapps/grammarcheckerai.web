@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { environment } = require("../../config/environment");
 const { JWT_SECRET } = environment;
-const { userCollection } = require("../../database/models/userSchema");
+const { users } = require("../../models");
 
 async function getUser(req, res) {
   const authHeader = req.headers.authorization;

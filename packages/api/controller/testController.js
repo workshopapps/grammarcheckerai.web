@@ -106,7 +106,6 @@ exports.sendMail = (req, res) => {
   emailService({
     to: email,
     subject: "Speak Better: Password Changed Successfully",
-    body: "sample Text",
     templateId: PASSWORD_CHANGED_TEMPLATE_ID,
     data: { name: name, url: "https://speakbetter.hng.tech/me/home" },
   });

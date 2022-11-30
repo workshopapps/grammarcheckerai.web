@@ -8,7 +8,7 @@ const {
   FB_CLIENT_SERECT,
   NODE_ENV,
 } = environment;
-const User = require('../database/models/userSchema.js');
+const { user } = require('../models');
 
 // used to serialize the user for the session
 passport.serializeUser(function (user, cb) {

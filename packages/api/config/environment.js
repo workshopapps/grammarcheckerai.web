@@ -31,6 +31,11 @@ const environment = {
   EMAIL_FROM: process.env.EMAIL_FROM,
   SIGNUP_TEMPLATE_ID: process.env.SIGNUP_TEMPLATE_ID,
   RESET_PASSWORD_TEMPLATE_ID: process.env.RESET_PASSWORD_TEMPLATE_ID,
+	DB_USER: process.env.DB_USER,
+	DB_PWD: process.env.DB_PWD,
+	DB_HOST: process.env.DB_HOST,
+	DIALECT: process.env.DIALECT,
+	DB_DB: process.env.DB_DB,
   PASSWORD_CHANGED_TEMPLATE_ID: process.env.PASSWORD_CHANGED_TEMPLATE_ID,
   SENDGRID_EMAIL_FROM: process.env.SENDGRID_EMAIL_FROM
 };
