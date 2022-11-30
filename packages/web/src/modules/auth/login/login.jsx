@@ -187,7 +187,7 @@ const Index = () => {
               <div className={styles._gs2logincheck}>
                 <div className={styles._g2loginoption}>
                   <input type="checkbox" id="userRememberPassword" />
-                  <span>Keep me signed in</span>
+                  <label htmlFor="userRememberPassword">Keep me signed in</label>
                 </div>
                 <div className={styles._gs2loginsignin}>
                   <button
