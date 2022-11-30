@@ -151,6 +151,7 @@
   color: #fff;
   background: #5d387f;
   border-radius: 12px;
+  text-transform: lowercase;
 }
 ._gs2signupcontinue button:hover {
   font-style: normal;
