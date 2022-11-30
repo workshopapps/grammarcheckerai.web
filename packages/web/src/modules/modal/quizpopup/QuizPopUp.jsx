@@ -59,7 +59,7 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
     <>
       {
         
-        // errorMsg ? setShowQuiz(false) :
+        errorMsg ? setShowQuiz(false) :
         <>
           {showQuiz ? (
             <div className={styles.quiz}>
