@@ -24,8 +24,6 @@ pipeline {
 				sh "c npm install && pm2 start /home/devineer//backend/server.js -- --port 5555"
 			
 			}
-
-	}
 			
 	}
 
