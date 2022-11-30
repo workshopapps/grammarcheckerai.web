@@ -88,7 +88,6 @@ exports.resetPassword = async (req, res) => {
     emailService({
       to: email,
       subject: "Speak Better: Password Changed Successfully",
-      body: "sample text",
       templateId: PASSWORD_CHANGED_TEMPLATE_ID,
       data: {
         name: user.firstName,
