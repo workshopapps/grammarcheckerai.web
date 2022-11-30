@@ -24,9 +24,9 @@ const QuizGame = () => {
     }
   };
 
-  const getQuestions = async () => {
+  const getQuestions = async () => { 
     try {
-      const response = await axios.get('https://grittygrammar.hng.tech/api/v1/quiz');
+      const response = await axios.get('https://speakbetter.hng.tech/api/v1/quiz');
       console.log(response.data);
       const data = response.data;
       setTrivia(data);

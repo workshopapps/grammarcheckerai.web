@@ -91,11 +91,14 @@ export default function CustomRecorder({ setChats }) {
     <>
       {sendAudio.isLoading && <Loader />}
       <button
-        className={`rounded-full relative h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
+        className={`rounded-full  relative h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
           isRecording ? styles._bot_mic : ''
-        }`}
+        } `}
       >
-        <button className="w-16 absolute top-0 left-0" onClick={() => recorderHandler()}>
+        <button
+          className={`w-16 h-16 absolute top-0 left-0 items-center justify-center ${styles.mic}`}
+          onClick={() => recorderHandler()}
+        >
           {isRecording && <img src={micImg} alt="" style={{ opacity: 0 }} />}
           <Recorder
             record={false}
