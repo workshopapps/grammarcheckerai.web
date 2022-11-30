@@ -2,15 +2,15 @@ pipeline {
 
 	agent any
 	stages {
+		
+		
 
 		stage("build frontend"){
 
 			steps {
-
 				sh "cd packages/web"
-				sh "sudo npm install"
-				sh "sudo npm run build"
-			}
+				sh "cd packages/web && unset NODE_ENV && npm i --force && npm fund && npm run build"
+			} 
 
 		
 			}
@@ -19,11 +19,13 @@ pipeline {
 			steps {
 				sh "sudo cp -r packages/api/ /home/devineer/backend"
 				sh "sudo cp -r ${WORKSPACE}/packages/web/dist/	/home/devineer/frontend"
-				sh "pm2 kill"
-				sh "cd /home/devineer/backend && npm install && pm2 start server.js -- --port 5555"
-				sh "cd /home/devineer && pm2 serve frontend 3333"
-
-	}
+				sh "sudo chsh -s /bin/bash jenkins"
+				sh "sudo su - devineer && $USER"
+				sh "sudo pm2 delete all"
+				sh "sudo su - devineer && sudo pm2 serve /home/devineer/frontend 3333"
+				sh "sudo su - devineer && npm install && sudo pm2 start /home/devineer/backend/server.js -- --port 5555"
+			}
+			
 	}
 
 

@@ -65,6 +65,10 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [activeNav, setActiveNav] = useState('Home');
+  
+
+
   const navigate = useNavigate();
 
   const context = useContext(ThemeContext);
@@ -102,7 +106,12 @@ const Navbar = () => {
               { title: 'Contact', to: '/contact' },
               // { title: 'Log in', to: '/signin' },
             ].map((item) => (
-              <NavLink to={item.to} key={item.title}>
+              <NavLink
+                to={item.to}
+                key={item.title}
+                onClick={(e) => setActiveNav(e.target.innerText)}
+                className={`${activeNav === item.title ? 'font-bold ' : ''} `}
+              >
                 {item.title}
               </NavLink>
             ))}
@@ -129,7 +138,12 @@ const Navbar = () => {
               { title: 'Log in', to: '/signin' },
               // { title: 'Sign Up', to: '/signup' },
             ].map((item) => (
-              <NavLink to={item.to} key={item.title}>
+              <NavLink
+                to={item.to}
+                key={item.title}
+                onClick={(e) => setActiveNav(e.target.innerText)}
+                className={`${activeNav === item.title ? 'font-bold ' : ''} `}
+              >
                 {item.title}
               </NavLink>
             ))}
