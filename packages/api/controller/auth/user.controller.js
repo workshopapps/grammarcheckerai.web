@@ -1,11 +1,12 @@
 const { response } = require("../../utilities/response");
 const { getTokens } = require("./google.user.controller");
-const { register } = require("../../repository/user.repository");
+const { register } = require("../../repository/user.repository"); 
 const { userCollection } = require("../../database/models/userSchema");
-const { slugify } = require("../../utilities/compare");
+const { slugify } = require("../../utilities/compare"); 
 const emailService = require("../../services/email.service");
 const { environment } = require("../../config/environment");
-const { SIGNUP_TEMPLATE_ID, BASE_URL } = environment;
+const { dynamicTemplateIds } = require("../../utilities/email.template");
+const { SIGNUP_TEMPLATE_ID } = environment;
 
 async function registerUser(req, res) {
   let {
@@ -17,6 +18,7 @@ async function registerUser(req, res) {
     confirm_password,
     language,
   } = req.body;
+  
   //Check if the user already exist
   password =
     password === confirm_password
@@ -37,13 +39,13 @@ async function registerUser(req, res) {
 
   const data = { email, firstName, lastName, username, password, language };
 
-  emailService({
-    to: email,
+  await emailService({
+    to: email, 
     subject: "Welcome to Speak Better",
-    templateId: SIGNUP_TEMPLATE_ID,
-    data: {
+    templateId: dynamicTemplateIds.SIGNUP_TEMPLATE,
+    dynamicTemplateData: {
       name: firstName,
-      url: `${BASE_URL}/signin`,
+      action_url: "/signin",
     },
   });
 
