@@ -11,5 +11,5 @@ async function register(data) {
 }
 
 module.exports = {
-  register
+  register,
 };
