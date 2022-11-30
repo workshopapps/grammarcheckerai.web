@@ -1,11 +1,11 @@
 const { response } = require("../../utilities/response");
 const { getTokens } = require("./google.user.controller");
-const { register } = require("../../repository/user.repository"); 
+const { register } = require("../../repository/user.repository");
 const { userCollection } = require("../../database/models/userSchema");
-const { slugify } = require("../../utilities/compare"); 
+const { slugify } = require("../../utilities/compare");
 const emailService = require("../../services/email.service");
 const { environment } = require("../../config/environment");
-const { SIGNUP_TEMPLATE_ID } = environment;
+const { SIGNUP_TEMPLATE_ID, BASE_URL } = environment;
 
 async function registerUser(req, res) {
   let {
@@ -37,16 +37,16 @@ async function registerUser(req, res) {
 
   const data = { email, firstName, lastName, username, password, language };
 
-  await emailService({
-    to: email, 
+  sendMail = emailService({
+    to: email,
     subject: "Welcome to Speak Better",
     templateId: SIGNUP_TEMPLATE_ID,
+    body: "New User Signup",
     data: {
       name: firstName,
-      action_url: "/signin",
+      url: `/signin`,
     },
   });
-
   const user = await register(data);
 
   if (!user)
