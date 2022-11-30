@@ -17,8 +17,8 @@ pipeline {
 		stage("deploy") {
 		
 			steps {
-				sh "sudo cp -r packages/api/ /home/devineer/backend"
-				sh "sudo cp -r ${WORKSPACE}/packages/web/dist/	/home/devineer/frontend"
+				sh "sudo cp -rf packages/api/ /home/devineer/backend"
+				sh "sudo cp -fr ${WORKSPACE}/packages/web/dist/	/home/devineer/frontend"
 				//sh "sudo chsh -s /bin/bash jenkins"
 				sh "sudo su - devineer && whoami"
 				sh "sudo pm2 delete all"
