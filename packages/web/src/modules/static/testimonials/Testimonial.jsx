@@ -64,13 +64,7 @@ export default function Testimonial() {
   return (
     <div>
       <div className="mx-6 lg:mx-32">
-        <div className="text-xs my-6">
-          <Link to="/ratings" className="text-[#5D387F]">
-            {' '}
-            &lt; Back{' '}
-          </Link>
-        </div>
-        <h1 className="text-center mt-12 text-lg lg:text-4xl">Users Love What We Do</h1>
+        <h1 className="text-center mt-2 text-lg lg:text-4xl">Users Love What We Do</h1>
         <p className="text-center my-4 text-sm lg:text-lg">
           Read the stories of our users who have relied on our product to improve their grammar
         </p>
