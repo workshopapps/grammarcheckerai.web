@@ -7,16 +7,12 @@ import styles from './navbar.module.css';
 import useMediaQuery from '@mui/material/useMediaQuery';
 // eslint-disable-next-line import/no-unresolved
 import { Drawer } from '@mui/material';
-import { FaMoon } from 'react-icons/fa';
-import { BsSunFill } from 'react-icons/bs';
-
 // Material UI toggle button
 import { styled } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
+
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -36,12 +32,12 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
       },
       '& + .MuiSwitch-track': {
         opacity: 1,
-        backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+        backgroundColor: theme.palette.mode === 'dark' ? '#fff' : '#fff',
       },
     },
   },
   '& .MuiSwitch-thumb': {
-    backgroundColor: theme.palette.mode === 'dark' ? '#003892' : '#001e3c',
+    backgroundColor: theme.palette.mode === 'dark' ? '#5d387f' : '#5d387f',
     width: 32,
     height: 32,
     '&:before': {
@@ -60,7 +56,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
   '& .MuiSwitch-track': {
     opacity: 1,
-    backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+    backgroundColor: theme.palette.mode === 'dark' ? '#fff' : '#fff',
     borderRadius: 20 / 2,
   },
 }));
@@ -74,9 +70,8 @@ const Navbar = () => {
   const context = useContext(ThemeContext);
   localStorage.setItem('theme', context.theme);
   const toggleDarkMode = () => {
-      context.toggle();
+    context.toggle();
   }
-  const light = context.theme === 'light';
 
 
   const isTabletOrMobile = useMediaQuery('(max-width: 1000px)');
@@ -88,19 +83,13 @@ const Navbar = () => {
         <img src={logoImg} alt="gritty" />
       </button>
 
-
-<FormGroup>
-      <FormControlLabel
-              className={`${styles._themeswitch} `}
-              onClick={toggleDarkMode}
-        control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
-      />
-    </FormGroup>
-
-
-
-
-
+      <FormGroup>
+        <FormControlLabel
+          className={`${styles._themeswitch} `}
+          onClick={toggleDarkMode}
+          control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
+        />
+      </FormGroup>
 
       <div className={styles._nvmenu}>
         {!isTabletOrMobile && (
