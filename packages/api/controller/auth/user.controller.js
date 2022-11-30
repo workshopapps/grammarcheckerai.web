@@ -7,7 +7,6 @@ const emailService = require("../../services/email.service");
 const { environment } = require("../../config/environment");
 const { SIGNUP_TEMPLATE_ID } = environment;
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 async function registerUser(req, res) {
   let {
@@ -71,7 +70,7 @@ async function googleAuthUserSignUp(req, res) {
   const { name, email } = await getTokens(req.query.code);
 
   //Check if user already exist
-  const user = await userCollection.findOne({ email });
+  const user = await users.findOne({  where: { email } });
 
   if (user) {
     const data = {

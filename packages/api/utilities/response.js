@@ -1,3 +1,5 @@
+const { generateAuthToken } = require("./generateToken");
+
 /**
  * Returns response object
  * @param {string} message Response message
@@ -18,7 +20,10 @@ const formatMessage = (str) => {
   // Make first letter capitial
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
 const authResponse = (userData) => {
+	let { id, email } = userData
+	let payload = { id, email }
   const user = {
     _id: userData.id,
     firstName: userData.firstName,
@@ -26,7 +31,7 @@ const authResponse = (userData) => {
     username: userData.username,
     email: userData.email,
     language: userData.language,
-    // token: userData.generateAuthToken(),
+    token: generateAuthToken(payload),
   };
   return user;
 };

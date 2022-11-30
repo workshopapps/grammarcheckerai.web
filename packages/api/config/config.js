@@ -9,7 +9,15 @@ const config = {
     "password": DB_PWD,
     "database": DB_DB,
     "host": DB_HOST,
-    "dialect": DIALECT
+    "dialect": DIALECT,
+		"dialectOptions": {
+      // "ssl": {
+      //   "require": false,
+      //   "rejectUnauthorized": false
+      // }
+    },
+    "logging": true,
+    "seederStorage": "sequelize"
   },
   "test": {
     "username": DB_USER,
@@ -23,8 +31,16 @@ const config = {
     "password": DB_PWD,
     "database": DB_DB,
     "host": DB_HOST,
-    "dialect": DIALECT
-  }
+    "dialect": DIALECT,
+		"dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    },
+    "logging": false,
+    "seederStorage": "sequelize"
+	}
 }
 
 module.exports = config;

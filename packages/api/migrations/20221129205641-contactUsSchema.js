@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
-		await queryInterface.createTable('message', {
+		await queryInterface.createTable('contact', {
 			id: {
 				allowNull: false,
 				autoIncrement: true,
@@ -38,6 +38,6 @@ module.exports = {
 		});
 	},
 	down: async (queryInterface, Sequelize) => {
-		await queryInterface.dropTable('message');
+		await queryInterface.dropTable('contact');
 	}
 };

@@ -18,17 +18,23 @@ const verifyJWTToken = (token) => {
 
 
 // // jwt auth token
-exports.generateAuthToken = (payload) => {
+const generateAuthToken = (payload) => {
 	const token = jwt.sign( payload, JWT_SECRET, {
 		expiresIn: "1h",
 	});
 	return token;
 };
 
-// users.methods.generateHash = async (reqPassword) => {
-// 	const salt = await bcrypt.genSalt(10);
-// 	return await bcrypt.hash(reqPassword, salt);
-// };
+const generateHash = async (reqPassword) => {
+	const salt = await bcrypt.genSalt(10);
+	return await bcrypt.hash(reqPassword, salt);
+};
+
+// comparing the password
+const comparePassword = async function (reqPassword) {
+	const correctPassword = await bcrypt.compare(reqPassword, this.password);
+	return correctPassword;
+};
 
 // exports.authValidatorSchema = Joi.object().keys({
 // 	email: Joi.string()
@@ -41,4 +47,4 @@ exports.generateAuthToken = (payload) => {
 // 	password: Joi.string().min(5).required(),
 // });
 
-module.exports = {  verifyJWTToken }
+module.exports = { verifyJWTToken, generateAuthToken, generateHash, comparePassword }
