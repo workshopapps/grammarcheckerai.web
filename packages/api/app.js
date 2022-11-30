@@ -2,9 +2,10 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const session = require("express-session");
+const Memorystore = require("memorystore")(session);
 const { environment } = require("./config/environment");
 const { SESSION_SECRET } = environment;
-const expressFileUpload = require('express-fileupload');
+const expressFileUpload = require("express-fileupload");
 require("express-async-errors");
 require("./database/index");
 const passport = require("passport");
@@ -18,6 +19,10 @@ const { routeHandler } = require("./routes/index.route"),
 app.use(passport.initialize()).use(express.json()).use(cors());
 
 const sess = {
+  store: new Memorystore({
+    checkPeriod: 86400000, // prune expired entries every 24h
+  }),
+  maxAge: 60000,
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
@@ -35,9 +40,11 @@ app
 
 app.use("/v1", routeHandler);
 app.use(expressFileUpload());
-app.use(express.urlencoded({
-  extended: true
-}));
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 app.get("*", (req, res) => {
   res.status(200).json({
     message: "Welcome to Grit Grammarly 🙌",
