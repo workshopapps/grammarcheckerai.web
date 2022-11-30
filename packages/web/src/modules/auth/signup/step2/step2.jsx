@@ -1,5 +1,5 @@
+/* eslint-disable react/no-unknown-property */
 import React, { useState, useEffect } from 'react';
-import useTheme from '../../../../hooks/useTheme';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import toast, { Toaster } from 'react-hot-toast';
@@ -17,7 +17,10 @@ import apple from '../../../../assets/apple.png';
 import facebook from '../../../../assets/facebook.png';
 import Carousel from 'nuka-carousel';
 
+import useTheme from '../../../../hooks/useTheme';
+
 const index = () => {
+  const context = useTheme();
   const [newUserName, setNewUserName] = useState('');
   const [newUserFirstName, setNewUserFirstName] = useState('');
   const [newUserLastName, setNewUserLastName] = useState('');
@@ -27,7 +30,6 @@ const index = () => {
   const [newUserEmail, setNewUserEmail] = useState('');
   const [userId, setUserId] = useState('');
   const [userToken, setUserToken] = useState('');
-  const context = useTheme();
 
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
@@ -83,7 +85,8 @@ const index = () => {
           setUserToken(resToken);
           localStorage.setItem('grittyuserid', userId);
           localStorage.setItem('grittyusertoken', userToken);
-          setTimeout(() => navigate('/me/home'), 5000);
+          localStorage.setItem('isdashboard', true);
+          setTimeout(() => navigate('/me/home', { replace: true }), 5000);
         })
         .catch((err) => {
           error(err.response.data.message);
@@ -101,12 +104,12 @@ const index = () => {
 
   */
 
-  const handleGoogleAuth = () => {
+  const useFetch = (url) => {
     var requestOptions = {
       method: 'GET',
       redirect: 'follow',
     };
-    fetch('https://grittygrammar.hng.tech/api/v1/auth/google', requestOptions)
+    fetch(url, requestOptions)
       .then((response) => response.text())
       .then((result) => {
         const oBJ = JSON.parse(result);
@@ -115,8 +118,12 @@ const index = () => {
       .catch((err) => error(err.message));
   };
 
+  const handleGoogleAuth = () => {
+    useFetch('https://grittygrammar.hng.tech/api/v1/auth/google');
+  };
+
   /* 
-    handleGoogleAuth handles the Facebook social login. 
+    handleFacebookAuth handles the Facebook social login. 
 
     This redirects to the endpoint which gets a usertoken from facebook
     Then redirects to the provided URL token for account creation
@@ -124,21 +131,11 @@ const index = () => {
   */
 
   const handleFacebookAuth = () => {
-    var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-    fetch('https://grittygrammar.hng.tech/api/v1/auth/facebook', requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        const oBJ = JSON.parse(result);
-        window.location.href = oBJ.message;
-      })
-      .catch((err) => error(err.message));
+    useFetch('https://grittygrammar.hng.tech/api/v1/auth/facebook');
   };
 
   /* 
-    handleGoogleAuth handles the LinkedIn social login. 
+    handleLinkedInAuth handles the LinkedIn social login. 
 
     This redirects to the endpoint which gets a usertoken from linkedin
     Then redirects to the provided URL token for account creation
@@ -146,18 +143,9 @@ const index = () => {
   */
 
   const handleLinkedInAuth = () => {
-    var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-    fetch('https://grittygrammar.hng.tech/api/v1/auth/linkedin', requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        const oBJ = JSON.parse(result);
-        window.location.href = oBJ.message;
-      })
-      .catch((err) => error(err.message));
+    useFetch('https://grittygrammar.hng.tech/api/v1/auth/linkedin');
   };
+
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div step-theme={context.theme} className={styles._gs2mainsignup}>

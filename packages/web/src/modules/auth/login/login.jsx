@@ -16,10 +16,9 @@ import useLogin from '../../../hooks/auth/useLogin';
 import toast, { Toaster } from 'react-hot-toast';
 import PasswordMask from 'react-password-mask';
 import Carousel from 'nuka-carousel';
-
 import useTheme from '../../../hooks/useTheme';
 
-const index = () => {
+const Index = () => {
   const context = useTheme();
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -73,7 +72,11 @@ const index = () => {
           setUserToken(resToken);
           localStorage.setItem('grittyuserid', userId);
           localStorage.setItem('grittyusertoken', userToken);
-          setTimeout(() => navigate('/me/home'), 5000);
+          localStorage.setItem('isdashboard', true);
+          setTimeout(() => {
+            window.location.replace('/me/home');
+            navigate('/me/home', { replace: true });
+          }, 5000);
         })
         .catch((err) => {
           error(err.message);
@@ -87,12 +90,12 @@ const index = () => {
     Then redirects to the provided URL token for user login
 
   */
-  const handleGoogleAuth = () => {
+  const useFetch = (url) => {
     var requestOptions = {
       method: 'GET',
       redirect: 'follow',
     };
-    fetch('https://grittygrammar.hng.tech/api/v1/auth/google', requestOptions)
+    fetch(url, requestOptions)
       .then((response) => response.text())
       .then((result) => {
         const oBJ = JSON.parse(result);
@@ -101,48 +104,32 @@ const index = () => {
       .catch((err) => error(err.message));
   };
 
-  /* 
-    handleFacebookAuth handles the Facebook social login. 
+  const handleGoogleAuth = () => {
+    useFetch('https://grittygrammar.hng.tech/api/v1/auth/google');
+  };
 
-    This redirects to the endpoint which gets a usertoken from Facebook
-    Then redirects to the provided URL token user login
-    
-  */
+  /* 
+      handleFacebookAuth handles the Facebook social login. 
+  
+      This redirects to the endpoint which gets a usertoken from facebook
+      Then redirects to the provided URL token for account creation
+  
+    */
 
   const handleFacebookAuth = () => {
-    var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-    fetch('https://grittygrammar.hng.tech/api/v1/auth/facebook', requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        const oBJ = JSON.parse(result);
-        window.location.href = oBJ.message;
-      })
-      .catch((err) => error(err.message));
+    useFetch('https://grittygrammar.hng.tech/api/v1/auth/facebook');
   };
 
   /* 
-    handleLinkedInAuth handles the LinkedIn social login. 
-
-    This redirects to the endpoint which gets a usertoken from LinkedIn
-    Then redirects to the provided URL token user login
-    
-  */
+      handleLinkedInAuth handles the LinkedIn social login. 
+  
+      This redirects to the endpoint which gets a usertoken from linkedin
+      Then redirects to the provided URL token for account creation
+  
+    */
 
   const handleLinkedInAuth = () => {
-    var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-    fetch('https://grittygrammar.hng.tech/api/v1/auth/linkedin', requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        const oBJ = JSON.parse(result);
-        window.location.href = oBJ.message;
-      })
-      .catch((err) => error(err.message));
+    useFetch('https://grittygrammar.hng.tech/api/v1/auth/linkedin');
   };
 
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
@@ -274,4 +261,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

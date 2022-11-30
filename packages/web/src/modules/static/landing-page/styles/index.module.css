@@ -69,8 +69,10 @@
 .step_active{
   color: #8C54BF;
 }
+
+
 [step-theme='dark'].step_active{
-  color: rgb(71, 10, 90);
+  color: #fff;
   transition: all .4s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 @media only screen and (min-width: 768px) {

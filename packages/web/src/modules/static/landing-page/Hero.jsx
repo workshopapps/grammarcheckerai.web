@@ -19,7 +19,7 @@ const Hero = () => {
                     </div>
                     <p className='font-bold text-2xl my-4'>Corrects all grammatical errors.</p>
                     <p className={`mb-10 text-lg`}>Tired of making grammer mistakes while you speak?
-                        Do you find it hard to constuct correct sentences in the new language you're learning?</p>
+                        Do you find it hard to constuct correct sentences in the new language you&apos;re learning?</p>
                     <Link
                         to='/signup'
                         className=' text-white bg-[#5D387F] py-4 px-3 rounded-lg hover:bg-[#392150] hover:text-white transition-colors'>Try Gritty Grammar For Free!</Link>

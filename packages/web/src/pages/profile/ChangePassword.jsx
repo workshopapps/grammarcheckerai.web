@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton'
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { ENDPOINTS } from '../../lib/constants';
 
 
 
@@ -14,7 +15,8 @@ export default function ChangePassword() {
     const history = useNavigate();
     const navigate = useNavigate();
     const data = JSON.parse(localStorage.getItem("userData"));
-    const url = "https://grittygrammar.hng.tech/api/v1/user/profile/";
+    const endpoint = ENDPOINTS.API_BASE_URL;
+    const url = endpoint + 'user/profile/';
     const token = localStorage.getItem("grittyusertoken");
     const error = (message) => toast.error(message);
     const success = (message) => toast.success(message);
