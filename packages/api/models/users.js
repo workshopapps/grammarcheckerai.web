@@ -1,8 +1,5 @@
 const Sequelize = require('sequelize');
 const { Model } = require('sequelize');
-const Joi = require("joi");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const { environment } = require("../config/environment");
 const { JWT_SECRET } = environment;
 
@@ -97,10 +94,3 @@ class users extends Sequelize.Model {
   }
 }
 
-users.afterCreate(async (user) => {
-	const salt = await bcrypt.genSalt(10);
-	let password = await bcrypt.hash(user.password, salt);
-	await user.update({
-		password: password
-	}, { where: { password: password } })
-})

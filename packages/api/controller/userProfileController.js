@@ -1,4 +1,4 @@
-const { userCollection } = require('../database/models/userSchema');
+// const { userCollection } = require('../database/models/userSchema');
 const { comparePassword } = require('../utilities/compare');
 
 async function userProfile(req, res) {

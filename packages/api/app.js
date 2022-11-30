@@ -6,7 +6,7 @@ const Memorystore = require("memorystore")(session);
 const { environment } = require("./config/environment");
 const expressFileUpload = require("express-fileupload");
 require("express-async-errors");
-require("./database/index");
+// require("./database/index");
 const passport = require("passport");
 require("./services/linkedinStrategy");
 require("./services/facebookStrategy");

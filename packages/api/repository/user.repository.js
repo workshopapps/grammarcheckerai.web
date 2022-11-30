@@ -3,7 +3,7 @@ const { authResponse } = require("../utilities/response");
 
 async function register(data) {
   try {
-    const user = await userscreate(data);
+    const user = await users.create(data);
 
     return authResponse(user);
   } catch (error) {

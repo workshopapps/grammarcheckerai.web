@@ -1,5 +1,5 @@
 const { response } = require("../utilities/response");
-const { userCollection } = require("../database/models/userSchema");
+const { userCollection } = require("../models");
 const { environment } = require("../config/environment.js");
 const { verifyJWTToken } = require("../utilities/generateToken");
 const emailService = require("../services/email.service");

@@ -20,13 +20,13 @@ const formatMessage = (str) => {
 };
 const authResponse = (userData) => {
   const user = {
-    _id: userData._id,
+    _id: userData.id,
     firstName: userData.firstName,
     lastName: userData.lastName,
     username: userData.username,
     email: userData.email,
     language: userData.language,
-    token: userData.generateAuthToken(),
+    // token: userData.generateAuthToken(),
   };
   return user;
 };

@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 
 class conversation extends Sequelize.Model {
 	static associate(models) {
-		conversation.belongsTo(models.user, {
+		conversation.belongsTo(models.users, {
 			foreignKey: "userId"
 		}),
 

@@ -1,4 +1,4 @@
-const { userCollection } = require("../database/models/userSchema");
+const { userCollection } = require("../models");
 const { findOne } = require("../repository/user.repository");
 const { response, authResponse } = require("../utilities/response");
 

@@ -1,5 +1,5 @@
-const Conversation = require("../database/models/conversationSchema");
-const Message = require("../database/models/messageSchema");
+const Conversation = require("../models");
+const Message = require("../models");
 
 async function startConversation(req, res) {
   try {

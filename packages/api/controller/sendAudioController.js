@@ -1,6 +1,6 @@
-const UserResponse = require("../database/models/userResponseSchema");
-const BotResponse = require("../database/models/botResponseSchema");
-const Message = require("../database/models/messageSchema");
+const UserResponse = require("../models");
+const BotResponse = require("../models");
+const Message = require("../models");
 const grammarCheckHandler = require("../scripts/grammarCheck");
 const { chatHandler, appendConversationToChatLog } = require("../scripts/chat");
 const {

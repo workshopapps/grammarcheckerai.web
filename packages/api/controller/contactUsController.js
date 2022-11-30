@@ -1,4 +1,4 @@
-const Contact = require("../database/models/contactUsSchema");
+const Contact = require("../models");
 
 //contact us
 async function contactUsController (req, res) {

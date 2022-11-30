@@ -1,11 +1,13 @@
 const { response } = require("../../utilities/response");
 const { getTokens } = require("./google.user.controller");
 const { register } = require("../../repository/user.repository"); 
-const { userCollection } = require("../../database/models/userSchema");
+const { users } = require("../../models");
 const { slugify } = require("../../utilities/compare"); 
 const emailService = require("../../services/email.service");
 const { environment } = require("../../config/environment");
 const { SIGNUP_TEMPLATE_ID } = environment;
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 async function registerUser(req, res) {
   let {
@@ -28,31 +30,33 @@ async function registerUser(req, res) {
           })
         );
 
-  const checkEmailExist = await user.findOne({ email });
+  const checkEmailExist = await users.findOne({  where: { email } });
 
   if (checkEmailExist)
     return res
       .status(409)
       .json(response({ message: "User already exist", success: false }));
 
+	const salt = await bcrypt.genSalt(10);
+	password = await bcrypt.hash(password, salt);
+
   const data = { email, firstName, lastName, username, password, language };
-
-  await emailService({
-    to: email, 
-    subject: "Welcome to Speak Better",
-    templateId: SIGNUP_TEMPLATE_ID,
-    data: {
-      name: firstName,
-      action_url: "/signin",
-    },
-  });
-
-  const user = await register(data);
+	const user = await register(data);
 
   if (!user)
     return res
       .status(500)
       .json(response({ success: false, message: "User not created" }));
+
+	await emailService({
+		to: email, 
+		subject: "Welcome to Speak Better",
+		templateId: SIGNUP_TEMPLATE_ID,
+		data: {
+			name: firstName,
+			action_url: "/signin",
+		},
+	});
 
   return res.status(201).json(
     response({
