@@ -33,7 +33,6 @@ exports.requestForgotPassword = async (req, res) => {
     emailService({
       to: email,
       subject: "Password Reset",
-      body: "sample text",
       templateId: RESET_PASSWORD_TEMPLATE_ID,
       data: {
         name: user.firstName,
