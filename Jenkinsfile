@@ -20,7 +20,7 @@ pipeline {
 				sh "sudo cp -r packages/api/ /home/devineer/backend"
 				sh "sudo cp -r ${WORKSPACE}/packages/web/dist/	/home/devineer/frontend"
 				//sh "sudo chsh -s /bin/bash jenkins"
-				sh "sudo su - devineer && echo $USER"
+				sh "sudo su - devineer && whoami"
 				sh "sudo pm2 delete all"
 				sh "sudo pm2 serve /home/devineer/frontend 3333"
 				sh "sudo npm install && sudo pm2 start /home/devineer/backend/server.js -- --port 5555"
