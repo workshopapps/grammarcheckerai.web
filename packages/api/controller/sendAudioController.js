@@ -1,6 +1,4 @@
-const UserResponse = require("../models");
-const BotResponse = require("../models");
-const Message = require("../models");
+const  { userResponse, message, botResponse } = require("../models");
 const grammarCheckHandler = require("../scripts/grammarCheck");
 const { chatHandler, appendConversationToChatLog } = require("../scripts/chat");
 const {
@@ -67,7 +65,7 @@ async function getBotResponse(req, res) {
     req.session.chatLog = chatLog; // set updated chat log to session
 
     // construct response
-    let userResponse, botResponse;
+    let userResponses, botResponses;
 
     // for not logged in users
     if (!conversationId) {
@@ -87,20 +85,20 @@ async function getBotResponse(req, res) {
       };
     } else {
       // for logged in users
-      userResponse = await UserResponse.create({
+      userResponses = await userResponse.create({
         audioURL: dummyAudioUrl,
       });
 
-      botResponse = await BotResponse.create({
+      botResponses = await botResponse.create({
         transcribedAudioText,
         correctedText: correctUserResponseInTxt.trim(),
         botReply,
       });
 
-      await Message.create({
+      await message.create({
         conversationId,
-        userResponseId: userResponse._id,
-        botResponseId: botResponse._id,
+        userResponseId: userResponses.id,
+        botResponseId: botResponses.id,
       });
     }
 
@@ -108,13 +106,13 @@ async function getBotResponse(req, res) {
       success: true,
       message: "Message exchange successfully completed between user and bot",
       data: {
-        userResponse,
-        botResponse,
+        userResponses,
+        botResponses,
         conversationId: conversationId || null,
       },
     });
   } catch (err) {
-    throw err;
+    // throw err;
     return res.status(500).send({
       success: false,
       message: err,

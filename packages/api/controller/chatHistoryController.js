@@ -1,21 +1,19 @@
-const {userResponse} = require('../database/models/userResponseSchema')
-const {conversation} =require('../database/models/conversationSchema')
-const {message} = require('../database/models/messageSchema')
-const {botResponse} = require('../database/models/botResponseSchema')
+const { userResponse, conversation, message , botResponse } = require('../models')
 
 
 exports.history = async (req, res) =>{
-    const {userId} = req.params
+    const { userId } = req.params
     let conversation_id;
-    let conversation = await conversation.find({userId : userId })
-    if (!conversation){
+    let conversations = await conversation.findAll({ where: { userId : userId } })
+    if (!conversations){
         return res.status(401).json({ message: "No history available"})
     }
-    if (conversation){
-        conversation_id = data[0]._id
+    if (conversations){
+        conversation_id = conversations.id.
         console.log(conversation_id)
     }
-    messageHistory = await Message.find({ conversationId: conversation_id}).populate({
+    messageHistory = await message.find({ where: { conversationId: conversation_id } })
+		messageHistory.update({
         path: "userResponseId botResponseId"
     });
     return res.status(200).json({

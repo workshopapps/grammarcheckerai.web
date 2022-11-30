@@ -1,7 +1,7 @@
 const { response } = require("../utilities/response");
-const { userCollection } = require("../models");
+const { users } = require("../models");
 const { environment } = require("../config/environment.js");
-const { verifyJWTToken } = require("../utilities/generateToken");
+const { verifyJWTToken, generateHash } = require("../utilities/generateToken");
 const emailService = require("../services/email.service");
 
 const { BASE_URL, RESET_PASSWORD_TEMPLATE_ID } = environment;
@@ -10,7 +10,7 @@ exports.requestForgotPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
-    const user = await userCollection.findOne({ email });
+    const user = await users.findOne({ where: { email } });
 
     if (!user) {
       return res.status(409).json(
@@ -74,14 +74,14 @@ exports.resetPassword = async (req, res) => {
     }
 
     const { email } = decodeToken;
-    const user = await userCollection.findOne({ email });
+    const user = await users.findOne({ where: { email } });
     if (!user) {
       return res
         .status(409)
         .json(response({ message: "User does not exist", success: false }));
     }
 
-    const password = await user.generateHash(new_password);
+    const password = await generateHash(new_password);
 
     await user.updateOne({
       password,

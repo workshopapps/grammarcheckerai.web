@@ -1,13 +1,12 @@
-const Conversation = require("../models");
-const Message = require("../models");
+const { conversation, message } = require("../models");
 
 async function startConversation(req, res) {
   try {
     let user = req.user;
     let userId = user?._id;
 
-    let conversation, messageHistory;
-    conversation = await Conversation.findOne({ userId });
+    let conversations, messageHistory;
+    conversations = await conversation.findOne({ where: { userId }});
 
     // Handles starting of conversation for users that are not logged in
     if (!userId && !conversation) {
@@ -17,7 +16,7 @@ async function startConversation(req, res) {
           ? "Ongoing conversation - not logged in user"
           : "New conversation started - not logged in user",
         data: {
-          conversation: conversation || null,
+          conversation: conversations || null,
           messageHistory: messageHistory || [],
           botInitialMessage: req.session.chatLog
             ? null
@@ -27,14 +26,15 @@ async function startConversation(req, res) {
     }
 
     // Handles creation of conversation for new users
-    if (userId && !conversation) {
-      conversation = await Conversation.create({ userId });
+    if (userId && !conversations) {
+      conversation = await conversation.create({ userId });
     }
 
     // Fetches conversation history
-    messageHistory = await Message.find({
-      conversationId: conversation._id,
-    }).populate({
+    messageHistory = await message.findOne({
+      conversationId: conversation.id,
+    })
+		messageHistory.update({
       path: "userResponseId botResponseId",
     });
 
@@ -44,7 +44,7 @@ async function startConversation(req, res) {
         ? "Ongoing conversation - logged in user"
         : "New conversation started - logged in user",
       data: {
-        conversation,
+        conversations,
         messageHistory,
         botInitialMessage: req.session.chatLog
           ? null
