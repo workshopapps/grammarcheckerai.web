@@ -5,7 +5,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useLocalStorage, getStorageData } from '../../../../hooks/useLocalStorage';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './step1.module.css';
-import Logo from '../../../../assets/signup-logo.png';
+import Logo from '../../../../assets/images/signuplogo.png';
 import Image1 from '../../../../assets/steponeframeone.png';
 import Image2 from '../../../../assets/steponeframetwo.png';
 
