@@ -6,19 +6,19 @@ import search from '../../../assets/search.svg';
 import arrowDown from '../../../assets/arrowDown.svg';
 import arrowUp from '../../../assets/arrowUp.svg';
 
-// const historyDays = [
-//   { id: '1', date: 'Today - Thursday, 19 September 2022' },
-//   { id: '2', date: 'Yesterday - Wednesday, 18 September 2022' },
-//   { id: '3', date: 'Last week' },
-//   { id: '4', date: 'Last month' },
-// ];
+const historyDays = [
+  { id: '1', date: 'Today - Thursday, 19 September 2022' },
+  { id: '2', date: 'Yesterday - Wednesday, 18 September 2022' },
+  { id: '3', date: 'Last week' },
+  { id: '4', date: 'Last month' },
+];
 
 
 const url = "https://grittygrammar.hng.tech/api/v1/chathistory/:6d04fa09-1ccf-42d0-83db-d61cd8af270c"
 
 
 function History() {
-  const [history, setHistory] = useState(null);
+  const [history, setHistory] = useState(historyDays);
   // const [historyDays, setHistoryDays] = useState(null)
   useEffect(() => {
 
