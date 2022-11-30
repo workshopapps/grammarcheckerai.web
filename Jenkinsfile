@@ -1,60 +1,36 @@
 pipeline {
-    environment {
-        registryFrontend = 'tobiisreal/team-grit-frontend'
-        registryBackend = 'tobiisreal/team-grit-backend'
-        registryCredential = 'dockerhubcredentials'
-        dockerImageFrontend = ''
-        dockerImageBackend = ''
-        ANSIBLE_PRIVATE_KEY = credentials('gritty-private-key')
-    }
-    agent any
-    tools { nodejs 'node' }
-    stages {
-            stage('Installing dependencies') {
-            steps {
-                script {
-                        sh 'cd packages/api && npm install --verbose'
-                        //sh 'cd ..'
-                        sh 'cd packages/web && npm install --verbose'
-                }
-            }
-            }
-        stage('Building Docker Image') {
-                steps {
-                    script {
-                        /* remove all container */
-                        always {
-                            sh 'docker stop $(docker ps -a -q)'
-                            sh 'docker rm $(docker ps -q)'
-                        }
-                        dir('packages/web') {
-                        dockerImageFrontend = docker.build registryFrontend + ':latest'
-                        }
-                        dir('packages/api') {
-                        dockerImageBackend = docker.build registryBackend + ':latest'
-                        }
-                    }
-                }
-        }
-            stage('Deploying Docker Image to Dockerhub') {
-                steps {
-                    script {
-                        docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-                        dockerImageFrontend.push()
-                        dockerImageBackend.push()
-                        }
-                    }
-                }
-            }
-    }
-        stage('Deploying using ansible') {
-                steps {
-                sh 'ansible-playbook --private-key=$ANSIBLE_PRIVATE_KEY ./ansible/deploy-app.yml -i ./ansible/inventory.txt -vvv'
-                }
-        }
-        stage('Email notification') {
-                steps {
-                sh 'mail bcc: '', body: 'check build', cc: 'joshkid610@gmail.com, philndubuoke@gmail.com', from: '', replyTo: '', subject: 'Build failure', to: 'isreali34@gmail.com'
-                }
-    }
+
+	agent any
+	stages {
+		
+		
+
+		stage("build frontend"){
+
+			steps {
+				sh "cd packages/web"
+				sh "cd packages/web && unset NODE_ENV && npm i --force && npm fund && npm run build"
+			} 
+
+		
+			}
+		stage("deploy") {
+		
+			steps {
+				sh "sudo cp -r packages/api/ /home/devineer/backend"
+				sh "sudo cp -r ${WORKSPACE}/packages/web/dist/	/home/devineer/frontend"
+				sh "sudo chsh -s /bin/bash jenkins"
+				sh "sudo su - devineer && $USER"
+				sh "sudo pm2 delete all"
+				sh "sudo su - devineer && sudo pm2 serve /home/devineer/frontend 3333"
+				sh "sudo su - devineer && npm install && sudo pm2 start /home/devineer/backend/server.js -- --port 5555"
+			}
+			
+	}
+
+
+	}
+
+
+
 }

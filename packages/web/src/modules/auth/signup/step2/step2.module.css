@@ -46,7 +46,7 @@
 ._gs2mainsignup[step-theme='dark'],
 ._gs2signupcontent h2[step-theme='dark'],
 ._gs2signupcontent ._subtitle[step-theme='dark'],
-._gssignuptophead[step-theme='dark']{
+._gssignuptophead[step-theme='dark'] {
   background-color: var(--bg-dark);
   color: rgb(233, 227, 227);
 }
@@ -92,6 +92,9 @@
   flex-direction: column;
   padding: 10px 0;
 }
+._gs2signupinput span {
+  margin-bottom: 10px;
+}
 ._gs2signupinput a {
   border-radius: 2% !important;
   background-color: #fff !important;
@@ -105,7 +108,6 @@
   line-height: 17px;
 }
 ._gs2signupinput div {
-  margin: 8px 0;
   outline: none;
   width: 90%;
   max-width: 550px;

@@ -24,6 +24,43 @@ h6 {
 html {
   scroll-behavior: smooth;
 }
+
+._eV_dK,
+._2N9dq {
+  display: none !important;
+}
+._3neb0 {
+  order: 2 !important;
+}
+
+._f2DT8 span {
+  position: relative !important;
+  animation: none !important;
+}
+._1YOWG {
+  bottom: -90px !important;
+}
+._1YOWG,
+._1Yplu {
+  position: absolute;
+  bottom: -120px;
+  transform: translateX(-50%);
+  left: 50%;
+  width: max-content;
+}
+
+._1Yplu button {
+  padding: 5px 10px;
+}
+._3neb0 {
+  left: 8px;
+  top: 8px;
+  display: block !important;
+  position: relative;
+}
+._3neb0 svg {
+  color: #fff !important;
+}
 .slide {
   padding: 30px !important;
 }

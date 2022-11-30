@@ -14,7 +14,6 @@
     "storybook": "lerna run storybook",
     "diff": "lerna diff",
     "build-storybook": "build-storybook",
-
     "test": "lerna run test"
   },
   "devDependencies": {
@@ -38,9 +37,8 @@
     "@banana-dev/banana-dev": "^4.0.0",
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@mui/material": "^5.10.15",
+    "@emotion/react": "^11.10.5", 
+    "@sendgrid/mail": "^7.7.0",
     "@storybook/testing-library": "^0.0.13",
     "aws-sdk": "^2.1260.0",
     "axios": "^1.1.3",

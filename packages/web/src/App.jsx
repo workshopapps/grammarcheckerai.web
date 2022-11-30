@@ -1,11 +1,9 @@
-import React, { lazy, Suspense, useState } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import './App.css';
 import Fallback from './components/Fallback/Fallback';
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom';
 import QuizGame from './modules/static/quizgame/QuizGame';
-import ProtectedRoute from './components/ProtectedRoute';
-import { useEffect } from 'react';
-// import QuizGame from './modules/static/quizgame/QuizGame';
+// import ProtectedRoute from './components/ProtectedRoute';
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
 const SigninPage = lazy(() => import('./modules/auth/login/login'));
 const ProfilePage = lazy(() => import('./pages/profile/profileScreen'));
@@ -28,6 +26,7 @@ const HomePages = lazy(() => import('./modules/account/home/homePage'));
 const HistoryPage = lazy(() => import('./modules/account/history/history'));
 const CorrectionPage = lazy(() => import('./modules/account/history/correction'));
 const Conversation = lazy(() => import('./modules/account/conversation'));
+const ConversationTry = lazy(() => import('./modules/account/conversation/chat'));
 const Landing = lazy(() => import('./modules/static/landing-page/LandingPage'));
 const Legal = lazy(() => import('./pages/Legal/index'));
 const SettingsPage = lazy(() => import('./modules/setting/home-settings/Settings'));
@@ -166,6 +165,12 @@ const ConversationPage = () => (
   </Suspense>
 );
 
+const ConversationTryPage = () => (
+  <Suspense fallback={<Fallback />}>
+    <ConversationTry />
+  </Suspense>
+);
+
 const LandingPage = () => (
   <Suspense fallback={<Fallback />}>
     <Landing />
@@ -245,17 +250,23 @@ const LandingLayout = () => (
 );
 
 function App() {
-  const [isLoggedin, setIsLoggedIn] = useState(false);
+  const [isLoggedin, setisLoggedin] = useState(false);
+  const [isDashboard, setIsDashboard] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem('grittyuserid') !== null && localStorage.getItem('grittyuserid') !== '') {
-      setIsLoggedIn(true);
+      setisLoggedin(true);
+    }
+    if (localStorage.getItem('isdashboard') !== false) {
+      setIsDashboard(true);
     }
   }, []);
 
   return (
     <Routes>
       <Route path="/converse" element={<ConversationPage />} />
+      <Route path="/converse/try" element={<ConversationTryPage />} />
+
       <Route path="/history" element={<h2>History</h2>} />
       <Route element={<LandingLayout />}>
         <Route path="/" element={<LandingPage />} />
@@ -272,8 +283,8 @@ function App() {
         <Route path="/testimonials" element={<Testimonial />} />
         <Route path="/ratings" element={<Ratings />} />
         <Route path="/legal" element={<LegalPage />} />
-        <Route path="/quizgame" element={<QuizGame />}></Route>
       </Route>
+      <Route path="/quizgame" element={<QuizGame />}></Route>
       <Route path="/newsletter" element={<NewsletterPage />} />
       <Route path="/career" element={<Careers />} />
       <Route path="/roles" element={<Roles />} />
@@ -294,51 +305,16 @@ function App() {
         <Route path="forgot-password" element={<Forgotpassword />} />
         <Route path="reset-password" element={<ResetLink />} />
       </Route>
-      <Route path="/me" element={<DashboardLayout />}>
-        <Route
-          path="home"
-          element={
-            <ProtectedRoute>
-              <HomePage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="history"
-          element={
-            <ProtectedRoute>
-              <History />
-            </ProtectedRoute>
-          }
-        />
+      <Route path="/me" element={isDashboard === false ? <Navigate to="/signin" /> : <DashboardLayout />}>
+        <Route path="home" element={<HomePage />} />
+        <Route path="history" element={<History />} />
         <Route path="history/correction" element={<Correction />} />
-        <Route
-          path="profile"
-          element={
-            <ProtectedRoute>
-              <ProfileScreen />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="profile" element={<ProfileScreen />} />
         <Route path="profile/changepassword" element={<ChangePassword />} />
         <Route path="profile/deleteaccount" element={<DeleteAccount />} />
         <Route path="profile/deleteaccount-step2" element={<ConfirmDeleteAccount />} />
-        <Route
-          path="import"
-          element={
-            <ProtectedRoute>
-              <TranscribePage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="settings"
-          element={
-            <ProtectedRoute>
-              <Settings />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="import" element={<TranscribePage />} />
+        <Route path="settings" element={<Settings />} />
       </Route>
     </Routes>
   );

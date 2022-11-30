@@ -38,12 +38,12 @@ const Charcters = () => {
        
     ]
     return (
-        <section className={`${context.theme === 'dark' ? 'bg-[#E8DDF2]' : 'bg-[#ffff]'} py-10`}>
+        <section className={`${context.theme === 'dark' ? 'bg-[#000]' : 'bg-[#ffff]'} py-10`}>
             <div className='w-[90%] mx-auto max-w-[1220px] '>
-                <header className=' text-[#263238] py-7 max-w-md'>
-                    <h2 className='mb-4 text-xl md:text-2xl font-black md:whitespace-nowrap'>Talk to our AI bot in different characters</h2>
-                    <p>Make your learning experience more personalised and fun.
-                        Talk to grit in different voices, avatars and personalities.
+                <header className='py-7 max-w-md'>
+                    <h2 className={`${context.theme === 'dark' ? 'text-[#fff]' : 'text-[#263238]'} mb-4 text-xl md:text-2xl font-black md:whitespace-nowrap`}>Talk to our AI bot in different characters</h2>
+                    <p className={`${context.theme === 'dark' ? 'text-[#fff]' : 'text-[#263238]'}`}>Make your learning experience more personalised and fun.
+                        Talk to <span className={`${context.theme === 'dark' ? 'text-[#BA7CFE]' : 'text-[#263238]'}`}>grit</span> in different voices, avatars and personalities.
                     </p>
                 </header>
           

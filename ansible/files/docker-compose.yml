@@ -32,7 +32,7 @@ services:
       - FB_CALLBACK_URL=${FB_CALLBACK_URL}
       - MODEL_KEY=${MODEL_KEY}
       - API_KEY=${API_KEY}
-      - FILE_SIZE=104857
+      - FILE_SIZE=50485700
       - SENDGRID_HOST=smtp.sendgrid.net
       - SENDGRID_USER=${SENDGRID_USER}
       - SENDGRID_API_KEY=${SENDGRID_API_KEY}
