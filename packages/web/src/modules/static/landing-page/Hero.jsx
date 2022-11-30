@@ -26,7 +26,7 @@ const Hero = () => {
           <p className="font-bold text-2xl my-4">Corrects all grammatical errors.</p>
           <p className={`mb-10 text-lg`}>
             Tired of making grammer mistakes while you speak? Do you find it hard to constuct correct sentences in the
-            new language you&apos;re learning?
+            new language you're learning?
           </p>
           <Link
             to="/signup"
