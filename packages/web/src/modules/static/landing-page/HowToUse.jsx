@@ -32,7 +32,7 @@ const HowToUse = () => {
   const [active, setActive] = useState(btns[0]);
 
   return (
-    <section className="bg-[#f5f3f380] py-10 transition-all">
+<section className={`${context.theme === 'dark' ? 'bg-[#211f21]' : 'bg-[#ffff]'} py-10  transition-all`}>
       <div className="w-[80%] mx-auto my-6 space-y-24">
         <h3 className={`text-xl text-center ${context.theme === 'dark' ? 'text-[#ffffff]' : null} md:text-3xl font-black`}>
           How You Can Use Gritty Grammar In Three Tiny Steps
@@ -46,14 +46,15 @@ const HowToUse = () => {
                   type="button"
                   className={`${
                     btn.step === active.step ? styles.step_active : 'transparent'
-                  }  hover:border-[#5D387F] text-left pl-7 min-h-max relative h-28`}
+                  }  hover:border-[#BA7CFE] text-left pl-7 min-h-max relative h-28 `}
                   onClick={() => setActive(btn)}
                   step-theme={context.theme}
                 >
-                  <span className="block font-black text-lg">Step {btn.step} </span>
-                  {btn.title}
+                  <span className={`${context.theme === 'dark' ? 'text-[#BA7CFE]' : 'text-[#000]'} block font-black text-lg`}>Step {btn.step} </span>
+                  <span className={`${active.step ? '' : styles.step_active} `}> {btn.title} </span> 
+                  {/* {btn.title}  */}
                   {btn.step === active.step ? (
-                    <motion.div className="absolute top-0 -left-1 h-full w-1 bg-[#5D387F] block" layoutId="underline" />
+                    <motion.div className="absolute top-0 -left-1 h-full w-1 bg-[#BA7CFE] block" layoutId="underline" />
                   ) : null}
                 </button>
               );
