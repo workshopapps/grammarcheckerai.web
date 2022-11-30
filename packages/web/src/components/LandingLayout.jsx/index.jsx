@@ -4,7 +4,7 @@ import Navbar from '../Navbar';
 
 function LandingLayout() {
   return (
-    <div className="space-y-32">
+    <div>
       <Navbar />
       <Outlet />
     </div>

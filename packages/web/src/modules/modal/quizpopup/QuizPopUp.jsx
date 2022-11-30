@@ -16,7 +16,7 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
 
   const getQuestions = async () => {
     try {
-      const response = await axios.get('https://grittygrammar.hng.tech/api/v1/quiz');
+      const response = await axios.get('https://speakbetter.hng.tech/api/v1/quiz');
       console.log(response.data);
       const data = response.data;
       setTrivia(data);
@@ -47,11 +47,11 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
 
   const handleClose = () => {
     setShowQuiz(false);
-    if (showQuiz !== true) {
-      setInterval(() => {
-        setShowQuiz(true);
-      }, 50000);
-    }
+    // if (showQuiz == true) {
+    //   setInterval(() => {
+    //     setShowQuiz(true);
+    //   }, 50000);
+    // }
   };
 
   return (
