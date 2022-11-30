@@ -19,7 +19,7 @@ pipeline {
 			steps {
 				sh "sudo cp -r packages/api/ /home/devineer/backend"
 				sh "sudo cp -r ${WORKSPACE}/packages/web/dist/	/home/devineer/frontend"
-				sh "su - devineer -s /bin/bash && echo $USER"
+				sh "sudo su - devineer -s /bin/bash && echo $USER"
 				sh "sudo pm2 delete all"
 				sh "sudo su - devineer && sudo pm2 serve /home/devineer/frontend 3333"
 				sh "sudo su - devineer && npm install && sudo pm2 start /home/devineer/backend/server.js -- --port 5555"
