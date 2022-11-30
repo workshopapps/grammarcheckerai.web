@@ -20,8 +20,8 @@ pipeline {
 				sh "sudo cp -r packages/api/ /home/devineer/backend"
 				sh "sudo cp -r ${WORKSPACE}/packages/web/dist/	/home/devineer/frontend"
 				sh "pm2 kill"
-				sh "pm2 serve /home/devineer/frontend 3333"
-				sh "c npm install && pm2 start /home/devineer//backend/server.js -- --port 5555"
+				sh "sudo pm2 serve /home/devineer/frontend 3333"
+				sh "c npm install && sudo  pm2 start /home/devineer//backend/server.js -- --port 5555"
 			
 			}
 			
