@@ -10,14 +10,6 @@ const config = {
     database: DB_DB,
     host: DB_HOST,
     dialect: DIALECT,
-    dialectOptions: {
-      ssl: {
-        require: false,
-        rejectUnauthorized: false,
-      },
-    },
-    logging: true,
-    seederStorage: "sequelize",
   },
   test: {
     username: DB_USER,
