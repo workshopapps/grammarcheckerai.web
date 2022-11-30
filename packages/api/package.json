@@ -7,9 +7,9 @@
         "dev": "nodemon server.js",
         "start": "node server.js",
         "test": "jest",
-				"db:migrate": "sequelize db:migrate",
-    		"db:undo:migrate": "sequelize db:migrate:undo",
-    		"db:seed": "sequelize db:seed:all"
+        "db:migrate": "sequelize db:migrate",
+        "db:undo:migrate": "sequelize db:migrate:undo",
+        "db:seed": "sequelize db:seed:all"
     },
     "keywords": [],
     "author": "Team Carpenter Grit",
