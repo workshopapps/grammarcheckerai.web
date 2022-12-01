@@ -16,11 +16,11 @@ const NewsLetter = () => {
         <input
           type="email"
           placeholder="Your email address"
-          className={`${styles.subscribe} py-4 px-3 w-[100%] rounded-lg shadow-sm`}
+          className={`${styles.subscribe} py-4 px-4 w-[100%] rounded-lg bg-[#EEEEEE] border-0 shadow-sm`}
         />
         <button
           type="submit"
-          className={`${styles._btn} bg-[#5D387F] text-[#E8DDF2] rounded-lg absolute right-3 top-[15%] hover:bg-[#392150] hover:text-white transition-colors`}
+          className={`${styles._btn} bg-[#5D387F] text-[#E8DDF2] rounded-lg absolute right-3 top-[25%] hover:bg-[#392150] hover:text-white transition-colors`}
         >
           Subscribe
         </button>
