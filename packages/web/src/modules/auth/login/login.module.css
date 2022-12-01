@@ -7,7 +7,7 @@
   overflow-x: hidden;
   overflow-y: scroll;
 }
-._gs2mainlogin[signup-theme='dark']{
+._gs2mainlogin[signup-theme='dark'] {
   background-color: var(--bg-dark);
 }
 /* width */
@@ -46,7 +46,7 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
-[gs2logincol1-theme='dark']{
+[gs2logincol1-theme='dark'] {
   background-color: var(--bg-dark);
   color: rgb(233, 227, 227);
 }
@@ -88,7 +88,7 @@
 }
 ._gs2logincontent h2[signup-theme='dark'],
 ._gs2logincontent p[signup-theme='dark'],
-._gs2loginsignin button[signup-theme='dark']{
+._gs2loginsignin button[signup-theme='dark'] {
   color: rgb(233, 227, 227);
 }
 
@@ -150,6 +150,7 @@
   color: #fff;
   background: #5d387f;
   border-radius: 12px;
+  text-transform: lowercase;
 }
 ._gs2logincontinue button:hover {
   font-style: normal;
@@ -483,7 +484,13 @@
     justify-content: center;
   }
   ._gs2logininput {
-    padding: 25px 0;
+    padding: 8px 0;
+  }
+  ._gs2logininput div {
+    margin: 0;
+  }
+  ._gs2logininput span {
+    padding: 10px 0;
   }
   ._gs2mainlogincol2images img:first-child {
     width: 100%;
@@ -503,6 +510,9 @@
   ._gs2logincontent ._subtitle {
     width: 100%;
     max-width: 377px;
+  }
+  ._gs2loginsignin {
+    padding-top: 16px;
   }
 }
 @media only screen and (max-width: 410px) {

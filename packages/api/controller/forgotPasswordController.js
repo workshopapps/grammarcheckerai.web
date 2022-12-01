@@ -30,7 +30,7 @@ exports.requestForgotPassword = async (req, res) => {
       templateId: RESET_PASSWORD_TEMPLATE_ID,
       data: {
         name: user.firstName,
-        action_url: reset_password_url,
+        url: reset_password_url,
       },
     });
 

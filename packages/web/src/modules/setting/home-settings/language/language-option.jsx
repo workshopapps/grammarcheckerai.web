@@ -1,58 +1,7 @@
-import {
-  arrowRightIcon,
-  BritishFlagIcon,
-  checkIcon,
-  ChineseFlagIcon,
-  FinnishFlagIcon,
-  GermanyFlagIcon,
-  HindiFlagIcon,
-  ItalianFlagIcon,
-  MalayFlagIcon,
-  MandarinFlagIcon,
-  NorwegianFlagIcon,
-  PortugeseFlagIcon,
-  searchIcon,
-  UAEFlagIcon,
-  USAFlagIcon,
-} from '../../../../assets';
+import { arrowRightIcon, checkIcon, searchIcon } from '../../../../assets';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
 
-function LanguageOption({ openBar, setUniversalLanguage }) {
-  const [languageList, setLanguage] = useState([
-    { name: 'Chinese', flag: ChineseFlagIcon },
-    { name: 'British English', flag: BritishFlagIcon, selected: true },
-    { name: 'Finnish', flag: FinnishFlagIcon },
-    { name: 'Hindi', flag: HindiFlagIcon },
-    { name: 'Italian', flag: ItalianFlagIcon },
-    { name: 'Malay', flag: MalayFlagIcon },
-    { name: 'Mandarin', flag: MandarinFlagIcon },
-    { name: 'Norwegian', flag: NorwegianFlagIcon },
-    { name: 'Portugese', flag: PortugeseFlagIcon },
-    { name: 'German', flag: GermanyFlagIcon },
-    { name: 'US English', flag: USAFlagIcon },
-    { name: 'Arabic', flag: UAEFlagIcon },
-  ]);
-
-  useEffect(() => {
-    var selected = languageList.filter((obj) => {
-      return obj.selected;
-    });
-
-    setUniversalLanguage(selected);
-  }, [languageList]);
-
-  const selectLanguage = (id) => {
-    setLanguage((arr) =>
-      arr.map((obj) => {
-        if (obj === id) {
-          return { ...obj, selected: true };
-        }
-        return { ...obj, selected: false };
-      }),
-    );
-  };
-
+function LanguageOption({ openBar, changeLanguage, languageList }) {
   return (
     <div className="absolute top-0 left-0 z-[150] w-full h-screen bg-dark-100 px-6 py-5 overflow-y-auto">
       <div className="max-w-screen-xl mx-auto">
@@ -77,8 +26,7 @@ function LanguageOption({ openBar, setUniversalLanguage }) {
                 <button
                   className="absolute w-full h-full"
                   onClick={() => {
-                    // openBar('language');
-                    selectLanguage(language);
+                    changeLanguage(language);
                   }}
                 ></button>
                 <div className="w-full flex items-center gap-3 font-normal">
@@ -105,7 +53,8 @@ function LanguageOption({ openBar, setUniversalLanguage }) {
 
 LanguageOption.propTypes = {
   openBar: PropTypes.func,
-  setUniversalLanguage: PropTypes.func,
+  languageList: PropTypes.array,
+  changeLanguage: PropTypes.func,
 };
 
 export default LanguageOption;
