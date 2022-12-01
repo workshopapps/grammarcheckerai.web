@@ -20,7 +20,7 @@ const Header = () => {
           </NavLink>
         ))}
       </div>
-      <button className="bg-purple-500 py-3 px-5 rounded-lg text-white ">Get started</button>
+      <button className="bg-[#5D387F] hover:bg-[#392150] py-3 px-5 rounded-lg text-white ">Get started</button>
     </header>
   );
 };
