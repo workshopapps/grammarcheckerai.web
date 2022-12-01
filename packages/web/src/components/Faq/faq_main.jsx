@@ -13,7 +13,7 @@ function FaqMain() {
         <div
           className={` ${
             dark && 'bg-[#211f21]'
-          } lg:h-[350px] h-[320px] md:h-[320px]   bg-[#5D387F]  grid place-items-center`}
+          } lg:h-[350px] h-[320px] md:h-[320px]  bg-[#5D387F]  grid place-items-center`}
         >
           {' '}
           <div className=" lg:w-[50%] md:[70%] w-[85%] m-auto flex justify-center items-center flex-col">
@@ -64,7 +64,7 @@ function FaqMain() {
         <div
           className={` ${
             dark && 'bg-[black]'
-          } grid lg:grid-cols-3 md:grid-cols-2 lg:mt-[43px] place-items-center  md:gap-10  items-center lg:m-10 justify-center m-5`}
+          } grid lg:grid-cols-3 md:grid-cols-2 lg:mt-[44px] place-items-center  md:gap-10  items-center lg:m-10 justify-center m-5`}
         >
           {data
             .filter((val) => {
@@ -99,7 +99,7 @@ function FaqMain() {
                     <p
                       className={` ${
                         dark && 'text-[#c0c0c0]'
-                      } text-[#53686A]  text-[11px] md:text-[14px] lg:text-[17px] mt-[10px] md:mt-5 lg:mt-[12px] leading-[20px] lg:leading-[25px] font-normal w-[232px] lg:w-auto  md:w-[250px] h-auto  font-[Inter]`}
+                      } text-[#53686A]  text-[11px] md:text-[13px] lg:text-[17px] mt-[10px] md:mt-5 lg:mt-[12px] leading-[20px] lg:leading-[25px] font-normal w-[232px] lg:w-auto  md:w-[250px] h-auto  font-[Inter]`}
                     >
                       {val.para}
                     </p>
