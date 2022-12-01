@@ -1,22 +1,95 @@
 const { environment } = require("../config/environment");
 const Subscription = require("../database/models/subscriptionSchema");
-
+const https = require("https");
 const { PAYSTACK_SECRET_KEY } = environment;
 const paystack = require("paystack")(PAYSTACK_SECRET_KEY);
 
-exports.home = async (req, res) => {
-  return res.status(200).send({ status: "ok", message: "Hello Paystack" });
+exports.allSubscriptions = async (req, res) => {
+  const subscriptions = await Subscription.find();
+  return res.status(200).send({ status: "ok", data: subscriptions });
 };
 
-exports.fetchSubscription = async (req, res) => {
-  paystack.customer
-    .list()
-    .then(function (body) {
-      return res.status(200).send(body.data);
+exports.subscribe = async (req, res) => {
+  const { user, name, amount, interval, subscriptionId } = req.body;
+  req.body.paymentGateway = "paystack";
+
+  const params = JSON.stringify({
+    customer: name,
+    plan: "PLN_2cqf3nx11trbn4b",
+    send_invoices: true,
+    redirect_url: "https://paystack.com/pay/1ka-cpvjd7",
+  });
+  const activeSubscription = await Subscription.findOne({ userId: user })
+    .then((result) => {
+      if (result != null)
+        return res
+          .status(400)
+          .send({ success: false, message: "User already subscribed" });
     })
-    .catch(function (error) {
-      console.log(error);
+    .catch((error) => {
+      return res
+        .status(500)
+        .send({ success: false, message: "Something went wrong" });
     });
-};
+  if (!activeSubscription) {
+    await Subscription.create(req.body);
+    const options = {
+      hostname: "api.paystack.co",
+      port: 443,
+      path: "/transaction/initialize",
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
+        "Content-Type": "application/json",
+      },
+    };
+    const request = https
+      .request(options, (response) => {
+        let data = "";
 
-exports.subscribe = async (req, res) => {};
+        response.on("data", (chunk) => {
+          data += chunk;
+        });
+
+        response.on("end", () => {
+          return data;
+        });
+      })
+      .on("error", (error) => {
+        console.error(error);
+      });
+
+    request.write(params);
+    request.end();
+    return res.status(200).send(JSON.parse(request.outputData[2].data));
+  }
+};
+exports.verifyTransaction = async (req, res)=> {
+
+  const options = {
+    hostname: "api.paystack.co",
+    port: 443,
+    path: "/transaction/verify/:reference",
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
+    },
+  };
+
+  const request = https
+    .request(options, (res) => {
+      let data = "";
+
+      res.on("data", (chunk) => {
+        data += chunk;
+      });
+
+      res.on("end", () => {
+        console.log(JSON.parse(data));
+      });
+    })
+    .on("error", (error) => {
+      console.error(error);
+    });
+    return res.status(200).send(request);
+}
