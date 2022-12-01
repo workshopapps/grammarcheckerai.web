@@ -150,7 +150,7 @@ const About = () => {
                   </div>
                 ))}
             </div>
-            <BsThreeDots className=" text-3xl font-bold text-primary" />
+            
           </div>
           <div className="flex flex-col items-center justify-center bg-primary py-6 px-8 mt-4 md:w-full">
             <p className=" text-white  text-center text-lg">Try Quick Transcribe for free</p>
