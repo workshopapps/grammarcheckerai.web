@@ -9478,6 +9478,11 @@ react-password-mask@^3.3.1:
   resolved "https://registry.npmjs.org/react-password-mask/-/react-password-mask-3.3.1.tgz"
   integrity sha512-/MpZs25k36W1h7e/CKvyHsoRYxqmSZGDakhgs9GohfxPdGf8wgLhSkPPvNX5XJZDtriWduH7rnMYE2RJUGpdkA==
 
+react-paystack@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/react-paystack/-/react-paystack-4.0.1.tgz"
+  integrity sha512-6bJ+kHlJZqHupnezlA96tlZh+GQc1giNesLN1vvjQ1lsK8mavjF24uyiwyewInOUSs42+9hx1eP8gZTIgHLYLg==
+
 react-refresh@^0.14.0:
   version "0.14.0"
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.14.0.tgz"

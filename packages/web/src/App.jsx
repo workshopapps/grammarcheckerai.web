@@ -3,7 +3,7 @@ import './App.css';
 import Fallback from './components/Fallback/Fallback';
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom';
 import QuizGame from './modules/static/quizgame/QuizGame';
-// import ProtectedRoute from './components/ProtectedRoute'; 
+// import ProtectedRoute from './components/ProtectedRoute';
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
 const SigninPage = lazy(() => import('./modules/auth/login/login'));
 const ProfilePage = lazy(() => import('./pages/profile/profileScreen'));
@@ -42,7 +42,7 @@ const Ai = lazy(() => import('./pages/Blog/Ai'));
 const Grammar = lazy(() => import('./pages/Blog/Grammar'));
 const Tips = lazy(() => import('./pages/Blog/Tips'));
 const Contact = lazy(() => import('./pages/contact/index'));
-
+const PremiumSubs = lazy(() => import('./modules/premium/index'));
 // All routes/pages must be import from ./pages folder
 
 const DashboardLayout = () => (
@@ -54,6 +54,11 @@ const DashboardLayout = () => (
 const Signuptwo = () => (
   <Suspense fallback={<Fallback />}>
     <SignupTwoPage />
+  </Suspense>
+);
+const Premium = () => (
+  <Suspense fallback={<Fallback />}>
+    <PremiumSubs />
   </Suspense>
 );
 
@@ -268,6 +273,7 @@ function App() {
       <Route path="/converse/try" element={<ConversationTryPage />} />
 
       <Route path="/history" element={<h2>History</h2>} />
+      <Route path="/premium" element={<Premium />} />
       <Route element={<LandingLayout />}>
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<LandingPage />} />
