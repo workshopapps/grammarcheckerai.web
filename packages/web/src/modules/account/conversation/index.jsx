@@ -38,14 +38,7 @@ function Conversation() {
         context.theme === 'dark' ? styles.convo_theme : null
       } `}
     >
-      <div className="flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto items-center justify-between">
-        {/*  eslint-disable-next-line jsx-a11y/media-has-caption */}
-        {/* <audio controls src={audioResult} /> */}
-        <div className="w-36">
-          <Link to="/home">
-            <img src={logoImg} alt="" className="max-w-full" />
-          </Link>
-        </div>
+      <div className="flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto items-center justify-end">
         <SeletedLanguage />
       </div>
       <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4 scroll-smooth">
