@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
 import Footer from '../../modules/static/landing-page/Footer';
 import data from './faq_data';
+import useTheme from '../../hooks/useTheme';
 
 function FaqMain() {
+  const context = useTheme();
+  const dark = context.theme === 'dark';
   const [searchTerm, setsearchTerm] = useState('');
   return (
     <>
       <div className="w-full h-full flex flex-col justify-between ">
-        <div className="lg:h-[300px] h-[296px] md:h-[320px]  bg-[#8C54BF] mb-20 grid place-items-center">
+        <div
+          className={` ${
+            dark && 'bg-[#211f21]'
+          } lg:h-[300px] h-[296px] md:h-[320px]   bg-[#8C54BF] mb-20 grid place-items-center`}
+        >
           <h3 className="lg:mt-[45px] mt-[55px] flex items-center justify-center  text-[#FFFFFF] font-semibold lg:leading-[24px] leading-[17px] md:leading-[20px] lg:text-[24px] md:text-[20px] text-[16px] font-[Inter]">
             FAQs
           </h3>
@@ -49,7 +56,11 @@ function FaqMain() {
       </div>
 
       <div className="place-items-center  mb-20">
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 lg:mt-[43px] place-items-center lg:gap-20 md:gap-10 gap-20 items-center lg:m-10 justify-center m-5">
+        <div
+          className={` ${
+            dark && 'bg-[black]'
+          } grid lg:grid-cols-3 md:grid-cols-2 lg:mt-[43px] place-items-center lg:gap-20 md:gap-10 gap-20 items-center lg:m-10 justify-center m-5`}
+        >
           {data
             .filter((val) => {
               if (searchTerm === '') {
