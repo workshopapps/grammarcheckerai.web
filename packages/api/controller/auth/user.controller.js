@@ -73,6 +73,7 @@ async function registerUser(req, res) {
           data: user,
           Email: maildata
       });
+
 }
 
 async function googleAuthUserSignUp(req, res) {

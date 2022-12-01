@@ -277,7 +277,7 @@ const index = () => {
         </div>
         <div className={styles._gs2signupcol2}>
           <div className={styles._gs2mainsignupcol2body}>
-            <Carousel autoplay={true} autoplayInterval={5000} withoutControls={true}>
+            <Carousel autoplay={true} autoplayInterval={7000} withoutControls={true} pauseOnHover={true} wrapAround={true} animation="fade">
               <div className={styles._gs2mainsignupcol2images}>
                 <img src={Image1} alt="column1" />
                 <img src={Image2} alt="column1" />
