@@ -119,7 +119,7 @@ const index = () => {
   };
 
   const handleGoogleAuth = () => {
-    useFetch('https://grittygrammar.hng.tech/api/v1/auth/google');
+    useFetch('https://speakbetter.hng.tech/api/v1/auth/google');
   };
 
   /* 
@@ -131,7 +131,7 @@ const index = () => {
   */
 
   const handleFacebookAuth = () => {
-    useFetch('https://grittygrammar.hng.tech/api/v1/auth/facebook');
+    useFetch('https://speakbetter.hng.tech/api/v1/auth/facebook');
   };
 
   /* 
@@ -143,7 +143,7 @@ const index = () => {
   */
 
   const handleLinkedInAuth = () => {
-    useFetch('https://grittygrammar.hng.tech/api/v1/auth/linkedin');
+    useFetch('https://speakbetter.hng.tech/api/v1/auth/linkedin');
   };
 
   const isTabletorMobile = useMediaQuery('(min-width:850px)');

@@ -105,7 +105,7 @@ const Index = () => {
   };
 
   const handleGoogleAuth = () => {
-    useFetch('https://grittygrammar.hng.tech/api/v1/auth/google');
+    useFetch('https://speakbetter.hng.tech/api/v1/auth/google');
   };
 
   /* 
@@ -117,7 +117,7 @@ const Index = () => {
     */
 
   const handleFacebookAuth = () => {
-    useFetch('https://grittygrammar.hng.tech/api/v1/auth/facebook');
+    useFetch('https://speakbetter.hng.tech/api/v1/auth/facebook');
   };
 
   /* 
@@ -129,7 +129,7 @@ const Index = () => {
     */
 
   const handleLinkedInAuth = () => {
-    useFetch('https://grittygrammar.hng.tech/api/v1/auth/linkedin');
+    useFetch('https://speakbetter.hng.tech/api/v1/auth/linkedin');
   };
 
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
@@ -187,7 +187,7 @@ const Index = () => {
               <div className={styles._gs2logincheck}>
                 <div className={styles._g2loginoption}>
                   <input type="checkbox" id="userRememberPassword" />
-                  <span>Keep me signed in</span>
+                  <label htmlFor="userRememberPassword">Keep me signed in</label>
                 </div>
                 <div>
                   <button
