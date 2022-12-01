@@ -3,6 +3,7 @@ const { getTokens } = require("./google.user.controller");
 const { register } = require("../../repository/user.repository");
 const { userCollection } = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
+const { generateEmailVerificationLink, verifyLink } = require("../../utilities/generateToken");
 const emailService = require("../../services/email.service");
 const { environment } = require("../../config/environment");
 const { SIGNUP_TEMPLATE_ID, BASE_URL } = environment;
@@ -36,17 +37,29 @@ async function registerUser(req, res) {
       .json(response({ message: "User already exist", success: false }));
 
   const data = { email, firstName, lastName, username, password, language };
-
-  emailService({
-    to: email,
-    subject: "Welcome to Speak Better",
+  
+  //generate verification email
+  let verificationLink = await generateEmailVerificationLink(data)
+    
+    
+  const maildata = {
+  to: email,
+  subject: "Verify your Email",
+  templateId: SIGNUP_TEMPLATE_ID,
+  data: {
+    name: firstName,
+    url: verificationLink,
+  }
+  }
+   emailService({  to: email,
+    subject: "Verify your Email",
     templateId: SIGNUP_TEMPLATE_ID,
     data: {
       name: firstName,
-      url: `${BASE_URL}/signin`,
-    },
-  });
+      url: verificationLink,
+    }});
 
+          
   const user = await register(data);
 
   if (!user)
@@ -54,13 +67,12 @@ async function registerUser(req, res) {
       .status(500)
       .json(response({ success: false, message: "User not created" }));
 
-  return res.status(201).json(
-    response({
-      success: true,
-      message: "User created successfully",
-      data: user,
-    })
-  );
+        // send success message
+        res.status(200).json({
+          message: "Verification mail sent successfully",
+          data: user,
+          Email: maildata
+      });
 }
 
 async function googleAuthUserSignUp(req, res) {
@@ -113,4 +125,28 @@ async function googleAuthUserSignUp(req, res) {
     );
   }
 }
-module.exports = { registerUser, googleAuthUserSignUp };
+
+async function verifyMail (req, res) {
+  let verificationLink = req.params.link
+
+  try {
+      let user = await verifyLink(verificationLink)
+      if (!user) {
+          throw new Error("Link expired")
+      }
+
+      res.status(201).json(
+        response({
+          success: true,
+          message: "User created successfully, pls go back to signin page and signin",
+        })
+      );
+  }
+  catch (err) {
+      res.status(400).json({
+          error: err.message
+      })
+  }
+}
+
+module.exports = { registerUser, googleAuthUserSignUp, verifyMail };
