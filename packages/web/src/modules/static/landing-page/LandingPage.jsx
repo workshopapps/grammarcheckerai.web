@@ -14,13 +14,14 @@ import QuizPopUp from '../../modal/quizpopup/QuizPopUp';
 
 const LandingPage = () => {
   const context = useTheme();
-  const [showQuiz, setShowQuiz] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(true);
 
-  useEffect(() => {
-    setInterval(() => {
-      setShowQuiz(true);
-    }, 4000)
-  }, [setShowQuiz]);
+  // useEffect(() => {
+
+  //   setInterval(() => {
+  //     setShowQuiz(true);
+  //   }, 4000)
+  // }, [setShowQuiz]);
 
   return (
     <div

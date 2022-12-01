@@ -4,11 +4,11 @@ const { environment } = require("../config/environment.js");
 const { verifyJWTToken, generateHash } = require("../utilities/generateToken");
 const emailService = require("../services/email.service");
 
-const { BASE_URL, RESET_PASSWORD_TEMPLATE_ID } = environment;
+const { BASE_URL, RESET_PASSWORD_TEMPLATE_ID, PASSWORD_CHANGED_TEMPLATE_ID } =
+  environment;
 
 exports.requestForgotPassword = async (req, res) => {
   const { email } = req.body;
-
   try {
     const user = await users.findOne({ where: { email } });
 
@@ -24,7 +24,7 @@ exports.requestForgotPassword = async (req, res) => {
     const token = user.generateAuthToken();
     const reset_password_url = `${BASE_URL}/v1/auth/password-reset?token=${token}`;
 
-    await emailService({
+    emailService({
       to: email,
       subject: "Password Reset",
       templateId: RESET_PASSWORD_TEMPLATE_ID,
@@ -81,12 +81,20 @@ exports.resetPassword = async (req, res) => {
         .json(response({ message: "User does not exist", success: false }));
     }
 
-    const password = await generateHash(new_password);
+    const password = await user.generateHash(new_password);
 
     await user.updateOne({
       password,
     });
-
+    emailService({
+      to: email,
+      subject: "Speak Better: Password Changed Successfully",
+      templateId: PASSWORD_CHANGED_TEMPLATE_ID,
+      data: {
+        name: user.firstName,
+        url: `${BASE_URL}/me/home`,
+      },
+    });
     return res.status(200).json(
       response({
         message: "Your password was reset successfully",

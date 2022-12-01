@@ -46,7 +46,6 @@ app.use(
     extended: true,
   })
 );
-
 app.get("*", (req, res) => {
   res.status(200).json({
     message: "Welcome to Grit Grammarly 🙌",
