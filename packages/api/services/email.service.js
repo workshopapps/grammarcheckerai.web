@@ -1,23 +1,22 @@
 const sendgrid = require("@sendgrid/mail");
 const { environment } = require("../config/environment.js");
-const { SENDGRID_API_KEY, EMAIL_FROM } = environment;
-
+const { SENDGRID_API_KEY } = environment; 
 sendgrid.setApiKey(SENDGRID_API_KEY);
 
-const emailService = async ({ to, subject, body, templateId, data }) => {
+const emailService = async ({ to, subject, templateId, dynamicTemplateData }) => {
+  
   return new Promise(async (resolve, reject) => {
     try {
       await sendgrid.send({
         from: `Speak Better <${EMAIL_FROM}>`,
-        to,
-        text: body,
+        to, 
         subject,
         templateId,
-        dynamicTemplateData: data,
+        dynamicTemplateData,
       });
 
       resolve(true);
-    } catch (err) { 
+    } catch (err) {  
       resolve(false);
     }
   });

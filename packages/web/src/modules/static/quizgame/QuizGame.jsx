@@ -10,6 +10,7 @@ const QuizGame = () => {
   const [trivia, setTrivia] = useState({});
   const [answer, setAnswer] = useState(false);
   const [score, setScore] = useState(0);
+  const [errorMsg, setErrorMsg] = useState(false);
 
   const handleAnswer = (e) => {
     // console.log(trivia.correctAnswer);
@@ -23,14 +24,15 @@ const QuizGame = () => {
     }
   };
 
-  const getQuestions = async () => {
+  const getQuestions = async () => { 
     try {
-      const response = await axios.get('https://grittygrammar.hng.tech/api/v1/quiz');
+      const response = await axios.get('https://speakbetter.hng.tech/api/v1/quiz');
       console.log(response.data);
       const data = response.data;
       setTrivia(data);
     } catch (error) {
       console.log('Error', error);
+      setErrorMsg(true);
     }
   };
 
@@ -45,38 +47,49 @@ const QuizGame = () => {
           <img src={logo} alt="" />
         </Link>
       </div>
-      <div className={styles.quizgame_card}>
-        <div className={styles.quizgame_card__content}>
-          <h1 className={styles.quizgame_card__content__heading}>
-            Test your skills in {trivia.category} with this Trivia
-          </h1>
-          <>
-            <h3 className={styles.quizgame_card__content__question}>{trivia.question}</h3>
-            <ul id="mainList" className={styles.quizgame_card__content__answers}>
-              {trivia.incorrectAnswers &&
-                trivia.incorrectAnswers.map(function (element, index) {
-                  return (
-                    <li id="mainOptions" onClick={handleAnswer} key={index}>
-                      {element}
-                    </li>
-                  );
-                })}
-            </ul>
-          </>
-        </div>
-      </div>
 
-      {answer ? (
-        <div className={styles.quizgame_card__score}>
-          <p>Your Score is {score}</p>
-          <button>
-            <Link to="/">Exit</Link>
-          </button>
+      {errorMsg ? (
+        <div className={styles.quizgame__err}>
+          <h3>Oops! Looks like an error occurred</h3>
+          <p>Bare with us while we get the server back up...</p>
+          <Link to="/">Exit page</Link>
         </div>
       ) : (
-        <div className={styles.quizgame__btn}>
-          <button onClick={() => setAnswer(true)}>View Score</button>
-        </div>
+        <>
+          <div className={styles.quizgame_card}>
+            <div className={styles.quizgame_card__content}>
+              <h1 className={styles.quizgame_card__content__heading}>
+                Test your skills in {trivia.category} with this Trivia
+              </h1>
+              <>
+                <h3 className={styles.quizgame_card__content__question}>{trivia.question}</h3>
+                <ul id="mainList" className={styles.quizgame_card__content__answers}>
+                  {trivia.incorrectAnswers &&
+                    trivia.incorrectAnswers.map(function (element, index) {
+                      return (
+                        <li id="mainOptions" onClick={handleAnswer} key={index}>
+                          {element}
+                        </li>
+                      );
+                    })}
+                </ul>
+              </>
+            </div>
+          </div>
+
+          {answer ? (
+            <div className={styles.quizgame_card__score}>
+              <p>Your Score is {score}</p>
+              <button>
+                <Link to="/">Exit</Link>
+              </button>
+            </div>
+          ) : (
+            <div className={styles.quizgame__btn}>
+              <button onClick={() => setAnswer(true)}>View Score</button>
+            </div>
+          )}
+        </>
       )}
     </section>
   );

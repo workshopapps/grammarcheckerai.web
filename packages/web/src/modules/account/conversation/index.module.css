@@ -7,9 +7,9 @@
   background-size: cover;
   background-position: center;
 }
-.convo_theme{
+.convo_theme {
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.99), rgba(39, 33, 33, 0.99)),
-  url('../../../assets/images/bg.webp');
+    url('../../../assets/images/bg.webp');
 }
 ._bot_mic {
   position: relative;
@@ -30,6 +30,13 @@
 }
 ._bot_mic ._f2DT8 span {
   position: relative;
+}
+
+.mic svg {
+  fill: white;
+  width: 40px;
+  height: 40px;
+  margin: auto auto;
 }
 
 @keyframes pulseAnimate {
