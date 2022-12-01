@@ -38,8 +38,9 @@ const NewsletterPage = () => {
       <section className={styles.newsletter}>
         <aside className={styles.newsletter_left}>
             <div className={styles.newsletter_left__logo}>
-              <Link to="/">
-                <img src={logo} alt="Gritty Grammar Logo" />
+              <Link to="/" className="text-[#5D387F]">
+              {' '}
+              &lt; Back{' '}
               </Link>
             </div>
             <div className={styles.newsletter_left__text}>
