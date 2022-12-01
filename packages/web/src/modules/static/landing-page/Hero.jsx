@@ -26,10 +26,10 @@ const Hero = () => {
           <p className="font-bold text-2xl my-4">Corrects all grammatical errors.</p>
           <p className={`mb-10 text-lg`}>
             Tired of making grammer mistakes while you speak? Do you find it hard to constuct correct sentences in the
-            new language you&apos;re learning?
+            new language you're learning?
           </p>
           <Link
-            to="/converse"
+            to="/signup"
             className=" text-white bg-[#5D387F] py-4 px-3 rounded-lg hover:bg-[#392150] hover:text-white transition-colors"
           >
             Try Gritty Grammar For Free!
@@ -37,7 +37,7 @@ const Hero = () => {
         </div>
 
         <div
-          className={`${styles.hero_img__container} relative w-[20em] mx-auto shadow-lg -mt-10  shadow-black rounded-2xl z-10 md:min-w-[20em]`}
+          className={`${styles.hero_img__container} relative w-[20em] mx-auto shadow-lg -mt-10  shadow-[#0000000] rounded-2xl z-10 md:min-w-[20em]`}
         >
           <div className={`${styles.correction}`}>
             <img src={purpleWoman} alt="mic" className=" w-[20em] " />
