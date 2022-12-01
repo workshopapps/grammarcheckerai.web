@@ -39,8 +39,8 @@
 }
 ._nvstarted button {
   background-color: #531f85;
-  padding: 10px;
-  border-radius: 10px;
+  padding: 12px 40px;
+  border-radius: 8px;
 }
 ._nvstarted button:hover {
   background-color: #69309e;
@@ -60,7 +60,7 @@
     height: 70px;
     width: 45%;
   }
-  
+
   ._nvstarted {
     width: 55%;
     z-index: 999;
