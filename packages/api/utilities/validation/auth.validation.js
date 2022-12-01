@@ -156,7 +156,7 @@ const reset_password = () => {
   ];
 };
 
-const request_reset_password = ()=>{
+const request_reset_password = () => {
   return [
     body("email")
       .exists()
@@ -169,7 +169,7 @@ const request_reset_password = ()=>{
       .normalizeEmail()
       .withMessage("please enter a valid email"),
     body().custom((body) => checkAllowedFields(body, "email")),
-  ]
+  ];
 };
 
 module.exports = {
