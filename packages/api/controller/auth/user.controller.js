@@ -3,76 +3,77 @@ const { getTokens } = require("./google.user.controller");
 const { register } = require("../../repository/user.repository");
 const { userCollection } = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
+const emailService = require("../../services/email.service"); 
+const { SIGNUP_TEMPLATE } = require("../../utilities/email.template");
 const { generateEmailVerificationLink, verifyLink } = require("../../utilities/generateToken");
-const emailService = require("../../services/email.service");
-const { environment } = require("../../config/environment");
-const { SIGNUP_TEMPLATE_ID, BASE_URL } = environment;
 
 async function registerUser(req, res) {
-  let {
-    email,
-    firstName,
-    lastName,
-    username,
-    password,
-    confirm_password,
-    language,
-  } = req.body;
-  //Check if the user already exist
-  password =
-    password === confirm_password
-      ? password
-      : res.status(422).json(
-          response({
-            success: false,
-            message: "Password mismatch, Comfirm your password",
-          })
-        );
-
-  const checkEmailExist = await userCollection.findOne({ email });
-
-  if (checkEmailExist)
-    return res
-      .status(409)
-      .json(response({ message: "User already exist", success: false }));
-
-  const data = { email, firstName, lastName, username, password, language };
+  try {
+    let {
+      email,
+      firstName,
+      lastName,
+      username,
+      password,
+      confirm_password,
+      language,
+    } = req.body;
+    
+    //Check if the user already exist
+    password =
+      password === confirm_password
+        ? password
+        : res.status(422).json(
+            response({
+              success: false,
+              message: "Password mismatch, Comfirm your password",
+            })
+          );
   
-  //generate verification email
-  let verificationLink = await generateEmailVerificationLink(data)
+    const checkEmailExist = await userCollection.findOne({ email });
+  
+    if (checkEmailExist)
+      return res
+        .status(409)
+        .json(response({ message: "User already exist", success: false }));
+  
+    const data = { email, firstName, lastName, username, password, language };
     
+    let verificationLink = await generateEmailVerificationLink(data)
     
-  const maildata = {
-  to: email,
-  subject: "Verify your Email",
-  templateId: SIGNUP_TEMPLATE_ID,
-  data: {
-    name: firstName,
-    url: verificationLink,
-  }
-  }
-   emailService({  to: email,
+
+  await emailService({  to: email,
     subject: "Verify your Email",
-    templateId: SIGNUP_TEMPLATE_ID,
-    data: {
+    templateId: SIGNUP_TEMPLATE,
+    dynamicTemplateData: {
       name: firstName,
-      url: verificationLink,
+      action_url: verificationLink,
     }});
 
-          
-  const user = await register(data);
+      
+    const user = await register(data);
 
-  if (!user)
-    return res
-      .status(500)
-      .json(response({ success: false, message: "User not created" }));
-
-        // send success message
-        res.status(200).json({
-          message: "Verification mail sent successfully",
-          data: user,
-          Email: maildata
-      });
+    if (!user)
+      return res
+        .status(500)
+        .json(response({ success: false, message: "User not created" }));
+  
+    return res.status(201).json(
+      response({
+        success: true,
+        message: "User created successfully, Check your email for confirmation",
+        data: user,
+      })
+    );
+  } catch (error) {
+    return res.status(500).json(
+      response({
+        success: false,
+        message: "Something went wrong, please contact an Admin",
+        data: user,
+      })
+    );
+  }
 }
 
 async function googleAuthUserSignUp(req, res) {
@@ -135,12 +136,9 @@ async function verifyMail (req, res) {
           throw new Error("Link expired")
       }
 
-      res.status(201).json(
-        response({
-          success: true,
-          message: "User created successfully, pls go back to signin page and signin",
-        })
-      );
+      res
+      .status(201)
+      .redirect("/v1/auth/signin");
   }
   catch (err) {
       res.status(400).json({
