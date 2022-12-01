@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import axios from "axios";
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './forgot.module.css';
 import Logo from '../../../assets/signup-logo.png';
 import Image1 from '../../../assets/steponeframeone.png';
 import Image2 from '../../../assets/steponeframetwo.png';
+import LoadingButton from '@mui/lab/LoadingButton';
+import useForgotPassword from '../../../hooks/auth/useForgotPassword';
 
 const index = () => {
   const [resetLink, setResetLink] = useState(false);
-  const [userEmail, setUserEmail] = useState("")
+  const [userEmail, setUserEmail] = useState('');
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
+  const authForgotPassword = useForgotPassword();
 
-useEffect(() => {
-  localStorage.setItem("email", userEmail);
-}, [userEmail])
+  useEffect(() => {
+    localStorage.setItem('email', userEmail);
+  }, [userEmail]);
 
   let navigate = useNavigate();
   const handleBack = () => {
@@ -24,31 +26,22 @@ useEffect(() => {
     navigate('/signin');
   };
 
-  const url = "http://grittygrammar.hng.tech/request-password-reset";
-  
   const handleSendResetLink = (e) => {
     e.preventDefault();
-    if ((userEmail === "")){
-      error("Invalid email!")
+    if (userEmail === '') {
+      error('Invalid email!');
+      return;
     }
-    else if ((userEmail !== localStorage.getItem('email'))){
-      error('User does not exist!');
-    } 
-    else {
-      axios.post(url, {
-        userEmail
+    authForgotPassword
+      .mutateAsync({
+        email: userEmail,
       })
       .then((res) => {
-        console.log(res)
-        setResetLink(true);
-        success("Email sent successfully")
+        success(res?.data?.message);
       })
       .catch((err) => {
-        console.log(err)
-        error("Time out...try again!")
-      })
-      // setResetLink(true);
-    }
+        error(err?.data?.message);
+      });
   };
   const handleOpenMail = () => {
     navigate('/reset-password');
@@ -90,7 +83,9 @@ useEffect(() => {
                   <span className={styles._gcforgotvalidate}>Email is available</span>
                 </div>
                 <div className={styles._gcforgotcontinue}>
-                  <button>Continue</button>
+                  <LoadingButton size="small" type="submit" loading={authForgotPassword.isLoading} variant="contained">
+                    Continue
+                  </LoadingButton>
                 </div>
               </form>
             </div>
