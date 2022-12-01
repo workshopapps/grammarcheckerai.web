@@ -224,8 +224,10 @@ color: #D7D7D7;
         margin-top: 73px;
     }
     .box{
-        width: 30%;
+        width: 40%;
         margin-top: 20px;
+        padding: 1rem;
+        align-items: center;
     }
     .lastbox{
         width: 30%;
