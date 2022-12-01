@@ -36,15 +36,18 @@ const comparePassword = async function (reqPassword) {
 	return correctPassword;
 };
 
-// exports.authValidatorSchema = Joi.object().keys({
-// 	email: Joi.string()
-// 		.email({
-// 			minDomainSegments: 2,
-// 			tlds: { allow: ["com", "net", "xyz", "io", "co", "org"] },
-// 		})
-// 		.lowercase()
-// 		.required(),
-// 	password: Joi.string().min(5).required(),
-// });
+    // generate email verification link when verify a newly created account
+ const   generateEmailVerificationLink =  async function (user) {
+		link = jwt.sign(user, JWT_SECRET, { expiresIn: "1800000"}) //token expires in 30 minutes
+		verificationLink = `${HOST}/api/v1/verify/${link}`
+		return verificationLink
+	};
 
-module.exports = { verifyJWTToken, generateAuthToken, generateHash, comparePassword }
+    // verify jwt => returns embeded user object if links is still active
+const   verifyLink = async function (link) {
+        let isValid = jwt.verify(link, JWT_SECRET )
+        if(isValid) return isValid
+    }
+
+
+module.exports = { verifyJWTToken, generateAuthToken, generateHash, comparePassword, generateEmailVerificationLink, verifyLink }

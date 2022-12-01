@@ -2,7 +2,8 @@ const { response } = require("../../utilities/response");
 const { getTokens } = require("./google.user.controller");
 const { register } = require("../../repository/user.repository"); 
 const { users } = require("../../models");
-const { slugify } = require("../../utilities/compare"); 
+const { slugify } = require("../../utilities/compare");
+const { generateEmailVerificationLink } = require("../../utilities/generateToken"); 
 const emailService = require("../../services/email.service");
 const { environment } = require("../../config/environment");
 const { SIGNUP_TEMPLATE_ID } = environment;
@@ -47,24 +48,25 @@ async function registerUser(req, res) {
       .status(500)
       .json(response({ success: false, message: "User not created" }));
 
-	await emailService({
-		to: email, 
-		subject: "Welcome to Speak Better",
-		templateId: SIGNUP_TEMPLATE_ID,
-		data: {
-			name: firstName,
-			action_url: "/signin",
-		},
-	});
+      const verificationLink = generateEmailVerificationLink(user);
+        // compose mail object
+        let mailData = {
+          to: email,
+          subject: "Verify Your Account",
+          body: verificationLink 
+      }
 
-  return res.status(201).json(
-    response({
-      success: true,
-      message: "User created successfully",
-      data: user,
-    })
-  );
+
+await emailService(mailData);
+
+        // send success message
+        res.status(200).json({
+            message: "Verification mail sent successfully",
+            data: user
+        })
 }
+
+
 
 async function googleAuthUserSignUp(req, res) {
   const { name, email } = await getTokens(req.query.code);
@@ -115,5 +117,32 @@ async function googleAuthUserSignUp(req, res) {
       })
     );
   }
+};
+
+
+async function verifyMail (req, res) {
+  let verificationLink = req.params.link
+
+  try {
+      let user = await verifyLink(verificationLink)
+      if (!user) {
+          throw new Error("Link expired")
+      }
+
+      res
+      .status(200)
+      .redirect("api/v1/login")
+  }
+  catch (err) {
+      res.status(400).json({
+          error: err.message
+      })
+  }
 }
-module.exports = { registerUser, googleAuthUserSignUp };
+
+
+
+
+module.exports = { registerUser, googleAuthUserSignUp, verifyMail};
+
+
