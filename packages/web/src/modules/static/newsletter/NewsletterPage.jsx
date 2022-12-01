@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NewsletterErrorPopUp from '../../modal/newsletter/newsletterErrorPopUp/NewsletterErrorPopUp';
 import styles from '../newsletter/NewsletterPage.module.scss';
-import logo from '../../../assets/newsletterImages/logo.png';
+import logo from '../../../assets/images/newsletter.logo.png';
 import letter from '../../../assets/newsletterImages/letter.png';
 import background from '../../../assets/newsletterImages/background.png';
 import close from '../../../assets/newsletterImages/close-square.png';
