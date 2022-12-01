@@ -41,7 +41,7 @@ exports.requestForgotPassword = async (req, res) => {
     return res.status(200).json(
       response({
         message: "A mail was just sent to this email address",
-        success: true,
+        success: true
       })
     );
   } catch (error) {
