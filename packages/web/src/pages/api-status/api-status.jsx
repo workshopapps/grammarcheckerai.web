@@ -1,10 +1,12 @@
 import React from 'react';
 import GrittyLogo from '../../assets/images/logo.webp';
+import Footer from '../../modules/static/landing-page/Footer';
 import style from './api-status.module.css';
 import Detail from './Report/ReportDetail';
 
 const ApiStatus = () => {
   return (
+    <>
     <div className="statusPage">
       <div className={style.header}>
         <a href="/home" className={style.headerLink}>
@@ -28,7 +30,10 @@ const ApiStatus = () => {
           <Detail />
         </main>
       </div>
+
     </div>
+      <Footer />
+      </>
   );
 };
 
