@@ -77,7 +77,7 @@ function Conversation() {
             <ChatContainer chats={chats} />
           )}
           <div>
-            <div className="mx-auto flex items-center justify-center" ref={chatRef}>
+            <div className="mx-auto flex items-center flex-col justify-center" ref={chatRef}>
               <CustomRecorder setChats={setChats} />
             </div>
             <div className="pt-14 h-28">
