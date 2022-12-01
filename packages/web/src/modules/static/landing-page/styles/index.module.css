@@ -20,7 +20,7 @@
   position: absolute;
   left: 8em;
   bottom: 0;
-  width: 69px;
+  width: 69px; 
   border-bottom: 7px solid red;
   opacity: 0.5;
 }
