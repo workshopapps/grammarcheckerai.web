@@ -99,7 +99,7 @@ function FaqMain() {
                     <p
                       className={` ${
                         dark && 'text-[#c0c0c0]'
-                      } text-[#53686A]  text-[11px] md:text-[14px] lg:text-[17px] mt-[10px] md:mt-5 lg:mt-[12px] leading-[20px] lg:leading-[25px] font-normal w-[232px] lg:w-auto  md:w-[250px] h-auto  font-[Inter]`}
+                      } text-[#53686A]  text-[11px] md:text-[13px] lg:text-[17px] mt-[10px] md:mt-5 lg:mt-[12px] leading-[20px] lg:leading-[25px] font-normal w-[232px] lg:w-auto  md:w-[250px] h-auto  font-[Inter]`}
                     >
                       {val.para}
                     </p>
