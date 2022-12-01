@@ -34,7 +34,7 @@ const Faq = () => {
         <div className="flex justify-center items-center">
           <Link
             to="/faq"
-            className={`${styles._btn} text-center bg-[#5D387F] text-[#f1eef3] hover:bg-[#392150] hover:text-white transition-colors`}
+            className={`${styles._btn} text-center rounded-lg bg-[#5D387F] text-[#f1eef3] hover:bg-[#392150] hover:text-white transition-colors`}
           >
             See more...
           </Link>
