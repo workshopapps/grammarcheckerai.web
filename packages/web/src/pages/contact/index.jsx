@@ -22,7 +22,8 @@ const index = () => {
             <div className={ContactCSS.container}>
                 <p
                     contact-theme={context.theme}
-                    className={ContactCSS.p1}>Contact Us</p>
+                    className={ContactCSS.p1}>Contact Us
+                </p>
                 <p
                     contact-theme={context.theme}
                     className={ContactCSS.p2}> We would love to hear from you</p>

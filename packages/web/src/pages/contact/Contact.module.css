@@ -1,12 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-
+.main_container{
+    margin-top: 3.5rem;
+    font-family: 'DM Sans', sans-serif;
+}
 .container{
-    width: 90%;
+    width: 80%;
     margin: auto;
     margin-top: -8em;
     padding-top: 8em;
@@ -30,13 +35,15 @@
     line-height: 31px;
     color: #393939;
 
+
 }
 .p2{
     font-weight: 700;
     font-size: 72px;
     line-height: 94px;
     color: #393939;
-    padding-top: 32px;
+    padding-top: 1rem;
+    word-spacing: 0.8rem !important;
 }
 .p3{
     text-align: center;
@@ -54,21 +61,25 @@ form{
     flex-direction: column;
     width: 45%;
 }
+
 .element2{
     display: flex;
     flex-direction: column;
     width: 45%;
 }
+
 .element3{
     display: flex;
     flex-direction: column;
     width: 45%;
 }
+
 .element4{
     display: flex;
     flex-direction: column;
     width: 45%;
 }
+
 .row1{
     display: flex;
     justify-content: space-between;
@@ -93,6 +104,8 @@ input{
 .subject{
     padding-top: 105px;
     padding-bottom: 42px;
+    font-size: 18px;
+    font-weight: 700;
 }
 .boxes{
     display: flex;
@@ -140,6 +153,10 @@ color: #D7D7D7;
 .row3{
     margin-top: 83px;
 }
+.row3 > label{
+    font-size: 14px;
+    font-weight: bold;
+}
 
 .send{
     text-align: center;
@@ -157,11 +174,18 @@ color: #D7D7D7;
 @media(max-width: 428px){
     .p1{
         margin-top: 12px;
+        margin-bottom: 12px;
         text-align: center;
+        font-size: 20px;
     }
     .p2{
         font-size: 24px;
         text-align: center;
+        word-spacing: 0px !important;
+        line-height: 31px !important;
+    }
+    .p3{
+        font-size: 1rem;
     }
     .row1{
         flex-direction: column;
@@ -208,3 +232,4 @@ color: #D7D7D7;
         margin-top: 20px;
     }
 }
+
