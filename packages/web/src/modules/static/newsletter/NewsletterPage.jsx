@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import NewsletterErrorPopUp from '../../modal/newsletter/newsletterErrorPopUp/NewsletterErrorPopUp';
 import styles from '../newsletter/NewsletterPage.module.scss';
 import logo from '../../../assets/images/newsletter.logo.png';
@@ -33,15 +33,17 @@ const NewsletterPage = () => {
     setIsSubmit(true);
   };
 
+  const navigate = useNavigate();
+
   return (
     <div className={styles.newsletterPage}>
       <section className={styles.newsletter}>
         <aside className={styles.newsletter_left}>
             <div className={styles.newsletter_left__logo}>
-              <Link to="/" className="text-[#5D387F]">
+              <button onClick={() => navigate(-1)} className="text-[#5D387F]">
               {' '}
               &lt; Back{' '}
-              </Link>
+              </button>
             </div>
             <div className={styles.newsletter_left__text}>
               <img src={letter} alt="Email icon" />
