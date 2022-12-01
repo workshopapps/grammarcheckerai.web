@@ -3,7 +3,7 @@ import Headerimg from '../../assets/blogimg/Rectangle 4.svg';
 
 const Header = () => {
   return (
-    <header className='mt-[-8.7em]'>
+    <header>
       <div className="mb-5 relative h-64 md:p-0 xl:mb-8">
         <img src={Headerimg} alt="" className="w-full h-64 object-cover" />
 

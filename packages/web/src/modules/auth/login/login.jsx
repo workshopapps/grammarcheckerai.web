@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import LoadingButton from '@mui/lab/LoadingButton';
 import styles from './login.module.css';
-import Logo from '../../../assets/signup-logo.png';
+import Logo from '../../../assets/images/signuplogo.png';
 import Image2 from '../../../assets/Correction 1.png';
 import Image1 from '../../../assets/error 1.png';
 import Image3 from '../../../assets/steponeframeone.png';
@@ -189,7 +189,7 @@ const Index = () => {
                   <input type="checkbox" id="userRememberPassword" />
                   <label htmlFor="userRememberPassword">Keep me signed in</label>
                 </div>
-                <div className={styles._gs2loginsignin}>
+                <div>
                   <button
                     signup-theme={context.theme}
                     type="button"

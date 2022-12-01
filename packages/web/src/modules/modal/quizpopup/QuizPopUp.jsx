@@ -16,7 +16,7 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
 
   const getQuestions = async () => {
     try {
-      const response = await axios.get('https://grittygrammar.hng.tech/api/v1/quiz');
+      const response = await axios.get('https://speakbetter.hng.tech/api/v1/quiz');
       console.log(response.data);
       const data = response.data;
       setTrivia(data);
@@ -47,17 +47,18 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
 
   const handleClose = () => {
     setShowQuiz(false);
-    if (showQuiz !== true) {
-      setInterval(() => {
-        setShowQuiz(true);
-      }, 50000);
-    }
+    // if (showQuiz == true) {
+    //   setInterval(() => {
+    //     setShowQuiz(true);
+    //   }, 50000);
+    // }
   };
 
   return (
     <>
-      {
-        errorMsg ? setShowQuiz(false) :
+      {errorMsg ? (
+        setShowQuiz(false)
+      ) : (
         <>
           {showQuiz ? (
             <div className={styles.quiz}>
@@ -97,9 +98,14 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
                         <li value={trivia.incorrectAnswers[3]} onClick={handleAnswer}>
                           {trivia.incorrectAnswers[3]}
                         </li> */}
-                        {trivia.incorrectAnswers && trivia.incorrectAnswers.map((element) => {
-                          return <li onClick={handleAnswer} key={element}>{element}</li>;
-                        })}
+                        {trivia.incorrectAnswers &&
+                          trivia.incorrectAnswers.map((element) => {
+                            return (
+                              <li onClick={handleAnswer} key={element}>
+                                {element}
+                              </li>
+                            );
+                          })}
                       </ul>
                     </>
                   )}
@@ -108,9 +114,9 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
             </div>
           ) : (
             ''
-          )} 
+          )}
         </>
-      }
+      )}
     </>
   );
 };

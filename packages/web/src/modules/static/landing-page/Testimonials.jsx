@@ -38,7 +38,7 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className={`${context.theme === 'dark' ? 'bg-[#f5f3f30a]' : 'bg-[#f5f3f380]'} py-16 text-[#525252]`}>
+    <section className={`${context.theme === 'dark' ? 'bg-[#0A0A0A] ' : 'bg-[#f5f3f380]'} py-16 text-[#525252]`}>
       <h3 className={`text-center ${context.theme === 'dark' ? 'text-[white]' : null} mb-10 text-xl md:text-3xl font-black`}>See what our customers are saying</h3>
       <div className="w-[90%] mx-auto flex flex-col gap-5 sm:flex-row justify-center">
         {testimonyDetails.map((data) => {
