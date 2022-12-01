@@ -19,7 +19,7 @@ const Careers = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       sliderScroll();
-    }, 3000);
+    }, 300000);
     return () => clearInterval(interval);
   });
 
@@ -50,7 +50,7 @@ const Careers = () => {
         <h4 className="text-center text-xl font-bold text-dark-primary">
           Hear from <span className="text-purple-500">the team</span>
         </h4>
-        <div className="flex whitespace-nowrap overflow-hidden max-[480px]:whitespace-normal">
+        <div className="flex overflow-hidden max-[480px]:whitespace-normal">
           {data?.map(({ img, feedback, name, role, idx }) => (
             <div
               key={idx}

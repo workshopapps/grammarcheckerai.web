@@ -10,7 +10,7 @@ const Application = () => {
       <div className="px-56 py-10 space-y-20 max-[480px]:px-0 max-[480px]:space-y-6 mt-20">
         <div className="max-[480px]:px-5 ">
           <div className="flex justify-between py-4">
-            <h3 className="text-3xl font-bold text-green max-[480px]:text-xl ">Analyst Relations Manager</h3>
+            <h3 className="text-3xl font-bold text-dark-200 max-[480px]:text-xl ">Analyst Relations Manager</h3>
             <a
               className="border-purple-500 border rounded-md py-3 px-6 max-[480px]:hidden hover:bg-green transition-all hover:text-white"
               href="#form"
