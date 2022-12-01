@@ -3,6 +3,10 @@ const { userCollection } = require("../database/models/userSchema");
 const { environment } = require("../config/environment.js");
 const { verifyJWTToken } = require("../utilities/generateToken");
 const emailService = require("../services/email.service");
+const {
+  REQUEST_PASSWORD_RESET,
+  RESET_PASSWORD,
+} = require("../utilities/email.template");
 
 const { BASE_URL, RESET_PASSWORD_TEMPLATE_ID, PASSWORD_CHANGED_TEMPLATE_ID } =
   environment;
@@ -26,11 +30,11 @@ exports.requestForgotPassword = async (req, res) => {
 
     emailService({
       to: email,
-      subject: "Password Reset",
-      templateId: RESET_PASSWORD_TEMPLATE_ID,
-      data: {
+      subject: "Requested Reset Password for Speak Better.",
+      templateId: REQUEST_PASSWORD_RESET,
+      dynamicTemplateData: {
         name: user.firstName,
-        action_url: reset_password_url,
+        url: reset_password_url,
       },
     });
 
@@ -86,11 +90,12 @@ exports.resetPassword = async (req, res) => {
     await user.updateOne({
       password,
     });
+
     emailService({
       to: email,
-      subject: "Speak Better: Password Changed Successfully",
-      templateId: PASSWORD_CHANGED_TEMPLATE_ID,
-      data: {
+      subject: "Speak Better Password Changed Successfully",
+      templateId: RESET_PASSWORD,
+      dynamicTemplateData: {
         name: user.firstName,
         url: `${BASE_URL}/me/home`,
       },
