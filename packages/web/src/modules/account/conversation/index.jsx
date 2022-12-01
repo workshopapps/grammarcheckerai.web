@@ -52,7 +52,7 @@ function Conversation() {
         <div className="text-center space-y-14">
           {chats.length === 0 ? (
             <>
-              <div className="mx-auto w-36 flex items-center justify-center">
+              <div className="mx-auto w-36 flex items-center flex-col justify-center">
                 {/* <img src={botImg} alt="" className="max-w-full" /> */}
                 <RiveBot size="large" />
               </div>
@@ -77,7 +77,7 @@ function Conversation() {
             <ChatContainer chats={chats} />
           )}
           <div>
-            <div className="mx-auto flex items-center justify-center" ref={chatRef}>
+            <div className="mx-auto flex items-center justify-center flex-col" ref={chatRef}>
               <CustomRecorder setChats={setChats} />
             </div>
             <div className="pt-14 h-28">
