@@ -189,7 +189,7 @@ const Index = () => {
                   <input type="checkbox" id="userRememberPassword" />
                   <span>Keep me signed in</span>
                 </div>
-                <div className={styles._gs2loginsignin}>
+                <div>
                   <button
                     signup-theme={context.theme}
                     type="button"
