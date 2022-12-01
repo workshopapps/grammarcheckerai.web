@@ -8,6 +8,7 @@ const contactRoute = require("./contactRoutes");
 const verify = require("../middlewares/auth.middleware");
 const quickTranscribe = require("./quickTranscribeRouter");
 const newsletter = require("../routes/newsLetterRoute");
+const leaderBoardRouter = require("../routes/leaderboardrouter");
 
 routeHandler.use("/auth", auth);
 routeHandler.use("/user", verify, userHandler);
@@ -17,5 +18,6 @@ routeHandler.use("/quiz", quizRoute);
 routeHandler.use("/quickTranscribe", quickTranscribe);
 routeHandler.use("/contact", contactRoute);
 routeHandler.use("/newsletter", newsletter);
+routeHandler.use("/leaderboard", leaderBoardRouter);
 
 module.exports = { routeHandler };
