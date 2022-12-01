@@ -1,25 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import axios from "axios";
-import { getStorageData, useLocalStorage } from '../../../hooks/useLocalStorage';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './reset.module.css';
 import Logo from '../../../assets/signup-logo.png';
 import Image2 from '../../../assets/Correction 1.png';
 import Image1 from '../../../assets/error 1.png';
+import useResetPassword from '../../../hooks/auth/useResetPassword';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const index = () => {
   const [userNewPassword, setUserNewPassword] = useState('');
   const [userConfirmNewPassword, setUserConfirmNewPassword] = useState('');
-  const [existingUserPassword, setExistingUserPassword] = useLocalStorage(
-    'existingUserPassword',
-    getStorageData('demoData'),
-  );
 
-  useEffect(() => {
-    setExistingUserPassword(getStorageData('demoData'));
-  }, []);
+  const authResetPassword = useResetPassword();
 
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
@@ -31,36 +25,21 @@ const index = () => {
   /* 
     handleSaveNewPassword => resets the originally saved database password
     to the new one when both inputs match
-  */
-    const url = "http://grittygrammar.hng.tech/password-reset";
+    */
 
   const handleSaveNewPassword = () => {
-    if ((userConfirmNewPassword !== userNewPassword)) {
-      console.log(userConfirmNewPassword);
-      console.log(userNewPassword);
-      error("Passwords do not match!");
+    if (userConfirmNewPassword !== userNewPassword) {
+      error('Passwords do not match!');
+      return;
     }
-
-    else if ((userConfirmNewPassword === "" ) && (userNewPassword === "" )){
-      error("Password cannot be empty!")
+    if (userConfirmNewPassword === '' && userNewPassword === '') {
+      error('Password cannot be empty!');
+      return;
     }
-    else {
-      axios.post(url, {
-        userNewPassword,
-        userConfirmNewPassword
-      })
-      .then((response) => {
-        console.log(response)
-        setExistingUserPassword(userNewPassword);
-        console.log(existingUserPassword);
-        setTimeout(() => navigate('/signin'), 3000);
-        success('Password reset Successful!');
-      })
-      .catch((err) => {
-        console.log(err)
-        error("Time out...try again!")
-      })
-    }
+    authResetPassword.mutateAsync({
+      new_password: '',
+      confirm_password: '',
+    });
   };
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
@@ -106,8 +85,16 @@ const index = () => {
                   onChange={(e) => setUserConfirmNewPassword(e.target.value)}
                 />
               </div>
-              <div className={styles._gs2logincontinue}>
-                <button onClick={handleSaveNewPassword}>Reset Password</button>
+              <div className={styles._gcforgotcontinue}>
+                <LoadingButton
+                  onClick={handleSaveNewPassword}
+                  size="small"
+                  type="submit"
+                  loading={authResetPassword.isLoading}
+                  variant="contained"
+                >
+                  Reset Password
+                </LoadingButton>
               </div>
             </div>
           </div>
