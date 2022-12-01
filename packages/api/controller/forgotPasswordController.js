@@ -34,7 +34,7 @@ exports.requestForgotPassword = async (req, res) => {
       templateId: REQUEST_PASSWORD_RESET,
       dynamicTemplateData: {
         name: user.firstName,
-        action_url: reset_password_url,
+        url: reset_password_url,
       },
     });
 
