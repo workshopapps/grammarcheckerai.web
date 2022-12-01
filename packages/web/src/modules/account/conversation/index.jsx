@@ -34,7 +34,7 @@ function Conversation() {
       initial={{ opacity: 0.1 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className={`min-h-screen space-y-6 flex pb-10 flex-col ${styles._convo} ${
+      className={`min-h-screen space-y-6 flex flex-col ${styles._convo} ${
         context.theme === 'dark' ? styles.convo_theme : null
       } `}
     >
@@ -48,8 +48,8 @@ function Conversation() {
         </div>
         <SeletedLanguage />
       </div>
-      <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4 scroll-smooth">
-        <div className="text-center space-y-14">
+      <div className="lg:flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4 scroll-smooth">
+        <div className="max-h-5/6 text-center space-y-6 lg:space-y-14">
           {chats.length === 0 ? (
             <>
               <div className="mx-auto w-36 flex items-center justify-center">
