@@ -1,6 +1,6 @@
 import React from 'react'
 import useTheme from '../../hooks/useTheme'
-import ContactCSS from'./Contact.module.css'
+import ContactCSS from './Contact.module.css'
 import login from "../../assets/login.svg"
 import user from '../../assets/user.svg'
 import stickynote from '../../assets/stickynote.svg'
@@ -22,7 +22,8 @@ const index = () => {
             <div className={ContactCSS.container}>
                 <p
                     contact-theme={context.theme}
-                    className={ContactCSS.p1}>Contact Us</p>
+                    className={ContactCSS.p1}>Contact Us
+                </p>
                 <p
                     contact-theme={context.theme}
                     className={ContactCSS.p2}> We would love to hear from you</p>
@@ -34,7 +35,7 @@ const index = () => {
                         <div className={ContactCSS.element1}>
                             <label contact-theme={context.theme}>First Name</label>
                             <input type="text" name='fname' placeholder='Enter first name here' />
-  
+
                         </div>
 
                         <div className={ContactCSS.element2}>
@@ -42,21 +43,21 @@ const index = () => {
                             <input type="text" name='lname' placeholder='Enter last name here' />
 
                         </div>
-                
+
                     </div>
-            
+
                     <div className={ContactCSS.row2}>
                         <div className={ContactCSS.element3}>
                             <label contact-theme={context.theme}>Email</label>
                             <input type="email" name='email' placeholder='Enter email here' />
                         </div>
-                
+
                         <div className={ContactCSS.element4}>
                             <label contact-theme={context.theme}>Phone Number</label>
                             <input type='tel' name='fname' placeholder='800 000 0000' />
 
                         </div>
-                
+
                     </div>
 
                     <p className={ContactCSS.subject}> Select Subject?</p>
@@ -102,7 +103,7 @@ const index = () => {
                     <div className={ContactCSS.send}>
                         <button className={ContactCSS.btn}>Send Message</button>
                     </div>
-            
+
                 </form>
             </div>
             <Footer />

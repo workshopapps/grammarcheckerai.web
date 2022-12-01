@@ -1,6 +1,6 @@
 const sendgrid = require("@sendgrid/mail");
 const { environment } = require("../config/environment.js");
-const { SENDGRID_API_KEY } = environment; 
+const { SENDGRID_API_KEY, EMAIL_FROM } = environment; 
 sendgrid.setApiKey(SENDGRID_API_KEY);
 
 const emailService = async ({ to, subject, templateId, dynamicTemplateData }) => {
@@ -17,6 +17,7 @@ const emailService = async ({ to, subject, templateId, dynamicTemplateData }) =>
 
       resolve(true);
     } catch (err) {  
+      console.log(err.response.body)
       resolve(false);
     }
   });

@@ -31,12 +31,14 @@ const Faq = () => {
                 mistakes and correct them appriopriately."
           />
         </div>
-        <Link
-          to="/faq"
-          className={`${styles._btn} rounded-lg bg-[#5D387F] text-[#f1eef3] hover:bg-[#392150] hover:text-white transition-colors`}
-        >
-          See more...
-        </Link>
+        <div className="flex justify-center items-center">
+          <Link
+            to="/faq"
+            className={`${styles._btn} text-center bg-[#5D387F] text-[#f1eef3] hover:bg-[#392150] hover:text-white transition-colors`}
+          >
+            See more...
+          </Link>
+        </div>
       </div>
     </div>
   );
