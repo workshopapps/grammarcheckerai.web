@@ -1,7 +1,7 @@
 import { ENDPOINTS } from '../../lib/constants';
 import useCustomMutation from '../useCustomMutation';
 
-const useForgotPassword = () => {
+const useResetPassword = () => {
   return useCustomMutation({
     method: 'post',
     endpoint: ENDPOINTS.API_AUTH_FORGOT_PASSWORD,
@@ -15,4 +15,4 @@ const useForgotPassword = () => {
   });
 };
 
-export default useForgotPassword;
+export default useResetPassword;

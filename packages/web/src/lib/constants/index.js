@@ -4,5 +4,6 @@ export const ENDPOINTS = {
   API_INITIATE_SIGNUP: '/auth/signup',
   API_SEND_AUDIO: 'conversation/sendAudio',
   API_AUTH_GOOGLE: 'auth/google',
-  API_AUTH_FORGOT_PASSWORD: 'auth/',
+  API_AUTH_FORGOT_PASSWORD: 'auth/request-password-reset',
+  API_AUTH_RESET_PASSWORD: '/auth/password-reset',
 };
