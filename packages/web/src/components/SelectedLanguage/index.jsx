@@ -1,32 +1,47 @@
 import * as React from 'react';
+import useTheme from '../../hooks/useTheme';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 export default function SeletedLanguage() {
-  const [age, setAge] = React.useState('10');
+  const [language, setLanguage] = React.useState('English');
+  const context = useTheme();
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setLanguage(event.target.value);
   };
 
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 120, height: '50px', fontSize: '14px' }} size="small">
+      <FormControl
+        sx={{
+          m: 1,
+          minWidth: 120,
+          height: '50px',
+          fontSize: '14px',
+        }}
+        size="small"
+      >
         <Select
-          value={age}
-          sx={{ fontSize: '14px' }}
+          value={language}
+          sx={{
+            fontSize: '14px',
+            color: context.theme === 'light' ? 'black' : 'white',
+            border: context.theme === 'light' ? 'inherit' : '1px solid white',
+          }}
           onChange={handleChange}
           displayEmpty
+          disableUnderline={true}
           inputProps={{ 'aria-label': 'Without label' }}
         >
-          <MenuItem sx={{ fontSize: '14px' }} value={10}>
+          <MenuItem sx={{ fontSize: '14px' }} value={'English'}>
             English
           </MenuItem>
-          <MenuItem sx={{ fontSize: '14px' }} value={20}>
+          <MenuItem sx={{ fontSize: '14px' }} value={'French'}>
             French
           </MenuItem>
-          <MenuItem sx={{ fontSize: '14px' }} value={30}>
+          <MenuItem sx={{ fontSize: '14px' }} value={'Dutch'}>
             Dutch
           </MenuItem>
         </Select>

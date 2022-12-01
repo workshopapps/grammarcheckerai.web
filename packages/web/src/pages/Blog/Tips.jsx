@@ -1,9 +1,11 @@
 import React from 'react';
 import Image3 from '../../assets/blogimg/image 2 (2).svg';
 import Cta from '../../components/Blogcomponents/Cta';
+import Footer from '../../modules/static/landing-page/Footer';
 
 const Tips = () => {
   return (
+    <div>
     <section className="mb-10">
       <div className="mt-10 md:max-w-3xl md:mx-auto xl:max-w-5xl">
         <h1 className="text-header text-xl font-bold mb-4 text-center xl:text-3xl">
@@ -101,6 +103,8 @@ const Tips = () => {
       </div>
       <Cta />
     </section>
+    <Footer />
+    </div>
   );
 };
 
