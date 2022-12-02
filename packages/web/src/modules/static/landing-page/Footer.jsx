@@ -20,7 +20,7 @@ const Footer = () => {
               <Link to="/career">Careers and Culture</Link>
               <Link to="/newsletter">Newsletter</Link>
               <Link to="/legal">Legal</Link>
-              <Link to="/terms">Terms of Use</Link>
+              <Link to="/terms-of-use">Terms of Use</Link>
             </div>
           </div>
           <div className={styles._ftcol1}>
