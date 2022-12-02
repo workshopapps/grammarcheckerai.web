@@ -1,0 +1,48 @@
+@import '../../../../assets/styles/variables.scss';
+
+.rank {
+    background-color: $greyColor;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    padding: 15px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    @include flexCenter(row);
+    z-index: 2;
+    color: $greyColor;
+    @include flexCenter(row);
+
+    &_card {
+        width: 300px;
+        height: auto;
+        padding: 20px;
+        background-color: $white;
+        border-radius: 10px;
+
+        &__img {
+            @include flexCenter(row);
+            justify-content: flex-end;
+            cursor: pointer;
+        }
+
+        &__content {
+
+            h2 {
+                font-size: 20px;
+                font-family: $fontFamily1;
+                margin: 10px 0px;
+            }
+
+            ol {
+                font-family: $fontFamily2;
+                @include flexCenter(column);
+
+                li {
+                    list-style-type: auto;
+                }
+            }
+        }
+    }
+}
