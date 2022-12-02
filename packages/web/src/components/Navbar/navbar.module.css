@@ -1,7 +1,8 @@
 ._header {
   height: 80px;
   display: flex;
-  position: relative;
+  position: sticky;
+  top: 0;
   justify-content: space-between;
   background-color: rgb(10, 10, 10);
   align-items: center;
