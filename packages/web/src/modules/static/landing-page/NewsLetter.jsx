@@ -20,7 +20,7 @@ const NewsLetter = () => {
         />
         <button
           type="submit"
-          className={`${styles._btn} bg-[#5D387F] text-[#E8DDF2] rounded-lg absolute right-3 top-[25%] hover:bg-[#392150] hover:text-white transition-colors`}
+          className={`${styles._btn} bg-[#5D387F] text-[#E8DDF2] rounded-lg absolute right-3 top-[15%] hover:bg-[#392150] hover:text-white transition-colors`}
         >
           Subscribe
         </button>
