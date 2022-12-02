@@ -151,6 +151,7 @@
   background: #5d387f;
   border-radius: 12px;
   text-transform: lowercase;
+  transition: all 0.4s ease-in-out;
 }
 ._gs2logincontinue button:hover {
   font-style: normal;

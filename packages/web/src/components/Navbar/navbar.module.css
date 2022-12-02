@@ -41,6 +41,7 @@
   background-color: #5d387f;
   padding: 10px;
   border-radius: 10px;
+  transition: all 0.4s ease-in-out;
 }
 ._nvstarted button:hover {
   background-color: #392150;
