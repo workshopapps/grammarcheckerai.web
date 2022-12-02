@@ -4,6 +4,8 @@ import Fallback from './components/Fallback/Fallback';
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom';
 import StartGame from './modules/static/quizgame/startgame/StartGame';
 // import ProtectedRoute from './components/ProtectedRoute';
+import QuizGame from './modules/static/quizgame/QuizGame';
+// import ProtectedRoute from './components/ProtectedRoute';
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
 const SigninPage = lazy(() => import('./modules/auth/login/login'));
 const ProfilePage = lazy(() => import('./pages/profile/profileScreen'));
