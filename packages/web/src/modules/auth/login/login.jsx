@@ -187,7 +187,7 @@ const Index = () => {
               <div className={styles._gs2logincheck}>
                 <div className={styles._g2loginoption}>
                   <input type="checkbox" id="userRememberPassword" />
-                  <span>Keep me signed in</span>
+                  <span  style={{lineHeight:'30px'}}>Keep me signed in</span>
                 </div>
                 <div>
                   <button
@@ -195,7 +195,7 @@ const Index = () => {
                     type="button"
                     className={styles._gsloginforgot}
                     onClick={handleForgotPassword}
-                  >
+                  > 
                     Forgot Password?
                   </button>
                 </div>

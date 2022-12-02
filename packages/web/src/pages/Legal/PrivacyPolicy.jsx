@@ -23,7 +23,7 @@ export default function PrivacyPolicy() {
             We may change this policy privacy from time to time by posting a new version here, and the new version will become effective immediately.
             </p>
 
-            <bold className='font-bold mt-5'>The privacy of our customers and affiliates is important to us. Therefore:</bold>
+            <h3 className='font-bold text-xl mt-5'>The privacy of our customers and affiliates is important to us. Therefore:</h3>
             <div className='mt-4'>
                 <div className='flex gap-4 items-center'>
                     <span className='bg-[#5d387f] w-2 h-2'></span>
