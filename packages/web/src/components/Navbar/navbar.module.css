@@ -1,7 +1,8 @@
 ._header {
   height: 80px;
   display: flex;
-  position: relative;
+  position: sticky;
+  top: 0;
   justify-content: space-between;
   background-color: rgb(10, 10, 10);
   align-items: center;
@@ -60,6 +61,7 @@
     height: 70px;
     width: 45%;
   }
+
   ._nvstarted {
     width: 55%;
     z-index: 999;
@@ -68,6 +70,10 @@
     align-items: center;
     flex-direction: row-reverse;
   }
+  ._nvlogo img {
+    height: 60%;
+  }
+
   ._nvnav {
     display: flex;
     flex-direction: column;
@@ -83,5 +89,8 @@
   ._nvlogo {
     height: 70px;
     width: 100%;
+  }
+  ._nvlogo img {
+    height: 40%;
   }
 }

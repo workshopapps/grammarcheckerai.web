@@ -1,5 +1,10 @@
-const app = require("../app");
 const axios = require("./axios");
+const { environment } = require("../config/environment");
+const { SENDGRID_API_KEY, PASSWORD_CHANGED_TEMPLATE_ID, EMAIL_FROM } =
+  environment;
+const emailService = require("../services/email.service");
+const sendgrid = require("@sendgrid/mail");
+sendgrid.setApiKey(SENDGRID_API_KEY);
 
 exports.home = async (req, res) => {
   var status = [];
@@ -95,4 +100,18 @@ exports.home = async (req, res) => {
       }
     });
   return res.status(200).send(status);
+};
+
+exports.sendMail = async (req, res) => {
+  const { email, name } = req.body;
+  emailService({
+    to: email,
+    subject: "Speak Better: Password Changed Successfully",
+    templateId: PASSWORD_CHANGED_TEMPLATE_ID,
+    dynamic_template_data: {
+      name: name,
+      actionurl: "https://speakbetter.hng.tech/me/home",
+    },
+  });
+  return res.status(200).send("Email Sent successfully");
 };

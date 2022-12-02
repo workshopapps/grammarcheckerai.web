@@ -1,66 +1,77 @@
 const { response } = require("../../utilities/response");
 const { getTokens } = require("./google.user.controller");
-const { register } = require("../../repository/user.repository"); 
+const { register } = require("../../repository/user.repository");
 const { userCollection } = require("../../database/models/userSchema");
-const { slugify } = require("../../utilities/compare"); 
+const { slugify } = require("../../utilities/compare");
 const emailService = require("../../services/email.service");
 const { environment } = require("../../config/environment");
 const { SIGNUP_TEMPLATE_ID } = environment;
 
 async function registerUser(req, res) {
-  let {
-    email,
-    firstName,
-    lastName,
-    username,
-    password,
-    confirm_password,
-    language,
-  } = req.body;
-  //Check if the user already exist
-  password =
-    password === confirm_password
-      ? password
-      : res.status(422).json(
-          response({
-            success: false,
-            message: "Password mismatch, Comfirm your password",
-          })
-        );
+  try {
+    let {
+      email,
+      firstName,
+      lastName,
+      username,
+      password,
+      confirm_password,
+      language,
+    } = req.body;
 
-  const checkEmailExist = await userCollection.findOne({ email });
+    //Check if the user already exist
+    password =
+      password === confirm_password
+        ? password
+        : res.status(422).json(
+            response({
+              success: false,
+              message: "Password mismatch, Comfirm your password",
+            })
+          );
 
-  if (checkEmailExist)
-    return res
-      .status(409)
-      .json(response({ message: "User already exist", success: false }));
+    const checkEmailExist = await userCollection.findOne({ email });
 
-  const data = { email, firstName, lastName, username, password, language };
+    if (checkEmailExist)
+      return res
+        .status(409)
+        .json(response({ message: "User already exist", success: false }));
 
-  await emailService({
-    to: email, 
-    subject: "Welcome to Speak Better",
-    templateId: SIGNUP_TEMPLATE_ID,
-    data: {
-      name: firstName,
-      action_url: "/signin",
-    },
-  });
+    const data = { email, firstName, lastName, username, password, language };
 
-  const user = await register(data);
+    const user = await register(data);
 
-  if (!user)
-    return res
-      .status(500)
-      .json(response({ success: false, message: "User not created" }));
+    await emailService({
+      to: email,
+      subject: "Welcome to Speak Better",
+      templateId: SIGNUP_TEMPLATE_ID,
+      dynamic_template_data: {
+        name: firstName,
+        actionurl: "/signin",
+      },
+    });
 
-  return res.status(201).json(
-    response({
-      success: true,
-      message: "User created successfully",
-      data: user,
-    })
-  );
+    if (!user)
+      return res
+        .status(500)
+        .json(response({ success: false, message: "User not created" }));
+
+    return res.status(201).json(
+      response({
+        success: true,
+        message: "User created successfully",
+        data: user,
+      })
+    );
+  } catch (error) {
+    return res.status(500).json(
+      response({
+        success: false,
+        message: "Something went wrong, please contact an Admin",
+        data: user,
+      })
+    );
+  }
 }
 
 async function googleAuthUserSignUp(req, res) {

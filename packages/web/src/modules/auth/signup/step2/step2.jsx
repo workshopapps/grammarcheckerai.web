@@ -7,7 +7,7 @@ import useSignup from '../../../../hooks/auth/useSignup';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PasswordMask from 'react-password-mask';
 import styles from './step2.module.css';
-import Logo from '../../../../assets/signup-logo.png';
+import Logo from '../../../../assets/images/signuplogo.png';
 import Image2 from '../../../../assets/Correction 1.png';
 import Image1 from '../../../../assets/error 1.png';
 import Image3 from '../../../../assets/steponeframeone.png';
@@ -277,7 +277,7 @@ const index = () => {
         </div>
         <div className={styles._gs2signupcol2}>
           <div className={styles._gs2mainsignupcol2body}>
-            <Carousel autoplay={true} autoplayInterval={5000} withoutControls={true}>
+            <Carousel autoplay={true} autoplayInterval={7000} withoutControls={true} pauseOnHover={true} wrapAround={true} animation="fade">
               <div className={styles._gs2mainsignupcol2images}>
                 <img src={Image1} alt="column1" />
                 <img src={Image2} alt="column1" />

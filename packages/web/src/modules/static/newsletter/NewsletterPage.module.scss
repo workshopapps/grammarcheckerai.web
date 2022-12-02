@@ -16,11 +16,12 @@
       height: 100vh;
       width: auto;
       @include flexCenter(column);
-      justify-content: space-around;
+      // justify-content: space-around;
 
       &__logo {
-        height: 5vh;
-        width: 100%;
+        // height: 5p;
+        width: 50%;
+        margin-left: -50%;
       }
 
       &__text {
