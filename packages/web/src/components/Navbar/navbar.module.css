@@ -1,7 +1,8 @@
 ._header {
   height: 80px;
   display: flex;
-  position: relative;
+  position: sticky;
+  top: 0;
   justify-content: space-between;
   background-color: rgb(10, 10, 10);
   align-items: center;
@@ -60,7 +61,7 @@
     height: 70px;
     width: 45%;
   }
-  
+
   ._nvstarted {
     width: 55%;
     z-index: 999;

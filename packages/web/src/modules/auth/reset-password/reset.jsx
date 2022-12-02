@@ -22,10 +22,6 @@ const index = () => {
   const handlePrev = () => {
     navigate('/signin');
   };
-  /* 
-    handleSaveNewPassword => resets the originally saved database password
-    to the new one when both inputs match
-    */
 
   const handleSaveNewPassword = () => {
     if (userConfirmNewPassword !== userNewPassword) {
@@ -36,10 +32,17 @@ const index = () => {
       error('Password cannot be empty!');
       return;
     }
-    authResetPassword.mutateAsync({
-      new_password: '',
-      confirm_password: '',
-    });
+    authResetPassword
+      .mutateAsync({
+        new_password: '',
+        confirm_password: '',
+      })
+      .then((res) => {
+        success(res.data.message ?? 'Success');
+      })
+      .catch((err) => {
+        error(err.response.message);
+      });
   };
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
