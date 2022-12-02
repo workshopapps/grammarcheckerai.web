@@ -20,7 +20,8 @@ const emailService = async ({
       });
 
       resolve(true);
-    } catch (err) {
+    } catch (err) {  
+      console.log(err.response.body)
       resolve(false);
     }
   });

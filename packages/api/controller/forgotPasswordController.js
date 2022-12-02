@@ -42,6 +42,7 @@ exports.requestForgotPassword = async (req, res) => {
       response({
         message: "A mail was just sent to this email address",
         success: true,
+        data: reset_password_url
       })
     );
   } catch (error) {
