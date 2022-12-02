@@ -44,6 +44,7 @@
         "passport-facebook": "^3.0.0",
         "passport-linkedin-oauth2": "^2.0.0",
         "path": "^0.12.7",
+        "paystack": "^2.0.1",
         "sass": "^1.56.1",
         "socket.io": "^4.5.4",
         "supertest": "^6.3.1",
