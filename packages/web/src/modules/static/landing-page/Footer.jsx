@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styles from './footer.module.css';
-import Logo from '../../../assets/images/grit-white.webp';
+import Logo from '../../../assets/images/logo2.png';
 
 const Footer = () => {
   return (
