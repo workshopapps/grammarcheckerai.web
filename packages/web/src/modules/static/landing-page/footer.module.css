@@ -1,6 +1,5 @@
 ._footer {
-  background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.8)),
-    url('../../../assets/footerart.png');
+ background-color: #303030;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -8,7 +7,7 @@
   background-color: rgb(10, 10, 10);
 }
 ._ftcopyright {
-  background-color: black;
+  background-color: #303030;
   height: 70px;
   display: flex;
   align-items: center;
@@ -49,7 +48,7 @@
   padding: 30px 10%;
   display: flex;
   justify-content: space-evenly;
-  flex-direction: row-reverse;
+ 
 }
 ._ftcol1title,
 ._ftcol2title,
@@ -78,18 +77,11 @@
 ._ftcolLogo {
   width: 25%;
   display: flex;
-  justify-content: flex-start;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
-._ftcol1 {
-  width: 25%;
-}
-._ftcol2 {
-  width: 25%;
-}
-._ftcol3 {
-  width: 25%;
-}
+
 ._ftcolcontentImage {
   display: flex;
   justify-content: flex-start;
@@ -97,7 +89,7 @@
 }
 @media only screen and (max-width: 750px) {
   ._ftcolumns {
-    flex-direction: column-reverse;
+    flex-direction: column;
     background-color: transparent;
     border-bottom: 1px solid rgb(85, 85, 85);
     color: white;

@@ -4,11 +4,16 @@
   position: sticky;
   top: 0;
   justify-content: space-between;
-  background-color: rgb(10, 10, 10);
+  background-color: #FFFFFF;
   align-items: center;
-  color: white;
+  color: #303030;
   z-index: 1100;
   width: 100%;
+  padding: 1em 1em 1em 3em;
+}
+._header[nav-theme='dark']{
+  background-color: #303030;
+  color: #FFFFFF;
 }
 ._header::before {
   z-index: 999;
@@ -18,7 +23,7 @@
   width: 25%;
 }
 ._nvlogo img {
-  height: 90%;
+  height: 70%;
 }
 ._nvmenu {
   width: 60%;
@@ -52,10 +57,7 @@
 }
 ._mobilenav svg {
   width: 40px;
-  fill: white;
   margin: 0 5px;
-  border: #531f85 1px solid;
-  padding: 5px;
 }
 @media only screen and (max-width: 1000px) {
   ._nvlogo {
