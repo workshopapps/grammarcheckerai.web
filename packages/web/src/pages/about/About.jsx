@@ -1,18 +1,12 @@
 import React from 'react';
 import useTheme from '../../hooks/useTheme';
-import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
 import { Values, Teams } from '../../pages/about/data/data';
 import { useNavigate } from 'react-router-dom';
-import figma from '../../assets/abt_images/figma.png';
-import tend from '../../assets/abt_images/tend.png';
-import saucelabs from '../../assets/abt_images/saucelabs.png';
-import stord from '../../assets/abt_images/stord.png';
 import illustration1 from '../../assets/abt_images/illustration1.png';
 import illustration2 from '../../assets/abt_images/Illustration2.png';
-import illustration4 from '../../assets/abt_images/Illustration4.png';
+import illustration4 from '../../assets/abt_images/illustration4.png';
 import rings from '../../assets/abt_images/rings.png';
 import ring1 from '../../assets/abt_images/ring1.png';
-import mavenir from '../../assets/abt_images/mavenir.png';
 import Footer from '../../modules/static/landing-page/Footer';
 
 const About = () => {
@@ -45,9 +39,11 @@ const About = () => {
 
           <div className="grid grid-cols-1 justify-center items-center w-full lg:px-32 m-auto lg:grid-cols-2 mt-3 lg:mx-2 md:px-10 lg:mt-10  ">
             <div className="  flex flex-col justify-center items-center lg:items-start m-5 lg:p-24 ">
-              <p className=" text-lineColor   ">Our Mission </p>
-              <p className={` ${dark && 'text-[#b403e0]'} text-cartBg font-bold mt-1 mb-2  text-xl`}>Why we are here</p>
-              <p className={` ${dark && 'text-[#e9e3e3]'} text-textColor text-center lg:text-left text-lg `}>
+              <p className={` ${dark && 'text-[#fff]'} text-lineColor `}>Our Mission </p>
+              <p className={` ${dark && 'text-[#8C54BF]'} text-primary font-bold mt-1 mb-2  text-xl`}>
+                Why we are here
+              </p>
+              <p className={` ${dark && 'text-[#8C54BF]'} text-textColor text-center lg:text-left text-lg `}>
                 To aid human comunication by creating a grammatically correct population
               </p>
             </div>
@@ -69,7 +65,7 @@ const About = () => {
                 <div className="w-10/12 md:full  mx-auto relative py-5">
                   <p
                     className={`${
-                      dark && 'text-[#b403e0]'
+                      dark && 'text-[#8C54BF]'
                     } text-cartBg font-bold text-center lg:text-left text-xl lg:text-2xl my-3 md:block`}
                   >
                     Our Unique Values
@@ -101,16 +97,18 @@ const About = () => {
 
           <div className="grid grid-cols-1 gap-4 justify-between  m-5  lg:m-auto  lg:px-20  lg:grid-cols-2">
             <div className="flex flex-col p-8 justify-center mt-4 md:p-8">
-              <p className=" text-lineColor text-center  lg:text-left">About Our Technology</p>
+              <p className={`${dark && 'text-[#fff]'} text-lineColor text-center  lg:text-left`}>
+                About Our Technology
+              </p>
               <p
                 className={`font-bold  text-center lg:text-left ${
-                  dark && 'text-[#b403e0]'
+                  dark && 'text-[#8C54BF]'
                 } text-cartBg text-xl lg:text-2xl mt-2 mb-3`}
               >
                 {' '}
                 What we are building
               </p>
-              <p className={`${dark && 'text-[#e9e3e3]'} lg:text-left text-textColor`}>
+              <p className={`${dark && 'text-[#8C54BF]'} lg:text-left text-textColor`}>
                 Speak better is an AI-powered grammar checker designed to check and correct grammar for multiple
                 languages. A brainchild of Carpenter-team-grit’s mission of having a population of excellent
                 grammarians. It offers the necessary tools for fluent and effective communication.
