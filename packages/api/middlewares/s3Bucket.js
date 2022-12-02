@@ -6,7 +6,7 @@ const { ACCESSKEYID, S3SECRETEKEY, GRITTYBUCKETNAME } = environment;
 
 
 // Set the AWS Region.
-const REGION = "us-east-1";
+const REGION = "eu-west-1";
 
 const credentials = {
     region: REGION,
