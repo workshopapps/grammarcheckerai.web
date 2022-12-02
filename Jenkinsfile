@@ -21,10 +21,9 @@ pipeline {
 			steps {
 				sh "sudo cp -rf packages/api/ /home/devineer/backend"
 				sh "sudo cp -fr ${WORKSPACE}/packages/web/* /home/devineer/frontend"
-				//sh "sudo chsh -s /bin/bash jenkins"
-				sh "sudo su - devineer && whoami"
-				sh "sudo pm2 delete all"
-				sh "sudo pm2 serve /home/devineer/frontend 3333"
+				sh "sudo chown devineer /home/devineer/frontend"
+				//sh "sudo pm2 delete all"
+				//sh "pm2 start npm /home/devineer/frontend 3333"
 				//sh "sudo npm install && sudo pm2 start /home/devineer/backend/server.js -- --port 5555"
 			}
 			
