@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom';
 import styles from './footer.module.css';
-import Logo from '../../../assets/images/grit-white.webp';
+import Logo from '../../../assets/images/wlogo.png';
+import AppStore from '../../../assets/images/applestore.png';
+import GoogleStore from '../../../assets/images/googlestore.png';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 
 const Footer = () => {
   return (
@@ -9,33 +14,43 @@ const Footer = () => {
         <div className={styles._ftcolumns}>
           <div className={styles._ftcolLogo}>
             <div className={styles._ftcolcontentImage}>
-              <img src={Logo} alt="footer logo" width={200} />
+              <img src={Logo} alt="footer logo" />
+            </div>
+            <div className="space-x-6 my-6 flex items-center justify-center ml-16">
+              <InstagramIcon />
+              <FacebookIcon />
+              <YouTubeIcon />
             </div>
           </div>
-        
-          <div className={styles._ftcol2}>
-            <div className={styles._ftcol2title}>Resources</div>
-            <div className={styles._ftcol2content}>
-              <Link to="/faq">FAQ</Link>
-              <Link to="/career">Careers and Culture</Link>
-              <Link to="/newsletter">Newsletter</Link>
-              <Link to="/legal">Legal</Link>
-              <Link to="/terms">Terms of Use</Link>
+          <div className="flex space-x-16 lg:space-x-0 lg:justify-around lg:w-1/2">
+            <div className={styles._ftcol1}>
+              <div className={styles._ftcol1title}>Products</div>
+              <div className={styles._ftcol1content}>
+                <Link to="/home">Home</Link>
+                <Link to="/about">About</Link>
+                <Link to="/blog">Blog</Link>
+                <Link to="/testimonials">Testimonial</Link>
+                <Link to="/api-status">API status</Link>
+              </div>
+            </div>
+
+            <div className={styles._ftcol2}>
+              <div className={styles._ftcol2title}>Resources</div>
+              <div className={styles._ftcol2content}>
+                <Link to="/faq">FAQ</Link>
+                <Link to="/career">Careers and Culture</Link>
+                <Link to="/newsletter">Newsletter</Link>
+                <Link to="/legal">Legal</Link>
+                <Link to="/terms">Terms of Use</Link>
+              </div>
             </div>
           </div>
-          <div className={styles._ftcol1}>
-            <div className={styles._ftcol1title}>Products</div>
-            <div className={styles._ftcol1content}>
-              <Link to="/home">Home</Link>
-              <Link to="/about">About</Link>
-              <Link to="/blog">Blog</Link>
-              <Link to="/testimonials">Testimonial</Link>
-              <Link to="/api-status">API status</Link>
-            </div>
+
+          <div className="my-4 lg:space-y-4 flex items-center space-x-4 lg:space-x-0 lg:block">
+            <img src={AppStore} alt="" className="w-1/3 lg:w-5/6 " />
+            <img src={GoogleStore} alt="" className="w-1/3 lg:w-5/6 " />
           </div>
-          <div className={styles._ftsidebar}></div>
         </div>
-       
         <div className={styles._ftcopyright}>
           <p>&copy;2022 GrittyGrammar</p>
         </div>

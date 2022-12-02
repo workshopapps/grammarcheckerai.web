@@ -3,7 +3,7 @@ import './App.css';
 import Fallback from './components/Fallback/Fallback';
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom';
 import QuizGame from './modules/static/quizgame/QuizGame';
-// import ProtectedRoute from './components/ProtectedRoute'; 
+// import ProtectedRoute from './components/ProtectedRoute';
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
 const SigninPage = lazy(() => import('./modules/auth/login/login'));
 const ProfilePage = lazy(() => import('./pages/profile/profileScreen'));
@@ -29,6 +29,10 @@ const Conversation = lazy(() => import('./modules/account/conversation'));
 const ConversationTry = lazy(() => import('./modules/account/conversation/chat'));
 const Landing = lazy(() => import('./modules/static/landing-page/LandingPage'));
 const Legal = lazy(() => import('./pages/Legal/index'));
+const TermsOfService = lazy(() => import('./pages/Legal/TermsOfService'));
+const PrivacyPolicy = lazy(() => import('./pages/Legal/PrivacyPolicy'));
+const CookiesStatement = lazy(() => import('./pages/Legal/CookiesStatement'));
+const Trademark = lazy(() => import('./pages/Legal/Trademark'));
 const SettingsPage = lazy(() => import('./modules/setting/home-settings/Settings'));
 const Transcribe = lazy(() => import('./modules/transcribe/index'));
 const CareerPage = lazy(() => import('./pages/career/Career'));
@@ -183,6 +187,29 @@ const LegalPage = () => (
   </Suspense>
 );
 
+const TOSPage = () => (
+  <Suspense fallback={<Fallback />}>
+    <TermsOfService />
+  </Suspense>
+);
+
+const PrivacyPage = () => (
+  <Suspense fallback={<Fallback />}>
+    <PrivacyPolicy />
+  </Suspense>
+);
+const CookiesPage = () => (
+  <Suspense fallback={<Fallback />}>
+    <CookiesStatement />
+  </Suspense>
+);
+
+const TrademarkPage = () => (
+  <Suspense fallback={<Fallback />}>
+    <Trademark />
+  </Suspense>
+);
+
 const JobsPage = () => (
   <Suspense fallback={<Fallback />}>
     <Jobs />
@@ -264,13 +291,13 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/converse" element={<ConversationPage />} />
       <Route path="/converse/try" element={<ConversationTryPage />} />
 
       <Route path="/history" element={<h2>History</h2>} />
       <Route element={<LandingLayout />}>
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<LandingPage />} />
+        <Route path="/converse" element={<ConversationPage />} />
         <Route path="/faq" element={<FaqMain />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/blog" element={<Blog />} />
@@ -283,6 +310,10 @@ function App() {
         <Route path="/testimonials" element={<Testimonial />} />
         <Route path="/ratings" element={<Ratings />} />
         <Route path="/legal" element={<LegalPage />} />
+        <Route path="/legal/terms-of-service" element={<TOSPage />} />
+        <Route path="/legal/privacy" element={<PrivacyPage />} />
+        <Route path="/legal/cookies" element={<CookiesPage />} />
+        <Route path="/legal/trademark" element={<TrademarkPage />} />
       </Route>
       <Route path="/quizgame" element={<QuizGame />}></Route>
       <Route path="/newsletter" element={<NewsletterPage />} />
