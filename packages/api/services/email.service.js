@@ -12,10 +12,9 @@ const emailService = async ({ to, templateId, dynamic_template_data }) => {
         templateId,
         dynamic_template_data,
       });
-
       resolve(true);
-    } catch (err) {
-      console.log(err);
+    } catch (err) {  
+      console.log(err)
       resolve(false);
     }
   });
