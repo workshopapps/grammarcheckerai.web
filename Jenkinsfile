@@ -9,7 +9,8 @@ pipeline {
 
 			steps {
 				sh "cd packages/web"
-				sh "cd packages/web && npm i --force && npm fund && npm run build"
+				sh "sudo npm cache clear --force"
+				sh "npm i --force && npm fund && npm run build"
 			} 
 
 		
