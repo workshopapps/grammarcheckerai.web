@@ -9,7 +9,8 @@ pipeline {
 
 			steps {
 				sh "cd packages/web"
-				sh "cd packages/web && unset NODE_ENV && npm i --force && npm fund && npm run build"
+				sh "sudo npm install -g npm@latest && sudo npm cache clear --force"
+				sh "cd packages/web && npm i --force && npm fund && CI=false npm run build"
 			} 
 
 		
