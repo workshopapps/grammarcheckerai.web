@@ -3,74 +3,81 @@ const { getTokens } = require("./authThirdPartyController");
 const { register } = require("../../repository/user.repository");
 const { userCollection } = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
+const {
+  generateEmailVerificationLink,
+  verifyLink,
+} = require("../../utilities/generateToken");
 const emailService = require("../../services/email.service");
-const { SIGNUP_TEMPLATE } = require("../../utilities/email.template");
+const { environment } = require("../../config/environment");
+const { SIGNUP_TEMPLATE_ID } = environment;
 
 async function registerUser(req, res) {
-	try {
-		let {
-			email,
-			firstName,
-			lastName,
-			username,
-			password,
-			confirm_password,
-			language,
-		} = req.body;
+  try {
+    let {
+      email,
+      firstName,
+      lastName,
+      username,
+      password,
+      confirm_password,
+      language,
+    } = req.body;
 
-		//Check if the user already exist
-		password =
-			password === confirm_password
-				? password
-				: res.status(422).json(
-					response({
-						success: false,
-						message: "Password mismatch, Comfirm your password",
-					})
-				);
+    //Check if the user already exist
+    password =
+      password === confirm_password
+        ? password
+        : res.status(422).json(
+            response({
+              success: false,
+              message: "Password mismatch, Comfirm your password",
+            })
+          );
 
-		const checkEmailExist = await userCollection.findOne({ email });
+    const checkEmailExist = await userCollection.findOne({ email });
 
-		if (checkEmailExist)
-			return res
-				.status(409)
-				.json(response({ message: "User already exist", success: false }));
+    if (checkEmailExist)
+      return res
+        .status(409)
+        .json(response({ message: "User already exist", success: false }));
 
-		const data = { email, firstName, lastName, username, password, language };
+    const data = { email, firstName, lastName, username, password, language };
 
-		const user = await register(data);
+    let verificationLink = await generateEmailVerificationLink(data);
 
-		await emailService({
-			to: email,
-			subject: "Welcome to Speak Better",
-			templateId: SIGNUP_TEMPLATE,
-			dynamicTemplateData: {
-				name: firstName,
-				action_url: "/signin",
-			},
-		});
+    await emailService({
+      to: email,
+      subject: "Welcome to Speak Better, Please Verify your Email",
+      templateId: SIGNUP_TEMPLATE_ID,
+      dynamicTemplateData: {
+        name: firstName,
+        action_url: verificationLink,
+      },
+    });
 
-		if (!user)
-			return res
-				.status(500)
-				.json(response({ success: false, message: "User not created" }));
+    const user = await register(data);
 
-		return res.status(201).json(
-			response({
-				success: true,
-				message: "User created successfully",
-				data: user,
-			})
-		);
-	} catch (error) {
-		return res.status(500).json(
-			response({
-				success: false,
-				message: "Something went wrong, please contact an Admin",
-				data: user,
-			})
-		);
-	}
+    if (!user)
+      return res
+        .status(500)
+        .json(response({ success: false, message: "User not created" }));
+
+    return res.status(201).json(
+      response({
+        success: true,
+        message: "User created successfully, Check your email for confirmation",
+        data: user,
+      })
+    );
+  } catch (error) {
+    return res.status(500).json(
+      response({
+        success: false,
+        message: "Something went wrong, please contact an Admin",
+        data: user,
+      })
+    );
+  }
 }
 
 async function googleAuthUserSignUp(req, res) {
@@ -124,4 +131,23 @@ async function googleAuthUserSignUp(req, res) {
 	}
 }
 
-module.exports = { registerUser, googleAuthUserSignUp };
+
+async function verifyMail(req, res) {
+  let verificationLink = req.params.link;
+
+  try {
+    let user = await verifyLink(verificationLink);
+    if (!user) {
+      throw new Error("Link expired");
+    }
+
+    res.status(201).redirect("/v1/auth/signin");
+  } catch (err) {
+    res.status(400).json({
+      error: err.message,
+    });
+  }
+}
+
+module.exports = { registerUser, googleAuthUserSignUp, verifyMail };
+

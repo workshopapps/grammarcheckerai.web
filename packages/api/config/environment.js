@@ -44,6 +44,7 @@ const environment = {
   FLW_SECRET_KEY: process.env.FLW_SECRET_KEY,
   PAYSTACK_SECRET_KEY: process.env.PAYSTACK_SECRET_KEY,
   PAYSTACK_PUBLIC_KEY: process.env.PAYSTACK_PUBLIC_KEY,
+  NEWSLETTER_WELCOME: process.env.NEWSLETTER_TEMPLATE_ID
 };
 
 module.exports = { environment };

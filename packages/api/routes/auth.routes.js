@@ -8,8 +8,9 @@ const {
 	loginValidationRules,
 } = require("../utilities/validation/auth.validation");
 const {
-	registerUser,
-	googleAuthUserSignUp,
+  registerUser,
+  verifyMail,
+  googleAuthUserSignUp,
 } = require("../controller/auth/user.controller");
 const { googleAuthURL, getLinkedinUrl, linkedinAccessToken, getFacebookURl, facebookAccessToken } = require("../controller/auth/authThirdPartyController");
 const { login } = require("../controller/loginController");
@@ -21,6 +22,8 @@ const {
 } = require("../controller/forgotPasswordController");
 
 auth.post("/signup", registerValidationRules(), validate, registerUser);
+auth.get("/verify/:link", verifyMail);
+
 auth.get("/google", googleAuthURL);
 auth.post("/google", googleAuthUserSignUp);
 auth.post(
