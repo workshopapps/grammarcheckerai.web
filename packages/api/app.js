@@ -14,6 +14,7 @@ require("./services/facebookStrategy");
 const { routeHandler } = require("./routes/index.route"),
   swaggerUi = require("swagger-ui-express"),
   swaggerDocument = require("./Tests/test.json");
+const CronJob = require("../api/controller/crons")
 
 //Passport Initialized
 app.use(passport.initialize()).use(express.json()).use(cors());
@@ -51,4 +52,14 @@ app.get("*", (req, res) => {
     user: "CORS enabled",
   });
 });
+
+//404 error
+app.use((req, res, next) => {
+  res.status(404).json({
+    message: "Ohh you are lost, go back now!!!!",
+  });
+});
+
+new CronJob();
+
 module.exports = app;
