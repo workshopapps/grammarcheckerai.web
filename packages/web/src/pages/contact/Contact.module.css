@@ -167,6 +167,10 @@ textarea {
   border-radius: 12px;
   color: white;
   border: none;
+  transition: all 0.4s ease-in-out;
+}
+.btn:hover {
+  background-color: #392150;
 }
 
 @media (max-width: 428px) {

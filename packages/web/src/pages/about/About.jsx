@@ -156,7 +156,7 @@ const About = () => {
             <p className=" text-white text-center font-light text-xs mt-2">
               Set up your personal account, free forever and never worry about a error in your speech again
             </p>
-            <button className=" bg-white text-textColor text-center font-bold py-2 px-4 rounded-[12px] mt-3">
+            <button className=" bg-white text-textColor ease-in-out duration-[.4s] transition-colors  text-center font-bold py-2 px-4 rounded-xl mt-3">
               Get Started
             </button>
           </div>

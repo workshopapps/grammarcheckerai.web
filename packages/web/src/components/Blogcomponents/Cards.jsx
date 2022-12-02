@@ -64,7 +64,7 @@ const Cards = () => {
         </div>
 
         <div className="flex justify-center items-center xl:hidden">
-          <button className="bg-btn relative text-white px-3 py-2 pl-4 flex justify-center items-center cursor-pointer rounded-[12px] hover:bg-[#3d1762]">
+          <button className="bg-btn relative text-white px-3 py-2 pl-4 flex justify-center items-center cursor-pointer ease-in-out duration-[.4s] transition-colors rounded-[12px] hover:bg-[#3d1762]">
             See more
             <img src={Icon} alt="" className="ml-2" />
           </button>
@@ -72,7 +72,7 @@ const Cards = () => {
       </div>
 
       <div className="xl:flex justify-center items-center xl:mx-auto hidden">
-        <button className="bg-btn relative text-white px-3 py-2 flex justify-center items-center cursor-pointer rounded-[12px] hover:bg-[#3d1762]">
+        <button className="bg-btn relative text-white px-3 py-2 flex justify-center items-center cursor-pointer rounded-[12px] ease-in-out duration-[.4s] transition-colors hover:bg-[#3d1762]">
           See more
           <img src={Icon} alt="" className="ml-2" />
         </button>
