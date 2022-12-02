@@ -9,7 +9,7 @@ pipeline {
 
 			steps {
 				sh "cd packages/web"
-				sh "cd packages/web && unset NODE_ENV && npm set registry=https://registry.npmjs.org/ && npm i --force && npm fund && npm run build"
+				sh "cd packages/web && npm i --force && npm fund && npm run build"
 			} 
 
 		
