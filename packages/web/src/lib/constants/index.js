@@ -7,5 +7,4 @@ export const ENDPOINTS = {
   API_BASE_PAYSTACK_URL: 'https://api.paystack.co/',
   API_PAYSTACK_URL: 'subscription',
   API_AUTH_FORGOT_PASSWORD: 'auth/',
->>>>>>> 722db5e570e3be566f59616b994c383720c4fd85
 };
