@@ -26,7 +26,7 @@ function HomePage() {
           </p>
         </div>
         <div className="start-convo  flex justify-center items-center flex-col sm:mt-14 mt-20">
-          <img src={talk} alt="microphone icon" className="sm:w-[80px] sm:h-[79px] w-[50.9px] h-[50.9px] " />
+          <img src={talk} alt="microphone icon" className="sm:w-[80px] sm:h-[79px] w-[50.9px] h-[50.9px] " /> 
           <p className="text-[#5A5A5A] sm:text-sm text-[12px] mt-3 font-normal">Tap the Microphone to begin</p>
         </div>
       </div>
