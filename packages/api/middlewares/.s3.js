@@ -9,7 +9,7 @@ const BUCKET_NAME = GRITTYBUCKETNAME;
 AWS.config.update({
   maxRetries: 3,
   httpOptions: { timeout: 30000, connectTimeout: 5000 },
-  region: "us-east-1",
+  region: "eu-west-1",
   accessKeyId: ACCESSKEYID,
   secretAccessKey: S3SECRETEKEY,
 });
@@ -23,7 +23,7 @@ const params = {
   Bucket: BUCKET_NAME,
   CreateBucketConfiguration: {
     // Set your region here
-    LocationConstraint: "us-east-1",
+    LocationConstraint: "eu-west-1",
   },
 };
 
