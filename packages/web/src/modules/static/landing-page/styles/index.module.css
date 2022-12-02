@@ -1,6 +1,5 @@
 ._btn {
   padding: 0.5em 1em;
-  border-radius: 5px;
   transition: all 0.4s ease-in-out;
 }
 .ff_inter {
@@ -20,7 +19,7 @@
   position: absolute;
   left: 8em;
   bottom: 0;
-  width: 69px; 
+  width: 69px;
   border-bottom: 7px solid red;
   opacity: 0.5;
 }
@@ -65,14 +64,13 @@
 .subscribe:focus {
   outline: 1px solid rgb(207, 207, 235);
 }
-.step_active{
-  color: #8C54BF;
+.step_active {
+  color: #8c54bf;
 }
 
-
-[step-theme='dark'].step_active{
+[step-theme='dark'].step_active {
   color: #fff;
-  transition: all .4s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 @media only screen and (min-width: 768px) {
   .hero__header::after {

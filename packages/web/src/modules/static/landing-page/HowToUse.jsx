@@ -32,26 +32,28 @@ const HowToUse = () => {
   const [active, setActive] = useState(btns[0]);
 
   return (
-<section className={`${context.theme === 'dark' ? 'bg-[#211f21]' : 'bg-[#ffff]'} py-10  transition-all`}>
+    <section className={`${context.theme === 'dark' ? 'bg-[#211f21]' : 'bg-[#ffff]'} py-10  transition-all`}>
       <div className="w-[80%] mx-auto my-6 ">
         <h3 className={`text-xl text-center md:text-left ${context.theme === 'dark' ? 'text-[#ffffff]' : null} md:text-3xl -mb-10 font-black`}>
           How You Can Use Speak Better In Three Tiny Steps
         </h3>
-        <div className="md:flex md:justify-between md:items-center mt-12">
+        <div className="md:flex md:justify-between md:items-center lg:gap-96 mt-12 w-[100%]">
           <div className="flex flex-col max-w-xs my-9 gap-4 border-l-[1px] border-[#afc1ca]">
             {btns.map((btn) => {
               return (
                 <button
                   key={btn.step}
                   type="button"
-                  className={`${
-                    btn.step === active.step ? styles.step_active : 'transparent'
-                  }  hover:border-[#BA7CFE] text-left pl-7 min-h-max relative h-28 `}
+                  className={`${btn.step === active.step ? styles.step_active : 'transparent'
+                    }  hover:border-[#BA7CFE] text-left pl-7 min-h-max relative h-28 `}
                   onClick={() => setActive(btn)}
                   step-theme={context.theme}
                 >
-                  <span className={`${context.theme === 'dark' ? 'text-[#BA7CFE]' : 'text-[#000]'} ${active.step === btn.step && 'text-[#9653dd]'}  block font-black text-lg`}>Step {btn.step} </span>
-                  <span className={`${active.step ? '' : styles.step_active} `}> {btn.title} </span> 
+                  <span className={`${context.theme === 'dark' ? 'text-[#BA7CFE]' : 'text-[#000]'} 
+                  ${active.step === btn.step && 'text-[#9653dd]'}  block font-black text-lg`}>
+                    Step {btn.step}
+                  </span>
+                  <span className={`${active.step ? '' : styles.step_active} `}> {btn.title} </span>
                   {/* {btn.title}  */}
                   {btn.step === active.step ? (
                     <motion.div className="absolute top-0 -left-1 h-full w-1 bg-[#BA7CFE] block" layoutId="underline" />

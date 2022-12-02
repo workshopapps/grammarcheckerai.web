@@ -39,12 +39,13 @@
   z-index: 999;
 }
 ._nvstarted button {
-  background-color: #531f85;
+  background-color: #5d387f;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 12px;
+  transition: all 0.4s ease-in-out;
 }
 ._nvstarted button:hover {
-  background-color: #69309e;
+  background-color: #392150;
 }
 ._mobilenav {
   background-color: transparent !important;

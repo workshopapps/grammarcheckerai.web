@@ -30,8 +30,7 @@ const Hero = () => {
           </p>
           <Link
             to="/converse"
-            className=" text-white whitespace-nowrap bg-[#5D387F] py-4 px-4 rounded-lg hover:bg-[#392150] hover:text-white transition-colors"
-          >
+            className=" text-white whitespace-nowrap bg-[#5D387F] py-4 px-4 rounded-lg hover:bg-[#392150] hover:text-white transition-colors">
             Try Speak Better For Free!
           </Link>
         </div>
