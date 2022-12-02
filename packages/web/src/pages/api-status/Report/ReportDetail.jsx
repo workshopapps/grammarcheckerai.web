@@ -11,7 +11,11 @@ const report = [
     status: ValidateStatus(SUCCESS),
   },
   {
-    title: 'Login/SSO',
+    title: 'Sign-in (Apple)',
+    status: ValidateStatus(SUCCESS),
+  },
+  {
+    title: 'Sign-in (Facebook)',
     status: ValidateStatus(SUCCESS),
   },
   {
@@ -19,7 +23,12 @@ const report = [
     status: ValidateStatus(FAILED),
   },
   {
-    title: 'Audio Transcribing',
+    title: 'Audio (/sendaudio)',
+    status: ValidateStatus(SUCCESS),
+  },
+  
+  {
+    title: 'Audio to whisper script',
     status: ValidateStatus(SUCCESS),
   },
   {
@@ -27,40 +36,53 @@ const report = [
     status: ValidateStatus(WARNING),
   },
   {
-    title: 'Notifications',
+    title: "Delete User",
+    status: ValidateStatus(SUCCESS)
+  },
+  {
+    title: 'Logout',
     status: ValidateStatus(FAILED),
   },
+  {
+    title: 'Update User',
+    status: ValidateStatus(SUCCESS),
+  },
+
 ];
 
 const Detail = () => {
-  const [status, setStatus] = useState([]); 
-  const apiTest = async () => {
-    const data = await axios.get('https://grittygrammar.hng.tech/api/v1/test')
-
-    data.data.map((item, index) => {
-    let statusImg = ''
-      if(item[Object.keys(item)].status === 'ok'){
-        statusImg = "SUCCESS"
-      }else if( item[Object.keys(item)].status === 'down'){
-        statusImg = "FAILED"
-      }else{
-        statusImg = "WARNING"
-      }
+  const [status, setStatus] = useState([]);
+  // const apiTest = async () => {
+  //   const data = await axios.get('https://grittygrammar.hng.tech/api/v1/test')
+  //   console.log(data);
+  //   data.data.map((item, index) => {
     
-      setStatus(status => [...status, {title: Object.keys(item), status: ValidateStatus(statusImg)}] );
+  //   let statusImg = ''
+  //     if(item[Object.keys(item)].status === 'ok'){
+  //       statusImg = "SUCCESS"
+  //     }else if( item[Object.keys(item)].status === 'down'){
+  //       statusImg = "FAILED"
+  //     }else{
+  //       statusImg = "WARNING"
+  //     }
+    
+  //     setStatus(status => [...status, {title: Object.keys(item), status: ValidateStatus(statusImg)}] );
 
-    }
-  )
-  } 
-  useEffect(() => {
-    apiTest() 
-  }, [])
+  //   }
+  // )
+  // } 
+  // useEffect(() => {
+  //   apiTest() 
+  // }, [])
 
   return (
     <section className={style.detail}>
       <h1 className={style.detailHeader}>All System Operation report</h1>
       <div className={style.mainDetail}>
-        {status?.map((el, i) => (
+        {/* {status?.map((el, i) => (
+          <StatusReport title={el.title} status={el.status} key={i} />
+        ))} */}
+        {report?.map((el, i) => (
           <StatusReport title={el.title} status={el.status} key={i} />
         ))}
       </div>
