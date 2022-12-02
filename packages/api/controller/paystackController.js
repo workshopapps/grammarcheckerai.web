@@ -3,6 +3,7 @@ const Subscription = require("../database/models/subscriptionSchema");
 const https = require("https");
 const { PAYSTACK_SECRET_KEY } = environment;
 const paystack = require("paystack")(PAYSTACK_SECRET_KEY);
+const axios = require('axios')
 
 exports.allSubscriptions = async (req, res) => {
   const subscriptions = await Subscription.find();
@@ -17,7 +18,8 @@ exports.subscribe = async (req, res) => {
     customer: name,
     plan: "PLN_2cqf3nx11trbn4b",
     send_invoices: true,
-    redirect_url: "https://paystack.com/pay/1ka-cpvjd7",
+    amount: amount,
+   // redirect_url: "https://paystack.com/pay/1ka-cpvjd7",
   });
   const activeSubscription = await Subscription.findOne({ userId: user })
     .then((result) => {
@@ -61,35 +63,38 @@ exports.subscribe = async (req, res) => {
 
     request.write(params);
     request.end();
-    return res.status(200).send(JSON.parse(request.outputData[2].data));
+    return res.status(200).send(request);
   }
 };
-exports.verifyTransaction = async (req, res)=> {
 
-  const options = {
+
+exports.verifyTransaction = async(req,res)=>{
+  const ref = req.params.ref
+  
+  const options ={
     hostname: "api.paystack.co",
     port: 443,
-    path: "/transaction/verify/:reference",
+    path: `https://api.paystack.co/transaction/verify/${ref}`,
     method: "GET",
     headers: {
-      Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
+     
+      Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`
     },
-  };
+  }
 
-  const request = https
-    .request(options, (res) => {
-      let data = "";
+  const request = https.request(options, (res)=>{
+    let data = "";
 
-      res.on("data", (chunk) => {
-        data += chunk;
-      });
-
-      res.on("end", () => {
-        console.log(JSON.parse(data));
-      });
-    })
-    .on("error", (error) => {
-      console.error(error);
+    res.on("data", (chunk)=>{
+      data += chunk;
     });
-    return res.status(200).send(request);
+
+    res.on("end", ()=>{
+      console.log(JSON.parse(data));
+    });
+  })
+  .on("error", (error)=>{
+    console.log(error);
+  });
+  return res.status(200).send(request)
 }
