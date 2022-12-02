@@ -8,7 +8,7 @@ import styles from './navbar.module.css';
 import useMediaQuery from '@mui/material/useMediaQuery';
 // eslint-disable-next-line import/no-unresolved
 import { Drawer } from '@mui/material';
-// Material UI toggle button
+//Material UI toggle button
 import { styled } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -120,7 +120,7 @@ const Navbar = () => {
           <Link to="#/" className={styles._mobilenav} onClick={() => setOpen(true)}>
             {context.theme === 'dark' ? <MenuOutlinedIcon /> : <MenuIcon className='text-["#3030303"]' />}
           </Link>
-        )}
+        )} 
         {!ismobile && (
           <button onClick={() => navigate('/signup')} className="text-white">
             Get started

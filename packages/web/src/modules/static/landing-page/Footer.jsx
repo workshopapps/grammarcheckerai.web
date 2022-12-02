@@ -3,9 +3,9 @@ import styles from './footer.module.css';
 import Logo from '../../../assets/images/wlogo.png';
 import AppStore from '../../../assets/images/applestore.png';
 import GoogleStore from '../../../assets/images/googlestore.png';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import YouTubeIcon from '@mui/icons-material/YouTube';
+// import InstagramIcon from '@mui/icons-material/Instagram';
+// import FacebookIcon from '@mui/icons-material/Facebook';
+// import YouTubeIcon from '@mui/icons-material/YouTube';
 
 const Footer = () => {
   return (
@@ -16,11 +16,11 @@ const Footer = () => {
             <div className={styles._ftcolcontentImage}>
               <img src={Logo} alt="footer logo" />
             </div>
-            <div className="space-x-6 my-6 flex items-center justify-center ml-16">
+            {/* <div className="space-x-6 my-6 flex items-center justify-center ml-16">
               <InstagramIcon />
               <FacebookIcon />
               <YouTubeIcon />
-            </div>
+            </div> */}
           </div>
           <div className="flex space-x-16 lg:space-x-0 lg:justify-around lg:w-1/2">
             <div className={styles._ftcol1}>
@@ -41,7 +41,7 @@ const Footer = () => {
                 <Link to="/career">Careers and Culture</Link>
                 <Link to="/newsletter">Newsletter</Link>
                 <Link to="/legal">Legal</Link>
-                <Link to="/terms">Terms of Use</Link>
+                <Link to="/terms-of-use">Terms of Use</Link>
               </div>
             </div>
           </div>
