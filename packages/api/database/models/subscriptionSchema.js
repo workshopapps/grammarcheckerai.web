@@ -38,8 +38,6 @@ const subscriptionSchema = new mongoose.Schema(
     },
     txref: {
       type: String,
-      enum: ["monthly", "yearly"],
-      default: "monthly",
     },
     status: {
       type: String,
