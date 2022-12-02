@@ -11,7 +11,7 @@ pipeline {
 				sh "unset NODE_ENV"
 				sh "cd packages/web"
 				sh "sudo npm install -g npm@latest && sudo npm cache clear --force"
-				sh "cd packages/web && sudo npm i --force && npm fund && npm run build"
+				sh "cd packages/web && sudo npm install --force --unsafe-perm=true --allow-root && npm fund && npm run build"
 			} 
 
 		
