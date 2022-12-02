@@ -1,5 +1,5 @@
 const { response } = require("../../utilities/response");
-const { getTokens } = require("./google.user.controller");
+const { getTokens } = require("./authThirdPartyController");
 const { register } = require("../../repository/user.repository");
 const { userCollection } = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
@@ -81,55 +81,56 @@ async function registerUser(req, res) {
 }
 
 async function googleAuthUserSignUp(req, res) {
-  const { name, email } = await getTokens(req.query.code);
+	const { name, email } = await getTokens(req.query.code);
 
-  //Check if user already exist
-  const user = await userCollection.findOne({ email });
+	//Check if user already exist
+	const user = await userCollection.findOne({ email });
 
-  if (user) {
-    const data = {
-      _id: user._id,
-      firstname: user.firstName,
-      lastname: user.lastName,
-      username: user.username,
-      email: user.email,
-      language: user.language,
-      token: user.generateAuthToken(),
-    };
-    return res.status(200).json(
-      response({
-        success: true,
-        message: "User logged in Sucessfully",
-        data: data,
-      })
-    );
-  } else {
-    const randomUserCode = (Math.random() + 1).toString(36).substring(7);
-    const newName = name.split(" ");
+	if (user) {
+		const data = {
+			_id: user._id,
+			firstname: user.firstName,
+			lastname: user.lastName,
+			username: user.username,
+			email: user.email,
+			language: user.language,
+			token: user.generateAuthToken(),
+		};
+		return res.status(200).json(
+			response({
+				success: true,
+				message: "User logged in Sucessfully",
+				data: data,
+			})
+		);
+	} else {
+		const randomUserCode = (Math.random() + 1).toString(36).substring(7);
+		const newName = name.split(" ");
 
-    const data = {
-      firstName: newName[0],
-      lastName: newName[1],
-      email: email,
-      username: slugify(name) + randomUserCode,
-      password: "password",
-    };
-    const user = await register(data);
+		const data = {
+			firstName: newName[0],
+			lastName: newName[1],
+			email: email,
+			username: slugify(name) + randomUserCode,
+			password: "password",
+		};
+		const user = await register(data);
 
-    if (!user)
-      return res
-        .status(500)
-        .json(response({ success: false, message: "User not created" }));
+		if (!user)
+			return res
+				.status(500)
+				.json(response({ success: false, message: "User not created" }));
 
-    return res.status(201).json(
-      response({
-        success: true,
-        message: "User created successfully",
-        data: user,
-      })
-    );
-  }
+		return res.status(201).json(
+			response({
+				success: true,
+				message: "User created successfully",
+				data: user,
+			})
+		);
+	}
 }
+
 
 async function verifyMail(req, res) {
   let verificationLink = req.params.link;
@@ -149,3 +150,4 @@ async function verifyMail(req, res) {
 }
 
 module.exports = { registerUser, googleAuthUserSignUp, verifyMail };
+
