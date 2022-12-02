@@ -8,7 +8,7 @@ const { ACCESSKEYID, S3SECRETEKEY, GRITTYBUCKETNAME } = environment;
 const s3 = new aws.S3({
   accessKeyId: ACCESSKEYID,
   secretAccessKey: S3SECRETEKEY,
-  region: 'us-east-1',
+
   Bucket: GRITTYBUCKETNAME,
 });
 
