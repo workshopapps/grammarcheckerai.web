@@ -1,4 +1,4 @@
-const quizRanking = require("../database/models/quizRanking");
+// const quizRanking = require("../database/models/quizRanking");
 
 async function leaderBoard(req, res) {
   const data = await quizRanking.find().sort({ totalPoints: -1 });

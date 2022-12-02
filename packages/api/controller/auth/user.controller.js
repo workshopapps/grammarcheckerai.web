@@ -4,7 +4,7 @@ const { register } = require("../../repository/user.repository");
 const { userCollection } = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
 const emailService = require("../../services/email.service");
-const { environment } = require("../config/environment.js");
+const { environment } = require("../../config/environment");
 const { SIGNUP_TEMPLATE_ID } = environment;
 
 async function registerUser(req, res) {
