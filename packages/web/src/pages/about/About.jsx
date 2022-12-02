@@ -1,6 +1,6 @@
 import React from 'react';
 import useTheme from '../../hooks/useTheme';
-import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
+import { BsArrowRight } from 'react-icons/bs';
 import { Values, Teams } from '../../pages/about/data/data';
 import figma from '../../assets/abt_images/figma.png';
 import tend from '../../assets/abt_images/tend.png';
