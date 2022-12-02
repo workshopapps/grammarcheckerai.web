@@ -3,8 +3,9 @@ const { getTokens } = require("./google.user.controller");
 const { register } = require("../../repository/user.repository");
 const { userCollection } = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
-const emailService = require("../../services/email.service"); 
-const { SIGNUP_TEMPLATE } = require("../../utilities/email.template");
+const emailService = require("../../services/email.service");
+const { environment } = require("../config/environment.js");
+const { SIGNUP_TEMPLATE_ID } = environment;
 
 async function registerUser(req, res) {
   try {
@@ -17,7 +18,7 @@ async function registerUser(req, res) {
       confirm_password,
       language,
     } = req.body;
-    
+
     //Check if the user already exist
     password =
       password === confirm_password
@@ -28,33 +29,33 @@ async function registerUser(req, res) {
               message: "Password mismatch, Comfirm your password",
             })
           );
-  
+
     const checkEmailExist = await userCollection.findOne({ email });
-  
+
     if (checkEmailExist)
       return res
         .status(409)
         .json(response({ message: "User already exist", success: false }));
-  
+
     const data = { email, firstName, lastName, username, password, language };
-  
+
     const user = await register(data);
-  
+
     await emailService({
-      to: email, 
+      to: email,
       subject: "Welcome to Speak Better",
-      templateId: SIGNUP_TEMPLATE,
-      dynamicTemplateData: {
+      templateId: SIGNUP_TEMPLATE_ID,
+      dynamic_template_data: {
         name: firstName,
-        action_url: "/signin",
+        actionurl: "/signin",
       },
     });
-  
+
     if (!user)
       return res
         .status(500)
         .json(response({ success: false, message: "User not created" }));
-  
+
     return res.status(201).json(
       response({
         success: true,
