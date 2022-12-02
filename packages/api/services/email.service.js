@@ -19,7 +19,7 @@ const emailService = async ({
 
       resolve(true);
     } catch (err) {  
-      console.log(err.response.body)
+      console.log(err)
       resolve(false);
     }
   });
