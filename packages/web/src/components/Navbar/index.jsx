@@ -63,8 +63,6 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-
-
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [activeNav, setActiveNav] = useState('Home');
@@ -75,9 +73,7 @@ const Navbar = () => {
   localStorage.setItem('theme', context.theme);
   const toggleDarkMode = () => {
     context.toggle();
-    console.log(context)
-  }
-
+  };
 
   const isTabletOrMobile = useMediaQuery('(max-width: 1000px)');
   const ismobile = useMediaQuery('(max-width: 700px)');

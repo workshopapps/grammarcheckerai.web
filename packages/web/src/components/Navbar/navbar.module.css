@@ -44,9 +44,9 @@
   z-index: 999;
 }
 ._nvstarted button {
-  background-color: #531f85;
-  padding: 10px 1.5em;
-  border-radius: 10px;
+  background-color: #5d387f;
+  padding: 10px;
+  border-radius: 12px;
   transition: all 0.4s ease-in-out;
 }
 ._nvstarted button:hover {
