@@ -10,7 +10,7 @@ pipeline {
 			steps {
 				sh "cd packages/web"
 				sh "sudo npm install -g npm@latest && sudo npm cache clear --force"
-				sh "npm i --force && npm fund && CI=false npm run build"
+				sh "cd packages/web && npm i --force && npm fund && CI=false npm run build"
 			} 
 
 		
