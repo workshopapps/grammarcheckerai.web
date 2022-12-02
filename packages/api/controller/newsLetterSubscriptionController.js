@@ -9,7 +9,7 @@ exports.isSubscribe = async (req, res) => {
     if (subscribed_user) {
       res.status(200).json({
         status: true,
-        message: "you already a subscriber, chill for our newsletters",
+        message: "You are already a subscriber, chill for our newsletters",
       });
     }
     const user_exist = await userCollection.findOne({ email });
