@@ -3,6 +3,7 @@ const { getTokens } = require("./google.user.controller");
 const { register } = require("../../repository/user.repository");
 const { userCollection } = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
+const { generateEmailVerificationLink, verifyLink } = require("../../utilities/generateToken");
 const emailService = require("../../services/email.service");
 const { environment } = require("../../config/environment");
 const { SIGNUP_TEMPLATE_ID } = environment;
@@ -38,18 +39,20 @@ async function registerUser(req, res) {
         .json(response({ message: "User already exist", success: false }));
 
     const data = { email, firstName, lastName, username, password, language };
+    
+    let verificationLink = await generateEmailVerificationLink(data)
+    
 
+  await emailService({  to: email,
+    subject: "Welcome to Speak Better, Please Verify your Email",
+    templateId: SIGNUP_TEMPLATE_ID,
+    dynamicTemplateData: {
+      name: firstName,
+      action_url: verificationLink,
+    }});
+
+      
     const user = await register(data);
-
-    await emailService({
-      to: email,
-      subject: "Welcome to Speak Better",
-      templateId: SIGNUP_TEMPLATE_ID,
-      dynamic_template_data: {
-        name: firstName,
-        actionurl: "/signin",
-      },
-    });
 
     if (!user)
       return res
@@ -59,7 +62,7 @@ async function registerUser(req, res) {
     return res.status(201).json(
       response({
         success: true,
-        message: "User created successfully",
+        message: "User created successfully, Check your email for confirmation",
         data: user,
       })
     );
@@ -124,4 +127,25 @@ async function googleAuthUserSignUp(req, res) {
     );
   }
 }
-module.exports = { registerUser, googleAuthUserSignUp };
+
+async function verifyMail (req, res) {
+  let verificationLink = req.params.link
+
+  try {
+      let user = await verifyLink(verificationLink)
+      if (!user) {
+          throw new Error("Link expired")
+      }
+
+      res
+      .status(201)
+      .redirect("/v1/auth/signin");
+  }
+  catch (err) {
+      res.status(400).json({
+          error: err.message
+      })
+  }
+}
+
+module.exports = { registerUser, googleAuthUserSignUp, verifyMail };
