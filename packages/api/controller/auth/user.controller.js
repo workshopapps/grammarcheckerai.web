@@ -131,7 +131,6 @@ async function googleAuthUserSignUp(req, res) {
 	}
 }
 
-
 async function verifyMail(req, res) {
   let verificationLink = req.params.link;
 
