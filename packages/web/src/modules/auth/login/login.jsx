@@ -42,7 +42,7 @@ const Index = () => {
     navigate('/signup');
   };
 
-  /* 
+  /*
     handleLogin logs the user in on a succesful input.
     It checks if the user is found in the database and finds the password for the user as well.
     After a succesful input, redirects the user to a Protected Route and shows the logged in user's dashboard
@@ -83,8 +83,8 @@ const Index = () => {
         });
     }
   };
-  /* 
-    handleGoogleAuth handles the Google social login. 
+  /*
+    handleGoogleAuth handles the Google social login.
 
     This redirects to the endpoint which gets a usertoken from google
     Then redirects to the provided URL token for user login
@@ -108,24 +108,24 @@ const Index = () => {
     useFetch('https://speakbetter.hng.tech/api/v1/auth/google');
   };
 
-  /* 
-      handleFacebookAuth handles the Facebook social login. 
-  
+  /*
+      handleFacebookAuth handles the Facebook social login.
+
       This redirects to the endpoint which gets a usertoken from facebook
       Then redirects to the provided URL token for account creation
-  
+
     */
 
   const handleFacebookAuth = () => {
     useFetch('https://speakbetter.hng.tech/api/v1/auth/facebook');
   };
 
-  /* 
-      handleLinkedInAuth handles the LinkedIn social login. 
-  
+  /*
+      handleLinkedInAuth handles the LinkedIn social login.
+
       This redirects to the endpoint which gets a usertoken from linkedin
       Then redirects to the provided URL token for account creation
-  
+
     */
 
   const handleLinkedInAuth = () => {
