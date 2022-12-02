@@ -1,9 +1,16 @@
-// const quizRanking = require("../database/models/quizRanking");
+const quizLeaderBoard = require("../database/models/quizLeaderBoardSchema");
 
 async function leaderBoard(req, res) {
-  const data = await quizRanking.find().sort({ totalPoints: -1 });
-  data.forEach((user, i) => {
-    user.rank = i + 1;
+  const data = await quizLeaderBoard.find().sort({ totalPoints: -1 });
+  if (data.length) {
+    data.forEach((user, i) => {
+      user.rank = i + 1;
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    data,
   });
 
   if (data) {
