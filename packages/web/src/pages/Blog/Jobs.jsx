@@ -21,7 +21,7 @@ const Jobs = () => {
         </div>
 
         <div className="p-4 mb-10 md:w-full md:h-full md:mb-10">
-          <img src={Image1} alt="" className="w-full md:h-full rounded" />
+          <img src={Image1} alt="" className="w-full md:h-full" />
         </div>
 
         <div className="p-4 py-4">

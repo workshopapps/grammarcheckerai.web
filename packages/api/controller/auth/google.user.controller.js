@@ -7,7 +7,7 @@ const { response } = require("../../utilities/response");
 
 async function googleAuthURL(req, res) {
   const options = {
-    redirect_uri: `${SERVER_ROOT_URI}/api/v1/auth/google`,
+    redirect_uri: `${SERVER_ROOT_URI}`,
     client_id: GOOGLE_CLIENT_ID,
     access_type: "offline",
     response_type: "code",
@@ -29,7 +29,7 @@ async function getTokens(code) {
     const client = new OAuth2Client(
       GOOGLE_CLIENT_ID,
       GOOGLE_CLIENT_SECRET,
-      `${SERVER_ROOT_URI}/api/v1/auth/google`
+      `${SERVER_ROOT_URI}`
     );
     
     const {res} = await client.getToken(code);
