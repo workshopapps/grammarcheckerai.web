@@ -8,7 +8,7 @@
   /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
 }
 .font_w {
-  font-weight: 900;
+  font-weight: 600;
 }
 ._quotes::before {
   content: url('../assets/quotes.png');
@@ -27,17 +27,16 @@
 .hero__header::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0em;
-  width: 19.2em;
+  top: -7px;
+  left: 2em;
+  width: 16.2em;
   height: 3em;
-  transform: rotate(358deg);
-  background: rgb(0, 0, 0);
+  font-weight: 200;
+  transform: rotate(-1.5deg);
+  background: #5D387F;
   z-index: -1;
 }
-.hero__header[hero-head-theme='dark']::after{
-  background: var(--bg-light);
-}
+
 .hero_img__container::before {
   content: url('../assets/hero/tap-mic.png');
   transform: scale(0.6);
@@ -77,8 +76,8 @@
 }
 @media only screen and (min-width: 768px) {
   .hero__header::after {
-    width: 20.2em;
-    left: -15px;
+    width: 13.2em;
+    left: -8px;
   }
   .correction::before {
     content: url('../assets/hero/ellipse.png');

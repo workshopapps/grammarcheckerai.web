@@ -33,9 +33,9 @@ const HowToUse = () => {
 
   return (
 <section className={`${context.theme === 'dark' ? 'bg-[#211f21]' : 'bg-[#ffff]'} py-10  transition-all`}>
-      <div className="w-[80%] mx-auto my-6 space-y-24">
-        <h3 className={`text-xl text-center ${context.theme === 'dark' ? 'text-[#ffffff]' : null} md:text-3xl font-black`}>
-          How You Can Use Gritty Grammar In Three Tiny Steps
+      <div className="w-[80%] mx-auto my-6 ">
+        <h3 className={`text-xl text-center md:text-left ${context.theme === 'dark' ? 'text-[#ffffff]' : null} md:text-3xl -mb-10 font-black`}>
+          How You Can Use Speak Better In Three Tiny Steps
         </h3>
         <div className="md:flex md:justify-between md:items-center mt-12">
           <div className="flex flex-col max-w-xs my-9 gap-4 border-l-[1px] border-[#afc1ca]">
@@ -50,7 +50,7 @@ const HowToUse = () => {
                   onClick={() => setActive(btn)}
                   step-theme={context.theme}
                 >
-                  <span className={`${context.theme === 'dark' ? 'text-[#BA7CFE]' : 'text-[#000]'} block font-black text-lg`}>Step {btn.step} </span>
+                  <span className={`${context.theme === 'dark' ? 'text-[#BA7CFE]' : 'text-[#000]'} ${active.step === btn.step && 'text-[#9653dd]'}  block font-black text-lg`}>Step {btn.step} </span>
                   <span className={`${active.step ? '' : styles.step_active} `}> {btn.title} </span> 
                   {/* {btn.title}  */}
                   {btn.step === active.step ? (
