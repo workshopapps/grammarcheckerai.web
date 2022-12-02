@@ -9,6 +9,7 @@ const {
 } = require("../utilities/validation/auth.validation");
 const {
   registerUser,
+  verifyMail,
   googleAuthUserSignUp,
 } = require("../controller/auth/user.controller");
 const { googleAuthURL } = require("../controller/auth/google.user.controller");
@@ -22,6 +23,8 @@ const {
 } = require("../controller/forgotPasswordController");
 
 auth.post("/signup", registerValidationRules(), validate, registerUser);
+auth.get("/verify/:link", verifyMail);
+
 auth.get("/google", googleAuthURL);
 auth.post("/google", googleAuthUserSignUp);
 auth.post(

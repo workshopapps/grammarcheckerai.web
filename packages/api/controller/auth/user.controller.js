@@ -3,64 +3,78 @@ const { getTokens } = require("./google.user.controller");
 const { register } = require("../../repository/user.repository");
 const { userCollection } = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
+const { generateEmailVerificationLink, verifyLink } = require("../../utilities/generateToken");
 const emailService = require("../../services/email.service");
 const { environment } = require("../../config/environment");
-const { SIGNUP_TEMPLATE_ID, BASE_URL } = environment;
+const { SIGNUP_TEMPLATE_ID } = environment;
 
 async function registerUser(req, res) {
-  let {
-    email,
-    firstName,
-    lastName,
-    username,
-    password,
-    confirm_password,
-    language,
-  } = req.body;
-  //Check if the user already exist
-  password =
-    password === confirm_password
-      ? password
-      : res.status(422).json(
-          response({
-            success: false,
-            message: "Password mismatch, Comfirm your password",
-          })
-        );
+  try {
+    let {
+      email,
+      firstName,
+      lastName,
+      username,
+      password,
+      confirm_password,
+      language,
+    } = req.body;
 
-  const checkEmailExist = await userCollection.findOne({ email });
+    //Check if the user already exist
+    password =
+      password === confirm_password
+        ? password
+        : res.status(422).json(
+            response({
+              success: false,
+              message: "Password mismatch, Comfirm your password",
+            })
+          );
 
-  if (checkEmailExist)
-    return res
-      .status(409)
-      .json(response({ message: "User already exist", success: false }));
+    const checkEmailExist = await userCollection.findOne({ email });
 
-  const data = { email, firstName, lastName, username, password, language };
+    if (checkEmailExist)
+      return res
+        .status(409)
+        .json(response({ message: "User already exist", success: false }));
 
-  emailService({
-    to: email,
-    subject: "Welcome to Speak Better",
+    const data = { email, firstName, lastName, username, password, language };
+    
+    let verificationLink = await generateEmailVerificationLink(data)
+    
+
+  await emailService({  to: email,
+    subject: "Welcome to Speak Better, Please Verify your Email",
     templateId: SIGNUP_TEMPLATE_ID,
-    data: {
+    dynamicTemplateData: {
       name: firstName,
-      url: `${BASE_URL}/signin`,
-    },
-  });
+      action_url: verificationLink,
+    }});
 
-  const user = await register(data);
+      
+    const user = await register(data);
 
-  if (!user)
-    return res
-      .status(500)
-      .json(response({ success: false, message: "User not created" }));
+    if (!user)
+      return res
+        .status(500)
+        .json(response({ success: false, message: "User not created" }));
 
-  return res.status(201).json(
-    response({
-      success: true,
-      message: "User created successfully",
-      data: user,
-    })
-  );
+    return res.status(201).json(
+      response({
+        success: true,
+        message: "User created successfully, Check your email for confirmation",
+        data: user,
+      })
+    );
+  } catch (error) {
+    return res.status(500).json(
+      response({
+        success: false,
+        message: "Something went wrong, please contact an Admin",
+        data: user,
+      })
+    );
+  }
 }
 
 async function googleAuthUserSignUp(req, res) {
@@ -113,4 +127,25 @@ async function googleAuthUserSignUp(req, res) {
     );
   }
 }
-module.exports = { registerUser, googleAuthUserSignUp };
+
+async function verifyMail (req, res) {
+  let verificationLink = req.params.link
+
+  try {
+      let user = await verifyLink(verificationLink)
+      if (!user) {
+          throw new Error("Link expired")
+      }
+
+      res
+      .status(201)
+      .redirect("/v1/auth/signin");
+  }
+  catch (err) {
+      res.status(400).json({
+          error: err.message
+      })
+  }
+}
+
+module.exports = { registerUser, googleAuthUserSignUp, verifyMail };
