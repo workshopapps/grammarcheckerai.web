@@ -9,6 +9,7 @@ const verify = require("../middlewares/auth.middleware");
 const quickTranscribe = require("./quickTranscribeRouter");
 const newsletter = require("../routes/newsLetterRoute");
 const leaderBoardRouter = require("../routes/leaderboardrouter");
+const paystackRouter = require("./paystackRouter");
 
 routeHandler.use("/auth", auth);
 routeHandler.use("/user", verify, userHandler);
@@ -19,5 +20,6 @@ routeHandler.use("/quickTranscribe", quickTranscribe);
 routeHandler.use("/contact", contactRoute);
 routeHandler.use("/newsletter", newsletter);
 routeHandler.use("/leaderboard", leaderBoardRouter);
+routeHandler.use("/paystack", paystackRouter);
 
 module.exports = { routeHandler };
