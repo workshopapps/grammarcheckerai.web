@@ -40,7 +40,7 @@ const index = () => {
         success(res?.data?.message);
       })
       .catch((err) => {
-        error(err?.data?.message);
+        error(err?.response?.data?.message);
       });
   };
   const handleOpenMail = () => {
