@@ -44,7 +44,10 @@
         "passport-facebook": "^3.0.0",
         "passport-linkedin-oauth2": "^2.0.0",
         "path": "^0.12.7",
+        "paystack": "^2.0.1",
+        "request": "^2.88.2",
         "sass": "^1.56.1",
+        "socket.io": "^4.5.4",
         "supertest": "^6.3.1",
         "swagger-ui-express": "^4.6.0",
         "uuid": "^9.0.0"
