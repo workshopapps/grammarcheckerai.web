@@ -337,7 +337,7 @@ function App() {
           </div>
         }
       >
-        <Route path="signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
+        <Route path="/signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
         <Route path="signup" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signuptwo />} />
         <Route path="forgot-password" element={<Forgotpassword />} />
         <Route path="reset-password" element={<ResetLink />} />
