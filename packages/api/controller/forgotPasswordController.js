@@ -8,7 +8,7 @@ const {
   RESET_PASSWORD,
 } = require("../utilities/email.template");
 
-const { BASE_URL, RESET_PASSWORD_TEMPLATE_ID, PASSWORD_CHANGED_TEMPLATE_ID } =
+const { BASE_URL, RESET_PASSWORD_TEMPLATE_ID, PASSWORD_CHANGED_TEMPLATE_ID} =
   environment;
 
 exports.requestForgotPassword = async (req, res) => {
@@ -31,17 +31,18 @@ exports.requestForgotPassword = async (req, res) => {
     emailService({
       to: email,
       subject: "Requested Reset Password for Speak Better.",
-      templateId: REQUEST_PASSWORD_RESET,
-      dynamicTemplateData: {
+      templateId: RESET_PASSWORD_TEMPLATE_ID,
+      dynamic_template_data: {
         name: user.firstName,
-        url: reset_password_url,
+        actionurl: reset_password_url,
       },
     });
 
     return res.status(200).json(
       response({
         message: "A mail was just sent to this email address",
-        success: true
+        success: true,
+        data: reset_password_url
       })
     );
   } catch (error) {
@@ -94,10 +95,10 @@ exports.resetPassword = async (req, res) => {
     emailService({
       to: email,
       subject: "Speak Better Password Changed Successfully",
-      templateId: RESET_PASSWORD,
-      dynamicTemplateData: {
+      templateId: PASSWORD_CHANGED_TEMPLATE_ID,
+      dynamic_template_data: {
         name: user.firstName,
-        url: `${BASE_URL}/me/home`,
+        actionurl: `${BASE_URL}/me/home`,
       },
     });
     return res.status(200).json(
