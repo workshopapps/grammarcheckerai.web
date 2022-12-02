@@ -13,7 +13,6 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 
-
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
   height: 34,
@@ -61,13 +60,9 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-
-
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [activeNav, setActiveNav] = useState('Home');
-  
-
 
   const navigate = useNavigate();
 
@@ -75,8 +70,7 @@ const Navbar = () => {
   localStorage.setItem('theme', context.theme);
   const toggleDarkMode = () => {
     context.toggle();
-  }
-
+  };
 
   const isTabletOrMobile = useMediaQuery('(max-width: 1000px)');
   const ismobile = useMediaQuery('(max-width: 700px)');
