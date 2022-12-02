@@ -1,5 +1,4 @@
 import style from './ReportDetail.module.css';
-import { SUCCESS, FAILED, WARNING } from '../../../lib/constants/StatusTypes';
 import { ValidateStatus } from '../../../lib/utils/validate-status-api';
 import StatusReport from '../../../components/StatusReport/StatusReport';
 import { useEffect, useState } from 'react';
@@ -20,7 +19,6 @@ const Detail = () => {
       } else {
         statusImg = "WARNING"
       }
-
       setStatus(status => [...status, { title: Object.keys(item), status: ValidateStatus(statusImg) }]);
     }
     )
