@@ -47,9 +47,10 @@
   background-color: #531f85;
   padding: 10px 1.5em;
   border-radius: 10px;
+  transition: all 0.4s ease-in-out;
 }
 ._nvstarted button:hover {
-  background-color: #69309e;
+  background-color: #392150;
 }
 ._mobilenav {
   background-color: transparent !important;

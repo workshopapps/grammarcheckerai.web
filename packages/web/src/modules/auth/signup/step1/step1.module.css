@@ -99,6 +99,7 @@
   color: #fff;
   background: #5d387f;
   border-radius: 12px;
+  transition: all 0.4s ease-in-out;
 }
 ._gcsignupfooter p {
   font-style: normal;
