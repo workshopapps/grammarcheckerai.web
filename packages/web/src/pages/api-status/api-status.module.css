@@ -38,11 +38,11 @@
 }
 
 .title {
-  font-size: 2rem;
   font-weight: 700;
+  font-size: 2rem;
   font-family: var(--DM-font);
   line-height: 2.603rem;
-  color: var(--text-color);
+  color: #0B303E;
 }
 
 .text {
