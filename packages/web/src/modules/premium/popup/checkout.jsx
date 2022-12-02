@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Dialog } from '@mui/material';
-import styles from './popup.module.css';
+import style from './popup.module.css';
+import styles from './checkout.module.css';
 
 const Checkout = (props) => {
   return (
@@ -10,10 +11,16 @@ const Checkout = (props) => {
       open={props.open}
       onClose={props.handleClosePremium}
       TransitionComponent={props.Transition}
-      className={styles._sbDialog}
+      className={style._sbDialog}
     >
-      <button onClick={props.handleBack}>Back</button>
-      <h3>{props.duration}</h3>
+      <div className={styles._cpBody}>
+        <div className={styles._cpCol1}>
+          <button onClick={props.handleBack}>Back</button>
+        </div>
+        <div className={styles._cpCol2}>
+          <h3>{props.duration}</h3>
+        </div>
+      </div>
     </Dialog>
   );
 };

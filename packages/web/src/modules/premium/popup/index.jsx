@@ -20,25 +20,61 @@ const index = (props) => {
   const authPay = usePay();
   const matches = useMediaQuery('(max-width:694px)');
   const [checkoutURL, setCheckoutURL] = React.useState('');
-  const [interval, setInterval] = React.useState({ plan: '', amount: '', duration: '' });
+  const [interval, setInterval] = React.useState({ plan: '', amount: 0, duration: '' });
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
+  const [userToken, setUserToken] = React.useState('');
+  const [email, setEmail] = React.useState('');
 
-  const handlePayment = () => {
-    authPay
-      .mutateAsync({
+  const useFetch = async (url) => {
+    var requestOptions = {
+      method: 'POST',
+      body: JSON.stringify({
         user: '0fa87984-fb92-4a3c-a43b-de63531686b9',
         email: 'cutytongy@gmail.com',
         name: 'Otong Akan',
         amount: 1000,
-        interval: interval,
+        interval: 'weekly',
         subscriptionId: 'PLN_2cqf3nx11trbn4b',
+      }),
+      mode: 'cors',
+      headers: {
+        'Access-Control-Allow-Origin': 'http://localhost:5000',
+        Authorization: 'Bearer pk_test_79b1560168d893e4e503c39acdc3b49f02db69c3',
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    };
+
+    await fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        console.log(oBJ);
       })
-      .then((res) => {
-        setCheckoutURL(res.data.authorization_url);
-      })
-      .then(() => {
-        alert(checkoutURL);
-      });
+      .catch((err) => console.log(err.message));
   };
+
+  const handlePayment = () => {
+    useFetch('http://localhost:5001/v1/paystack/pay');
+  };
+
+  // const handlePayment = () => {
+  //   authPay
+  //     .mutateAsync({
+  //       user: '0fa87984-fb92-4a3c-a43b-de63531686b9',
+  //       email: email,
+  //       name: firstName + '' + lastName,
+  //       amount: interval.amount,
+  //       interval: interval.duration,
+  //       subscriptionId: interval.plan,
+  //     })
+  //     .then((res) => {
+  //       setCheckoutURL(res.data.authorization_url);
+  //     })
+  //     .then(() => {
+  //       alert(checkoutURL);
+  //     });
+  // };
 
   const handleCheckout = (plan) => {
     setInterval(plan);
@@ -48,7 +84,7 @@ const index = (props) => {
     setInterval('');
   };
 
-  if (interval.duration === 'monthly')
+  if (interval.duration)
     return (
       <Checkout
         duration={interval.duration}
@@ -58,7 +94,6 @@ const index = (props) => {
         handleBack={handleBack}
       />
     );
-
   return (
     <Dialog
       fullScreen
@@ -126,7 +161,7 @@ const index = (props) => {
               <div className={styles._sbmobile}>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() => handleCheckout({ plan: 'monthly', amount: '1000', duration: 'monthly' })}
+                  onClick={() => handleCheckout({ plan: 'monthly', amount: 1000, duration: 'monthly' })}
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Monthly</p>
@@ -140,7 +175,10 @@ const index = (props) => {
                     </ul>
                   </div>
                 </button>
-                <button className={styles._sbPricingBox} onClick={() => handleCheckout('quarterly')}>
+                <button
+                  className={styles._sbPricingBox}
+                  onClick={() => handleCheckout({ plan: 'monthly', amount: 2000, duration: 'quarterly' })}
+                >
                   <div className={styles._sbPricingTitles}>
                     <p>Quarterly</p>
                     <h2>$10.90</h2>
@@ -153,7 +191,10 @@ const index = (props) => {
                     </ul>
                   </div>
                 </button>
-                <button className={styles._sbPricingBox} onClick={() => handleCheckout('yearly')}>
+                <button
+                  className={styles._sbPricingBox}
+                  onClick={() => handleCheckout({ plan: 'monthly', amount: 3000, duration: 'yearly' })}
+                >
                   <div className={styles._sbPricingTitles}>
                     <p>Yearly</p>
                     <h2>$10.90</h2>
@@ -177,7 +218,7 @@ const index = (props) => {
                       <p>
                         $10.90<span> / month</span>
                       </p>
-                      <button onClick={() => handleCheckout('monthly')}>Select</button>
+                      <button onClick={() => handlePayment()}>Select</button>
                     </div>
                   </div>
                   <hr />
@@ -191,7 +232,9 @@ const index = (props) => {
                       <p>
                         $8.90<span> / month</span>
                       </p>
-                      <button onClick={() => handleCheckout('quarterly')}>Select</button>
+                      <button onClick={() => handleCheckout({ plan: 'monthly', amount: 2000, duration: 'quarterly' })}>
+                        Select
+                      </button>
                     </div>
                   </div>
                   <hr />
@@ -205,7 +248,9 @@ const index = (props) => {
                       <p>
                         $5.90<span> / month</span>
                       </p>
-                      <button onClick={() => handleCheckout('yearly')}>Select</button>
+                      <button onClick={() => handleCheckout({ plan: 'monthly', amount: 3000, duration: 'yearly' })}>
+                        Select
+                      </button>
                     </div>
                   </div>
                 </div>

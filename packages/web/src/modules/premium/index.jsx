@@ -29,12 +29,14 @@ const Premium = () => {
         })
         .then((res) => {
           console.log(res);
+          setName(res);
         })
+        .then((result) => {})
         .catch((err) => {
           console.log(err);
         });
     },
-    onClose: () => alert("Wait! You need this oil, don't go!!!!"),
+    onClose: () => alert('njddsdhj'),
   };
 
   const useFetch = (url) => {
