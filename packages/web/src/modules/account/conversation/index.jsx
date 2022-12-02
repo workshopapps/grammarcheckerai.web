@@ -1,10 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import useTheme from '../../../hooks/useTheme';
 import logoImg from '../../../assets/images/logo.webp';
-// import micImg from '../../../assets/images/mic.svg';
-// import trashImg from '../../../assets/images/trash.svg';
-// import sendImg from '../../../assets/images/send.svg';
-// import pauseImg from '../../../assets/images/pause.svg';
 import styles from './index.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
@@ -34,22 +30,29 @@ function Conversation() {
       initial={{ opacity: 0.1 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className={`min-h-screen space-y-6 flex flex-col ${styles._convo} ${
+      className={`min-h-screen space-y-4 flex flex-col ${styles._convo} ${
         context.theme === 'dark' ? styles.convo_theme : null
       } `}
     >
-      <div className="flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto items-center justify-end">
+      <div className="flex flex-row content-between py-4 px-4 w-full max-w-7xl mx-auto items-center justify-between">
+        {/*  eslint-disable-next-line jsx-a11y/media-has-caption */}
+        {/* <audio controls src={audioResult} /> */}
+        <div className="w-36">
+          <Link to="/home">
+            <img src={logoImg} alt="" className="max-w-full" />
+          </Link>
+        </div>
         <SeletedLanguage />
       </div>
-      <div className="lg:flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4 scroll-smooth">
-        <div className="max-h-5/6 text-center space-y-6 lg:space-y-14">
+      <div className="lg:flex-1 w-full max-w-7xl mx-auto flex flex-col my-0 justify-center px-4 scroll-smooth">
+        <div className="max-h-5/6 text-center">
           {chats.length === 0 ? (
             <>
-              <div className="mx-auto w-36 flex items-center justify-center">
+              <div className="mx-auto w-36 h-28 flex items-center justify-center">
                 {/* <img src={botImg} alt="" className="max-w-full" /> */}
                 <RiveBot size="large" />
               </div>
-              <div className="space-y-4">
+              <div className="mt-2">
                 <h2
                   className={`text-xl ${
                     context.theme === 'dark' ? 'text-[#ffffff]' : 'text-[#262626]'
@@ -60,7 +63,7 @@ function Conversation() {
                 <p
                   className={` ${
                     context.theme === 'dark' ? 'text-[#ffffff]' : 'text-slate-600'
-                  } text-md sm:text-[19px]`}
+                  } text-md sm:text-[19px] mt-2`}
                 >
                   Each conversation bring you closer to fluency.
                 </p>
@@ -70,10 +73,10 @@ function Conversation() {
             <ChatContainer chats={chats} />
           )}
           <div>
-            <div className="mx-auto flex items-center flex-col justify-center" ref={chatRef}>
+            <div className="mx-auto flex items-center flex-col justify-center mt-12 xl:mt-8" ref={chatRef}>
               <CustomRecorder setChats={setChats} />
             </div>
-            <div className="pt-14 h-28">
+            <div className="pt-4">
               <AnimatePresence mode="wait">
                 <motion.div key={status} e initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                   {status === 'idle' ? (

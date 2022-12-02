@@ -82,6 +82,7 @@ else{
     //   }),
     //   'blob fron data.blob',
     // );
+    console.log(data);
     setState((prevState) => ({ ...prevState, audioDetails: data }));
 
     const soln = new FormData();
@@ -170,14 +171,15 @@ else{
             <span>{second}</span>
           </div>
 
-          <button className="flex justify-between items-center w-48 mt-8" onClick={() => recorderHandler()}>
+          <button className="flex justify-between items-center w-48 mt-4" onClick={() => recorderHandler()}>
                 <button onClick={() => handleReset()}><img src={trashImg} alt="" /></button>
                 <button onClick={(data) => handleAudioStop(data)}><img src={pauseImg} alt="" /></button>
-                <button onClick={(data) => handleAudioUpload(data)}><img src={sendImg} alt="" /></button>
+                <button onClick={state.audioDetails.url}><img src={sendImg} alt="" /></button>
           </button>
-        </div> 
-       
+        </div>
       </div>
+
+      
     </>
   );
 }
