@@ -15,7 +15,7 @@ export default function CustomRecorder({ setChats }) {
   const sendAudio = useSendAudioFile();
   const [isRecording, setRecording] = React.useState(false);
   const [isPremium, setIsPremium] = React.useState(0);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleClosePremium = () => {
     setOpen(false);
@@ -82,6 +82,7 @@ export default function CustomRecorder({ setChats }) {
     //   }),
     //   'blob fron data.blob',
     // );
+    console.log(data);
     setState((prevState) => ({ ...prevState, audioDetails: data }));
     setIsPremium(data.duration.s);
     console.log(isPremium);

@@ -9,13 +9,56 @@ import medal from '../Assets/medal-star.png';
 import ranking from '../Assets/ranking.png';
 import check from '../Assets/tick-square.png';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import usePay from '../../../hooks/auth/usePay';
+import Checkout from './checkout';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const index = (props) => {
+  const authPay = usePay();
   const matches = useMediaQuery('(max-width:694px)');
+  const [checkoutURL, setCheckoutURL] = React.useState('');
+  const [interval, setInterval] = React.useState({ plan: '', amount: '', duration: '' });
+
+  const handlePayment = () => {
+    authPay
+      .mutateAsync({
+        user: '0fa87984-fb92-4a3c-a43b-de63531686b9',
+        email: 'cutytongy@gmail.com',
+        name: 'Otong Akan',
+        amount: 1000,
+        interval: interval,
+        subscriptionId: 'PLN_2cqf3nx11trbn4b',
+      })
+      .then((res) => {
+        setCheckoutURL(res.data.authorization_url);
+      })
+      .then(() => {
+        alert(checkoutURL);
+      });
+  };
+
+  const handleCheckout = (plan) => {
+    setInterval(plan);
+  };
+
+  const handleBack = () => {
+    setInterval('');
+  };
+
+  if (interval.duration === 'monthly')
+    return (
+      <Checkout
+        duration={interval.duration}
+        open={props.open}
+        handleClosePremium={props.handleClosePremium}
+        Transition={Transition}
+        handleBack={handleBack}
+      />
+    );
+
   return (
     <Dialog
       fullScreen
@@ -81,7 +124,10 @@ const index = (props) => {
             </div>
             {matches ? (
               <div className={styles._sbmobile}>
-                <button className={styles._sbPricingBox}>
+                <button
+                  className={styles._sbPricingBox}
+                  onClick={() => handleCheckout({ plan: 'monthly', amount: '1000', duration: 'monthly' })}
+                >
                   <div className={styles._sbPricingTitles}>
                     <p>Monthly</p>
                     <h2>$10.90</h2>
@@ -94,7 +140,7 @@ const index = (props) => {
                     </ul>
                   </div>
                 </button>
-                <button className={styles._sbPricingBox}>
+                <button className={styles._sbPricingBox} onClick={() => handleCheckout('quarterly')}>
                   <div className={styles._sbPricingTitles}>
                     <p>Quarterly</p>
                     <h2>$10.90</h2>
@@ -107,7 +153,7 @@ const index = (props) => {
                     </ul>
                   </div>
                 </button>
-                <button className={styles._sbPricingBox}>
+                <button className={styles._sbPricingBox} onClick={() => handleCheckout('yearly')}>
                   <div className={styles._sbPricingTitles}>
                     <p>Yearly</p>
                     <h2>$10.90</h2>
@@ -131,7 +177,7 @@ const index = (props) => {
                       <p>
                         $10.90<span> / month</span>
                       </p>
-                      <button>Select</button>
+                      <button onClick={() => handleCheckout('monthly')}>Select</button>
                     </div>
                   </div>
                   <hr />
@@ -140,12 +186,12 @@ const index = (props) => {
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbIntervalPromo}>
                         <span>Quaterly</span>
-                        <span>Billed Annually - $35.6</span>
+                        <span>Billed Quaterly - $35.6</span>
                       </h5>
                       <p>
                         $8.90<span> / month</span>
                       </p>
-                      <button>Select</button>
+                      <button onClick={() => handleCheckout('quarterly')}>Select</button>
                     </div>
                   </div>
                   <hr />
@@ -159,7 +205,7 @@ const index = (props) => {
                       <p>
                         $5.90<span> / month</span>
                       </p>
-                      <button>Select</button>
+                      <button onClick={() => handleCheckout('yearly')}>Select</button>
                     </div>
                   </div>
                 </div>
