@@ -150,17 +150,13 @@ const About = () => {
                   </div>
                 ))}
             </div>
-            
           </div>
           <div className="flex flex-col items-center justify-center bg-primary py-6 px-8 mt-4 md:w-full">
             <p className=" text-white  text-center text-lg">Try Quick Transcribe for free</p>
             <p className=" text-white text-center font-light text-xs mt-2">
               Set up your personal account, free forever and never worry about a error in your speech again
             </p>
-            <button
-              onClick={() => navigate('/signup')}
-              className="hover:bg-gray-400 hover:text-white bg-white text-textColor text-center font-bold py-2 px-4 rounded-xl mt-3"
-            >
+            <button className=" bg-white text-textColor ease-in-out duration-[.4s] transition-colors  text-center font-bold py-2 px-4 rounded-xl mt-3">
               Get Started
             </button>
           </div>
