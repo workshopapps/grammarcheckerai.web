@@ -107,10 +107,6 @@ const About = () => {
                 languages. A brainchild of Carpenter-team-grits mission of having a population of excellent grammarians.
                 it offers the neccessary tools for fluent and effective communication
               </p>
-              <div className="flex text-center justify-center items-center lg:text-left lg:justify-start mt-3 gap-3">
-                <p className="text-lineColor  text-center lg:text-left">Learn more</p>
-                <BsArrowRight />
-              </div>
             </div>
             <div className=" mt-6   flex items-center justify-center">
               <img src={illustration3} alt="" width={400} />
@@ -148,7 +144,7 @@ const About = () => {
                   </div>
                 ))}
             </div>
-            
+
           </div>
           <div className="flex flex-col items-center justify-center bg-primary py-6 px-8 mt-4 md:w-full">
             <p className=" text-white  text-center text-lg">Try Quick Transcribe for free</p>
