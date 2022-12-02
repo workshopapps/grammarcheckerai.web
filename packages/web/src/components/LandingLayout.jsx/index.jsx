@@ -13,5 +13,5 @@ function LandingLayout() {
     </div>
   );
 }
-
+ 
 export default LandingLayout;

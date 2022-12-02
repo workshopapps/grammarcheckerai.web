@@ -2,6 +2,7 @@ import React from 'react';
 import useTheme from '../../hooks/useTheme';
 import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
 import { Values, Teams } from '../../pages/about/data/data';
+import { useNavigate } from 'react-router-dom';
 import figma from '../../assets/abt_images/figma.png';
 import tend from '../../assets/abt_images/tend.png';
 import saucelabs from '../../assets/abt_images/saucelabs.png';
@@ -16,6 +17,7 @@ import Footer from '../../modules/static/landing-page/Footer';
 
 const About = () => {
   const context = useTheme();
+  const navigate = useNavigate();
   const dark = context.theme === 'dark';
   return (
     <>
@@ -155,7 +157,10 @@ const About = () => {
             <p className=" text-white text-center font-light text-xs mt-2">
               Set up your personal account, free forever and never worry about a error in your speech again
             </p>
-            <button className=" bg-white text-textColor text-center font-bold py-2 px-4 rounded-xl mt-3">
+            <button
+              onClick={() => navigate('/signup')}
+              className="hover:bg-gray-400 hover:text-white bg-white text-textColor text-center font-bold py-2 px-4 rounded-xl mt-3"
+            >
               Get Started
             </button>
           </div>
