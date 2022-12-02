@@ -269,7 +269,6 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/converse" element={<ConversationPage />} />
       <Route path="/converse/try" element={<ConversationTryPage />} />
 
       <Route path="/history" element={<h2>History</h2>} />
@@ -277,6 +276,7 @@ function App() {
       <Route element={<LandingLayout />}>
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<LandingPage />} />
+        <Route path="/converse" element={<ConversationPage />} />
         <Route path="/faq" element={<FaqMain />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/blog" element={<Blog />} />
