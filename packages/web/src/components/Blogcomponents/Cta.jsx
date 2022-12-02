@@ -37,5 +37,21 @@ const Cta = () => {
     </section>
   );
 };
+     const context = useTheme();
+     const dark = context.theme === 'dark';
+     return(
+          <section>
+               <div className="px-4 mb-5 md:flex justify-between items-center md:max-w-3xl md:mx-auto">
+                    <img src={Ctaimg} alt="" className="mx-auto mb-3 md:mx-0 w-80"  />
+                    <div>
+                         <h1 className={`text-header ${dark ? 'text-white' : null} text-sm font-bold mb-3 text-center xl:text-sm`}>Enjoyed the read?</h1>
+
+                         <p className={` text-cards ${dark ? 'text-white' : null} font-normal text-xs mb-5 mx-auto max-w-xs xl:text-base`}>Join our monthly newsletter for helpful tips on how to learn languages fluently and AI tecnology.</p>
+
+                         <div className="w-80 mx-auto">
+                              <input type="text" className="border border-solid border-input_border bg-input p-2 w-2/3 rounded-r outline-none " placeholder="Your email" />
+                              <button className="bg-btn p-2 text-white w-1/3 rounded-r hover:bg-[#3d1762]">Subscribe</button>
+                         </div>
+                    </div>
 
 export default Cta;
