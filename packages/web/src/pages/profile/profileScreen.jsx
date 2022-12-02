@@ -16,7 +16,6 @@ export default function profileScreen() {
   const navigate = useNavigate();
   const endpoint = ENDPOINTS.API_BASE_URL;
   const url = endpoint + 'user/profile/';
-  //const id = "56341e98-b07c-4374-bfcc-ddf766a52322";
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
   const token = localStorage.getItem('grittyusertoken');
@@ -79,7 +78,6 @@ export default function profileScreen() {
     setNewUsername('');
   };
 
-  //data && console.log(JSON.parse(localStorage.getItem("userData")));
 
   const onSignOut = () => {
     localStorage.clear();
