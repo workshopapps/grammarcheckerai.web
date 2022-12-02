@@ -5,13 +5,6 @@ import Image3 from "../../assets/blogimg/image 2 (2).svg"
 import { Link } from "react-router-dom"
 import styles from './index.module.css';
 
-import React from 'react';
-import Image1 from '../../assets/blogimg/image2.svg';
-import Image2 from '../../assets/blogimg/image 2 (1).svg';
-import Image3 from '../../assets/blogimg/image 2 (2).svg';
-import Icon from '../../assets/blogimg/arrow-down-circle-fill 1.png';
-import { Link } from 'react-router-dom';
-
 const Cards = () => {
      return (
           <section>
@@ -59,23 +52,5 @@ const Cards = () => {
           </section>
      )
 }
-
-        <div className="flex justify-center items-center xl:hidden">
-          <button className="bg-btn relative text-white px-3 py-2 pl-4 flex justify-center items-center cursor-pointer ease-in-out duration-[.4s] transition-colors rounded-[12px] hover:bg-[#3d1762]">
-            See more
-            <img src={Icon} alt="" className="ml-2" />
-          </button>
-        </div>
-      </div>
-
-      <div className="xl:flex justify-center items-center xl:mx-auto hidden">
-        <button className="bg-btn relative text-white px-3 py-2 flex justify-center items-center cursor-pointer rounded-[12px] ease-in-out duration-[.4s] transition-colors hover:bg-[#3d1762]">
-          See more
-          <img src={Icon} alt="" className="ml-2" />
-        </button>
-      </div>
-    </section>
-  );
-};
 
 export default Cards;
