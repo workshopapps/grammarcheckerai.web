@@ -2,6 +2,7 @@ import React from 'react';
 import useTheme from '../../hooks/useTheme';
 import { BsArrowRight, BsThreeDots } from 'react-icons/bs';
 import { Values, Teams } from '../../pages/about/data/data';
+import { useNavigate } from 'react-router-dom';
 import figma from '../../assets/abt_images/figma.png';
 import tend from '../../assets/abt_images/tend.png';
 import saucelabs from '../../assets/abt_images/saucelabs.png';
@@ -16,6 +17,7 @@ import Footer from '../../modules/static/landing-page/Footer';
 
 const About = () => {
   const context = useTheme();
+  const navigate = useNavigate();
   const dark = context.theme === 'dark';
   return (
     <>
