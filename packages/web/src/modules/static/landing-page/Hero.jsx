@@ -30,7 +30,7 @@ const Hero = () => {
           </p>
           <Link
             to="/converse"
-            className=" text-white bg-[#5D387F] py-3 px-3 rounded-lg hover:bg-[#392150] ease-in-out duration-[.4s] transition-colors hover:text-white "
+            className=" text-white bg-[#5D387F] py-3 px-3 rounded-[12px] hover:bg-[#392150] ease-in-out duration-[.4s] transition-colors hover:text-white "
           >
             Try Gritty Grammar For Free!
           </Link>

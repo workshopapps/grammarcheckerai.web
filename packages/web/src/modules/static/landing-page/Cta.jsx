@@ -15,7 +15,7 @@ const Cta = () => {
         </p>
         <Link
           to="/signup"
-          className={`${styles._btn} bg-[#5D387F] rounded-lg text-[#E8DDF2] hover:bg-[#392150] hover:text-[#ffff] transition-colors `}
+          className={`${styles._btn} bg-[#5D387F] rounded-[12px] text-[#E8DDF2] hover:bg-[#392150] hover:text-[#ffff] transition-colors `}
           type="button"
         >
           Get Started

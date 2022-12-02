@@ -149,7 +149,7 @@
   padding: 16px 40px;
   color: #fff;
   background: #5d387f;
-  border-radius: 8px;
+  border-radius: 12px;
   text-transform: lowercase;
 }
 ._gs2logincontinue button:hover {
@@ -163,7 +163,7 @@
   padding: 16px 40px;
   color: #fff;
   background: #5d387f;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 ._gs2loginsignin a {
   font-style: normal;

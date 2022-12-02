@@ -18,7 +18,7 @@ const Utilise = () => {
       </div>
       <button
         type="button"
-        className={`${styles._btn} bg-[#E8DDF2] whitespace-nowrap rounded-lg text-[#263238] hover:bg-[#c9a3f0] hover:text-black transition-colors`}
+        className={`${styles._btn} bg-[#E8DDF2] whitespace-nowrap rounded-[12px] text-[#263238] hover:bg-[#c9a3f0] hover:text-black transition-colors`}
       >
         Download the App
       </button>
