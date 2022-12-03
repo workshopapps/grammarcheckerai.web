@@ -1,5 +1,6 @@
 const { userCollection } = require("../database/models/userSchema");
 const newsLetterSubscription = require("../database/models/newsLetterSubscriptionSchema");
+const newsLetterService = require("../services/newsletter")
 
 //query user collection
 exports.isSubscribe = async (req, res) => {
@@ -21,6 +22,7 @@ exports.isSubscribe = async (req, res) => {
       email,
       user_id: user_id || null,
     });
+    await newsLetterService.send(email)
     res.status(200).json({
       status: true,
       message: "You are now subscribed to our newsletter",
