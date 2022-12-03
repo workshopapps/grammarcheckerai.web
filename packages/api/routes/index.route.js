@@ -12,6 +12,7 @@ const reviewRating = require('../routes/reviewRatingRoute')
 const leaderBoardRouter = require("../routes/leaderboardrouter");
 const paystackRouter = require("./paystackRouter");
 const payRoute = require("../routes/payRoute")
+const newsletterSubscription = require("../routes/newsLetterSubscriptionRoute")
 
 
 routeHandler.use("/subscribe", payRoute)
@@ -28,6 +29,8 @@ routeHandler.use("/rating", reviewRating)
 
 routeHandler.use("/leaderboard", leaderBoardRouter);
 routeHandler.use("/paystack", paystackRouter);
+
+routeHandler.use("/subscribe", newsletterSubscription);
 
 
 module.exports = { routeHandler };

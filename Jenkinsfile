@@ -5,10 +5,11 @@ pipeline {
 		
 		
 
-		stage("build frontendnbackend"){
+		stage("build frontend"){
 
 			steps {
 				sh "unset NODE_ENV"
+				sh "npm cache clear -force"
 				sh "cd packages/web"
 				sh "sudo npm install -g npm@latest && sudo npm cache clear --force"
 				sh "cd packages/web && sudo npm install --force --unsafe-perm=true --allow-root && npm fund && npm run build"
@@ -20,19 +21,13 @@ pipeline {
 		stage("deploy") {
 		
 			steps {
-				sh "sudo su - enyioman && whoami"
-				sh "sudo ls /home/enyioman/"
-				sh "sudo cp -fr ${WORKSPACE}/grammarcheckerai.web/build/* /home/enyioman/frontend/build"
-				sh "sudo systemctl restart grammar.service"
-
-
-				// sh "sudo cp -fr ${WORKSPACE}/packages/api/* /home/enyioman/backend"
-				// sh "sudo cp -fr ${WORKSPACE}/packages/web/* /home/enyioman/frontend"
-				// sh "sudo chown enyioman /home/enyioman/frontend"
-				// sh "sudo chown enyioman /home/enyioman/backend"
-				// sh "sudo pm2 delete all"
-				// sh "pm2 start npm /home/enyioman/frontend -- --port 3333"
-				// sh "sudo npm install && sudo pm2 start /home/enyioman/backend/server.js -- --port 5555"
+				sh "sudo cp -fr ${WORKSPACE}/packages/api/* /home/devineer/backend"
+				sh "sudo cp -fr ${WORKSPACE}/packages/web/* /home/devineer/frontend"
+				sh "sudo chown devineer /home/devineer/frontend"
+				sh "sudo chown devineer /home/devineer/backend"
+				//sh "sudo pm2 delete all"
+				//sh "pm2 start npm /home/devineer/frontend 3333"
+				//sh "sudo npm install && sudo pm2 start /home/devineer/backend/server.js -- --port 5555"
 			}
 			
 	}

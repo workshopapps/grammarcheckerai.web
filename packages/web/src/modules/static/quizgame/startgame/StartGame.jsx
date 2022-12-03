@@ -1,10 +1,7 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
-import { useContext } from 'react';
-// import { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { QuizContext } from '../QuizContext';
-// import { io } from 'socket.io-client';
 import QuizGame from '../QuizGame';
 import Rank from '../rank/Rank';
 import styles from '../startgame/StartGame.module.scss';
@@ -15,7 +12,6 @@ const StartGame = () => {
   const [ start, setStart ] = useState(false);
   const [ rank, setRank ] = useState(false);
 
-  // console.log(socket);
   const handleStart = () => {
     socket.connect();
     socket.on('update-players', (count) => {
@@ -23,14 +19,12 @@ const StartGame = () => {
     });
     const userId = localStorage.getItem('grittyuserid');
     socket.emit('start-quiz', userId);
-    console.log(userId);
     setStart(true);
   };
 
-
   return (
     <>
-      {start ? <QuizGame players={players} setPlayers={setPlayers} /> : (
+      {start ? <QuizGame players={players} setPlayers={setPlayers} setStart={setStart} /> : (
         <section className={styles.startgame}>
           <div className={styles.startgame_card}>
             <h1>Join Quiz</h1>

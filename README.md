@@ -1,8 +1,8 @@
 # grammarcheckerai.web
 
-# Gitty Grammar
+# Speak Better
 
-This is Gritty Grammar monrepo bootstrapped lerna.
+This is Speak Better monrepo bootstrapped lerna.
 
 ## Getting Started
 

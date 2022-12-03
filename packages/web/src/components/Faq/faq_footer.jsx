@@ -15,7 +15,7 @@ function FaqFooter() {
            <div className="bg-[#2F1C40] text-[#FFFFFF]">
             <div className="lg:flex grid grid-cols-2  items-center justify-center  place-items-center lg:h-[83px] md:h-[211px] h-[300px]">
                 <div className="lg:flex lg:gap-[47px]">
-                <p className="text-[12px] lg:leading-[15px] hidden font-[Inter] lg:block mt-[14px]">@2022 Grittygrammar</p>                    
+                <p className="text-[12px] lg:leading-[15px] hidden font-[Inter] lg:block mt-[14px]">@2022 Speak Better</p>                    
                 <p className="text-[12px] cursor-pointer lg:leading-[15px] mt-[14px] font-[Inter]">Careers and Culture</p>
                 <p className="text-[12px] cursor-pointer lg:leading-[15px] mt-[14px] font-[Inter]">FAQ</p>
                 <p className="text-[12px] cursor-pointer lg:leading-[15px] mt-[14px] font-[Inter]">Newsletter</p>
@@ -31,7 +31,7 @@ function FaqFooter() {
                 </div>
             </div>
             <div className="p-5 lg:hidden">
-               <p className="text-[12px] lg:leading-[15px]  font-[Inter]  text-center justify-center grid place-items-center">@2022 Grittygrammar</p>                                  
+               <p className="text-[12px] lg:leading-[15px]  font-[Inter]  text-center justify-center grid place-items-center">@2022 Speak Better</p>                                  
             </div>
   
           </div>
