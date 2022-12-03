@@ -10,15 +10,10 @@ const Application = () => {
       <div className="px-56 py-10 space-y-20 max-[480px]:px-0 max-[480px]:space-y-6 mt-20">
         <div className="max-[480px]:px-5 ">
           <div className="flex justify-between py-4">
-            <h3 className="text-3xl font-bold text-green max-[480px]:text-xl ">Analyst Relations Manager</h3>
-            <a
-              className="border-purple-500 border rounded-md py-3 px-6 max-[480px]:hidden hover:bg-green transition-all hover:text-white"
-              href="#form"
-            >
-              Apply now
-            </a>
+            <h3 className="text-4xl font-bold max-[480px]:text-xl ">Analyst Relations Manager</h3>
+           
           </div>
-          <p className="py-6">
+          <p className=" text-sm py-6">
             We are looking for an Analyst Relations Manager to join our Communications team. The Analyst Relations
             Manager will be critical in building awareness of and sustaining Gritty Grammar’s category leadership while
             driving a high-touch program that creates leverage for our ambitious vision. Working closely with Gritty
@@ -26,8 +21,8 @@ const Application = () => {
             helping to establish and grow our category through validation from major analyst firms, including Gartner
             and Forrester, as well as boutique firms.
           </p>
-          <div className="space-y-3 py-4">
-            <h4>We’re looking for someone who</h4>
+          <div className=" text-sm space-y-3 py-4">
+            <h4 >We’re looking for someone who</h4>
             <ul className="list-disc space-y-1">
               <li>Embodies our EAGER values—is ethical, adaptable, gritty, empathetic, and remarkable.</li>
               <li>
@@ -63,13 +58,17 @@ const Application = () => {
                 stakeholders.
               </li>
               <li>
-                Can clearly and effectively articulate ideas and feedback verbally and through written communication.
+                Can clearly and effectively articulate ideas and feedback verbally and through written communication. <br></br><br></br>
               </li>
             </ul>
-            <button className="bg-purple-500 text-white border rounded-md py-3 px-6 max-[480px]:block hidden ">
-              Apply now
-            </button>
           </div>
+          <a
+              className=" bg-purple-500  text-white border-purple-500 border rounded-lg py-3 px-6 max-[480px]:hidden hover:text-white"
+              href="#form"
+            >
+             Apply now
+            </a>
+         
         </div>
         <form
           className="grid bg-gray-100 w-1/2 mx-auto py-8 space-y-5 max-[480px]:w-full max-[480px]:px-2 max-[480px]:space-y-6 "
@@ -96,7 +95,7 @@ const Application = () => {
               />
             </label>
             <label className="grid gap-y-1">
-              Email
+              abc@gmail.com
               <input
                 type="email"
                 name="email"
