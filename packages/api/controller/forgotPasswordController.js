@@ -23,7 +23,6 @@ exports.requestForgotPassword = async (req, res) => {
         })
       );
     }
-
     const token = user.generateAuthToken();
     const reset_password_url = `${BASE_URL}/reset-password?token=${token}`;
 
