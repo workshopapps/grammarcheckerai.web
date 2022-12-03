@@ -20,13 +20,13 @@ pipeline {
 		stage("deploy") {
 		
 			steps {
-				sh "sudo cp -fr ${WORKSPACE}/packages/api/* /home/devineer/backend"
-				sh "sudo cp -fr ${WORKSPACE}/packages/web/* /home/devineer/frontend"
-				sh "sudo chown devineer /home/devineer/frontend"
-				sh "sudo chown devineer /home/devineer/backend"
+				sh "sudo cp -fr ${WORKSPACE}/packages/api/* /home/enyioman/backend"
+				sh "sudo cp -fr ${WORKSPACE}/packages/web/* /home/enyioman/frontend"
+				sh "sudo chown enyioman /home/enyioman/frontend"
+				sh "sudo chown enyioman /home/enyioman/backend"
 				sh "sudo pm2 delete all"
-				sh "pm2 start npm /home/devineer/frontend 3333"
-				sh "sudo npm install && sudo pm2 start /home/devineer/backend/server.js -- --port 5555"
+				sh "pm2 start npm /home/enyioman/frontend --port 3333"
+				sh "sudo npm install && sudo pm2 start /home/enyioman/backend/server.js -- --port 5555"
 			}
 			
 	}
