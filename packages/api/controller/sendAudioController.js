@@ -8,10 +8,27 @@ const {
   uploadFileUrlToInitiateTranscription,
   getTranscriptionFromAssembly,
 } = require("../scripts/assemblyAI.js");
+const { translateFromEnglish } = require("../scripts/translate");
+
+const languageMap = {
+  "English": "en",
+  "English (AU)": "en_au",
+  "English (UK)": "en_uk",
+  "English (US)": "en_us",
+  "Spanish": "es",
+  "French": "fr",
+  "German": "de",
+  "Italian": "it",
+  "Portuguese": "pt",
+  "Dutch": "nl",
+  "Hindi": "hi",
+  "Japanese": "ja"
+}
 
 async function getBotResponse(req, res) {
   try {
     const conversationId = req.body.conversationId;
+    const language = req.body.language || "English";
     const audioFile = req.file; // retrieves file buffer and metadata set by multer
     const dummyAudioUrl = req.file?.originalname; // TODO: use aws s3 bucket file upload url
 
@@ -23,11 +40,17 @@ async function getBotResponse(req, res) {
       });
     }
 
+    // checks if specified language is not available
+    if (!languageMap[language]) {
+      return res.status(400).send({
+        success: false,
+        message: "Specified language is not supported",
+      });
+    }
+
     // Send audio to Assembly AI to get audio transcription
     const assemblyAIAudioUrl = await uploadFileForURL(audioFile.buffer); // upload file and get url
-    const preTranscriptId = await uploadFileUrlToInitiateTranscription(
-      assemblyAIAudioUrl
-    ); // upload url and initiate transcription
+    const preTranscriptId = await uploadFileUrlToInitiateTranscription(assemblyAIAudioUrl, languageMap[language]); // upload url and initiate transcription
     const transcribedAudioText = await getTranscriptionFromAssembly(
       preTranscriptId
     ); // process and download transcript
@@ -35,14 +58,14 @@ async function getBotResponse(req, res) {
     if (!transcribedAudioText) {
       return res.status(400).send({
         success: false,
-        message: "Assembly AI: Unknown error",
+        message: "Assembly AI: Unknown error or confirm selected language is the same as in audio",
       });
     }
 
     // Send transcript to OPenAI Grammar Correction to get corrected text
     let grammarCheckResponse = await grammarCheckHandler(
       transcribedAudioText,
-      "English"
+      language
     );
 
     // Handling OpenAI Grammar Correction Error
@@ -59,6 +82,12 @@ async function getBotResponse(req, res) {
     chatLog = req.session.chatLog; // get chat log from session
     const botRes = await chatHandler(correctUserResponseInTxt, chatLog);
     botReply = botRes.replace("AI:", "").trim();
+
+    // translate bot reply if specified language is not English
+    if (!["English", "English (AU)", "English (UK)", "English (US)"].includes(language)) {
+      botReply = await translateFromEnglish(botReply, language);
+    }
+
     chatLog = appendConversationToChatLog(
       correctUserResponseInTxt,
       botRes,
@@ -81,7 +110,7 @@ async function getBotResponse(req, res) {
         transcribedAudioText,
         correctedText: correctUserResponseInTxt.trim(),
         botReply,
-        language: "English",
+        language: language,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
@@ -95,6 +124,7 @@ async function getBotResponse(req, res) {
         transcribedAudioText,
         correctedText: correctUserResponseInTxt.trim(),
         botReply,
+        language
       });
 
       await Message.create({
