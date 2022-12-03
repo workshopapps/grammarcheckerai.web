@@ -16,8 +16,7 @@ const index = () => {
   const params = new URLSearchParams(url?.search);
   const token = params.get('token');
 
-  console.log(typeof token);
-  const authResetPassword = useResetPassword();
+  const authResetPassword = useResetPassword(token);
 
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
@@ -45,9 +44,10 @@ const index = () => {
         success(res.data.message ?? 'Success');
       })
       .catch((err) => {
-        error(err.response.message);
+        error(err?.response?.data?.data?.new_password ?? err?.response?.data?.data?.confirm_password);
       });
   };
+
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div className={styles._gs2mainlogin}>
