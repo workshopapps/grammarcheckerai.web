@@ -13,7 +13,7 @@ import {
   ChineseFlagIcon,
   GermanyFlagIcon,
   ItalianFlagIcon,
-} from '../../../assets';
+} from '../../assets';
 import FontAdjustment from './font-adjustment/font-adjustment';
 import HelpSupport from './help-support/help-support';
 import Languages from './language/languages';
@@ -31,6 +31,8 @@ function Settings() {
     { name: 'Italian', flag: ItalianFlagIcon },
     { name: 'Chinese', flag: ChineseFlagIcon },
   ]);
+
+  const [searchTerm, setsearchTerm] = useState('');
 
   const userId = localStorage.getItem('grittyuserid'); // Get user ID
   const userToken = localStorage.getItem('grittyusertoken'); // Get bearer token
@@ -97,17 +99,20 @@ function Settings() {
       route: 'language',
       name: 'Language',
       icon: languageIcon,
+      query: 'language, english, french, spanish, german, russian, italian, chinese',
       child: <Languages openBar={subPage} universalLanguage={languageList} />,
     },
     {
       name: 'Font Size Adjustment',
       icon: maximizeIcon,
+      query: 'font size adjustment',
       child: <FontAdjustment />,
     },
     {
       route: 'help',
       name: 'Help & Support',
       icon: infinityIcon,
+      query: 'With exceptional customer service, try Gritty Grammer, the best Grammer software out there',
       child: <HelpSupport />,
     },
   ];
@@ -141,18 +146,30 @@ function Settings() {
               id="search"
               placeholder="Search for a setting"
               className="w-full outline-0 border-0 px-3 py-2 font-normal"
+              onChange={(event) => {
+                setsearchTerm(event.target.value);
+              }}
             />
             <img className="" src={searchIcon} alt="search for a setting" />
           </label>
         </div>
         <div className="flex flex-col gap-6">
-          {settingList.map((option, index) => {
-            return (
-              <SettingOption key={index} option={option} arrowRight={arrowRightIcon} openBar={subPage}>
-                {option.child}
-              </SettingOption>
-            );
-          })}
+          {settingList
+            .filter((obj) => {
+              if (searchTerm === '' || obj.query.toLowerCase().includes(searchTerm.toLowerCase())) {
+                return obj;
+              } else if (settingList.every((val) => !val.query.toLowerCase().includes(searchTerm.toLowerCase()))) {
+                // If There is no result then show all list
+                return obj;
+              }
+            })
+            .map((option, index) => {
+              return (
+                <SettingOption key={index} option={option} arrowRight={arrowRightIcon} openBar={subPage}>
+                  {option.child}
+                </SettingOption>
+              );
+            })}
         </div>
       </div>
       {languageBar && <LanguageOption openBar={subPage} languageList={languageList} changeLanguage={changeLanguage} />}
