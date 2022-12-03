@@ -16,7 +16,7 @@ const quickTranscribe = async (req, res) => {
     if (!audioFile) {
       return res.status(400).send({
         success: false,
-        message: "Attach an audio file",
+        message: "Please attach an audio file",
       });
     }
 
