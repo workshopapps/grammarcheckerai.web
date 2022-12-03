@@ -47,7 +47,7 @@ function Settings() {
 
   const getLanguage = async () => {
     await axios
-      .get(`http://grittygrammar.hng.tech/api/v1/user/profile/${userId}`, config) // Used my login details ID here as well
+      .get(`https://api.speakbetter.hng.tech/v1/user/profile/${userId}`, config) // Used my login details ID here as well
       .then((response) => {
         userDetails = response.data.Detail;
         const userLanguage = response.data.Detail.language;
@@ -82,7 +82,7 @@ function Settings() {
 
     axios
       .post(
-        'http://grittygrammar.hng.tech/api/v1/user/profile/update',
+        'https://api.speakbetter.hng.tech/v1/user/profile/update',
         { ...userDetails, language: selected.name },
         config,
       )
