@@ -18,6 +18,9 @@
 ._btnContainer {
   @apply w-full flex flex-col md:flex-row lg:flex-row justify-end gap-5 mt-16;
 }
+._legalcard {
+  @apply bg-[#e8ddf2] py-8 px-4 flex gap-3 md:gap-0 md:flex-col md:text-center justify-center md:justify-start items-center rounded-xl
+}
 .no-space_ {
   margin: 0 !important;
 }

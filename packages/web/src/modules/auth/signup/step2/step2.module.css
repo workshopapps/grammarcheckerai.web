@@ -119,6 +119,7 @@
   border-radius: 8px;
   font-style: normal;
   font-weight: 400;
+  color:#000;
   font-size: 14px;
   line-height: 17px;
   width: 90%;
@@ -152,6 +153,7 @@
   background: #5d387f;
   border-radius: 12px;
   text-transform: lowercase;
+  transition: all 0.4s ease-in-out;
 }
 ._gs2signupcontinue button:hover {
   font-style: normal;
@@ -163,7 +165,7 @@
   text-align: center;
   padding: 16px 40px;
   color: #fff;
-  background: #5d387f;
+  background: #392150;
   border-radius: 12px;
 }
 ._gs2signupsignin p {
