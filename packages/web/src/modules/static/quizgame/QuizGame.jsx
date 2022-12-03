@@ -2,27 +2,44 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useRef, useEffect, useState, useContext } from 'react';
-import logo from '../../../assets/newsletterImages/logo.png';
 import { QuizContext } from './QuizContext';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import styles from '../quizgame/QuizGame.module.scss';
-import TotalScores from '../quizgame/totalscores/TotalScore';
+import TotalScores from './totalscores/TotalScore';
 
-const QuizGame = ({ players, setPlayers }) => {
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
+
+const QuizGame = ({ players, setPlayers, setStart }) => {
   const { socket } = useContext(QuizContext);
-
   const timeRef = useRef(null);
-  const optionRef = useRef(null);
 
+  const [winnerMsg, setWinnerMsg] = useState('');
+  const [answerList, setAnswerList] = useState([]);
   const [seconds, setSeconds] = useState(30);
   const [triviaQuestion, setTriviaQuestion] = useState([]);
-  const [answer, setAnswer] = useState(false);
-  const [className, setClassName] = useState('answer');
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [questionAnswer, setQuestionAnswer] = useState(0);
+  const [questionNumber, setQuestionNumber] = useState(0);
+  const [winner, setWinner] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState('');
   const [score, setScore] = useState(0);
   const [errorMsg, setErrorMsg] = useState(false);
-  // const [timeOut, setTimeOut] = useState(false);
+  const [timeOut, setTimeOut] = useState(false);
   const [changeColor, setChangeColor] = useState('#e8ddf2');
 
   const handleExit = () => {
@@ -30,32 +47,44 @@ const QuizGame = ({ players, setPlayers }) => {
     socket.on('update-players', (count) => {
       setPlayers(count);
     });
+    setStart(false);
+  };
+
+  let tick = triviaQuestion.answer;
+  console.log(tick);
+
+  const handleSubmit = () => {
+    const isCorrect = selectedAnswer === tick;
+    const userId = localStorage.getItem('grittyuserid');
+    socket.emit("update-quizProfile", userId, isCorrect);
+    if(isCorrect){
+      socket.emit('get-roundWinner', userId);
+      setTimeOut(false);
+      setWinner(true);
+      setScore(score + 1);
+    };
+    socket.on('receive-roundWinner', (roundWinnerMessage) => {
+      setWinnerMsg(roundWinnerMessage);
+      
+    });
+    setTimeout(() => {
+      if (isCorrect) {
+        console.log('correct');
+        setChangeColor('green');
+        setQuestionAnswer(questionAnswer + 1);
+      } else {
+        // setChangeColor(element !== tick ? 'red' : 'yellow');
+        setChangeColor('red');
+        console.log('incorrect');
+      }
+    }, 1000);
+
   };
 
   const handleAnswer = (element) => {
-    // let option = e.target.innerText;
     let tick = triviaQuestion.answer;
-    if (tick === element) {
-      optionRef.current.style.backgroundColor = 'red';
-      setScore(score + 5);
-    } else {
-      setScore(score - 1);
-    }
     setSelectedAnswer(element);
-    console.log(element);
-    console.log(tick);
-    setClassName('answer active');
-    setTimeout(() => {
-      if(element === tick){
-        setClassName(element===tick ? 'answer1' : 'mainOptions');
-        console.log('correct');
-        // setChangeColor(element === tick ? 'green' : 'red')
-        // setChangeColor('green');
-      } 
-      else {
-        console.log('incorrect');
-      }
-    }, 1000)
+    setChangeColor('yellow');
   };
 
   const countPlayers = () => {
@@ -67,31 +96,31 @@ const QuizGame = ({ players, setPlayers }) => {
   };
 
   const getQuestion = async () => {
-    const quiz = await axios.get('https://the-trivia-api.com/api/questions?limit=1');
-    const data = quiz.data[0];
-    const question = {
-      id: data.id,
-      answer: data.correctAnswer,
-      incorrectAnswers: data.incorrectAnswers,
-      question: data.question,
-    };
-    return question;
-  };
-
-  useEffect(() => {
-    const api = async () => {
-      const question = await getQuestion();
-      console.log(question);
+    socket.emit('get-question');
+    socket.on('receive-question', (question) => {
       setTriviaQuestion(question);
       let correctAnswer = question.answer;
       let incorrectAnswers = question.incorrectAnswers;
-      incorrectAnswers.splice(Math.floor(Math.random() * (incorrectAnswers.length + 1)), 0, correctAnswer);
-    };
-    api();
-  }, []);
+      console.log(incorrectAnswers);
+      // const options = incorrectAnswers.splice(Math.floor(Math.random() * (incorrectAnswers.length + 1)), 0, correctAnswer);
+      const options = shuffle([...incorrectAnswers, correctAnswer]);
+      
+      setAnswerList(options);
+    })
+  };
+
+  useEffect(() => {
+    setSeconds(30);
+    setQuestionNumber(questionNumber + 1);
+    getQuestion();
+  }, [score]);
 
   let countdown;
   useEffect(() => {
+    if (seconds === 0) {
+      console.log('end');
+      return setTimeOut(true);
+    }
     countdown = setInterval(() => {
       setSeconds(seconds - 1);
       if (seconds === 0) {
@@ -105,19 +134,22 @@ const QuizGame = ({ players, setPlayers }) => {
     }, 3000);
 
     return () => clearInterval(countdown);
-  }, []);
+  }, [seconds, setTimeOut]);
 
   return (
     <>
       <section id="game" className={styles.quizgame}>
         <div className={styles.quizgame__img}>
-          {/* <Link to="/">
-            <img src={logo} alt="" />
-          </Link> */}
-          <div ref={timeRef} className={styles.quizgame__img__timer}>
-            <h2>{seconds}</h2>
-          </div>
-          <p>{countPlayers()}</p>
+          {timeOut ? (
+            ''
+          ) : (
+            <>
+              <div ref={timeRef} className={styles.quizgame__img__timer}>
+                <h2>{seconds}</h2>
+              </div>
+              <p>{countPlayers()}</p>
+            </>
+          )}
         </div>
         {errorMsg ? (
           <div className={styles.quizgame__err}>
@@ -127,41 +159,44 @@ const QuizGame = ({ players, setPlayers }) => {
           </div>
         ) : (
           <>
-            <div className={styles.quizgame_card}>
-              <div className={styles.quizgame_card__content}>
-                <h1 className={styles.quizgame_card__content__heading}>Test your skills with this Trivia</h1>
-                <>
-                  <h3 className={styles.quizgame_card__content__question}>{triviaQuestion.question}</h3>
-                  <ul id="mainList" className={styles.quizgame_card__content__answers}>
-                    {triviaQuestion.incorrectAnswers &&
-                      triviaQuestion.incorrectAnswers.map(function (element, index) {
-                        return (
-                          <li
-                            style={{backgroundColor:changeColor}}
-                            className={selectedAnswer === element ? className : 'mainOptions'}
-                            id='mainOptions'
-                            ref={optionRef}
-                            onClick={() => handleAnswer(element)}
-                            key={index}
-                          >
-                            {element} 
-                          </li>
-                        );
-                      })}
-                  </ul>
-                </>
-              </div>
-            </div>
-            {answer ? (
-              <TotalScores />
+            {timeOut ? (
+              <div className={styles.quizgame__end}><h1>You Lost </h1></div>
             ) : (
-              <div className={styles.quizgame__btn}>
-                <button onClick={handleExit}>End Quiz</button>
-                <button onClick={() => setAnswer(true)}>Submit</button>
-              </div>
+              <>
+                <div className={styles.quizgame_card}>
+                  <div className={styles.quizgame_card__content}>
+                    <h1 className={styles.quizgame_card__content__heading}>Test your skills with this Trivia</h1>
+                    <>
+                      <h3 className={styles.quizgame_card__content__question}>{triviaQuestion.question}</h3>
+                      <ul id="mainList" className={styles.quizgame_card__content__answers}>
+                        {answerList &&
+                          answerList.map(function (element, index) {
+                            return (
+                              <li
+                                style={{ backgroundColor: selectedAnswer === element ? changeColor : '#e8ddf2' }}
+                                id="mainOptions"
+                                onClick={() => handleAnswer(element)}
+                                key={index}
+                              >
+                                {element}
+                              </li>
+                            );
+                          })}
+                      </ul>
+                    </>
+                  </div>
+                </div>
+              </>
             )}
+
+            <div className={styles.quizgame__btn}>
+              <button onClick={handleExit}>End Quiz</button>
+              {timeOut ? '' : <button onClick={handleSubmit}>Submit</button>}
+            </div>
           </>
         )}
+
+        {winner ? <TotalScores winnerMsg={winnerMsg} setStart={setStart} setWinner={setWinner} /> : ''}
       </section>
     </>
   );
@@ -170,11 +205,10 @@ const QuizGame = ({ players, setPlayers }) => {
 export default QuizGame;
 
 // Set up a submit handler
-// Compare answers
 // socket.emit("update-quizProfile", userId, isCorrect)
 // if(isCorrect){
 //  socket.emit("get-roundWinner", userId)
 // }
 // socket.on("receive-roundWinner", (fn) => {
 //  fn(userId);
-//})
+// })
