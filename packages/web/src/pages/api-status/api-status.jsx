@@ -14,7 +14,7 @@ const ApiStatus = () => {
         <main className={style.mainContainer}>
           <div className={style.mainHeader}>
             <h1 className={style.title}>Speak better is Running </h1>
-            <p className={style.text}>API Status for gritty grammar is updating in realtime.</p>
+            <p className={style.text}>API Status for speak better is updating in realtime.</p>
           </div>
 
           <Detail />
