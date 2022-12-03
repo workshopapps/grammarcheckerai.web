@@ -86,6 +86,7 @@ export default function CustomRecorder({ setChats }) {
     setState((prevState) => ({ ...prevState, audioDetails: data }));
     setIsPremium(data.duration.s);
     console.log(isPremium);
+    console.log(data, 'data');
     const soln = new FormData();
     soln.append('file', data.blob);
     if (data.duration.s && data.duration.s <= 10) {
@@ -116,7 +117,7 @@ export default function CustomRecorder({ setChats }) {
   };
 
   const handleAudioUpload = () => {
-    // console.log(file, 'file');
+    console.log('file', 'file');
   };
 
   const handleReset = () => {

@@ -11,8 +11,10 @@ const newsletter = require("../routes/newsLetterRoute");
 const reviewRating = require('../routes/reviewRatingRoute')
 const leaderBoardRouter = require("../routes/leaderboardrouter");
 const paystackRouter = require("./paystackRouter");
+const payRoute = require("../routes/payRoute")
 
 
+routeHandler.use("/subscribe", payRoute)
 routeHandler.use("/auth", auth);
 routeHandler.use("/user", verify, userHandler);
 routeHandler.use("/conversation", conversationRouter);
