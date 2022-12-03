@@ -10,6 +10,7 @@ const quickTranscribe = require("./quickTranscribeRouter");
 const newsletter = require("../routes/newsLetterRoute");
 const leaderBoardRouter = require("../routes/leaderboardrouter");
 const paystackRouter = require("./paystackRouter");
+const chatHistoryRouter = require("./chatHistory");
 
 routeHandler.use("/auth", auth);
 routeHandler.use("/user", verify, userHandler);
@@ -21,5 +22,6 @@ routeHandler.use("/contact", contactRoute);
 routeHandler.use("/newsletter", newsletter);
 routeHandler.use("/leaderboard", leaderBoardRouter);
 routeHandler.use("/paystack", paystackRouter);
+routeHandler.use("/chathistory", chatHistoryRouter);
 
 module.exports = { routeHandler };
