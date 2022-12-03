@@ -1,5 +1,5 @@
 const { response } = require("../utilities/response");
-const { userCollection } = require("../database/models/userSchema");
+const { userCollection, generateHash } = require("../database/models/userSchema");
 const { environment } = require("../config/environment.js");
 const { verifyJWTToken } = require("../utilities/generateToken");
 const emailService = require("../services/email.service");
@@ -82,7 +82,7 @@ exports.resetPassword = async (req, res) => {
         .json(response({ message: "User does not exist", success: false }));
     }
 
-    const password = await user.generateHash(new_password);
+    const password = await generateHash(new_password);
 
     await user.updateOne({
       password,
