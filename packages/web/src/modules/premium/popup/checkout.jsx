@@ -30,6 +30,7 @@ const Checkout = (props) => {
   const [isSamePassword, setIsSamePassword] = useState(true);
   const [newUserEmail, setNewUserEmail] = useState('');
   const [isPaymentPage, setIsPaymentPage] = useState(false);
+  const [isAlreadyLoggedIn, setIsAlreadyLoggedIn] = useState(false);
 
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
@@ -48,6 +49,10 @@ const Checkout = (props) => {
     setIsCreateAccount(true);
   };
 
+  const handlePrev = () => {
+    setIsPaymentPage(false);
+  };
+
   useEffect(() => {
     if (localStorage.getItem('grittyuserid') === null || localStorage.getItem('grittyuserid') === '') {
       localStorage.setItem('grittyuserid', userId);
@@ -55,6 +60,7 @@ const Checkout = (props) => {
     } else {
       localStorage.setItem('grittyuserid', localStorage.getItem('grittyuserid'));
       localStorage.setItem('grittyusertoken', localStorage.getItem('grittyusertoken'));
+      setIsAlreadyLoggedIn(true);
     }
   }, [userId, userToken]);
 
@@ -77,16 +83,11 @@ const Checkout = (props) => {
             success('Login Successful!');
             setTimeout(() => {
               setIsPaymentPage(true);
-            }, 2000);
+            }, 3000);
           } else {
             error('Already Logged in, proceeding...');
             setIsPaymentPage(true);
           }
-          // localStorage.setItem('isdashboard', true);
-          // setTimeout(() => {
-          //   window.location.replace('/me/home');
-          //   navigate('/me/home', { replace: true });
-          // }, 5000);
         })
         .catch((err) => {
           error(err.message);
@@ -132,24 +133,6 @@ const Checkout = (props) => {
     }
   };
 
-  // const useFetch = (url) => {
-  //   var requestOptions = {
-  //     method: 'GET',
-  //     redirect: 'follow',
-  //   };
-  //   fetch(url, requestOptions)
-  //     .then((response) => response.text())
-  //     .then((result) => {
-  //       const oBJ = JSON.parse(result);
-  //       window.location.href = oBJ.message;
-  //     })
-  //     .catch((err) => error(err.message));
-  // };
-
-  // const handleGoogleAuth = () => {
-  //   useFetch('https://speakbetter.hng.tech/api/v1/auth/google');
-  // };
-
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   const matches = useMediaQuery('(max-width:694px)');
   const isMobile = useMediaQuery('(max-width:389px)');
@@ -183,76 +166,87 @@ const Checkout = (props) => {
                 <p signup-theme={context.theme} className={styles._subtitle}>
                   Complete the process with just few steps. You’re almost all set.
                 </p>
-                {}
-                <form onSubmit={(e) => handlelogin(e)} className={styles._gs2loginform}>
-                  <div className={styles._gs2logininput}>
-                    <span>Email</span>
-                    <input
-                      type="email"
-                      placeholder="shalomtaiwo@example.com"
-                      defaultValue=""
-                      id="userName"
-                      required
-                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                      onChange={(e) => setUserEmail(e.target.value)}
-                    />
-                  </div>
-                  <div className={styles._gs2logininput}>
-                    <span>Password</span>
-                    <PasswordMask
-                      type="password"
-                      value={userPassword}
-                      id="userPassword"
-                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                      title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
-                      required
-                      onChange={(e) => setUserPassword(e.target.value)}
-                    />
-                  </div>
-                  {!isMobile && (
-                    <div className={styles._gs2logincheck}>
-                      <div className={styles._gs2loginsignin} signup-theme={context.theme}>
-                        <a href="#/" className={styles._gsloginforgot} onClick={handleCreateAccount}>
-                          Create an account?
-                        </a>
-                      </div>
-                      <div>
-                        <button
-                          signup-theme={context.theme}
-                          type="button"
-                          className={styles._gsloginforgot}
-                          onClick={handleForgotPassword}
-                        >
-                          Forgot Password?
-                        </button>
-                      </div>
+                {isPaymentPage === true ? (
+                  <div>
+                    <div className={styles._sbprev}>
+                      <button onClick={handlePrev}>Prev</button>
                     </div>
-                  )}
-                  <div className={styles._gs2logincontinue}>
-                    <LoadingButton size="small" type="submit" loading={authLogin.isLoading} variant="contained">
-                      Login
-                    </LoadingButton>
                   </div>
-                  {isMobile && (
-                    <div className={styles._gs2logincheck}>
-                      <div className={styles._gs2loginsignin} signup-theme={context.theme}>
-                        <a href="#/" className={styles._gsloginforgot} onClick={handleCreateAccount}>
-                          Create an account?
-                        </a>
-                      </div>
-                      <div>
-                        <button
-                          signup-theme={context.theme}
-                          type="button"
-                          className={styles._gsloginforgot}
-                          onClick={handleForgotPassword}
-                        >
-                          Forgot Password?
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                  {/* <div className={styles._gs2sociallogincol}>
+                ) : (
+                  <div>
+                    {isAlreadyLoggedIn ? (
+                      <div></div>
+                    ) : (
+                      <form onSubmit={(e) => handlelogin(e)} className={styles._gs2loginform}>
+                        <div>
+                          <div className={styles._gs2logininput}>
+                            <span>Email</span>
+                            <input
+                              type="email"
+                              placeholder="shalomtaiwo@example.com"
+                              defaultValue=""
+                              id="userName"
+                              required
+                              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                              onChange={(e) => setUserEmail(e.target.value)}
+                            />
+                          </div>
+                          <div className={styles._gs2logininput}>
+                            <span>Password</span>
+                            <PasswordMask
+                              type="password"
+                              value={userPassword}
+                              id="userPassword"
+                              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                              title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
+                              required
+                              onChange={(e) => setUserPassword(e.target.value)}
+                            />
+                          </div>
+                          {!isMobile && (
+                            <div className={styles._gs2logincheck}>
+                              <div className={styles._gs2loginsignin} signup-theme={context.theme}>
+                                <a href="#/" className={styles._gsloginforgot} onClick={handleCreateAccount}>
+                                  Create an account?
+                                </a>
+                              </div>
+                              <div>
+                                <button
+                                  signup-theme={context.theme}
+                                  type="button"
+                                  className={styles._gsloginforgot}
+                                  onClick={handleForgotPassword}
+                                >
+                                  Forgot Password?
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                          <div className={styles._gs2logincontinue}>
+                            <LoadingButton size="small" type="submit" loading={authLogin.isLoading} variant="contained">
+                              Login
+                            </LoadingButton>
+                          </div>
+                          {isMobile && (
+                            <div className={styles._gs2logincheck}>
+                              <div className={styles._gs2loginsignin} signup-theme={context.theme}>
+                                <a href="#/" className={styles._gsloginforgot} onClick={handleCreateAccount}>
+                                  Create an account?
+                                </a>
+                              </div>
+                              <div>
+                                <button
+                                  signup-theme={context.theme}
+                                  type="button"
+                                  className={styles._gsloginforgot}
+                                  onClick={handleForgotPassword}
+                                >
+                                  Forgot Password?
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                          {/* <div className={styles._gs2sociallogincol}>
                   <p>Alternatively, you can sign up with:</p>
                   <div className={styles._gs2sociallogins}>
                   <button type="button" className={styles._google} onClick={handleGoogleAuth}>
@@ -266,7 +260,11 @@ const Checkout = (props) => {
                   </button>
                 </div>
                 </div> */}
-                </form>
+                        </div>
+                      </form>
+                    )}
+                  </div>
+                )}
               </div>
               {!isTabletorMobile && (
                 <div className={styles._gs2logincol2}>
