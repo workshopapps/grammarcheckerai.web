@@ -46,7 +46,7 @@ const index = () => {
                 STEP <span>1</span> OUT OF <span>2</span>
               </p>
             )}
-            <h2 step-theme={context.theme}>Get Started with Gritty Grammar today!</h2>
+            <h2 step-theme={context.theme}>Get Started with Speak Better today!</h2>
             <p
               step-theme={context.theme}
               className={styles._subtitle}>Start your learning journey today, you can skip this process for later.</p>
