@@ -19,14 +19,12 @@ const StartGame = () => {
     });
     const userId = localStorage.getItem('grittyuserid');
     socket.emit('start-quiz', userId);
-    // console.log(userId);
     setStart(true);
   };
 
-
   return (
     <>
-      {start ? <QuizGame players={players} setPlayers={setPlayers} /> : (
+      {start ? <QuizGame players={players} setPlayers={setPlayers} setStart={setStart} /> : (
         <section className={styles.startgame}>
           <div className={styles.startgame_card}>
             <h1>Join Quiz</h1>
