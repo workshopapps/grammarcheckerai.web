@@ -47,7 +47,9 @@ const Ai = lazy(() => import('./pages/Blog/Ai'));
 const Grammar = lazy(() => import('./pages/Blog/Grammar'));
 const Tips = lazy(() => import('./pages/Blog/Tips'));
 const Contact = lazy(() => import('./pages/contact/index'));
-const PremiumSubs = lazy(() => import('./modules/premium/index'));
+const PremiumSubs = lazy(() => import('./modules/premium/popup/premium'));
+const SubscriptionHistory = lazy(() => import('./modules/premium/index'));
+
 // All routes/pages must be import from ./pages folder
 
 const DashboardLayout = () => (
@@ -64,6 +66,11 @@ const Signuptwo = () => (
 const Premium = () => (
   <Suspense fallback={<Fallback />}>
     <PremiumSubs />
+  </Suspense>
+);
+const Subscription = () => (
+  <Suspense fallback={<Fallback />}>
+    <SubscriptionHistory />
   </Suspense>
 );
 
@@ -352,6 +359,7 @@ function App() {
         <Route path="profile/deleteaccount-step2" element={<ConfirmDeleteAccount />} />
         <Route path="import" element={<TranscribePage />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="subscription" element={<Subscription />} />
       </Route>
     </Routes>
   );
