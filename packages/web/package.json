@@ -46,6 +46,7 @@
     "rive-react": "^3.0.33",
     "sass": "^1.56.1",
     "socket.io-client": "^4.5.4"
+  
   },
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
