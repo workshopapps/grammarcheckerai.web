@@ -10,8 +10,9 @@ import useLogin from '../../../hooks/auth/useLogin';
 import useSignup from '../../../hooks/auth/useSignup';
 import toast, { Toaster } from 'react-hot-toast';
 import PasswordMask from 'react-password-mask';
+import { usePaystackPayment } from 'react-paystack';
 import useTheme from '../../../hooks/useTheme';
-import { AiOutlineClose } from 'react-icons/ai';
+import usePay from '../../../hooks/auth/usePay';
 import check from '../Assets/tick-square.png';
 import medal from '../Assets/medal-star-white.png';
 
@@ -31,12 +32,15 @@ const Checkout = (props) => {
   const [newUserEmail, setNewUserEmail] = useState('');
   const [isPaymentPage, setIsPaymentPage] = useState(false);
   const [isAlreadyLoggedIn, setIsAlreadyLoggedIn] = useState(false);
+  const [userLSEmail, setUserLSEmail] = useState('');
 
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
 
   const authLogin = useLogin();
   const authSignup = useSignup();
+  const authPay = usePay();
+
   let navigate = useNavigate();
 
   const handleLoginAccount = () => {
@@ -49,10 +53,6 @@ const Checkout = (props) => {
     setIsCreateAccount(true);
   };
 
-  const handlePrev = () => {
-    setIsPaymentPage(false);
-  };
-
   useEffect(() => {
     if (localStorage.getItem('grittyuserid') === null || localStorage.getItem('grittyuserid') === '') {
       localStorage.setItem('grittyuserid', userId);
@@ -63,6 +63,28 @@ const Checkout = (props) => {
       setIsAlreadyLoggedIn(true);
     }
   }, [userId, userToken]);
+
+  const useFetch = (url) => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('grittyusertoken')}`,
+      },
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        console.log(oBJ.data);
+        localStorage.setItem('isFirstName', oBJ.data.firstName);
+        localStorage.setItem('isLastName', oBJ.data.lastName);
+        localStorage.setItem('isEmail', oBJ.data.email);
+        localStorage.setItem('isUsername', oBJ.data.username);
+      })
+      .catch((error) => error('error', error));
+  };
 
   const handlelogin = (e) => {
     e.preventDefault();
@@ -82,15 +104,17 @@ const Checkout = (props) => {
             localStorage.setItem('grittyusertoken', userToken);
             success('Login Successful!');
             setTimeout(() => {
+              useFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
               setIsPaymentPage(true);
             }, 3000);
           } else {
             error('Already Logged in, proceeding...');
+            useFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
             setIsPaymentPage(true);
           }
         })
         .catch((err) => {
-          error(err.message);
+          error(err.response.data.message);
         });
     }
   };
@@ -115,15 +139,17 @@ const Checkout = (props) => {
           confirm_password: newUserConfirmPassword,
         })
         .then((res) => {
-          success("Account Created Succesfully!\nYou'll be redirected to the Dashboard in 5 seconds...");
           const resId = res.data.data._id;
           const resToken = res.data.data.token;
-          // setUserId(resId);
-          // setUserToken(resToken);
-          // localStorage.setItem('grittyuserid', userId);
-          // localStorage.setItem('grittyusertoken', userToken);
-          // localStorage.setItem('isdashboard', true);
-          // setTimeout(() => navigate('/me/home', { replace: true }), 5000);
+          setUserId(resId);
+          setUserToken(resToken);
+          localStorage.setItem('grittyuserid', userId);
+          localStorage.setItem('grittyusertoken', userToken);
+          success('Account Created Succesfully!');
+          setTimeout(() => {
+            useFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+            setIsPaymentPage(true);
+          }, 3000);
         })
         .catch((err) => {
           error(err.response.data.message);
@@ -133,8 +159,49 @@ const Checkout = (props) => {
     }
   };
 
+  // you can call this function anything
+  const onSuccess = (reference) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    console.log(reference);
+    authPay
+      .mutateAsync({
+        user: localStorage.getItem('grittyuserid'),
+        email: localStorage.getItem('isEmail'),
+        name: localStorage.getItem('isFirstName') + ' ' + localStorage.getItem('isLastName'),
+        amount: props.amount,
+        interval: props.duration,
+        subscriptionId: props.plan,
+      })
+      .then((res) => {
+        console.log(res);
+        window.location.replace(reference.redirecturl);
+      })
+      .catch((err) => {
+        error(err.message);
+      });
+  };
+
+  // you can call this function anything
+  const onClose = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    console.log('closed');
+  };
+  const config = {
+    reference: new Date().getTime().toString(),
+    email: 'userEmail@gmail.com',
+    amount: props.amount,
+    publicKey: 'pk_test_79b1560168d893e4e503c39acdc3b49f02db69c3',
+  };
+
+  const initializePayment = usePaystackPayment(config);
+
+  const handlePayment = () => {
+    setUserLSEmail(localStorage.getItem('isEmail'));
+    initializePayment(onSuccess, onClose);
+    // useFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+  };
+
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
-  const matches = useMediaQuery('(max-width:694px)');
   const isMobile = useMediaQuery('(max-width:389px)');
 
   return (
@@ -168,14 +235,34 @@ const Checkout = (props) => {
                 </p>
                 {isPaymentPage === true ? (
                   <div>
-                    <div className={styles._sbprev}>
-                      <button onClick={handlePrev}>Prev</button>
+                    <div className={styles._cpSummary}>
+                      <h3>Plan: {props.duration}</h3>
+                      <h3>Amount: NGN {props.amount}</h3>
+                      <LoadingButton
+                        loading={authPay.isLoading}
+                        variant="contained"
+                        type="button"
+                        onClick={handlePayment}
+                      >
+                        Proceed to Payment
+                      </LoadingButton>
                     </div>
                   </div>
                 ) : (
                   <div>
-                    {isAlreadyLoggedIn ? (
-                      <div></div>
+                    {isAlreadyLoggedIn === true ? (
+                      <div className={styles._cpSummary}>
+                        <h3>Plan: {props.duration}</h3>
+                        <h3>Amount: NGN {props.amount}</h3>
+                        <LoadingButton
+                          loading={authPay.isLoading}
+                          variant="contained"
+                          type="button"
+                          onClick={handlePayment}
+                        >
+                          Proceed to Payment
+                        </LoadingButton>
+                      </div>
                     ) : (
                       <form onSubmit={(e) => handlelogin(e)} className={styles._gs2loginform}>
                         <div>
@@ -321,100 +408,114 @@ const Checkout = (props) => {
                 <p signup-theme={context.theme} className={styles._subtitle}>
                   Complete the process with just few steps. You’re almost all set.
                 </p>
-                <form onSubmit={(e) => handleSignUp(e)} className={styles._gs2loginform}>
-                  <div className={styles._gs2logininput}>
-                    <span>Enter Your Email</span>
-                    <input
-                      type="email"
-                      onChange={(e) => setNewUserEmail(e.target.value)}
-                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                      placeholder="shalomtaiwo@example.com"
-                      id="signupEmail"
-                      required
-                    />
-                  </div>
-                  <div className={styles._gs2logininput}>
-                    <span>Username</span>
-                    <input
-                      type="text"
-                      onChange={(e) => setNewUserName(e.target.value)}
-                      pattern="[A-Za-z_-]{1,32}"
-                      placeholder="meisieshalom"
-                      required
-                      id="signupUserName"
-                    />
-                  </div>
-                  <div className={styles._gs2logininput}>
-                    <span>First Name</span>
-                    <input
-                      type="text"
-                      required
-                      placeholder="Shalom"
-                      onChange={(e) => setNewUserFirstName(e.target.value)}
-                      id="signupFirstName"
-                    />
-                  </div>
-                  <div className={styles._gs2logininput}>
-                    <span>Last Name</span>
-                    <input
-                      type="text"
-                      required
-                      placeholder="Taiwo"
-                      onChange={(e) => setNewUserLastName(e.target.value)}
-                      id="signupLastName"
-                    />
-                  </div>
-                  <div className={styles._gs2logininput}>
-                    <span>Create a password</span>
-                    <PasswordMask
-                      type="password"
-                      required
-                      onChange={(e) => setNewUserPassword(e.target.value)}
-                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                      value={newUserPassword}
-                      title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
-                      id="signupCreatePassword"
-                    />
-                  </div>
-                  <div className={styles._gs2logininput}>
-                    <span>Confirm password</span>
-                    <PasswordMask
-                      type="password"
-                      required
-                      value={newUserConfirmPassword}
-                      onChange={(e) => setNewUserConfirmPassword(e.target.value)}
-                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                      title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
-                      id="signupConfirmPassword"
-                    />
-                    <span className={styles._gs2signupvalidate}>
-                      {isSamePassword === false ? 'Passwords must be the same' : ''}
-                    </span>
-                  </div>
-                  {!isMobile && (
-                    <div className={styles._gs2logincheck}>
-                      <div className={styles._gs2loginsignin} signup-theme={context.theme}>
-                        <a href="#/" className={styles._gsloginforgot} onClick={handleLoginAccount}>
-                          Log in instead?
-                        </a>
-                      </div>
-                    </div>
-                  )}
-                  <div className={styles._gs2logincontinue}>
-                    <LoadingButton size="small" type="submit" loading={authLogin.isLoading} variant="contained">
-                      Create Account
+                {isPaymentPage === true ? (
+                  <div className={styles._cpSummary}>
+                    <h3>Plan: {props.duration}</h3>
+                    <h3>Amount: NGN {props.amount}</h3>
+                    <LoadingButton
+                      loading={authPay.isLoading}
+                      variant="contained"
+                      type="button"
+                      onClick={handlePayment}
+                    >
+                      Proceed to Payment
                     </LoadingButton>
                   </div>
-                  {isMobile && (
-                    <div className={styles._gs2logincheck}>
-                      <div className={styles._gs2loginsignin} signup-theme={context.theme}>
-                        <a href="#/" className={styles._gsloginforgot} onClick={handlelogin}>
-                          Log in instead?
-                        </a>
-                      </div>
+                ) : (
+                  <form onSubmit={(e) => handleSignUp(e)} className={styles._gs2loginform}>
+                    <div className={styles._gs2logininput}>
+                      <span>Enter Your Email</span>
+                      <input
+                        type="email"
+                        onChange={(e) => setNewUserEmail(e.target.value)}
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                        placeholder="shalomtaiwo@example.com"
+                        id="signupEmail"
+                        required
+                      />
                     </div>
-                  )}
-                  {/* <div className={styles._gs2sociallogincol}>
+                    <div className={styles._gs2logininput}>
+                      <span>Username</span>
+                      <input
+                        type="text"
+                        onChange={(e) => setNewUserName(e.target.value)}
+                        pattern="[A-Za-z_-]{1,32}"
+                        placeholder="meisieshalom"
+                        required
+                        id="signupUserName"
+                      />
+                    </div>
+                    <div className={styles._gs2logininput}>
+                      <span>First Name</span>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Shalom"
+                        onChange={(e) => setNewUserFirstName(e.target.value)}
+                        id="signupFirstName"
+                      />
+                    </div>
+                    <div className={styles._gs2logininput}>
+                      <span>Last Name</span>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Taiwo"
+                        onChange={(e) => setNewUserLastName(e.target.value)}
+                        id="signupLastName"
+                      />
+                    </div>
+                    <div className={styles._gs2logininput}>
+                      <span>Create a password</span>
+                      <PasswordMask
+                        type="password"
+                        required
+                        onChange={(e) => setNewUserPassword(e.target.value)}
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        value={newUserPassword}
+                        title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
+                        id="signupCreatePassword"
+                      />
+                    </div>
+                    <div className={styles._gs2logininput}>
+                      <span>Confirm password</span>
+                      <PasswordMask
+                        type="password"
+                        required
+                        value={newUserConfirmPassword}
+                        onChange={(e) => setNewUserConfirmPassword(e.target.value)}
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
+                        id="signupConfirmPassword"
+                      />
+                      <span className={styles._gs2signupvalidate}>
+                        {isSamePassword === false ? 'Passwords must be the same' : ''}
+                      </span>
+                    </div>
+                    {!isMobile && (
+                      <div className={styles._gs2logincheck}>
+                        <div className={styles._gs2loginsignin} signup-theme={context.theme}>
+                          <a href="#/" className={styles._gsloginforgot} onClick={handleLoginAccount}>
+                            Log in instead?
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                    <div className={styles._gs2logincontinue}>
+                      <LoadingButton size="small" type="submit" loading={authSignup.isLoading} variant="contained">
+                        Create Account
+                      </LoadingButton>
+                    </div>
+                    {isMobile && (
+                      <div className={styles._gs2logincheck}>
+                        <div className={styles._gs2loginsignin} signup-theme={context.theme}>
+                          <a href="#/" className={styles._gsloginforgot} onClick={handlelogin}>
+                            Log in instead?
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                    {/* <div className={styles._gs2sociallogincol}>
                   <p>Alternatively, you can sign up with:</p>
                   <div className={styles._gs2sociallogins}>
                   <button type="button" className={styles._google} onClick={handleGoogleAuth}>
@@ -428,7 +529,8 @@ const Checkout = (props) => {
                   </button>
                 </div>
                 </div> */}
-                </form>
+                  </form>
+                )}
               </div>
             </div>
           )}
@@ -480,6 +582,8 @@ Checkout.propTypes = {
   handleBack: PropTypes.func,
   Transition: PropTypes.object,
   duration: PropTypes.node,
+  amount: PropTypes.number,
+  plan: PropTypes.string,
 };
 
 export default Checkout;

@@ -8,7 +8,7 @@ export const ENDPOINTS = {
   API_AUTH_GOOGLE: 'auth/google',
   API_BASE_PAYSTACK_URL: 'https://api.paystack.co/',
   API_PAYSTACK_URL: 'subscription',
-  API_PREMIUM_PAY: 'paystack/pay',
+  API_PREMIUM_PAY: 'subscribe/create',
   API_AUTH_FORGOT_PASSWORD: 'auth/request-password-reset',
   API_AUTH_RESET_PASSWORD: (token) => `auth/password-reset?token=${token}`,
 };

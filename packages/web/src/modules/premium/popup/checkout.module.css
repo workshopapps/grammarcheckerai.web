@@ -553,3 +553,9 @@ input[type='checkbox']:checked + label::before {
   color: #fff;
   padding: 10px 0;
 }
+._cpSummary {
+  padding: 5% 0;
+}
+._cpSummary h3 {
+  padding: 10px 0;
+}
