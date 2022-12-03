@@ -2,17 +2,18 @@ import React from 'react';
 import Heroimg from '../../assets/blogimg/Frame 1000001903.svg';
 import Cta from '../../components/Blogcomponents/Cta';
 import Footer from '../../modules/static/landing-page/Footer';
-
+import useTheme from "../../hooks/useTheme";
+const context = useTheme();
 const Ai = () => {
   return (
     <div>
     <section className="mb-10">
       <div className="mt-10 md:max-w-3xl md:mx-auto xl:max-w-5xl">
-        <h1 className="text-header text-xl font-bold mb-4 text-center xl:text-3xl">
+        <h1 className={` ${context.theme === 'dark' ? 'text-white' : 'text-header'}  text-xl font-bold mb-4 text-center xl:text-3xl`}>
           The Time Is Now for Conversational AI
         </h1>
 
-        <div className="text-header text-sm font-bold mb-4 text-center p-4">
+        <div className={`${context.theme === 'dark' ? 'text-white' : 'text-header'}  text-sm font-bold mb-4 text-center p-4`}>
           <span className="mr-3">Home</span>
           <span className="mr-3">&gt;&gt;&gt;</span>
           <span className="mr-3">Blog</span>
@@ -23,7 +24,7 @@ const Ai = () => {
           <img src={Heroimg} alt="" className="md:w-full md:h-full" />
         </div>
 
-        <div className="p-4 py-4">
+        <div className={` ${context.theme === 'dark' ? 'text-white' : null} p-4 py-4`}>
           <p className="font-normal text-base mb-3">
             The ease with which we use computers substantially influences the likelihood that technology may disrupt a
             particular element of life or business. Computers were far less user-friendly when we needed to enter code

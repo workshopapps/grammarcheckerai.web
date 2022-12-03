@@ -14,12 +14,10 @@ const Cta = () => {
             Enjoyed the read?
           </h1>
 
-          <p
-            className={` text-cards ${
-              dark ? 'text-white' : null
-            } font-normal text-sm mb-5 mx-auto max-w-xs xl:text-base`}
-          >
-            Join our monthly newsletter for helpful tips on how to learn languages fluently and AI tecnology.
+
+          <p className={` ${context.theme === 'dark' ? 'text-white' : null} font-normal text-sm mb-5 mx-auto max-w-xs xl:text-base`}>
+          Join our monthly newsletter for helpful tips on how to learn languages fluently and AI tecnology.
+
           </p>
 
           <div className="w-80 mx-auto">

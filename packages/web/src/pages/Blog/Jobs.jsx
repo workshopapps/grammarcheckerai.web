@@ -2,29 +2,31 @@ import React from 'react';
 import Image1 from '../../assets/blogimg/image2.svg';
 import Cta from '../../components/Blogcomponents/Cta';
 import Footer from '../../modules/static/landing-page/Footer';
+import useTheme from "../../hooks/useTheme";
 
 const Jobs = () => {
+  const context = useTheme();
   return (
     <div>
     <section className="mb-10">
       <div className="mt-10 md:max-w-3xl md:mx-auto xl:max-w-5xl">
-        <h1 className="text-header text-xl font-bold mb-4 text-center xl:text-3xl">
+        <h1 className={`text-header ${context.theme === 'dark' ? 'text-white' : 'text-header'}  text-xl font-bold mb-4 text-center xl:text-3xl`}>
           7 Amazing Jobs That Will Pay You to Speak English
         </h1>
 
-        <div className="text-header text-sm font-bold mb-4 text-center p-4">
+        <div className={` ${context.theme === 'dark' ? 'text-white' : 'text-header'}  text-sm font-bold mb-4 text-center p-4`}>
           <span className="mr-3">Home</span>
           <span className="mr-3">&gt;&gt;&gt;</span>
           <span className="mr-3">Blog</span>
           <span className="mr-3">&gt;&gt;&gt;</span>
-          <span className="text-blog">7 Amazing Jobs That Will Pay You to Speak English</span>
+          <span className= "text-blog">7 Amazing Jobs That Will Pay You to Speak English</span>
         </div>
 
         <div className="p-4 mb-10 md:w-full md:h-full md:mb-10">
           <img src={Image1} alt="" className="w-full md:h-full" />
         </div>
 
-        <div className="p-4 py-4">
+        <div className= {` ${context.theme === 'dark' ? 'text-white' : null} p-4 py-4`}>
           <p className="font-normal text-base mb-3">
             Do you want to make money speaking English? If so, you&apos;re in luck! There are many amazing jobs out there
             that will pay you to use your fluency in the English language. Whether you want to work in business,
@@ -67,7 +69,7 @@ const Jobs = () => {
             guide could be the perfect job for you! You&apos;ll get to explore different places in your city and help people
             learn about them. The average salary for a tour guide is around $15-20 per hour.
           </p>
-          <h1 className="text-header text-xl font-bold mb-8 mt-8 text-center xl:text-3xl">
+          <h1 className= {` ${context.theme === 'dark' ? 'text-white' : 'text-header'}  text-xl font-bold mb-8 mt-8 text-center xl:text-3xl`}>
             How to secure a role as a fluent English speaker.
           </h1>
           <p className="font-normal text-base mb-3">
