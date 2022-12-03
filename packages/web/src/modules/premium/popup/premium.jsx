@@ -64,15 +64,7 @@ const index = (props) => {
           <div className={styles._sbmodalCol1}>
             <div className={styles._sbmodalHeaderCol1}>
               <div className={styles._sbmodalTitle}>
-                {matches ? (
-                  <div className={styles._sbmobilemodalclose}>
-                    <IconButton onClick={props.handleClosePremium}>
-                      <AiOutlineClose />
-                    </IconButton>
-                  </div>
-                ) : (
-                  <img src={medal} alt="medal" />
-                )}
+                <img src={medal} alt="medal" />
                 <h2>Upgrade to premium</h2>
               </div>
             </div>

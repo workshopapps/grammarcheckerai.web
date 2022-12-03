@@ -174,7 +174,7 @@ const Checkout = (props) => {
       })
       .then((res) => {
         console.log(res);
-        window.location.replace(reference.redirecturl);
+        // window.location.replace(reference.redirecturl);
       })
       .catch((err) => {
         error(err.message);
