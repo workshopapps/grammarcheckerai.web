@@ -9,6 +9,7 @@ import { MotionContext } from 'framer-motion';
 
 const Testimonials = () => {
   const context = useTheme();
+  const dark = context.theme === 'dark';
   const testimonyDetails = [
     {
       testimony:
@@ -40,11 +41,11 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className={`${context.theme === 'dark' ? 'bg-[#0A0A0A] ' : 'bg-[#fff]'} py-16 text-[#525252]`}>
+    <section className={`${dark ? 'bg-[#0A0A0A] ' : 'bg-[#fff]'} py-16 text-[#525252]`}>
       <div className='max-w-[1600px] mx-auto'>
         <div className='md:ml-[9em] mb-10'>
-          <h3 className={`text-center md:text-left ${context.theme === 'dark' ? 'text-[white]' : null} mb-3 text-xl md:text-3xl font-black`}>See what our customers are saying</h3>
-          <p className='text-center md:text-left'>Several case studies have shown that Speak Better helps to significantly sound smarter through simple, effective exercises.</p>
+          <h3 className={`text-center md:text-left ${dark ? 'text-[white]' : null} mb-3 text-xl md:text-3xl font-black`}>See what our customers are saying</h3>
+          <p className={`${dark && 'text-white'} text-center md:text-left`}>Several case studies have shown that Speak Better helps to significantly sound smarter through simple, effective exercises.</p>
         </div>
         <div className="w-[90%] mx-auto flex flex-col gap-5 sm:flex-row justify-center">
           {testimonyDetails.map((data) => {

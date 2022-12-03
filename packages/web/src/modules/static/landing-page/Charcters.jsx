@@ -43,7 +43,7 @@ const Charcters = () => {
                 <header className='py-7 max-w-md'>
                     <h2 className={`${context.theme === 'dark' ? 'text-[#fff]' : 'text-[#263238]'} mb-4 text-xl md:text-2xl font-black md:whitespace-nowrap`}>Talk to our AI bot in different characters</h2>
                     <p className={`${context.theme === 'dark' ? 'text-[#fff]' : 'text-[#263238]'} md:whitespace-nowrap`}>Make your learning experience more personalised and fun.
-                        Talk to <span className={`${context.theme === 'dark' ? 'text-[#BA7CFE]' : 'text-[#263238]'}`}>grit</span> in different voices, avatars and personalities.
+                        Talk to <span className={`${context.theme === 'dark' ? 'text-[#BA7CFE]' : 'text-[#263238]'}`}>Speak Better</span> in different voices, avatars and personalities.
                     </p>
                 </header>
           

@@ -8,12 +8,13 @@ import styles from './styles/index.module.css';
 
 const HowToUse = () => {
   const context = useTheme();
+  const dark = context.theme === 'dark';
   const btns = [
     {
       step: 1,
       title:
         'Tap on the mic and start up\
-                a conversation with Grit our Ai bot,\
+                a conversation with Doting Piper our AI bot,\
                 talk about anything',
       img: step1Img,
     },
@@ -32,7 +33,7 @@ const HowToUse = () => {
   const [active, setActive] = useState(btns[0]);
 
   return (
-<section className={`${context.theme === 'dark' ? 'bg-[#211f21]' : 'bg-[#ffff]'} py-10  transition-all`}>
+<section className={`${dark ? 'bg-[#211f21]' : 'bg-[#ffff]'} py-10  transition-all`}>
       <div className="w-[80%] mx-auto my-6 ">
         <h3 className={`text-xl text-center md:text-left ${context.theme === 'dark' ? 'text-[#ffffff]' : null} md:text-3xl -mb-10 font-black`}>
           How You Can Use Speak Better In Three Tiny Steps
@@ -50,8 +51,8 @@ const HowToUse = () => {
                   onClick={() => setActive(btn)}
                   step-theme={context.theme}
                 >
-                  <span className={`${context.theme === 'dark' ? 'text-[#BA7CFE]' : 'text-[#000]'} ${active.step === btn.step && 'text-[#9653dd]'}  block font-black text-lg`}>Step {btn.step} </span>
-                  <span className={`${active.step ? '' : styles.step_active} `}> {btn.title} </span> 
+                  <span className={`${dark ? 'text-[#BA7CFE]' : 'text-[#000]'} ${active.step === btn.step && 'text-[#9653dd]'}  block font-black text-lg`}>Step {btn.step} </span>
+                  <span className={`${active.step ? '' : styles.step_active} ${dark && 'text-white'}` }> {btn.title} </span> 
                   {/* {btn.title}  */}
                   {btn.step === active.step ? (
                     <motion.div className="absolute top-0 -left-1 h-full w-1 bg-[#BA7CFE] block" layoutId="underline" />
