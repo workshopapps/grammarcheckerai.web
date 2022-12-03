@@ -54,7 +54,7 @@ export default function DeleteAccount() {
                 <p className='font-bold text-[#393939]'>{data.email}</p>
             </div>
             <div className='flex flex-col sm:flex-row mt-2 sm:mt-0 border-b-[1px] sm:text-lg text-base sm:border-none border-[#d7d7d7] justify-between px-2 py-2'>
-                <span className='text-[#9c9c9c]'>I`ve been with Gritty Grammar since</span>
+                <span className='text-[#9c9c9c]'>I`ve been with Speak Better since</span>
                 <p className='font-bold text-[#393939]'>{data.createdAt.slice(0,10)}</p>
             </div>
 
