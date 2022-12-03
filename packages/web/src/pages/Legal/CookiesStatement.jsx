@@ -28,19 +28,19 @@ import Footer from '../../modules/static/landing-page/Footer'
 
             <ol className='flex flex-col py-5 gap-4 list-disc'>
                 <li>
-                    <bold className='font-bold'>Essential cookies:</bold>These cookies are strictly necessary to provide you with access to and the basic use of our Services or Online Properties, such as access to secure areas and setting your privacy preferences. These cookies cannot be turned off.
+                    <p className='font-bold'>Essential cookies:</p>These cookies are strictly necessary to provide you with access to and the basic use of our Services or Online Properties, such as access to secure areas and setting your privacy preferences. These cookies cannot be turned off.
                 </li>
                 <li>
-                    <bold className='font-bold'>Performance and functionality cookies:</bold> These cookies are used to enhance the performance and functionality of our Online Properties, but are not required for their use. However, without these cookies, certain functionality of the Online Properties may become limited or unavailable.
+                    <p className='font-bold'>Performance and functionality cookies:</p> These cookies are used to enhance the performance and functionality of our Online Properties, but are not required for their use. However, without these cookies, certain functionality of the Online Properties may become limited or unavailable.
                 </li>
                 <li>
-                    <bold className='font-bold'>Analytics and customization cookies: </bold>These cookies help us understand how our Online Properties are being used or how effective our marketing campaigns are, or to help us customize our Sites for you. Thanks to this information, we are able to improve the features offered on our Online Properties.
+                    <p className='font-bold'>Analytics and customization cookies: </p>These cookies help us understand how our Online Properties are being used or how effective our marketing campaigns are, or to help us customize our Sites for you. Thanks to this information, we are able to improve the features offered on our Online Properties.
                 </li>
                 <li>
-                    <bold className='font-bold'>Targeting cookies: </bold>These cookies are used to make advertising messages more relevant to you. They perform functions like preventing the same ad from continuously reappearing, ensuring that ads are properly displayed for advertisers, and in some cases selecting advertisements that are based on your interests.
+                    <p className='font-bold'>Targeting cookies: </p>These cookies are used to make advertising messages more relevant to you. They perform functions like preventing the same ad from continuously reappearing, ensuring that ads are properly displayed for advertisers, and in some cases selecting advertisements that are based on your interests.
                 </li>
                 <li>
-                   <bold className='font-bold'>Social Media cookies:</bold> These cookies are used to enable you to share pages and content that you find interesting on our Online Properties through third-party social networking and other websites. These cookies may also be used for advertising purposes.
+                   <p className='font-bold'>Social Media cookies:</p> These cookies are used to enable you to share pages and content that you find interesting on our Online Properties through third-party social networking and other websites. These cookies may also be used for advertising purposes.
                 </li>
             </ol>
         </div>

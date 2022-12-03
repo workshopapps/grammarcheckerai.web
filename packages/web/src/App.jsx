@@ -320,7 +320,7 @@ function App() {
       <Route path="/career" element={<Careers />} />
       <Route path="/roles" element={<Roles />} />
       <Route path="/apply" element={<Application />} />
-      <Route path="/app-status" element={<ApiStatus />} />
+      <Route path="/api-status" element={<ApiStatus />} />
       <Route path="/emailtemplate" element={<EmailTemplate />} />
       <Route path="/newsletter-template" element={<NewsletterTemplate />} />
       <Route path="/signin-template" element={<SignInTemplate />} />
@@ -331,7 +331,7 @@ function App() {
           </div>
         }
       >
-        <Route path="signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
+        <Route path="/signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
         <Route path="signup" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signuptwo />} />
         <Route path="forgot-password" element={<Forgotpassword />} />
         <Route path="reset-password" element={<ResetLink />} />

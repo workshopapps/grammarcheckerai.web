@@ -13,8 +13,8 @@ import { styled } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import MenuIcon from '@mui/icons-material/Menu';
-import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+import { BsList } from 'react-icons/bs'
+
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -118,7 +118,7 @@ const Navbar = () => {
       <div className={styles._nvstarted}>
         {isTabletOrMobile && (
           <Link to="#/" className={styles._mobilenav} onClick={() => setOpen(true)}>
-            {context.theme === 'dark' ? <MenuOutlinedIcon /> : <MenuIcon className='text-["#3030303"]' />}
+            {context.theme === 'dark' ? <BsList /> : <BsList className='text-["#3030303"]' />}
           </Link>
         )} 
         {!ismobile && (

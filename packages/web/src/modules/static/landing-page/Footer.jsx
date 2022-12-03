@@ -3,9 +3,9 @@ import styles from './footer.module.css';
 import Logo from '../../../assets/images/wlogo.png';
 import AppStore from '../../../assets/images/applestore.png';
 import GoogleStore from '../../../assets/images/googlestore.png';
-// import InstagramIcon from '@mui/icons-material/Instagram';
-// import FacebookIcon from '@mui/icons-material/Facebook';
-// import YouTubeIcon from '@mui/icons-material/YouTube';
+import facebookimg from '../../../assets/footer/facebook.png';
+import youtubeimg from '../../../assets/footer/youtube.png';
+import instagramimg from '../../../assets/footer/insta.png';
 
 const Footer = () => {
   return (
@@ -16,11 +16,11 @@ const Footer = () => {
             <div className={styles._ftcolcontentImage}>
               <img src={Logo} alt="footer logo" />
             </div>
-            {/* <div className="space-x-6 my-6 flex items-center justify-center ml-16">
-              <InstagramIcon />
-              <FacebookIcon />
-              <YouTubeIcon />
-            </div> */}
+            <div className="space-x-6 my-6 flex items-center justify-center ml-16">
+              <img src={instagramimg} alt="insta" />
+              <img src={facebookimg} alt="fb" />
+              <img src={youtubeimg} alt="yt" />  
+            </div>
           </div>
           <div className="flex space-x-16 lg:space-x-0 lg:justify-around lg:w-1/2">
             <div className={styles._ftcol1}>
