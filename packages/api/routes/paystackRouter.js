@@ -10,6 +10,9 @@ paystackRouter.get("/", async (req, res) => {
 	return res.status(200).send({ status: "ok", data: subscriptions });
 });
 paystackRouter.post("/pay", async (req, res) => {
+	const subscriptions = await Subscription.findOne({ email: req.body.email });
+	if (subscriptions)
+		return res.status(200).send({ message: "ok", data: subscriptions });
 	const form = req.body;
 	form.metadata = {
 		full_name: form.name,
