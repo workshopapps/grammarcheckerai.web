@@ -1,4 +1,4 @@
-const { response } = require("express");
+// const { response } = require("express");
 const request = require("request");
 const Subscription = require("../database/models/subscriptionSchema");
 const { initializePayment, verifyPayment } = require("../controller/paystack")(
@@ -24,7 +24,7 @@ paystackRouter.post("/pay", async (req, res) => {
         .send({ success: false, message: "Something went wrong" });
     }
     const response = JSON.parse(body);
-    const txref = response.data.reference
+    const txref = response.data.reference;
     await Subscription.create({
       email: form.email,
       subscriptionId: form.subscriptionId,
@@ -60,14 +60,15 @@ paystackRouter.get("/verify", async (req, res) => {
     const updateStatus = await Subscription.findOne({
       txref: response.data.reference,
     });
+  if (!updateStatus)
+    return res
+      .status(400)
+      .send({ sucess: false, message: "No transaction found" });
     if (updateStatus.status == "success")
       return res
         .status(200)
         .send({ success: true, message: "Transaction verified already!" });
-    if (!updateStatus)
-      return res
-        .status(400)
-        .send({ sucess: false, message: "No transaction found" });
+    
 
     await Subscription.findByIdAndUpdate(updateStatus._id, {
       status: response.data.status,

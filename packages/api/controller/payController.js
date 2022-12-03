@@ -3,7 +3,7 @@ const Subscription = require("../database/models/subscriptionSchema");
 
 const createPayment = async (req, res) => {
   let user = req.user;
-  let userId = user?._id;
+  let userId = user._id;
   try {
     const { email, subscriptionId, interval, amount, currency } = req.body;
     const payload = {
@@ -31,7 +31,11 @@ const createPayment = async (req, res) => {
 
 const getSubscription = async (req, res) => {
   try {
-    const { email } = req.body;
+    const  {email} = req.query;
+    if (!email)return res.status(400).send({
+      success: false,
+      message: "Empty Request",
+    }); 
     const user = await Subscription.findOne({ email });
     if (!user) {
       return res.status(404).send({
@@ -48,9 +52,6 @@ const getSubscription = async (req, res) => {
     return res.status(400).send({
       success: false,
       message: "An Error Occured",
-      data: {
-        error,
-      },
     });
   }
 };
