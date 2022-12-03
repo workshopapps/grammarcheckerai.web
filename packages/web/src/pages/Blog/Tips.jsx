@@ -10,10 +10,10 @@ const Tips = () => {
     <div>
     <section className="mb-10">
       <div className="mt-10 md:max-w-3xl md:mx-auto xl:max-w-5xl">
-        <h1 className={`${context.theme === 'dark' ? 'text-[#ffff] ' : 'text-[#000]'}text-header text-xl font-bold mb-4 text-center xl:text-3xl`}>
+        <h1 className={`${context.theme === 'dark' ? 'text-[#ffff] ' : 'text-header'} text-xl font-bold mb-4 text-center xl:text-3xl`}>
           10 Tips to Help You Speak English Like a Native
         </h1>
-        <div className={`text-header ${context.theme === 'dark' ? 'text-white' : null} text-header text-sm font-bold mb-4 text-center p-4`}>
+        <div className={` ${context.theme === 'dark' ? 'text-white' : 'text-header'}  text-sm font-bold mb-4 text-center p-4`}>
           <span className="mr-3">Home</span>
           <span className="mr-3">&gt;&gt;&gt;</span>
           <span className="mr-3">Blog</span>

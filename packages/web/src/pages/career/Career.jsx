@@ -4,7 +4,9 @@ import Footer from '../../components/Careers/footer';
 import Navbar from '../../components/Navbar';
 import teamData from '../../data/careers/teamData.json';
 
+
 const Careers = () => {
+
   const myData = teamData;
   const [activeSlide, setActiveSlide] = useState(1);
 
