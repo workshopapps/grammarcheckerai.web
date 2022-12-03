@@ -26,7 +26,7 @@ const SignInEmailTemplate = lazy(() => import('./modules/static/emailtemplate/si
 const HomePages = lazy(() => import('./modules/account/home/homePage'));
 const HistoryPage = lazy(() => import('./modules/account/history/history'));
 const CorrectionPage = lazy(() => import('./modules/account/history/correction'));
-const Conversation = lazy(() => import('./modules/account/conversation'));
+const Conversation = lazy(() => import('./modules/account/conversation/fake'));
 const ConversationTry = lazy(() => import('./modules/account/conversation/chat'));
 const Landing = lazy(() => import('./modules/static/landing-page/LandingPage'));
 const Legal = lazy(() => import('./pages/Legal/index'));

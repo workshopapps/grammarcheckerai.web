@@ -62,19 +62,6 @@ export default function CustomRecorder({ setChats }) {
   const error = (message) => toast.error(message);
 
   const handleAudioStop = (data) => {
-    // console.log(data, 'data');
-    // console.log(
-    //   new Blob([data.url], {
-    //     type: 'audio/mp3',
-    //   }),
-    //   'blob from data.url',
-    // );
-    // console.log(
-    //   new Blob([data.blob], {
-    //     type: 'audio/mp3',
-    //   }),
-    //   'blob fron data.blob',
-    // );
     setState((prevState) => ({ ...prevState, audioDetails: data }));
     console.log(data, 'data');
     const soln = new FormData();
