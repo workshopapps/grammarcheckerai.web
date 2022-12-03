@@ -18,6 +18,7 @@ const index = () => {
 
   const authResetPassword = useResetPassword(token);
 
+  console.log(import.meta.env);
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
 
