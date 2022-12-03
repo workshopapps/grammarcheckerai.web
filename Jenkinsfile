@@ -12,7 +12,7 @@ pipeline {
 				sh "cd packages/web"
 				sh "sudo npm install -g npm@latest && sudo npm cache clear --force"
 				sh "cd packages/web && sudo npm install --force --unsafe-perm=true --allow-root && npm fund && npm run build"
-				sh "cd packages/api && sudo npm install --force --unsafe-perm=true --allow-root"
+				sh "cd packages/api && npm install --force"
 			} 
 
 		
