@@ -61,7 +61,7 @@ app.use("*", (req, res) => {
 });
 
 //404 error
-app.use((req, res, next) => {
+app.all("*",(req, res, next) => {
   res.status(404).json({
     message: "Ohh you are lost, go back now!!!!",
   });
