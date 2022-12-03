@@ -7,21 +7,23 @@ import Detail from './Report/ReportDetail';
 const ApiStatus = () => {
   return (
     <>
+    <div className="statusPage">
       <Navbar />
-      <div className="statusPage">
-        <div>
-          <main className={style.mainContainer}>
-            <div className={style.mainHeader}>
-              <h1 className={style.title}>Speak better is Running </h1>
-              <p className={style.text}>API Status for Speak Better is updating in realtime.</p>
-            </div>
+      <div>
+        <main className={style.mainContainer}>
+          <div className={style.mainHeader}>
+            <h1 className={style.title}>Speak better is Running </h1>
+            <p className={style.text}>API Status for gritty grammar is updating in realtime.</p>
+          </div>
 
-            <Detail />
-          </main>
-        </div>
+          <Detail />
+        </main>
       </div>
-      <Footer />
-    </>
+    </div>
+    <div className={style.footer}>
+    <Footer />
+    </div>
+      </>
   );
 };
 
