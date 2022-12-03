@@ -26,6 +26,7 @@ auth.get("/verify/:link", verifyMail);
 
 auth.get("/google", googleAuthURL);
 auth.post("/google", googleAuthUserSignUp);
+
 auth.post(
 	"/request-password-reset",
 	request_reset_password(),
@@ -40,7 +41,6 @@ auth.get("/linkedin", getLinkedinUrl);
 auth.get("/linkedin/callback", linkedinAccessToken)
 // auth.get("/facebook", getFacebookURl)
 // auth.get("/facebook/callback", facebookAccessToken)
-
 // auth.use("/facebook", facebook);
 
 module.exports = { auth };
