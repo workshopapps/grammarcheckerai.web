@@ -9,6 +9,7 @@ const {
   getTranscriptionFromAssembly,
 } = require("../scripts/assemblyAI.js");
 const { translateFromEnglish } = require("../scripts/translate");
+const fileUploadToS3Bucket = require("./uploadBuffer");
 
 const languageMap = {
   "English": "en",
@@ -30,7 +31,6 @@ async function getBotResponse(req, res) {
     const conversationId = req.body.conversationId;
     const language = req.body.language || "English";
     const audioFile = req.file; // retrieves file buffer and metadata set by multer
-    const dummyAudioUrl = req.file?.originalname; // TODO: use aws s3 bucket file upload url
 
     // checks if file is available
     if (!audioFile) {
@@ -47,6 +47,9 @@ async function getBotResponse(req, res) {
         message: "Specified language is not supported",
       });
     }
+
+    // initiate file upload to aws s3 bucket
+    let audioUrl = fileUploadToS3Bucket(audioFile.buffer);
 
     // Send audio to Assembly AI to get audio transcription
     const assemblyAIAudioUrl = await uploadFileForURL(audioFile.buffer); // upload file and get url
@@ -95,13 +98,16 @@ async function getBotResponse(req, res) {
     );
     req.session.chatLog = chatLog; // set updated chat log to session
 
+    // await file upload to aws s3 bucket to get file url
+    audioUrl = await audioUrl;
+
     // construct response
     let userResponse, botResponse;
 
     // for not logged in users
     if (!conversationId) {
       userResponse = {
-        audioURL: dummyAudioUrl,
+        audioURL: audioUrl,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
@@ -117,7 +123,7 @@ async function getBotResponse(req, res) {
     } else {
       // for logged in users
       userResponse = await UserResponse.create({
-        audioURL: dummyAudioUrl,
+        audioURL: audioUrl,
       });
 
       botResponse = await BotResponse.create({
@@ -144,7 +150,6 @@ async function getBotResponse(req, res) {
       },
     });
   } catch (err) {
-    throw err;
     return res.status(500).send({
       success: false,
       message: err,

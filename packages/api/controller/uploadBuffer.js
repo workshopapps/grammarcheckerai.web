@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 const { environment } = require('../config/environment')
-const v4 = require("uuid")
+const { v4 } = require("uuid")
 const { ACCESSKEYID, S3SECRETEKEY, GRITTYBUCKETNAME } = environment;
 
 // Set the AWS Region.
@@ -19,7 +19,7 @@ const fileUploadToS3Bucket = async (dataBuffer) => {
         // Setting up S3 upload parameters
         const params = {
             Bucket: GRITTYBUCKETNAME,
-            Key: v4(), // File name you want to save as in S3 // Change the key value to UUID or GUID
+            Key: `${v4()}.mp3`, // File name you want to save as in S3
             Body: dataBuffer,
         };
         
