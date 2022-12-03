@@ -12,7 +12,11 @@ import LoadingButton from '@mui/lab/LoadingButton';
 const index = () => {
   const [userNewPassword, setUserNewPassword] = useState('');
   const [userConfirmNewPassword, setUserConfirmNewPassword] = useState('');
+  const url = new URL(window?.location?.href);
+  const params = new URLSearchParams(url?.search);
+  const token = params.get('token');
 
+  console.log(typeof token);
   const authResetPassword = useResetPassword();
 
   const error = (message) => toast.error(message);
@@ -34,8 +38,8 @@ const index = () => {
     }
     authResetPassword
       .mutateAsync({
-        new_password: '',
-        confirm_password: '',
+        new_password: userNewPassword,
+        confirm_password: userConfirmNewPassword,
       })
       .then((res) => {
         success(res.data.message ?? 'Success');
