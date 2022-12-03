@@ -6,11 +6,11 @@ import Footer from '../../modules/static/landing-page/Footer'
    return (
      <div>
          <div className='py-14 text-center bg-[#E8DDF2] text-BLACK'>
-            <h1 className='text-3xl font-bold'>Cookies statement</h1>
+            <h1 className='md:text-3xl text-2xl font-bold'>Cookies statement</h1>
             <p>Last updated: 12 November, 2022.</p>
         </div>
 
-        <div className='px-5 md:px-10 py-10'>
+        <div className='px-8 md:px-10 py-10'>
             <h3 className='font-bold text-xl py-4'>What are cookies?</h3>
             <p>
             Cookies are small data files that are placed on your computer or mobile device when you visit a website. The term “cookie” is used in this Cookie Statement in the broad sense to include cookies and all similar techniques and technologies, including web beacons. Web beacons (sometimes called “tracking pixels” or “clear gifs”) are tiny graphics files that contain a unique identifier that enable us to recognize when someone has visited our online properties or taken an action in relation to our Online Properties. Cookies are widely used by website owners in order to make their websites work, or to work more efficiently, as well as to provide reporting information.

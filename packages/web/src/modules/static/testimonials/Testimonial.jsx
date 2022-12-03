@@ -73,8 +73,8 @@ export default function Testimonial() {
           className={`${styles._header} lg:bg-purple-500 lg:text-white flex flex-col justify-center items-center lg:py-32`}
           nav-theme={context.theme}
         >
-          <h1 className="text-center my-4 text-lg sm:text-2xl lg:text-5xl">Users Love What We Do</h1>
-          <p className="text-center text-sm lg:text-lg w-1/2">
+          <h1 className="text-center font-bold text-xl my-4 sm:text-2xl lg:text-5xl">Users Love What We Do</h1>
+          <p className="text-center font-[500] text-sm lg:text-lg md:w-1/2">
             Read the stories of our users who have relied on our product to improve their grammer. Join Speak Better
             today and be a part of the team.
           </p>
