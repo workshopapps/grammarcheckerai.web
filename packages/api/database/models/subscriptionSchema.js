@@ -7,7 +7,7 @@ const subscriptionSchema = new mongoose.Schema(
   {
     user: {
       type: String,
-      ref: "User",
+      ref: "user",
       required: [true, "A subscription must be made by a User"],
       default: () => v4(),
     },
@@ -15,7 +15,6 @@ const subscriptionSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      unique: true,
     },
     subscriptionId: {
       type: String,
@@ -23,14 +22,14 @@ const subscriptionSchema = new mongoose.Schema(
     },
     interval: {
       type: String,
-      enum: ["weekly", "monthly", "biannually", "annually"],
+      enum: ["monthly", "quarterly", "annually"],
       default: "monthly",
       required: true,
     },
     paymentGateway: {
       type: String,
       enum: ["paystack", "flutterwave", "stripe"],
-      required: true,
+      default: "paystack",
     },
     amount: {
       type: Number,
@@ -49,6 +48,9 @@ const subscriptionSchema = new mongoose.Schema(
       enum: ["NGN", "USD", "EUR", "YEN", "GBP"],
       default: "NGN",
     },
+    nextSubscriptionDate:{
+      type: String
+    }
   },
   {
     timestamps: true,

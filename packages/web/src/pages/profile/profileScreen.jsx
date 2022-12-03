@@ -14,7 +14,7 @@ export default function profileScreen() {
   const [newUsername, setNewUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const endpoint = ENDPOINTS.API_BASE_URL;
+  const endpoint = ENDPOINTS.API_BASE_HTTPS_URL;
   const url = endpoint + 'user/profile/';
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);

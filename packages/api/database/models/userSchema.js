@@ -27,11 +27,14 @@ let schema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: false,
       minlength: 6,
       maxlength: 1023,
     },
     username: {
+      type: String,
+    },
+    profilePicture: {
       type: String,
     },
     role: {
@@ -55,9 +58,14 @@ let schema = new mongoose.Schema(
 // Hashing the password
 schema.pre("save", async function () {
   const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  return (this.password =
+    this.password !== null ? bcrypt.hash(this.password, salt) : null);
 });
 
+exports.generateHash = async (reqPassword) => {
+  const salt = await bcrypt.genSalt(10);
+  return await bcrypt.hash(reqPassword, salt);
+};
 // comparing the password
 schema.methods.comparePassword = async function (reqPassword) {
   const correctPassword = await bcrypt.compare(reqPassword, this.password);
@@ -77,11 +85,6 @@ schema.methods.generateAuthToken = function () {
     expiresIn: "3d",
   });
   return token;
-};
-
-schema.methods.generateHash = async(reqPassword)=>{ 
-  const salt = await bcrypt.genSalt(10);
-  return await bcrypt.hash(reqPassword, salt);
 };
 
 exports.authValidatorSchema = Joi.object().keys({

@@ -5,7 +5,7 @@ export default function PrivacyPolicy() {
   return (
     <div>
         <div className='py-14 text-center bg-[#E8DDF2] text-BLACK'>
-            <h1 className='text-3xl font-bold'>Speak Better Privacy Policy</h1>
+            <h1 className='md:text-3xl text-2xl font-bold'>Speak Better Privacy Policy</h1>
             <p>Last updated: 12 November, 2022.</p>
         </div>
 

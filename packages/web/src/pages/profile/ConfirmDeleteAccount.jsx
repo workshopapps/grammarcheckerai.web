@@ -40,7 +40,7 @@ export default function ConfirmDeleteAccount() {
     const [password, setPassword] = useState("");
     const history = useNavigate();
     const success = (message) => toast.success(message);
-    const endpoint = ENDPOINTS.API_BASE_URL;
+    const endpoint = ENDPOINTS.API_BASE_HTTPS_URL;
     const url = endpoint + 'user/';
     const data = JSON.parse(localStorage.getItem("userData"));
     const token = localStorage.getItem('grittyusertoken');

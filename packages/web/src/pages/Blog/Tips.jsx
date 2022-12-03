@@ -2,6 +2,7 @@ import React from 'react';
 import Image3 from '../../assets/blogimg/image 2 (2).svg';
 import Cta from '../../components/Blogcomponents/Cta';
 import Footer from '../../modules/static/landing-page/Footer';
+import { Link } from "react-router-dom"
 
 const Tips = () => {
   return (
@@ -12,15 +13,15 @@ const Tips = () => {
           10 Tips to Help You Speak English Like a Native
         </h1>
         <div className="text-header text-sm font-bold mb-4 text-center p-4">
-          <span className="mr-3">Home</span>
+          <span className="mr-3"><Link  to="/home">Home</Link></span>
           <span className="mr-3">&gt;&gt;&gt;</span>
-          <span className="mr-3">Blog</span>
+          <span className="mr-3"><Link  to="/blog">Blog</Link></span>
           <span className="mr-3">&gt;&gt;&gt;</span>
           <span className="text-blog">10 Tips to Help You Speak English Like a Native</span>
         </div>
 
         <div className="p-4 mb-10 md:w-full md:h-full md:mb-10">
-          <img src={Image3} alt="improve your english speaking skills" className="w-full md:h-full rounded" />
+          <img src={Image3} alt="improve your english speaking skills" className="w-full md:h-full" />
         </div>
 
         <div className="p-4 py-4">
