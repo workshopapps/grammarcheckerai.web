@@ -28,9 +28,9 @@ function LanguageOption({ openBar, changeLanguage, languageList }) {
         <div className="flex flex-col gap-8 h-6/12">
           {languageList
             .filter((obj) => {
-              if (searchTerm === '' || obj.query.toLowerCase().includes(searchTerm.toLowerCase())) {
+              if (searchTerm === '' || obj.name.toLowerCase().includes(searchTerm.toLowerCase())) {
                 return obj;
-              } else if (languageList.every((val) => !val.query.toLowerCase().includes(searchTerm.toLowerCase()))) {
+              } else if (languageList.every((val) => !val.name.toLowerCase().includes(searchTerm.toLowerCase()))) {
                 // If There is no result then show all list
                 return obj;
               }
