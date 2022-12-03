@@ -102,7 +102,6 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
       let correctAnswer = question.answer;
       let incorrectAnswers = question.incorrectAnswers;
       console.log(incorrectAnswers);
-      // const options = incorrectAnswers.splice(Math.floor(Math.random() * (incorrectAnswers.length + 1)), 0, correctAnswer);
       const options = shuffle([...incorrectAnswers, correctAnswer]);
       
       setAnswerList(options);
@@ -204,11 +203,3 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
 
 export default QuizGame;
 
-// Set up a submit handler
-// socket.emit("update-quizProfile", userId, isCorrect)
-// if(isCorrect){
-//  socket.emit("get-roundWinner", userId)
-// }
-// socket.on("receive-roundWinner", (fn) => {
-//  fn(userId);
-// })
