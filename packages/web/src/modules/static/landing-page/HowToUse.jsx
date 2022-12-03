@@ -13,7 +13,7 @@ const HowToUse = () => {
       step: 1,
       title:
         'Tap on the mic and start up\
-                a conversation with Grit our Ai bot,\
+                a conversation with Speak Better our Ai bot,\
                 talk about anything',
       img: step1Img,
     },
@@ -35,7 +35,7 @@ const HowToUse = () => {
 <section className={`${context.theme === 'dark' ? 'bg-[#211f21]' : 'bg-[#ffff]'} py-10  transition-all`}>
       <div className="w-[80%] mx-auto my-6 space-y-24">
         <h3 className={`text-xl text-center ${context.theme === 'dark' ? 'text-[#ffffff]' : null} md:text-3xl font-black`}>
-          How You Can Use Gritty Grammar In Three Tiny Steps
+          How You Can Use Speak Better In Three Tiny Steps
         </h3>
         <div className="md:flex md:justify-between md:items-center mt-12">
           <div className="flex flex-col max-w-xs my-9 gap-4 border-l-[1px] border-[#afc1ca]">

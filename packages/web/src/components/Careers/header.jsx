@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <header className="flex justify-between py-4 max-[480px]:px-3 items-center z-10 fixed top-0 w-full bg-white px-10 shadow-sm">
       <div>
-        <img src="images/grit.svg" alt="gritty" />
+        <img src="images/grit.svg" alt="Speak Better" />
       </div>
       <div className="flex space-x-12 max-[480px]:hidden ">
         {[

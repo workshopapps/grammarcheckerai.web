@@ -109,7 +109,7 @@ const About = () => {
                 What we are building
               </p>
               <p className={`${dark && 'text-[#8C54BF]'} lg:text-left text-textColor`}>
-                Speak better is an AI-powered grammar checker designed to check and correct grammar for multiple
+                Speak Better is an AI-powered grammar checker designed to check and correct grammar for multiple
                 languages. A brainchild of Carpenter-team-grit’s mission of having a population of excellent
                 grammarians. It offers the necessary tools for fluent and effective communication.
               </p>
@@ -131,8 +131,8 @@ const About = () => {
           </div> */}
           <div className=" flex flex-col items-center justify-center m-8 mt-24">
             <div className="space-y-2">
-              <p className={'font-bold text-primary text-center text-xl lg:text-2xl'}>Team behind of product</p>
-              <p className="text-purple-500 text-center">Amazing heads of department at Gritty Grammar</p>
+              <p className={'font-bold text-primary text-center text-xl lg:text-2xl'}>Team behind our product</p>
+              <p className="text-purple-500 text-center">Amazing heads of department at Speak Better</p>
             </div>
             <div className="grid grid-cols-1 gap-4 justify-between  m-5 p-5 md:m-4 md:p-4 md:grid-cols-4  lg:grid-cols-5">
               {Teams &&

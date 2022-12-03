@@ -11,7 +11,7 @@ export default function PrivacyPolicy() {
 
         <div className='flex flex-col gap-5 px-5 md:px-10 py-10'>
             <p>
-            Speak better is committed to the security and privacy of our customers data. 
+            Speak Better is committed to the security and privacy of our customers data. 
             </p>
             <p>
             This privacy policy outlines our dedication to protecting the data of our clients and serves as a contract between us and them, as well as with other parties, regarding our data handling.procedures. 

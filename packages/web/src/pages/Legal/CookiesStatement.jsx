@@ -18,7 +18,7 @@ import Footer from '../../modules/static/landing-page/Footer'
 
             <h3 className='font-bold text-xl py-4'>Why do we use cookies?</h3>
             <p>
-            Speak better uses first- and third-party cookies for several reasons. Some cookies are required for technical reasons in order for our Online Properties to operate, and we refer to these as “essential” or “ strictly necessary ” cookies. Other cookies enable us to better understand your use of our Online Properties, to track and target the interests of our Users, and to enhance the experience of Users on our Online Properties. Third parties serve cookies through our Online Properties for advertising, analytics and other purposes.
+            Speak Better uses first- and third-party cookies for several reasons. Some cookies are required for technical reasons in order for our Online Properties to operate, and we refer to these as “essential” or “ strictly necessary ” cookies. Other cookies enable us to better understand your use of our Online Properties, to track and target the interests of our Users, and to enhance the experience of Users on our Online Properties. Third parties serve cookies through our Online Properties for advertising, analytics and other purposes.
             </p>
 
             <h3 className='font-bold text-xl py-3'>Types of first - and- third party cookies we use</h3>

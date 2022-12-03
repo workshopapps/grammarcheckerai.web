@@ -20,7 +20,7 @@ const Hero = () => {
                 styles.ff_inter
               } md:text-4xl whitespace-nowrap`}
             >
-              Gritty Grammar.
+              Speak Better.
             </h2>
           </div>
           <p className="font-bold text-2xl my-4">Corrects all grammatical errors.</p>
@@ -32,7 +32,7 @@ const Hero = () => {
             to="/converse"
             className=" text-white bg-[#5D387F] py-4 px-3 rounded-[12px] hover:bg-[#392150] ease-in-out duration-[.4s] transition-colors hover:text-white "
           >
-            Try Gritty Grammar For Free!
+            Try Speak Better For Free!
           </Link>
         </div>
 

@@ -89,7 +89,7 @@ const NewsletterPage = () => {
                 <img className={styles.newsletter_success__card__text_img} id="mailIcon" src={envelope1} alt="" />
                 <h3>Thanks for your subscription</h3>
                 <p>
-                  We have sent an email to Grittygrammergmail.com to confirm the validity of our email address. after
+                  We have sent an email to speakbetter@gmail.com to confirm the validity of our email address. after
                   receiving the email follow the link provided to complete your registration.
                 </p>
               </div>

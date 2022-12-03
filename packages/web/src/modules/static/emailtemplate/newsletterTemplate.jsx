@@ -5,7 +5,7 @@ const NewsletterEmailTemplate = () => {
     <div className="bg-white px-20 py-14 max-[640px]:p-0">
       <div className="bg-dark-300 w-3/5 mx-auto pt-5 pb-20 px-20 max-[640px]:w-full max-[640px]:px-6 max-[640px]:h-screen">
         <div className="flex justify-center py-10">
-          <img src="images/grit.svg" alt="gritty grammar icon" />
+          <img src="images/grit.svg" alt="speak better icon" />
         </div>
         <div className="bg-white p-14 space-y-8 max-[640px]:p-8 my-4">
           <h2>Thanks for subscribing to our Newsletter</h2>
@@ -13,7 +13,7 @@ const NewsletterEmailTemplate = () => {
 
           <p>
             See you soon, <br />
-            Team Grit.
+            Team Speak Better.
           </p>
         </div>
         <div className="bg-white my-4 p-14 space-y-8 max-[640px]:p-8 text-center">
@@ -24,7 +24,7 @@ const NewsletterEmailTemplate = () => {
             </a>
           </div>
         </div>
-        <p className='text-center text-sm text-cards py-5'>You received this email to confirm your new account registration with grittygrammar.</p>
+        <p className='text-center text-sm text-cards py-5'>You received this email to confirm your new account registration with Speak Better.</p>
       </div>
     </div>
   );

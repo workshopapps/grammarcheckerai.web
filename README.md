@@ -2,7 +2,7 @@
 
 # Gitty Grammar
 
-This is Gritty Grammar monrepo bootstrapped lerna.
+This is Speak Better monrepo bootstrapped lerna.
 
 ## Getting Started
 

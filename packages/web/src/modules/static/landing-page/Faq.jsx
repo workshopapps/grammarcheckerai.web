@@ -15,19 +15,19 @@ const Faq = () => {
 
         <div className="mb-9">
           <FaqBox
-            question="How does Gritty Grammar work?"
+            question="How does Speak Better work?"
             details="Download the app, Sign up and get started!
                 You answer these questions We transcribe to text using
                 whisper Identify grammatical errors It tells you how
                 best to construct the sentence"
           />
           <FaqBox
-            question="Can Gritty Grammar translate in all languages? "
-            details="Yes, Gritty Grammar is avaliable to translate into all languages."
+            question="Can Speak Better translate in all languages? "
+            details="Yes, Speak Better is avaliable to translate into all languages."
           />
           <FaqBox
-            question="How does Gritty Grammar correct grammatical errors quickly? "
-            details="Gritty Grammar has efficient algorithms designed to identify
+            question="How does Speak Better correct grammatical errors quickly? "
+            details="Speak Better has efficient algorithms designed to identify
                 mistakes and correct them appriopriately."
           />
         </div>
