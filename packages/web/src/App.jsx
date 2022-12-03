@@ -334,7 +334,7 @@ function App() {
         <Route path="/signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
         <Route path="signup" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signuptwo />} />
         <Route path="forgot-password" element={<Forgotpassword />} />
-        <Route path="reset-password" element={<ResetLink />} />
+        <Route path="password-reset" element={<ResetLink />} />
       </Route>
       <Route path="/me" element={isDashboard === false ? <Navigate to="/signin" /> : <DashboardLayout />}>
         <Route path="home" element={<HomePage />} />
