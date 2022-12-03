@@ -4,7 +4,7 @@ import styles from './index.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import ChatContainer from './chat-container';
-// import SeletedLanguage from '../../../components/SelectedLanguage';
+import SeletedLanguage from '../../../components/SelectedLanguage';
 import RiveBot from '../../../components/RiveBot';
 import micImg from '../../../assets/images/mic.svg';
 import trashImg from '../../../assets/images/trash.svg';
@@ -14,6 +14,7 @@ import { convertSecToMin } from '../../../lib/utils';
 import useSendAudioFile from '../../../hooks/account/useSendAudio';
 import useMediaRecorder from '@wmik/use-media-recorder';
 import Loader from '../../../components/Loader';
+import toast, { Toaster } from 'react-hot-toast';
 
 function Conversation() {
   const navigate = useNavigate();
@@ -31,6 +32,9 @@ function Conversation() {
     blobOptions: { type: 'audio/wav' },
     mediaStreamConstraints: { audio: true, video: false },
   });
+  const [language, setLanguage] = React.useState('English');
+  const error = (message) => toast.error(message);
+
   const [chats, setChats] = React.useState([]);
   const context = useTheme();
   const chatRef = useRef(null);
@@ -50,6 +54,7 @@ function Conversation() {
 
     const soln = new FormData();
     soln.append('file', audioResult);
+    soln.append('language', language);
 
     sendAudio
       .mutateAsync(soln)
@@ -69,7 +74,7 @@ function Conversation() {
         ]);
       })
       .catch((err) => {
-        console.log(err);
+        error(err?.response?.data?.message);
       });
 
     clearMediaBlob();
@@ -84,14 +89,8 @@ function Conversation() {
         context.theme === 'dark' ? styles.convo_theme : null
       } `}
     >
-      {/* <div className="flex flex-row content-between py-6 px-4 w-full max-w-7xl mx-auto items-center justify-end">
-        <div className="w-36">
-          <img src={logoImg} alt="" className="max-w-full" />
-        </div>
-        <SeletedLanguage />
-      </div> */}
       {sendAudio.isLoading && <Loader />}
-      <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4">
+      <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4 pt-10">
         <div className="text-center space-y-14">
           {chats.length === 0 ? (
             <>
@@ -113,6 +112,9 @@ function Conversation() {
                 >
                   Each conversation bring you closer to fluency.
                 </p>
+                <div>
+                  <SeletedLanguage language={language} setLanguage={setLanguage} />
+                </div>
               </div>
             </>
           ) : (
@@ -153,7 +155,7 @@ function Conversation() {
                       )}
                     </>
                   ) : (
-                    <div>
+                    <div className="pb-10">
                       <p>{convertSecToMin('30')}</p>
                       <div className="flex items-center justify-center space-x-6 pt-5">
                         <button
@@ -183,6 +185,7 @@ function Conversation() {
           </div>
         </div>
       </div>
+      <Toaster />
     </motion.div>
   );
 }
