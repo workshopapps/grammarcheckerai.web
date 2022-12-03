@@ -5914,6 +5914,9 @@
 "esbuild-windows-64@0.15.15":
   "version" "0.15.15"
 
+"esbuild-windows-64@0.15.15":
+  "version" "0.15.15"
+
 "esbuild@^0.15.15", "esbuild@^0.15.9":
   "version" "0.15.15"
   optionalDependencies:
