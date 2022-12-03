@@ -23,19 +23,32 @@ paystackRouter.post("/pay", async (req, res) => {
 				.status(400)
 				.send({ success: false, message: "Something went wrong" });
 		}
-		var response = JSON.parse(body);
+		const response = JSON.parse(body);
+		const txref = response.data.reference;
 		await Subscription.create({
 			email: form.email,
 			subscriptionId: form.subscriptionId,
 			amount: form.amount,
 			paymentGateway: "paystack",
-			txref: response.data.reference,
-		});
-		return res.status(200).send({ success: true, data: response });
+			txref: txref,
+		})
+			.then(() => {
+				return res.status(200).send({ success: true, data: response });
+			})
+			.catch((error) => {
+				console.log(error);
+				return res
+					.status(400)
+					.send({ success: false, message: "Something went wrong" });
+			});
 	});
 });
 paystackRouter.get("/verify", async (req, res) => {
 	const { ref } = req.body;
+	if (!ref)
+		return res
+			.status(400)
+			.send({ success: false, message: "Invalid Reference" });
 	verifyPayment(ref, async (error, body) => {
 		if (error) {
 			console.log(error);
@@ -47,6 +60,10 @@ paystackRouter.get("/verify", async (req, res) => {
 		const updateStatus = await Subscription.findOne({
 			txref: response.data.reference,
 		});
+		if (updateStatus.status == "success")
+			return res
+				.status(200)
+				.send({ success: true, message: "Transaction verified already!" });
 		if (!updateStatus)
 			return res
 				.status(400)
@@ -54,6 +71,11 @@ paystackRouter.get("/verify", async (req, res) => {
 
 		await Subscription.findByIdAndUpdate(updateStatus._id, {
 			status: response.data.status,
+		}).catch((error) => {
+			console.log(error);
+			return res
+				.status(400)
+				.send({ sucess: false, message: "Something went wrong" });
 		});
 		const data = response.data;
 		return res.status(200).send({ success: true, data });

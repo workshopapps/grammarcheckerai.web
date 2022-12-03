@@ -51,10 +51,13 @@ exports.uploadFileForURL = async function (bufferData) {
 }
 
 // function upload audio file url to register file for transcription processing which returns the transription process id
-exports.uploadFileUrlToInitiateTranscription = async function (audioUrl) {
+exports.uploadFileUrlToInitiateTranscription = async function (audioUrl, language) {
     console.log("-------------------- File Registration for transcription started --------------------");
     const url = 'https://api.assemblyai.com/v2/transcript';
-    const data = { "audio_url": audioUrl };
+    const data = { 
+        "audio_url": audioUrl,
+        "language_code": language
+     };
 
     const params = {
         headers: {
