@@ -8,13 +8,12 @@ const emailService = async ({ to, templateId, dynamic_template_data }) => {
     try {
       await sendgrid.send({
         from: `Speak Better <${SENDGRID_EMAIL_FROM}>`,
-        to,
-        templateId,
-        dynamic_template_data,
+        to: to,
+        templateId: templateId,
+        dynamic_template_data: dynamic_template_data,
       });
-      
       resolve(true);
-    } catch (err) {  
+    } catch (err) {
       resolve(false);
     }
   });
