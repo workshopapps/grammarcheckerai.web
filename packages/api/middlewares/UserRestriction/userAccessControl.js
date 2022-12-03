@@ -109,4 +109,5 @@ module.exports = {
   deleteUserAccess,
   userConversationAccess,
   updateUserAccess,
+  getUser,
 };
