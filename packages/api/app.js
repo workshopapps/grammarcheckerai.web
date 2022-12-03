@@ -45,7 +45,7 @@ app.use(
     extended: true,
   })
 );
-app.get("*", (req, res) => {
+app.use("*", (req, res) => {
   res.status(200).json({
     message: "Welcome to Grit Grammarly 🙌",
     user: "CORS enabled",

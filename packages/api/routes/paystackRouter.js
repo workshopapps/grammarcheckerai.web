@@ -4,8 +4,6 @@ const Subscription = require("../database/models/subscriptionSchema");
 const { initializePayment, verifyPayment } = require("../controller/paystack")(
   request
 );
-// const {createPayment} = require("../controller/paystackController")
-// const Subscription = require("../database/models/subscriptionSchema");
 paystackRouter = require("express").Router();
 
 paystackRouter.get("/", async (req, res) => {
@@ -15,18 +13,13 @@ paystackRouter.get("/", async (req, res) => {
 
 paystackRouter.post("/pay", async (req, res) => {
   const form = req.body;
-  const params = JSON.stringify({
-    email: form.email,
-    amount: form.amount,
-    plan: form.subscriptionId,
-  });
   console.log(form);
   form.metadata = {
     full_name: form.name,
   };
   form.amount *= 100;
 
-  initializePayment(form, params, async (error, body) => {
+  initializePayment(form, async (error, body) => {
     if (error) {
       //handle errors
       console.log(error);
@@ -58,6 +51,5 @@ paystackRouter.get("/verify", async (req, res) => {
   });
 });
 
-// paystackRouter.post("/create", createPayment)
-
 module.exports = paystackRouter;
+
