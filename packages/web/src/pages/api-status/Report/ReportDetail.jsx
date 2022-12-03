@@ -7,8 +7,7 @@ import axios from 'axios';
 const Detail = () => {
   const [status, setStatus] = useState([]);
   const apiTest = async () => {
-    const data = await axios.get('http://api.speakbetter.hng.tech/v1/test')
-    console.log(data);
+    const data = await axios.get('https://api.speakbetter.hng.tech/v1/test')
     data.data.map((item, index) => {
 
       let statusImg = ''
