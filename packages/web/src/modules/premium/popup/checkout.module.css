@@ -5,15 +5,54 @@
   justify-content: flex-start;
   align-items: flex-start;
 }
+._cpHeader {
+  height: 60px;
+  padding: 15px;
+}
 ._cpCol1 {
   width: 55%;
-  background-color: rgb(236, 235, 235);
   height: 100%;
+  padding: 5% 3%;
+  background-color: #f9f6ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+._cpUserFields {
+  background-color: #fff;
   padding: 5%;
+  width: 80%;
+  box-shadow: 2px 2px 5px #f1edf5, -2px -2px 5px #e7e7e7;
+  border-radius: 5px;
+}
+._cpCheckoutFields {
+  padding: 10px 0;
+  color: #7d7d7e;
+}
+._cpCheckoutFields p {
+  padding: 10px 0;
 }
 ._cpCol2 {
   width: 45%;
   padding: 5%;
   height: 100%;
-  background-color: rgb(248, 246, 246);
+  background-color: #fff;
+}
+@media only screen and (max-width: 800px) {
+  ._cpBody {
+    flex-direction: column;
+  }
+  ._cpCol1 {
+    width: 100%;
+  }
+  ._cpCol2 {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 594px) {
+  ._cpCol1 {
+    padding: 5% 0;
+  }
 }

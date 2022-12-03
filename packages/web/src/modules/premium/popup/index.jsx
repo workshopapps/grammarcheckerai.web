@@ -37,19 +37,15 @@ const index = (props) => {
         interval: 'weekly',
         subscriptionId: 'PLN_2cqf3nx11trbn4b',
       }),
-      mode: 'cors',
       headers: {
-        'Access-Control-Allow-Origin': 'http://localhost:5000',
         Authorization: 'Bearer pk_test_79b1560168d893e4e503c39acdc3b49f02db69c3',
         'Content-type': 'application/json; charset=UTF-8',
       },
     };
 
     await fetch(url, requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        const oBJ = JSON.parse(result);
-        console.log(oBJ);
+      .then((response) => {
+        window.location.href = response.data.authorization_url;
       })
       .catch((err) => console.log(err.message));
   };
