@@ -58,7 +58,7 @@ let schema = new mongoose.Schema(
 // Hashing the password
 schema.pre('save', async function () {
   const salt = await bcrypt.genSalt(10);
-  this.password = this.password !== null ? await bcrypt.hash(this.password, salt) : null;
+  this.password = this.password !== null ? bcrypt.hash(this.password, salt) : null;
 });
 
 // comparing the password
