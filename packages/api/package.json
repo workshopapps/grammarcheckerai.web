@@ -43,9 +43,12 @@
         "request": "^2.88.2",
         "sass": "^1.56.1",
         "socket.io": "^4.5.4",
+        "sshpk": "^1.17.0",
         "supertest": "^6.3.1",
         "swagger-ui-express": "^4.6.0",
-        "uuid": "^9.0.0"
+        "tough-cookie": "^4.1.2",
+        "uuid": "^9.0.0",
+        "verror": "^1.10.1"
     },
     "devDependencies": {
         "nodemon": "^2.0.20"

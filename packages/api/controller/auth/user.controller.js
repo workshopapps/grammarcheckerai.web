@@ -1,15 +1,14 @@
-const { response } = require("../../utilities/response");
+const { response, authResponse } = require("../../utilities/response");
 const { getTokens } = require("./authThirdPartyController");
 const { register } = require("../../repository/user.repository");
-const { userCollection } = require("../../database/models/userSchema");
+const { userCollection, generateHash } = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
 const {
   generateEmailVerificationLink,
   verifyLink,
 } = require("../../utilities/generateToken");
 const emailService = require("../../services/email.service");
-const { environment } = require("../../config/environment");
-const { SIGNUP_TEMPLATE_ID } = environment;
+const { SIGNUP_TEMPLATE } = require("../../utilities/email.template");
 
 async function registerUser(req, res) {
   try {
@@ -26,7 +25,7 @@ async function registerUser(req, res) {
     //Check if the user already exist
     password =
       password === confirm_password
-        ? password
+        ? await generateHash(password)
         : res.status(422).json(
             response({
               success: false,
@@ -35,27 +34,27 @@ async function registerUser(req, res) {
           );
 
     const checkEmailExist = await userCollection.findOne({ email });
-
+    
     if (checkEmailExist)
       return res
         .status(409)
         .json(response({ message: "User already exist", success: false }));
-
+        
     const data = { email, firstName, lastName, username, password, language };
 
     let verificationLink = await generateEmailVerificationLink(data);
 
+    const user = await register(data);
+
     await emailService({
       to: email,
       subject: "Welcome to Speak Better, Please Verify your Email",
-      templateId: SIGNUP_TEMPLATE_ID,
+      templateId: SIGNUP_TEMPLATE,
       dynamicTemplateData: {
         name: firstName,
         action_url: verificationLink,
       },
     });
-
-    const user = await register(data);
 
     if (!user)
       return res
@@ -79,56 +78,83 @@ async function registerUser(req, res) {
     );
   }
 }
+async function login(req, res) {
+  // retrieve the email and password
+  const { email, password } = req.body;
 
+  const user = await userCollection.findOne({ email });
+
+  if (!user) {
+    return res
+      .status(401)
+      .json({ msg: `User with email ${email} does not exist.` });
+  }
+
+  // comparing password
+  const validPassword = await user.comparePassword(password);
+  console.log(email, password, validPassword, user);
+  console.log(validPassword);
+  if (!validPassword) {
+    return res.status(401).json({ msg: "Invalid email or password" });
+  }
+
+  return res.status(200).json(
+    response({
+      success: true,
+      message: "User login successfully",
+      data: authResponse(user),
+    })
+  );
+}
 async function googleAuthUserSignUp(req, res) {
-	const { name, email } = await getTokens(req.query.code);
+  const { name, email } = await getTokens(req.query.code);
 
-	//Check if user already exist
-	const user = await userCollection.findOne({ email });
+  //Check if user already exist
+  const user = await userCollection.findOne({ email });
 
-	if (user) {
-		const data = {
-			_id: user._id,
-			firstname: user.firstName,
-			lastname: user.lastName,
-			username: user.username,
-			email: user.email,
-			language: user.language,
-			token: user.generateAuthToken(),
-		};
-		return res.status(200).json(
-			response({
-				success: true,
-				message: "User logged in Sucessfully",
-				data: data,
-			})
-		);
-	} else {
-		const randomUserCode = (Math.random() + 1).toString(36).substring(7);
-		const newName = name.split(" ");
+  if (user) {
+    const data = {
+      _id: user._id,
+      firstname: user.firstName,
+      lastname: user.lastName,
+      username: user.username,
+      email: user.email,
+      language: user.language,
+      token: user.generateAuthToken(),
+    };
+    return res.status(200).json(
+      response({
+        success: true,
+        message: "User logged in Sucessfully",
+        data: data,
+      })
+    );
+  } else {
+    const randomUserCode = (Math.random() + 1).toString(36).substring(7);
+    const newName = name.split(" ");
 
-		const data = {
-			firstName: newName[0],
-			lastName: newName[1],
-			email: email,
-			username: slugify(name) + randomUserCode,
-			password: "password",
-		};
-		const user = await register(data);
+    const data = {
+      firstName: newName[0],
+      lastName: newName[1],
+      email: email,
+      username: slugify(name) + randomUserCode,
+      password: "password",
+    };
+    const user = await register(data);
 
-		if (!user)
-			return res
-				.status(500)
-				.json(response({ success: false, message: "User not created" }));
+    if (!user)
+      return res
+        .status(500)
+        .json(response({ success: false, message: "User not created" }));
 
-		return res.status(201).json(
-			response({
-				success: true,
-				message: "User created successfully",
-				data: user,
-			})
-		);
-	}
+    return res.status(201).json(
+      response({
+        success: true,
+        message: "User created successfully",
+        data: user,
+      })
+    );
+  }
 }
 
 async function verifyMail(req, res) {
@@ -148,5 +174,4 @@ async function verifyMail(req, res) {
   }
 }
 
-module.exports = { registerUser, googleAuthUserSignUp, verifyMail };
-
+module.exports = { registerUser, googleAuthUserSignUp, verifyMail, login };

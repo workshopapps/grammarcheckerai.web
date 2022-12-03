@@ -12,7 +12,7 @@ const {
   FB_CLIENT_ID,
   FB_CLIENT_SERECT,
 } = environment;
-const Axios = require("axios");
+const axios = require("axios");
 const querystring = require("query-string");
 const { userCollection } = require("../../database/models/userSchema");
 const { register } = require("../../repository/user.repository");
@@ -22,7 +22,7 @@ const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
 
 async function googleAuthURL(req, res) {
   const options = {
-    redirect_uri: `${SERVER_ROOT_URI}`,
+    redirect_uri: `${SERVER_ROOT_URI}/signin`,
     client_id: GOOGLE_CLIENT_ID,
     access_type: "offline",
     response_type: "code",
@@ -44,7 +44,7 @@ async function getTokens(code) {
     const client = new OAuth2Client(
       GOOGLE_CLIENT_ID,
       GOOGLE_CLIENT_SECRET,
-      `${SERVER_ROOT_URI}`
+      `${SERVER_ROOT_URI}/signin`
     );
 
     const { res } = await client.getToken(code);
@@ -69,15 +69,13 @@ async function getTokens(code) {
 }
 
 const getLinkedinUrl = (req, res) => {
-  return res
-    .status(200)
-    .json(
-      response({
-        message: "LinkedIn URL",
-        success: true,
-        data: `https://www.linkedin.com/oauth/v2/authorization?response_type=code&scope=r_liteprofile%20r_emailaddress&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${LINKEDIN_URL_ENCODED}`,
-      })
-    );
+  return res.status(200).json(
+    response({
+      message: "LinkedIn URL",
+      success: true,
+      data: `https://www.linkedin.com/oauth/v2/authorization?response_type=code&scope=r_liteprofile%20r_emailaddress&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${LINKEDIN_URL_ENCODED}`,
+    })
+  );
 };
 
 /*
@@ -100,7 +98,7 @@ const getLinkedinAccessToken = async ({
     grant_type: "authorization_code",
   };
 
-  const res_value = await Axios({
+  const res_value = await axios({
     method: "POST",
     url,
     headers: {
@@ -132,7 +130,7 @@ const linkedinAccessToken = async (req, res) => {
       clientSecret: LINKEDIN_SECRET_ID,
     });
 
-    const linkedinUserEmail = await Axios({
+    const linkedinUserEmail = await axios({
       method: "GET",
       url: `https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))`,
       headers: {
@@ -143,7 +141,7 @@ const linkedinAccessToken = async (req, res) => {
       console.log(error);
     });
 
-    const linkedinUser = await Axios({
+    const linkedinUser = await axios({
       method: "GET",
       url: `https://api.linkedin.com/v2/me`,
       headers: {
@@ -159,15 +157,13 @@ const linkedinAccessToken = async (req, res) => {
     const existing_user = await userCollection.findOne({ email });
 
     if (existing_user) {
-      return res
-        .status(200)
-        .json(
-          response({
-            success: true,
-            message: "User login successfully",
-            data: authResponse(existing_user),
-          })
-        );
+      return res.status(200).json(
+        response({
+          success: true,
+          message: "User login successfully",
+          data: authResponse(existing_user),
+        })
+      );
     }
 
     // create user

@@ -17,7 +17,14 @@ const { routeHandler } = require("./routes/index.route"),
 const CronJob = require("../api/controller/crons")
 
 //Passport Initialized
-app.use(passport.initialize()).use(express.json()).use(cors());
+app
+  .use(passport.initialize())
+  .use(express.json())
+  .use(
+    cors({
+      origin: "*",
+    })
+  );
 
 const sess = {
   store: new Memorystore({
@@ -46,7 +53,7 @@ app.use(
     extended: true,
   })
 );
-app.get("*", (req, res) => {
+app.use("*", (req, res) => {
   res.status(200).json({
     message: "Welcome to Grit Grammarly 🙌",
     user: "CORS enabled",
