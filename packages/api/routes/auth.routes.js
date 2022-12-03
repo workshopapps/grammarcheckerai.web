@@ -9,21 +9,28 @@ const {
 } = require("../utilities/validation/auth.validation");
 const {
   registerUser,
+  verifyMail,
   googleAuthUserSignUp,
+  login,
 } = require("../controller/auth/user.controller");
-const { googleAuthURL } = require("../controller/auth/google.user.controller");
-const { linkedin } = require("./linkedin-auth");
-const { login } = require("../controller/loginController");
+const {
+  googleAuthURL,
+  getLinkedinUrl,
+  linkedinAccessToken, 
+} = require("../controller/auth/authThirdPartyController"); 
 const { logout } = require("../controller/logoutcontroller");
-const { facebook } = require("./facebookAuth");
+
 const {
   requestForgotPassword,
   resetPassword,
 } = require("../controller/forgotPasswordController");
 
 auth.post("/signup", registerValidationRules(), validate, registerUser);
+auth.get("/verify/:link", verifyMail);
+
 auth.get("/google", googleAuthURL);
 auth.post("/google", googleAuthUserSignUp);
+
 auth.post(
   "/request-password-reset",
   request_reset_password(),
@@ -34,7 +41,7 @@ auth.post("/password-reset", reset_password(), validate, resetPassword);
 
 auth.post("/login", loginValidationRules(), validate, login);
 auth.post("/logout", logout);
-auth.use("/linkedin", linkedin);
-auth.use("/facebook", facebook);
+auth.get("/linkedin", getLinkedinUrl);
+auth.get("/linkedin/callback", linkedinAccessToken); 
 
 module.exports = { auth };

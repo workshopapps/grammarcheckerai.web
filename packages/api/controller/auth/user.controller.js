@@ -1,9 +1,13 @@
-const { response } = require("../../utilities/response");
-const { getTokens } = require("./google.user.controller");
+const { response, authResponse } = require("../../utilities/response");
+const { getTokens } = require("./authThirdPartyController");
 const { register } = require("../../repository/user.repository");
 const { userCollection } = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
-const emailService = require("../../services/email.service"); 
+const {
+  generateEmailVerificationLink,
+  verifyLink,
+} = require("../../utilities/generateToken");
+const emailService = require("../../services/email.service");
 const { SIGNUP_TEMPLATE } = require("../../utilities/email.template");
 
 async function registerUser(req, res) {
@@ -17,7 +21,7 @@ async function registerUser(req, res) {
       confirm_password,
       language,
     } = req.body;
-    
+
     //Check if the user already exist
     password =
       password === confirm_password
@@ -28,37 +32,39 @@ async function registerUser(req, res) {
               message: "Password mismatch, Comfirm your password",
             })
           );
-  
+
     const checkEmailExist = await userCollection.findOne({ email });
-  
+    console.log(checkEmailExist);
     if (checkEmailExist)
       return res
         .status(409)
         .json(response({ message: "User already exist", success: false }));
-  
+
     const data = { email, firstName, lastName, username, password, language };
-  
+
+    let verificationLink = await generateEmailVerificationLink(data);
+
     const user = await register(data);
-  
+
     await emailService({
-      to: email, 
-      subject: "Welcome to Speak Better",
+      to: email,
+      subject: "Welcome to Speak Better, Please Verify your Email",
       templateId: SIGNUP_TEMPLATE,
       dynamicTemplateData: {
         name: firstName,
-        action_url: "/signin",
+        action_url: verificationLink,
       },
     });
-  
+
     if (!user)
       return res
         .status(500)
         .json(response({ success: false, message: "User not created" }));
-  
+
     return res.status(201).json(
       response({
         success: true,
-        message: "User created successfully",
+        message: "User created successfully, Check your email for confirmation",
         data: user,
       })
     );
@@ -72,7 +78,33 @@ async function registerUser(req, res) {
     );
   }
 }
+async function login(req, res) {
+  // retrieve the email and password
+  const { email, password } = req.body;
 
+  const user = await userCollection.findOne({ email });
+  
+  if (!user) {
+    return res
+      .status(401)
+      .json({ msg: `User with email ${email} does not exist.` });
+  }
+  
+  // comparing password
+  const validPassword = await user.comparePassword(password);
+
+  if (!validPassword) {
+    return res.status(401).json({ msg: "Invalid email or password" });
+  }
+
+  return res.status(200).json(
+    response({
+      success: true,
+      message: "User login successfully",
+      data: authResponse(user),
+    })
+  );
+}
 async function googleAuthUserSignUp(req, res) {
   const { name, email } = await getTokens(req.query.code);
 
@@ -123,4 +155,22 @@ async function googleAuthUserSignUp(req, res) {
     );
   }
 }
-module.exports = { registerUser, googleAuthUserSignUp };
+
+async function verifyMail(req, res) {
+  let verificationLink = req.params.link;
+
+  try {
+    let user = await verifyLink(verificationLink);
+    if (!user) {
+      throw new Error("Link expired");
+    }
+
+    res.status(201).redirect("/v1/auth/signin");
+  } catch (err) {
+    res.status(400).json({
+      error: err.message,
+    });
+  }
+}
+
+module.exports = { registerUser, googleAuthUserSignUp, verifyMail, login };

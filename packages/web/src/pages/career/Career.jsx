@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Culture from '../../components/Careers/culture';
 import Footer from '../../components/Careers/footer';
 
@@ -8,19 +8,16 @@ import { FaChevronLeft, FaChevronRight  } from 'react-icons/fa';
 
 
 const Careers = () => {
-  const [index, setIndex] = useState(0)
-   console.log(index);
- 
+  const myData = teamData;
+  const [activeSlide, setActiveSlide] = useState(1);
 
- 
-  const nextPerson = () => {
-    setIndex (index === 1 ? 0 : prev =>prev + 1 ) ;
-  }
-  const prevPerson = () => {
-    setIndex (index === 0 ? 1 : prev =>prev - 1 ) ;
+  const previous = () => {
+    activeSlide === 1 ? setActiveSlide(activeSlide + 1) : setActiveSlide(activeSlide - 1);
   };
 
-
+  const next = () => {
+    activeSlide === 2 ? setActiveSlide(1) : setActiveSlide(activeSlide + 1);
+  };
 
   return (
     <div>
@@ -31,60 +28,57 @@ const Careers = () => {
         <h1 className="text-sm py-[20] -mt-8  text-white  max-[480px]:max-[480px]:w-3/5 max-[480px]:mx-auto">
           A culture rooted in setting people up for success
         </h1>
-      </section>
-      <div>
-        <div className="flex items-center justify-center px-60 py-14 bg-gray-100 ">
-          <div className="">
-            <h4 className="text-center text-xl font-bold text-dark-primary">
-              Hear from <span className="text-purple-500">the team</span>
-            </h4>
-            <section>
-              <div className =" overflow-hidden flex w-[300vw] h-full " style={{transform:`translateX(-${index * 100}vw)`}}>
-                {teamData.map(({ img, feedback, name, role, id }) => (
-                  <div  key={id} className =" overflow-hidden flex justify-center w-[100vw] mt-12 ">
-                    <article className=" flex flex-col items-center">
-                      <img className=" rounded-full w-[200px]  " src={img} alt={name} />
-                      <p className="text-center max-w-[480px] mt-10">{feedback}</p>
-                      <div className="mt-8 text-center text-sm leading-5">
-                        <p>{name}</p>
-                        <p className='italic'>{role}</p>
-                      </div>
-                    </article>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="flex items-center gap-4 justify-center bottom-0 mt-10">
-                <button className="flex justify-center items-center rounded-full bg-black text-white w-7 h-7" onClick={prevPerson}>
-                  <FaChevronLeft />
-                </button>
-                <button className="flex justify-center items-center rounded-full bg-black text-white w-7 h-7" onClick={nextPerson}>
-                  <FaChevronRight />
-                </button>
-              </div>
-            </section>
-            {/* <div  className="flex  max-[480px]:whitespace-normal"> 
-          {teamData.map(({ img, feedback, name, role, id }) => (
-            <div style={{...carouselStyle}}
-        
-              key={id}
-              className="w-full justify-center  overflow:hidden items-center min-w-full transition-all max-[360px]:min-w-fit"
-        
-            >
-              <TeamFeedback img={img} feedback={feedback} name={name} role={role}  />
-          </div>
-        ))}
-        </div> */}
-            {/* <div className="flex items-center justify-center space-x-10">
-              <button className="prev-btn" onClick={prevSlide}>
-                <FaChevronLeft />
-              </button>
-              <button className="next-btn" onClick={nextSlide}>
-                <FaChevronRight />
-              </button>
-            </div> */}
-          </div>
+        <div>
+          
         </div>
+      </section>
+      <div className=" flex justify-center items-center flex-col px-30 py-14 space-y-14 bg-[#F6F6F6] ">
+        <h4 className="text-center text-xl font-bold text-dark-primary">
+          Hear from <span className="text-purple-500">the team</span>
+        </h4>
+        <div
+          style={{
+            transform: `translateX(-${activeSlide * 1}%)`,
+            transition: 'all 1s',
+          }}
+          className=" flex w-full  flex-col m-auto justify-center transition-all items-center overflow-hidden "
+        >
+          {myData.map((item) => {
+            const { id, img, name, feedback, role } = item;
+            return (
+              <div
+                key={id}
+                className={
+                  activeSlide === id ? 'flex  w-[100%] m-auto justify-center  flex-col items-center' : 'hidden'
+                }
+              >
+                <div className="flex md:w-[70%] m-auto flex-col items-center  text-center transition-all justify-center">
+                  <img src={img} alt={feedback} className="rounded-full w-[100px] md:w-[180px] " />
+                  <div className=" px-10">
+                    <h3 className="text-[15px] font-bold md:text-[18px] mt-[24px] leading-6 md:leading-[30px] text-[#393939] ">
+                      <q> {feedback} </q>
+                    </h3>
+                    <p className=" text-[13px] md:text-[16px] mt-[16px] leading-[19px] text-[#5A5A5A] font-light italic">
+                      {' '}
+                      {name}
+                    </p>
+                    <p className=" text-[13px] md:text-[16px] mt-[8px] leading-[19px] text-[#5A5A5A] font-light italic  mb-[24px]">
+                      {role}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+          <div className="flex items-center w-[30%] md:w-[14%] m-auto justify-between mt-5 py=[50px]">
+            <button onClick={previous} className="cursor-pointer">
+              <img src="images/previous.svg" alt="previous" />
+            </button>
+            <button onClick={next} className="cursor-pointer">
+              <img src="images/next.svg" alt="next" />
+            </button>{' '}
+          </div>
+        </div>{' '}
       </div>
       <Culture />
       <section className="text-center py-10 ">
@@ -105,8 +99,10 @@ Every member of the team brings something unique to Gritty Grammar which strengh
         </a>
       </section>
       <Footer />
-    </div>
-  );
+      </div>
+      
+  
+  )
 };
 
 export default Careers;

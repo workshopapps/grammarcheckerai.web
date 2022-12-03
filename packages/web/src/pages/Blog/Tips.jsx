@@ -20,7 +20,7 @@ const Tips = () => {
         </div>
 
         <div className="p-4 mb-10 md:w-full md:h-full md:mb-10">
-          <img src={Image3} alt="improve your english speaking skills" className="w-full md:h-full rounded" />
+          <img src={Image3} alt="improve your english speaking skills" className="w-full md:h-full" />
         </div>
 
         <div className="p-4 py-4">
