@@ -1,0 +1,39 @@
+@import '../../../../assets/styles/variables.scss';
+
+.total_score {
+    background-color: $greyColor;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    padding: 15px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    @include flexCenter(row);
+    z-index: 2;
+    color: $greyColor;
+    @include flexCenter(row);
+
+    &__card {
+        background-color: $white;
+        width: 300px;
+        height: 300px;
+        padding: 20px;
+        color: $greyColor;
+        @include flexCenter(column);
+        justify-content: space-between;
+
+        &__btn {
+            width: 80%;
+            @include flexCenter(row);
+            justify-content: space-between;
+
+            button {
+                background-color: $purpleBackground;
+                border-radius: 8px;
+                padding: 10px;
+                color: $white;
+            }
+        }
+    }
+}

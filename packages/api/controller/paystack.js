@@ -1,8 +1,7 @@
 const { environment } = require("../config/environment");
 const { PAYSTACK_SECRET_KEY } = environment;
 const paystack = (request) => {
-
-  const initializePayment = ( form, params, mycallback) => {
+  const initializePayment = (form, mycallback) => {
     const option = {
       url: "https://api.paystack.co/transaction/initialize",
       headers: {
@@ -11,7 +10,6 @@ const paystack = (request) => {
         "cache-control": "no-cache",
       },
       form,
-       params,
     };
     const callback = (error, response, body) => {
       return mycallback(error, body);
