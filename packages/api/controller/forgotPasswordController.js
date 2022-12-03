@@ -23,9 +23,8 @@ exports.requestForgotPassword = async (req, res) => {
         })
       );
     }
-
     const token = user.generateAuthToken();
-    const reset_password_url = `${BASE_URL}/reset-password?token=${token}`;
+    const reset_password_url = `${BASE_URL}/password-reset?token=${token}`;
 
     emailService({
       to: email,
