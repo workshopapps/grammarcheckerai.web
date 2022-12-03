@@ -10,21 +10,17 @@ const quizFlow = function (io, socket) {
   const count = io.engine.clientsCount;
   io.emit("update-players", count);
   socket.on("start-quiz", startQuizHandler);
-  io.emit("get-question", generateQuestion);
+  socket.on("get-question", async () => {
+    const question = await generateQuestion();
+    io.emit("receive-question", question);
+  });
   socket.on("update-quizProfile", userQuizProfileUpdateHandler);
-  socket.on("get-roundWinner", (winnerUserId) => {
+  socket.on("get-roundWinner", async (winnerUserId) => {
     if (!winnerUserId) {
-      io.emit("receive-roundWinner", () => {
-        return `Time up!!! No player won this round.`;
-      });
+      io.emit("receive-roundWinner", "Time up!!! No player won this round.");
     } else {
-      io.emit("receive-roundWinner", async (userId) => {
-        const roundWinner = await receiveRoundWinnerHandler(
-          winnerUserId,
-          userId
-        );
-        return roundWinner;
-      });
+      const roundWinner = await receiveRoundWinnerHandler(winnerUserId);
+      io.emit("receive-roundWinner", roundWinner);
     }
   });
   socket.on("disconnect", () => {
