@@ -21,7 +21,9 @@ const ApiStatus = () => {
         </main>
       </div>
     </div>
-      <Footer />
+    <div className={style.footer}>
+    <Footer />
+    </div>
       </>
   );
 };
