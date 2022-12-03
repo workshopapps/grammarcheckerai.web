@@ -13,10 +13,9 @@ exports.startQuizHandler = async (userId) => {
   }
 };
 
-exports.receiveRoundWinnerHandler = async (winnerUserId, userId) => {
-  const isWinner = winnerUserId === userId;
+exports.receiveRoundWinnerHandler = async (winnerUserId) => {
   const user = await userCollection.findById(winnerUserId);
-  return `${isWinner ? "You" : user.username} won this round.`;
+  return `${user.username} won this round.`;
 };
 
 exports.generateQuestion = async function () {
