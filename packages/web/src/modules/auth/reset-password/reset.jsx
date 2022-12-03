@@ -1,26 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import axios from "axios";
-import { getStorageData, useLocalStorage } from '../../../hooks/useLocalStorage';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './reset.module.css';
-import Logo from '../../../assets/signup-logo.png';
+import Logo from '../../../assets/images/logo2.png';
 import Image2 from '../../../assets/Correction 1.png';
 import Image1 from '../../../assets/error 1.png';
+import useResetPassword from '../../../hooks/auth/useResetPassword';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const index = () => {
   const [userNewPassword, setUserNewPassword] = useState('');
   const [userConfirmNewPassword, setUserConfirmNewPassword] = useState('');
-  const [existingUserPassword, setExistingUserPassword] = useLocalStorage(
-    'existingUserPassword',
-    getStorageData('demoData'),
-  );
+  const url = new URL(window?.location?.href);
+  const params = new URLSearchParams(url?.search);
+  const token = params.get('token');
 
-  useEffect(() => {
-    setExistingUserPassword(getStorageData('demoData'));
-  }, []);
+  const authResetPassword = useResetPassword(token);
 
+  console.log(import.meta.env);
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
 
@@ -28,40 +26,29 @@ const index = () => {
   const handlePrev = () => {
     navigate('/signin');
   };
-  /* 
-    handleSaveNewPassword => resets the originally saved database password
-    to the new one when both inputs match
-  */
-    const url = "http://grittygrammar.hng.tech/password-reset";
 
   const handleSaveNewPassword = () => {
-    if ((userConfirmNewPassword !== userNewPassword)) {
-      console.log(userConfirmNewPassword);
-      console.log(userNewPassword);
-      error("Passwords do not match!");
+    if (userConfirmNewPassword !== userNewPassword) {
+      error('Passwords do not match!');
+      return;
     }
-
-    else if ((userConfirmNewPassword === "" ) && (userNewPassword === "" )){
-      error("Password cannot be empty!")
+    if (userConfirmNewPassword === '' && userNewPassword === '') {
+      error('Password cannot be empty!');
+      return;
     }
-    else {
-      axios.post(url, {
-        userNewPassword,
-        userConfirmNewPassword
+    authResetPassword
+      .mutateAsync({
+        new_password: userNewPassword,
+        confirm_password: userConfirmNewPassword,
       })
-      .then((response) => {
-        console.log(response)
-        setExistingUserPassword(userNewPassword);
-        console.log(existingUserPassword);
-        setTimeout(() => navigate('/signin'), 3000);
-        success('Password reset Successful!');
+      .then((res) => {
+        success(res.data.message ?? 'Success');
       })
       .catch((err) => {
-        console.log(err)
-        error("Time out...try again!")
-      })
-    }
+        error(err?.response?.data?.data?.new_password ?? err?.response?.data?.data?.confirm_password);
+      });
   };
+
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div className={styles._gs2mainlogin}>
@@ -85,31 +72,53 @@ const index = () => {
                 />
               </svg>
             </div>
-            <h2>Set A New Password</h2>
-            <p className={styles._subtitle}>Create a super memorable password</p>
-            <div className={styles._gs2loginform}>
-              <div className={styles._gs2logininput}>
-                <span>Enter New Password</span>
-                <input
-                  type="password"
-                  id="userNewPassword"
-                  defaultValue={userNewPassword}
-                  onChange={(e) => setUserNewPassword(e.target.value)}
-                />
+            {authResetPassword.isSuccess && authResetPassword.data ? (
+              <div className="space-y-4 pt-10">
+                <h2>Set A New Password</h2>
+                <p className={styles._subtitle}>Your password has been reset successfully, hit continue to proceed.</p>
+                <div className={styles._gcforgotcontinue}>
+                  <LoadingButton onClick={handlePrev} size="small" variant="contained">
+                    Continue
+                  </LoadingButton>
+                </div>
               </div>
-              <div className={styles._gs2logininput}>
-                <span>Confirm Password</span>
-                <input
-                  type="password"
-                  id="userConfirmPassword"
-                  defaultValue={userConfirmNewPassword}
-                  onChange={(e) => setUserConfirmNewPassword(e.target.value)}
-                />
+            ) : (
+              <div>
+                <h2>Set A New Password</h2>
+                <p className={styles._subtitle}>Create a super memorable password</p>
+                <div className={styles._gs2loginform}>
+                  <div className={styles._gs2logininput}>
+                    <span>Enter New Password</span>
+                    <input
+                      type="password"
+                      id="userNewPassword"
+                      defaultValue={userNewPassword}
+                      onChange={(e) => setUserNewPassword(e.target.value)}
+                    />
+                  </div>
+                  <div className={styles._gs2logininput}>
+                    <span>Confirm Password</span>
+                    <input
+                      type="password"
+                      id="userConfirmPassword"
+                      defaultValue={userConfirmNewPassword}
+                      onChange={(e) => setUserConfirmNewPassword(e.target.value)}
+                    />
+                  </div>
+                  <div className={styles._gcforgotcontinue}>
+                    <LoadingButton
+                      onClick={handleSaveNewPassword}
+                      size="small"
+                      type="submit"
+                      loading={authResetPassword.isLoading}
+                      variant="contained"
+                    >
+                      Reset Password
+                    </LoadingButton>
+                  </div>
+                </div>
               </div>
-              <div className={styles._gs2logincontinue}>
-                <button onClick={handleSaveNewPassword}>Reset Password</button>
-              </div>
-            </div>
+            )}
           </div>
         </div>
         <div className={styles._gs2logincol2}>
