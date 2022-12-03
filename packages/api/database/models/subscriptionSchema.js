@@ -15,7 +15,6 @@ const subscriptionSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      unique: true,
     },
     subscriptionId: {
       type: String,

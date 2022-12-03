@@ -83,7 +83,7 @@ async function login(req, res) {
   const { email, password } = req.body;
 
   const user = await userCollection.findOne({ email });
-  
+  console.log(user)
   if (!user) {
     return res
       .status(401)
