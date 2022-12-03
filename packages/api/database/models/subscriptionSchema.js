@@ -22,7 +22,7 @@ const subscriptionSchema = new mongoose.Schema(
     },
     interval: {
       type: String,
-      enum: ["monthly", "quarterly", "annually"],
+      enum: ["monthly", "quarterly", "annually", "weekly"],
       default: "monthly",
       required: true,
     },
