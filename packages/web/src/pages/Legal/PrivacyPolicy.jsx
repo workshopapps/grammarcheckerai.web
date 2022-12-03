@@ -9,7 +9,7 @@ export default function PrivacyPolicy() {
             <p>Last updated: 12 November, 2022.</p>
         </div>
 
-        <div className='flex flex-col gap-5 px-5 md:px-10 py-10'>
+        <div className='w-[95%] m-auto flex flex-col gap-5 px-5 md:px-10 py-10'>
             <p>
             Speak better is committed to the security and privacy of our customers data. 
             </p>

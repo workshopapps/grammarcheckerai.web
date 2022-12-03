@@ -99,7 +99,7 @@ const Transcribe = () => {
               <div className="pb-20 md:pb-16 px-2 mt-5 relative">
                 {data.botMsg !== null ? (
                   <div className="ai__msg w-52">
-                    <h1 className="text-base font-medium ">Gritty Grammar</h1>
+                    <h1 className="text-base font-medium ">Speak Better</h1>
                     <p className="bg-gray-100 font-normal leading-5 p-2 rounded">{data.botMsg}</p>
                     <p className="mt-1 text-xs text-left">{new Date().toLocaleTimeString()}</p>
                   </div>
