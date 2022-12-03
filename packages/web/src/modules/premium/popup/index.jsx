@@ -26,7 +26,7 @@ const index = (props) => {
   const [userToken, setUserToken] = React.useState('');
   const [email, setEmail] = React.useState('');
 
-  const useFetch = async (url) => {
+  const useFetch = (url) => {
     var requestOptions = {
       method: 'POST',
       body: JSON.stringify({
@@ -38,20 +38,21 @@ const index = (props) => {
         subscriptionId: 'PLN_2cqf3nx11trbn4b',
       }),
       headers: {
+        'Access-Control-Allow-Origin': '*',
         Authorization: 'Bearer pk_test_79b1560168d893e4e503c39acdc3b49f02db69c3',
         'Content-type': 'application/json; charset=UTF-8',
       },
     };
 
-    await fetch(url, requestOptions)
+    fetch(url, requestOptions)
       .then((response) => {
-        window.location.href = response.data.authorization_url;
+        console.log(response);
       })
       .catch((err) => console.log(err.message));
   };
 
   const handlePayment = () => {
-    useFetch('http://localhost:5001/v1/paystack/pay');
+    useFetch('https://api.speakbetter.hng.tech/v1/paystack/pay');
   };
 
   // const handlePayment = () => {
@@ -173,7 +174,7 @@ const index = (props) => {
                 </button>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() => handleCheckout({ plan: 'monthly', amount: 2000, duration: 'quarterly' })}
+                  onClick={() => handleCheckout({ plan: 'quarterly', amount: 2000, duration: 'quarterly' })}
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Quarterly</p>
@@ -189,7 +190,7 @@ const index = (props) => {
                 </button>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() => handleCheckout({ plan: 'monthly', amount: 3000, duration: 'yearly' })}
+                  onClick={() => handleCheckout({ plan: 'yearly', amount: 3000, duration: 'yearly' })}
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Yearly</p>
@@ -214,7 +215,9 @@ const index = (props) => {
                       <p>
                         $10.90<span> / month</span>
                       </p>
-                      <button onClick={() => handlePayment()}>Select</button>
+                      <button onClick={() => handleCheckout({ plan: 'monthly', amount: 2000, duration: 'monthly' })}>
+                        Select
+                      </button>
                     </div>
                   </div>
                   <hr />
@@ -228,7 +231,9 @@ const index = (props) => {
                       <p>
                         $8.90<span> / month</span>
                       </p>
-                      <button onClick={() => handleCheckout({ plan: 'monthly', amount: 2000, duration: 'quarterly' })}>
+                      <button
+                        onClick={() => handleCheckout({ plan: 'quarterly', amount: 2000, duration: 'quarterly' })}
+                      >
                         Select
                       </button>
                     </div>
@@ -244,7 +249,7 @@ const index = (props) => {
                       <p>
                         $5.90<span> / month</span>
                       </p>
-                      <button onClick={() => handleCheckout({ plan: 'monthly', amount: 3000, duration: 'yearly' })}>
+                      <button onClick={() => handleCheckout({ plan: 'yearly', amount: 3000, duration: 'yearly' })}>
                         Select
                       </button>
                     </div>
