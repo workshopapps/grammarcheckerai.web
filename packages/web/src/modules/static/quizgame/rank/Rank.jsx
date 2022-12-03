@@ -10,7 +10,7 @@ const Rank = ({ setRank }) => {
   const [ranks, setRanks] = useState({});
 
   const getLeaderBoard = async () => {
-    const rankingBoard = await axios.get('http://localhost:5001/v1/leaderboard');
+    const rankingBoard = await axios.get('https://api.speakbetter.hng.tech/v1/leaderboard');
     const data = rankingBoard.data;
     setRanks(data.data[0]);
     // console.log(ranks);
