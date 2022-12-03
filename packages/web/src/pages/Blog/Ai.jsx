@@ -2,8 +2,8 @@ import React from 'react';
 import Heroimg from '../../assets/blogimg/Frame 1000001903.svg';
 import Cta from '../../components/Blogcomponents/Cta';
 import Footer from '../../modules/static/landing-page/Footer';
-import useTheme from "../../hooks/useTheme";
-const context = useTheme();
+import { Link } from "react-router-dom"
+
 const Ai = () => {
   return (
     <div>
@@ -13,10 +13,10 @@ const Ai = () => {
           The Time Is Now for Conversational AI
         </h1>
 
-        <div className={`${context.theme === 'dark' ? 'text-white' : 'text-header'}  text-sm font-bold mb-4 text-center p-4`}>
-          <span className="mr-3">Home</span>
+        <div className="text-header text-sm font-bold mb-4 text-center p-4">
+          <span className="mr-3"><Link  to="/home">Home</Link></span>
           <span className="mr-3">&gt;&gt;&gt;</span>
-          <span className="mr-3">Blog</span>
+          <span className="mr-3"><Link  to="/blog">Blog</Link></span>
           <span className="mr-3">&gt;&gt;&gt;</span>
           <span className="text-blog">The Time Is Now for Conversational AI</span>
         </div>

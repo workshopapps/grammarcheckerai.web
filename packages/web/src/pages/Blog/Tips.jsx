@@ -2,7 +2,7 @@ import React from 'react';
 import Image3 from '../../assets/blogimg/image 2 (2).svg';
 import Cta from '../../components/Blogcomponents/Cta';
 import Footer from '../../modules/static/landing-page/Footer';
-import useTheme from "../../hooks/useTheme";
+import { Link } from "react-router-dom"
 
 const Tips = () => {
   const context = useTheme();
@@ -13,10 +13,10 @@ const Tips = () => {
         <h1 className={`${context.theme === 'dark' ? 'text-[#ffff] ' : 'text-header'} text-xl font-bold mb-4 text-center xl:text-3xl`}>
           10 Tips to Help You Speak English Like a Native
         </h1>
-        <div className={` ${context.theme === 'dark' ? 'text-white' : 'text-header'}  text-sm font-bold mb-4 text-center p-4`}>
-          <span className="mr-3">Home</span>
+        <div className="text-header text-sm font-bold mb-4 text-center p-4">
+          <span className="mr-3"><Link  to="/home">Home</Link></span>
           <span className="mr-3">&gt;&gt;&gt;</span>
-          <span className="mr-3">Blog</span>
+          <span className="mr-3"><Link  to="/blog">Blog</Link></span>
           <span className="mr-3">&gt;&gt;&gt;</span>
           <span className="text-blog">10 Tips to Help You Speak English Like a Native</span>
         </div>

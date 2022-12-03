@@ -2,8 +2,8 @@ import React from 'react';
 import Image1 from '../../assets/blogimg/image2.svg';
 import Cta from '../../components/Blogcomponents/Cta';
 import Footer from '../../modules/static/landing-page/Footer';
-import useTheme from "../../hooks/useTheme";
-
+import { Link } from "react-router-dom"
+import useTheme from '../../hooks/useTheme';
 const Jobs = () => {
   const context = useTheme();
   return (
@@ -14,10 +14,10 @@ const Jobs = () => {
           7 Amazing Jobs That Will Pay You to Speak English
         </h1>
 
-        <div className={` ${context.theme === 'dark' ? 'text-white' : 'text-header'}  text-sm font-bold mb-4 text-center p-4`}>
-          <span className="mr-3">Home</span>
+        <div className="text-header text-sm font-bold mb-4 text-center p-4">
+          <span className="mr-3"><Link  to="/home">Home</Link></span>
           <span className="mr-3">&gt;&gt;&gt;</span>
-          <span className="mr-3">Blog</span>
+          <span className="mr-3"><Link  to="/blog">Blog</Link></span>
           <span className="mr-3">&gt;&gt;&gt;</span>
           <span className= "text-blog">7 Amazing Jobs That Will Pay You to Speak English</span>
         </div>

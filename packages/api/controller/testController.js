@@ -1,7 +1,6 @@
 const axios = require("./axios");
 const { environment } = require("../config/environment");
-const { SENDGRID_API_KEY, PASSWORD_CHANGED_TEMPLATE_ID, EMAIL_FROM } =
-  environment;
+const { SENDGRID_API_KEY, TEST_EMAIL_TEMPLATE_ID, EMAIL_FROM } = environment;
 const emailService = require("../services/email.service");
 const sendgrid = require("@sendgrid/mail");
 sendgrid.setApiKey(SENDGRID_API_KEY);
