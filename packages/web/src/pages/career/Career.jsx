@@ -72,16 +72,16 @@ const Careers = () => {
           })}
           <div className="flex items-center w-[30%] md:w-[14%] m-auto justify-between mt-5 py=[50px]">
             <button onClick={previous} className="cursor-pointer">
-              <img src="images/previous.svg" alt="previous" />
+              <img src="images/previous.svg" className='' alt="previous" />
             </button>
             <button onClick={next} className="cursor-pointer">
-              <img src="images/next.svg" alt="next" />
+              <img src="images/next.svg"   className='px-4'alt="next" />
             </button>{' '}
           </div>
         </div>{' '}
       </div>
       <Culture />
-      <section className="text-center py-10 ">
+      <section className=" mb-[64px] text-center py-10 ">
         <h1 className='text-xl'>Apply for roles</h1>
         <p className="w-1/2 mx-auto py-6  text-sm max-[480px]:w-full max-[480px]:px-8 max-[480px]:pb-10 my-6">
         <svg  className="inline float-left mb-2 ml-2 mr-2"width="10" height="10" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -94,7 +94,7 @@ Every member of the team brings something unique to Gritty Grammar which strengh
 </svg>
 
         </p>
-        <a href="/roles" className="bg-purple-800 p text-white rounded-lg py-4 px-4">
+        <a href="/roles" className=" bg-[#5D387F] p text-white rounded-lg py-4 px-6 ">
           Explore Open Roles
         </a>
       </section>

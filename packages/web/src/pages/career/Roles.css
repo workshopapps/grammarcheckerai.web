@@ -26,4 +26,33 @@
 ._p:first-child{
   background-color: black;
   color: white;
+  
 }
+@media screen and (max-width: 480px) {
+  ._t{
+    margin: 0;
+    padding: 5px;
+
+  }
+
+  ._p{
+    padding: auto;
+    width: 70%;
+    height: 50px;
+    white-space: nowrap;
+    border-radius: 21px;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  /* For IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+}
+
+
+
+

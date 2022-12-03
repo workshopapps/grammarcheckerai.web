@@ -54,14 +54,17 @@ const Roles = () => {
             gives our team members the best of both worlds: unlock creativity, fuels innovation and you also have time for
             personal activities.
           </p>
-          <div className="py-10">
+          <div className="py-4  scrollbar-hide overflow-scroll w-full flex">
+
           {roles.map((button) => {
           
-            return <button className='_p ' onClick= {() => setSelectedRole(button.value)} type="submit">{button.value}</button>
+            return <button className='_p  ' onClick= {() => setSelectedRole(button.value)} type="submit">{button.value}</button>
           })}
           
           
           
+          </div>
+          <div>
               {selectedRole === 'Sales' &&  (
                 <p className="text-center w-3/5 mx-auto py-16 text-gray-500">
                  No open roles at the moment
@@ -121,9 +124,10 @@ const Roles = () => {
                 ))}
                 <hr />
               </div>
-            )}
-          </div>
-                </div>
+            )}</div>
+                </div> 
+
+
         </div>
       <Footer/>
     </div>
