@@ -1,5 +1,5 @@
-const { response } = require("../../utilities/response");
-const { getTokens } = require("./google.user.controller");
+const { response, authResponse } = require("../../utilities/response");
+const { getTokens } = require("./authThirdPartyController");
 const { register } = require("../../repository/user.repository");
 const { userCollection } = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
@@ -8,8 +8,7 @@ const {
   verifyLink,
 } = require("../../utilities/generateToken");
 const emailService = require("../../services/email.service");
-const { environment } = require("../../config/environment");
-const { SIGNUP_TEMPLATE_ID } = environment;
+const { SIGNUP_TEMPLATE } = require("../../utilities/email.template");
 
 async function registerUser(req, res) {
   try {
@@ -35,7 +34,7 @@ async function registerUser(req, res) {
           );
 
     const checkEmailExist = await userCollection.findOne({ email });
-
+    console.log(checkEmailExist);
     if (checkEmailExist)
       return res
         .status(409)
@@ -45,17 +44,17 @@ async function registerUser(req, res) {
 
     let verificationLink = await generateEmailVerificationLink(data);
 
+    const user = await register(data);
+
     await emailService({
       to: email,
       subject: "Welcome to Speak Better, Please Verify your Email",
-      templateId: SIGNUP_TEMPLATE_ID,
+      templateId: SIGNUP_TEMPLATE,
       dynamicTemplateData: {
         name: firstName,
         action_url: verificationLink,
       },
     });
-
-    const user = await register(data);
 
     if (!user)
       return res
@@ -79,7 +78,33 @@ async function registerUser(req, res) {
     );
   }
 }
+async function login(req, res) {
+  // retrieve the email and password
+  const { email, password } = req.body;
 
+  const user = await userCollection.findOne({ email });
+  
+  if (!user) {
+    return res
+      .status(401)
+      .json({ msg: `User with email ${email} does not exist.` });
+  }
+  
+  // comparing password
+  const validPassword = await user.comparePassword(password);
+
+  if (!validPassword) {
+    return res.status(401).json({ msg: "Invalid email or password" });
+  }
+
+  return res.status(200).json(
+    response({
+      success: true,
+      message: "User login successfully",
+      data: authResponse(user),
+    })
+  );
+}
 async function googleAuthUserSignUp(req, res) {
   const { name, email } = await getTokens(req.query.code);
 
@@ -148,4 +173,4 @@ async function verifyMail(req, res) {
   }
 }
 
-module.exports = { registerUser, googleAuthUserSignUp, verifyMail };
+module.exports = { registerUser, googleAuthUserSignUp, verifyMail, login };

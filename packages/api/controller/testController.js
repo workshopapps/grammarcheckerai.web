@@ -106,8 +106,8 @@ exports.sendMail = async (req, res) => {
   const { email, name } = req.body;
   emailService({
     to: email,
-    subject: "Speak Better: Password Changed Successfully",
-    templateId: PASSWORD_CHANGED_TEMPLATE_ID,
+    subject: "Speak Better: Welcome!",
+    templateId: TEST_EMAIL_TEMPLATE_ID,
     dynamic_template_data: {
       name: name,
       actionurl: "https://speakbetter.hng.tech/me/home",

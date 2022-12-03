@@ -55,6 +55,7 @@
     "joi": "^17.7.0",
     "jsonwebtoken": "^8.5.1",
     "lamejs": "^1.2.1",
+    "memorystore": "^1.6.7",
     "mic-recorder-to-mp3": "^2.2.2",
     "mongodb": "^4.12.0",
     "mongoose": "^6.7.2",
