@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Culture from '../../components/Careers/culture';
 import Footer from '../../components/Careers/footer';
-import TeamFeedback from '../../components/Careers/teamFeedback';
 import Navbar from '../../components/Navbar';
 import teamData from '../../data/careers/teamData.json';
 
 const Careers = () => {
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const data = teamData;
   const sliderScroll = () => {
@@ -23,12 +23,16 @@ const Careers = () => {
     return () => clearInterval(interval);
   });
 
+  const myData = teamData;
+  const [activeSlide, setActiveSlide] = useState(1);
+
+
   const previous = () => {
-    currentIndex != 0 && setCurrentIndex(currentIndex - 1);
+    activeSlide === 1 ? setActiveSlide(activeSlide + 1) : setActiveSlide(activeSlide - 1);
   };
 
   const next = () => {
-    currentIndex === 2 ? setCurrentIndex(0) : setCurrentIndex(currentIndex + 1);
+    activeSlide === 2 ? setActiveSlide(1) : setActiveSlide(activeSlide + 1);
   };
 
   return (
@@ -46,10 +50,11 @@ const Careers = () => {
           </a>
         </div>
       </section>
-      <div className="px-60 py-14 space-y-14 bg-gray-100 max-[480px]:px-2 max-[480px]:py-8">
+      <div className=" flex justify-center items-center flex-col px-30 py-14 space-y-14 bg-[#F6F6F6] ">
         <h4 className="text-center text-xl font-bold text-dark-primary">
           Hear from <span className="text-purple-500">the team</span>
         </h4>
+
         <div className="flex overflow-hidden max-[480px]:whitespace-normal">
           {data?.map(({ img, feedback, name, role, idx }) => (
             <div
@@ -71,6 +76,50 @@ const Careers = () => {
           <button onClick={next} className="cursor-pointer">
             <img src="images/next.svg" alt="next" />
           </button>{' '}
+        </div>
+
+        <div
+          style={{
+            transform: `translateX(-${activeSlide * 1}%)`,
+            transition: 'all 1s',
+          }}
+          className=" flex w-full  flex-col m-auto justify-center transition-all items-center overflow-hidden "
+        >
+          {myData.map((item) => {
+            const { id, img, name, feedback, role } = item;
+            return (
+              <div
+                key={id}
+                className={
+                  activeSlide === id ? 'flex  w-[100%] m-auto justify-center  flex-col items-center' : 'hidden'
+                }
+              >
+                <div className="flex md:w-[70%] m-auto flex-col items-center  text-center transition-all justify-center">
+                  <img src={img} alt={feedback} className="rounded-full w-[100px] md:w-[180px] " />
+                  <div className=" px-10">
+                    <h3 className="text-[15px] font-bold md:text-[18px] mt-[24px] leading-6 md:leading-[30px] text-[#393939] ">
+                      <q> {feedback} </q>
+                    </h3>
+                    <p className=" text-[13px] md:text-[16px] mt-[16px] leading-[19px] text-[#5A5A5A] font-light italic">
+                      {' '}
+                      {name}
+                    </p>
+                    <p className=" text-[13px] md:text-[16px] mt-[8px] leading-[19px] text-[#5A5A5A] font-light italic  mb-[24px]">
+                      {role}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+          <div className="flex items-center w-[30%] md:w-[14%] m-auto justify-between mt-5 py=[50px]">
+            <button onClick={previous} className="cursor-pointer">
+              <img src="images/previous.svg" alt="previous" />
+            </button>
+            <button onClick={next} className="cursor-pointer">
+              <img src="images/next.svg" alt="next" />
+            </button>
+          </div>
         </div>
       </div>
       <Culture />

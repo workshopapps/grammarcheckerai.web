@@ -1,17 +1,19 @@
 import React, { useState, useContext } from 'react';
 import { ThemeContext } from '../../lib/context/DarkThemeContext';
 import { NavLink, useNavigate, Link } from 'react-router-dom';
-import logoImg from '../../assets/images/grit-white.webp';
+import logoImg from '../../assets/images/logo2.png';
+import logoImgWhite from '../../assets/images/wlogo.png';
 import styles from './navbar.module.css';
 // eslint-disable-next-line import/no-unresolved
 import useMediaQuery from '@mui/material/useMediaQuery';
 // eslint-disable-next-line import/no-unresolved
 import { Drawer } from '@mui/material';
-// Material UI toggle button
+//Material UI toggle button
 import { styled } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import { BsList } from 'react-icons/bs'
 
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -32,7 +34,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
       },
       '& + .MuiSwitch-track': {
         opacity: 1,
-        backgroundColor: theme.palette.mode === 'dark' ? '#fff' : '#fff',
+        backgroundColor: theme.palette.mode === 'dark' ? '#5d387f' : '#5d387f',
       },
     },
   },
@@ -56,35 +58,30 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
   '& .MuiSwitch-track': {
     opacity: 1,
-    backgroundColor: theme.palette.mode === 'dark' ? '#fff' : '#fff',
+    backgroundColor: theme.palette.mode === 'dark' ? '#5d387f' : '#5d387f',
     borderRadius: 20 / 2,
   },
 }));
-
-
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [activeNav, setActiveNav] = useState('Home');
   
-
-
   const navigate = useNavigate();
 
   const context = useContext(ThemeContext);
   localStorage.setItem('theme', context.theme);
   const toggleDarkMode = () => {
     context.toggle();
-  }
-
+  };
 
   const isTabletOrMobile = useMediaQuery('(max-width: 1000px)');
   const ismobile = useMediaQuery('(max-width: 700px)');
 
   return (
-    <header className={styles._header} nav-theme={context.theme}>
+    <header className={`${styles._header} dark:bg-header bg-white `} nav-theme={context.theme}>
       <button className={styles._nvlogo} onClick={() => navigate('/home')}>
-        <img src={logoImg} alt="gritty" />
+        {context.theme === 'dark' ? <img src={logoImgWhite} alt="gritty" /> : <img src={logoImg} alt="gritty" />}
       </button>
 
       <FormGroup>
@@ -121,12 +118,14 @@ const Navbar = () => {
       <div className={styles._nvstarted}>
         {isTabletOrMobile && (
           <Link to="#/" className={styles._mobilenav} onClick={() => setOpen(true)}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-              <path d="M16.4 9H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zm0 4H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zM3.6 7h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1z" />
-            </svg>
+            {context.theme === 'dark' ? <BsList /> : <BsList className='text-["#3030303"]' />}
           </Link>
+        )} 
+        {!ismobile && (
+          <button onClick={() => navigate('/signup')} className="text-white">
+            Get started
+          </button>
         )}
-        {!ismobile && <button onClick={() => navigate('/signup')}>Get started</button>}
         <Drawer open={open} onClose={() => setOpen(false)} className={styles.DrawerNav}>
           <div className={styles._nvnav}>
             {[

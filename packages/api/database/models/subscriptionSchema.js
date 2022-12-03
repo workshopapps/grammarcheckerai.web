@@ -15,7 +15,6 @@ const subscriptionSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      unique: true,
     },
     subscriptionId: {
       type: String,
@@ -38,8 +37,6 @@ const subscriptionSchema = new mongoose.Schema(
     },
     txref: {
       type: String,
-      enum: ["monthly", "yearly"],
-      default: "monthly",
     },
     status: {
       type: String,
