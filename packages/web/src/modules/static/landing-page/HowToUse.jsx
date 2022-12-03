@@ -38,7 +38,7 @@ const HowToUse = () => {
         <h3 className={`text-xl text-center md:text-left ${context.theme === 'dark' ? 'text-[#ffffff]' : null} md:text-3xl -mb-10 font-black`}>
           How You Can Use Speak Better In Three Tiny Steps
         </h3>
-        <div className="md:flex md:justify-between md:items-center mt-12">
+        <div className="md:flex md:justify-between md:items-center mt-12 lg:gap-96">
           <div className="flex flex-col max-w-xs my-9 gap-4 border-l-[1px] border-[#afc1ca]">
             {btns.map((btn) => {
               return (
