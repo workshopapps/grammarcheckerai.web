@@ -23,6 +23,12 @@
         @include flexCenter(column);
         justify-content: space-between;
 
+        &__text {
+            font-family: $fontFamily1;
+            color: $greenColor;
+            font-size: 28px;
+        }
+
         &__btn {
             width: 80%;
             @include flexCenter(row);
