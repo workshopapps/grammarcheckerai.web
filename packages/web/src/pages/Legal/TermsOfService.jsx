@@ -5,11 +5,11 @@ export default function TermsOfService() {
   return (
     <div>
         <div className='py-14 text-center bg-[#E8DDF2] text-BLACK'>
-            <h1 className='text-3xl font-bold'>Speak Better Terms of Services</h1>
+            <h1 className='md:text-3xl text-2xl font-bold'>Speak Better Terms of Services</h1>
             <p>Last updated: 12 November, 2022.</p>
         </div>
 
-        <div className='px-5 md:px-10 py-10'>
+        <div className='px-8 md:px-10 py-10'>
             <h3 className='font-bold text-lg'>What the “Terms of service” mean</h3>
             <p>
                 The Terms for Speak Better are included in these Terms of Service. These Terms, which regulate your access to and use of the Services and outline your rights and obligations therein, are a binding contract between you and Speak Better. You accept these Terms by using any of our Services (including viewing a Site). Please refrain from using or gaining access to the Services if you do not agree to these Terms. You agree to these Terms on behalf of any entity for which you will be using the Services (such as your employer) and its affiliates, and you represent that you have the capacity to do so.
