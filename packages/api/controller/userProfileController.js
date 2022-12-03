@@ -1,32 +1,52 @@
 const { userCollection } = require("../database/models/userSchema");
+const { response } = require("../utilities/response");
 const bcrypt = require("bcryptjs");
 
 async function comparePassword(password, hash) {
   return await bcrypt.compare(password, hash);
 }
 
-async function userProfile(req, res) {
+const userProfile = async (req, res) => {
   //gets user id
   const id = req.params.id;
+
   try {
-    const user = await userCollection.findOne({ _id: id });
+    const user = await userCollection.findById(id);
+    // if user was not found
     if (!user) {
-      return res.json({
-        status: 204,
-        error: "No user with that id",
-      });
+      return res.status(404).json(
+        response({
+          success: false,
+          message: "User Not Found",
+          data: {},
+        })
+      );
     }
-    res.json({ Detail: user });
-    res.status(200);
+
+    return res.status(200).json(
+      response({
+        success: true,
+        message: "User found",
+        data: user,
+      })
+    );
   } catch (error) {
-    res.status(400);
-    res.json(error);
+    console.log(error);
+    return res.status(400).json(
+      response({
+        success: false,
+        message: "An Error Occured",
+        data: {
+          error,
+        },
+      })
+    );
   }
-}
+};
 
 // FOR DELETING A USER ACCOUNT.
 //////////////////////////////////////////////////////////////////////////////////////////////////
-async function deleteUser(req, res) {
+const deleteUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -48,8 +68,7 @@ async function deleteUser(req, res) {
     }
 
     // verify that the user password is correct
-    const hash = user.password;
-    const isCorrect = await comparePassword(password, hash);
+    const validPassword = await user.comparePassword(password);
 
     // if password is not correct
     if (!isCorrect) {
@@ -59,7 +78,7 @@ async function deleteUser(req, res) {
     }
 
     // if user exist and password is correct
-    if (user && isCorrect) {
+    if (user && validPassword) {
       await userCollection.deleteOne({ email });
       res.status(200);
       res.json({ message: "you have successfully deleted your account" });
@@ -68,26 +87,52 @@ async function deleteUser(req, res) {
     res.status(500);
     res.json({ message: "Something went wrong" });
   }
-}
+};
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Updates a User profile.
-async function updateUser(req, res) {
-  await userCollection
-    .findByIdAndUpdate(req.user._id, req.body, { new: true })
-    .then((user) => {
-      if (!user) {
-        //If user was not found.
-        return res
-          .status(401)
-          .json({ message: "No user found with the provided credentials." });
-      }
-      res.status(200).json({ message: "user updated successfully." });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(401).json({ message: "an error occurred" });
+const updateUser = async (req, res) => {
+  try {
+    const profilePicture = req.file ? req.file.location : "";
+
+    const data = {
+      ...req.body,
+      profilePicture: profilePicture,
+    };
+
+    const user = await userCollection.findByIdAndUpdate(req.user._id, data, {
+      new: true,
     });
-}
+
+    //If user was not found.
+    if (!user) {
+      return res.status(404).json(
+        response({
+          success: false,
+          message: "User Not Found",
+          data: {},
+        })
+      );
+    }
+    return res.status(200).json(
+      response({
+        success: true,
+        message: "user updated successfully.",
+        data: {},
+      })
+    );
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(
+      response({
+        success: false,
+        message: "An Error Occured",
+        data: {
+          error: error,
+        },
+      })
+    );
+  }
+};
 
 module.exports = { deleteUser, userProfile, updateUser };
