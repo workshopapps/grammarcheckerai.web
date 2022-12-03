@@ -20,13 +20,19 @@ pipeline {
 		stage("deploy") {
 		
 			steps {
-				sh "sudo cp -fr ${WORKSPACE}/packages/api/* /home/enyioman/backend"
-				sh "sudo cp -fr ${WORKSPACE}/packages/web/* /home/enyioman/frontend"
-				sh "sudo chown enyioman /home/enyioman/frontend"
-				sh "sudo chown enyioman /home/enyioman/backend"
+				sh "sudo su - enyioman && whoami"
+				sh "sudo ls /home/enyioman/"
+				sh "sudo cp -fr ${WORKSPACE}/grammarcheckerai.web/build/* /home/enyioman/frontend/build"
+				sh "sudo systemctl restart grammar.service"
+
+
+				// sh "sudo cp -fr ${WORKSPACE}/packages/api/* /home/enyioman/backend"
+				// sh "sudo cp -fr ${WORKSPACE}/packages/web/* /home/enyioman/frontend"
+				// sh "sudo chown enyioman /home/enyioman/frontend"
+				// sh "sudo chown enyioman /home/enyioman/backend"
 				// sh "sudo pm2 delete all"
-				sh "pm2 start npm /home/enyioman/frontend -- --port 3333"
-				sh "sudo npm install && sudo pm2 start /home/enyioman/backend/server.js -- --port 5555"
+				// sh "pm2 start npm /home/enyioman/frontend -- --port 3333"
+				// sh "sudo npm install && sudo pm2 start /home/enyioman/backend/server.js -- --port 5555"
 			}
 			
 	}
