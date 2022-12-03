@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './reset.module.css';
-import Logo from '../../../assets/signup-logo.png';
+import Logo from '../../../assets/images/logo2.png';
 import Image2 from '../../../assets/Correction 1.png';
 import Image1 from '../../../assets/error 1.png';
 import useResetPassword from '../../../hooks/auth/useResetPassword';
@@ -71,39 +71,53 @@ const index = () => {
                 />
               </svg>
             </div>
-            <h2>Set A New Password</h2>
-            <p className={styles._subtitle}>Create a super memorable password</p>
-            <div className={styles._gs2loginform}>
-              <div className={styles._gs2logininput}>
-                <span>Enter New Password</span>
-                <input
-                  type="password"
-                  id="userNewPassword"
-                  defaultValue={userNewPassword}
-                  onChange={(e) => setUserNewPassword(e.target.value)}
-                />
+            {authResetPassword.isSuccess && authResetPassword.data ? (
+              <div className="space-y-4 pt-10">
+                <h2>Set A New Password</h2>
+                <p className={styles._subtitle}>Your password has been reset successfully, hit continue to proceed.</p>
+                <div className={styles._gcforgotcontinue}>
+                  <LoadingButton onClick={handlePrev} size="small" variant="contained">
+                    Continue
+                  </LoadingButton>
+                </div>
               </div>
-              <div className={styles._gs2logininput}>
-                <span>Confirm Password</span>
-                <input
-                  type="password"
-                  id="userConfirmPassword"
-                  defaultValue={userConfirmNewPassword}
-                  onChange={(e) => setUserConfirmNewPassword(e.target.value)}
-                />
+            ) : (
+              <div>
+                <h2>Set A New Password</h2>
+                <p className={styles._subtitle}>Create a super memorable password</p>
+                <div className={styles._gs2loginform}>
+                  <div className={styles._gs2logininput}>
+                    <span>Enter New Password</span>
+                    <input
+                      type="password"
+                      id="userNewPassword"
+                      defaultValue={userNewPassword}
+                      onChange={(e) => setUserNewPassword(e.target.value)}
+                    />
+                  </div>
+                  <div className={styles._gs2logininput}>
+                    <span>Confirm Password</span>
+                    <input
+                      type="password"
+                      id="userConfirmPassword"
+                      defaultValue={userConfirmNewPassword}
+                      onChange={(e) => setUserConfirmNewPassword(e.target.value)}
+                    />
+                  </div>
+                  <div className={styles._gcforgotcontinue}>
+                    <LoadingButton
+                      onClick={handleSaveNewPassword}
+                      size="small"
+                      type="submit"
+                      loading={authResetPassword.isLoading}
+                      variant="contained"
+                    >
+                      Reset Password
+                    </LoadingButton>
+                  </div>
+                </div>
               </div>
-              <div className={styles._gcforgotcontinue}>
-                <LoadingButton
-                  onClick={handleSaveNewPassword}
-                  size="small"
-                  type="submit"
-                  loading={authResetPassword.isLoading}
-                  variant="contained"
-                >
-                  Reset Password
-                </LoadingButton>
-              </div>
-            </div>
+            )}
           </div>
         </div>
         <div className={styles._gs2logincol2}>
