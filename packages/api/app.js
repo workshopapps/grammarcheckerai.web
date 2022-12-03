@@ -16,7 +16,14 @@ const { routeHandler } = require("./routes/index.route"),
   swaggerDocument = require("./Tests/test.json");
 
 //Passport Initialized
-app.use(passport.initialize()).use(express.json()).use(cors());
+app
+  .use(passport.initialize())
+  .use(express.json())
+  .use(
+    cors({
+      origin: "*",
+    })
+  );
 
 const sess = {
   store: new Memorystore({
