@@ -128,9 +128,9 @@ const Index = () => {
 
     */
 
-  const handleLinkedInAuth = () => {
-    useFetch('https://grittygrammar.hng.tech/api/v1/auth/linkedin');
-  };
+  // const handleLinkedInAuth = () => {
+  //   useFetch('https://grittygrammar.hng.tech/api/v1/auth/linkedin');
+  // };
 
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
@@ -224,8 +224,9 @@ const Index = () => {
                   <button type="button" className={styles._facebook} onClick={handleFacebookAuth}>
                     <img src={facebook} alt="facebook authentication" />
                   </button>
-                  <button type="button" className={styles._apple} onClick={handleLinkedInAuth}>
-                    <img src={apple} alt="apple authentication" />
+                  <button type="button" className={styles._apple}>
+                    <a href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&scope=r_liteprofile%20r_emailaddress&client_id=77cy5gqnolzhra&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fv1%2Fauth%2Flinkedin%2Fcallback"><img src={apple} alt="apple authentication" /></a>
+                    
                   </button>
                 </div>
               </div>
