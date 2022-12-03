@@ -39,7 +39,6 @@ export default function DeleteAccount() {
         return errors;
     }
 
-    //console.log(new Date(), data.createdAt.slice(0,10));
 
 
   return (
@@ -78,6 +77,7 @@ export default function DeleteAccount() {
                         {formErrors.email}
                     </p>
                 </label>
+
 
                 <div className="_btnContainer">
                     <ProfileScreenButton onClick={() => history(-1)} variant="secondary">Cancel</ProfileScreenButton>
