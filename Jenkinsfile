@@ -19,7 +19,7 @@ pipeline {
 		stage("deploy") {
 		
 			steps {
-				sh "sudo cp -rf packages/api/ /home/devineer/backend"
+				sh "sudo cp -fr ${WORKSPACE}packages/api/* /home/devineer/backend"
 				sh "sudo cp -fr ${WORKSPACE}/packages/web/* /home/devineer/frontend"
 				sh "sudo chown devineer /home/devineer/frontend"
 				//sh "sudo pm2 delete all"
