@@ -1,9 +1,11 @@
 import React from 'react';
 import Heroimg from '../../assets/blogimg/Frame 1000001903.svg';
 import Cta from '../../components/Blogcomponents/Cta';
+import Footer from '../../modules/static/landing-page/Footer';
 
 const Ai = () => {
   return (
+    <div>
     <section className="mb-10">
       <div className="mt-10 md:max-w-3xl md:mx-auto xl:max-w-5xl">
         <h1 className="text-header text-xl font-bold mb-4 text-center xl:text-3xl">
@@ -18,7 +20,7 @@ const Ai = () => {
           <span className="text-blog">The Time Is Now for Conversational AI</span>
         </div>
         <div className="p-4 mb-10 md:w-full md:h-full md:mb-10 xl:w-full">
-          <img src={Heroimg} alt="" className="md:w-full md:h-full rounded" />
+          <img src={Heroimg} alt="" className="md:w-full md:h-full" />
         </div>
 
         <div className="p-4 py-4">
@@ -56,6 +58,8 @@ const Ai = () => {
       </div>
       <Cta />
     </section>
+    <Footer />
+    </div>
   );
 };
 

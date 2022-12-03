@@ -1,9 +1,11 @@
 import React from 'react';
 import Image2 from '../../assets/blogimg/image 2 (1).svg';
 import Cta from '../../components/Blogcomponents/Cta';
+import Footer from '../../modules/static/landing-page/Footer';
 
 const Grammar = () => {
   return (
+    <div>
     <section className="mb-10">
       <div className="mt-10 md:max-w-3xl md:mx-auto xl:max-w-5xl">
         <h1 className="text-header text-xl font-bold mb-4 text-center xl:text-3xl">
@@ -18,7 +20,7 @@ const Grammar = () => {
           <span className="text-blog">10 Grammar Mistakes You&apos;re Probably Making (And How to Fix Them)</span>
         </div>
         <div className="p-4 mb-10 md:w-full md:h-full md:mb-10">
-          <img src={Image2} alt="Grammar check" className="w-full md:h-full rounded" />
+          <img src={Image2} alt="Grammar check" className="w-full md:h-full" />
         </div>
 
         <div className="p-4 py-4">
@@ -149,6 +151,8 @@ const Grammar = () => {
       </div>
       <Cta />
     </section>
+    <Footer />
+    </div>
   );
 };
 

@@ -1,9 +1,11 @@
 import React from 'react';
 import Image1 from '../../assets/blogimg/image2.svg';
 import Cta from '../../components/Blogcomponents/Cta';
+import Footer from '../../modules/static/landing-page/Footer';
 
 const Jobs = () => {
   return (
+    <div>
     <section className="mb-10">
       <div className="mt-10 md:max-w-3xl md:mx-auto xl:max-w-5xl">
         <h1 className="text-header text-xl font-bold mb-4 text-center xl:text-3xl">
@@ -19,7 +21,7 @@ const Jobs = () => {
         </div>
 
         <div className="p-4 mb-10 md:w-full md:h-full md:mb-10">
-          <img src={Image1} alt="" className="w-full md:h-full rounded" />
+          <img src={Image1} alt="" className="w-full md:h-full" />
         </div>
 
         <div className="p-4 py-4">
@@ -98,10 +100,12 @@ const Jobs = () => {
             help you feel more confident when presenting yourself and make a good impression on the interviewer. By
             following these tips, you&apos;ll be well on your way to securing a role as a fluent English speaker. Good luck!
           </p>
-        </div>
+      </div>
       </div>
       <Cta />
     </section>
+    <Footer />
+    </div>
   );
 };
 

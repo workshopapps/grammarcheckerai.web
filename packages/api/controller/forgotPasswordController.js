@@ -8,8 +8,7 @@ const {
   RESET_PASSWORD,
 } = require("../utilities/email.template");
 
-const { BASE_URL, RESET_PASSWORD_TEMPLATE_ID, PASSWORD_CHANGED_TEMPLATE_ID } =
-  environment;
+const { BASE_URL } = environment;
 
 exports.requestForgotPassword = async (req, res) => {
   const { email } = req.body;
@@ -24,24 +23,22 @@ exports.requestForgotPassword = async (req, res) => {
         })
       );
     }
-
     const token = user.generateAuthToken();
-    const reset_password_url = `${BASE_URL}/v1/auth/password-reset?token=${token}`;
+    const reset_password_url = `${BASE_URL}/password-reset?token=${token}`;
 
     emailService({
       to: email,
-      subject: "Requested Reset Password for Speak Better.",
       templateId: REQUEST_PASSWORD_RESET,
-      dynamicTemplateData: {
+      dynamic_template_data: {
         name: user.firstName,
-        url: reset_password_url,
+        actionurl: reset_password_url,
       },
     });
 
     return res.status(200).json(
       response({
         message: "A mail was just sent to this email address",
-        success: true
+        success: true, 
       })
     );
   } catch (error) {
@@ -95,9 +92,9 @@ exports.resetPassword = async (req, res) => {
       to: email,
       subject: "Speak Better Password Changed Successfully",
       templateId: RESET_PASSWORD,
-      dynamicTemplateData: {
+      dynamic_template_data: {
         name: user.firstName,
-        url: `${BASE_URL}/me/home`,
+        actionurl: `${BASE_URL}/me/home`,
       },
     });
     return res.status(200).json(
