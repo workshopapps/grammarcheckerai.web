@@ -1,61 +1,94 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useRef, useEffect, useState } from 'react';
-import logo from '../../../assets/newsletterImages/logo.png';
+import React, { useRef, useEffect, useState, useContext } from 'react';
+// import logo from '../../../assets/newsletterImages/logo.png';
+import { QuizContext } from './QuizContext';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styles from '../quizgame/QuizGame.module.scss';
 import TotalScores from '../quizgame/totalscores/TotalScore';
 
-const QuizGame = () => {
+const QuizGame = ({ players, setPlayers }) => {
+  const { socket } = useContext(QuizContext);
+
   const timeRef = useRef(null);
+
   const [seconds, setSeconds] = useState(30);
   const [triviaQuestion, setTriviaQuestion] = useState([]);
-  // const [correctAnswer, setCorrectAnswer] = useState("");
-  // const [trivia, setTrivia] = useState({});
   const [answer, setAnswer] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState('');
   const [score, setScore] = useState(0);
   const [errorMsg, setErrorMsg] = useState(false);
+  const [timeOut, setTimeOut] = useState(false);
+  const [changeColor, setChangeColor] = useState('#e8ddf2');
 
-  const handleAnswer = (e) => {
-    let option = e.target.innerText;
-    let tick = triviaQuestion.correct_answer;
-    if (tick === option) {
-      setScore(score + 5);
-    } else {
-      setScore(score - 1);
+  const handleExit = () => {
+    socket.disconnect();
+    socket.on('update-players', (count) => {
+      setPlayers(count);
+    });
+  };
+
+  const handleAnswer = (element) => {
+    let tick = triviaQuestion.answer;
+    setSelectedAnswer(element);
+    setChangeColor('yellow');
+    setTimeout(() => {
+      if (element === tick) {
+        console.log('correct');
+        setChangeColor('green');
+        setScore(score + 1);
+      } else {
+        // setChangeColor(element !== tick ? 'red' : 'yellow');
+        setChangeColor('red');
+        console.log('incorrect');
+        setScore(score - 1);
+      }
+    }, 1000);
+  };
+
+  const countPlayers = () => {
+    if (players > 1) {
+      return `You and ${players - 1} others are currently playing`;
+    } else if (players <= 1) {
+      return 'You are the only one here';
     }
   };
 
-  const getQuestions = async () => {
-    try {
-      // const response = await axios.get('https://speakbetter.hng.tech/api/v1/quiz');
-      const response = await axios.get('https://opentdb.com/api.php?amount=1&type=multiple');
-      console.log(response.data);
-      const data = response.data;
-      // setTrivia(data);
-      setTriviaQuestion(data.results[0]);
-      let correctAnswer = data.results[0].correct_answer;
-      let incorrectAnswers = data.results[0].incorrect_answers;
-      let optionList = incorrectAnswers.splice(
-        Math.floor(Math.random() * (incorrectAnswers.length + 1)),
-        0,
-        correctAnswer,
-      );
-      console.log(optionList);
-      console.log(correctAnswer);
-    } catch (error) {
-      console.log('Error', error);
-      setErrorMsg(true);
-    }
+  const getQuestion = async () => {
+    const quiz = await axios.get('https://the-trivia-api.com/api/questions?limit=1');
+    const data = quiz.data[0];
+    const question = {
+      id: data.id,
+      answer: data.correctAnswer,
+      incorrectAnswers: data.incorrectAnswers,
+      question: data.question,
+    };
+    return question;
   };
 
   useEffect(() => {
-    getQuestions();
+    const api = async () => {
+      const question = await getQuestion();
+      console.log(question);
+      setTriviaQuestion(question);
+      let correctAnswer = question.answer;
+      let incorrectAnswers = question.incorrectAnswers;
+      incorrectAnswers.splice(Math.floor(Math.random() * (incorrectAnswers.length + 1)), 0, correctAnswer);
+    };
+
+    setSeconds(30);
+    // setTimeOut(true);
+    api();
   }, [score]);
 
   let countdown;
   useEffect(() => {
+    if (seconds === 0) {
+      console.log('end');
+      return setTimeOut(true);
+    }
     countdown = setInterval(() => {
       setSeconds(seconds - 1);
       if (seconds === 0) {
@@ -69,64 +102,23 @@ const QuizGame = () => {
     }, 3000);
 
     return () => clearInterval(countdown);
-  });
+  }, [seconds, setTimeOut]);
 
   return (
     <>
       <section id="game" className={styles.quizgame}>
         <div className={styles.quizgame__img}>
-          <Link to="/">
-            <img src={logo} alt="" />
-          </Link>
-          <div ref={timeRef} className={styles.quizgame__img__timer}>
-            <h2>{seconds}</h2>
-          </div>
-        </div>
-
-        {/* {errorMsg ? (
-      <div className={styles.quizgame__err}>
-        <h3>Oops! Looks like an error occurred</h3>
-        <p>Bare with us while we get the server back up...</p>
-        <Link to="/">Exit page</Link>
-      </div>
-    ) : (
-      <>
-        <div className={styles.quizgame_card}>
-          <div className={styles.quizgame_card__content}>
-            <h1 className={styles.quizgame_card__content__heading}>
-              Test your skills in {trivia.category} with this Trivia
-            </h1>
+          {timeOut ? (
+            ''
+          ) : (
             <>
-              <h3 className={styles.quizgame_card__content__question}>{trivia.question}</h3>
-              <ul id="mainList" className={styles.quizgame_card__content__answers}>
-                {trivia.incorrectAnswers &&
-                  trivia.incorrectAnswers.map(function (element, index) {
-                    return (
-                      <li id="mainOptions" onClick={handleAnswer} key={index}>
-                        {element}
-                      </li>
-                    );
-                  })}
-              </ul>
+              <div ref={timeRef} className={styles.quizgame__img__timer}>
+                <h2>{seconds}</h2>
+              </div>
+              <p>{countPlayers()}</p>
             </>
-          </div>
+          )}
         </div>
-
-        {answer ? (
-          <div className={styles.quizgame_card__score}>
-            <p>Your Score is {score}</p>
-            <button>
-              <Link to="/">Exit</Link>
-            </button>
-          </div>
-        ) : (
-          <div className={styles.quizgame__btn}>
-            <button onClick={() => setAnswer(true)}>View Score</button>
-          </div>
-        )}
-      </>
-    )} */}
-
         {errorMsg ? (
           <div className={styles.quizgame__err}>
             <h3>Oops! Looks like an error occurred</h3>
@@ -135,31 +127,44 @@ const QuizGame = () => {
           </div>
         ) : (
           <>
-            <div className={styles.quizgame_card}>
-              <div className={styles.quizgame_card__content}>
-                <h1 className={styles.quizgame_card__content__heading}>
-                  Test your skills in {triviaQuestion.category} with this Trivia
-                </h1>
-                <>
-                  <h3 className={styles.quizgame_card__content__question}>{triviaQuestion.question}</h3>
-                  <ul id="mainList" className={styles.quizgame_card__content__answers}>
-                    {triviaQuestion.incorrect_answers &&
-                      triviaQuestion.incorrect_answers.map(function (element, index) {
-                        return (
-                          <li id="mainOptions" onClick={handleAnswer} key={index}>
-                            {element}
-                          </li>
-                        );
-                      })}
-                  </ul>
-                </>
-              </div>
-            </div>
+            {timeOut ? (
+              <div className={styles.quizgame__end}><h1>You Lost </h1></div>
+            ) : (
+              <>
+                <div className={styles.quizgame_card}>
+                  <div className={styles.quizgame_card__content}>
+                    <h1 className={styles.quizgame_card__content__heading}>Test your skills with this Trivia</h1>
+                    <>
+                      <h3 className={styles.quizgame_card__content__question}>{triviaQuestion.question}</h3>
+                      <ul id="mainList" className={styles.quizgame_card__content__answers}>
+                        {triviaQuestion.incorrectAnswers &&
+                          triviaQuestion.incorrectAnswers.map(function (element, index) {
+                            return (
+                              <li
+                                style={{ backgroundColor: selectedAnswer === element ? changeColor : '#e8ddf2' }}
+                                id="mainOptions"
+                                onClick={() => handleAnswer(element)}
+                                key={index}
+                              >
+                                {element}
+                              </li>
+                            );
+                          })}
+                      </ul>
+                    </>
+                  </div>
+                </div>
+              </>
+            )}
+
             {answer ? (
               <TotalScores />
             ) : (
               <div className={styles.quizgame__btn}>
-                <button onClick={() => setAnswer(true)}>Submit</button>
+                <button onClick={handleExit}>
+                  <Link to="/startgame">End Quiz</Link>{' '}
+                </button>
+                {timeOut ? '' : <button onClick={() => setAnswer(true)}>Submit</button>}
               </div>
             )}
           </>
@@ -170,3 +175,13 @@ const QuizGame = () => {
 };
 
 export default QuizGame;
+
+// Set up a submit handler
+// Compare answers DONE
+// socket.emit("update-quizProfile", userId, isCorrect)
+// if(isCorrect){
+//  socket.emit("get-roundWinner", userId)
+// }
+// socket.on("receive-roundWinner", (fn) => {
+//  fn(userId);
+//})

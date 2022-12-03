@@ -3,7 +3,7 @@
 .quizgame {
   margin-top: 0px;
   width: 100%;
-  // height: 100vh;
+//   height: 100vh;
   overflow: hidden;
   @include flexCenter(column);
   justify-content: space-between;
@@ -13,10 +13,32 @@
   &__img {
     width: 100%;
     @include flexCenter(row);
-    justify-content: flex-start;
+    justify-content: space-between;
 
     a {
       text-decoration: none;
+    }
+
+    &__timer {
+        border-radius: 50%;
+        padding: 10px;
+
+        h2 {
+            color: $white;
+        }
+    }
+  }
+
+  &__end {
+    height: 100vh;
+    width: 100vw;
+    @include flexCenter(row);
+    padding: 50px;
+
+    h1 {
+        font-size: 36px;
+        font-weight: 700;
+        font-family: $fontFamily1;
     }
   }
 
@@ -26,26 +48,6 @@
     justify-content: space-between;
     padding: 10px;
 
-    &__img {
-        width: 100%;
-        @include flexCenter(row);
-        justify-content: space-between;
-
-        a {
-            text-decoration: none;
-        }
-
-        &__timer {
-            border: 1px solid;
-            border-radius: 50%;
-            background-color: $greyColor;
-            padding: 10px;
-
-            h2 {
-                color: $white;
-            }
-        }
-    }
     &__content {
       margin-top: 50px;
       @include flexCenter(column);
@@ -69,91 +71,6 @@
         word-spacing: 3px;
       }
 
-        &__content {
-
-            margin-top: 50px;
-            @include flexCenter(column);
-            width: 100%;
-            text-align: center;
-
-            &__heading {
-                color: $greyColor;
-                text-shadow: 1px 15px 5px #e8ddf2;
-                font-size: 35px;
-                font-family: $fontFamily1;
-                font-weight: 700;
-            }
-
-            &__question {
-                font-family: $fontFamily2;
-                margin: 20px 0px;
-                font-size: 24px;
-                width: inherit;
-                letter-spacing: -1px;
-                word-spacing: 3px;
-            }
-
-            &__answers {
-                width: 100%;
-                text-align: center;
-                display: grid;
-                grid-template-columns: 1fr;
-                grid-template-rows: repeat(4, 1fr);
-                grid-column-gap: 0px;
-                grid-row-gap: 10px;
-                place-items: center;
-
-                li {
-                    width: 90%;
-                    font-family: $fontFamily2;
-                    cursor: pointer;
-                    list-style: none;
-                    border: 1px solid #e8ddf2;
-                    border-radius: 8px;
-                    background-color: #e8ddf2;
-                    padding: 15px;
-                    font-size: 20px;
-
-                    &:hover {
-                        color: $greyColor;
-                        background-color: $white;
-                    }
-                }
-            }
-        }
-
-        &__score {
-            width: 100%;
-            @include flexCenter(row);
-            justify-content: flex-start;
-            margin-top: 30px;
-
-            p {
-                width: 250px;
-                font-size: 30px;
-                font-weight: 700;
-                color: $greyColor;
-            }
-
-            button {
-                margin-left: 80px;
-                width: 100px;
-                background-color: red;
-                border: 1px solid red;
-                padding: 10px;
-                border-radius: 10px;
-
-                a {
-                    width: inherit;
-                    font-weight: 500;
-                    color: $white;
-                }
-            }
-        }
-    }
-
-    &__btn {
-        margin-top: 20px;
       &__answers {
         width: 100%;
         text-align: center;
@@ -216,6 +133,8 @@
   &__btn {
     margin-top: 20px;
     width: 100%;
+    @include flexCenter(row);
+    justify-content: space-between;
 
     button {
       background-color: $purpleBackground;
