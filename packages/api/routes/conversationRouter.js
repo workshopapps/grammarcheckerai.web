@@ -9,12 +9,12 @@ const {
 const textResponse = require("../controller/sendTextController");
 
 // const uploadAudio = require("../middlewares/s3Bucket.js");
-const uploadFile1 = require("../controller/uploadBuffer.js");
+const fileUploadToS3Bucket = require("../controller/uploadBuffer.js");
 const saveAudio = require("../controller/uploadAudioController.js");
 const uploadFile = require("../middlewares/audio.middleware.js");
 
 // conversationRouter.post("/uploadAudio", uploadAudio.single("file"), saveAudio);
-conversationRouter.post("/uploadAudio", uploadFile1, saveAudio);
+conversationRouter.post("/uploadAudio", fileUploadToS3Bucket, saveAudio);
 conversationRouter.get("/start", userConversationAccess, startConversation);
 conversationRouter.get("/end", endConversation);
 conversationRouter.post("/sendAudio", uploadFile, getBotResponse);
@@ -22,4 +22,3 @@ conversationRouter.post("/sendText", textResponse);
 
 
 module.exports = conversationRouter;
-
