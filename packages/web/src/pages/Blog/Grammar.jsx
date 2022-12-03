@@ -20,7 +20,7 @@ const Grammar = () => {
           <span className="text-blog">10 Grammar Mistakes You&apos;re Probably Making (And How to Fix Them)</span>
         </div>
         <div className="p-4 mb-10 md:w-full md:h-full md:mb-10">
-          <img src={Image2} alt="Grammar check" className="w-full md:h-full rounded" />
+          <img src={Image2} alt="Grammar check" className="w-full md:h-full" />
         </div>
 
         <div className="p-4 py-4">

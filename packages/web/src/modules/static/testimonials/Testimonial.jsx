@@ -1,5 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+
+import { ThemeContext } from '../../../lib/context/DarkThemeContext';
+import styles from './Testimonial.module.css';
 
 import stars from '../../../assets/raters/star.png';
 import testimonial1 from '../../../assets/raters/testimonials/testimonial1.png';
@@ -61,19 +63,28 @@ export default function Testimonial() {
       image: testimonial5,
     },
   ];
+
+  const context = useContext(ThemeContext);
+
   return (
     <div>
-      <div className="mx-6 lg:mx-32">
-        <h1 className="text-center mt-6 text-lg sm:text-2xl lg:text-4xl">Users Love What We Do</h1>
-        <p className="text-center my-4 text-sm lg:text-lg">
-          Read the stories of our users who have relied on our product to improve their grammar
-        </p>
-        <main className="lg:grid space-y-6 lg:space-y-0 grid-cols-3 gap-8 my-14">
+      <div>
+        <div
+          className={`${styles._header} lg:bg-purple-500 lg:text-white flex flex-col justify-center items-center lg:py-32`}
+          nav-theme={context.theme}
+        >
+          <h1 className="text-center my-4 text-lg sm:text-2xl lg:text-5xl">Users Love What We Do</h1>
+          <p className="text-center text-sm lg:text-lg w-1/2">
+            Read the stories of our users who have relied on our product to improve their grammer. Join Speak Better
+            today and be a part of the team.
+          </p>
+        </div>
+        <main className="lg:grid space-y-6 lg:space-y-0 grid-cols-3 gap-8 lg:mt-32 my-14 mx-16 lg:mx-32 ">
           {testimonials.map((testimony) => {
             return (
               <section
                 key={testimony.id}
-                className={`lg:flex px-4 py-6 lg:p-0 shadow-md rounded-xl col-span-2 lg:h-56 ${
+                className={`lg:flex px-4 py-6 lg:p-0 shadow-md rounded-xl col-span-2 lg:h-56  bg-white ${
                   testimony.id % 2 === 0 ? 'col-start-2' : ''
                 }`}
               >
@@ -90,9 +101,9 @@ export default function Testimonial() {
                     alt=""
                     className="h-20 w-20 rounded-full lg:relative lg:h-full lg:w-full lg:rounded-none z-30"
                   />
-                  <div className="lg:hidden ml-6">
+                  <div className={`lg:hidden ml-6 ${styles._header}`}>
                     <p className="font-bold">{testimony.name}</p>
-                    <span className="flex float-right ml-4">
+                    <span className="flex lg:float-right lg:ml-4">
                       {[...Array(5)].map((it, index) => {
                         return <img src={stars} key={index} alt="" />;
                       })}
@@ -111,7 +122,7 @@ export default function Testimonial() {
                       <span className="text-xs">May 8, 2022</span>
                     </div>
                     <div>
-                      <h3 className="my-4 text-center lg:text-left">{testimony.heading}</h3>
+                      <h3 className="mb-4 lg:text-left font-bold">{testimony.heading}</h3>
                       <p className="text-xs">{testimony.testimony}</p>
                     </div>
                   </div>
