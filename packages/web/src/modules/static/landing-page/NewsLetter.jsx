@@ -4,7 +4,7 @@ import styles from './styles/index.module.css';
 const NewsLetter = () => {
     const context = useTheme();
     return (
-        <section className={`${context.theme === 'dark' ? 'bg-[#f0ecec]' : null} w-[90%] md:w-[80%] mx-auto text-center flex flex-col justify-center md:items-start md:ml-[10em] gap-5 my-36 px-8 py-8 rounded-lg`}>
+        <section className={`${context.theme === 'dark' ? 'bg-transparent text-white' : null} w-[90%] md:w-[80%] mx-auto text-center md:text-left flex flex-col justify-center md:items-start md:ml-[10em] gap-5 my-36 px-8 py-8 rounded-lg`}>
         <h5 className="text-3xl md:text-4xl font-black -mb-2">Be the first to know</h5>
         <p>Subscribe to out newsletter and  be the first to know about new updates
             and news, but no spam, scouts honor!</p>
