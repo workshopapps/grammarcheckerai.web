@@ -7,9 +7,8 @@ const {
   generateEmailVerificationLink,
   verifyLink,
 } = require("../../utilities/generateToken");
-const emailService = require("../../services/email.service");
-const { environment } = require("../../config/environment");
-const { SIGNUP_TEMPLATE_ID } = environment;
+const emailService = require("../../services/email.service"); 
+const {SIGNUP_TEMPLATE} = require('../../utilities/email.template') 
 
 async function registerUser(req, res) {
   try {
@@ -45,17 +44,18 @@ async function registerUser(req, res) {
 
     let verificationLink = await generateEmailVerificationLink(data);
 
+    const user = await register(data);
+
     await emailService({
       to: email,
       subject: "Welcome to Speak Better, Please Verify your Email",
-      templateId: SIGNUP_TEMPLATE_ID,
+      templateId: SIGNUP_TEMPLATE,
       dynamicTemplateData: {
         name: firstName,
         action_url: verificationLink,
       },
     });
 
-    const user = await register(data);
 
     if (!user)
       return res

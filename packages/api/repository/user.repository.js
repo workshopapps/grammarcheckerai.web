@@ -2,8 +2,7 @@ const { userCollection } = require("../database/models/userSchema");
 const { authResponse } = require("../utilities/response");
 async function register(data) {
   try {
-    const user = await userCollection.create(data);
-		console.log(user)
+    const user = await userCollection.create(data); 
     return authResponse(user);
   } catch (error) {
 		console.log(error)
