@@ -54,10 +54,10 @@ app.use(
   })
 );
 
-//welcome note
+//welcome note 
 app.use("*", (req, res) => {
   res.status(200).json({
-    message: "Welcome to Grit Grammarly 🙌",
+    message: "Welcome to Speak Better 👄", 
     user: "CORS enabled",
   });
 });
