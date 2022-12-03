@@ -1,28 +1,36 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import { useContext } from 'react';
+// import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { io } from 'socket.io-client';
+import { QuizContext } from '../QuizContext';
+// import { io } from 'socket.io-client';
 import QuizGame from '../QuizGame';
 import Rank from '../rank/Rank';
 import styles from '../startgame/StartGame.module.scss';
 
 const StartGame = () => {
+  const {socket} = useContext(QuizContext);
+  const [players, setPlayers] = useState(0);
   const [ start, setStart ] = useState(false);
   const [ rank, setRank ] = useState(false);
 
+  // console.log(socket);
   const handleStart = () => {
-    setStart(true);
-    const socket = io('http://api.speakbetter.hng.tech/');
-    socket.on('connect', () => {
-      console.log(`You connected with ${socket.id}`);
+    socket.connect();
+    socket.on('update-players', (count) => {
+      setPlayers(count);
     });
-    // socket.emit('start-quiz', 'id');
+    const userId = localStorage.getItem('grittyuserid');
+    socket.emit('start-quiz', userId);
+    console.log(userId);
+    setStart(true);
   };
-  
+
 
   return (
     <>
-      {start ? <QuizGame/> : (
+      {start ? <QuizGame players={players} setPlayers={setPlayers} /> : (
         <section className={styles.startgame}>
           <div className={styles.startgame_card}>
             <h1>Join Quiz</h1>

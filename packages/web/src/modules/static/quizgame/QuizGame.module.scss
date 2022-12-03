@@ -44,6 +44,11 @@
             width: 100%;
             text-align: center;
 
+            .answer .active {
+                background-color: black;
+                color: white;
+            }
+
             &__heading {
                 color: $greyColor;
                 text-shadow: 1px 15px 5px #e8ddf2;
@@ -82,11 +87,62 @@
                     padding: 15px;
                     font-size: 20px;
 
+                    #answer {
+                        color: red;
+                    }
+
                     &:hover {
                         color: $greyColor;
                         background-color: $white;
                     }
+
+                    #answer1 {
+                        background-color: plum;
+                    }
+    
+                    #mainOptions {
+                        color: blue;
+                    }
+
                 }
+
+                #answer1 {
+                    background-color: yellow;
+                }
+
+                #mainOptions {
+                    color: green;
+                }
+
+                // &__answer correct {
+                //     animation: correct 1s ease forwards;
+                // }
+
+                // @keyframes correct {
+                //     0% {
+                //         background: yellow;
+                //     }
+                //     40% {
+                //         background-color: purple;
+                //     }
+                //     62%,
+                //     100% {
+                //         background-color: green;
+                //     }
+                // }
+
+                // @keyframes wrong {
+                //     0% {
+                //         background: yellow;
+                //     }
+                //     40% {
+                //         background-color: purple;
+                //     }
+                //     62%,
+                //     100% {
+                //         background-color: red;
+                //     }
+                // }
             }
         }
 
@@ -123,6 +179,8 @@
     &__btn {
         margin-top: 20px;
         width: 100%;
+        @include flexCenter(row);
+        justify-content: space-between;
 
         button {
             background-color: $purpleBackground;
@@ -133,6 +191,18 @@
             font-weight: 500;
             color: $white;
             padding: 10px;
+        }
+
+        a {
+            text-align: center;
+            background-color: crimson;
+            border: 1px solid crimson;
+            padding: 10px;
+            border-radius: 8px;
+            width: 150px;
+            font-size: 20px;
+            font-weight: 500;
+            color: $white;
         }
     }
 

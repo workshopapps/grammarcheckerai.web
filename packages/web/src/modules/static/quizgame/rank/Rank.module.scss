@@ -30,18 +30,16 @@
         &__content {
 
             h2 {
+                text-align: center;
+                color: $greenColor;
                 font-size: 20px;
                 font-family: $fontFamily1;
                 margin: 10px 0px;
             }
 
-            ol {
+            table {
+                text-align: center;
                 font-family: $fontFamily2;
-                @include flexCenter(column);
-
-                li {
-                    list-style-type: auto;
-                }
             }
         }
     }

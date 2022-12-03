@@ -2,9 +2,8 @@ import React, { lazy, Suspense, useState, useEffect } from 'react';
 import './App.css';
 import Fallback from './components/Fallback/Fallback';
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom';
-import StartGame from './modules/static/quizgame/startgame/StartGame';
-// import ProtectedRoute from './components/ProtectedRoute';
-import QuizGame from './modules/static/quizgame/QuizGame';
+// import StartGame from './modules/static/quizgame/startgame/StartGame';
+import Layout from './modules/static/quizgame/layout/Layout';
 // import ProtectedRoute from './components/ProtectedRoute';
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
 const SigninPage = lazy(() => import('./modules/auth/login/login'));
@@ -286,7 +285,7 @@ function App() {
         <Route path="/ratings" element={<Ratings />} />
         <Route path="/legal" element={<LegalPage />} />
       </Route>
-      <Route path="/startgame" element={<StartGame />}></Route>
+      <Route path="/startgame" element={<Layout />}></Route>
       <Route path="/newsletter" element={<NewsletterPage />} />
       <Route path="/career" element={<Careers />} />
       <Route path="/roles" element={<Roles />} />
