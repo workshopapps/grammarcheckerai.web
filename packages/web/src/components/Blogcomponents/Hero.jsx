@@ -15,7 +15,7 @@ const Hero = () => {
                     </div>
 
                     <div className="md:p-2 md:px-4 md:w-1/2 xl:pr-4 xl:px-0">
-                         <h1 className={`text-header ${context.theme === 'dark' ? 'text-white' : null} text-xl font-bold mb-3 text-center md:text-center xl:text-3xl transition-all xl:px-4`}>The Time Is Now for Conversational AI</h1>
+                         <h1 className={`text-header ${context.theme === 'dark' ? 'text-white' : null} text-xl font-bold mb-3 text-left xl:text-3xl transition-all xl:px-4`}>The Time Is Now for Conversational AI</h1>
 
                          <p className="font-normal text-justify text-sm mb-3">The ease with which we use computers substantially influences the likelihood that technology may disrupt a particular element of life or business. Computers were far less user-friendly when we needed to enter code into a command line only to load a software However, the mouse and graphical user interfaces made things much simpler, and computers grew from specialist goods to become commonplace. Touch advanced the situation further, contributing to the development of a society in which most individuals wear a computer on their wrist in addition to carrying one in their pocket.<br /><br />
 
