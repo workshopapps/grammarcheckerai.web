@@ -293,7 +293,6 @@ function App() {
   return (
     <Routes>
       <Route path="/converse/try" element={<ConversationTryPage />} />
-
       <Route path="/history" element={<h2>History</h2>} />
       <Route element={<LandingLayout />}>
         <Route path="/" element={<LandingPage />} />
