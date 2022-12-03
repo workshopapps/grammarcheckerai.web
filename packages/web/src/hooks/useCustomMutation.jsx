@@ -1,9 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
 import { ENDPOINTS } from '../lib/constants';
 import { secureRequest } from '../lib/utils';
+
 const getMutationAction = (mutationData) => {
-  const { endpoint, method, headers, isCreathorsApi = true } = mutationData;
-  const url = isCreathorsApi ? ENDPOINTS.API_BASE_URL + endpoint : endpoint;
+  const { endpoint, method, headers, isGrittyApi = true } = mutationData;
+  const url = isGrittyApi
+    ? import.meta.env === 'development'
+      ? ENDPOINTS.API_BASE_HTTP_URL
+      : ENDPOINTS.API_BASE_HTTPS_URL + endpoint
+    : endpoint;
   return {
     mutationFn: (body) =>
       secureRequest({
@@ -15,6 +20,7 @@ const getMutationAction = (mutationData) => {
     ...mutationData,
   };
 };
+
 function useCustomMutation(mutationData) {
   const {
     mutationFn,
