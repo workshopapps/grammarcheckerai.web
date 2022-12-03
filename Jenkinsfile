@@ -20,10 +20,14 @@ pipeline {
 		stage("deploy") {
 		
 			steps {
-				sh "sudo su - enyioman && whoami"
-				sh "sudo ls /home/enyioman/"
-				sh "sudo cp -fr ${WORKSPACE}/grammarcheckerai.web/build/* /home/enyioman/frontend/build"
-				sh "sudo systemctl restart grammar.service"
+				// sh "sudo su - enyioman && whoami"
+				// sh "sudo ls /home/enyioman/"
+				// sh "sudo cp -fr ${WORKSPACE}/grammarcheckerai.web/build/* /home/enyioman/frontend/build"
+				// sh "sudo systemctl restart grammar.service"
+
+				sh "cd packages/web && sudo pm2 start --name heed npm -- start"
+				sh "cd packages/api && sudo pm2 start --name heed npm -- start"
+				sh "sudo pm2 save"
 
 
 				// sh "sudo cp -fr ${WORKSPACE}/packages/api/* /home/enyioman/backend"
