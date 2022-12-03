@@ -19,7 +19,7 @@ export default function Testimonial() {
       date: 'May 8, 2022',
       name: 'Amaka Disappoint',
       heading: 'No more disgraceful errors',
-      testimony: `“I am a big fan of Gritty Grammar because it takes the fear out of grammar. I've always been scared
+      testimony: `“I am a big fan of Speak Better because it takes the fear out of grammar. I've always been scared
                 of making grammatical errors, but with this app, I don't have to worry about them anymore.” — Amaka
                 Disappoint`,
       image: testimonial1,
@@ -58,7 +58,7 @@ export default function Testimonial() {
       date: 'May 8, 2022',
       name: 'Edward Rose',
       heading: 'Good app for students',
-      testimony: `“I am a teacher, and Gritty Grammar is the perfect app for students to use in class. It's
+      testimony: `“I am a teacher, and Speak Better is the perfect app for students to use in class. It's
                 interactive and fun so that they don&apos;t even realize they are learning!” — Edward Rose`,
       image: testimonial5,
     },
