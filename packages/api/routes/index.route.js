@@ -8,14 +8,11 @@ const contactRoute = require("./contactRoutes");
 const verify = require("../middlewares/auth.middleware");
 const quickTranscribe = require("./quickTranscribeRouter");
 const newsletter = require("../routes/newsLetterRoute");
-<<<<<<< HEAD
 const newsletterSubscription = require("../routes/newsLetterSubscriptionRoute")
-=======
 const reviewRating = require('../routes/reviewRatingRoute')
 const leaderBoardRouter = require("../routes/leaderboardrouter");
 const paystackRouter = require("./paystackRouter");
 
->>>>>>> 303c9432093648c05d76f021345261b52f0254d3
 
 routeHandler.use("/auth", auth);
 routeHandler.use("/user", verify, userHandler);
