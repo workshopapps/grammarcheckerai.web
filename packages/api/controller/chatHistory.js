@@ -32,7 +32,7 @@ async function chatHistory(req, res) {
     const botResponseId = messages.map((data) => {
       return data.botResponseId;
     });
-    const botResponse = await UserResponse.find({ botResponseId });
+    const botResponse = await BotResponse.find({ botResponseId });
 
     res.status(200);
     res.json({ userResponse, botResponse });
