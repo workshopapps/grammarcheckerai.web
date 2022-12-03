@@ -1,4 +1,4 @@
-import { arrowRightIcon, checkIcon, searchIcon } from '../../../../assets';
+import { arrowRightIcon, checkIcon, searchIcon } from '../../../assets';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 

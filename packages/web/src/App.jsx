@@ -336,7 +336,7 @@ function App() {
         <Route path="forgot-password" element={<Forgotpassword />} />
         <Route path="reset-password" element={<ResetLink />} />
       </Route>
-      <Route path="/me" element={isDashboard === false ? <Navigate to="/signin" /> : <DashboardLayout />}>
+      <Route path="/me" element={<DashboardLayout />}>
         <Route path="home" element={<HomePage />} />
         <Route path="history" element={<History />} />
         <Route path="history/correction" element={<Correction />} />
