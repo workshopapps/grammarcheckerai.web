@@ -43,8 +43,12 @@
     "react-speech-recognition": "^3.10.0",
     "react-voice-recorder": "^2.1.2",
     "rive-react": "^3.0.33",
+<<<<<<< HEAD
     "sass": "^1.56.1",
     "socket.io-client": "^4.5.4"
+=======
+    "sass": "^1.56.1"
+>>>>>>> 0063a85ff91d9376447ac9bc721f4143161e71e1
   },
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",

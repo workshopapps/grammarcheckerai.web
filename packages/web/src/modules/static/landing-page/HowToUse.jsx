@@ -45,9 +45,8 @@ const HowToUse = () => {
                 <button
                   key={btn.step}
                   type="button"
-                  className={`${
-                    btn.step === active.step ? styles.step_active : 'transparent'
-                  }  hover:border-[#BA7CFE] text-left pl-7 min-h-max relative h-28 `}
+                  className={`${btn.step === active.step ? styles.step_active : 'transparent'
+                    }  hover:border-[#BA7CFE] text-left pl-7 min-h-max relative h-28 `}
                   onClick={() => setActive(btn)}
                   step-theme={context.theme}
                 >
