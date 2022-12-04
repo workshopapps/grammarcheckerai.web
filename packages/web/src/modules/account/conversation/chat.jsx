@@ -3,9 +3,6 @@ import { Recorder } from 'react-voice-recorder';
 import useSendAudioFile from '../../../hooks/account/useSendAudio';
 import styles from './index.module.css';
 import micImg from '../../../assets/images/mic.svg';
-import trashImg from '../../../assets/images/trash.svg';
-import sendImg from '../../../assets/images/send.svg';
-import pauseImg from '../../../assets/images/pause.svg';
 import toast, { Toaster } from 'react-hot-toast';
 import Loader from '../../../components/Loader';
 import PropTypes from 'prop-types';
@@ -13,38 +10,6 @@ import PropTypes from 'prop-types';
 export default function CustomRecorder({ setChats }) {
   const sendAudio = useSendAudioFile();
   const [isRecording, setRecording] = React.useState(false);
-  const [second, setSecond] = useState('00');
-  const [minute, setMinute] = useState('00');
-  const [counter, setCounter] = useState(0);
-
-  useEffect(() => {
-    let intervalId;
-
-    if (isRecording) {
-      intervalId = setInterval(() => {
-        const secondCounter = counter % 60;
-        const minuteCounter = Math.floor(counter / 60);
-
-        let computedSecond = String(secondCounter).length === 1 ? `0${secondCounter}` : secondCounter;
-
-        let computedMinute = String(minuteCounter).length === 1 ? `0${minuteCounter}` : minuteCounter;
-
-        setSecond(computedSecond);
-        setMinute(computedMinute);
-
-        setCounter((counter) => counter + 1);
-      }, 1000);
-    }
-    return () => clearInterval(intervalId);
-  }, [isRecording, counter]);
-
-  let text = '';
-  if (isRecording) {
-    text;
-  } else {
-    text = 'Tap the Microphone to begin';
-  }
-
   const [state, setState] = React.useState({
     audioURL: null,
     audioDetails: {
@@ -119,7 +84,6 @@ export default function CustomRecorder({ setChats }) {
       >
         <button className={`inset-0 items-center justify-center ${styles.mic}`} onClick={() => recorderHandler()}>
           {<img className="" src={micImg} alt="" style={{ opacity: 1 }} />}
-          <div className="opacity-0 absolute">
             <Recorder
               record={false}
               title={'New recording'}
@@ -128,7 +92,7 @@ export default function CustomRecorder({ setChats }) {
               handleAudioUpload={(data) => handleAudioUpload(data)}
               handleReset={() => handleReset()}
             />
-          </div>
+          
         </button>
 
         <span style={{ '--i': 0 }}></span>
@@ -137,29 +101,6 @@ export default function CustomRecorder({ setChats }) {
         <span style={{ '--i': 3 }}></span>
       </button>
       <Toaster />
-
-      <div>
-        {/* <p className="mt-6">{text}</p> */}
-        <div>
-          <div className="flex justify-center items-center mt-8">
-            <span>{minute}</span>
-            <span>:</span>
-            <span>{second}</span>
-          </div>
-
-          <button className="flex justify-between items-center w-48 mt-8" onClick={() => recorderHandler()}>
-            <button onClick={() => handleReset()}>
-              <img src={trashImg} alt="" />
-            </button>
-            <button onClick={(data) => handleAudioStop(data)}>
-              <img src={pauseImg} alt="" />
-            </button>
-            <button onClick={(data) => handleAudioUpload(data)}>
-              <img src={sendImg} alt="" />
-            </button>
-          </button>
-        </div>
-      </div>
     </>
   );
 }

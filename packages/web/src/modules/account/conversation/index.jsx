@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useTheme from '../../../hooks/useTheme';
 import styles from './index.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,13 +10,16 @@ import micImg from '../../../assets/images/mic.svg';
 import trashImg from '../../../assets/images/trash.svg';
 import sendImg from '../../../assets/images/send.svg';
 import pauseImg from '../../../assets/images/pause.svg';
-import { convertSecToMin } from '../../../lib/utils';
+// import { convertSecToMin } from '../../../lib/utils';
 import useSendAudioFile from '../../../hooks/account/useSendAudio';
 import useMediaRecorder from '@wmik/use-media-recorder';
 import Loader from '../../../components/Loader';
 import toast, { Toaster } from 'react-hot-toast';
 
 function Conversation() {
+  const [second, setSecond] = useState('00');
+  const [minute, setMinute] = useState('00');
+  const [counter, setCounter] = useState(0);
   const navigate = useNavigate();
   const sendAudio = useSendAudioFile();
   let {
@@ -32,6 +35,8 @@ function Conversation() {
     blobOptions: { type: 'audio/wav' },
     mediaStreamConstraints: { audio: true, video: false },
   });
+  console.log("recording")
+
   const [language, setLanguage] = React.useState('English');
   const error = (message) => toast.error(message);
 
@@ -79,6 +84,34 @@ function Conversation() {
 
     clearMediaBlob();
   };
+
+  useEffect(() => {
+    let intervalId;
+
+    if (startRecording) {
+      intervalId = setInterval(() => {
+        const secondCounter = counter % 60;
+        const minuteCounter = Math.floor(counter / 60);
+
+        let computedSecond = String(secondCounter).length === 1 ? `0${secondCounter}` : secondCounter;
+
+        let computedMinute = String(minuteCounter).length === 1 ? `0${minuteCounter}` : minuteCounter;
+
+        setSecond(computedSecond);
+        setMinute(computedMinute);
+
+        setCounter((counter) => counter + 1);
+      }, 1000);
+    }
+    return () => clearInterval(intervalId);
+  }, [startRecording, counter]);
+
+  const stopTimer = () => {
+    stopRecording()
+    setCounter(0);
+    setSecond("00")
+    setMinute("00")
+  }
 
   return (
     <motion.div
@@ -156,11 +189,15 @@ function Conversation() {
                     </>
                   ) : (
                     <div className="pb-10">
-                      <p>{convertSecToMin('30')}</p>
+                      <div className="flex justify-center items-center mt-8">
+                        <span>{minute}</span>
+                        <span>:</span>
+                        <span>{second}</span>
+                      </div>
                       <div className="flex items-center justify-center space-x-6 pt-5">
                         <button
                           className="h-6 w-6 rounded-full flex justify-center items-center"
-                          onClick={() => stopRecording()}
+                          onClick={(status === 'stopped' ? resumeRecording() : stopTimer)}
                         >
                           <img src={trashImg} alt="" className="w-full" />
                         </button>
@@ -173,6 +210,7 @@ function Conversation() {
                         <button
                           className="h-6 w-6 rounded-full flex justify-center items-center"
                           onClick={submitAudioHandler}
+                          
                         >
                           <img src={sendImg} alt="" className="w-full" />
                         </button>
