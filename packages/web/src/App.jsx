@@ -3,7 +3,7 @@ import './App.css';
 import Fallback from './components/Fallback/Fallback';
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom';
 import QuizGame from './modules/static/quizgame/QuizGame';
-// import ProtectedRoute from './components/ProtectedRoute';
+// import ProtectedRoute from './components/ProtectedRoute'; 
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
 const SigninPage = lazy(() => import('./modules/auth/login/login'));
 const ProfilePage = lazy(() => import('./pages/profile/profileScreen'));
@@ -46,9 +46,15 @@ const Ai = lazy(() => import('./pages/Blog/Ai'));
 const Grammar = lazy(() => import('./pages/Blog/Grammar'));
 const Tips = lazy(() => import('./pages/Blog/Tips'));
 const Contact = lazy(() => import('./pages/contact/index'));
+const SocialPage = lazy(() => import('./modules/auth/social-auth-redirect/social'));
+
 
 // All routes/pages must be import from ./pages folder
-
+const Social = () => (
+  <Suspense fallback={<Fallback />}>
+    <SocialPage />
+  </Suspense>
+);
 const DashboardLayout = () => (
   <Suspense fallback={<Fallback />}>
     <Dashboard />
@@ -333,6 +339,7 @@ function App() {
       >
         <Route path="/signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
         <Route path="signup" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signuptwo />} />
+        <Route path="/social" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Social />} />
         <Route path="forgot-password" element={<Forgotpassword />} />
         <Route path="reset-password" element={<ResetLink />} />
       </Route>
