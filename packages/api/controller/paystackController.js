@@ -8,7 +8,7 @@ const paystack = express.Router();
 const { initializePayment, verifyPayment } = require("./paystack")(request);
 
 exports.allSubscriptions = async (req, res) => {
-  const subscriptions = await Subscription.find();
+  const subscriptions = await Subscription.find().then(()=> {});
   return res.status(200).send({ status: "ok", data: subscriptions });
 };
 

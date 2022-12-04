@@ -1,5 +1,6 @@
 const Subscription = require("../database/models/subscriptionSchema");
 
+
 const createPayment = async (req, res) => {
   let email = req.body.email;
   if (!email)
@@ -38,11 +39,12 @@ const getSubscription = async (req, res) => {
         success: false,
         message: "Empty Request",
       });
-    const user = await Subscription.findOne({ email });
+    const user = await Subscription.find({ email });
     if (!user) {
-      return res.status(404).send({
+      return res.status(400).send({
         success: false,
-        message: "User Not Found",
+        message: "User not subscribed",
+        data: [],
       });
     }
     return res.status(200).send({
@@ -68,9 +70,10 @@ const cancelSubscription = async (req, res) => {
     });
   const user = await Subscription.findOne({ email });
   if (!user) {
-    return res.status(404).send({
+    return res.status(400).send({
       success: false,
       message: `No subscription found for ${email}`,
+      data: [],
     });
   }
 
@@ -90,4 +93,8 @@ const cancelSubscription = async (req, res) => {
     });
 };
 
-module.exports = { createPayment, getSubscription, cancelSubscription };
+module.exports = {
+  createPayment,
+  getSubscription,
+  cancelSubscription,
+};

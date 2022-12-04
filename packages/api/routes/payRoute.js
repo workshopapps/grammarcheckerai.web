@@ -5,6 +5,7 @@ const {
   createPayment,
   getSubscription,
   cancelSubscription,
+  allSubscriptions,
 } = require("../controller/payController");
 
 payRouter.post("/create", createPayment);
@@ -12,3 +13,4 @@ payRouter.post("/cancel", cancelSubscription);
 payRouter.get("/", getSubscription);
 
 module.exports = payRouter;
+
