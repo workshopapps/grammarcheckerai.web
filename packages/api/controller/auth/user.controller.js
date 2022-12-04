@@ -43,17 +43,16 @@ async function registerUser(req, res) {
     const data = { email, firstName, lastName, username, password, language };
 
     let verificationLink = await generateEmailVerificationLink(data);
-
     const user = await register(data);
 
     await emailService({
       to: email,
       subject: "Welcome to Speak Better, Please Verify your Email",
-      templateId: SIGNUP_TEMPLATE,
+      templateId: SIGNUP_TEMPLATE, // Email Confirmation Template
       dynamicTemplateData: {
         name: firstName,
         action_url: verificationLink,
-      },
+      }
     });
 
     if (!user)
@@ -65,7 +64,7 @@ async function registerUser(req, res) {
       response({
         success: true,
         message: "User created successfully, Check your email for confirmation",
-        data: user,
+        data: user
       })
     );
   } catch (error) {
@@ -78,6 +77,8 @@ async function registerUser(req, res) {
     );
   }
 }
+
+
 async function login(req, res) {
   // retrieve the email and password
   const { email, password } = req.body;
@@ -92,8 +93,6 @@ async function login(req, res) {
 
   // comparing password
   const validPassword = await user.comparePassword(password);
-  console.log(email, password, validPassword, user);
-  console.log(validPassword);
   if (!validPassword) {
     return res.status(401).json({ msg: "Invalid email or password" });
   }
@@ -106,6 +105,8 @@ async function login(req, res) {
     })
   );
 }
+
+
 async function googleAuthUserSignUp(req, res) {
   const { name, email } = await getTokens(req.query.code);
 
@@ -166,7 +167,8 @@ async function verifyMail(req, res) {
       throw new Error("Link expired");
     }
 
-    res.status(201).redirect("/v1/auth/signin");
+    // res.status(201).redirect("/v1/auth/signin");
+    res.status(201).json({message: "Email has been Successfully Confirmed, pls go back to login route"});
   } catch (err) {
     res.status(400).json({
       error: err.message,
