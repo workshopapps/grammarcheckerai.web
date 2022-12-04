@@ -49,8 +49,8 @@ function Settings() {
     await axios
       .get(`https://api.speakbetter.hng.tech/v1/user/profile/${userId}`, config) // Used my login details ID here as well
       .then((response) => {
-        userDetails = response.data.Detail;
-        const userLanguage = response.data.Detail.language;
+        userDetails = response.data.data;
+        const userLanguage = response.data.data.language;
 
         setLanguage((prev) =>
           prev.map((obj) => {
