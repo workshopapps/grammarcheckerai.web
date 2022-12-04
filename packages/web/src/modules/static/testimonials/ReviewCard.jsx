@@ -47,7 +47,7 @@ export const ReviewCard = ({ closeModal }) => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              conversation_id: 3,
+              conversation_id: Math.floor(Math.random()*10),
               ratings: currentValue,
               userid: '914d5fc6-887a-4264-8e66-cd41232cb46f',
               comment: formvalue.comment,
