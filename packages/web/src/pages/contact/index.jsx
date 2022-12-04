@@ -224,6 +224,7 @@ const index = () => {
                     <div className={ContactCSS.row3}>
                         <label>Message</label>
                         <textarea name="textarea" placeholder='Write your message here' className="text-black"></textarea>
+
                     </div>
                     <div className={ContactCSS.send}>
                         <button
