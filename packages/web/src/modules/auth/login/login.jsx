@@ -92,9 +92,13 @@ const Index = () => {
           localStorage.setItem('grittyuserid', userId);
           localStorage.setItem('grittyusertoken', userToken);
           localStorage.setItem('isdashboard', true);
+        })
+        .then(() => {
           setTimeout(() => {
             getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
           }, 2000);
+        })
+        .then(() => {
           setTimeout(() => {
             window.location.replace('/me/home');
             navigate('/me/home', { replace: true });

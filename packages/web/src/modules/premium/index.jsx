@@ -75,6 +75,11 @@ const Subscription = () => {
               </TableBody>
             </Table>
           </TableContainer>
+          <div className={styles._sbCancel}>
+            <Button variant="outlined" color="secondary">
+              Cancel Subscription
+            </Button>
+          </div>
         </div>
       ) : (
         <div className={styles.empty_state}>
@@ -84,11 +89,6 @@ const Subscription = () => {
           <button onClick={handlePremium}>Upgrade Now</button>
         </div>
       )}
-      <div className={styles._sbCancel}>
-        <Button variant="outlined" color="secondary">
-          Cancel Subscription
-        </Button>
-      </div>
     </div>
   );
 };

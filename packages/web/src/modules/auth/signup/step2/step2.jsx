@@ -40,6 +40,23 @@ const index = () => {
   const handlePrev = () => {
     navigate('/home');
   };
+
+  /* 
+    handleSignUp => signs up the user if they do not exist in the database.
+    The function checks for invalid fields as well as empty fields and returns an erro
+    when the conditions are not according to the rule.
+    -------------------------
+    After a successful attempt at creating the new user => the function navigates to the sign in page.
+    This is done using a setTimeout after user account creation
+
+    User is given a token on account creation which monitors their existing session
+    
+  */
+  useEffect(() => {
+    localStorage.setItem('grittyuserid', userId);
+    localStorage.setItem('grittyusertoken', userToken);
+  }, [userId, userToken]);
+
   const getUserDetails = (url) => {
     var requestOptions = {
       method: 'GET',
@@ -58,22 +75,6 @@ const index = () => {
       })
       .catch((error) => error('error', error));
   };
-
-  /* 
-    handleSignUp => signs up the user if they do not exist in the database.
-    The function checks for invalid fields as well as empty fields and returns an erro
-    when the conditions are not according to the rule.
-    -------------------------
-    After a successful attempt at creating the new user => the function navigates to the sign in page.
-    This is done using a setTimeout after user account creation
-
-    User is given a token on account creation which monitors their existing session
-    
-  */
-  useEffect(() => {
-    localStorage.setItem('grittyuserid', userId);
-    localStorage.setItem('grittyusertoken', userToken);
-  }, [userId, userToken]);
 
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -104,10 +105,16 @@ const index = () => {
           localStorage.setItem('grittyuserid', userId);
           localStorage.setItem('grittyusertoken', userToken);
           localStorage.setItem('isdashboard', true);
-          getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+        })
+        .then(() => {
+          setTimeout(() => {
+            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+          }, 4000);
+        })
+        .then(() => {
           setTimeout(() => {
             navigate('/me/home', { replace: true });
-          }, 5000);
+          }, 6000);
         })
         .catch((err) => {
           error(err.response.data.message);
