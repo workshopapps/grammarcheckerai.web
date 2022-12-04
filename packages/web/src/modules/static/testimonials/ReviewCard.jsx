@@ -58,7 +58,7 @@ export const ReviewCard = ({ closeModal }) => {
             });
               
           if (response.ok) {
-              setSuccessMessage('Thank you for ratiing SpeakBetter!');
+              setSuccessMessage('Thank you for rating SpeakBetter!');
               
           } else {
             setSuccessMessage('There was an error processing your review');
