@@ -5,11 +5,11 @@ export default function PrivacyPolicy() {
   return (
     <div>
         <div className='py-14 text-center bg-[#E8DDF2] text-BLACK'>
-            <h1 className='text-3xl font-bold'>Speak Better Privacy Policy</h1>
+            <h1 className='md:text-3xl text-2xl font-bold'>Speak Better Privacy Policy</h1>
             <p>Last updated: 12 November, 2022.</p>
         </div>
 
-        <div className='flex flex-col gap-5 px-5 md:px-10 py-10'>
+        <div className='w-[95%] m-auto flex flex-col gap-5 px-5 md:px-10 py-10'>
             <p>
             Speak better is committed to the security and privacy of our customers data. 
             </p>

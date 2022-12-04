@@ -5,12 +5,6 @@ const { JWT_SECRET } = environment;
 
 const subscriptionSchema = new mongoose.Schema(
   {
-    user: {
-      type: String,
-      ref: "User",
-      required: [true, "A subscription must be made by a User"],
-      default: () => v4(),
-    },
     email: {
       type: String,
       required: true,
@@ -23,14 +17,14 @@ const subscriptionSchema = new mongoose.Schema(
     },
     interval: {
       type: String,
-      enum: ["weekly", "monthly", "biannually", "annually"],
+      enum: ["monthly", "quarterly", "annually", "weekly"],
       default: "monthly",
       required: true,
     },
     paymentGateway: {
       type: String,
       enum: ["paystack", "flutterwave", "stripe"],
-      required: true,
+      default: "paystack",
     },
     amount: {
       type: Number,
@@ -49,6 +43,9 @@ const subscriptionSchema = new mongoose.Schema(
       enum: ["NGN", "USD", "EUR", "YEN", "GBP"],
       default: "NGN",
     },
+    nextSubscriptionDate:{
+      type: String
+    }
   },
   {
     timestamps: true,

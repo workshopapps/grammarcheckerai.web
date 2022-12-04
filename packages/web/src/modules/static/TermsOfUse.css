@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com');
+@import url('https://fonts.gstatic.com');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
+
+._termspage {
+  font-family: 'DM Sans', sans-serif;
+  margin-left: 120px;
+  margin-right: 120px;
+  margin-top: 40px;
+  margin-bottom: 73px;
+  justify-content: center;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+  ._termspage {
+    font-family: 'DM Sans', sans-serif;
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-top: 32px;
+    margin-bottom: 72px;
+    justify-content: center;
+  }
+}

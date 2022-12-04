@@ -1,7 +1,7 @@
 const { response, authResponse } = require("../../utilities/response");
 const { getTokens } = require("./authThirdPartyController");
 const { register } = require("../../repository/user.repository");
-const { userCollection } = require("../../database/models/userSchema");
+const { userCollection, generateHash } = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
 const {
   generateEmailVerificationLink,
@@ -25,7 +25,7 @@ async function registerUser(req, res) {
     //Check if the user already exist
     password =
       password === confirm_password
-        ? password
+        ? await generateHash(password)
         : res.status(422).json(
             response({
               success: false,
@@ -34,12 +34,12 @@ async function registerUser(req, res) {
           );
 
     const checkEmailExist = await userCollection.findOne({ email });
-    console.log(checkEmailExist);
+    
     if (checkEmailExist)
       return res
         .status(409)
         .json(response({ message: "User already exist", success: false }));
-
+        
     const data = { email, firstName, lastName, username, password, language };
 
     let verificationLink = await generateEmailVerificationLink(data);
@@ -83,16 +83,17 @@ async function login(req, res) {
   const { email, password } = req.body;
 
   const user = await userCollection.findOne({ email });
-  
+
   if (!user) {
     return res
       .status(401)
       .json({ msg: `User with email ${email} does not exist.` });
   }
-  
+
   // comparing password
   const validPassword = await user.comparePassword(password);
-
+  console.log(email, password, validPassword, user);
+  console.log(validPassword);
   if (!validPassword) {
     return res.status(401).json({ msg: "Invalid email or password" });
   }
