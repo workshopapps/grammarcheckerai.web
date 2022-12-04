@@ -29,8 +29,8 @@ const About = () => {
             </div>
           </div>
           <div className="py-14 space-y-6">
-            <h2 className="text-lighttextGray text-2xl text-center">Trusted by top brands</h2>
-            <div className="overflow-scroll scrollbar-hide flex justify-between gap-x-16">
+            <h2 className={` ${context.theme === 'dark' ? 'text-[#fff]' : 'text-lighttextGray'} text-2xl text-center`}>Trusted by top brands</h2>
+            <div className="overflow-scroll scrollbar-hide flex justify-between gap-x-16" >
               {['catalog', 'spherule', 'lightbox', 'luminous', 'altshift'].map((brand, idx) => (
                 <img src={`/images/${brand}.svg`} alt="brand" key={idx} />
               ))}
@@ -40,11 +40,11 @@ const About = () => {
           <div className="grid grid-cols-1 justify-center items-center w-full lg:px-32 m-auto lg:grid-cols-2 mt-3 lg:mx-2 md:px-10 lg:mt-10  ">
             <div className="  flex flex-col justify-center items-center lg:items-start m-5 lg:p-24 ">
               <p className={` ${dark && 'text-[#fff]'} text-lineColor `}>Our Mission </p>
-              <p className={` ${dark && 'text-[#8C54BF]'} text-primary font-bold mt-1 mb-2  text-xl`}>
+              <p className={` ${context.theme === 'dark' ? 'text-lineColor' : ' text-primary '} font-bold mt-1 mb-2  text-xl`}>
                 Why we are here
               </p>
-              <p className={` ${dark && 'text-[#8C54BF]'} text-textColor text-center lg:text-left text-lg `}>
-                To aid human comunication by creating a grammatically correct population
+              <p className={` ${context.theme === 'dark' ? 'text-[#fff]' : 'text-textColor'} `}>
+                    To aid human comunication by creating a grammatically correct population
               </p>
             </div>
             <div className=" py-6 px-20 md:px-40 lg:pr-20 flex justify-center items-center ">
@@ -80,7 +80,7 @@ const About = () => {
                           <div className="w-5 h-5 bg-lineColor absolute -left-10 transform -translate-x-2/4 rounded-full z-10 -mt-2 md:mt-0"></div>
                           <div className="w-10 h-1 bg-lineColor absolute -left-10 z-0"></div>
                           <div className="flex-auto " key={idx}>
-                            <h1 className={`${dark && 'text-[#e9e3e3]'} font-normal text-textColor`}>
+                            <h1 className={`  ${context.theme === 'dark' ? 'text-gray-600' : ' text-header '} font-normal`}>
                               {value.message}
                             </h1>
                           </div>
@@ -100,15 +100,9 @@ const About = () => {
               <p className={`${dark && 'text-[#fff]'} text-lineColor text-center  lg:text-left`}>
                 About Our Technology
               </p>
-              <p
-                className={`font-bold  text-center lg:text-left ${
-                  dark && 'text-[#8C54BF]'
-                } text-cartBg text-xl lg:text-2xl mt-2 mb-3`}
-              >
-                {' '}
-                What we are building
-              </p>
-              <p className={`${dark && 'text-[#8C54BF]'} lg:text-left text-textColor`}>
+              <p className={` ${context.theme === 'dark' ? 'text-[#8C54BF]' : ' text-primary '} text-xl lg:text-2xl mt-2 mb-3`}>  What we are building</p>
+
+              <p className={` ${context.theme === 'dark' ? 'text-[#fff]' : ' text-primary '}  lg:text-left`}>
                 Speak better is an AI-powered grammar checker designed to check and correct grammar for multiple
                 languages. A brainchild of Carpenter-team-grit’s mission of having a population of excellent
                 grammarians. It offers the necessary tools for fluent and effective communication.
@@ -139,8 +133,8 @@ const About = () => {
                 Teams.map((team, idx) => (
                   <div className=" flex flex-col items-center justify-start mt-4 gap-1  " key={idx}>
                     <img src={team.imgsrc} alt="" className=" mb-2 h-[140px] w-[140px]" />
-                    <p className="font-bold text-purple-500 text-center text-base">{team.name}</p>
-                    <p className="text-purple-500 text-center">{team.role}</p>
+                    <p className={` ${context.theme === 'dark' ? 'text-[#fff]' : 'text-purple-500'} font-bold  text-center text-base`}>{team.name}</p>
+                    <p className={` ${context.theme === 'dark' ? 'text-gray-500' : 'text-purple-500'} text-center`}>{team.role}</p>
                   </div>
                 ))}
             </div>
