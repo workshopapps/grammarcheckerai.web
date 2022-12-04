@@ -55,7 +55,7 @@ export const ReviewCard = ({ closeModal }) => {
           });
 
         //console.log(localStorage.getItem("grittyuserid"))
-        console.log(formvalue.comment);
+        //console.log(formvalue.comment);
       };
 
   return (
