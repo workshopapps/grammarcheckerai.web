@@ -1,6 +1,6 @@
-# Gritty Grammar
+# Speak Better
 
-This is Gritty Grammar frontend bootstrapped with [`react vite`](https://vitejs.dev/).
+This is Speak Better frontend bootstrapped with [`react vite`](https://vitejs.dev/).
 
 ## Getting Started
 

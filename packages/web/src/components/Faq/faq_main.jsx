@@ -67,11 +67,12 @@ function FaqMain() {
           } grid lg:grid-cols-3 md:grid-cols-2 lg:mt-[44px] place-items-center  md:gap-10  items-center lg:m-10 justify-center m-5`}
         >
           {data
-            .filter((val) => {
-              if (searchTerm === '') {
-                return val;
-              } else if (val.title.toLowerCase().includes(searchTerm.toLowerCase())) {
-                return val;
+            .filter((obj) => {
+              if (searchTerm === '' || obj.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+                return obj;
+              } else if (data.every((val) => !val.title.toLowerCase().includes(searchTerm.toLowerCase()))) {
+                // If There is no result then show all list
+                return obj;
               }
             })
             .map((val) => {
