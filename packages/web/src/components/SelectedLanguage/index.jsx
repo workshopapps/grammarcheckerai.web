@@ -27,8 +27,9 @@ export default function SeletedLanguage() {
           value={language}
           sx={{
             fontSize: '14px',
-            color: context.theme === 'light' ? 'black' : 'white',
+            color: context.theme === 'dark' && 'white',
             border: context.theme === 'light' ? 'inherit' : '1px solid white',
+            background: context.theme === 'dark' && 'black' 
           }}
           onChange={handleChange}
           displayEmpty
