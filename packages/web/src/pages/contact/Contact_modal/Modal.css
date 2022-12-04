@@ -1,0 +1,55 @@
+.modalContainer[contact-theme='dark']{
+  background: var(--bg-dark);
+  color: #e9e3e3;
+}
+.modal_container[contact-theme='dark']{
+  background: var(--bg-dark);
+  color: #e9e3e3;
+}
+.modal_conatiner p[contact-theme='dark']{
+  color: #e9e3e3;
+}
+.modalContainer span[contact-theme='dark']{
+  color: #e9e3e3;
+}
+.overlay{
+  background-color: rgba(0, 0, 0, 0.7);
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  width:200%;
+  height:200%;
+  position: fixed;
+}
+
+.modalContainer{
+  max-width: 500px;
+  width:90%;
+  height: auto;
+  position: fixed;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.75);
+}
+.closeBtn{
+  position: fixed;
+  top:10%;
+  right:10%;
+}
+.content{
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  width:90%;
+  height: auto;
+  margin: auto;
+}
+.message-border{
+  border-bottom: 1px solid grey;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}

@@ -115,7 +115,7 @@ const Navbar = () => {
           </div>
         )}
       </div>
-      <div className={styles._nvstarted}>
+      {/* <div className={styles._nvstarted}>
         {isTabletOrMobile && (
           <Link to="#/" className={styles._mobilenav} onClick={() => setOpen(true)}>
             {context.theme === 'dark' ? <BsList /> : <BsList className='text-["#3030303"]' />}
@@ -148,7 +148,7 @@ const Navbar = () => {
             ))}
           </div>
         </Drawer>
-      </div>
+      </div> */}
     </header>
   );
 };
