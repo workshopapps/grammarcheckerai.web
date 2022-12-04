@@ -28,21 +28,18 @@ const NewsletterPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const bodyFormData = new FormData()
-    bodyFormData.append('email', userEmail)
-    fetch('https://api.speakbetter.hng.tech/v1/subscribe/newsletter/confirm', {
-      method: 'POST',
-     headers: {
-      // 'Accept' : 'application/json',
-      'Content-Type': 'application/json'
-     },
-      body: JSON.stringify(bodyFormData)
-    })
-    .then((res) => {
-      console.warn(res);
+    axios({
+      method: 'post',
+      url: 'https://api.speakbetter.hng.tech/v1/subscribe/newsletter/confirm',
+      data: {
+        email: 'egwuenuprecious7@gmail.com'
+      }
+    }).then(response => {
+      console.log(response);
+    }).catch(error => {
+      console.log(error);
     })
 
-  
     if (email.current.value !== '') {
       localStorage.setItem('emailData', email.current.value);
     }
