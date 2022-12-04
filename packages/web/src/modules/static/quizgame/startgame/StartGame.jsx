@@ -15,14 +15,14 @@ const StartGame = () => {
 
   const handleStart = () => {
     const userId = localStorage.getItem('grittyuserid');
-    if (userId !== null) {
+    if (userId && (userId !== null || userId !== '')) {
       socket.connect();
       socket.on('update-players', (count) => {
         setPlayers(count);
       });
       socket.emit('start-quiz', userId);
       setStart(true);
-    } else if (userId === null) {
+    } else if (userId === null || userId === '') {
       console.log('Only logged in users can play quiz');
       setLoggedIn(true);
       socket.disconnect();
