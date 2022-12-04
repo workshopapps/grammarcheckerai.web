@@ -12,62 +12,53 @@ const passport = require("passport");
 require("./services/linkedinStrategy");
 require("./services/facebookStrategy");
 const { routeHandler } = require("./routes/index.route"),
-	swaggerUi = require("swagger-ui-express"),
-	swaggerDocument = require("./Tests/test.json");
-const CronJob = require("../api/controller/crons");
+  swaggerUi = require("swagger-ui-express"),
+  swaggerDocument = require("./Tests/test.json");
 
 //Passport Initialized
 app
-	.use(passport.initialize())
-	.use(express.json())
-	.use(
-		cors({
-			origin: "*",
-		})
-	);
+  .use(passport.initialize())
+  .use(express.json())
+  .use(
+    cors({
+      origin: "*",
+    })
+  );
 
 const sess = {
-	store: new Memorystore({
-		checkPeriod: 86400000, // prune expired entries every 24h
-	}),
-	maxAge: 60000,
-	secret: SESSION_SECRET,
-	resave: false,
-	saveUninitialized: true,
-	cookie: {},
+  store: new Memorystore({
+    checkPeriod: 86400000, // prune expired entries every 24h
+  }),
+  maxAge: 60000,
+  secret: SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {},
 };
 
 if (app.get("env") === "production") {
-	app.set("trust proxy", 1); // trust first proxy
-	sess.cookie.secure = true; // serve secure cookies
+  app.set("trust proxy", 1); // trust first proxy
+  sess.cookie.secure = true; // serve secure cookies
 }
 
 app
-	.use(session(sess))
-	.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  .use(session(sess))
+  .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/v1", routeHandler);
 app.use(expressFileUpload());
 app.use(
-	express.urlencoded({
-		extended: true,
-	})
+  express.urlencoded({
+    extended: true,
+  })
 );
 
 //welcome note
 app.use("*", (req, res) => {
-	res.status(200).json({
-		message: "Welcome to Grit Grammarly 🙌",
-		user: "CORS enabled",
-	});
+  res.status(200).json({
+    message: "Welcome to Grit Grammarly 🙌",
+    user: "CORS enabled",
+  });
 });
 
-//404 error
-app.all("*", (req, res, next) => {
-	res.status(404).json({
-		message: "Ohh you are lost, go back now!!!!",
-	});
-});
-
-new CronJob();
 module.exports = app;
