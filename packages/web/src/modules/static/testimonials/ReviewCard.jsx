@@ -33,7 +33,9 @@ export const ReviewCard = ({ closeModal }) => {
     const [hateSpeakBetter, setHateSpeakBetter] = useState(false);
     const [neutral, setNeutral] = useState(true);
 
-    const [formvalue, setFormvalue] = useState({ comment: ''});
+    const [formvalue, setFormvalue] = useState({ comment: '' });
+    
+    const [successMessage, setSuccessMessage] = useState('')
 
     const handleInput = (e) => {
         const { name, value } = e.target;
@@ -43,16 +45,29 @@ export const ReviewCard = ({ closeModal }) => {
     
       const handleFormsubmit = async (e) => {
           e.preventDefault();
-          await fetch('https://api.speakbetter.hng.tech/v1/rating', {
+          try {
+            const response = await fetch('https://api.speakbetter.hng.tech/v1/rating', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              conversation_id: Math.floor(Math.random()*10),
+              conversation_id: Math.floor(Math.random()*1000),
               ratings: currentValue,
               userid: '914d5fc6-887a-4264-8e66-cd41232cb46f',
               comment: formvalue.comment,
             }),
-          });
+            });
+              
+          if (response.ok) {
+              setSuccessMessage('Thank you for ratiing SpeakBetter!');
+              
+          } else {
+            setSuccessMessage('There was an error processing your review');
+          }
+          }
+          
+          catch (error) {
+              console.log(error)
+          }
 
         //console.log(localStorage.getItem("grittyuserid"))
         //console.log(formvalue.comment);
@@ -134,12 +149,13 @@ export const ReviewCard = ({ closeModal }) => {
                   Not Now
                 </button>
                 <button type="submit" 
-                    onClick={() => { handleFormsubmit; closeModal; }}
+                    onClick={() => { handleFormsubmit}}
                     className="text-white font-bold bg-purple-500 px-8 py-4 rounded-lg shadow-sm">
                   Submit
                 </button>
               </div>
             </form>
+            <p className='font-bold text-purple-500 text-center '>{successMessage}</p>
           </main>
         )}
         {hateSpeakBetter && (
