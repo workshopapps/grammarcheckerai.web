@@ -1,4 +1,17 @@
-
+.modalContainer[contact-theme='dark']{
+  background: var(--bg-dark);
+  color: #e9e3e3;
+}
+.modal_container[contact-theme='dark']{
+  background: var(--bg-dark);
+  color: #e9e3e3;
+}
+.modal_conatiner p[contact-theme='dark']{
+  color: #e9e3e3;
+}
+.modalContainer span[contact-theme='dark']{
+  color: #e9e3e3;
+}
 .overlay{
   background-color: rgba(0, 0, 0, 0.7);
   top:0;

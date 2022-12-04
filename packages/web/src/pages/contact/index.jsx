@@ -35,7 +35,7 @@ const index = () => {
                     className={ContactCSS.h1}>Contact Us
                 </p>
                 <p
-                    
+
                     className={ContactCSS.p1}> The Gritty App Is Brought To You By The Team at Grit Grammar. If you Have Any Questions Or Feedback, Please Don't Hesitate To Reach Out To Us. We Are Always Happy To Help!</p>
                   </div>
                   </div>
@@ -152,10 +152,10 @@ const index = () => {
                             <div className="flex lg:hidden">
                             <div className="flex m-0 p-0">
                             <img src={flag} alt="" className=" h-2/3 mt-1" />
-                            <p className="ml-1">+234</p>
+                            <p contact-theme={context.theme} className="ml-1">+234</p>
                             </div>
                             </div>
-                            <input contact-theme={context.theme} type='tel' name='fname' className="w-full ml-4"placeholder='800 000 0000' />
+                            <input contact-theme={context.theme} type='tel' name='fname' className="w-full ml-8 lg:ml-4"placeholder='800 000 0000' />
                             </div>
 
                     </div>
