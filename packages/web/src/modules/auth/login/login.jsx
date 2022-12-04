@@ -48,7 +48,7 @@ const Index = () => {
     After a succesful input, redirects the user to a Protected Route and shows the logged in user's dashboard
     -----------------------------
     If user input is unsuccesful, shows an error notification and keeps the user on the page.
-
+ 
     A successful login provides a token and id which monitors user session.
   */
   useEffect(() => {
@@ -143,9 +143,9 @@ const Index = () => {
 
     */
 
-  const handleFacebookAuth = () => {
-    useFetch('https://speakbetter.hng.tech/api/v1/auth/facebook');
-  };
+  // const handleFacebookAuth = () => {
+  //   useFetch('https://speakbetter.hng.tech/api/v1/auth/facebook');
+  // };
 
   /*
       handleLinkedInAuth handles the LinkedIn social login.
@@ -248,8 +248,10 @@ const Index = () => {
                   <button type="button" className={styles._google} onClick={handleGoogleAuth}>
                     <img src={google} alt="google authentication" />
                   </button>
-                  <button type="button" className={styles._facebook} onClick={handleFacebookAuth}>
-                    <img src={facebook} alt="facebook authentication" />
+                  <button type="button" className={styles._facebook}>
+                    <a href="https://api.speakbetter.hng.tech/v1/auth/facebook">
+                      <img src={facebook} alt="facebook authentication" />
+                    </a>
                   </button>
                   <button type="button" className={styles._apple}>
                     <a href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&scope=r_liteprofile%20r_emailaddress&client_id=77cy5gqnolzhra&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fv1%2Fauth%2Flinkedin%2Fcallback"><img src={apple} alt="apple authentication" /></a>

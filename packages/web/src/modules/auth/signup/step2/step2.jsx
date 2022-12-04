@@ -158,11 +158,11 @@ const index = () => {
 
   */
 
-  const handleFacebookAuth = () => {
-    useFetch('https://speakbetter.hng.tech/api/v1/auth/facebook');
-  };
+  // const handleFacebookAuth = () => {
+  //   useFetch('https://speakbetter.hng.tech/api/v1/auth/facebook');
+  // };
 
-  /* 
+  /*  
     handleLinkedInAuth handles the LinkedIn social login. 
 
     This redirects to the endpoint which gets a usertoken from linkedin
@@ -292,8 +292,10 @@ const index = () => {
                   <button type="button" className={styles._google} onClick={handleGoogleAuth}>
                     <img src={google} alt="google authentication" />
                   </button>
-                  <button type="button" className={styles._facebook} onClick={handleFacebookAuth}>
-                    <img src={facebook} alt="facebook authentication" />
+                  <button type="button" className={styles._facebook}>
+                    <a href="https://api.speakbetter.hng.tech/v1/auth/facebook">
+                      <img src={facebook} alt="facebook authentication" />
+                    </a>
                   </button>
                   <button type="button" className={styles._apple} onClick={handleLinkedInAuth}>
                     <img src={apple} alt="apple authentication" />

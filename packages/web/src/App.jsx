@@ -41,26 +41,26 @@ const AboutPage = lazy(() => import('./pages/about/About'));
 const RolesPage = lazy(() => import('./pages/career/Roles'));
 const ApplicationPage = lazy(() => import('./pages/career/Application'));
 const ApiPage = lazy(() => import('./pages/api-status/api-status'));
-const LandingLayoutPage = lazy(() => import('./components/LandingLayout.jsx'));
+const LandingLayoutPage = lazy(() => import('./components/LandingLayout.jsx/index.jsx'));
 const Jobs = lazy(() => import('./pages/Blog/Jobs'));
 const Ai = lazy(() => import('./pages/Blog/Ai'));
 const Grammar = lazy(() => import('./pages/Blog/Grammar'));
 const Tips = lazy(() => import('./pages/Blog/Tips'));
 const Contact = lazy(() => import('./pages/contact/index'));
-const SocialPage = lazy(() => import('./modules/auth/social-auth-redirect/social'));
 const PremiumSubs = lazy(() => import('./modules/premium/popup/premium'));
 const SubscriptionHistory = lazy(() => import('./modules/premium/index'));
 
 
 // All routes/pages must be import from ./pages folder
-const Social = () => (
-  <Suspense fallback={<Fallback />}>
-    <SocialPage />
-  </Suspense>
-);
 const DashboardLayout = () => (
   <Suspense fallback={<Fallback />}>
     <Dashboard />
+  </Suspense>
+);
+
+const Social = () => (
+  <Suspense fallback={<Fallback />}>
+    <SocialPage />
   </Suspense>
 );
 
@@ -350,6 +350,7 @@ function App() {
           </div>
         }
       >
+        <Route path="/social" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Social />} />
         <Route path="/signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
         <Route path="signup" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signuptwo />} />
         <Route path="/social" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Social />} />
