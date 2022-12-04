@@ -3,9 +3,9 @@ import useTheme from '../../hooks/useTheme';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import PropTypes from 'prop-types';
 
-export default function SeletedLanguage() {
-  const [language, setLanguage] = React.useState('English');
+export default function SeletedLanguage({ setLanguage, language }) {
   const context = useTheme();
 
   const handleChange = (event) => {
@@ -27,8 +27,9 @@ export default function SeletedLanguage() {
           value={language}
           sx={{
             fontSize: '14px',
-            color: context.theme === 'light' ? 'black' : 'white',
+            color: context.theme === 'dark' && 'white',
             border: context.theme === 'light' ? 'inherit' : '1px solid white',
+            background: context.theme === 'dark' && 'black' 
           }}
           onChange={handleChange}
           displayEmpty
@@ -44,8 +45,16 @@ export default function SeletedLanguage() {
           <MenuItem sx={{ fontSize: '14px' }} value={'Dutch'}>
             Dutch
           </MenuItem>
+          <MenuItem sx={{ fontSize: '14px' }} value={'German'}>
+            German
+          </MenuItem>
         </Select>
       </FormControl>
     </div>
   );
 }
+
+SeletedLanguage.propTypes = {
+  setLanguage: PropTypes.func,
+  language: PropTypes.string,
+};

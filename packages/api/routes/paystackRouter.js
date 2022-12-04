@@ -71,7 +71,6 @@ paystackRouter.get("/verify", async (req, res) => {
         .status(200)
         .send({ success: true, message: "Transaction verified already!" });
     
-
     await Subscription.findByIdAndUpdate(updateStatus._id, {
       status: response.data.status,
     }).catch((error) => {
