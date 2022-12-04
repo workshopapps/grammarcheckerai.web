@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Dialog, IconButton } from '@mui/material';
+import { Button, Dialog, IconButton } from '@mui/material';
 import style from './popup.module.css';
 import styles from './checkout.module.css';
 import React, { useState, useEffect } from 'react';
@@ -171,9 +171,19 @@ const Checkout = (props) => {
         interval: props.duration,
         subscriptionId: props.plan,
       })
-      .then((res) => {
-        console.log(res);
-        // window.location.replace(reference.redirecturl);
+      .then(() => {
+        toast(() => (
+          <span>
+            Subscription <b>Succesfully!</b>
+            <p>Redirecting in 5 seconds...</p>
+            <button onClick={''}>Go to Dashboard</button>
+          </span>
+        ));
+      })
+      .then(() => {
+        setTimeout(() => {
+          navigate('/me/home');
+        }, 5000);
       })
       .catch((err) => {
         error(err.message);
@@ -194,11 +204,22 @@ const Checkout = (props) => {
 
   const initializePayment = usePaystackPayment(config);
 
+  const handleNavigate = () => {
+    toast.dismiss();
+    navigate('/me/home');
+  };
   const handlePayment = () => {
     setUserLSEmail(JSON.parse(localStorage.getItem('isUserDetails')).email);
 
     if (props.userIsSubscribed) {
-      error('Subscription Already Exist');
+      toast(() => (
+        <span>
+          <b>User already subscribed!</b>
+          <Button variant="outlined" color="secondary" onClick={handleNavigate}>
+            Go to Dashboard
+          </Button>
+        </span>
+      ));
       return;
     }
     if (userLSEmail && userLSEmail !== '') {
@@ -245,7 +266,7 @@ const Checkout = (props) => {
                       <h3>Amount: NGN {props.amount}</h3>
                       <LoadingButton
                         loading={authPay.isLoading}
-                        variant="contained"
+                        variant="outlined"
                         type="button"
                         onClick={handlePayment}
                       >

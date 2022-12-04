@@ -12,7 +12,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import useGetUserSubscription from '../../hooks/account/useGetUserSubscription';
-import useUserProfile from '../../hooks/account/useUserProfile';
+// import useUserProfile from '../../hooks/account/useUserProfile';
 import Skeleton from '@mui/material/Skeleton';
 
 // import CircularProgress from '@mui/material/CircularProgress';
@@ -20,10 +20,10 @@ import Skeleton from '@mui/material/Skeleton';
 const Subscription = () => {
   const navigate = useNavigate();
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails')).email);
-  const userProfile = useUserProfile(localStorage.getItem('grittyuserid'));
+  // const userProfile = useUserProfile(localStorage.getItem('grittyuserid'));
 
-  console.log(userSubscription?.value, 'userSubscription?.value');
-  console.log(userProfile?.value, 'userProfile?.value');
+  // console.log(userSubscription?.value, 'userSubscription?.value');
+  // console.log(userProfile?.value, 'userProfile?.value');
 
   const handlePremium = () => {
     navigate('/premium');
@@ -37,21 +37,21 @@ const Subscription = () => {
         <p>Manage Subscription information here</p>
       </div>
 
-      {userSubscription.data && !userSubscription?.value && (
+      {/* {userSubscription.data && !userSubscription?.value && (
         <div className={styles.empty_state}>
           <MdPayments />
           <h3 className="">No Subscriptions</h3>
           <p>There have been no Subscription in this section yet</p>
           <button onClick={handlePremium}>Upgrade Now</button>
         </div>
-      )}
+      )} */}
       {/* {true && (
         <div className="h-20 w-full ">
           <CircularProgress color="inherit" size="xl" />
         </div>
       )} */}
 
-      {userSubscription.data && userSubscription?.value ? (
+      {userSubscription.data && userSubscription?.value.length !== 0 ? (
         <div>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 300 }} aria-label="simple table">

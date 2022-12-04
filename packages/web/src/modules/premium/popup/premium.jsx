@@ -1,30 +1,46 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Slide from '@mui/material/Slide';
 import Dialog from '@mui/material/Dialog';
 import styles from './popup.module.css';
-import { IconButton } from '@mui/material';
-import { AiOutlineClose } from 'react-icons/ai';
 import medal from '../Assets/medal-star.png';
 import ranking from '../Assets/ranking.png';
 import check from '../Assets/tick-square.png';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Checkout from './checkout';
 import Navbar from '../../../components/Navbar';
+import useGetUserSubscription from '../../../hooks/account/useGetUserSubscription';
+import { Toaster } from 'react-hot-toast';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
-const index = (props) => {
+const index = () => {
   const matches = useMediaQuery('(max-width:694px)');
   const [interval, setInterval] = React.useState({ plan: '', amount: 0, duration: '' });
   const [open, setOpen] = React.useState(true);
+
   const handleClosePremium = () => {
-    setOpen(true);
+    setOpen(false);
   };
+  const [userIsSubscribed, setUserIsSubscribed] = React.useState(false);
+  const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
+
   const handleCheckout = (plan) => {
     setInterval(plan);
+    if (userSubscription?.value && userSubscription?.value.length !== 0) {
+      // console.log('User is subscribed');
+      userSubscription?.value?.map((item) => {
+        if (item.status === 'initiated') {
+          setUserIsSubscribed(true);
+          return;
+        }
+        setUserIsSubscribed(false);
+      });
+    } else {
+      // console.log('User is not subscribed');
+      setUserIsSubscribed(false);
+    }
   };
 
   const handleBack = () => {
@@ -33,24 +49,22 @@ const index = (props) => {
 
   if (interval.duration)
     return (
-      <Checkout
-        duration={interval.duration}
-        open={open}
-        handleClosePremium={handleClosePremium}
-        Transition={Transition}
-        handleBack={handleBack}
-        amount={interval.amount}
-        plan={interval.plan}
-      />
+      <>
+        <Checkout
+          duration={interval.duration}
+          open={open}
+          handleClosePremium={handleClosePremium}
+          Transition={Transition}
+          handleBack={handleBack}
+          amount={interval.amount}
+          plan={interval.plan}
+          userIsSubscribed={userIsSubscribed}
+        />
+        <Toaster />
+      </>
     );
   return (
-    <Dialog
-      fullScreen
-      open={open}
-      onClose={handleClosePremium}
-      TransitionComponent={Transition}
-      className={styles._sbDialog}
-    >
+    <Dialog fullScreen open={true} TransitionComponent={Transition} className={styles._sbDialog}>
       <div className={styles._sbpopup}>
         <Navbar />
         {matches ? null : (
@@ -135,10 +149,10 @@ const index = (props) => {
                 </button>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() => handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 35000, duration: 'yearly' })}
+                  onClick={() => handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 35000, duration: 'annually' })}
                 >
                   <div className={styles._sbPricingTitles}>
-                    <p>Yearly</p>
+                    <p>Annually</p>
                     <h2>$10.90</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
@@ -202,7 +216,7 @@ const index = (props) => {
                       </p>
                       <button
                         onClick={() =>
-                          handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 35000, duration: 'yearly' })
+                          handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 35000, duration: 'annually' })
                         }
                       >
                         Select
@@ -215,13 +229,9 @@ const index = (props) => {
           </div>
         </div>
       </div>
+      <Toaster />
     </Dialog>
   );
-};
-
-index.propTypes = {
-  open: PropTypes.bool,
-  handleClosePremium: PropTypes.func,
 };
 
 export default index;

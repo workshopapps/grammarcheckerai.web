@@ -81,3 +81,6 @@ html {
 .MuiOutlinedInput-colorSecondary:hover {
   border: rgb(236, 236, 236) 1px solid;
 }
+.css-1twrztz-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root {
+  background-color: #5d387f !important;
+}

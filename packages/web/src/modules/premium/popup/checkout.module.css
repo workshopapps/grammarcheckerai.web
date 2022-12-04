@@ -408,6 +408,9 @@ input[type='checkbox']:checked + label::before {
     width: 100%;
     justify-content: center;
   }
+  ._gs2logincol1 {
+    justify-content: center;
+  }
 }
 @media only screen and (max-width: 850px) {
   ._gs2sociallogincol {
@@ -438,6 +441,7 @@ input[type='checkbox']:checked + label::before {
     width: 100%;
     height: auto;
     padding: 0;
+    justify-content: space-between;
   }
   ._gs2logincontent {
     padding: 3% 5%;
