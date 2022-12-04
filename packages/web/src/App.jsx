@@ -34,7 +34,7 @@ const TermsOfService = lazy(() => import('./pages/Legal/TermsOfService'));
 const PrivacyPolicy = lazy(() => import('./pages/Legal/PrivacyPolicy'));
 const CookiesStatement = lazy(() => import('./pages/Legal/CookiesStatement'));
 const Trademark = lazy(() => import('./pages/Legal/Trademark'));
-const SettingsPage = lazy(() => import('./modules/setting/home-settings/Settings'));
+const SettingsPage = lazy(() => import('./modules/setting/Settings'));
 const Transcribe = lazy(() => import('./modules/transcribe/index'));
 const CareerPage = lazy(() => import('./pages/career/Career'));
 const AboutPage = lazy(() => import('./pages/about/About'));
