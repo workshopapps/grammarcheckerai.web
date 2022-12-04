@@ -1,17 +1,26 @@
 import React from 'react';
 import styles from './index.module.css';
 import { MdPayments } from 'react-icons/md';
-import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
-const Subscription = (props) => {
+const Subscription = () => {
   const [isUserHistory, setIsUserHistory] = React.useState([]);
-  const useFetch = (url) => {
+  const navigate = useNavigate();
+
+  const useNewFetch = (url) => {
     var requestOptions = {
       method: 'GET',
+      redirect: 'follow',
       headers: {
-        Authorization: 'Bearer sk_test_11cd20d24df0f472d32521e1bfb3c00608593c54',
+        Authorization: `Bearer ${localStorage.getItem('grittyusertoken')}`,
       },
     };
 
@@ -19,32 +28,79 @@ const Subscription = (props) => {
       .then((response) => response.text())
       .then((result) => {
         const oBJ = JSON.parse(result);
-        console.log(oBJ.data);
-        setIsUserHistory(oBJ.data);
+        localStorage.setItem('isEmail', oBJ.data.email);
+      })
+      .catch((error) => error('error', error));
+  };
+
+  const useFetch = (url) => {
+    var requestOptions = {
+      method: 'GET',
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        if (Array.isArray(oBJ.data)) {
+          setIsUserHistory(oBJ.data);
+          return;
+        }
+        setIsUserHistory([oBJ.data]);
       })
       .catch((err) => console.log(err.message));
   };
 
   React.useEffect(() => {
-    useFetch(`https://api.paystack.co/subscription/`);
+    useNewFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+    useFetch(`https://api.speakbetter.hng.tech/v1/subscribe?email=${localStorage.getItem('isEmail')}`);
   }, []);
+
+  const handlePremium = () => {
+    navigate('/premium');
+  };
 
   return (
     <div className={styles._subsPage}>
-      {isUserHistory === '' && isUserHistory == null ? (
+      <div className={styles._subsMain}>
+        <h2>Subscription History</h2>
+        <p>Manage Subscription information here</p>
+      </div>
+      {isUserHistory.length < 1 ? (
         <div className={styles.empty_state}>
           <MdPayments />
           <h3 className="">No Subscriptions</h3>
           <p>There have been no Subscription in this section yet</p>
-          <button>Upgrade Now</button>
+          <button onClick={handlePremium}>Upgrade Now</button>
         </div>
       ) : (
-        <div>{isUserHistory.map((subs, index) => {})}</div>
+        <div>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 300 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Date</TableCell>
+                  <TableCell align="left">Plan</TableCell>
+                  <TableCell align="left">Amount</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {isUserHistory.map((subs) => (
+                  <TableRow key={subs._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                    <TableCell component="th" scope="row">
+                      {dayjs(subs.createdAt).format('DD/MM/YYYY')}
+                    </TableCell>
+                    <TableCell align="left">{subs.interval}</TableCell>
+                    <TableCell align="left">NGN {subs.amount}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
       )}
     </div>
   );
 };
-
-Subscription.propTypes = {};
 
 export default Subscription;

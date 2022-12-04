@@ -48,3 +48,20 @@
   border-radius: 12px;
   transition: all 0.4s ease-in-out;
 }
+
+._subsPage {
+  margin-top: 40px;
+  padding: 20px;
+}
+._subsChildren {
+  font-size: 14px;
+  color: rgb(82, 82, 82);
+}
+._subsMain {
+  padding-bottom: 30px;
+}
+._subsMain h2 {
+  font-size: 20px;
+  color: rgb(58, 58, 58);
+  line-height: 30px;
+}

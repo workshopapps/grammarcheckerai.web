@@ -42,7 +42,7 @@ const LandingPage = () => {
       .catch((error) => error('error', error));
   };
 
-  useFetch(`https://api.speakbetter.hng.tech/v1/subscribe/?email=${'tshalom01@gmail.com'}`);
+  useFetch(`https://api.speakbetter.hng.tech/v1/subscribe?email=${'tshalom01@gmail.com'}`);
 
   return (
     <div data-theme={context.theme} className={` bg-[#bbb8b81a] `}>
