@@ -45,9 +45,9 @@ auth.post('/password-reset', reset_password(), validate, resetPassword);
 auth.post('/login', loginValidationRules(), validate, login);
 auth.post('/logout', logout);
 auth.get('/linkedin', getLinkedinUrl);
-auth.get('/linkedin/callback', linkedinAccessToken);
-// auth.get("/facebook", getFacebookURl);
-// auth.get("/facebook/callback", facebookAccessToken);
+auth.post('/linkedin/callback', linkedinAccessToken);
+auth.get("/facebook", getFacebookURl);
+auth.post("/facebook/callback", facebookAccessToken);
 auth.use('/facebook', facebook);
 
 module.exports = { auth };
