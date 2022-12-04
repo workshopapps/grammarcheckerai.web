@@ -240,7 +240,7 @@ textarea{
     flex-direction: row;
   }
   .box {
-    gap: 2px;
+    gap: 8px;
     width: 70px;
     height: 82px;
   }
