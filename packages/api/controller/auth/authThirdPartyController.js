@@ -23,7 +23,7 @@ const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
 
 async function googleAuthURL(req, res) {
 	const options = {
-		redirect_uri: `${SERVER_ROOT_URI}/signin`,
+		redirect_uri: `${SERVER_ROOT_URI}`,
 		client_id: GOOGLE_CLIENT_ID,
 		access_type: "offline",
 		response_type: "code",
@@ -45,7 +45,7 @@ async function getTokens(code) {
 		const client = new OAuth2Client(
 			GOOGLE_CLIENT_ID,
 			GOOGLE_CLIENT_SECRET,
-			`${SERVER_ROOT_URI}/signin`
+			`${SERVER_ROOT_URI}`
 		);
 
 		const { res } = await client.getToken(code);
