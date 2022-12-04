@@ -1,6 +1,5 @@
 const Subscription = require("../database/models/subscriptionSchema");
 
-
 const createPayment = async (req, res) => {
   let email = req.body.email;
   if (!email)
@@ -34,11 +33,18 @@ const createPayment = async (req, res) => {
 const getSubscription = async (req, res) => {
   try {
     const { email } = req.query;
-    if (!email)
+    if (!email) {
       return res.status(400).send({
         success: false,
-        message: "Empty Request",
+        message: "Invalid Email",
       });
+    }
+    if (email == undefined || email == null || email == "undefined") {
+      return res.status(400).send({
+        success: false,
+        message: "Invalid Email",
+      });
+    }
     const user = await Subscription.find({ email });
     if (!user) {
       return res.status(400).send({
