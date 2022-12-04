@@ -14,8 +14,7 @@ import PropTypes from 'prop-types';
 export default function CustomRecorder({ setChats }) {
   const sendAudio = useSendAudioFile();
   const [isRecording, setRecording] = React.useState(false);
-  const [isPremium, setIsPremium] = React.useState(0);
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleClosePremium = () => {
     setOpen(false);
@@ -82,10 +81,7 @@ export default function CustomRecorder({ setChats }) {
     //   }),
     //   'blob fron data.blob',
     // );
-    console.log(data);
     setState((prevState) => ({ ...prevState, audioDetails: data }));
-    setIsPremium(data.duration.s);
-    console.log(isPremium);
     console.log(data, 'data');
     const soln = new FormData();
     soln.append('file', data.blob);
@@ -111,7 +107,7 @@ export default function CustomRecorder({ setChats }) {
           error(err?.response?.data?.message ?? 'Error');
           console.log(err);
         });
-    } else if (data.duration.s && data.duration.s > 10) {
+    } else if (data.duration.s && data.duration.s >= 11) {
       setOpen(true);
     }
   };
@@ -138,7 +134,7 @@ export default function CustomRecorder({ setChats }) {
 
   return (
     <>
-      <Premium open={open} handleClosePremium={handleClosePremium} />
+      <Premium open={true} handleClosePremium={handleClosePremium} />
       {sendAudio.isLoading && <Loader />}
       <button
         className={`rounded-full  relative h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${

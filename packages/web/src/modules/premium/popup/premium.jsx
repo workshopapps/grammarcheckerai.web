@@ -103,7 +103,7 @@ const index = (props) => {
               <div className={styles._sbmobile}>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() => handleCheckout({ plan: 'PLN_2cqf3nx11trbn4b', amount: 350000, duration: 'monthly' })}
+                  onClick={() => handleCheckout({ plan: 'PLN_2cqf3nx11trbn4b', amount: 3500, duration: 'monthly' })}
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Monthly</p>
@@ -119,9 +119,7 @@ const index = (props) => {
                 </button>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() =>
-                    handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 1000000, duration: 'quarterly' })
-                  }
+                  onClick={() => handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 10000, duration: 'quarterly' })}
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Quarterly</p>
@@ -137,7 +135,7 @@ const index = (props) => {
                 </button>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() => handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 3500000, duration: 'yearly' })}
+                  onClick={() => handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 35000, duration: 'yearly' })}
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Yearly</p>
@@ -164,7 +162,7 @@ const index = (props) => {
                       </p>
                       <button
                         onClick={() =>
-                          handleCheckout({ plan: 'PLN_2cqf3nx11trbn4b', amount: 350000, duration: 'monthly' })
+                          handleCheckout({ plan: 'PLN_2cqf3nx11trbn4b', amount: 3500, duration: 'monthly' })
                         }
                       >
                         Select
@@ -184,7 +182,7 @@ const index = (props) => {
                       </p>
                       <button
                         onClick={() =>
-                          handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 1000000, duration: 'quarterly' })
+                          handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 10000, duration: 'quarterly' })
                         }
                       >
                         Select
@@ -204,7 +202,7 @@ const index = (props) => {
                       </p>
                       <button
                         onClick={() =>
-                          handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 3500000, duration: 'yearly' })
+                          handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 35000, duration: 'yearly' })
                         }
                       >
                         Select

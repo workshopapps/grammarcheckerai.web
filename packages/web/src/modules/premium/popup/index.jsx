@@ -10,6 +10,7 @@ import ranking from '../Assets/ranking.png';
 import check from '../Assets/tick-square.png';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Checkout from './checkout';
+import useGetUserSubscription from '../../../hooks/account/useGetUserSubscription';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -17,15 +18,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const index = (props) => {
   const matches = useMediaQuery('(max-width:694px)');
-  // const [checkoutURL, setCheckoutURL] = React.useState('');
   const [interval, setInterval] = React.useState({ plan: '', amount: 0, duration: '' });
-  // const [firstName, setFirstName] = React.useState('');
-  // const [lastName, setLastName] = React.useState('');
-  // const [userToken, setUserToken] = React.useState('');
-  // const [email, setEmail] = React.useState('');
+  const [userIsSubscribed, setUserIsSubscribed] = React.useState(false);
+  const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
 
   const handleCheckout = (plan) => {
     setInterval(plan);
+    if (userSubscription?.value && userSubscription?.value.length !== 0) {
+      // console.log('User is subscribed');
+      setUserIsSubscribed(true);
+    } else {
+      // console.log('User is not subscribed');
+      setUserIsSubscribed(false);
+    }
   };
 
   const handleBack = () => {
@@ -42,6 +47,7 @@ const index = (props) => {
         handleBack={handleBack}
         amount={interval.amount}
         plan={interval.plan}
+        userIsSubscribed={userIsSubscribed}
       />
     );
   return (
@@ -111,7 +117,7 @@ const index = (props) => {
               <div className={styles._sbmobile}>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() => handleCheckout({ plan: 'PLN_2cqf3nx11trbn4b', amount: 350000, duration: 'monthly' })}
+                  onClick={() => handleCheckout({ plan: 'PLN_2cqf3nx11trbn4b', amount: 3500, duration: 'monthly' })}
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Monthly</p>
@@ -127,9 +133,7 @@ const index = (props) => {
                 </button>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() =>
-                    handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 1000000, duration: 'quarterly' })
-                  }
+                  onClick={() => handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 10000, duration: 'quarterly' })}
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Quarterly</p>
@@ -145,7 +149,7 @@ const index = (props) => {
                 </button>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() => handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 3500000, duration: 'yearly' })}
+                  onClick={() => handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 35000, duration: 'yearly' })}
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Yearly</p>
@@ -172,7 +176,7 @@ const index = (props) => {
                       </p>
                       <button
                         onClick={() =>
-                          handleCheckout({ plan: 'PLN_2cqf3nx11trbn4b', amount: 350000, duration: 'monthly' })
+                          handleCheckout({ plan: 'PLN_2cqf3nx11trbn4b', amount: 3500, duration: 'monthly' })
                         }
                       >
                         Select
@@ -192,7 +196,7 @@ const index = (props) => {
                       </p>
                       <button
                         onClick={() =>
-                          handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 1000000, duration: 'quarterly' })
+                          handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 10000, duration: 'quarterly' })
                         }
                       >
                         Select
@@ -212,7 +216,7 @@ const index = (props) => {
                       </p>
                       <button
                         onClick={() =>
-                          handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 3500000, duration: 'yearly' })
+                          handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 35000, duration: 'yearly' })
                         }
                       >
                         Select
