@@ -9,6 +9,7 @@ import letter from '../../../assets/newsletterImages/letter.png';
 import background from '../../../assets/newsletterImages/background.png';
 import close from '../../../assets/newsletterImages/close-square.png';
 import envelope1 from '../../../assets/newsletterImages/envelope1.png';
+import axios from 'axios';
 
 const NewsletterPage = () => {
   const email = useRef();
@@ -27,6 +28,18 @@ const NewsletterPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axios({
+      method: 'post',
+      url: 'https://api.speakbetter.hng.tech/v1/subscribe/newsletter/confirm',
+      data: {
+        email: 'egwuenuprecious7@gmail.com'
+      }
+    }).then(response => {
+      console.log(response);
+    }).catch(error => {
+      console.log(error);
+    })
+
     if (email.current.value !== '') {
       localStorage.setItem('emailData', email.current.value);
     }
@@ -56,7 +69,7 @@ const NewsletterPage = () => {
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} encType="application/json">
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
@@ -67,7 +80,7 @@ const NewsletterPage = () => {
                   placeholder="Youremail@example.com"
                   required
                 />
-                <button id="submit" value={isSubmit}>
+                <button id="submit" value={isSubmit} type="submit">
                   Subscribe
                 </button>
               </form>
