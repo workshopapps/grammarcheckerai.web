@@ -253,8 +253,9 @@ const Index = () => {
                       <img src={facebook} alt="facebook authentication" />
                     </a>
                   </button>
-                  <button type="button" className={styles._apple} onClick={handleLinkedInAuth}>
-                    <img src={apple} alt="apple authentication" />
+                  <button type="button" className={styles._apple}>
+                    <a href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&scope=r_liteprofile%20r_emailaddress&client_id=77cy5gqnolzhra&redirect_uri=https://speakbetter.hng.tech/"><img src={apple} alt="apple authentication" /></a>
+                    
                   </button>
                 </div>
               </div>

@@ -5,7 +5,6 @@ import { Route, Routes, Outlet, Navigate } from 'react-router-dom';
 // import StartGame from './modules/static/quizgame/startgame/StartGame';
 import Layout from './modules/static/quizgame/layout/Layout';
 // import ProtectedRoute from './components/ProtectedRoute';
-const SocialPage = lazy(() => import('./modules/auth/social-auth-redirect/social.jsx'));
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
 const SigninPage = lazy(() => import('./modules/auth/login/login'));
 const ProfilePage = lazy(() => import('./pages/profile/profileScreen'));
@@ -51,8 +50,8 @@ const Contact = lazy(() => import('./pages/contact/index'));
 const PremiumSubs = lazy(() => import('./modules/premium/popup/premium'));
 const SubscriptionHistory = lazy(() => import('./modules/premium/index'));
 
-// All routes/pages must be import from ./pages folder
 
+// All routes/pages must be import from ./pages folder
 const DashboardLayout = () => (
   <Suspense fallback={<Fallback />}>
     <Dashboard />
@@ -354,6 +353,7 @@ function App() {
         <Route path="/social" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Social />} />
         <Route path="/signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
         <Route path="signup" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signuptwo />} />
+        <Route path="/social" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Social />} />
         <Route path="forgot-password" element={<Forgotpassword />} />
         <Route path="password-reset" element={<ResetLink />} />
       </Route>
