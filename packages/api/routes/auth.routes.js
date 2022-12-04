@@ -16,7 +16,9 @@ const {
 const {
   googleAuthURL,
   getLinkedinUrl,
-  linkedinAccessToken, 
+  linkedinAccessToken,
+	getFacebookURl,
+	facebookAccessToken
 } = require("../controller/auth/authThirdPartyController"); 
 const { logout } = require("../controller/logoutcontroller");
 
@@ -42,6 +44,8 @@ auth.post("/password-reset", reset_password(), validate, resetPassword);
 auth.post("/login", loginValidationRules(), validate, login);
 auth.post("/logout", logout);
 auth.get("/linkedin", getLinkedinUrl);
-auth.get("/linkedin/callback", linkedinAccessToken); 
+auth.get("/linkedin/callback", linkedinAccessToken);
+auth.get("/facebook", getFacebookURl);
+auth.get("/facebook/callback", facebookAccessToken);
 
 module.exports = { auth };

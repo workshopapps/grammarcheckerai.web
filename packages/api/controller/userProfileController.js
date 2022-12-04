@@ -68,7 +68,7 @@ const deleteUser = async (req, res) => {
     }
 
     // verify that the user password is correct
-    const validPassword = await user.comparePassword(password);
+    const isCorrect = await comparePassword(password, user.password);
 
     // if password is not correct
     if (!isCorrect) {
@@ -78,7 +78,7 @@ const deleteUser = async (req, res) => {
     }
 
     // if user exist and password is correct
-    if (user && validPassword) {
+    if (isCorrect) {
       await userCollection.deleteOne({ email });
       res.status(200);
       res.json({ message: "you have successfully deleted your account" });
