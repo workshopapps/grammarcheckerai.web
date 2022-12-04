@@ -6,13 +6,15 @@ const createPayment = async (req, res) => {
   if (!email)
     return res.status(400).send({ success: false, message: "Invalid email" });
   try {
-    const { email, subscriptionId, interval, amount, currency } = req.body;
+    const {user, email, subscriptionId, interval, amount, currency } = req.body;
     const payload = {
+      user,
       email,
       subscriptionId,
       interval,
       amount,
       currency,
+      user: userId,
     };
     const result = await Subscription.create(payload);
     res.status(200).send({
