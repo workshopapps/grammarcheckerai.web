@@ -5,7 +5,7 @@ pipeline {
 		
 		
 
-		stage("build frontend"){
+		stage("build frontend and backend"){
 
 			steps {
 				sh "unset NODE_ENV"
@@ -27,7 +27,7 @@ pipeline {
 				sh "sudo chown devineer /home/devineer/backend"
 				//sh "sudo pm2 delete all"
 				//sh "pm2 start npm /home/devineer/frontend 3333"
-				//sh "sudo npm install && sudo pm2 start /home/devineer/backend/server.js -- --port 5555"
+				//sh "sudo npm install && pm2 start /home/devineer/backend/server.js -- --port 5555"
 			}
 			
 	}
