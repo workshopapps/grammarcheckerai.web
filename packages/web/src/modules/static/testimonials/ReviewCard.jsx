@@ -141,7 +141,7 @@ export const ReviewCard = ({ closeModal }) => {
                   />
                 </div>
               </section>
-              <div className="flex justify-evenly mt-6 ">
+              <div className="flex justify-evenly mt-4">
                 <button
                   onClick={closeModal}
                   className="text-purple-500 font-bold bg-white px-8 py-4 rounded-lg shadow-sm"
