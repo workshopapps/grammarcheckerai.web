@@ -192,7 +192,7 @@ label {
   width: 100%;
   border: 1px solid #d7d7d7;
   border-radius: 8px;
-  height: 377px;
+  height: 300px;
   display:flex;
   margin-top: 8px;
   color: #d7d7d7;
@@ -243,12 +243,12 @@ textarea{
   .box {
     gap: 12px;
     width: 70px;
-    height: 82px;
+    height: 85px;
   }
   .lastbox {
     gap: 12px;
     width: 70px;
-    height: 82px;
+    height: 85px;
   }
 
 
