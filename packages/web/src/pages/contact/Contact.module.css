@@ -111,6 +111,7 @@ textarea[contact-theme='dark'],
   display: flex;
   margin: 2rem;
   padding:0 1rem;
+  width: 90%;
   flex-direction: column;
 }
 
@@ -240,12 +241,12 @@ textarea{
     flex-direction: row;
   }
   .box {
-    gap: 8px;
+    gap: 12px;
     width: 70px;
     height: 82px;
   }
   .lastbox {
-    gap: 2px;
+    gap: 12px;
     width: 70px;
     height: 82px;
   }
