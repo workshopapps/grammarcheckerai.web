@@ -33,16 +33,24 @@ const createPayment = async (req, res) => {
 const getSubscription = async (req, res) => {
   try {
     const { email } = req.query;
-    if (!email)
+    if (!email) {
       return res.status(400).send({
         success: false,
-        message: "Empty Request",
+        message: "Invalid Email",
       });
-    const user = await Subscription.findOne({ email });
-    if (!user) {
-      return res.status(404).send({
+    }
+    if (email == undefined || email == null || email == "undefined") {
+      return res.status(400).send({
         success: false,
-        message: "User Not Found",
+        message: "Invalid Email",
+      });
+    }
+    const user = await Subscription.find({ email });
+    if (!user) {
+      return res.status(400).send({
+        success: false,
+        message: "User not subscribed",
+        data: [],
       });
     }
     return res.status(200).send({
@@ -68,9 +76,10 @@ const cancelSubscription = async (req, res) => {
     });
   const user = await Subscription.findOne({ email });
   if (!user) {
-    return res.status(404).send({
+    return res.status(400).send({
       success: false,
       message: `No subscription found for ${email}`,
+      data: [],
     });
   }
 
@@ -90,4 +99,8 @@ const cancelSubscription = async (req, res) => {
     });
 };
 
-module.exports = { createPayment, getSubscription, cancelSubscription };
+module.exports = {
+  createPayment,
+  getSubscription,
+  cancelSubscription,
+};

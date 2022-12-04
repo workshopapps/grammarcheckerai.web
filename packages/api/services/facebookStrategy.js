@@ -20,7 +20,7 @@ passport.deserializeUser(function (obj, cb) {
   cb(null, obj);
 });
 const fbCallbackUrl =
-  NODE_ENV === 'development' ? FB_CALLBACK_URL_DEV : FB_CALLBACK_URL;
+  'https://api.speakbetter.hng.tech/v1/auth/facebook/callback';
 
 //facebook strategy
 passport.use(
@@ -29,7 +29,6 @@ passport.use(
       clientID: FB_CLIENT_ID,
       clientSecret: FB_CLIENT_SERECT,
       callbackURL: fbCallbackUrl,
-
       profileFields: [
         'id',
         'displayName',
@@ -39,7 +38,6 @@ passport.use(
       ],
     },
     async (accessToken, refreshToken, profile, done) => {
-      console.log(profile);
       try {
         // check if user exist
         const oldUser = await User.userCollection.findOne({
@@ -63,7 +61,7 @@ passport.use(
           lastName: profile.name.familyName,
           password: 'password',
         });
-        // console.log(newUser, '+++++++++++++++++');
+
         await newUser.save();
 
         done(null, newUser);
