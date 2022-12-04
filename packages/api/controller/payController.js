@@ -2,11 +2,11 @@ const Subscription = require("../database/models/subscriptionSchema");
 
 const createPayment = async (req, res) => {
   let email = req.body.email;
-
   if (!email)
     return res.status(400).send({ success: false, message: "Invalid email" });
   try {
-    const {user, email, subscriptionId, interval, amount, currency } = req.body;
+    const { user, email, subscriptionId, interval, amount, currency } =
+      req.body;
     const payload = {
       user,
       email,
@@ -14,7 +14,6 @@ const createPayment = async (req, res) => {
       interval,
       amount,
       currency,
-      user: userId,
     };
     const result = await Subscription.create(payload);
     res.status(200).send({
@@ -26,7 +25,7 @@ const createPayment = async (req, res) => {
     console.log(error);
     return res.status(400).send({
       success: false,
-      message: "An Error Occured",
+      message: `Error: ${error.message}`,
     });
   }
 };
@@ -52,11 +51,43 @@ const getSubscription = async (req, res) => {
       data: user,
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).send({
       success: false,
-      message: "An Error Occured",
+      message: `Error: ${error.message}`,
     });
   }
 };
 
-module.exports = { createPayment, getSubscription };
+const cancelSubscription = async (req, res) => {
+  const { email } = req.body;
+  if (!email)
+    return res.status(400).send({
+      success: false,
+      message: "Invalid email sent",
+    });
+  const user = await Subscription.findOne({ email });
+  if (!user) {
+    return res.status(404).send({
+      success: false,
+      message: `No subscription found for ${email}`,
+    });
+  }
+
+  await Subscription.findByIdAndDelete(user._id)
+    .then(() => {
+      return res.status(200).send({
+        success: true,
+        message: "Subscription Cancelled",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(400).send({
+        success: false,
+        message: `Error: ${err.message}`,
+      });
+    });
+};
+
+module.exports = { createPayment, getSubscription, cancelSubscription };
