@@ -56,6 +56,25 @@ const Index = () => {
     localStorage.setItem('grittyusertoken', userToken);
   }, [userId, userToken]);
 
+  const getUserDetails = (url) => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('grittyusertoken')}`,
+      },
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        console.log(oBJ.data);
+        localStorage.setItem('isUserDetails', JSON.stringify(oBJ.data));
+      })
+      .catch((error) => error('error', error));
+  };
+
   const handlelogin = (e) => {
     e.preventDefault();
     if ((userEmail !== '') & (userPassword !== '')) {
@@ -74,6 +93,9 @@ const Index = () => {
           localStorage.setItem('grittyusertoken', userToken);
           localStorage.setItem('isdashboard', true);
           setTimeout(() => {
+            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+          }, 2000);
+          setTimeout(() => {
             window.location.replace('/me/home');
             navigate('/me/home', { replace: true });
           }, 5000);
@@ -90,6 +112,7 @@ const Index = () => {
     Then redirects to the provided URL token for user login
 
   */
+
   const useFetch = (url) => {
     var requestOptions = {
       method: 'GET',

@@ -19,7 +19,7 @@ import Skeleton from '@mui/material/Skeleton';
 
 const Subscription = () => {
   const navigate = useNavigate();
-  const userSubscription = useGetUserSubscription(localStorage.getItem('isEmail'));
+  const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails')).email);
   const userProfile = useUserProfile(localStorage.getItem('grittyuserid'));
 
   console.log(userSubscription?.value, 'userSubscription?.value');

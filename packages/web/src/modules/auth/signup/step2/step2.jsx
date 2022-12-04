@@ -40,6 +40,24 @@ const index = () => {
   const handlePrev = () => {
     navigate('/home');
   };
+  const getUserDetails = (url) => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('grittyusertoken')}`,
+      },
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        console.log(oBJ.data);
+        localStorage.setItem('isUserDetails', JSON.stringify(oBJ.data));
+      })
+      .catch((error) => error('error', error));
+  };
 
   /* 
     handleSignUp => signs up the user if they do not exist in the database.
@@ -86,7 +104,10 @@ const index = () => {
           localStorage.setItem('grittyuserid', userId);
           localStorage.setItem('grittyusertoken', userToken);
           localStorage.setItem('isdashboard', true);
-          setTimeout(() => navigate('/me/home', { replace: true }), 5000);
+          getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+          setTimeout(() => {
+            navigate('/me/home', { replace: true });
+          }, 5000);
         })
         .catch((err) => {
           error(err.response.data.message);
