@@ -72,7 +72,7 @@ function Conversation() {
     const soln = new FormData();
     soln.append('file', audioResult);
     soln.append('language', language);
-    if (second <= '05' || userSubscription?.value.length !== 0) {
+    if (second <= '05' || (userSubscription?.value && userSubscription?.value.length !== 0)) {
       sendAudio
         .mutateAsync(soln)
         .then((res) => {
