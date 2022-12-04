@@ -7,30 +7,36 @@ import Rank from '../rank/Rank';
 import styles from '../startgame/StartGame.module.scss';
 
 const StartGame = () => {
-  const {socket} = useContext(QuizContext);
+  const { socket } = useContext(QuizContext);
   const [players, setPlayers] = useState(0);
-  const [ start, setStart ] = useState(false);
-  const [ rank, setRank ] = useState(false);
+  const [start, setStart] = useState(false);
+  const [rank, setRank] = useState(false);
 
   const handleStart = () => {
-    socket.connect();
-    socket.on('update-players', (count) => {
-      setPlayers(count);
-    });
     const userId = localStorage.getItem('grittyuserid');
-    socket.emit('start-quiz', userId);
-    setStart(true);
+    if ( userId !== '' ) {
+      socket.connect();
+      socket.on('update-players', (count) => {
+        setPlayers(count);
+      });
+      socket.emit('start-quiz', userId);
+      setStart(true);
+    } else {
+      return 'Only Logged in Users can use Quiz';
+    }
   };
 
   return (
     <>
-      {start ? <QuizGame players={players} setPlayers={setPlayers} setStart={setStart} /> : (
+      {start ? (
+        <QuizGame players={players} setPlayers={setPlayers} setStart={setStart} />
+      ) : (
         <section className={styles.startgame}>
           <div className={styles.startgame_card}>
             <h1>Join Quiz</h1>
-    
+
             <p>Test your skills among other players in this amazing Quiz Adventure.</p>
-    
+
             <div className={styles.startgame_card__btn}>
               <button onClick={handleStart}>Start Game</button>
               <button onClick={() => setRank(true)}>Leader Board</button>

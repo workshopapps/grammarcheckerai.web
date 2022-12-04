@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from '../rank/Rank.module.scss';
 import { GrClose } from 'react-icons/gr';
+import loading from '../../../../assets/newsletterImages/loading.gif';
 
 const Rank = ({ setRank }) => {
   const [ranks, setRanks] = useState([]);
@@ -32,19 +33,20 @@ const Rank = ({ setRank }) => {
           <table>
             <thead>
               <tr>
+                <th>Rank</th>
                 <th>Username</th>
                 <th>Total Questions</th>
                 <th>Total Points</th>
               </tr>
             </thead>
-
-            {ranks.map(() => {
+            {ranks.map((element) => {
               return (
-                <tbody key={ranks.userId}>
+                <tbody key={element}>
                   <tr>
-                    <td>{ranks.username}</td>
-                    <td>{ranks.totalQuestions}</td>
-                    <td>{ranks.totalPoints}</td>
+                    <td>{element.rank}</td>
+                    <td>{element.username}</td>
+                    <td>{element.totalQuestions}</td>
+                    <td>{element.totalPoints}</td>
                   </tr>
                 </tbody>
               );
