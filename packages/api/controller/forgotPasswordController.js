@@ -1,12 +1,15 @@
-const { response } = require("../utilities/response");
-const { userCollection, generateHash } = require("../database/models/userSchema");
-const { environment } = require("../config/environment.js");
-const { verifyJWTToken } = require("../utilities/generateToken");
-const emailService = require("../services/email.service");
+const { response } = require('../utilities/response');
+const {
+  userCollection,
+  generateHash,
+} = require('../database/models/userSchema');
+const { environment } = require('../config/environment.js');
+const { verifyJWTToken } = require('../utilities/generateToken');
+const emailService = require('../services/email.service');
 const {
   REQUEST_PASSWORD_RESET,
   RESET_PASSWORD,
-} = require("../utilities/email.template");
+} = require('../utilities/email.template');
 
 const { BASE_URL } = environment;
 
@@ -37,14 +40,14 @@ exports.requestForgotPassword = async (req, res) => {
 
     return res.status(200).json(
       response({
-        message: "A mail was just sent to this email address",
-        success: true, 
+        message: 'A mail was just sent to this email address',
+        success: true,
       })
     );
   } catch (error) {
     return res.status(500).json(
       response({
-        message: "Something went wrong wile processing this request",
+        message: 'Something went wrong wile processing this request',
         success: false,
       })
     );
@@ -61,7 +64,7 @@ exports.resetPassword = async (req, res) => {
       return res.status(422).json(
         response({
           success: false,
-          message: "Password mismatch, Comfirm your password",
+          message: 'Password mismatch, Comfirm your password',
         })
       );
     }
@@ -71,7 +74,7 @@ exports.resetPassword = async (req, res) => {
     if (!decodeToken) {
       return res
         .status(401)
-        .json(response({ message: "Invalid Token", success: false }));
+        .json(response({ message: 'Invalid Token', success: false }));
     }
 
     const { email } = decodeToken;
@@ -79,7 +82,7 @@ exports.resetPassword = async (req, res) => {
     if (!user) {
       return res
         .status(409)
-        .json(response({ message: "User does not exist", success: false }));
+        .json(response({ message: 'User does not exist', success: false }));
     }
 
     const password = await generateHash(new_password);
@@ -90,7 +93,7 @@ exports.resetPassword = async (req, res) => {
 
     emailService({
       to: email,
-      subject: "Speak Better Password Changed Successfully",
+      subject: 'Speak Better Password Changed Successfully',
       templateId: RESET_PASSWORD,
       dynamic_template_data: {
         name: user.firstName,
@@ -99,14 +102,14 @@ exports.resetPassword = async (req, res) => {
     });
     return res.status(200).json(
       response({
-        message: "Your password was reset successfully",
+        message: 'Your password was reset successfully',
         success: true,
       })
     );
   } catch (error) {
     return res.status(500).json(
       response({
-        message: "Something went wrong wile processing this request",
+        message: 'Something went wrong wile processing this request',
         success: false,
       })
     );
