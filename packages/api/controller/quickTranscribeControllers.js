@@ -59,16 +59,15 @@ const quickTranscribe = async (req, res) => {
       message: "Message exchange successfully completed between user and bot",
       data: {
         audioUrl,
-        correctedText: correctUserResponseInTxt,
+        transcribedAudioText,
+        correctUserResponseInTxt,
       },
     });
   } catch (err) {
-    return res.status(500).json(
-      response({
-        success: false,
-        message: err,
-      })
-    );
+    return res.status(500).json({
+      success: false,
+      message: err,
+    });
   }
 };
 
