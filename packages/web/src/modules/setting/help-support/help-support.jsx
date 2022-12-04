@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { arrowRightIcon } from '../../../../assets';
+import { arrowRightIcon } from '../../../assets';
 
 function HelpSupport() {
   return (
