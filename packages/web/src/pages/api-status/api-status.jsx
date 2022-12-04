@@ -4,7 +4,9 @@ import Footer from '../../modules/static/landing-page/Footer';
 import style from './api-status.module.css';
 import Detail from './Report/ReportDetail';
 
+
 const ApiStatus = () => {
+
   return (
     <>
     <div className="statusPage">
