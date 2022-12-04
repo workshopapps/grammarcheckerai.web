@@ -5,12 +5,6 @@ const { JWT_SECRET } = environment;
 
 const subscriptionSchema = new mongoose.Schema(
   {
-    user: {
-      type: String,
-      ref: "user",
-      required: [true, "A subscription must be made by a User"],
-      default: () => v4(),
-    },
     email: {
       type: String,
       required: true,

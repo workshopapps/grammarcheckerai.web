@@ -10,7 +10,6 @@ import micImg from '../../../assets/images/mic.svg';
 import trashImg from '../../../assets/images/trash.svg';
 import sendImg from '../../../assets/images/send.svg';
 import pauseImg from '../../../assets/images/pause.svg';
-// import { convertSecToMin } from '../../../lib/utils';
 import useSendAudioFile from '../../../hooks/account/useSendAudio';
 import useMediaRecorder from '@wmik/use-media-recorder';
 import Loader from '../../../components/Loader';
@@ -22,6 +21,7 @@ function Conversation() {
   const [counter, setCounter] = useState(0);
   const navigate = useNavigate();
   const sendAudio = useSendAudioFile();
+  const [beginRecording, setBeginRecording] = useState(false)
   let {
     status,
     mediaBlob: audioResult,
@@ -55,7 +55,9 @@ function Conversation() {
   };
 
   const submitAudioHandler = async () => {
-    stopRecording();
+    setCounter(0)
+    setBeginRecording(false)
+    stopRecording()
 
     const soln = new FormData();
     soln.append('file', audioResult);
@@ -85,10 +87,12 @@ function Conversation() {
     clearMediaBlob();
   };
 
+  
+
   useEffect(() => {
     let intervalId;
 
-    if (startRecording) {
+    if (beginRecording) {
       intervalId = setInterval(() => {
         const secondCounter = counter % 60;
         const minuteCounter = Math.floor(counter / 60);
@@ -104,14 +108,8 @@ function Conversation() {
       }, 1000);
     }
     return () => clearInterval(intervalId);
-  }, [startRecording, counter]);
+  }, [beginRecording, counter]);
 
-  const stopTimer = () => {
-    stopRecording()
-    setCounter(0);
-    setSecond("00")
-    setMinute("00")
-  }
 
   return (
     <motion.div
@@ -158,6 +156,7 @@ function Conversation() {
               <button
                 onClick={() => {
                   console.log(status);
+                  setBeginRecording((prevstate) => !prevstate)
                   status === 'idle' || status === 'stopped' ? startRecording() : null;
                 }}
                 className={`rounded-full h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
@@ -197,20 +196,37 @@ function Conversation() {
                       <div className="flex items-center justify-center space-x-6 pt-5">
                         <button
                           className="h-6 w-6 rounded-full flex justify-center items-center"
-                          onClick={(status === 'stopped' ? resumeRecording() : stopTimer)}
+                          onClick={() => {
+                            setCounter(0)
+                            setBeginRecording(false)
+                            stopRecording()
+                          }}
                         >
                           <img src={trashImg} alt="" className="w-full" />
                         </button>
                         <button
                           className="h-6 w-6 rounded-full flex justify-center items-center"
-                          onClick={() => (status === 'paused' ? resumeRecording() : pauseRecording())}
+                          onClick={() => {
+                            if (status === "recording"){
+                              setBeginRecording(false)
+                              pauseRecording()
+                            } 
+                            else if (status === "idle"){
+                              setBeginRecording(true)
+                              resumeRecording()
+                            }
+                          }}
                         >
                           <img src={pauseImg} alt="" className="w-full" />
                         </button>
                         <button
                           className="h-6 w-6 rounded-full flex justify-center items-center"
-                          onClick={submitAudioHandler}
-                          
+                          onClick={() => {
+                            submitAudioHandler()
+                            setCounter(0)
+                            setBeginRecording(false)
+                            stopRecording()
+                          }}
                         >
                           <img src={sendImg} alt="" className="w-full" />
                         </button>
