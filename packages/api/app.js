@@ -14,7 +14,6 @@ require("./services/facebookStrategy");
 const { routeHandler } = require("./routes/index.route"),
   swaggerUi = require("swagger-ui-express"),
   swaggerDocument = require("./Tests/test.json"); 
-const CronJob = require("../api/controller/crons")
 
 //Passport Initialized
 app
@@ -62,12 +61,4 @@ app.use("*", (req, res) => {
   });
 });
 
-//404 error
-app.all("*",(req, res, next) => {
-  res.status(404).json({
-    message: "Ohh you are lost, go back now!!!!",
-  });
-});
-
-new CronJob();
 module.exports = app;
