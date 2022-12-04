@@ -54,7 +54,7 @@ exports.userQuizProfileUpdateHandler = async (userId, isCorrect) => {
 
     // if the user's answer is Correct
     if (isCorrect) userQuizProfile.totalPoints += 10;
-    await userInfo.save({ validateBeforeSave: true });
+    await userQuizProfile.save({ validateBeforeSave: true });
   } catch (error) {
     throw error;
   }

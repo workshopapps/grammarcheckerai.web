@@ -1,12 +1,14 @@
-const userCollection = require("../database/models/userSchema");
 const Subscription = require("../database/models/subscriptionSchema");
 
 const createPayment = async (req, res) => {
-  let user = req.user;
-  let userId = user._id;
+  let email = req.body.email;
+
+  if (!email)
+    return res.status(400).send({ success: false, message: "Invalid email" });
   try {
-    const { email, subscriptionId, interval, amount, currency } = req.body;
+    const {user, email, subscriptionId, interval, amount, currency } = req.body;
     const payload = {
+      user,
       email,
       subscriptionId,
       interval,
@@ -31,11 +33,12 @@ const createPayment = async (req, res) => {
 
 const getSubscription = async (req, res) => {
   try {
-    const  {email} = req.query;
-    if (!email)return res.status(400).send({
-      success: false,
-      message: "Empty Request",
-    }); 
+    const { email } = req.query;
+    if (!email)
+      return res.status(400).send({
+        success: false,
+        message: "Empty Request",
+      });
     const user = await Subscription.findOne({ email });
     if (!user) {
       return res.status(404).send({
