@@ -8,7 +8,7 @@ const QuizContextProvider = (props) => {
   const userId = localStorage.getItem('grittyuserid');
   const socket = io('https://api.speakbetter.hng.tech/', { autoConnect: false });
 
-  if (userId !== null) {
+  if (userId && (userId !== null || userId !== '')) {
     socket.on('connect', () => {
       console.log(`You connected with ${socket.id}`);
     });
