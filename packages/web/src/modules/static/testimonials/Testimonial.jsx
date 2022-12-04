@@ -1,4 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext,useState } from 'react';
+import { Link } from 'react-router-dom';
+
 
 import { ThemeContext } from '../../../lib/context/DarkThemeContext';
 import styles from './Testimonial.module.css';
@@ -12,7 +14,11 @@ import testimonial5 from '../../../assets/raters/testimonials/testimonial5.png';
 import ornament2 from '../../../assets/raters/testimonials/ornament2.png';
 import Footer from '../landing-page/Footer';
 
+import { ReviewCard } from './ReviewCard';
+
 export default function Testimonial() {
+
+
   const testimonials = [
     {
       id: 1,
@@ -65,7 +71,7 @@ export default function Testimonial() {
   ];
 
   const context = useContext(ThemeContext);
-
+  
   return (
     <div>
       <div>
@@ -79,6 +85,13 @@ export default function Testimonial() {
             today and be a part of the team.
           </p>
         </div>
+        <Link
+          className="text-center bg-purple-500 text-white w-64 flex justify-center py-4 rounded-xl my-6 mx-auto"
+          //onClick={() => setOpenReviewModal(true)}
+          to="/ratings"
+        >
+          Rate SpeakBetter
+        </Link>
         <main className="lg:grid space-y-6 lg:space-y-0 grid-cols-3 gap-8 lg:mt-32 my-14 mx-16 lg:mx-32 ">
           {testimonials.map((testimony) => {
             return (
