@@ -1674,13 +1674,6 @@
   "resolved" "https://registry.npmjs.org/base64url/-/base64url-3.0.1.tgz"
   "version" "3.0.1"
 
-"basic-auth@~2.0.1":
-  "integrity" "sha512-NF+epuEdnUYVlGuhaxbbq+dvJttwLnGY+YixlXlME5KpQ5W3CnXA5cVTneY3SPbPDRkcjMbifrwmFYcClgOZeg=="
-  "resolved" "https://registry.npmjs.org/basic-auth/-/basic-auth-2.0.1.tgz"
-  "version" "2.0.1"
-  dependencies:
-    "safe-buffer" "5.1.2"
-
 "bcrypt-pbkdf@^1.0.0":
   "version" "1.0.2"
   dependencies:
@@ -1968,26 +1961,26 @@
   dependencies:
     "ms" "2.1.2"
 
-"debug@^4.3.4":
-  "integrity" "sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ=="
-  "resolved" "https://registry.npmjs.org/debug/-/debug-4.3.4.tgz"
-  "version" "4.3.4"
-  dependencies:
-    "ms" "2.1.2"
-
-"debug@~4.3.1":
-  "integrity" "sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ=="
-  "resolved" "https://registry.npmjs.org/debug/-/debug-4.3.4.tgz"
-  "version" "4.3.4"
-  dependencies:
-    "ms" "2.1.2"
-
 "debug@~4.3.2":
   "integrity" "sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ=="
   "resolved" "https://registry.npmjs.org/debug/-/debug-4.3.4.tgz"
   "version" "4.3.4"
   dependencies:
     "ms" "2.1.2"
+
+"debug@2.6.9":
+  "integrity" "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA=="
+  "resolved" "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz"
+  "version" "2.6.9"
+  dependencies:
+    "ms" "2.0.0"
+
+"debug@2.6.9":
+  "integrity" "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA=="
+  "resolved" "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz"
+  "version" "2.6.9"
+  dependencies:
+    "ms" "2.0.0"
 
 "debug@2.6.9":
   "integrity" "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA=="
@@ -2917,16 +2910,6 @@
   dependencies:
     "minimist" "^1.2.6"
 
-"mkdirp@^1.0.3", "mkdirp@^1.0.4":
-  "integrity" "sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw=="
-  "resolved" "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz"
-  "version" "1.0.4"
-
-"modify-values@^1.0.0":
-  "integrity" "sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw=="
-  "resolved" "https://registry.npmjs.org/modify-values/-/modify-values-1.0.1.tgz"
-  "version" "1.0.1"
-
 "mongodb-connection-string-url@^2.5.4":
   "version" "2.5.4"
   dependencies:
@@ -3066,20 +3049,6 @@
     "touch" "^3.1.0"
     "undefsafe" "^2.0.5"
 
-"nopt@^5.0.0":
-  "integrity" "sha512-Tbj67rffqceeLpcRXrT7vKAN8CwfPeIBgM7E6iBkmKLV7bEMwpGgYLGv0jACUsECaa/vuxP0IjEont6umdMgtQ=="
-  "resolved" "https://registry.npmjs.org/nopt/-/nopt-5.0.0.tgz"
-  "version" "5.0.0"
-  dependencies:
-    "abbrev" "1"
-
-"nopt@^6.0.0":
-  "integrity" "sha512-ZwLpbTgdhuZUnZzjd7nb1ZV+4DoiC6/sfiVKok72ym/4Tlf+DFdlHYmT2JPmcNNWV6Pi3SDf1kT+A4r9RTuT9g=="
-  "resolved" "https://registry.npmjs.org/nopt/-/nopt-6.0.0.tgz"
-  "version" "6.0.0"
-  dependencies:
-    "abbrev" "^1.0.0"
-
 "nopt@~1.0.10":
   "integrity" "sha512-NWmpvLSqUrgrAC9HCuxEvb+PSloHpqVu+FqcO4eeF2h5qYRhA7ev6KvelyQAKtegUbC6RypJnlEOhd8vloNKYg=="
   "resolved" "https://registry.npmjs.org/nopt/-/nopt-1.0.10.tgz"
@@ -3100,7 +3069,7 @@
   "resolved" "https://registry.npmjs.org/oauth/-/oauth-0.9.15.tgz"
   "version" "0.9.15"
 
-"object-assign@^4", "object-assign@^4.0.1", "object-assign@^4.1.1":
+"object-assign@^4", "object-assign@^4.1.1":
   "integrity" "sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg=="
   "resolved" "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz"
   "version" "4.1.1"
@@ -3991,71 +3960,6 @@
   "integrity" "sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ=="
   "resolved" "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz"
   "version" "1.0.2"
-
-"write-file-atomic@^2.4.2":
-  "integrity" "sha512-GaETH5wwsX+GcnzhPgKcKjJ6M2Cq3/iZp1WyY/X1CSqrW+jVNM9Y7D8EC2sM4ZG/V8wZlSniJnCKWPmBYAucRQ=="
-  "resolved" "https://registry.npmjs.org/write-file-atomic/-/write-file-atomic-2.4.3.tgz"
-  "version" "2.4.3"
-  dependencies:
-    "graceful-fs" "^4.1.11"
-    "imurmurhash" "^0.1.4"
-    "signal-exit" "^3.0.2"
-
-"write-file-atomic@^3.0.0":
-  "integrity" "sha512-AvHcyZ5JnSfq3ioSyjrBkH9yW4m7Ayk8/9My/DD9onKeu/94fwrMocemO2QAJFAlnnDN+ZDS+ZjAR5ua1/PV/Q=="
-  "resolved" "https://registry.npmjs.org/write-file-atomic/-/write-file-atomic-3.0.3.tgz"
-  "version" "3.0.3"
-  dependencies:
-    "imurmurhash" "^0.1.4"
-    "is-typedarray" "^1.0.0"
-    "signal-exit" "^3.0.2"
-    "typedarray-to-buffer" "^3.1.5"
-
-"write-file-atomic@^4.0.0", "write-file-atomic@^4.0.1":
-  "integrity" "sha512-7KxauUdBmSdWnmpaGFg+ppNjKF8uNLry8LyzjauQDOVONfFLNKrKvQOxZ/VuTIcS/gge/YNahf5RIIQWTSarlg=="
-  "resolved" "https://registry.npmjs.org/write-file-atomic/-/write-file-atomic-4.0.2.tgz"
-  "version" "4.0.2"
-  dependencies:
-    "imurmurhash" "^0.1.4"
-    "signal-exit" "^3.0.7"
-
-"write-json-file@^3.2.0":
-  "integrity" "sha512-3xZqT7Byc2uORAatYiP3DHUUAVEkNOswEWNs9H5KXiicRTvzYzYqKjYc4G7p+8pltvAw641lVByKVtMpf+4sYQ=="
-  "resolved" "https://registry.npmjs.org/write-json-file/-/write-json-file-3.2.0.tgz"
-  "version" "3.2.0"
-  dependencies:
-    "detect-indent" "^5.0.0"
-    "graceful-fs" "^4.1.15"
-    "make-dir" "^2.1.0"
-    "pify" "^4.0.1"
-    "sort-keys" "^2.0.0"
-    "write-file-atomic" "^2.4.2"
-
-"write-json-file@^4.3.0":
-  "integrity" "sha512-PxiShnxf0IlnQuMYOPPhPkhExoCQuTUNPOa/2JWCYTmBquU9njyyDuwRKN26IZBlp4yn1nt+Agh2HOOBl+55HQ=="
-  "resolved" "https://registry.npmjs.org/write-json-file/-/write-json-file-4.3.0.tgz"
-  "version" "4.3.0"
-  dependencies:
-    "detect-indent" "^6.0.0"
-    "graceful-fs" "^4.1.15"
-    "is-plain-obj" "^2.0.0"
-    "make-dir" "^3.0.0"
-    "sort-keys" "^4.0.0"
-    "write-file-atomic" "^3.0.0"
-
-"write-pkg@^4.0.0":
-  "integrity" "sha512-v2UQ+50TNf2rNHJ8NyWttfm/EJUBWMJcx6ZTYZr6Qp52uuegWw/lBkCtCbnYZEmPRNL61m+u67dAmGxo+HTULA=="
-  "resolved" "https://registry.npmjs.org/write-pkg/-/write-pkg-4.0.0.tgz"
-  "version" "4.0.0"
-  dependencies:
-    "sort-keys" "^2.0.0"
-    "type-fest" "^0.4.1"
-    "write-json-file" "^3.2.0"
-
-"ws@^8.2.3":
-  "integrity" "sha512-HPG3wQd9sNQoT9xHyNCXoDUa+Xw/VevmY9FoHyQ+g+rrMn4j6FB4np7Z0OhdTgjx6MgQLK7jwSy1YecU1+4Asg=="
-  "resolved" "https://registry.npmjs.org/ws/-/ws-8.11.0.tgz"
-  "version" "8.11.0"
 
 "ws@~8.2.3":
   "integrity" "sha512-wBuoj1BDpC6ZQ1B7DWQBYVLphPWkm8i9Y0/3YdHjHKHiohOJ1ws+3OccDWtH+PoC9DZD5WOTrJvNbWvjS6JWaA=="
