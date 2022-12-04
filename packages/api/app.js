@@ -13,7 +13,7 @@ require("./services/linkedinStrategy");
 require("./services/facebookStrategy");
 const { routeHandler } = require("./routes/index.route"),
   swaggerUi = require("swagger-ui-express"),
-  swaggerDocument = require("./Tests/test.json"); 
+  swaggerDocument = require("./Tests/test.json");
 
 //Passport Initialized
 app
@@ -53,10 +53,10 @@ app.use(
   })
 );
 
-//welcome note 
+//welcome note
 app.use("*", (req, res) => {
   res.status(200).json({
-    message: "Welcome to Speak Better 👄", 
+    message: "Welcome to Grit Grammarly 🙌",
     user: "CORS enabled",
   });
 });
