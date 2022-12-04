@@ -8,7 +8,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import LoadingButton from '@mui/lab/LoadingButton';
 import useLogin from '../../../hooks/auth/useLogin';
 import useSignup from '../../../hooks/auth/useSignup';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import PasswordMask from 'react-password-mask';
 import { usePaystackPayment } from 'react-paystack';
 import useTheme from '../../../hooks/useTheme';
@@ -196,15 +196,14 @@ const Checkout = (props) => {
 
   const handlePayment = () => {
     setUserLSEmail(JSON.parse(localStorage.getItem('isUserDetails')).email);
+
     if (props.userIsSubscribed) {
-      error('Email already subscribed');
+      error('Subscription Already Exist');
       return;
     }
     if (userLSEmail && userLSEmail !== '') {
       initializePayment(onSuccess, onClose);
     }
-
-    // useFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
   };
 
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
@@ -578,7 +577,6 @@ const Checkout = (props) => {
             </div>
           )}
         </div>
-        <Toaster />
       </div>
     </Dialog>
   );

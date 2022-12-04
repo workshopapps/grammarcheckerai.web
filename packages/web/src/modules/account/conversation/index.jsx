@@ -26,9 +26,7 @@ function Conversation() {
   const [beginRecording, setBeginRecording] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const userSubscription = useGetUserSubscription(
-    JSON.parse(localStorage.getItem('isUserDetails')) ? JSON.parse(localStorage.getItem('isUserDetails')) : '',
-  );
+  const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
 
   const handleClosePremium = () => {
     setOpen(false);
@@ -66,7 +64,7 @@ function Conversation() {
     }, 600);
   };
 
-  const submitAudioHandler = async () => {
+  const submitAudioHandler = () => {
     setCounter(0);
     setBeginRecording(false);
     stopRecording();
@@ -74,7 +72,7 @@ function Conversation() {
     const soln = new FormData();
     soln.append('file', audioResult);
     soln.append('language', language);
-    if (second <= '05') {
+    if (second <= '05' || userSubscription?.value.length !== 0) {
       sendAudio
         .mutateAsync(soln)
         .then((res) => {

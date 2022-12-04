@@ -26,7 +26,13 @@ const index = (props) => {
     setInterval(plan);
     if (userSubscription?.value && userSubscription?.value.length !== 0) {
       // console.log('User is subscribed');
-      setUserIsSubscribed(true);
+      userSubscription?.value?.map((item) => {
+        if (item.status === 'initiated') {
+          setUserIsSubscribed(true);
+          return;
+        }
+        setUserIsSubscribed(false);
+      });
     } else {
       // console.log('User is not subscribed');
       setUserIsSubscribed(false);
