@@ -11,7 +11,7 @@ pipeline {
 				sh "unset NODE_ENV"
 				//sh "npm cache clear -force"
 				sh "cd packages/web"
-				sh "sudo npm install -g npm@latest && sudo npm cache clear --force"
+				//sh "sudo npm install -g npm@latest && sudo npm cache clear --force"
 				sh "cd packages/web && sudo npm install --force --unsafe-perm=true --allow-root && npm fund && npm run build"
 				sh "cd packages/api && sudo npm install --force"
 			} 
@@ -32,18 +32,18 @@ pipeline {
 			
 		}
 
-		stage("Performance test"){
+// 		stage("Performance test"){
 
-			steps{
-				echo 'Installing k6'
-                // sh 'sudo chmod +x setup_k6.sh'
-                // sh 'sudo ./setup_k6.sh'
-                echo 'Running K6 performance tests...'
-				sh 'ls -a'
-				sh "pwd"
-                sh 'k6 run Performance_Test_Discriptof.js'
-			}
-		}
+// 			steps{
+// 				echo 'Installing k6'
+//                 // sh 'sudo chmod +x setup_k6.sh'
+//                 // sh 'sudo ./setup_k6.sh'
+//                 echo 'Running K6 performance tests...'
+// 				sh 'ls -a'
+// 				sh "pwd"
+//                 sh 'k6 run Performance_Test_Discriptof.js'
+// 			}
+// 		}
 
 
 	}

@@ -15,7 +15,7 @@ const ForgotPage = lazy(() => import('./modules/auth/forgot-password/forgot'));
 const ResetPage = lazy(() => import('./modules/auth/reset-password/reset'));
 const FaqPagenupTwo = lazy(() => import('./components/Faq/faq_main'));
 const BlogView = lazy(() => import('./pages/Blog/Homepage'));
-const TandC = lazy(() => import('./modules/static/terms_of_use'));
+const TandC = lazy(() => import('./modules/static/TermsOfUse'));
 const Review = lazy(() => import('./modules/static/testimonials/Testimonial'));
 const Rates = lazy(() => import('./modules/static/testimonials/Ratings'));
 const Dashboard = lazy(() => import('./components/DashboardLayout'));
@@ -34,7 +34,7 @@ const TermsOfService = lazy(() => import('./pages/Legal/TermsOfService'));
 const PrivacyPolicy = lazy(() => import('./pages/Legal/PrivacyPolicy'));
 const CookiesStatement = lazy(() => import('./pages/Legal/CookiesStatement'));
 const Trademark = lazy(() => import('./pages/Legal/Trademark'));
-const SettingsPage = lazy(() => import('./modules/setting/home-settings/Settings'));
+const SettingsPage = lazy(() => import('./modules/setting/Settings'));
 const Transcribe = lazy(() => import('./modules/transcribe/index'));
 const CareerPage = lazy(() => import('./pages/career/Career'));
 const AboutPage = lazy(() => import('./pages/about/About'));
@@ -319,7 +319,7 @@ function App() {
         <Route path="/grammar" element={<GrammarPage />} />
         <Route path="/ai" element={<AiPage />} />
         <Route path="/tips" element={<TipsPage />} />
-        <Route path="/terms-of-use" element={<TermsOfUse />} />
+        <Route path="/TermsOfUse" element={<TermsOfUse />} />
         <Route path="/testimonials" element={<Testimonial />} />
         <Route path="/ratings" element={<Ratings />} />
         <Route path="/legal" element={<LegalPage />} />
