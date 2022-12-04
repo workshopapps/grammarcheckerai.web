@@ -114,7 +114,7 @@ const Grammar = () => {
           <p className="font-normal text-base mb-3">
             There are several common mistakes that people make when using grammar. To avoid making these mistakes, be
             careful to listen to yourself and ensure you use the correct verb form. If you need help with the correct
-            verb form, consult a grammar reference app like the Gritty grammar app or website. You can avoid making
+            verb form, consult a grammar reference app like the Speak Better app or website. You can avoid making
             incorrect grammar mistakes with some care and attention.
           </p>
 

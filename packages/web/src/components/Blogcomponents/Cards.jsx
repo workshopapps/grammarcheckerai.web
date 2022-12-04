@@ -12,9 +12,9 @@ const Cards = () => {
           <section>
                <div className="px-8 max-w-sm py-2 grid grid-cols-1 gap-12 gap-y-2 md:gap-y-8 md:grid-cols-2 mb-4 md:max-w-3xl mx-auto xl:grid-cols-3 xl:max-w-6xl xl:p-0">
 
-                    <div className={`border-solid border border-card_border w-full p-2 md:max-w-sm md:p-4 xl:max-w-lg ${styles._border_width}`}>
+                    <div className={`border-solid border border-card_border w-full p-2 md:max-w-sm md:p-4 xl:max-w-lg rounded-lg ${styles._border_width}`}>
                          <div className="mb-3">
-                         <img src={Image1} alt=""  className="w-full h-32 object-cover" />
+                         <img src={Image1} alt=""  className="w-full h-32 object-cover rounded-lg" />
                          </div>
                          
                          <h1 className={` ${context.theme === 'dark' ? 'text-white' : 'text-header'}  text-sm font-bold mb-3 xl:text-xl`}>7 Amazing Jobs That Will Pay You to Speak English</h1>
@@ -25,9 +25,9 @@ const Cards = () => {
                          <Link to="/jobs" className={`${context.theme === 'dark' ? 'text-[#ffff] ' : 'text-[#000]'} text-header text-sm font-bold mb-3 text-left hover:text-[#5d387f]`}>Read more</Link>
                     </div>
 
-                    <div className={`border-solid border border-card_border w-full p-2 md:max-w-sm md:p-4 xl:max-w-lg ${styles._border_width}`}>
+                    <div className={`border-solid border border-card_border w-full p-2 md:max-w-sm md:p-4 xl:max-w-lg rounded-lg ${styles._border_width}`}>
                          <div className="mb-3">
-                         <img src={Image2} alt="" className="w-full h-32 object-cover" />
+                         <img src={Image2} alt="" className="w-full h-32 object-cover rounded-lg" />
                          </div>
                          
                          <h1 className={` ${context.theme === 'dark' ? 'text-white' : 'text-header'}  text-sm font-bold mb-3 xl:text-xl`}>10 Grammar Mistakes You&apos;re Probably Making (And How to Fix Them)</h1>
@@ -38,9 +38,9 @@ const Cards = () => {
                          <Link to="/grammar" className={`${context.theme === 'dark' ? 'text-[#ffff] ' : 'text-[#000]'} text-header text-sm font-bold mb-3 text-left hover:text-[#5d387f]`}>Read more</Link>
                     </div>
 
-                    <div className={`border-solid border border-card_border w-full p-2 md:max-w-sm md:p-4 xl:max-w-lg ${styles._border_width}`}>
+                    <div className={`border-solid border border-card_border w-full p-2 md:max-w-sm md:p-4 xl:max-w-lg rounded-lg ${styles._border_width}`}>
                          <div className="mb-3">
-                         <img src={Image3} alt="" className="w-full h-32 object-cover" />
+                         <img src={Image3} alt="" className="w-full h-32 object-cover rounded-lg" />
                          </div>
                          
                          <h1 className={` ${context.theme === 'dark' ? 'text-white' : 'text-header'}  text-sm font-bold mb-3 xl:text-xl`}>10 Tips to Help You Speak English Like a Native</h1>

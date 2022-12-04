@@ -5,17 +5,18 @@ const {
 } = require("../scripts/assemblyAI");
 const grammarCheckHandler = require("../scripts/grammarCheck");
 const { response } = require("../utilities/response");
+const fileUploadToS3Bucket = require("./uploadBuffer");
 
 const quickTranscribe = async (req, res) => {
   try {
     const audioFile = req.file; // retrieves file buffer and metadata set by multer
-    const dummyAudioUrl = req.file.originalname; // TODO: use aws s3 bucket file upload url
+    let audioUrlPromise = fileUploadToS3Bucket(audioFile.buffer);
 
     // checks if file is available
     if (!audioFile) {
       return res.status(400).send({
         success: false,
-        message: "Attach an audio file",
+        message: "Please attach an audio file",
       });
     }
 
@@ -51,11 +52,13 @@ const quickTranscribe = async (req, res) => {
 
     const { correctUserResponseInTxt } = grammarCheckResponse;
 
+    audioUrl = await audioUrlPromise;
+
     res.status(200).json({
       success: true,
       message: "Message exchange successfully completed between user and bot",
       data: {
-        userAudio: dummyAudioUrl,
+        audioUrl,
         correctedText: correctUserResponseInTxt,
       },
     });

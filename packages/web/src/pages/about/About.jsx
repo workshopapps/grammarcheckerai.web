@@ -125,8 +125,13 @@ const About = () => {
           </div> */}
           <div className=" flex flex-col items-center justify-center m-8 mt-24">
             <div className="space-y-2">
+<<<<<<< HEAD
               <p className={` ${context.theme === 'dark' ? 'text-[#8C54BF]' : ' text-primary '} font-bold  text-center text-xl lg:text-2xl`}>Team behind of product</p>
               <p className={` ${context.theme === 'dark' ? 'text-[#fff]' : ' text-primary '}  text-center`}>Amazing heads of department at Gritty Grammar</p>
+=======
+              <p className={'font-bold text-primary text-center text-xl lg:text-2xl'}>Team behind of product</p>
+              <p className="text-purple-500 text-center">Amazing heads of department at Speak Better</p>
+>>>>>>> f4b1986099b3a8a8fc65cf0b643e4a0d793488cb
             </div>
             <div className="grid grid-cols-1 gap-4 justify-between  m-5 p-5 md:m-4 md:p-4 md:grid-cols-4  lg:grid-cols-5">
               {Teams &&

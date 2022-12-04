@@ -82,9 +82,15 @@ const Careers = () => {
         </div>{' '}
       </div>
       <Culture />
+<<<<<<< HEAD
       <section className={`${context.theme === 'dark' ? 'bg-[#0F0E0E]' : 'bg-[#ffff]'} text-center py-10 `}>
         <p className= {`${context.theme === 'dark' ? 'text-[#fff]' : 'text-[#0F0E0E]'} w-1/2 mx-auto py-6 max-[480px]:w-full max-[480px]:px-8 max-[480px]:pb-10 my-6`}>
           Every member of the team brings something unique to Gritty Grammar which strenghtens the team. We are growing
+=======
+      <section className="text-center py-10 ">
+        <p className="w-1/2 mx-auto py-6 max-[480px]:w-full max-[480px]:px-8 max-[480px]:pb-10 my-6">
+          Every member of the team brings something unique to Speak Better which strenghtens the team. We are growing
+>>>>>>> f4b1986099b3a8a8fc65cf0b643e4a0d793488cb
           and we would like you to join us. Do you think you have what it takes to join the team? Find out how you can
           add your talent and skills to our team and help us push forward our mission!
         </p>
