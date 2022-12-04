@@ -10,55 +10,23 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import useGetUserSubscription from '../../hooks/account/useGetUserSubscription';
+import useUserProfile from '../../hooks/account/useUserProfile';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Subscription = () => {
   const [isUserHistory, setIsUserHistory] = React.useState([]);
   const navigate = useNavigate();
+  const userSubscription = useGetUserSubscription(localStorage.getItem('isEmail'));
+  const userProfile = useUserProfile(localStorage.getItem('grittyuserid'));
 
-  const useNewFetch = (url) => {
-    var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('grittyusertoken')}`,
-      },
-    };
-
-    fetch(url, requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        const oBJ = JSON.parse(result);
-        localStorage.setItem('isEmail', oBJ.data.email);
-      })
-      .catch((error) => error('error', error));
-  };
-
-  const useFetch = (url) => {
-    var requestOptions = {
-      method: 'GET',
-    };
-
-    fetch(url, requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        const oBJ = JSON.parse(result);
-        if (Array.isArray(oBJ.data)) {
-          setIsUserHistory(oBJ.data);
-          return;
-        }
-        setIsUserHistory([oBJ.data]);
-      })
-      .catch((err) => console.log(err.message));
-  };
-
-  React.useEffect(() => {
-    useNewFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
-    useFetch(`https://api.speakbetter.hng.tech/v1/subscribe?email=${localStorage.getItem('isEmail')}`);
-  }, []);
+  console.log(userSubscription?.value, 'userSubscription?.value');
+  console.log(userProfile?.value, 'userProfile?.value');
 
   const handlePremium = () => {
     navigate('/premium');
   };
+  const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
 
   return (
     <div className={styles._subsPage}>
@@ -66,14 +34,22 @@ const Subscription = () => {
         <h2>Subscription History</h2>
         <p>Manage Subscription information here</p>
       </div>
-      {isUserHistory.length < 1 ? (
+
+      {userSubscription.data && !userSubscription?.value && (
         <div className={styles.empty_state}>
           <MdPayments />
           <h3 className="">No Subscriptions</h3>
           <p>There have been no Subscription in this section yet</p>
           <button onClick={handlePremium}>Upgrade Now</button>
         </div>
-      ) : (
+      )}
+      {/* {true && (
+        <div className="h-20 w-full ">
+          <CircularProgress color="inherit" size="xl" />
+        </div>
+      )} */}
+
+      {userSubscription.data && userSubscription?.value && (
         <div>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 300 }} aria-label="simple table">
@@ -85,13 +61,13 @@ const Subscription = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {isUserHistory.map((subs) => (
-                  <TableRow key={subs._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                {checkForArray(userSubscription?.value).map((subs) => (
+                  <TableRow key={subs?._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                     <TableCell component="th" scope="row">
-                      {dayjs(subs.createdAt).format('DD/MM/YYYY')}
+                      {subs?.createdAt ? dayjs(subs?.createdAt).format('DD/MM/YYYY') : null}
                     </TableCell>
-                    <TableCell align="left">{subs.interval}</TableCell>
-                    <TableCell align="left">NGN {subs.amount}</TableCell>
+                    <TableCell align="left">{subs?.interval}</TableCell>
+                    <TableCell align="left">NGN {subs?.amount}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
