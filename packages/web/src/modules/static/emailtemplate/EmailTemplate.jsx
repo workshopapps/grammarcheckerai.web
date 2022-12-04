@@ -25,7 +25,7 @@ const EmailTemplate = () => {
         </div>
         <div className={styles.email_nav__logo}>
           <img src={logo} alt="" />
-          <h4>Gritty Grammar</h4>
+          <h4>Speak Better</h4>
         </div>
       </div>
 
@@ -38,7 +38,7 @@ const EmailTemplate = () => {
           <div>
             <h3>Improve your speaking skill to the max</h3>
             <p>
-              Welcome to Gritty Grammar, It's great to have you! Here are a bunch of features that will get your
+              Welcome to Speak Better, It's great to have you! Here are a bunch of features that will get your
               speaking up to speed
             </p>
           </div>
@@ -47,9 +47,9 @@ const EmailTemplate = () => {
         <div className={styles.email_content__bottom}>
           <img src={recentErrors} alt="" />
           <div>
-            <h4>Gritty Grammar</h4>
+            <h4>Speak Better</h4>
             <p>
-              Learn from your mistakes with Gritty.Get comprehensive description and tips for how to avoid similar
+              Learn from your mistakes with Speak Better.Get comprehensive description and tips for how to avoid similar
               mistakes in the future
             </p>
           </div>
@@ -86,7 +86,7 @@ const EmailTemplate = () => {
         </div>
 
         <div className={styles.email_content__policy}>
-          <p>You're receiving this email because you are a subscriber of Gritty Grammar</p>
+          <p>You're receiving this email because you are a subscriber of Speak Better</p>
           <p>If you feel you received it by mistake or wish to unsubscribe, click here</p>
         </div>
       </div>

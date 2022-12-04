@@ -89,11 +89,11 @@ const Tips = () => {
           </p>
 
           <p className="font-normal text-base mb-3">
-            10. Download an app like the gritty grammar app: This is a great way to practice and test yourself on the
+            10. Download an app like the Speak Better app: This is a great way to practice and test yourself on the
             go. The app has a variety of grammar, vocabulary, reading comprehension, and speaking exercises so you can
             fine-tune your skills in no time. Additionally, the app gives you questions that you get to answer and also
             provides feedback so you can see where you need to improve. So, grab your phone and start learning English
-            with the gritty grammar app!
+            with the Speak Better app!
           </p>
 
           <p className="font-normal text-base mb-3">
