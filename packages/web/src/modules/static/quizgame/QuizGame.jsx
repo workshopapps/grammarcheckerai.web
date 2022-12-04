@@ -6,7 +6,6 @@ import { QuizContext } from './QuizContext';
 import { Link } from 'react-router-dom';
 import styles from '../quizgame/QuizGame.module.scss';
 import TotalScores from './totalscores/TotalScore';
-import loading from '../../../assets/newsletterImages/loading.gif';
 
 function shuffle(array) {
   let currentIndex = array.length,
@@ -26,7 +25,7 @@ function shuffle(array) {
 }
 
 const QuizGame = ({ players, setPlayers, setStart }) => {
-  const { socket, isLoading, setIsLoading } = useContext(QuizContext);
+  const { socket } = useContext(QuizContext);
   const timeRef = useRef(null);
   const [winnerMsg, setWinnerMsg] = useState('');
   const [answerList, setAnswerList] = useState([]);
@@ -43,6 +42,7 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
 
   const handleExit = () => {
     socket.disconnect();
+    console.log('socket disconnected')
     socket.on('update-players', (count) => {
       setPlayers(count);
     });
@@ -88,7 +88,6 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
   };
 
   const getQuestion = async () => {
-    setIsLoading(true);
     try {
       socket.emit('get-question');
       socket.on('receive-question', (question) => {
@@ -97,7 +96,6 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
         let incorrectAnswers = question.incorrectAnswers;
         const options = shuffle([...incorrectAnswers, correctAnswer]);
         setAnswerList(options);
-        setIsLoading(false);
       });
     } catch (err) {
       console.log('Error', err);
@@ -160,37 +158,29 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
               </div>
             ) : (
               <>
-                {isLoading ? (
-                  <div>
-                    <img src={loading} alt="Loading gif" />
+                <div className={styles.quizgame_card}>
+                  <div className={styles.quizgame_card__content}>
+                    <h1 className={styles.quizgame_card__content__heading}>Test your skills with this Trivia</h1>
+                    <>
+                      <h3 className={styles.quizgame_card__content__question}>{triviaQuestion.question}</h3>
+                      <ul id="mainList" className={styles.quizgame_card__content__answers}>
+                        {answerList &&
+                          answerList.map(function (element, index) {
+                            return (
+                              <li
+                                style={{ backgroundColor: selectedAnswer === element ? changeColor : '#e8ddf2' }}
+                                id="mainOptions"
+                                onClick={() => handleAnswer(element)}
+                                key={index}
+                              >
+                                {element}
+                              </li>
+                            );
+                          })}
+                      </ul>
+                    </>
                   </div>
-                ) : (
-                  <>
-                    <div className={styles.quizgame_card}>
-                      <div className={styles.quizgame_card__content}>
-                        <h1 className={styles.quizgame_card__content__heading}>Test your skills with this Trivia</h1>
-                        <>
-                          <h3 className={styles.quizgame_card__content__question}>{triviaQuestion.question}</h3>
-                          <ul id="mainList" className={styles.quizgame_card__content__answers}>
-                            {answerList &&
-                              answerList.map(function (element, index) {
-                                return (
-                                  <li
-                                    style={{ backgroundColor: selectedAnswer === element ? changeColor : '#e8ddf2' }}
-                                    id="mainOptions"
-                                    onClick={() => handleAnswer(element)}
-                                    key={index}
-                                  >
-                                    {element}
-                                  </li>
-                                );
-                              })}
-                          </ul>
-                        </>
-                      </div>
-                    </div>
-                  </>
-                )}
+                </div>
               </>
             )}
 

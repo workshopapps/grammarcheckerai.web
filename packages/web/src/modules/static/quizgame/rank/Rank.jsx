@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from '../rank/Rank.module.scss';
 import { GrClose } from 'react-icons/gr';
-import loading from '../../../../assets/newsletterImages/loading.gif';
 
 const Rank = ({ setRank }) => {
   const [ranks, setRanks] = useState([]);
