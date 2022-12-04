@@ -2,17 +2,17 @@ const userCollection = require("../database/models/userSchema");
 const Subscription = require("../database/models/subscriptionSchema");
 
 const createPayment = async (req, res) => {
-  let user = req.user;
-  let userId = user._id;
+  // let user = req.user;
+  // let userId = user._id;
   try {
-    const { email, subscriptionId, interval, amount, currency } = req.body;
+    const {user, email, subscriptionId, interval, amount, currency } = req.body;
     const payload = {
+      user,
       email,
       subscriptionId,
       interval,
       amount,
       currency,
-      user: userId,
     };
     const result = await Subscription.create(payload);
     res.status(200).send({
