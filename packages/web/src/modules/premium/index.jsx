@@ -12,23 +12,33 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import useGetUserSubscription from '../../hooks/account/useGetUserSubscription';
-// import useUserProfile from '../../hooks/account/useUserProfile';
 import Skeleton from '@mui/material/Skeleton';
-
-// import CircularProgress from '@mui/material/CircularProgress';
+import useCancelPremium from '../../hooks/auth/useCancelPremium';
+import toast, { Toaster } from 'react-hot-toast';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const Subscription = () => {
   const navigate = useNavigate();
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails')).email);
-  // const userProfile = useUserProfile(localStorage.getItem('grittyuserid'));
 
-  // console.log(userSubscription?.value, 'userSubscription?.value');
-  // console.log(userProfile?.value, 'userProfile?.value');
+  const premiumCancel = useCancelPremium();
 
   const handlePremium = () => {
     navigate('/premium');
   };
   const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
+
+  const handleProCancellation = () => {
+    premiumCancel
+      .mutateAsync({
+        email: JSON.parse(localStorage.getItem('isUserDetails'))?.email,
+      })
+      .then((res) => {
+        console.log(res);
+        toast.success('Subscription Cancelled Succesfully');
+        userSubscription.refetch();
+      });
+  };
 
   return (
     <div className={styles._subsPage}>
@@ -36,20 +46,6 @@ const Subscription = () => {
         <h2>Subscription History</h2>
         <p>Manage Subscription information here</p>
       </div>
-
-      {/* {userSubscription.data && !userSubscription?.value && (
-        <div className={styles.empty_state}>
-          <MdPayments />
-          <h3 className="">No Subscriptions</h3>
-          <p>There have been no Subscription in this section yet</p>
-          <button onClick={handlePremium}>Upgrade Now</button>
-        </div>
-      )} */}
-      {/* {true && (
-        <div className="h-20 w-full ">
-          <CircularProgress color="inherit" size="xl" />
-        </div>
-      )} */}
 
       {userSubscription.data && userSubscription?.value.length !== 0 ? (
         <div>
@@ -60,6 +56,7 @@ const Subscription = () => {
                   <TableCell>Date</TableCell>
                   <TableCell align="left">Plan</TableCell>
                   <TableCell align="left">Amount</TableCell>
+                  <TableCell align="left">Status</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -70,15 +67,21 @@ const Subscription = () => {
                     </TableCell>
                     <TableCell align="left">{subs?.interval || <Skeleton animation="wave" />}</TableCell>
                     <TableCell align="left">{`NGN ${subs?.amount}` || <Skeleton animation="wave" />}</TableCell>
+                    <TableCell align="left">{subs?.status || <Skeleton animation="wave" />}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
           <div className={styles._sbCancel}>
-            <Button variant="outlined" color="secondary">
+            <LoadingButton
+              loading={premiumCancel.loading}
+              variant="outlined"
+              color="secondary"
+              onClick={handleProCancellation}
+            >
               Cancel Subscription
-            </Button>
+            </LoadingButton>
           </div>
         </div>
       ) : (
@@ -89,6 +92,7 @@ const Subscription = () => {
           <button onClick={handlePremium}>Upgrade Now</button>
         </div>
       )}
+      <Toaster />
     </div>
   );
 };

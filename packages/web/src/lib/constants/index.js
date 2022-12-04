@@ -10,6 +10,7 @@ export const ENDPOINTS = {
   API_BASE_PAYSTACK_URL: 'https://api.paystack.co/',
   API_PAYSTACK_URL: 'subscription',
   API_PREMIUM_PAY: 'subscribe/create',
+  API_PREMIUM_CANCEL: 'subscribe/cancel',
   API_AUTH_FORGOT_PASSWORD: 'auth/request-password-reset',
   API_AUTH_RESET_PASSWORD: (token) => `auth/password-reset?token=${token}`,
 

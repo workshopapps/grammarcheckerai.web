@@ -53,6 +53,7 @@
   margin-top: 40px;
   padding: 20px;
   z-index: 1;
+  position: relative;
 }
 ._subsChildren {
   font-size: 14px;
@@ -67,8 +68,10 @@
   line-height: 30px;
 }
 ._sbCancel {
-  position: absolute;
+  position: fixed;
   bottom: 30px;
+  right: 0;
+  z-index: 9 !important;
 }
 ._sbCancel button {
   cursor: pointer;
