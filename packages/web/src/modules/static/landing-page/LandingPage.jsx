@@ -11,7 +11,6 @@ import Testimonials from './Testimonials';
 import Utilise from './Utilise';
 import QuizPopUp from '../../modal/quizpopup/QuizPopUp';
 
-
 const LandingPage = () => {
   const context = useTheme();
   const [showQuiz, setShowQuiz] = useState(true);
@@ -23,10 +22,30 @@ const LandingPage = () => {
   //   }, 4000)
   // }, [setShowQuiz]);
 
+  /* 
+      The code below checks for a parameter on a successful payment subscription.
+      If successful, redirects the user to this Homepage and calls the parameter to validate payment.
+      This then ceates a new redirection based on the feedback gotten from the backend endpoint
+  */
+
+  const useFetch = (url) => {
+    var requestOptions = {
+      method: 'GET',
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        console.log(oBJ.data);
+      })
+      .catch((error) => error('error', error));
+  };
+
+  useFetch(`https://api.speakbetter.hng.tech/v1/subscribe?email=${'tshalom01@gmail.com'}`);
+
   return (
-    <div
-    data-theme={context.theme}
-      className={` bg-[#bbb8b81a] `}>
+    <div data-theme={context.theme} className={` bg-[#bbb8b81a] `}>
       <Hero />
       <HowToUse />
       <Charcters />

@@ -11,12 +11,12 @@ const Legal = () => {
 
   return (
     <div className='w-full'>
-      <div className='py-20 text-center bg-[#5d387f] text-white'>
-        <h1 className='text-2xl md:text-4xl'>Legal Infrormation and Resources</h1>
-        <p className='w-[60%] md:w-full m-auto text-sm mt-2'>Find all the information you need as regards your legal rights to use our product</p>
+      <div className='md:py-[7rem] py-[4rem] text-center bg-[#5d387f] text-white'>
+        <h1 className='text-xl font-bold  md:text-4xl'>Legal Infrormation and Resources</h1>
+        <p className='w-[70%] md:w-full m-auto text-sm mt-2'>Find all the information you need as regards your legal rights to use our product</p>
       </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-2 py-20 px-10 md:px-20 gap-10'>
+      <div className='grid grid-cols-1 md:grid-cols-2 md:py-20 py-10 px-10 md:px-20 gap-10'>
         <Link to='/legal/terms-of-service'>
         <div className='_legalcard'>
           <img src={termspng} alt="terms" />

@@ -29,7 +29,7 @@ export default function Ratings() {
       stars: 5,
       date: '11/16/22',
       review:
-        'A great assistant! Gritty Grammar Is my best writing buddy! I always have it check my writings. Been using it for a while now and love it!',
+        'A great assistant! Speak Better Is my best writing buddy! I always have it check my writings. Been using it for a while now and love it!',
     },
     {
       name: 'A Google User',
@@ -47,7 +47,7 @@ export default function Ratings() {
       stars: 4,
       date: '11/16/22',
       review:
-        'I have only been using the free version for about 24 hours. I appreciate how it is improving my grammar. Gritty Grammar has improved my use of commas (my downfall), word intonation, and capitalization - in just 24 hours of use!',
+        'I have only been using the free version for about 24 hours. I appreciate how it is improving my grammar. Speak Better has improved my use of commas (my downfall), word intonation, and capitalization - in just 24 hours of use!',
     },
   ];
 

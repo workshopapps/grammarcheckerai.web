@@ -10,7 +10,7 @@ function HelpSupport() {
         <img src={arrowRightIcon} alt="Select a langauge" />
       </div>
       <p className="font-normal">
-        With exceptional customer service, try Gritty Grammer, the best Grammer software <br /> out there.
+        With exceptional customer service, try Speak Better, the best Grammer software <br /> out there.
       </p>
     </div>
   );

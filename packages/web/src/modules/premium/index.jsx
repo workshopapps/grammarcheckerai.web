@@ -1,50 +1,26 @@
-import React, { useState } from 'react';
-import { PaystackButton } from 'react-paystack';
-import { TextField, Button } from '@mui/material';
-import usePremium from '../../hooks/auth/usePremium';
-const Premium = () => {
-  const planPremium = usePremium();
-  const publicKey = 'pk_test_0c3ed4c2ad95f30b182a119b48ae9f99e9c4cb5c';
-  const amount = 100;
-  const currency = 'ZAR';
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+import React from 'react';
+import styles from './index.module.css';
+import { MdPayments } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
-  const componentProps = {
-    reference: new Date().getTime().toString(),
-    email,
-    amount,
-    currency,
-    metadata: {
-      name,
-    },
-    publicKey,
-    text: 'Subscribe',
+const Subscription = () => {
+  const [isUserHistory, setIsUserHistory] = React.useState([]);
+  const navigate = useNavigate();
 
-    onSuccess: () => {
-      planPremium
-        .mutateAsync({
-          customer: email,
-          plan: 'PLN_4yhibhhlmcw51j4',
-        })
-        .then((res) => {
-          console.log(res);
-          setName(res);
-        })
-        .then((result) => {})
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    onClose: () => alert('njddsdhj'),
-  };
-
-  const useFetch = (url) => {
+  const useNewFetch = (url) => {
     var requestOptions = {
       method: 'GET',
-      customer: email,
+      redirect: 'follow',
       headers: {
-        Authorization: 'Bearer sk_test_7c8d4865357e9ee081faf517549b011044a8cd12',
+        Authorization: `Bearer ${localStorage.getItem('grittyusertoken')}`,
       },
     };
 
@@ -52,42 +28,79 @@ const Premium = () => {
       .then((response) => response.text())
       .then((result) => {
         const oBJ = JSON.parse(result);
-        console.log(oBJ);
+        localStorage.setItem('isEmail', oBJ.data.email);
+      })
+      .catch((error) => error('error', error));
+  };
+
+  const useFetch = (url) => {
+    var requestOptions = {
+      method: 'GET',
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        if (Array.isArray(oBJ.data)) {
+          setIsUserHistory(oBJ.data);
+          return;
+        }
+        setIsUserHistory([oBJ.data]);
       })
       .catch((err) => console.log(err.message));
   };
 
-  const handleUserSubs = () => {
-    useFetch('https://api.paystack.co/subscription');
+  React.useEffect(() => {
+    useNewFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+    useFetch(`https://api.speakbetter.hng.tech/v1/subscribe?email=${localStorage.getItem('isEmail')}`);
+  }, []);
+
+  const handlePremium = () => {
+    navigate('/premium');
   };
 
   return (
-    <div>
-      <div>
-        <TextField
-          fullWidth
-          label="Full names"
-          id="fullWidth"
-          value={name}
-          type={'text'}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <TextField
-          fullWidth
-          label="email"
-          id="fullWidth"
-          type={'email'}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        {email !== '' && name !== '' ? <PaystackButton {...componentProps} /> : null}
+    <div className={styles._subsPage}>
+      <div className={styles._subsMain}>
+        <h2>Subscription History</h2>
+        <p>Manage Subscription information here</p>
       </div>
-      <Button onClick={handleUserSubs} variant="outlined" color="primary">
-        Get user List
-      </Button>
+      {isUserHistory.length < 1 ? (
+        <div className={styles.empty_state}>
+          <MdPayments />
+          <h3 className="">No Subscriptions</h3>
+          <p>There have been no Subscription in this section yet</p>
+          <button onClick={handlePremium}>Upgrade Now</button>
+        </div>
+      ) : (
+        <div>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 300 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Date</TableCell>
+                  <TableCell align="left">Plan</TableCell>
+                  <TableCell align="left">Amount</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {isUserHistory.map((subs) => (
+                  <TableRow key={subs._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                    <TableCell component="th" scope="row">
+                      {dayjs(subs.createdAt).format('DD/MM/YYYY')}
+                    </TableCell>
+                    <TableCell align="left">{subs.interval}</TableCell>
+                    <TableCell align="left">NGN {subs.amount}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+      )}
     </div>
   );
 };
 
-export default Premium;
+export default Subscription;

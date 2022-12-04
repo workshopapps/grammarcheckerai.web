@@ -10,20 +10,19 @@ import ranking from '../Assets/ranking.png';
 import check from '../Assets/tick-square.png';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Checkout from './checkout';
+import Navbar from '../../../components/Navbar';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="left" ref={ref} {...props} />;
 });
 
 const index = (props) => {
   const matches = useMediaQuery('(max-width:694px)');
-  // const [checkoutURL, setCheckoutURL] = React.useState('');
   const [interval, setInterval] = React.useState({ plan: '', amount: 0, duration: '' });
-  // const [firstName, setFirstName] = React.useState('');
-  // const [lastName, setLastName] = React.useState('');
-  // const [userToken, setUserToken] = React.useState('');
-  // const [email, setEmail] = React.useState('');
-
+  const [open, setOpen] = React.useState(true);
+  const handleClosePremium = () => {
+    setOpen(true);
+  };
   const handleCheckout = (plan) => {
     setInterval(plan);
   };
@@ -36,8 +35,8 @@ const index = (props) => {
     return (
       <Checkout
         duration={interval.duration}
-        open={props.open}
-        handleClosePremium={props.handleClosePremium}
+        open={open}
+        handleClosePremium={handleClosePremium}
         Transition={Transition}
         handleBack={handleBack}
         amount={interval.amount}
@@ -47,32 +46,25 @@ const index = (props) => {
   return (
     <Dialog
       fullScreen
-      open={props.open}
-      onClose={props.handleClosePremium}
+      open={open}
+      onClose={handleClosePremium}
       TransitionComponent={Transition}
       className={styles._sbDialog}
     >
       <div className={styles._sbpopup}>
+        <Navbar />
         {matches ? null : (
           <div className={styles._sbmodalclose}>
-            <IconButton onClick={props.handleClosePremium}>
+            {/* <IconButton onClick={props.handleClosePremium}>
               <AiOutlineClose />
-            </IconButton>
+            </IconButton> */}
           </div>
         )}
         <div className={styles._sbmodalContent}>
           <div className={styles._sbmodalCol1}>
             <div className={styles._sbmodalHeaderCol1}>
               <div className={styles._sbmodalTitle}>
-                {matches ? (
-                  <div className={styles._sbmobilemodalclose}>
-                    <IconButton onClick={props.handleClosePremium}>
-                      <AiOutlineClose />
-                    </IconButton>
-                  </div>
-                ) : (
-                  <img src={medal} alt="medal" />
-                )}
+                <img src={medal} alt="medal" />
                 <h2>Upgrade to premium</h2>
               </div>
             </div>

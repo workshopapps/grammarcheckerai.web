@@ -14,7 +14,7 @@ export default function profileScreen() {
   const [newUsername, setNewUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const endpoint = ENDPOINTS.API_BASE_URL;
+  const endpoint = ENDPOINTS.API_BASE_HTTPS_URL;
   const url = endpoint + 'user/profile/';
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
@@ -33,8 +33,8 @@ export default function profileScreen() {
         headers: headersList,
       });
       const data = await response.json();
-      localStorage.setItem('userData', JSON.stringify(data.Detail));
-      setData(data.Detail);
+      localStorage.setItem('userData', JSON.stringify(data.data));
+      setData(data.data);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -84,6 +84,7 @@ export default function profileScreen() {
     window.location.replace('/signin');
     location.reload();
   };
+
 
   return (
     <main className="bg-white h-screen pt-2 sm:pt-16">
