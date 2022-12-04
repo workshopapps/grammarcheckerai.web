@@ -48,7 +48,7 @@ const Index = () => {
     After a succesful input, redirects the user to a Protected Route and shows the logged in user's dashboard
     -----------------------------
     If user input is unsuccesful, shows an error notification and keeps the user on the page.
-
+ 
     A successful login provides a token and id which monitors user session.
   */
   useEffect(() => {
@@ -116,9 +116,9 @@ const Index = () => {
 
     */
 
-  const handleFacebookAuth = () => {
-    useFetch('https://grittygrammar.hng.tech/api/v1/auth/facebook');
-  };
+  // const handleFacebookAuth = () => {
+  //   useFetch('https://grittygrammar.hng.tech/api/v1/auth/facebook');
+  // };
 
   /*
       handleLinkedInAuth handles the LinkedIn social login.
@@ -187,7 +187,7 @@ const Index = () => {
               <div className={styles._gs2logincheck}>
                 <div className={styles._g2loginoption}>
                   <input type="checkbox" id="userRememberPassword" />
-                  <span  style={{lineHeight:'30px'}}>Keep me signed in</span>
+                  <span style={{ lineHeight: '30px' }}>Keep me signed in</span>
                 </div>
                 <div>
                   <button
@@ -195,7 +195,7 @@ const Index = () => {
                     type="button"
                     className={styles._gsloginforgot}
                     onClick={handleForgotPassword}
-                  > 
+                  >
                     Forgot Password?
                   </button>
                 </div>
@@ -221,8 +221,10 @@ const Index = () => {
                   <button type="button" className={styles._google} onClick={handleGoogleAuth}>
                     <img src={google} alt="google authentication" />
                   </button>
-                  <button type="button" className={styles._facebook} onClick={handleFacebookAuth}>
-                    <img src={facebook} alt="facebook authentication" />
+                  <button type="button" className={styles._facebook}>
+                    <a href="https://api.speakbetter.hng.tech/v1/auth/facebook">
+                      <img src={facebook} alt="facebook authentication" />
+                    </a>
                   </button>
                   <button type="button" className={styles._apple} onClick={handleLinkedInAuth}>
                     <img src={apple} alt="apple authentication" />
