@@ -201,7 +201,7 @@ const index = () => {
 
                         </div>
 
-                        <div className="flex lg:hidden sm:gap-8 sm:pl-8 sm:pr-8 sm:items-center sm:justify-center lg:gap-8 p-0">
+                        <div className="flex gap-8 pl-8 pr-8 items-center justify-center lg:hidden p-0">
                         <button className={ContactCSS.box}>
                             <img src={deviceMessage} alt="" />
                             <p className='text-sm'>Chat issues</p>
