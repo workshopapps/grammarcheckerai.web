@@ -223,10 +223,7 @@ const index = () => {
 
                     <div className={ContactCSS.row3}>
                         <label>Message</label>
-                        <div className={ContactCSS.textarea_container}>
-                        <img src={chat} alt="" className="h-[20px] mt-2"/>
-                        <textarea contact-theme={context.theme} name="textarea" placeholder='Type message' className='m-1'></textarea>
-                        </div>
+                        <text area name="textarea" placeholder="Type message" classname='m-1'></textarea>
                     </div>
                     <div className={ContactCSS.send}>
                         <button
