@@ -31,7 +31,6 @@ const Index = () => {
   
   const authLinkedIn = useAuthLinkedIn(location?.search)
   const linkedInLink = useGetLinkedInLink()
-  console.log(linkedInLink?.value, "from rubies login")
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
 
@@ -109,7 +108,6 @@ const Index = () => {
       .then((response) => response.text())
       .then((result) => {
         const oBJ = JSON.parse(result);
-        console.log(oBJ.data);
         localStorage.setItem('isUserDetails', JSON.stringify(oBJ.data));
       })
       .catch((error) => error('error', error));
