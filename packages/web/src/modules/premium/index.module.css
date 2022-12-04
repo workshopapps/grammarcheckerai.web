@@ -52,6 +52,7 @@
 ._subsPage {
   margin-top: 40px;
   padding: 20px;
+  z-index: 1;
 }
 ._subsChildren {
   font-size: 14px;
@@ -64,4 +65,11 @@
   font-size: 20px;
   color: rgb(58, 58, 58);
   line-height: 30px;
+}
+._sbCancel {
+  position: absolute;
+  bottom: 30px;
+}
+._sbCancel button {
+  cursor: pointer;
 }

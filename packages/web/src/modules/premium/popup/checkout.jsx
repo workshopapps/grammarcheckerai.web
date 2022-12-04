@@ -78,10 +78,7 @@ const Checkout = (props) => {
       .then((result) => {
         const oBJ = JSON.parse(result);
         console.log(oBJ.data);
-        localStorage.setItem('isFirstName', oBJ.data.firstName);
-        localStorage.setItem('isLastName', oBJ.data.lastName);
-        localStorage.setItem('isEmail', oBJ.data.email);
-        localStorage.setItem('isUsername', oBJ.data.username);
+        localStorage.setItem('isUserDetails', JSON.stringify(oBJ.data));
       })
       .catch((error) => error('error', error));
   };
@@ -161,13 +158,14 @@ const Checkout = (props) => {
 
   // you can call this function anything
   const onSuccess = (reference) => {
+    const user = JSON.parse(localStorage.getItem('isUserDetails'));
+
     // Implementation for whatever you want to do with reference and after success call.
     console.log(reference);
     authPay
       .mutateAsync({
-        user: localStorage.getItem('grittyuserid'),
-        email: localStorage.getItem('isEmail'),
-        name: localStorage.getItem('isFirstName') + ' ' + localStorage.getItem('isLastName'),
+        email: user.email,
+        name: user.firstName + ' ' + user.lastName,
         amount: props.amount,
         interval: props.duration,
         subscriptionId: props.plan,
@@ -188,7 +186,7 @@ const Checkout = (props) => {
   };
   const config = {
     reference: new Date().getTime().toString(),
-    email: 'userEmail@gmail.com',
+    email: userLSEmail,
     amount: props.amount,
     publicKey: 'pk_test_79b1560168d893e4e503c39acdc3b49f02db69c3',
   };
@@ -196,8 +194,10 @@ const Checkout = (props) => {
   const initializePayment = usePaystackPayment(config);
 
   const handlePayment = () => {
-    setUserLSEmail(localStorage.getItem('isEmail'));
-    initializePayment(onSuccess, onClose);
+    setUserLSEmail(JSON.parse(localStorage.getItem('isUserDetails')).email);
+    if (userLSEmail && userLSEmail !== '') {
+      initializePayment(onSuccess, onClose);
+    }
     // useFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
   };
 
