@@ -2,6 +2,7 @@ import React from 'react';
 import Heroimg from '../../assets/blogimg/Frame 1000001903.svg';
 import Cta from '../../components/Blogcomponents/Cta';
 import Footer from '../../modules/static/landing-page/Footer';
+import { Link } from "react-router-dom"
 
 const Ai = () => {
   return (
@@ -13,14 +14,14 @@ const Ai = () => {
         </h1>
 
         <div className="text-header text-sm font-bold mb-4 text-center p-4">
-          <span className="mr-3">Home</span>
+          <span className="mr-3"><Link  to="/home">Home</Link></span>
           <span className="mr-3">&gt;&gt;&gt;</span>
-          <span className="mr-3">Blog</span>
+          <span className="mr-3"><Link  to="/blog">Blog</Link></span>
           <span className="mr-3">&gt;&gt;&gt;</span>
           <span className="text-blog">The Time Is Now for Conversational AI</span>
         </div>
         <div className="p-4 mb-10 md:w-full md:h-full md:mb-10 xl:w-full">
-          <img src={Heroimg} alt="" className="md:w-full md:h-full rounded" />
+          <img src={Heroimg} alt="" className="md:w-full md:h-full" />
         </div>
 
         <div className="p-4 py-4">

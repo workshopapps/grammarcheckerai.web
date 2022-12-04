@@ -6,21 +6,24 @@ const NewsLetter = () => {
   return (
     <section
       className={`${
-        context.theme === 'dark' ? 'bg-[#f0ecec]' : null
-      } w-[90%] max-w-lg mx-auto text-center flex flex-col justify-center gap-5 my-36 px-3 py-8 rounded-lg shadow-xl`}
+        context.theme === 'dark' ? 'bg-transparent text-white' : null
+      } w-[90%] md:w-[60%] mx-auto text-center flex flex-col justify-center 
+        md:items-start md:ml-[10em] gap-5 my-36 py-8`}
     >
-      <h5 className="text-[30px] font-black">Be the first to know</h5>
-      <p>Subscribe to out newsletter and be the first to know about new updates and news, but no spam, scouts honor!</p>
+      <h5 className="text-xl md:text-3xl font-black -mb-2">Be the first to know</h5>
+      <p className="text-center md:text-left">
+        Subscribe to out newsletter and be the first to know about new updates and news, but no spam, scouts honor!
+      </p>
 
-      <div className="relative">
+      <div className="relative md:w-[80%] flex ">
         <input
           type="email"
           placeholder="Your email address"
-          className={`${styles.subscribe} py-4 px-4 w-[100%] rounded-lg bg-[#EEEEEE] border-0 shadow-sm`}
+          className={`${styles.subscribe} rounded-tl-md rounded-bl-md text-black bg-gray-200 placeholder:text-black py-4 px-3 w-[100%] shadow-sm`}
         />
         <button
           type="submit"
-          className={`${styles._btn} bg-[#5D387F] text-[#E8DDF2] rounded-[12px] absolute right-3 top-[15%] hover:bg-[#392150] hover:text-white transition-colors`}
+          className={` py-4 px-7 bg-[#5D387F] text-[#E8DDF2] rounded-tr-md rounded-br-md hover:bg-[#392150] hover:text-white transition-colors`}
         >
           Subscribe
         </button>

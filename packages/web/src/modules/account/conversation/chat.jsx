@@ -13,27 +13,21 @@ import PropTypes from 'prop-types';
 export default function CustomRecorder({ setChats }) {
   const sendAudio = useSendAudioFile();
   const [isRecording, setRecording] = React.useState(false);
-  const [second, setSecond] = useState("00")
-  const [minute, setMinute] = useState("00")
-  const [counter, setCounter] = useState(0)
+  const [second, setSecond] = useState('00');
+  const [minute, setMinute] = useState('00');
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     let intervalId;
 
-    if (isRecording){
+    if (isRecording) {
       intervalId = setInterval(() => {
         const secondCounter = counter % 60;
         const minuteCounter = Math.floor(counter / 60);
 
-        let computedSecond = 
-        String(secondCounter).length === 1 ?
-        `0${secondCounter}` :
-        secondCounter;
+        let computedSecond = String(secondCounter).length === 1 ? `0${secondCounter}` : secondCounter;
 
-        let computedMinute =
-        String(minuteCounter).length === 1 ?
-        `0${minuteCounter}`:
-        minuteCounter;
+        let computedMinute = String(minuteCounter).length === 1 ? `0${minuteCounter}` : minuteCounter;
 
         setSecond(computedSecond);
         setMinute(computedMinute);
@@ -42,15 +36,14 @@ export default function CustomRecorder({ setChats }) {
       }, 1000);
     }
     return () => clearInterval(intervalId);
-}, [isRecording, counter])
+  }, [isRecording, counter]);
 
-let text = ""
-if (isRecording){
-  text
-}
-else{
-  text = "Tap the Microphone to begin"
-}
+  let text = '';
+  if (isRecording) {
+    text;
+  } else {
+    text = 'Tap the Microphone to begin';
+  }
 
   const [state, setState] = React.useState({
     audioURL: null,
@@ -83,7 +76,7 @@ else{
     //   'blob fron data.blob',
     // );
     setState((prevState) => ({ ...prevState, audioDetails: data }));
-
+    console.log(data, 'data');
     const soln = new FormData();
     soln.append('file', data.blob);
     sendAudio
@@ -110,7 +103,7 @@ else{
   };
 
   const handleAudioUpload = () => {
-    // console.log(file, 'file');
+    console.log('file', 'file');
   };
 
   const handleReset = () => {
@@ -137,20 +130,17 @@ else{
           isRecording ? styles._bot_mic : ''
         } `}
       >
-        <button
-          className={`inset-0 items-center justify-center ${styles.mic}`}
-          onClick={() => recorderHandler()}
-        >
+        <button className={`inset-0 items-center justify-center ${styles.mic}`} onClick={() => recorderHandler()}>
           {<img className="" src={micImg} alt="" style={{ opacity: 1 }} />}
-          <div className='opacity-0 absolute'>
-          <Recorder
-            record={false}
-            title={'New recording'}
-            audioURL={state.audioDetails.url}
-            handleAudioStop={(data) => handleAudioStop(data)}
-            handleAudioUpload={(data) => handleAudioUpload(data)}
-            handleReset={() => handleReset()}
-          />
+          <div className="opacity-0 absolute">
+            <Recorder
+              record={false}
+              title={'New recording'}
+              audioURL={state.audioDetails.url}
+              handleAudioStop={(data) => handleAudioStop(data)}
+              handleAudioUpload={(data) => handleAudioUpload(data)}
+              handleReset={() => handleReset()}
+            />
           </div>
         </button>
 
@@ -162,7 +152,7 @@ else{
       <Toaster />
 
       <div>
-      {/* <p className="mt-6">{text}</p> */}
+        {/* <p className="mt-6">{text}</p> */}
         <div>
           <div className="flex justify-center items-center mt-8">
             <span>{minute}</span>
@@ -171,12 +161,17 @@ else{
           </div>
 
           <button className="flex justify-between items-center w-48 mt-8" onClick={() => recorderHandler()}>
-                <button onClick={() => handleReset()}><img src={trashImg} alt="" /></button>
-                <button onClick={(data) => handleAudioStop(data)}><img src={pauseImg} alt="" /></button>
-                <button onClick={(data) => handleAudioUpload(data)}><img src={sendImg} alt="" /></button>
+            <button onClick={() => handleReset()}>
+              <img src={trashImg} alt="" />
+            </button>
+            <button onClick={(data) => handleAudioStop(data)}>
+              <img src={pauseImg} alt="" />
+            </button>
+            <button onClick={(data) => handleAudioUpload(data)}>
+              <img src={sendImg} alt="" />
+            </button>
           </button>
-        </div> 
-       
+        </div>
       </div>
     </>
   );

@@ -1,34 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Culture from '../../components/Careers/culture';
 import Footer from '../../components/Careers/footer';
-import TeamFeedback from '../../components/Careers/teamFeedback';
 import Navbar from '../../components/Navbar';
 import teamData from '../../data/careers/teamData.json';
 
 const Careers = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const data = teamData;
-  const sliderScroll = () => {
-    if (currentIndex === data.length - 1) {
-      return setCurrentIndex(0);
-    }
-
-    return setCurrentIndex(currentIndex + 1);
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      sliderScroll();
-    }, 3000);
-    return () => clearInterval(interval);
-  });
+  const myData = teamData;
+  const [activeSlide, setActiveSlide] = useState(1);
 
   const previous = () => {
-    currentIndex != 0 && setCurrentIndex(currentIndex - 1);
+    activeSlide === 1 ? setActiveSlide(activeSlide + 1) : setActiveSlide(activeSlide - 1);
   };
 
   const next = () => {
-    currentIndex === 2 ? setCurrentIndex(0) : setCurrentIndex(currentIndex + 1);
+    activeSlide === 2 ? setActiveSlide(1) : setActiveSlide(activeSlide + 1);
   };
 
   return (
@@ -46,37 +31,58 @@ const Careers = () => {
           </a>
         </div>
       </section>
-      <div className="px-60 py-14 space-y-14 bg-gray-100 max-[480px]:px-2 max-[480px]:py-8">
+      <div className=" flex justify-center items-center flex-col px-30 py-14 space-y-14 bg-[#F6F6F6] ">
         <h4 className="text-center text-xl font-bold text-dark-primary">
           Hear from <span className="text-purple-500">the team</span>
         </h4>
-        <div className="flex whitespace-nowrap overflow-hidden max-[480px]:whitespace-normal">
-          {data?.map(({ img, feedback, name, role, idx }) => (
-            <div
-              key={idx}
-              className="w-full justify-center items-center min-w-full transition-all max-[480px]:min-w-fit"
-              style={{
-                transform: `translateX(-${currentIndex * 100}%)`,
-                transition: `1s cubic-bezier(0.39, 0.575,0.565, 1)`,
-              }}
-            >
-              <TeamFeedback img={img} feedback={feedback} name={name} role={role} />
-            </div>
-          ))}
-        </div>
-        <div className="flex items-center justify-center space-x-10">
-          <button onClick={previous} className="cursor-pointer">
-            <img src="images/previous.svg" alt="previous" />
-          </button>
-          <button onClick={next} className="cursor-pointer">
-            <img src="images/next.svg" alt="next" />
-          </button>{' '}
-        </div>
+        <div
+          style={{
+            transform: `translateX(-${activeSlide * 1}%)`,
+            transition: 'all 1s',
+          }}
+          className=" flex w-full  flex-col m-auto justify-center transition-all items-center overflow-hidden "
+        >
+          {myData.map((item) => {
+            const { id, img, name, feedback, role } = item;
+            return (
+              <div
+                key={id}
+                className={
+                  activeSlide === id ? 'flex  w-[100%] m-auto justify-center  flex-col items-center' : 'hidden'
+                }
+              >
+                <div className="flex md:w-[70%] m-auto flex-col items-center  text-center transition-all justify-center">
+                  <img src={img} alt={feedback} className="rounded-full w-[100px] md:w-[180px] " />
+                  <div className=" px-10">
+                    <h3 className="text-[15px] font-bold md:text-[18px] mt-[24px] leading-6 md:leading-[30px] text-[#393939] ">
+                      <q> {feedback} </q>
+                    </h3>
+                    <p className=" text-[13px] md:text-[16px] mt-[16px] leading-[19px] text-[#5A5A5A] font-light italic">
+                      {' '}
+                      {name}
+                    </p>
+                    <p className=" text-[13px] md:text-[16px] mt-[8px] leading-[19px] text-[#5A5A5A] font-light italic  mb-[24px]">
+                      {role}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+          <div className="flex items-center w-[30%] md:w-[14%] m-auto justify-between mt-5 py=[50px]">
+            <button onClick={previous} className="cursor-pointer">
+              <img src="images/previous.svg" alt="previous" />
+            </button>
+            <button onClick={next} className="cursor-pointer">
+              <img src="images/next.svg" alt="next" />
+            </button>{' '}
+          </div>
+        </div>{' '}
       </div>
       <Culture />
       <section className="text-center py-10 ">
         <p className="w-1/2 mx-auto py-6 max-[480px]:w-full max-[480px]:px-8 max-[480px]:pb-10 my-6">
-          Every member of the team brings something unique to Gritty Grammar which strenghtens the team. We are growing
+          Every member of the team brings something unique to Speak Better which strenghtens the team. We are growing
           and we would like you to join us. Do you think you have what it takes to join the team? Find out how you can
           add your talent and skills to our team and help us push forward our mission!
         </p>

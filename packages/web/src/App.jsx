@@ -2,7 +2,8 @@ import React, { lazy, Suspense, useState, useEffect } from 'react';
 import './App.css';
 import Fallback from './components/Fallback/Fallback';
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom';
-import QuizGame from './modules/static/quizgame/QuizGame';
+// import StartGame from './modules/static/quizgame/startgame/StartGame';
+import Layout from './modules/static/quizgame/layout/Layout';
 // import ProtectedRoute from './components/ProtectedRoute';
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
 const SigninPage = lazy(() => import('./modules/auth/login/login'));
@@ -292,7 +293,6 @@ function App() {
   return (
     <Routes>
       <Route path="/converse/try" element={<ConversationTryPage />} />
-
       <Route path="/history" element={<h2>History</h2>} />
       <Route element={<LandingLayout />}>
         <Route path="/" element={<LandingPage />} />
@@ -315,12 +315,12 @@ function App() {
         <Route path="/legal/cookies" element={<CookiesPage />} />
         <Route path="/legal/trademark" element={<TrademarkPage />} />
       </Route>
-      <Route path="/quizgame" element={<QuizGame />}></Route>
+      <Route path="/startgame" element={<Layout />}></Route>
       <Route path="/newsletter" element={<NewsletterPage />} />
       <Route path="/career" element={<Careers />} />
       <Route path="/roles" element={<Roles />} />
       <Route path="/apply" element={<Application />} />
-      <Route path="/app-status" element={<ApiStatus />} />
+      <Route path="/api-status" element={<ApiStatus />} />
       <Route path="/emailtemplate" element={<EmailTemplate />} />
       <Route path="/newsletter-template" element={<NewsletterTemplate />} />
       <Route path="/signin-template" element={<SignInTemplate />} />
@@ -331,10 +331,10 @@ function App() {
           </div>
         }
       >
-        <Route path="signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
+        <Route path="/signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
         <Route path="signup" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signuptwo />} />
         <Route path="forgot-password" element={<Forgotpassword />} />
-        <Route path="reset-password" element={<ResetLink />} />
+        <Route path="password-reset" element={<ResetLink />} />
       </Route>
       <Route path="/me" element={isDashboard === false ? <Navigate to="/signin" /> : <DashboardLayout />}>
         <Route path="home" element={<HomePage />} />

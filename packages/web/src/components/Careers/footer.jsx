@@ -47,7 +47,7 @@ const Footer = () => {
           </p>
         </div>
         <div className={styles._ftcopyright}>
-          <p>&copy;2022 GrittyGrammar</p>
+          <p>&copy;2022 Speak Better</p>
         </div>
       </div>
     </footer>
