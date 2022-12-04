@@ -47,7 +47,7 @@ export const ReviewCard = ({ closeModal }) => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              conversation_id: 1,
+              conversation_id: 3,
               ratings: currentValue,
               userid: '914d5fc6-887a-4264-8e66-cd41232cb46f',
               comment: formvalue.comment,
@@ -55,7 +55,7 @@ export const ReviewCard = ({ closeModal }) => {
           });
 
         //console.log(localStorage.getItem("grittyuserid"))
-        //console.log(formvalue.comment);
+        console.log(formvalue.comment);
       };
 
   return (
@@ -133,7 +133,9 @@ export const ReviewCard = ({ closeModal }) => {
                 >
                   Not Now
                 </button>
-                <button type="submit" className="text-white font-bold bg-purple-500 px-8 py-4 rounded-lg shadow-sm">
+                <button type="submit" 
+                    onClick={() => { handleFormsubmit; closeModal; }}
+                    className="text-white font-bold bg-purple-500 px-8 py-4 rounded-lg shadow-sm">
                   Submit
                 </button>
               </div>
@@ -153,7 +155,8 @@ export const ReviewCard = ({ closeModal }) => {
                 onClick={() => {
                   setLoveSpeakBetter(true);
                   setNeutral(false);
-                  setHateSpeakBetter(false);
+                 setHateSpeakBetter(false);
+                    
                 }}
               >
                 Send Feedback
