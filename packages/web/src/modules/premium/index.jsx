@@ -12,10 +12,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import useGetUserSubscription from '../../hooks/account/useGetUserSubscription';
 import useUserProfile from '../../hooks/account/useUserProfile';
-import CircularProgress from '@mui/material/CircularProgress';
+// import CircularProgress from '@mui/material/CircularProgress';
 
 const Subscription = () => {
-  const [isUserHistory, setIsUserHistory] = React.useState([]);
   const navigate = useNavigate();
   const userSubscription = useGetUserSubscription(localStorage.getItem('isEmail'));
   const userProfile = useUserProfile(localStorage.getItem('grittyuserid'));
