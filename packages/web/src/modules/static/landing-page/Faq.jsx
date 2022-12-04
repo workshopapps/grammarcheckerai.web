@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import styles from './styles/index.module.css';
 
 const Faq = () => {
-    const context = useTheme();
-    return (
-      <div className={` ${context.theme === 'dark' ? 'bg-[#000]' : 'bg-[#ffff]'} py-8`}>
-        <div className="w-[90%] max-w-2xl mx-auto my-7 flex flex-col md:ml-[10em]">
-          <div className={`${context.theme === 'dark' ? 'text-[#ffffff]' : null} text-center md:text-left`}>
-            <h4 className="text-center md:text-left text-3xl font-black">Frequently Asked Questions</h4>
+  const context = useTheme();
+  const dark = context.theme === 'dark';
+  return (
+    <div className={` ${dark ? 'bg-[#000]' : 'bg-[#ffff]'} py-8`}>
+      <div className="w-[80%] mx-auto">
+        <div className="w-[90%] max-w-2xl mx-auto my-7 flex flex-col md:ml-0">
+          <div className={`${dark ? 'text-[#ffffff]' : null} text-center md:text-left`}>
+            <h4 className="text-center text-xl md:text-left md:text-3xl font-black">Frequently Asked Questions</h4>
             <p className="mb-7 mt-3">If you have further questions, please contact us</p>
           </div>
 
@@ -31,10 +33,9 @@ const Faq = () => {
                 mistakes and correct them appriopriately."
             />
           </div>
-          
         </div>
       </div>
-    
+    </div>
   );
 };
 

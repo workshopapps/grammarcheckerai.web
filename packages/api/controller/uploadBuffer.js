@@ -1,17 +1,17 @@
-const AWS = require('aws-sdk');
-const { environment } = require('../config/environment')
-const v4 = require("uuid")
+const AWS = require("aws-sdk");
+const { environment } = require("../config/environment");
+const { v4 } = require("uuid");
 const { ACCESSKEYID, S3SECRETEKEY, GRITTYBUCKETNAME } = environment;
 
 // Set the AWS Region.
 const REGION = "eu-west-1";
 
 const s3 = new AWS.S3({
-    region: REGION,
-    credentials: {
-        accessKeyId: ACCESSKEYID,
-        secretAccessKey: S3SECRETEKEY
-    }
+  region: REGION,
+  credentials: {
+    accessKeyId: ACCESSKEYID,
+    secretAccessKey: S3SECRETEKEY,
+  },
 });
 
 const fileUploadToS3Bucket = async (dataBuffer) => {
@@ -19,7 +19,7 @@ const fileUploadToS3Bucket = async (dataBuffer) => {
         // Setting up S3 upload parameters
         const params = {
             Bucket: GRITTYBUCKETNAME,
-            Key: v4(), // File name you want to save as in S3 // Change the key value to UUID or GUID
+            Key: `${v4()}.mp3`, // File name you want to save as in S3
             Body: dataBuffer,
         };
         
@@ -35,14 +35,11 @@ const fileUploadToS3Bucket = async (dataBuffer) => {
             })
         })
 
-        let fileLocation = await promise;
-        return fileLocation;
-    }
-
-    catch (err) {
-        console.error(`Error: ${err.message}`);
-    };
+    let fileLocation = await promise;
+    return fileLocation;
+  } catch (err) {
+    console.error(`Error: ${err.message}`);
+  }
 };
 
-
-module.exports = fileUploadToS3Bucket
+module.exports = fileUploadToS3Bucket;
