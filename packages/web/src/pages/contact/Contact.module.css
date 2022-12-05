@@ -159,7 +159,7 @@ label {
   align-items: center;
   padding: 12px;
   gap: 9px;
-  width: 155px;
+  width: 149px;
   height: 82px;
   background: #F6F6F6;
   border-radius: 8px;
@@ -176,7 +176,7 @@ label {
   align-items: center;
   padding: 12px;
   gap: 9px;
-  width: 155px;
+  width: 149px;
   height: 82px;
   background: #5D387F;
   border-radius: 8px;
@@ -274,11 +274,5 @@ textarea{
 @media (max-width: 815px) {
   .hero_container{
     display:none;
-  }
-  .box{
-    width:150px;
-  }
-  .lastbox{
-    width:150px;
   }
 }
