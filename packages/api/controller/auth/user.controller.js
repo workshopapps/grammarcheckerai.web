@@ -1,7 +1,10 @@
 const { response, authResponse } = require("../../utilities/response");
 const { getTokens } = require("./authThirdPartyController");
 const { register } = require("../../repository/user.repository");
-const { userCollection, generateHash } = require("../../database/models/userSchema");
+const {
+  userCollection,
+  generateHash,
+} = require("../../database/models/userSchema");
 const { slugify } = require("../../utilities/compare");
 const {
   generateEmailVerificationLink,
@@ -34,12 +37,12 @@ async function registerUser(req, res) {
           );
 
     const checkEmailExist = await userCollection.findOne({ email });
-    
+
     if (checkEmailExist)
       return res
         .status(409)
         .json(response({ message: "User already exist", success: false }));
-        
+
     const data = { email, firstName, lastName, username, password, language };
 
     let verificationLink = await generateEmailVerificationLink(data);
@@ -107,7 +110,17 @@ async function login(req, res) {
   );
 }
 async function googleAuthUserSignUp(req, res) {
-  const { name, email } = await getTokens(req.query.code);
+  const googleUserData = await getTokens(req.query.code);
+
+  if (!googleUserData || googleUserData === "invalid_grant") {
+    return res.status(400).json(
+      response({
+        success: false,
+        message: "Please provide a valid google authentication code",
+      })
+    );
+  }
+  const { name, email } = googleUserData;
 
   //Check if user already exist
   const user = await userCollection.findOne({ email });
