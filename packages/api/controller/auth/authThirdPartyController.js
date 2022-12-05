@@ -84,13 +84,13 @@ async function getTokens(code) {
 }
 
 const getLinkedinUrl = (req, res) => {
-  return res.status(200).json(
-    response({
-      message: "LinkedIn URL",
-      success: true,
-      data: `https://www.linkedin.com/oauth/v2/authorization?response_type=code&scope=r_liteprofile%20r_emailaddress&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${LINKEDIN_URL_ENCODED}`,
-    })
-  );
+	return res.status(200).json(
+		response({
+			message: "LinkedIn URL",
+			success: true,
+			data: `https://www.linkedin.com/oauth/v2/authorization?response_type=code&scope=r_liteprofile%20r_emailaddress&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${LINKEDIN_CALLBACK_URL}`,
+		})
+	);
 };
 
 /*
@@ -145,16 +145,16 @@ const linkedinAccessToken = async (req, res) => {
       clientSecret: LINKEDIN_SECRET_ID,
     });
 
-    const linkedinUserEmail = await axios({
-      method: "GET",
-      url: `https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))`,
-      headers: {
-        Authorization: `Bearer ${token.access_token}`,
-      },
-    }).catch((error) => {
-      return res.status(400).json({ message: `Failed to fetch token` });
+		const linkedinUserEmail = await axios({
+			method: "GET",
+			url: `https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))`,
+			headers: {
+				Authorization: `Bearer ${token.access_token}`,
+			},
+		}).catch((error) => {
+			console.log(error)
+			return res.status(400).json({ message: `Failed to fetch token` });
     });
-
     const linkedinUser = await axios({
       method: "GET",
       url: `https://api.linkedin.com/v2/me`,
@@ -216,14 +216,14 @@ const linkedinAccessToken = async (req, res) => {
 };
 
 const getFacebookURl = (req, res) => {
-  const options = {
-    client_id: FB_CLIENT_ID,
-    redirect_uri: "http://localhost:5000/v1/auth/facebook/callback",
-    scope: ["email", "user_friends"].join(","), // comma seperated string
-    response_type: "code",
-    auth_type: "rerequest",
-    display: "popup",
-  };
+	const options = {
+		client_id: FB_CLIENT_ID,
+		redirect_uri: FB_CALLBACK_URL,
+		scope: ['email', 'user_friends'].join(','), // comma seperated string
+		response_type: 'code',
+		auth_type: 'rerequest',
+		display: 'popup',
+	}
 
   const facebookLoginUrl = `https://www.facebook.com/v4.0/dialog/oauth?${querystring.stringify(
     options

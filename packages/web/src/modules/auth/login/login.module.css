@@ -124,7 +124,7 @@
   max-width: 550px;
   color: #393939;
 }
-._g2loginoption{
+._g2loginoption {
   display: flex;
   align-items: center;
 }
@@ -197,7 +197,6 @@
   width: 90%;
   max-width: 550px;
 }
-
 ._gs2logincheck input[type='checkbox'] {
   width: 20px;
   opacity: 0;
@@ -224,7 +223,7 @@
   padding: 0px 8px;
 }
 
-input[type="checkbox"]:checked + label::before {
+input[type='checkbox']:checked + label::before {
   content: '\2713';
   visibility: visible;
   width: 20px;

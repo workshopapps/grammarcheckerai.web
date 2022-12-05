@@ -57,6 +57,25 @@ const index = () => {
     localStorage.setItem('grittyusertoken', userToken);
   }, [userId, userToken]);
 
+  const getUserDetails = (url) => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('grittyusertoken')}`,
+      },
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        console.log(oBJ.data);
+        localStorage.setItem('isUserDetails', JSON.stringify(oBJ.data));
+      })
+      .catch((error) => error('error', error));
+  };
+
   const handleSignUp = (e) => {
     e.preventDefault();
     if (
@@ -86,7 +105,16 @@ const index = () => {
           localStorage.setItem('grittyuserid', userId);
           localStorage.setItem('grittyusertoken', userToken);
           localStorage.setItem('isdashboard', true);
-          setTimeout(() => navigate('/me/home', { replace: true }), 5000);
+        })
+        .then(() => {
+          setTimeout(() => {
+            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+          }, 4000);
+        })
+        .then(() => {
+          setTimeout(() => {
+            navigate('/me/home', { replace: true });
+          }, 6000);
         })
         .catch((err) => {
           error(err.response.data.message);
@@ -119,7 +147,7 @@ const index = () => {
   };
 
   const handleGoogleAuth = () => {
-    useFetch('https://.hng.tech/api/v1/auth/google');
+    useFetch('https://speakbetter.hng.tech/api/v1/auth/google');
   };
 
   /* 
@@ -130,11 +158,11 @@ const index = () => {
 
   */
 
-  const handleFacebookAuth = () => {
-    useFetch('https://grittygrammar.hng.tech/api/v1/auth/facebook');
-  };
+  // const handleFacebookAuth = () => {
+  //   useFetch('https://speakbetter.hng.tech/api/v1/auth/facebook');
+  // };
 
-  /* 
+  /*  
     handleLinkedInAuth handles the LinkedIn social login. 
 
     This redirects to the endpoint which gets a usertoken from linkedin
@@ -143,7 +171,7 @@ const index = () => {
   */
 
   const handleLinkedInAuth = () => {
-    useFetch('https://grittygrammar.hng.tech/api/v1/auth/linkedin');
+    useFetch('https://speakbetter.hng.tech/api/v1/auth/linkedin');
   };
 
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
@@ -264,8 +292,10 @@ const index = () => {
                   <button type="button" className={styles._google} onClick={handleGoogleAuth}>
                     <img src={google} alt="google authentication" />
                   </button>
-                  <button type="button" className={styles._facebook} onClick={handleFacebookAuth}>
-                    <img src={facebook} alt="facebook authentication" />
+                  <button type="button" className={styles._facebook}>
+                    <a href="https://api.speakbetter.hng.tech/v1/auth/facebook">
+                      <img src={facebook} alt="facebook authentication" />
+                    </a>
                   </button>
                   <button type="button" className={styles._apple} onClick={handleLinkedInAuth}>
                     <img src={apple} alt="apple authentication" />
@@ -277,7 +307,14 @@ const index = () => {
         </div>
         <div className={styles._gs2signupcol2}>
           <div className={styles._gs2mainsignupcol2body}>
-            <Carousel autoplay={true} autoplayInterval={7000} withoutControls={true} pauseOnHover={true} wrapAround={true} animation="fade">
+            <Carousel
+              autoplay={true}
+              autoplayInterval={7000}
+              withoutControls={true}
+              pauseOnHover={true}
+              wrapAround={true}
+              animation="fade"
+            >
               <div className={styles._gs2mainsignupcol2images}>
                 <img src={Image1} alt="column1" />
                 <img src={Image2} alt="column1" />

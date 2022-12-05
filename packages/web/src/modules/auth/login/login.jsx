@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import LoadingButton from '@mui/lab/LoadingButton';
 import styles from './login.module.css';
@@ -17,6 +17,9 @@ import toast, { Toaster } from 'react-hot-toast';
 import PasswordMask from 'react-password-mask';
 import Carousel from 'nuka-carousel';
 import useTheme from '../../../hooks/useTheme';
+import useGetLinkedInLink from "../../../hooks/auth/useGetLinkedInLink"
+import useAuthLinkedIn from "../../../hooks/auth/useAuthLinkedIn"
+import Loader from "../../../components/Loader"
 
 const Index = () => {
   const context = useTheme();
@@ -24,7 +27,10 @@ const Index = () => {
   const [userPassword, setUserPassword] = useState('');
   const [userId, setUserId] = useState('');
   const [userToken, setUserToken] = useState('');
-
+  const location = useLocation()
+  
+  const authLinkedIn = useAuthLinkedIn(location?.search)
+  const linkedInLink = useGetLinkedInLink()
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
 
@@ -42,19 +48,70 @@ const Index = () => {
     navigate('/signup');
   };
 
+  React.useEffect(() => {
+    if(location?.search && location?.search?.includes("code")) {
+
+    authLinkedIn
+    .mutateAsync({})
+    .then((res) => {
+      success('Login Successful! Redirecting in 5 seconds');
+      const resId = res.data.data._id;
+      const resToken = res.data.data.token;
+      setUserId(resId);
+      setUserToken(resToken);
+      localStorage.setItem('grittyuserid', userId);
+      localStorage.setItem('grittyusertoken', userToken);
+      localStorage.setItem('isdashboard', true);
+    })
+    .then(() => {
+      setTimeout(() => {
+        getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+      }, 2000);
+    })
+    .then(() => {
+      setTimeout(() => {
+        window.location.replace('/me/home');
+        navigate('/me/home', { replace: true });
+      }, 5000);
+    })
+    .catch((err) => {
+      error(err.message);
+    })
+  }
+
+  }, [])
+
   /*
     handleLogin logs the user in on a succesful input.
     It checks if the user is found in the database and finds the password for the user as well.
     After a succesful input, redirects the user to a Protected Route and shows the logged in user's dashboard
     -----------------------------
     If user input is unsuccesful, shows an error notification and keeps the user on the page.
-
+ 
     A successful login provides a token and id which monitors user session.
   */
   useEffect(() => {
     localStorage.setItem('grittyuserid', userId);
     localStorage.setItem('grittyusertoken', userToken);
   }, [userId, userToken]);
+
+  const getUserDetails = (url) => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('grittyusertoken')}`,
+      },
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        localStorage.setItem('isUserDetails', JSON.stringify(oBJ.data));
+      })
+      .catch((error) => error('error', error));
+  };
 
   const handlelogin = (e) => {
     e.preventDefault();
@@ -73,6 +130,13 @@ const Index = () => {
           localStorage.setItem('grittyuserid', userId);
           localStorage.setItem('grittyusertoken', userToken);
           localStorage.setItem('isdashboard', true);
+        })
+        .then(() => {
+          setTimeout(() => {
+            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+          }, 2000);
+        })
+        .then(() => {
           setTimeout(() => {
             window.location.replace('/me/home');
             navigate('/me/home', { replace: true });
@@ -90,6 +154,7 @@ const Index = () => {
     Then redirects to the provided URL token for user login
 
   */
+
   const useFetch = (url) => {
     var requestOptions = {
       method: 'GET',
@@ -105,7 +170,7 @@ const Index = () => {
   };
 
   const handleGoogleAuth = () => {
-    useFetch('https://grittygrammar.hng.tech/api/v1/auth/google');
+    useFetch('https://speakbetter.hng.tech/api/v1/auth/google');
   };
 
   /*
@@ -116,9 +181,9 @@ const Index = () => {
 
     */
 
-  const handleFacebookAuth = () => {
-    useFetch('https://grittygrammar.hng.tech/api/v1/auth/facebook');
-  };
+  // const handleFacebookAuth = () => {
+  //   useFetch('https://speakbetter.hng.tech/api/v1/auth/facebook');
+  // };
 
   /*
       handleLinkedInAuth handles the LinkedIn social login.
@@ -129,12 +194,13 @@ const Index = () => {
     */
 
   const handleLinkedInAuth = () => {
-    useFetch('https://grittygrammar.hng.tech/api/v1/auth/linkedin');
+    useFetch('https://speakbetter.hng.tech/api/v1/auth/linkedin');
   };
 
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div signup-theme={context.theme} className={styles._gs2mainlogin}>
+      {authLinkedIn.isLoading && <Loader />}
       <div className={styles._gs2login}>
         <div className={styles._gs2logincol1} gs2logincol1-theme={context.theme}>
           {isTabletorMobile && (
@@ -183,11 +249,11 @@ const Index = () => {
                   required
                   onChange={(e) => setUserPassword(e.target.value)}
                 />
-              </div>
               <div className={styles._gs2logincheck}>
+              </div>
                 <div className={styles._g2loginoption}>
                   <input type="checkbox" id="userRememberPassword" />
-                  <span  style={{lineHeight:'30px'}}>Keep me signed in</span>
+                  <span style={{ lineHeight: '30px' }}>Keep me signed in</span>
                 </div>
                 <div>
                   <button
@@ -195,7 +261,7 @@ const Index = () => {
                     type="button"
                     className={styles._gsloginforgot}
                     onClick={handleForgotPassword}
-                  > 
+                  >
                     Forgot Password?
                   </button>
                 </div>
@@ -221,11 +287,14 @@ const Index = () => {
                   <button type="button" className={styles._google} onClick={handleGoogleAuth}>
                     <img src={google} alt="google authentication" />
                   </button>
-                  <button type="button" className={styles._facebook} onClick={handleFacebookAuth}>
-                    <img src={facebook} alt="facebook authentication" />
+                  <button type="button" className={styles._facebook}>
+                    <a href="https://api.speakbetter.hng.tech/v1/auth/facebook">
+                      <img src={facebook} alt="facebook authentication" />
+                    </a>
                   </button>
-                  <button type="button" className={styles._apple} onClick={handleLinkedInAuth}>
-                    <img src={apple} alt="apple authentication" />
+                  <button type="button" className={styles._apple}>
+                    <a href={linkedInLink?.value}><img src={apple} alt="apple authentication" /></a>
+                    
                   </button>
                 </div>
               </div>

@@ -70,6 +70,17 @@ html {
 
 /* For IE, Edge and Firefox */
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.MuiOutlinedInput-colorSecondary {
+  border: rgb(135, 67, 180) 1px solid;
+  color: rgb(27, 27, 27);
+  font-size: 14px;
+}
+.MuiOutlinedInput-colorSecondary:hover {
+  border: rgb(236, 236, 236) 1px solid;
+}
+.css-1twrztz-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root {
+  background-color: #5d387f !important;
 }
