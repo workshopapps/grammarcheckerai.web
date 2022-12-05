@@ -343,7 +343,9 @@ function App() {
           </div>
         }
       >
-        <Route path="/signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
+        <Route path="/signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} >
+          
+        </Route>
         <Route path="signup" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signuptwo />} />
         {/* <Route path="/social" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Social />} /> */}
         <Route path="forgot-password" element={<Forgotpassword />} />
