@@ -74,7 +74,7 @@ const getLinkedinUrl = (req, res) => {
 		response({
 			message: "LinkedIn URL",
 			success: true,
-			data: `https://www.linkedin.com/oauth/v2/authorization?response_type=code&scope=r_liteprofile%20r_emailaddress&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${LINKEDIN_URL_ENCODED}`,
+			data: `https://www.linkedin.com/oauth/v2/authorization?response_type=code&scope=r_liteprofile%20r_emailaddress&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${LINKEDIN_CALLBACK_URL}`,
 		})
 	);
 };
@@ -138,6 +138,7 @@ const linkedinAccessToken = async (req, res) => {
 				Authorization: `Bearer ${token.access_token}`,
 			},
 		}).catch((error) => {
+			console.log(error)
 			return res.status(400).json({ message: `Failed to fetch token` });
 
 		});
@@ -205,7 +206,7 @@ const linkedinAccessToken = async (req, res) => {
 const getFacebookURl = (req, res) => {
 	const options = {
 		client_id: FB_CLIENT_ID,
-		redirect_uri: 'http://localhost:5000/v1/auth/facebook/callback',
+		redirect_uri: FB_CALLBACK_URL,
 		scope: ['email', 'user_friends'].join(','), // comma seperated string
 		response_type: 'code',
 		auth_type: 'rerequest',

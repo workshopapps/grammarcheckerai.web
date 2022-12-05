@@ -24,7 +24,7 @@ const NewsLetter = () => {
       method: 'post',
       url: 'https://api.speakbetter.hng.tech/v1/subscribe/newsletter/confirm',
       data: {
-        email: 'egwuenuprecious7@gmail.com'
+        email: userEmail
       }
     }).then(response => {
       console.log(response);
