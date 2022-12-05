@@ -275,4 +275,7 @@ textarea{
   .hero_container{
     display:none;
   }
+  .box{
+    width:150px;
+  }
 }
