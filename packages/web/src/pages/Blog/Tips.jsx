@@ -5,11 +5,12 @@ import Footer from '../../modules/static/landing-page/Footer';
 import { Link } from "react-router-dom"
 
 const Tips = () => {
+  const context = useTheme();
   return (
     <div>
     <section className="mb-10">
       <div className="mt-10 md:max-w-3xl md:mx-auto xl:max-w-5xl">
-        <h1 className="text-header text-xl font-bold mb-4 text-center xl:text-3xl">
+        <h1 className={`${context.theme === 'dark' ? 'text-[#ffff] ' : 'text-header'} text-xl font-bold mb-4 text-center xl:text-3xl`}>
           10 Tips to Help You Speak English Like a Native
         </h1>
         <div className="text-header text-sm font-bold mb-4 text-center p-4">
@@ -24,7 +25,7 @@ const Tips = () => {
           <img src={Image3} alt="improve your english speaking skills" className="w-full md:h-full" />
         </div>
 
-        <div className="p-4 py-4">
+        <div className= {` ${context.theme === 'dark' ? 'text-white' : null} p-4 py-4`}>
           <p className="font-normal text-base mb-3">
             If you want to learn how to speak English like a native, you need to start with the basics. In this blog
             post, we will discuss 10 tips that will help you improve your speaking skills in a short amount of time!
@@ -89,11 +90,11 @@ const Tips = () => {
           </p>
 
           <p className="font-normal text-base mb-3">
-            10. Download an app like the gritty grammar app: This is a great way to practice and test yourself on the
+            10. Download an app like the Speak Better app: This is a great way to practice and test yourself on the
             go. The app has a variety of grammar, vocabulary, reading comprehension, and speaking exercises so you can
             fine-tune your skills in no time. Additionally, the app gives you questions that you get to answer and also
             provides feedback so you can see where you need to improve. So, grab your phone and start learning English
-            with the gritty grammar app!
+            with the Speak Better app!
           </p>
 
           <p className="font-normal text-base mb-3">

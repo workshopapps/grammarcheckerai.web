@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { arrowRightIcon } from '../../../../assets';
+import { arrowRightIcon } from '../../../assets';
 
 function HelpSupport() {
   return (
@@ -10,7 +10,7 @@ function HelpSupport() {
         <img src={arrowRightIcon} alt="Select a langauge" />
       </div>
       <p className="font-normal">
-        With exceptional customer service, try Gritty Grammer, the best Grammer software <br /> out there.
+        With exceptional customer service, try Speak Better, the best Grammer software <br /> out there.
       </p>
     </div>
   );

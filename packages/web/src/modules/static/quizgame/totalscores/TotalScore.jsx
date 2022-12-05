@@ -9,7 +9,7 @@ const TotalScores = ({winnerMsg, setStart, setWinner}) => {
   useEffect(() => {
     setInterval(() => {
       setWinner(false);
-    }, 5000)
+    }, 7000)
   })
   
   return (

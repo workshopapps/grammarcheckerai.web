@@ -1,62 +1,45 @@
-
-const AWS = require('aws-sdk');
-const { environment } = require('../config/environment')
+const AWS = require("aws-sdk");
+const { environment } = require("../config/environment");
+const { v4 } = require("uuid");
 const { ACCESSKEYID, S3SECRETEKEY, GRITTYBUCKETNAME } = environment;
-
-// time measurement for the file upload process
-let fileUploadStartTime;
-let fileUPloadEndTime;
-
 
 // Set the AWS Region.
 const REGION = "eu-west-1";
 
-
-  const s3 = new AWS.S3({
-    region: REGION,
-    credentials: {
-      accessKeyId: ACCESSKEYID,
-      secretAccessKey: S3SECRETEKEY
-    }
+const s3 = new AWS.S3({
+  region: REGION,
+  credentials: {
+    accessKeyId: ACCESSKEYID,
+    secretAccessKey: S3SECRETEKEY,
+  },
 });
 
-
-
-const uploadFile1 = async (dataBuffer) => {
+const fileUploadToS3Bucket = async (dataBuffer) => {
     try {
-
-    // Setting up S3 upload parameters
-    startTime = new Date();
-    fileUploadStartTime = new Date();
-    console.log("-------------------- File Upload to S3-Bucket --------------------");
-
-    const params = {
-        Bucket: GRITTYBUCKETNAME,
-        Key: "UserAudioFile", // File name you want to save as in S3
-        contenType: "mp3, hss,",
-        Body: Buffer.from(dataBuffer, "base64"),
-    };
-
-    // Uploading files to the bucket
-    await  s3.upload(params, function(err, data) {
-        if (err) {
-            throw err;
-        }
-        else {
-                fileUPloadEndTime = new Date;
-                console.log("File upload processing time - success: ", (fileUploadStartTime - fileUPloadEndTime)/1000);
-                console.log(`File uploaded successfully. ${data.Location}`);
-                return data.location;
-            }
+        // Setting up S3 upload parameters
+        const params = {
+            Bucket: GRITTYBUCKETNAME,
+            Key: `${v4()}.mp3`, // File name you want to save as in S3
+            Body: dataBuffer,
+        };
+        
+        // Uploading files to the bucket
+        let promise = new Promise((resolve, reject) => {
+            s3.upload(params, function (err, data) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(data.Location);
+                }
+            })
         })
-    }
 
-     catch (err) {
-        fileUPloadEndTime = new Date;
-        console.log("File upload processing time - failed: ", (fileUploadStartTime - fileUPloadEndTime)/1000);
-        console.error(`Error: ${err.message}`);
-    };
+    let fileLocation = await promise;
+    return fileLocation;
+  } catch (err) {
+    console.error(`Error: ${err.message}`);
+  }
 };
 
-
-module.exports = uploadFile1
+module.exports = fileUploadToS3Bucket;
