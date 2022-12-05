@@ -8,33 +8,33 @@ import  "./Roles.css"
 ['Sales', 'Marketing' ,'Front-End','Back-end','Design', 'Corporate'];
 const Roles = () => {
   const roles = [{
-    id: 1,
-    value: 'Design',
+      id: 1,
+      value: 'Design',
 
-  },
-  {
-    id: 2,
-    value: 'Marketing',
-    
-  },
-  {
-    id: 3,
-    value: 'Front-End',
-    
-  },
-  {
-    id: 4,
-    value: 'Back-end',
-    
-  },{
-    id: 5,
-    value: 'Sales',
-    
-  },{
-    id: 6,
-    value: 'Corporate',
-  }
-]
+    },
+    {
+      id: 2,
+      value: 'Marketing',
+      
+    },
+    {
+      id: 3,
+      value: 'Front-End',
+      
+    },
+    {
+      id: 4,
+      value: 'Back-end',
+      
+    },{
+      id: 5,
+      value: 'Sales',
+      
+    },{
+      id: 6,
+      value: 'Corporate',
+    }
+  ]
   const [selectedRole, setSelectedRole] = useState('Sales');
 
   const handleChange = (evt) => {
@@ -43,7 +43,7 @@ const Roles = () => {
 
   return (
     <div>
-       <Navbar />
+      <Navbar />
       <div className=" py-10 space-y-6 px-72 max-[480px]:px-4 text-dark-200">
         <h3 className="font-bold text-purple-500 text-4xl text-center">Open Roles</h3>
         <p className="py-8 text-dark-200">
@@ -87,15 +87,13 @@ const Roles = () => {
                       Apply
                     </a>
                   </div>
-                ))}
-                <hr />
-              </div>
-            ))}
-            </div>
-                </div> 
-
-
-        </div>
+                  <hr />
+                </div>
+              ))}
+            </div> 
+          )}  
+        </div> 
+      </div>
       <Footer/>
     </div>
   );
