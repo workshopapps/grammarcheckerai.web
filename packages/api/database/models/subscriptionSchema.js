@@ -32,6 +32,7 @@ const subscriptionSchema = new mongoose.Schema(
     },
     txref: {
       type: String,
+      unique: true
     },
     status: {
       type: String,

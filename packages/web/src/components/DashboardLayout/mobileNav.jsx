@@ -7,13 +7,7 @@ import { BsDownload, BsClock, BsFillPersonLinesFill, BsCashCoin } from 'react-ic
 
 export default function mobileNav({ nav, toggleNav }) {
   return (
-    <div
-      className={
-        nav
-          ? 'bg-[#000]/50 h-screen absolute z-[101] w-full translate-x-[0rem] ease-in-out transition-all opacity-100 duration-[800ms] sm:hidden'
-          : 'w-full absolute h-screen ease-in-out transition-all duration-[800ms] translate-x-[-40rem] z-[99]'
-      }
-    >
+    <div className={nav ? 'bg-[#000]/50 h-screen absolute z-[101] w-full translate-x-[0rem] ease-in-out transition-all opacity-100 duration-[800ms] sm:hidden' : 'w-full absolute h-screen ease-in-out transition-all duration-[800ms] translate-x-[-40rem] -z-[99]'}>
       <div className="w-[50%] h-screen bg-[#F6F6F6] max-h-screen min-h-screen sm:sticky top-0">
         <button onClick={toggleNav} className="absolute top-4 right-4 w-8 h-8">
           <img src={closepng} alt="close" />
