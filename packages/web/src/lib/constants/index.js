@@ -7,7 +7,7 @@ export const ENDPOINTS = {
   API_GET_PROFILE: 'user/profile',
   API_SEND_AUDIO: 'conversation/sendAudio',
   API_AUTH_GOOGLE: 'auth/google',
-  API_AUTH_LINKEDIN: 'auth/linkedin',
+  API_AUTH_LINKEDIN: 'auth/linkedin', 
   API_AUTH_POST_LINKEDIN: (params) => `auth/linkedin/callback${params}`,
   API_BASE_PAYSTACK_URL: 'https://api.paystack.co/',
   API_PAYSTACK_URL: 'subscription',

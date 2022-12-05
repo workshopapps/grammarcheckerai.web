@@ -12,7 +12,7 @@ const useGetLinkedInLink = () => {
         console.log(res);
       }
     },
-  });
+  }); 
 };
 
 export default useGetLinkedInLink;
