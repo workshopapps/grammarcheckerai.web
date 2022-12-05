@@ -325,7 +325,7 @@ function App() {
         <Route path="/grammar" element={<GrammarPage />} />
         <Route path="/ai" element={<AiPage />} />
         <Route path="/tips" element={<TipsPage />} />
-        <Route path="/TermsOfUse" element={<TermsOfUse />} />
+        <Route path="/termsOfUse" element={<TermsOfUse />} />
         <Route path="/testimonials" element={<Testimonial />} />
         <Route path="/ratings" element={<Ratings />} />
         <Route path="/legal" element={<LegalPage />} />
