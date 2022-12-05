@@ -8,6 +8,8 @@ export const ENDPOINTS = {
   API_SEND_AUDIO: 'conversation/sendAudio',
   API_AUTH_GOOGLE: 'auth/google',
   API_BASE_PAYSTACK_URL: 'https://api.paystack.co/',
+  API_AUTH_FACEBOOK: 'auth/facebook',
+  API_AUTH_POST_FACEBOOK: (params) => `auth/facebook/callback${params}`,
   API_PAYSTACK_URL: 'subscription',
   API_PREMIUM_PAY: 'subscribe/create',
   API_PREMIUM_CANCEL: 'subscribe/cancel',
