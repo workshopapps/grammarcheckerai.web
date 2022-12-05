@@ -1,4 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext,useState } from 'react';
+import { Link } from 'react-router-dom';
+
 
 import { ThemeContext } from '../../../lib/context/DarkThemeContext';
 import styles from './Testimonial.module.css';
@@ -12,14 +14,18 @@ import testimonial5 from '../../../assets/raters/testimonials/testimonial5.png';
 import ornament2 from '../../../assets/raters/testimonials/ornament2.png';
 import Footer from '../landing-page/Footer';
 
+import { ReviewCard } from './ReviewCard';
+
 export default function Testimonial() {
+
+
   const testimonials = [
     {
       id: 1,
       date: 'May 8, 2022',
       name: 'Amaka Disappoint',
       heading: 'No more disgraceful errors',
-      testimony: `“I am a big fan of Gritty Grammar because it takes the fear out of grammar. I've always been scared
+      testimony: `“I am a big fan of Speak Better because it takes the fear out of grammar. I've always been scared
                 of making grammatical errors, but with this app, I don't have to worry about them anymore.” — Amaka
                 Disappoint`,
       image: testimonial1,
@@ -58,14 +64,14 @@ export default function Testimonial() {
       date: 'May 8, 2022',
       name: 'Edward Rose',
       heading: 'Good app for students',
-      testimony: `“I am a teacher, and Gritty Grammar is the perfect app for students to use in class. It's
+      testimony: `“I am a teacher, and Speak Better is the perfect app for students to use in class. It's
                 interactive and fun so that they don&apos;t even realize they are learning!” — Edward Rose`,
       image: testimonial5,
     },
   ];
 
   const context = useContext(ThemeContext);
-
+  
   return (
     <div>
       <div>
@@ -73,12 +79,19 @@ export default function Testimonial() {
           className={`${styles._header} lg:bg-purple-500 lg:text-white flex flex-col justify-center items-center lg:py-32`}
           nav-theme={context.theme}
         >
-          <h1 className="text-center my-4 text-lg sm:text-2xl lg:text-5xl">Users Love What We Do</h1>
-          <p className="text-center text-sm lg:text-lg w-1/2">
+          <h1 className="text-center font-bold text-xl my-4 sm:text-2xl lg:text-5xl">Users Love What We Do</h1>
+          <p className="text-center font-[500] text-sm lg:text-lg md:w-1/2">
             Read the stories of our users who have relied on our product to improve their grammer. Join Speak Better
             today and be a part of the team.
           </p>
         </div>
+        <Link
+          className="text-center bg-purple-500 text-white w-64 flex justify-center py-4 rounded-xl my-6 mx-auto"
+          //onClick={() => setOpenReviewModal(true)}
+          to="/ratings"
+        >
+          Rate SpeakBetter
+        </Link>
         <main className="lg:grid space-y-6 lg:space-y-0 grid-cols-3 gap-8 lg:mt-32 my-14 mx-16 lg:mx-32 ">
           {testimonials.map((testimony) => {
             return (

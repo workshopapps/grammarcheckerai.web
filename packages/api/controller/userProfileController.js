@@ -1,5 +1,10 @@
-const { userCollection } = require('../database/models/userSchema');
-const { response } = require('../utilities/response');
+const { userCollection } = require("../database/models/userSchema");
+const { response } = require("../utilities/response");
+const bcrypt = require("bcryptjs");
+
+async function comparePassword(password, hash) {
+  return await bcrypt.compare(password, hash);
+}
 
 const userProfile = async (req, res) => {
   //gets user id
@@ -12,7 +17,7 @@ const userProfile = async (req, res) => {
       return res.status(404).json(
         response({
           success: false,
-          message: 'User Not Found',
+          message: "User Not Found",
           data: {},
         })
       );
@@ -21,7 +26,7 @@ const userProfile = async (req, res) => {
     return res.status(200).json(
       response({
         success: true,
-        message: 'User found',
+        message: "User found",
         data: user,
       })
     );
@@ -30,7 +35,7 @@ const userProfile = async (req, res) => {
     return res.status(400).json(
       response({
         success: false,
-        message: 'An Error Occured',
+        message: "An Error Occured",
         data: {
           error,
         },
@@ -47,13 +52,9 @@ const deleteUser = async (req, res) => {
 
     // checking if all required field are provided.
     if (!email || !password) {
-      return res.status(400).json(
-        response({
-          success: false,
-          message: 'Please provide user email or Password',
-          data: {},
-        })
-      );
+      res.status(400);
+      res.json({ message: "please provide user email and password" });
+      return;
     }
 
     // checking for user in our database using the email provided
@@ -61,52 +62,30 @@ const deleteUser = async (req, res) => {
 
     // if user does not exist
     if (!user) {
-      return res.status(404).json(
-        response({
-          success: false,
-          message: 'No user found with the email provided',
-          data: {},
-        })
-      );
+      res.status(404);
+      res.json({ message: "no user found with the email provided" });
+      return;
     }
 
     // verify that the user password is correct
-    const validPassword = await user.comparePassword(password);
+    const isCorrect = await comparePassword(password, user.password);
 
     // if password is not correct
-    if (!validPassword) {
-      return res.status(400).json(
-        response({
-          success: false,
-          message: 'You provided an incorrect password',
-          data: {},
-        })
-      );
+    if (!isCorrect) {
+      res.status(401);
+      res.json({ message: "you are not authorized to delete this account" });
+      return;
     }
 
     // if user exist and password is correct
-    if (user && validPassword) {
+    if (isCorrect) {
       await userCollection.deleteOne({ email });
-
-      return res.status(200).json(
-        response({
-          success: true,
-          message: 'User successfully deleted',
-          data: {},
-        })
-      );
+      res.status(200);
+      res.json({ message: "you have successfully deleted your account" });
     }
   } catch (error) {
-    console.log(error);
-    return res.status(400).json(
-      response({
-        success: false,
-        message: 'An Error Occured',
-        data: {
-          error,
-        },
-      })
-    );
+    res.status(500);
+    res.json({ message: "Something went wrong" });
   }
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -114,7 +93,7 @@ const deleteUser = async (req, res) => {
 //Updates a User profile.
 const updateUser = async (req, res) => {
   try {
-    const profilePicture = req.file ? req.file.location : '';
+    const profilePicture = req.file ? req.file.location : "";
 
     const data = {
       ...req.body,
@@ -130,7 +109,7 @@ const updateUser = async (req, res) => {
       return res.status(404).json(
         response({
           success: false,
-          message: 'User Not Found',
+          message: "User Not Found",
           data: {},
         })
       );
@@ -138,7 +117,7 @@ const updateUser = async (req, res) => {
     return res.status(200).json(
       response({
         success: true,
-        message: 'user updated successfully.',
+        message: "user updated successfully.",
         data: {},
       })
     );
@@ -147,7 +126,7 @@ const updateUser = async (req, res) => {
     return res.status(400).json(
       response({
         success: false,
-        message: 'An Error Occured',
+        message: "An Error Occured",
         data: {
           error: error,
         },

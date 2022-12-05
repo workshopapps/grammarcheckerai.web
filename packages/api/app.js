@@ -52,10 +52,13 @@ app.use(
     extended: true,
   })
 );
+
+//welcome note
 app.use("*", (req, res) => {
   res.status(200).json({
     message: "Welcome to Grit Grammarly 🙌",
     user: "CORS enabled",
   });
 });
+
 module.exports = app;

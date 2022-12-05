@@ -2,7 +2,7 @@
 import useTheme from '../../hooks/useTheme';
 import React from 'react';
 import Footer from './landing-page/Footer';
-import './terms_of_use.css';
+import '../static/TermsOfUse.css';
 
 const TermsOfUse = () => {
   const context = useTheme();

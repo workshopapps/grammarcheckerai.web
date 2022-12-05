@@ -1,59 +1,106 @@
-const userCollection = require("../database/models/userSchema")
 const Subscription = require("../database/models/subscriptionSchema");
 
 const createPayment = async (req, res) => {
-    let user = req.user;
-    let userId = user?._id;
-    try {
-      const { email, subscriptionId, interval, amount, currency} = req.body;
-      const payload ={email, subscriptionId, interval, amount, currency, user:userId}
-      const result = await Subscription.create(payload)
-      res.status(200).send({
-        success: true,
-        message: "Subscription created",
-        data: result
-      })
-    } catch (error) {
-      return res.status(400).json(
-        response({
-          success: false,
-          message: 'An Error Occured',
-          data: {
-            error,
-          },
-        })
-      );
-    }
-  }
-
-
-const getSubscription  = async (req, res) =>{
- try {
-  const {email} = req.body;
-  const user = await Subscription.findOne({email});
-  if (!user) {
-    return res.status(404).send({
-        success: false,
-        message: 'User Not Found',
-        data: {},
-      }
-    );
-  }
-  return res.status(200).send({
+  let email = req.body.email;
+  if (!email)
+    return res.status(400).send({ success: false, message: "Invalid email" });
+  try {
+    const { user, email, subscriptionId, interval, amount, currency } =
+      req.body;
+    const payload = {
+      user,
+      email,
+      subscriptionId,
+      interval,
+      amount,
+      currency,
+    };
+    const result = await Subscription.create(payload);
+    res.status(200).send({
       success: true,
-      message: 'User found',
-      data: user,
-    })
- } catch (error) {
-  return res.status(400).json({
+      message: "Subscription created",
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({
       success: false,
-      message: 'An Error Occured',
-      data: {
-        error,
-      },
-    }
-  );
- }
-}
+      message: `Error: ${error.message}`,
+    });
+  }
+};
 
-  module.exports = {createPayment, getSubscription};
+const getSubscription = async (req, res) => {
+  try {
+    const { email } = req.query;
+    if (!email) {
+      return res.status(400).send({
+        success: false,
+        message: "Invalid Email",
+      });
+    }
+    if (email == undefined || email == null || email == "undefined") {
+      return res.status(400).send({
+        success: false,
+        message: "Invalid Email",
+      });
+    }
+    const user = await Subscription.find({ email });
+    if (!user) {
+      return res.status(400).send({
+        success: false,
+        message: "User not subscribed",
+        data: [],
+      });
+    }
+    return res.status(200).send({
+      success: true,
+      message: "User found",
+      data: user,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({
+      success: false,
+      message: `Error: ${error.message}`,
+    });
+  }
+};
+
+const cancelSubscription = async (req, res) => {
+  const { email } = req.body;
+  if (!email)
+    return res.status(400).send({
+      success: false,
+      message: "Invalid email sent",
+    });
+  const user = await Subscription.findOne({ email });
+  if (!user) {
+    return res.status(400).send({
+      success: false,
+      message: `No subscription found for ${email}`,
+      data: [],
+    });
+  }
+
+  await Subscription.findByIdAndDelete(user._id)
+    .then(() => {
+      return res.status(200).send({
+        success: true,
+        message: "Subscription Cancelled",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(400).send({
+        success: false,
+        message: `Error: ${err.message}`,
+      });
+    });
+};
+
+module.exports = {
+  createPayment,
+  getSubscription,
+  cancelSubscription,
+};

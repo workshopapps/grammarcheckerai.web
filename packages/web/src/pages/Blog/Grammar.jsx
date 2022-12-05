@@ -3,13 +3,14 @@ import Image2 from '../../assets/blogimg/image 2 (1).svg';
 import Cta from '../../components/Blogcomponents/Cta';
 import Footer from '../../modules/static/landing-page/Footer';
 import { Link } from "react-router-dom"
-
+import useTheme from '../../hooks/useTheme';
 const Grammar = () => {
+  const context = useTheme();
   return (
     <div>
     <section className="mb-10">
       <div className="mt-10 md:max-w-3xl md:mx-auto xl:max-w-5xl">
-        <h1 className="text-header text-xl font-bold mb-4 text-center xl:text-3xl">
+        <h1 className={` ${context.theme === 'dark' ? 'text-white' : 'text-header'}  text-xl font-bold mb-4 text-center xl:text-3xl`}>
           10 Grammar Mistakes You&apos;re Probably Making (And How to Fix Them)
         </h1>
 
@@ -24,7 +25,7 @@ const Grammar = () => {
           <img src={Image2} alt="Grammar check" className="w-full md:h-full" />
         </div>
 
-        <div className="p-4 py-4">
+        <div className= {` ${context.theme === 'dark' ? 'text-white' : null} p-4 py-4`}>
           <p className="font-normal text-base mb-3">
             Do you make these common grammar mistakes? Many people do, and it&apos;s easy to see why. English is a complex
             language to learn, and many rules seem confusing. This blog post will discuss ten common grammar mistakes
@@ -113,11 +114,11 @@ const Grammar = () => {
           <p className="font-normal text-base mb-3">
             There are several common mistakes that people make when using grammar. To avoid making these mistakes, be
             careful to listen to yourself and ensure you use the correct verb form. If you need help with the correct
-            verb form, consult a grammar reference app like the Gritty grammar app or website. You can avoid making
+            verb form, consult a grammar reference app like the Speak Better app or website. You can avoid making
             incorrect grammar mistakes with some care and attention.
           </p>
 
-          <h1 className="text-header text-xl font-bold mb-8 mt-8 text-center xl:text-3xl">
+          <h1 className={`${context.theme === 'dark' ? 'text-white' : 'text-header'} text-xl font-bold mb-8 mt-8 text-center xl:text-3xl`}>
             How to improve your grammar every day.
           </h1>
 

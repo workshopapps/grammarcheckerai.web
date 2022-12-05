@@ -25,13 +25,13 @@ export const getQueryAction = (payload) => {
 };
 
 function useQueryActionHook(data) {
-  const { queryFn, queryKey, endpoint, ...others } = getQueryAction({
+  const { queryFn, queryKey, ...others } = getQueryAction({
     ...data,
   });
 
   const queryResult = useQuery({
     queryFn,
-    queryKey: queryKey || endpoint,
+    queryKey: queryKey,
 
     onError: (err) => {
       if (err) {
