@@ -50,17 +50,10 @@ const Contact = lazy(() => import('./pages/contact/index'));
 const PremiumSubs = lazy(() => import('./modules/premium/popup/premium'));
 const SubscriptionHistory = lazy(() => import('./modules/premium/index'));
 
-
 // All routes/pages must be import from ./pages folder
 const DashboardLayout = () => (
   <Suspense fallback={<Fallback />}>
     <Dashboard />
-  </Suspense>
-);
-
-const Social = () => (
-  <Suspense fallback={<Fallback />}>
-    <SocialPage />
   </Suspense>
 );
 
@@ -350,10 +343,9 @@ function App() {
           </div>
         }
       >
-        <Route path="/social" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Social />} />
         <Route path="/signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
         <Route path="signup" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signuptwo />} />
-        <Route path="/social" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Social />} />
+        {/* <Route path="/social" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Social />} /> */}
         <Route path="forgot-password" element={<Forgotpassword />} />
         <Route path="password-reset" element={<ResetLink />} />
       </Route>

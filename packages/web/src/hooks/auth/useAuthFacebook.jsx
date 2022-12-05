@@ -1,10 +1,10 @@
 import { ENDPOINTS } from '../../lib/constants';
 import useCustomMutation from '../useCustomMutation';
 
-const useAuthLinkedIn = (params) => {
+const useAuthFacebook = (params) => {
   return useCustomMutation({
     method: 'post',
-    endpoint: ENDPOINTS.API_AUTH_POST_LINKEDIN(params),
+    endpoint: ENDPOINTS.API_AUTH_POST_FACEBOOK(params),
     queryKey: [params],
     redirect: 'follow',
     showSuccessToast: false,
@@ -15,5 +15,5 @@ const useAuthLinkedIn = (params) => {
     },
   });
 };
- 
-export default useAuthLinkedIn;
+
+export default useAuthFacebook;
