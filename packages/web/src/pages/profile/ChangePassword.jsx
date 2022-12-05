@@ -15,7 +15,7 @@ export default function ChangePassword() {
     const history = useNavigate();
     const navigate = useNavigate();
     const data = JSON.parse(localStorage.getItem("userData"));
-    const endpoint = ENDPOINTS.API_BASE_URL;
+    const endpoint = ENDPOINTS.API_BASE_HTTPS_URL;
     const url = endpoint + 'user/profile/';
     const token = localStorage.getItem("grittyusertoken");
     const error = (message) => toast.error(message);

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton';
 import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+import { ENDPOINTS } from '../../lib/constants';
 
 const reasonsArray = [
     {
@@ -9,7 +11,7 @@ const reasonsArray = [
     },
     {
         id: 2,
-        text: 'I no longer need Gritty Grammer'
+        text: 'I no longer need Speak Better'
     },
     {
         id: 3,
@@ -35,7 +37,41 @@ const reasonsArray = [
 
 export default function ConfirmDeleteAccount() {
     const [reasons, setReasons] = useState([]);
+    const [password, setPassword] = useState("");
     const history = useNavigate();
+    const success = (message) => toast.success(message);
+    const endpoint = ENDPOINTS.API_BASE_HTTPS_URL;
+    const url = endpoint + 'user/';
+    const data = JSON.parse(localStorage.getItem("userData"));
+    const token = localStorage.getItem('grittyusertoken');
+
+    const headersList = {
+        Authorization: `Bearer ${token}`,
+      };
+
+    const deleteUser = async () => {
+        let bodyContent = {
+          email: data.email,
+          password: password
+        };
+        try {
+          const response = await fetch(url, {
+            method: 'DELETE',
+            body: JSON.stringify(bodyContent),
+            headers: { ...headersList, 'Content-Type': 'application/json; charset=utf-8' },
+          });
+            const data = await response.json();
+            console.log(data);
+            success('success!');
+            localStorage.clear();
+            window.location.replace('/signin');
+            location.reload();
+          setTimeout(() => location.reload(), 2000);
+        } catch (err) {
+          console.log(err);
+          //error('error updating data.');
+        }
+      };
 
     const addReason = (text) => {
         if(reasons.includes(text)) {
@@ -52,7 +88,7 @@ export default function ConfirmDeleteAccount() {
     <div className='h-[100vh] flex flex-col w-[90%] md:w-[70%] lg:w-[70%] m-auto pt-2 sm:pt-16'>
         <div className='flex flex-col'>
             <h1 className='text-xl sm:text-2xl text-[#393939] sm:text-center text-center font-bold'>Delete Account</h1>
-            <p className='text-sm sm:text-lg mt-2 opacity-50'>Step 2/2: Please share the reasons why you no longer want to continue with Gritty Grammer so we can improve our services further. You can make multiple selections.</p>
+            <p className='text-sm sm:text-lg mt-2 opacity-50'>Step 2/2: Please share the reasons why you no longer want to continue with Speak Better so we can improve our services further. You can make multiple selections.</p>
         </div>
 
         <ul className='mt-10 flex flex-wrap gap-6'>
@@ -66,14 +102,22 @@ export default function ConfirmDeleteAccount() {
             ))}
         </ul>
 
+        <form className='mt-5'>
+            <label className='flex flex-col'>
+                <span className='text-lg'>password:</span>
+                <input type="password" value={password} className='_input' onChange={(e) => setPassword(e.target.value)} />
+            </label>
+        </form>
+
         <div className="_btnContainer">
             <ProfileScreenButton onClick={() => history(-1)} variant="secondary">
                 Cancel
             </ProfileScreenButton>
-            <ProfileScreenButton disabled={Object.keys(reasons).length === 0 ? true : false} >
+            <ProfileScreenButton onClick={deleteUser} disabled={Object.keys(reasons).length === 0 ? true : false} >
                 Submit
             </ProfileScreenButton>
         </div>
+        <Toaster />
     </div>
   )
 }

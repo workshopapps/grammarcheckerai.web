@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { getFontSize } from '../../../../hooks/useCustomFont';
+import { getFontSize } from '../../../hooks/useCustomFont';
 import styles from './font-adjustment.module.css';
 
 function FontAdjustment() {

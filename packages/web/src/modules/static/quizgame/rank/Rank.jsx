@@ -7,13 +7,14 @@ import styles from '../rank/Rank.module.scss';
 import { GrClose } from 'react-icons/gr';
 
 const Rank = ({ setRank }) => {
-  const [ranks, setRanks] = useState({});
+  const [ranks, setRanks] = useState([]);
 
   const getLeaderBoard = async () => {
-    const rankingBoard = await axios.get('http://localhost:5001/v1/leaderboard');
+    const rankingBoard = await axios.get('https://api.speakbetter.hng.tech/v1/leaderboard');
     const data = rankingBoard.data;
-    setRanks(data.data[0]);
-    // console.log(ranks);
+    console.log(data.data);
+    setRanks(data.data);
+    console.log(ranks);
   };
 
   useEffect(() => {
@@ -37,7 +38,7 @@ const Rank = ({ setRank }) => {
               </tr>
             </thead>
 
-            {Object.keys(ranks).map(() => {
+            {ranks.map(() => {
               return (
                 <tbody key={ranks.userId}>
                   <tr>

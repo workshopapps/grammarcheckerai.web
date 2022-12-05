@@ -81,18 +81,11 @@ const Careers = () => {
         </div>{' '}
       </div>
       <Culture />
-      <section className=" mb-[64px] text-center py-10 ">
-        <h1 className='text-xl'>Apply for roles</h1>
-        <p className="w-1/2 mx-auto py-6  text-sm max-[480px]:w-full max-[480px]:px-8 max-[480px]:pb-10 my-6">
-        <svg  className="inline float-left mb-2 ml-2 mr-2"width="10" height="10" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.892 11.104L5.212 0.399998H8.092L5.404 11.104H0.892ZM8.38 11.104L12.748 0.399998H15.628L12.892 11.104H8.38Z" fill="#5D387F"/>
-</svg>
-Every member of the team brings something unique to Gritty Grammar which strenghtens the team. We are
-          growing and we would like you to join us. Do you think you have what it takes to join the team? Find out how
-          you can add your talent and skills to our team and help us push forward our mission! <svg className=" float-right -top-0 relative   object-right-top mb-2 ml-5 mr-"  width="10" height="10" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.892 11.104L5.212 0.399998H8.092L5.404 11.104H0.892ZM8.38 11.104L12.748 0.399998H15.628L12.892 11.104H8.38Z" fill="#5D387F"/>
-</svg>
-
+      <section className="text-center py-10 ">
+        <p className="w-1/2 mx-auto py-6 max-[480px]:w-full max-[480px]:px-8 max-[480px]:pb-10 my-6">
+          Every member of the team brings something unique to Speak Better which strenghtens the team. We are growing
+          and we would like you to join us. Do you think you have what it takes to join the team? Find out how you can
+          add your talent and skills to our team and help us push forward our mission!
         </p>
         <a href="/roles" className=" bg-[#5D387F] p text-white rounded-lg py-4 px-6 ">
           Explore Open Roles

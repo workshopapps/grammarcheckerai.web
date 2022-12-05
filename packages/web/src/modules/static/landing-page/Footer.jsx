@@ -41,7 +41,7 @@ const Footer = () => {
                 <Link to="/career">Careers and Culture</Link>
                 <Link to="/newsletter">Newsletter</Link>
                 <Link to="/legal">Legal</Link>
-                <Link to="/terms-of-use">Terms of Use</Link>
+                <Link to="/TermsOfUse">Terms of Use</Link>
               </div>
             </div>
           </div>
@@ -52,7 +52,7 @@ const Footer = () => {
           </div>
         </div>
         <div className={styles._ftcopyright}>
-          <p>&copy;2022 GrittyGrammar</p>
+          <p>&copy;2022 Speak Better</p>
         </div>
       </div>
     </footer>
