@@ -56,6 +56,8 @@ const index = () => {
       }).then(response => {
         console.log(response);
         setOpenModal(false);
+      }).catch(error => {
+        console.log(error);
       })
     };
 
