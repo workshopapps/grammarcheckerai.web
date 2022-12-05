@@ -4,13 +4,13 @@
     "id": "h1vuxh3bomktv"
   },
   "info": {
-    "title": "GrittyGrammarly",
+    "title": "Speak Better",
     "version": "1.0",
     "description": "API endpoint test for the grammarcheckerai app"
   },
   "servers": [
     {
-      "url": "http://localhost:3000",
+      "url": "http://localhost:5000",
       "description": "Offline"
     },
     {
@@ -19,10 +19,10 @@
     }
   ],
   "paths": {
-    "/api/v1/auth/login": {
+    "/v1/auth/login": {
       "post": {
         "summary": "This Route Logs Existing User in",
-        "operationId": "post-api-v1-login",
+        "operationId": "post-v1-login",
         "responses": {
           "200": {
             "$ref": "#/components/responses/success"
@@ -40,7 +40,7 @@
             "$ref": "#/components/responses/error"
           }
         },
-        "description": "Login route enables registered user to log into their account",
+        "description": "The login route enables registered users to log into their account",
         "requestBody": {
           "$ref": "#/components/requestBodies/api_login"
         },
@@ -50,10 +50,10 @@
       },
       "parameters": []
     },
-    "/api/v1/auth/signup": {
+    "/v1/auth/signup": {
       "post": {
         "summary": "This Route creates new User",
-        "operationId": "post-api-v1-signup",
+        "operationId": "post-v1-signup",
         "responses": {
           "200": {
             "$ref": "#/components/responses/success"
@@ -77,7 +77,7 @@
             "$ref": "#/components/responses/error"
           }
         },
-        "description": "Signup route enables new user to regiter an account",
+        "description": "The signup route enables a new user to register an account",
         "requestBody": {
           "$ref": "#/components/requestBodies/api_signup"
         },
@@ -87,11 +87,158 @@
       },
       "parameters": []
     },
-    "/api/v1/user/delete_user": {
+    "/v1/auth/google": {
+      "parameters": [],
+      "get": {
+        "summary": "",
+        "operationId": "get-v1-auth-google",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/user/google-login": {
+      "post": {
+        "summary": "",
+        "operationId": "post-v1-user-google-login",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "description": "Authenticate Google signup"
+      }
+    },
+    "/v1/auth/linkedin": {
+      "parameters": [],
+      "get": {
+        "summary": "LinkedIn Authentication",
+        "operationId": "get-v1-auth-linkedin",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/success"
+          },
+          "403": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/success"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "description": "Get Linkedin authentication Route",
+        "tags": [
+          "Linkedin Auth"
+        ]
+      }
+    },
+    "/v1/user": {
       "parameters": [],
       "delete": {
         "summary": "",
-        "operationId": "deleteapi-v1-user-delete_user",
+        "operationId": "delete-v1-user",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "description": "delete_user route enables registered and verified user to delete their existing account",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Authorization",
+            "description": "Bearer Token",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/api_delete"
+        }
+      }
+    },
+    "/v1/auth/facebook": {
+      "get": {
+        "summary": "Facebook Authentication",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "201": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "403": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "405": {
+            "description": "Method Not Allowed"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "operationId": "get-facebook-callback",
+        "description": "Gets Facebook authentication route",
+        "tags": [
+          "Facebook Auth"
+        ]
+      },
+      "parameters": []
+    },
+    "/v1/conversation/sendAudio": {
+      "post": {
+        "summary": "",
+        "operationId": "post-getConversation",
         "responses": {
           "200": {
             "$ref": "#/components/responses/success"
@@ -112,13 +259,33 @@
             "$ref": "#/components/responses/error"
           }
         },
-        "description": "delete_user route enables registered and verified user to delete their existing account",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/api_delete"
-        },
+        "description": "This end point sends audio file to the bot",
         "tags": [
-          "User"
+          "Conversation"
         ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/sendAudio"
+        }
+      },
+      "parameters": []
+    },
+    "v1/conversation/start": {
+      "parameters": [],
+      "get": {
+        "summary": "",
+        "operationId": "getv1-conversation-start",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "description": "Conversation start for the registered user",
         "parameters": [
           {
             "schema": {
@@ -132,55 +299,91 @@
         ]
       }
     },
-    "/api/v1/user/update_user/:userId": {
-      "post": {
-        "summary": "This Route Updates the User Details in the database",
-        "operationId": "post-update_user-:userId",
+    "/v1/conversation/end": {
+      "parameters": [],
+      "get": {
+        "summary": "",
+        "operationId": "getv1-conversation-start",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/success"
-          },
-          "202": {
-            "$ref": "#/components/responses/success"
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "v1/user/profile/:id": {
+      "parameters": [],
+      "get": {
+        "summary": "",
+        "operationId": "getv1-user-profile-:id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "AUTHORIZATION ": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Bearer Token"
+              }
+            }
           },
           "400": {
-            "$ref": "#/components/responses/error"
+            "description": "Bad Request"
           },
           "401": {
-            "$ref": "#/components/responses/error"
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "404": {
-            "$ref": "#/components/responses/error"
+            "description": "Not Found",
+            "headers": {
+              "authorization": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "bearer token"
+              }
+            }
           },
           "500": {
-            "$ref": "#/components/responses/error"
+            "description": "Internal Server Error"
           }
         },
-        "description": "update_user route enables registered and verified user to update their existing account",
-        "tags": [
-          "User"
+        "security": [
+          {
+            "token": []
+          }
         ],
+        "description": "user_profile route gets registered and verified user in the database",
         "parameters": [
           {
             "schema": {
               "type": "string"
             },
             "in": "query",
-            "name": "userId",
+            "name": "id",
             "description": "id"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "description": "Bearer Token",
+            "name": "Authorization",
+            "required": true
           }
-        ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/api_update"
-        }
-      },
-      "parameters": []
+        ]
+      }
     },
-    "/api/v1/user/profile/": {
+    "v1/correctionHistory/:userId": {
       "parameters": [],
       "get": {
         "summary": "Get all the user in the database",
-        "operationId": "get-api-v1-user-profile-:id",
+        "operationId": "",
         "responses": {
           "200": {
             "$ref": "#/components/responses/success"
@@ -217,7 +420,44 @@
         "tags": [
           "User"
         ],
-        "description": "user_profile route gets registered and verified user tin the database"
+        "description": ""
+      }
+    },
+    "v1/user/profile/update": {
+      "parameters": [],
+      "get": {
+        "summary": "Get all the user in the database",
+        "operationId": "",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/success"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          },
+          "502": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "parameters": [],
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "security": [
+          {
+            "token": []
+          }
+        ]
       }
     },
     "/api/v1/auth/getBot": {
@@ -325,40 +565,6 @@
       },
       "parameters": []
     },
-    "/api/v1/sendAudio": {
-      "post": {
-        "summary": "",
-        "operationId": "post-getConversation",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/success"
-          },
-          "201": {
-            "$ref": "#/components/responses/success"
-          },
-          "400": {
-            "$ref": "#/components/responses/error"
-          },
-          "401": {
-            "$ref": "#/components/responses/error"
-          },
-          "404": {
-            "$ref": "#/components/responses/error"
-          },
-          "500": {
-            "$ref": "#/components/responses/error"
-          }
-        },
-        "description": "This end point sends audio file to the bot",
-        "tags": [
-          "Conversation"
-        ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/sendAudio"
-        }
-      },
-      "parameters": []
-    },
     "/api/1/auth/request-reset-password": {
       "post": {
         "summary": "Unscripted Route",
@@ -443,84 +649,6 @@
       },
       "parameters": []
     },
-    "/api/v1/auth/google": {
-      "parameters": [],
-      "get": {
-        "summary": "Google Authentication",
-        "operationId": "get-auth-google-auth",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/success"
-          },
-          "201": {
-            "$ref": "#/components/responses/success"
-          },
-          "400": {
-            "$ref": "#/components/responses/error"
-          },
-          "401": {
-            "$ref": "#/components/responses/error"
-          },
-          "403": {
-            "$ref": "#/components/responses/error"
-          },
-          "404": {
-            "$ref": "#/components/responses/error"
-          },
-          "500": {
-            "$ref": "#/components/responses/error"
-          }
-        },
-        "description": "Get and Post to Google authentication Route",
-        "tags": [
-          "Google Auth"
-        ]
-      },
-      "post": {
-        "summary": "",
-        "operationId": "postapi-v1-auth-google",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "description": "Get Google Auth Route"
-      }
-    },
-    "/api/v1/auth/linkedin": {
-      "parameters": [],
-      "get": {
-        "summary": "LinkedIn Authentication",
-        "operationId": "get-auth-google-auth",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/success"
-          },
-          "201": {
-            "$ref": "#/components/responses/success"
-          },
-          "400": {
-            "$ref": "#/components/responses/error"
-          },
-          "401": {
-            "$ref": "#/components/responses/success"
-          },
-          "403": {
-            "$ref": "#/components/responses/error"
-          },
-          "404": {
-            "$ref": "#/components/responses/success"
-          },
-          "500": {
-            "$ref": "#/components/responses/error"
-          }
-        },
-        "description": "Get Linkedin authentication Route",
-        "tags": [
-          "Linkedin Auth"
-        ]
-      }
-    },
     "/api/v1/auth/linkedin/callback": {
       "parameters": [],
       "get": {
@@ -554,43 +682,6 @@
           "Linkedin Auth"
         ]
       }
-    },
-    "/api/v1/auth/facebook": {
-      "get": {
-        "summary": "Facebook Authentication",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/success"
-          },
-          "201": {
-            "$ref": "#/components/responses/success"
-          },
-          "400": {
-            "$ref": "#/components/responses/error"
-          },
-          "401": {
-            "$ref": "#/components/responses/error"
-          },
-          "403": {
-            "$ref": "#/components/responses/error"
-          },
-          "404": {
-            "$ref": "#/components/responses/error"
-          },
-          "405": {
-            "description": "Method Not Allowed"
-          },
-          "500": {
-            "$ref": "#/components/responses/error"
-          }
-        },
-        "operationId": "get-facebook-callback",
-        "description": "Gets Facebook authentication route",
-        "tags": [
-          "Facebook Auth"
-        ]
-      },
-      "parameters": []
     },
     "/api/v1/auth/facebook/callback": {
       "get": {
@@ -684,6 +775,9 @@
                   "type": "string"
                 },
                 "firstName": {
+                  "type": "string"
+                },
+                "username": {
                   "type": "string"
                 },
                 "confirm_password": {

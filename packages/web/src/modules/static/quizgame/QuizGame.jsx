@@ -8,18 +8,17 @@ import styles from '../quizgame/QuizGame.module.scss';
 import TotalScores from './totalscores/TotalScore';
 
 function shuffle(array) {
-  let currentIndex = array.length,  randomIndex;
+  let currentIndex = array.length,
+    randomIndex;
 
   // While there remain elements to shuffle.
   while (currentIndex != 0) {
-
     // Pick a remaining element.
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
 
     // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
   }
 
   return array;
@@ -28,7 +27,6 @@ function shuffle(array) {
 const QuizGame = ({ players, setPlayers, setStart }) => {
   const { socket } = useContext(QuizContext);
   const timeRef = useRef(null);
-
   const [winnerMsg, setWinnerMsg] = useState('');
   const [answerList, setAnswerList] = useState([]);
   const [seconds, setSeconds] = useState(30);
@@ -44,6 +42,7 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
 
   const handleExit = () => {
     socket.disconnect();
+    console.log('socket disconnected')
     socket.on('update-players', (count) => {
       setPlayers(count);
     });
@@ -51,38 +50,31 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
   };
 
   let tick = triviaQuestion.answer;
-  console.log(tick);
 
   const handleSubmit = () => {
     const isCorrect = selectedAnswer === tick;
     const userId = localStorage.getItem('grittyuserid');
-    socket.emit("update-quizProfile", userId, isCorrect);
-    if(isCorrect){
+    socket.emit('update-quizProfile', userId, isCorrect);
+    if (isCorrect) {
       socket.emit('get-roundWinner', userId);
       setTimeOut(false);
       setWinner(true);
       setScore(score + 1);
-    };
+    }
     socket.on('receive-roundWinner', (roundWinnerMessage) => {
       setWinnerMsg(roundWinnerMessage);
-      
     });
     setTimeout(() => {
       if (isCorrect) {
-        console.log('correct');
         setChangeColor('green');
         setQuestionAnswer(questionAnswer + 1);
       } else {
-        // setChangeColor(element !== tick ? 'red' : 'yellow');
         setChangeColor('red');
-        console.log('incorrect');
       }
     }, 1000);
-
   };
 
   const handleAnswer = (element) => {
-    let tick = triviaQuestion.answer;
     setSelectedAnswer(element);
     setChangeColor('yellow');
   };
@@ -96,16 +88,19 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
   };
 
   const getQuestion = async () => {
-    socket.emit('get-question');
-    socket.on('receive-question', (question) => {
-      setTriviaQuestion(question);
-      let correctAnswer = question.answer;
-      let incorrectAnswers = question.incorrectAnswers;
-      console.log(incorrectAnswers);
-      const options = shuffle([...incorrectAnswers, correctAnswer]);
-      
-      setAnswerList(options);
-    })
+    try {
+      socket.emit('get-question');
+      socket.on('receive-question', (question) => {
+        setTriviaQuestion(question);
+        let correctAnswer = question.answer;
+        let incorrectAnswers = question.incorrectAnswers;
+        const options = shuffle([...incorrectAnswers, correctAnswer]);
+        setAnswerList(options);
+      });
+    } catch (err) {
+      console.log('Error', err);
+      setErrorMsg(true);
+    }
   };
 
   useEffect(() => {
@@ -117,7 +112,6 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
   let countdown;
   useEffect(() => {
     if (seconds === 0) {
-      console.log('end');
       return setTimeOut(true);
     }
     countdown = setInterval(() => {
@@ -159,7 +153,9 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
         ) : (
           <>
             {timeOut ? (
-              <div className={styles.quizgame__end}><h1>You Lost </h1></div>
+              <div className={styles.quizgame__end}>
+                <h1>You Lost </h1>
+              </div>
             ) : (
               <>
                 <div className={styles.quizgame_card}>
@@ -202,4 +198,3 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
 };
 
 export default QuizGame;
-
