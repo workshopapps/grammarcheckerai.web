@@ -15,8 +15,8 @@
 }
 .hero_container{
   background-color: #5D387F;
-  padding-top: 4rem;
-  padding-bottom: 4rem;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
 }
 .container {
   width: 100%;
@@ -60,7 +60,7 @@ textarea[contact-theme='dark'],
   font-size: 20px;
   line-height: 150%;
   text-align: center;
-  padding: 0 15rem;
+  padding: 0 10rem;
   color: rgba(255, 255, 255, 0.75);
 }
 .p2 {
@@ -122,13 +122,10 @@ textarea[contact-theme='dark'],
   border-radius: 16px;
   width: 95%;
 }
-
 .extra_areas{
   padding:1rem;
   margin: 0 1.5rem;
 }
-
-
 .reach{
   margin:2rem;
 }
@@ -162,7 +159,7 @@ label {
   align-items: center;
   padding: 12px;
   gap: 9px;
-  width: 155px;
+  width: 149px;
   height: 82px;
   background: #F6F6F6;
   border-radius: 8px;
@@ -170,6 +167,8 @@ label {
 }
 .box:hover{
   transform: scale(1.1);
+  background: #5D387F;
+  color: white;
 }
 .lastbox {
   display: flex;
@@ -177,7 +176,7 @@ label {
   align-items: center;
   padding: 12px;
   gap: 9px;
-  width: 155px;
+  width: 149px;
   height: 82px;
   background: #5D387F;
   border-radius: 8px;
@@ -186,6 +185,8 @@ label {
 }
 .lastbox:hover{
   transform: scale(1.1);
+  background: #5D386B;
+  color: black;
 }
 
 
@@ -246,14 +247,24 @@ textarea{
   .box {
     gap: 12px;
     width: 70px;
-    height: 94px;
-
+    height:92px;
   }
   .lastbox {
     gap: 12px;
     width: 70px;
     height: 94px;
   }
+  .form{
+    margin: 0;
+    width:87%;
+  }
+}
+
+@media (max-width: 815px) {
+  .hero_container{
+    display:none;
+  }
+
   .form{
     margin: 0;
     width:87%;

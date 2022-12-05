@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import LoadingButton from '@mui/lab/LoadingButton';
 import styles from './login.module.css';
@@ -17,6 +17,11 @@ import toast, { Toaster } from 'react-hot-toast';
 import PasswordMask from 'react-password-mask';
 import Carousel from 'nuka-carousel';
 import useTheme from '../../../hooks/useTheme';
+import useGetFacebookLink from '../../../hooks/auth/useGetFacebooLink';
+import useAuthFacebook from '../../../hooks/auth/useAuthFacebook';
+import Loader from '../../../components/Loader';
+import useGetLinkedInLink from '../../../hooks/auth/useGetLinkedInLink';
+import useAuthLinkedIn from '../../../hooks/auth/useAuthLinkedIn';
 
 const Index = () => {
   const context = useTheme();
@@ -25,6 +30,13 @@ const Index = () => {
   const [userId, setUserId] = useState('');
   const [userToken, setUserToken] = useState('');
 
+  const location = useLocation();
+
+  const authFacebook = useAuthFacebook(location?.search);
+  const facebookLink = useGetFacebookLink();
+
+  const authLinkedIn = useAuthLinkedIn(location?.search);
+  const linkedInLink = useGetLinkedInLink();
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
 
@@ -41,6 +53,66 @@ const Index = () => {
   const handleCreateAccount = () => {
     navigate('/signup');
   };
+
+  React.useEffect(() => {
+    if (location?.search && location?.search?.includes('code')) {
+      authFacebook
+        .mutateAsync({})
+        .then((res) => {
+          success('Login Successful! Redirecting in 5 seconds');
+          const resId = res.data.data._id;
+          const resToken = res.data.data.token;
+          setUserId(resId);
+          setUserToken(resToken);
+          localStorage.setItem('grittyuserid', userId);
+          localStorage.setItem('grittyusertoken', userToken);
+          localStorage.setItem('isdashboard', true);
+        })
+        .then(() => {
+          setTimeout(() => {
+            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+          }, 2000);
+        })
+        .then(() => {
+          setTimeout(() => {
+            window.location.replace('/me/home');
+            navigate('/me/home', { replace: true });
+          }, 5000);
+        })
+        .catch((err) => {
+          error(err.message);
+        });
+    }
+
+    if (location?.search && location?.search?.includes('code')) {
+      authLinkedIn
+        .mutateAsync({})
+        .then((res) => {
+          success('Login Successful! Redirecting in 5 seconds');
+          const resId = res.data.data._id;
+          const resToken = res.data.data.token;
+          setUserId(resId);
+          setUserToken(resToken);
+          localStorage.setItem('grittyuserid', userId);
+          localStorage.setItem('grittyusertoken', userToken);
+          localStorage.setItem('isdashboard', true);
+        })
+        .then(() => {
+          setTimeout(() => {
+            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+          }, 2000);
+        })
+        .then(() => {
+          setTimeout(() => {
+            window.location.replace('/me/home');
+            navigate('/me/home', { replace: true });
+          }, 5000);
+        })
+        .catch((err) => {
+          error(err.message);
+        });
+    }
+  }, []);
 
   /*
     handleLogin logs the user in on a succesful input.
@@ -69,7 +141,6 @@ const Index = () => {
       .then((response) => response.text())
       .then((result) => {
         const oBJ = JSON.parse(result);
-        console.log(oBJ.data);
         localStorage.setItem('isUserDetails', JSON.stringify(oBJ.data));
       })
       .catch((error) => error('error', error));
@@ -155,13 +226,15 @@ const Index = () => {
 
     */
 
-  const handleLinkedInAuth = () => {
-    useFetch('https://speakbetter.hng.tech/api/v1/auth/linkedin');
-  };
+  // const handleLinkedInAuth = () => {
+  //   useFetch('https://speakbetter.hng.tech/api/v1/auth/linkedin');
+  // };
 
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div signup-theme={context.theme} className={styles._gs2mainlogin}>
+      {authFacebook.isLoading && <Loader />}
+      {authLinkedIn.isLoading && <Loader />}
       <div className={styles._gs2login}>
         <div className={styles._gs2logincol1} gs2logincol1-theme={context.theme}>
           {isTabletorMobile && (
@@ -210,8 +283,7 @@ const Index = () => {
                   required
                   onChange={(e) => setUserPassword(e.target.value)}
                 />
-              </div>
-              <div className={styles._gs2logincheck}>
+                <div className={styles._gs2logincheck}></div>
                 <div className={styles._g2loginoption}>
                   <input type="checkbox" id="userRememberPassword" />
                   <span style={{ lineHeight: '30px' }}>Keep me signed in</span>
@@ -249,12 +321,14 @@ const Index = () => {
                     <img src={google} alt="google authentication" />
                   </button>
                   <button type="button" className={styles._facebook}>
-                    <a href="https://api.speakbetter.hng.tech/v1/auth/facebook">
+                    <a href={facebookLink?.value}>
                       <img src={facebook} alt="facebook authentication" />
                     </a>
                   </button>
-                  <button type="button" className={styles._apple} onClick={handleLinkedInAuth}>
-                    <img src={apple} alt="apple authentication" />
+                  <button type="button" className={styles._apple}>
+                    <a href={linkedInLink?.value}>
+                      <img src={apple} alt="apple authentication" />
+                    </a>
                   </button>
                 </div>
               </div>

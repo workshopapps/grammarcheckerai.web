@@ -12,8 +12,8 @@ pipeline {
 				//sh "npm cache clear -force"
 				sh "cd packages/web"
 				//sh "sudo npm install -g npm@latest && sudo npm cache clear --force"
-				sh "cd packages/web && sudo npm install --force --unsafe-perm=true --allow-root && npm fund && npm run build"
-				sh "cd packages/api && sudo npm install --force"
+				sh "cd packages/web && sudo npm ci --force --unsafe-perm=true --allow-root && npm fund && npm run build"
+				sh "cd packages/api && sudo npm ci --force --unsafe-perm=true --allow-root"
 			} 
 
 		
