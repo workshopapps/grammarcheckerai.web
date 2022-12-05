@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import MobileNav from './mobileNav';
 import { Outlet } from 'react-router-dom';
-import logoImg from '../../assets/images/logo.webp';
+import logoImg from '../../assets/images/logo2.png';
 import hamburger from '../../assets/hamburger.png';
 import SidebarLink from '../SidebarLink';
 import { IoHomeOutline, IoSettingsOutline } from 'react-icons/io5';
-import { BsDownload, BsClock, BsFillPersonLinesFill } from 'react-icons/bs';
+import { BsDownload, BsClock, BsFillPersonLinesFill, BsCashCoin } from 'react-icons/bs';
 
 function DashboardLayout() {
   const [nav, setNav] = useState(false);
   const toggleNav = () => {
-    setNav(!nav)
-  }
+    setNav(!nav);
+  };
 
   return (
     <div className="flex min-h-screen">
@@ -34,6 +34,9 @@ function DashboardLayout() {
           </SidebarLink>
           <SidebarLink Icon={BsFillPersonLinesFill} to="/me/profile">
             Profile
+          </SidebarLink>
+          <SidebarLink Icon={BsCashCoin} to="/me/subscription">
+            Billing
           </SidebarLink>
           <SidebarLink Icon={IoSettingsOutline} to="/me/settings">
             Settings

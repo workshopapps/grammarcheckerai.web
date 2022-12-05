@@ -1,0 +1,244 @@
+._sbpopup {
+  background-image: url(../Assets/premiumBackground.png), url(../Assets/premiumBackground.png),
+    url(../Assets/premiumBackground.png), url(../Assets/premiumBackground.png), url(../Assets/premiumBackground.png);
+  background-repeat: no-repeat;
+  background-position: 20% top, 80% top, 60% center, 30% bottom;
+  height: 100vh;
+  width: 100vw;
+}
+._sbmodalclose {
+  height: 10%;
+  padding: 2%;
+}
+._sbmodalContent {
+  height: calc(100vh - 10%);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 5% 5%;
+  width: 100%;
+  max-width: 1528px;
+  margin: 0 auto;
+}
+._sbmodalTitle {
+  display: flex;
+  align-items: center;
+}
+._sbmodalTitle h2 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 40px;
+  color: #262626;
+}
+._sbmodalText {
+  max-width: 416px;
+  width: auto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  padding: 5% 0;
+  color: #5a5a5a;
+}
+._sbmodalCol1Body {
+  padding-left: 40px;
+}
+._sbmodalList div {
+  display: flex;
+  justify-content: flex-start;
+  padding: 3% 0;
+  align-items: center;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  color: #262626;
+}
+._sbmodalList div p {
+  padding-left: 6px;
+}
+._sbmodalCol2List {
+  display: block;
+}
+._sbmodalcharges {
+  display: flex;
+  padding: 7% 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+._sbmodalcharges h6 {
+  width: 30%;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  text-align: center;
+  color: #5d387f;
+}
+._sbmodalCol1 {
+  width: 45%;
+}
+._sbmodalCol2 {
+  width: 55%;
+}
+._sbSubs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 70%;
+}
+._sbSubs ._sbInterval {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  color: #5a5a5a;
+}
+._sbSubs ._sbIntervalPromo {
+  display: flex;
+  flex-direction: column;
+}
+._sbSubs ._sbIntervalPromo span:first-child {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  color: #5a5a5a;
+}
+._sbSubs ._sbIntervalPromo span:nth-child(2) {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  color: #5a5a5a;
+}
+._sbSubs p {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  color: #5a5a5a;
+  padding: 2%;
+}
+._sbSubs p span {
+  font-size: 15px;
+}
+._sbSubs button {
+  padding: 12px 30px;
+  width: 98px;
+  height: 42px;
+  color: white;
+  background: #5d387f;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2%;
+}
+._sbNoDisplay {
+  visibility: hidden;
+}
+._sbmodalCol1 {
+  padding-right: 5%;
+}
+._sbListIcon {
+  height: 24px;
+  width: 24px;
+}
+@media only screen and (max-width: 900px) {
+  ._sbmodalContent {
+    flex-direction: column;
+  }
+  ._sbmodalText {
+    max-width: 900px;
+    width: 90%;
+  }
+  ._sbmodalCol1 {
+    width: 100%;
+  }
+  ._sbmodalCol2 {
+    width: 100%;
+    padding-top: 8%;
+  }
+  ._sbpopup {
+    background-image: url(../Assets/premiumBackground.png), url(../Assets/premiumBackground.png);
+    background-repeat: no-repeat;
+    background-position: 20% top, 30% bottom;
+    height: 100%;
+    width: 100vw;
+  }
+}
+._sbmobile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+._sbPricingBox {
+  width: 100%;
+  padding: 16px 8px;
+  margin: 5% 10%;
+  border-radius: 8px;
+}
+._sbPricingBox:first-child {
+  background: #f7f7f7;
+}
+._sbPricingBox:nth-child(2) {
+  background: #2fb087;
+  color: #fff;
+}
+._sbPricingBox:nth-child(3) {
+  background: #8c54bf;
+  color: #fff;
+}
+._sbPricingDetails {
+  text-align: left;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+._sbPricingDetails ul {
+  list-style: disc;
+  padding-left: 10%;
+}
+._sbPricingDetails ul li {
+  padding: 1.5% 0;
+}
+._sbPricingTitles p {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+}
+._sbPricingTitles h2 {
+  font-family: 'Inter';
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 20px;
+  padding: 15px 0;
+}
+@media only screen and (max-width: 594px) {
+  ._sbmodalTitle {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+  }
+  ._sbpopup {
+    background-image: url(../Assets/premiumBackground.png);
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+  }
+  ._sbmodalTitle h2 {
+    font-size: 25px;
+  }
+  ._sbmodalList div {
+    padding: 4% 0;
+  }
+  ._sbmodalCol1Body {
+    padding-left: 5px;
+  }
+}

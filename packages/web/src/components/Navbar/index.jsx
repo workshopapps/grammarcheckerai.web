@@ -13,7 +13,13 @@ import { styled } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { BsList } from 'react-icons/bs'
+import { BsList } from 'react-icons/bs';
+import {FaHome} from "react-icons/fa";
+import {FaBlog} from "react-icons/fa";
+import {FaEnvelopeOpenText} from "react-icons/fa";
+import {FaSignInAlt} from "react-icons/fa";
+import {FaUsers} from "react-icons/fa";
+import {FaRegComments} from "react-icons/fa";
 
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -66,7 +72,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [activeNav, setActiveNav] = useState('Home');
-  
+
   const navigate = useNavigate();
 
   const context = useContext(ThemeContext);
@@ -115,7 +121,7 @@ const Navbar = () => {
           </div>
         )}
       </div>
-      <div className={styles._nvstarted}>
+      { <div className={styles._nvstarted}>
         {isTabletOrMobile && (
           <Link to="#/" className={styles._mobilenav} onClick={() => setOpen(true)}>
             {context.theme === 'dark' ? <BsList /> : <BsList className='text-["#3030303"]' />}
@@ -129,26 +135,27 @@ const Navbar = () => {
         <Drawer open={open} onClose={() => setOpen(false)} className={styles.DrawerNav}>
           <div className={styles._nvnav}>
             {[
-              { title: 'Home', to: '/home' },
-              { title: 'Converse', to: '/converse' },
-              { title: 'About', to: '/about' },
-              { title: 'Blog', to: '/blog' },
-              { title: 'Contact', to: '/contact' },
-              { title: 'Log in', to: '/signin' },
+              { icon: <FaHome className='mx-3'/>, title: 'Home', to: '/home' },
+              { icon: <FaRegComments className='mx-3' />, title: 'Converse', to: '/converse' },
+              { icon: <FaUsers className='mx-3' />, title: 'About', to: '/about' },
+              { icon: <FaBlog className='mx-3' />, title: 'Blog', to: '/blog' },
+              { icon: <FaEnvelopeOpenText className='mx-3' />, title: 'Contact', to: '/contact' },
+              { icon: <FaSignInAlt className='mx-3' />, title: 'Log in', to: '/signin' },
               // { title: 'Sign Up', to: '/signup' },
             ].map((item) => (
               <NavLink
                 to={item.to}
                 key={item.title}
                 onClick={(e) => setActiveNav(e.target.innerText)}
-                className={`${activeNav === item.title ? 'font-bold ' : ''} `}
+                className={`${activeNav === item.title ? 'font-bold ' : ''} flex items-center border-l-8 border-y-8 border-white  hover:bg-[#392150] hover:text-white hover:rounded-l-full`}
               >
+                {item.icon}
                 {item.title}
               </NavLink>
             ))}
           </div>
         </Drawer>
-      </div>
+      </div> }
     </header>
   );
 };
