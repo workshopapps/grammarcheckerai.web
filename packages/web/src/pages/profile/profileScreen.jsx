@@ -151,7 +151,7 @@ export default function profileScreen() {
               <input
                 type="password"
                 name="password"
-                value={data.password.substring(0, 10)}
+                value={data.password === null ? '' : data.password.substring(0, 10)}
                 disabled
                 className="text-xl bg-transparent"
               />
