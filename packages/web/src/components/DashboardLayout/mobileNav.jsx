@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import closepng from '../../assets/close.png';
-import logoImg from '../../assets/images/logo.webp';
+import logoImg from '../../assets/images/logo2.png';
 import SidebarLink from '../SidebarLink';
 import { IoHomeOutline, IoSettingsOutline } from 'react-icons/io5';
 import { BsDownload, BsClock, BsFillPersonLinesFill, BsCashCoin } from 'react-icons/bs';

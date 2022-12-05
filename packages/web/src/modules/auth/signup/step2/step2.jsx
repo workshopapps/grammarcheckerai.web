@@ -7,7 +7,7 @@ import useSignup from '../../../../hooks/auth/useSignup';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PasswordMask from 'react-password-mask';
 import styles from './step2.module.css';
-import Logo from '../../../../assets/images/signuplogo.png';
+import Logo from '../../../../assets/images/logo2.png';
 import Image2 from '../../../../assets/Correction 1.png';
 import Image1 from '../../../../assets/error 1.png';
 import Image3 from '../../../../assets/steponeframeone.png';
