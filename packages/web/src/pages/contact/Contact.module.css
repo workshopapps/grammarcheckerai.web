@@ -278,4 +278,7 @@ textarea{
   .box{
     width:150px;
   }
+  .lastbox{
+    width:150px;
+  }
 }
