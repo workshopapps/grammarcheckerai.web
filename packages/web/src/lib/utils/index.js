@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const secureRequest = async ({ url, method = 'get', body = undefined, headers: requestHeader }) => {
   //   get
-  const token = '';
+  const token = localStorage.getItem('grittyusertoken');
 
   const grittyHeaders = {
     Authorization: `Bearer ${token}`,

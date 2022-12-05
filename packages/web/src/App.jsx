@@ -41,15 +41,16 @@ const AboutPage = lazy(() => import('./pages/about/About'));
 const RolesPage = lazy(() => import('./pages/career/Roles'));
 const ApplicationPage = lazy(() => import('./pages/career/Application'));
 const ApiPage = lazy(() => import('./pages/api-status/api-status'));
-const LandingLayoutPage = lazy(() => import('./components/LandingLayout.jsx'));
+const LandingLayoutPage = lazy(() => import('./components/LandingLayout.jsx/index.jsx'));
 const Jobs = lazy(() => import('./pages/Blog/Jobs'));
 const Ai = lazy(() => import('./pages/Blog/Ai'));
 const Grammar = lazy(() => import('./pages/Blog/Grammar'));
 const Tips = lazy(() => import('./pages/Blog/Tips'));
 const Contact = lazy(() => import('./pages/contact/index'));
+const PremiumSubs = lazy(() => import('./modules/premium/popup/premium'));
+const SubscriptionHistory = lazy(() => import('./modules/premium/index'));
 
 // All routes/pages must be import from ./pages folder
-
 const DashboardLayout = () => (
   <Suspense fallback={<Fallback />}>
     <Dashboard />
@@ -59,6 +60,16 @@ const DashboardLayout = () => (
 const Signuptwo = () => (
   <Suspense fallback={<Fallback />}>
     <SignupTwoPage />
+  </Suspense>
+);
+const Premium = () => (
+  <Suspense fallback={<Fallback />}>
+    <PremiumSubs />
+  </Suspense>
+);
+const Subscription = () => (
+  <Suspense fallback={<Fallback />}>
+    <SubscriptionHistory />
   </Suspense>
 );
 
@@ -294,6 +305,7 @@ function App() {
     <Routes>
       <Route path="/converse/try" element={<ConversationTryPage />} />
       <Route path="/history" element={<h2>History</h2>} />
+      <Route path="/premium" element={<Premium />} />
       <Route element={<LandingLayout />}>
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<LandingPage />} />
@@ -306,7 +318,7 @@ function App() {
         <Route path="/grammar" element={<GrammarPage />} />
         <Route path="/ai" element={<AiPage />} />
         <Route path="/tips" element={<TipsPage />} />
-        <Route path="/TermsOfUse" element={<TermsOfUse />} />
+        <Route path="/termsOfUse" element={<TermsOfUse />} />
         <Route path="/testimonials" element={<Testimonial />} />
         <Route path="/ratings" element={<Ratings />} />
         <Route path="/legal" element={<LegalPage />} />
@@ -333,6 +345,7 @@ function App() {
       >
         <Route path="/signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
         <Route path="signup" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signuptwo />} />
+        {/* <Route path="/social" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Social />} /> */}
         <Route path="forgot-password" element={<Forgotpassword />} />
         <Route path="password-reset" element={<ResetLink />} />
       </Route>
@@ -346,6 +359,7 @@ function App() {
         <Route path="profile/deleteaccount-step2" element={<ConfirmDeleteAccount />} />
         <Route path="import" element={<TranscribePage />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="subscription" element={<Subscription />} />
       </Route>
     </Routes>
   );

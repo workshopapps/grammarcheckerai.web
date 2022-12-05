@@ -19,7 +19,7 @@ const Footer = () => {
             <div className="space-x-6 my-6 flex items-center justify-center ml-16">
               <img src={instagramimg} alt="insta" />
               <img src={facebookimg} alt="fb" />
-              <img src={youtubeimg} alt="yt" />  
+              <img src={youtubeimg} alt="yt" />
             </div>
           </div>
           <div className="flex space-x-16 lg:space-x-0 lg:justify-around lg:w-1/2">
@@ -41,7 +41,7 @@ const Footer = () => {
                 <Link to="/career">Careers and Culture</Link>
                 <Link to="/newsletter">Newsletter</Link>
                 <Link to="/legal">Legal</Link>
-                <Link to="/TermsOfUse">Terms of Use</Link>
+                <Link to="/termsOfUse">Terms of Use</Link>
               </div>
             </div>
           </div>
