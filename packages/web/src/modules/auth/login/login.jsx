@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import LoadingButton from '@mui/lab/LoadingButton';
 import styles from './login.module.css';
@@ -17,6 +17,9 @@ import toast, { Toaster } from 'react-hot-toast';
 import PasswordMask from 'react-password-mask';
 import Carousel from 'nuka-carousel';
 import useTheme from '../../../hooks/useTheme';
+import useGetLinkedInLink from "../../../hooks/auth/useGetLinkedInLink"
+import useAuthLinkedIn from "../../../hooks/auth/useAuthLinkedIn"
+import Loader from "../../../components/Loader"
 
 const Index = () => {
   const context = useTheme();
@@ -24,7 +27,10 @@ const Index = () => {
   const [userPassword, setUserPassword] = useState('');
   const [userId, setUserId] = useState('');
   const [userToken, setUserToken] = useState('');
-
+  const location = useLocation()
+  
+  const authLinkedIn = useAuthLinkedIn(location?.search)
+  const linkedInLink = useGetLinkedInLink()
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
 
@@ -41,6 +47,39 @@ const Index = () => {
   const handleCreateAccount = () => {
     navigate('/signup');
   };
+
+  React.useEffect(() => {
+    if(location?.search && location?.search?.includes("code")) {
+
+    authLinkedIn
+    .mutateAsync({})
+    .then((res) => {
+      success('Login Successful! Redirecting in 5 seconds');
+      const resId = res.data.data._id;
+      const resToken = res.data.data.token;
+      setUserId(resId);
+      setUserToken(resToken);
+      localStorage.setItem('grittyuserid', userId);
+      localStorage.setItem('grittyusertoken', userToken);
+      localStorage.setItem('isdashboard', true);
+    })
+    .then(() => {
+      setTimeout(() => {
+        getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+      }, 2000);
+    })
+    .then(() => {
+      setTimeout(() => {
+        window.location.replace('/me/home');
+        navigate('/me/home', { replace: true });
+      }, 5000);
+    })
+    .catch((err) => {
+      error(err.message);
+    })
+  }
+
+  }, [])
 
   /*
     handleLogin logs the user in on a succesful input.
@@ -69,7 +108,6 @@ const Index = () => {
       .then((response) => response.text())
       .then((result) => {
         const oBJ = JSON.parse(result);
-        console.log(oBJ.data);
         localStorage.setItem('isUserDetails', JSON.stringify(oBJ.data));
       })
       .catch((error) => error('error', error));
@@ -162,6 +200,7 @@ const Index = () => {
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div signup-theme={context.theme} className={styles._gs2mainlogin}>
+      {authLinkedIn.isLoading && <Loader />}
       <div className={styles._gs2login}>
         <div className={styles._gs2logincol1} gs2logincol1-theme={context.theme}>
           {isTabletorMobile && (
@@ -210,8 +249,8 @@ const Index = () => {
                   required
                   onChange={(e) => setUserPassword(e.target.value)}
                 />
-              </div>
               <div className={styles._gs2logincheck}>
+              </div>
                 <div className={styles._g2loginoption}>
                   <input type="checkbox" id="userRememberPassword" />
                   <span style={{ lineHeight: '30px' }}>Keep me signed in</span>
@@ -254,7 +293,7 @@ const Index = () => {
                     </a>
                   </button>
                   <button type="button" className={styles._apple}>
-                    <a href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&scope=r_liteprofile%20r_emailaddress&client_id=77cy5gqnolzhra&redirect_uri=https://speakbetter.hng.tech/"><img src={apple} alt="apple authentication" /></a>
+                    <a href={linkedInLink?.value}><img src={apple} alt="apple authentication" /></a>
                     
                   </button>
                 </div>
