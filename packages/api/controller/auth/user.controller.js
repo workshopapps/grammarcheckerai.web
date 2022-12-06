@@ -55,7 +55,7 @@ async function registerUser(req, res) {
       dynamicTemplateData: {
         name: firstName,
         action_url: verificationLink,
-      }
+      },
     });
 
     if (!user)
@@ -67,7 +67,7 @@ async function registerUser(req, res) {
       response({
         success: true,
         message: "User created successfully, Check your email for confirmation",
-        data: user
+        data: user,
       })
     );
   } catch (error) {
@@ -80,7 +80,6 @@ async function registerUser(req, res) {
     );
   }
 }
-
 
 async function login(req, res) {
   // retrieve the email and password
@@ -109,7 +108,27 @@ async function login(req, res) {
   );
 }
 
+async function refreshUserToken(req, res) {
+  const { _id } = req.user;
+  //Check if user already exist
+  const user = await userCollection.findById(_id);
+  if(!user){
+    return res.status(404).json(
+      response({
+        success: true,
+        message: "User not found",
+      })
+    );
+  } 
 
+  return res.status(200).json(
+    response({
+      success: true,
+      message: "Refresh token accepted",
+      data: authResponse(user),
+    })
+  );
+}
 async function googleAuthUserSignUp(req, res) {
   const googleUserData = await getTokens(req.query.code);
 
@@ -181,7 +200,12 @@ async function verifyMail(req, res) {
     }
 
     // res.status(201).redirect("/v1/auth/signin");
-    res.status(201).json({message: "Email has been Successfully Confirmed, pls go back to login route"});
+    res
+      .status(201)
+      .json({
+        message:
+          "Email has been Successfully Confirmed, pls go back to login route",
+      });
   } catch (err) {
     res.status(400).json({
       error: err.message,
@@ -189,4 +213,10 @@ async function verifyMail(req, res) {
   }
 }
 
-module.exports = { registerUser, googleAuthUserSignUp, verifyMail, login };
+module.exports = {
+  registerUser,
+  googleAuthUserSignUp,
+  verifyMail,
+  login,
+  refreshUserToken,
+};

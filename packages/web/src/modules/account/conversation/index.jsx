@@ -45,7 +45,6 @@ function Conversation() {
     blobOptions: { type: 'audio/wav' },
     mediaStreamConstraints: { audio: true, video: false },
   });
-  // console.log('recording');
 
   const [language, setLanguage] = React.useState('English');
   const error = (message) => toast.error(message);
@@ -72,7 +71,7 @@ function Conversation() {
     const soln = new FormData();
     soln.append('file', audioResult);
     soln.append('language', language);
-    if (second <= '05' || (userSubscription?.value && userSubscription?.value.length !== 0)) {
+    if (second <= '20' || (userSubscription?.value && userSubscription?.value.length !== 0)) {
       sendAudio
         .mutateAsync(soln)
         .then((res) => {
