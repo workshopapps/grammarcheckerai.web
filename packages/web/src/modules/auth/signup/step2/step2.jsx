@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import toast, { Toaster } from 'react-hot-toast';
 import useSignup from '../../../../hooks/auth/useSignup';
@@ -17,6 +17,12 @@ import apple from '../../../../assets/apple.png';
 import facebook from '../../../../assets/facebook.png';
 import Carousel from 'nuka-carousel';
 
+import Loader from '../../../../components/Loader';
+import useGetLinkedInLink from '../../../../hooks/auth/useGetLinkedInLink';
+import useAuthLinkedIn from '../../../../hooks/auth/useAuthLinkedIn';
+
+import useGetFacebookLink from '../../../../hooks/auth/useGetFacebooLink';
+import useAuthFacebook from '../../../../hooks/auth/useAuthFacebook';
 import useTheme from '../../../../hooks/useTheme';
 
 const index = () => {
@@ -33,6 +39,14 @@ const index = () => {
 
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
+
+  const location = useLocation();
+
+  const authFacebook = useAuthFacebook(location?.search);
+  const facebookLink = useGetFacebookLink();
+
+  const authLinkedIn = useAuthLinkedIn(location?.search);
+  const linkedInLink = useGetLinkedInLink();
 
   const authSignup = useSignup();
 
@@ -132,6 +146,66 @@ const index = () => {
 
   */
 
+  React.useEffect(() => {
+    if (location?.search && location?.search?.includes('code')) {
+      authFacebook
+        .mutateAsync({})
+        .then((res) => {
+          success('Login Successful! Redirecting in 5 seconds');
+          const resId = res.data.data._id;
+          const resToken = res.data.data.token;
+          setUserId(resId);
+          setUserToken(resToken);
+          localStorage.setItem('grittyuserid', userId);
+          localStorage.setItem('grittyusertoken', userToken);
+          localStorage.setItem('isdashboard', true);
+        })
+        .then(() => {
+          setTimeout(() => {
+            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+          }, 2000);
+        })
+        .then(() => {
+          setTimeout(() => {
+            window.location.replace('/me/home');
+            navigate('/me/home', { replace: true });
+          }, 5000);
+        })
+        .catch((err) => {
+          error(err.message);
+        });
+    }
+
+    if (location?.search && location?.search?.includes('code')) {
+      authLinkedIn
+        .mutateAsync({})
+        .then((res) => {
+          success('Login Successful! Redirecting in 5 seconds');
+          const resId = res.data.data._id;
+          const resToken = res.data.data.token;
+          setUserId(resId);
+          setUserToken(resToken);
+          localStorage.setItem('grittyuserid', userId);
+          localStorage.setItem('grittyusertoken', userToken);
+          localStorage.setItem('isdashboard', true);
+        })
+        .then(() => {
+          setTimeout(() => {
+            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+          }, 2000);
+        })
+        .then(() => {
+          setTimeout(() => {
+            window.location.replace('/me/home');
+            navigate('/me/home', { replace: true });
+          }, 5000);
+        })
+        .catch((err) => {
+          error(err.message);
+        });
+    }
+  }, []);
+
   const useFetch = (url) => {
     var requestOptions = {
       method: 'GET',
@@ -177,13 +251,15 @@ const index = () => {
 
   */
 
-  const handleLinkedInAuth = () => {
-    useFetch('https://speakbetter.hng.tech/api/v1/auth/linkedin');
-  };
+  // const handleLinkedInAuth = () => {
+  //   useFetch('https://speakbetter.hng.tech/api/v1/auth/linkedin');
+  // };
 
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div step-theme={context.theme} className={styles._gs2mainsignup}>
+      {authFacebook.isLoading && <Loader />}
+      {authLinkedIn.isLoading && <Loader />}
       <div className={styles._gs2signup}>
         <div step-theme={context.theme} className={styles._gs2signupcol1}>
           {isTabletorMobile && (
@@ -300,12 +376,14 @@ const index = () => {
                     <img src={google} alt="google authentication" />
                   </button>
                   <button type="button" className={styles._facebook}>
-                    <a href="https://api.speakbetter.hng.tech/v1/auth/facebook">
+                    <a href={facebookLink?.value}>
                       <img src={facebook} alt="facebook authentication" />
                     </a>
                   </button>
-                  <button type="button" className={styles._apple} onClick={handleLinkedInAuth}>
-                    <img src={apple} alt="apple authentication" />
+                  <button type="button" className={styles._apple}>
+                    <a href={linkedInLink?.value}>
+                      <img src={apple} alt="apple authentication" />
+                    </a>
                   </button>
                 </div>
               </div>
