@@ -3,9 +3,11 @@ import Image3 from '../../assets/blogimg/image 2 (2).svg';
 import Cta from '../../components/Blogcomponents/Cta';
 import Footer from '../../modules/static/landing-page/Footer';
 import { Link } from "react-router-dom"
+import useTheme from '../../hooks/useTheme';
 
 const Tips = () => {
   const context = useTheme();
+  const dark = context.theme === 'dark';
   return (
     <div>
     <section className="mb-10">
