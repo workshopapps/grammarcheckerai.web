@@ -153,7 +153,7 @@ const index = () => {
   // };
 
   const handleGoogleAuth = async () => {
-    const res = useFetch('https://api.speakbetter.hng.tech/v1/auth/google');
+    const res = useFetch('http://127.0.0.1:5002/v1/auth/google');
     return res.data;
   };
 
