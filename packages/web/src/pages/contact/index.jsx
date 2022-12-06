@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
-import useTheme from '../../hooks/useTheme'
-import ContactCSS from './Contact.module.css'
-import login from "../../assets/login.svg"
-import user from '../../assets/user.svg'
-import flag from '../../assets/flag/NG.png'
-import chat from '../../assets/chat/messages-2.png'
-import stickynote from '../../assets/stickynote.svg'
-import deviceMessage from '../../assets/device-message.svg'
-import danger from "../../assets/danger.svg"
-import archive from '../../assets/archive.svg'
+import React, { useState } from 'react';
+import axios from 'axios';
+import useTheme from '../../hooks/useTheme';
+import ContactCSS from './Contact.module.css';
+import login from "../../assets/login.svg";
+import user from '../../assets/user.svg';
+import flag from '../../assets/flag/NG.png';
+import chat from '../../assets/chat/messages-2.png';
+import stickynote from '../../assets/stickynote.svg';
+import deviceMessage from '../../assets/device-message.svg';
+import danger from "../../assets/danger.svg";
+import archive from '../../assets/archive.svg';
 import Modal from './Contact_modal/Modal.jsx';
 import Footer from '../../modules/static/landing-page/Footer';
 import { IconContext } from "react-icons";
@@ -22,6 +23,43 @@ const index = () => {
     const context = useTheme();
     const dark = context.theme === 'dark';
     const [openModal, setOpenModal] = useState(false);
+    const [isSubmit, setIsSubmit] = useState(false);
+    const [firstName, setFirstName]= useState('');
+    const [lastName, setLastName]= useState('');
+    const [email, setUserEmail] = useState('');
+    const [phoneNumber, setPhoneNumber]= useState('');
+    const [message, setUserMessage]= useState('');
+    const [active, setActive] = useState(0);
+
+    const setClick = (num) => {
+        if (active === num){
+          setActive(0)
+        }else{
+          setActive(num)
+        }
+    };
+
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      setOpenModal(true);
+      axios({
+        method: 'post',
+        url: 'https://api.speakbetter.hng.tech/v1/contact',
+        data: {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          phoneNumber: phoneNumber,
+          message: message
+        }
+      }).then(response => {
+        console.log(response);
+        setOpenModal(false);
+      }).catch(error => {
+        console.log(error);
+      })
+    };
 
     return (
         <div
@@ -99,7 +137,9 @@ const index = () => {
                 </div>
 
                 <div className="mt-0 lg:mt-8">
-                <form className="sm:w-[97vw] sm:m-2 lg:w-full">
+                <form
+                  onSubmit={handleSubmit} encType="application/json"
+                  className="sm:w-[97vw] sm:m-2 lg:w-full">
                 <div className={ContactCSS.form}>
                 <div>
                     <div className="flex flex-col lg:flex-row">
@@ -111,7 +151,16 @@ const index = () => {
                               <FaUserAlt/>
                               </div>
                             </IconContext.Provider>
-                            <input contact-theme={context.theme} type="text" name='fname' className="w-full lg:w-{50%}" placeholder= ' Mike' />
+                            <input
+                              contact-theme={context.theme}
+                              required
+                              type="text"
+                              name='firstName'
+                              id='first_name'
+                              className="w-full lg:w-{50%}"
+                              placeholder= ' Mike'
+                              value={firstName}
+                              onChange={(e) => setFirstName(event.target.value)} />
                             </div>
                         </div>
 
@@ -123,7 +172,15 @@ const index = () => {
                               <FaUserAlt/>
                               </div>
                             </IconContext.Provider>
-                            <input contact-theme={context.theme} type="text"  name='lname' className=" w-full lg:w-{50%}" placeholder='Type Name' />
+                            <input
+                              contact-theme={context.theme}
+                              required
+                              type="text"
+                              name='lastName'
+                              id='last_name'
+                              className=" w-full lg:w-{50%}"
+                              placeholder='Type Name'
+                              onChange={(e) => setLastName(event.target.value)}/>
                             </div>
                         </div>
                       </div>
@@ -137,7 +194,15 @@ const index = () => {
                               <MdEmail />
                               </div>
                             </IconContext.Provider>
-                            <input contact-theme={context.theme} type="email" name='email' className="w-full" placeholder='Type Email' />
+                            <input
+                              contact-theme={context.theme}
+                              required
+                              type="email"
+                              name='email'
+                              id='email'
+                              className="w-full"
+                              placeholder='Type Email'
+                              onChange={(e) => setUserEmail(event.target.value)}/>
                         </div>
                         </div>
 
@@ -155,7 +220,15 @@ const index = () => {
                             <p contact-theme={context.theme} className="ml-1">+234</p>
                             </div>
                             </div>
-                            <input contact-theme={context.theme} type='tel' name='fname' className="w-full ml-8 lg:ml-4"placeholder='800 000 0000' />
+                            <input
+                              contact-theme={context.theme}
+                              required
+                              type='tel'
+                              name='phoneNumber'
+                              id='phone_number'
+                              className="w-full ml-8 lg:ml-4"
+                              placeholder='800 000 0000'
+                              onChange={(e) => setPhoneNumber(event.target.value)}/>
                             </div>
 
                     </div>
@@ -169,32 +242,58 @@ const index = () => {
                         className={ContactCSS.boxes}>
                         <div className="flex flex-col mt-2">
                         <div className="hidden lg:grid lg:grid-cols-4 lg:justify-around gap-8 m-0 p-0">
-                        <button className={ContactCSS.box}>
+
+
+                        <button
+                          className={ContactCSS.box}
+                          onClick={() => setClick(1)}
+                          style={{ backgroundColor: active==1 ? "#5D387F" : "#F6F6F6", color: active===1 ? "white" : "black" }}
+                          >
                             <img src={login} alt="" />
                             <p className='text-sm'>Login issues</p>
                         </button>
 
-                        <button className={ContactCSS.box}>
+                        <button
+                          className={ContactCSS.box}
+                          onClick={() => setClick(2)}
+                          style={{ backgroundColor: active===2 ? "#5D387F" : "#F6F6F6", color: active===2 ? "white" : "black" }}
+                          >
                             <img src={user} alt="" />
                             <p className='text-sm'>Account issues</p>
                         </button>
 
-                        <button className={ContactCSS.box}>
+                        <button
+                          className={ContactCSS.box}
+                          onClick={() => setClick(3)}
+                          style={{ backgroundColor: active===3 ? "#5D387F" : "#F6F6F6", color: active===3 ? "white" : "black" }}
+                            >
                             <img src={stickynote} alt="" />
                             <p className='text-sm'>Usage Issues</p>
                         </button>
 
-                        <button className={ContactCSS.box}>
+                        <button
+                          className={ContactCSS.box}
+                          onClick={() => setClick(4)}
+                          style={{ backgroundColor: active===4 ? "#5D387F" : "#F6F6F6", color: active===4 ? "white" : "black" }}
+                            >
                             <img src={deviceMessage} alt="" />
                             <p className='text-sm'>Chat issues</p>
                         </button>
 
-                        <button className={ContactCSS.box}>
+                        <button
+                          className={ContactCSS.box}
+                          onClick={() => setClick(5)}
+                          style={{ backgroundColor: active===5 ? "#5D387F" : "#F6F6F6", color: active===5 ? "white" : "black" }}
+                            >
                             <img src={danger} alt="" />
                             <p className='text-sm'>Error checking</p>
                         </button>
 
-                        <button className={ContactCSS.lastbox}>
+                        <button
+                          className={ContactCSS.lastbox}
+                          onClick={() => setClick(6)}
+                          style={{ backgroundColor: active===0 ? "#5D387F" : "#F6F6F6", color: active===0 ? "white" : "black" }}
+                            >
                             <img src={archive} alt="" />
                             <p className='text-sm'>General Inquiry</p>
                         </button>
@@ -202,17 +301,29 @@ const index = () => {
                         </div>
 
                         <div className="flex gap-8 pl-8 pr-8 items-center justify-center lg:hidden p-0">
-                        <button className={ContactCSS.box}>
+                        <button
+                          className={ContactCSS.box}
+                          onClick={() => setClick(4)}
+                          style={{ backgroundColor: active===4 ? "#5D387F" : "#F6F6F6", color: active===4 ? "white" : "black" }}
+                            >
                             <img src={deviceMessage} alt="" />
                             <p className='text-sm'>Chat issues</p>
                         </button>
 
-                        <button className={ContactCSS.box}>
+                        <button
+                          className={ContactCSS.box}
+                          onClick={() => setClick(5)}
+                          style={{ backgroundColor: active===5 ? "#5D387F" : "#F6F6F6", color: active===5 ? "white" : "black" }}
+                            >
                             <img src={danger} alt="" />
                             <p className='text-sm'>Error checking</p>
                         </button>
 
-                        <button className={ContactCSS.lastbox}>
+                        <button
+                          className={ContactCSS.lastbox}
+                          onClick={() => setClick(6)}
+                          style={{ backgroundColor: active===0 ? "#5D387F" : "#F6F6F6", color: active===0 ? "white" : "black" }}
+                            >
                             <img src={archive} alt="" />
                             <p className='text-sm'>General Inquiry</p>
                         </button>
@@ -225,17 +336,26 @@ const index = () => {
                         <label>Message</label>
                         <div className={ContactCSS.textarea_container}>
                         <img src={chat} alt="" className="h-[20px] mt-2"/>
-                        <textarea contact-theme={context.theme} name="textarea" placeholder='Type message' className='m-1'></textarea>
-
+                        <textarea
+                          contact-theme={context.theme}
+                          required
+                          name="message"
+                          id='message'
+                          placeholder='Type message'
+                          className='m-1'
+                          onChange={(e) => setUserMessage(event.target.value)}></textarea>
                         </div>
                     </div>
                     <div className={ContactCSS.send}>
                         <button
-                          onClick={() => setOpenModal(true)}
+                          id="submit"
+                          value={isSubmit}
+                          type="submit"
                           className={ContactCSS.btn}>
                         Send Message
                         </button>
                       <Modal open={openModal} onClose={() =>setOpenModal(false)}/>
+
                     </div>
                     </div>
                 </div>
