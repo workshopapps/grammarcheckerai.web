@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MobileNav from './mobileNav';
 import { Outlet } from 'react-router-dom';
-import logoImg from '../../assets/images/logo.webp';
+import logoImg from '../../assets/images/logo2.png';
 import hamburger from '../../assets/hamburger.png';
 import SidebarLink from '../SidebarLink';
 import { IoHomeOutline, IoSettingsOutline } from 'react-icons/io5';
