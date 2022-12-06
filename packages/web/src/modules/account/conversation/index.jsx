@@ -127,13 +127,13 @@ function Conversation() {
         initial={{ opacity: 0.1 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
-        className={`min-h-screen space-y-6 flex flex-col ${styles._convo} ${
-          context.theme === 'dark' ? styles.convo_theme : null
-        } `}
+        className={`space-y-6 flex flex-col ${styles._convo} ${context.theme === 'dark' ? styles.convo_theme : null} ${
+          styles._height
+        }`}
       >
         {sendAudio.isLoading && <Loader />}
-        <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4 pt-10">
-          <div className="text-center space-y-14">
+        <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4 pt-2 lg:pt-6">
+          <div className="text-center max-h-5/6 space-y-5 lg:space-y-10">
             {chats.length === 0 ? (
               <>
                 <div className="mx-auto w-36 flex items-center justify-center">
