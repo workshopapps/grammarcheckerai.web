@@ -88,6 +88,14 @@ const cancelSubscription = async (req, res) => {
       data: [],
     });
   }
+  if (transaction.status == "cancelled")
+    return res
+      .status(200)
+      .send({
+        success: false,
+        message: "Subscription cancelled already!",
+        data: [],
+      });
 
   const cancel = await Subscription.findByIdAndUpdate(
     transaction._id,
@@ -98,14 +106,14 @@ const cancelSubscription = async (req, res) => {
       return res.status(200).send({
         success: true,
         message: "Subscription Cancelled",
-        data: cancel
+        data: cancel,
       });
     })
     .catch((err) => {
       console.log(err);
       return res.status(400).send({
         success: false,
-        message: `Error: ${err.message}`,
+        message: `Error: ${err}`,
       });
     });
 };
@@ -116,7 +124,7 @@ const verification = async (req, res) => {
   if (!txref || !email)
     return res
       .status(400)
-      .send({ success: false, message: "Invalid Reference" });
+      .send({ success: false, message: "Invalid Reference or Email" });
   const verifiedTx = await Subscription.findOne({
     $and: [{ email: email }, { txref: txref }],
   });
@@ -138,9 +146,8 @@ const verification = async (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      return res.status(400).send(error.message);
+      return res.status(400).send(error);
     });
-  console.log(isVerified);
 };
 
 module.exports = {
