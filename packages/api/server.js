@@ -40,7 +40,7 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
   quizFlow(io, socket);
 });
-
+app.use(Sentry.Handlers.errorHandler());
 httpServer.listen(PORT, () => {
   console.log(`server running on http://${HOST}:${PORT} in ${NODE_ENV} mode`);
 });
