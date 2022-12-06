@@ -37,6 +37,8 @@ const Index = () => {
   const authGoogle = useAuthGoogle(location?.search);
   const googleLink = useGetGoogleLink();
 
+  console.log(googleLink);
+
   const authFacebook = useAuthFacebook(location?.search);
   const facebookLink = useGetFacebookLink();
 
@@ -236,10 +238,10 @@ const Index = () => {
       })
       .catch((err) => error(err.message));
   };
-  useEffect(() => {
-    const res = useFetch('https://speakbetter.hng.tech/api/v1/auth/google');
-    console.log(res.message);
-  });
+  // useEffect(() => {
+  //   const res = useFetch('https://speakbetter.hng.tech/api/v1/auth/google');
+  //   console.log(res.message);
+  // });
 
   const handleGoogleAuth = () => {};
 
