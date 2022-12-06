@@ -4,14 +4,14 @@ import './index.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AuthProvider from './lib/context/AuthContext';
 import '../src/assets/styles/styles.scss';
+import * as Sentry from "@sentry/react";
+import { BrowserTracing } from "@sentry/tracing";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import ScrollToTop from './ScrollToTop';
 import DarkThemeContext from './lib/context/DarkThemeContext';
 const queryClient = new QueryClient();
-import * as Sentry from "@sentry/react";
-import { BrowserTracing } from "@sentry/tracing";
 
 Sentry.init({
   dsn: "https://18c4ae39884c459bb8e1ce9aba19be30@o4504276798144512.ingest.sentry.io/4504276833730560",
