@@ -11,7 +11,7 @@ const {
   registerUser,
   verifyMail,
   googleAuthUserSignUp,
-  login,
+  login,refreshUserToken
 } = require('../controller/auth/user.controller');
 const {
   googleAuthURL,
@@ -21,7 +21,7 @@ const {
   facebookAccessToken,
 } = require('../controller/auth/authThirdPartyController');
 const { logout } = require('../controller/logoutcontroller');
-
+const verify = require("../middlewares/auth.middleware");
 const {
   requestForgotPassword,
   resetPassword,
@@ -49,5 +49,6 @@ auth.post('/linkedin/callback', linkedinAccessToken);
 auth.get("/facebook", getFacebookURl);
 auth.post("/facebook/callback", facebookAccessToken);
 auth.use('/facebook', facebook);
+auth.post("/refresh-token", verify, refreshUserToken);
 
 module.exports = { auth };
