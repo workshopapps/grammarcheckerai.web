@@ -10,7 +10,7 @@ import { BrowserRouter } from 'react-router-dom';
 import ScrollToTop from './ScrollToTop';
 import DarkThemeContext from './lib/context/DarkThemeContext';
 const queryClient = new QueryClient();
-
+import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 
 Sentry.init({
