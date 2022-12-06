@@ -38,8 +38,10 @@ const reasonsArray = [
 export default function ConfirmDeleteAccount() {
     const [reasons, setReasons] = useState([]);
     const [password, setPassword] = useState("");
+    const [btnDisabled, setBtnDisabled] = useState(true);
     const history = useNavigate();
     const success = (message) => toast.success(message);
+    const error = (message) => toast.error(message);
     const endpoint = ENDPOINTS.API_BASE_HTTPS_URL;
     const url = endpoint + 'user/';
     const data = JSON.parse(localStorage.getItem("userData"));
@@ -61,12 +63,18 @@ export default function ConfirmDeleteAccount() {
             headers: { ...headersList, 'Content-Type': 'application/json; charset=utf-8' },
           });
             const data = await response.json();
-            console.log(data);
-            success('success!');
-            localStorage.clear();
-            window.location.replace('/signin');
-            location.reload();
-          setTimeout(() => location.reload(), 2000);
+            if(data.message === "you are not authorized to delete this account") {
+                error('incorrect password!')
+            } else if (data.message === "you have successfully deleted your account") {
+                console.log(data);
+                success('account deleted!');
+                localStorage.clear();
+                window.location.replace('/signin');
+                location.reload();
+                setTimeout(() => location.reload(), 2000);
+            } else {
+                error('try again')
+            }
         } catch (err) {
           console.log(err);
           //error('error updating data.');
@@ -81,8 +89,12 @@ export default function ConfirmDeleteAccount() {
         }
     }
     useEffect(() => {
-        console.log(reasons);
-    },[reasons])
+        if (Object.keys(reasons).length === 0) {
+            setBtnDisabled(true)
+        } else {
+            setBtnDisabled(false)
+        }
+    },[reasons, password])
      
   return (
     <div className='h-[100vh] flex flex-col w-[90%] md:w-[70%] lg:w-[70%] m-auto pt-2 sm:pt-16'>
@@ -113,7 +125,7 @@ export default function ConfirmDeleteAccount() {
             <ProfileScreenButton onClick={() => history(-1)} variant="secondary">
                 Cancel
             </ProfileScreenButton>
-            <ProfileScreenButton onClick={deleteUser} disabled={Object.keys(reasons).length === 0 ? true : false} >
+            <ProfileScreenButton onClick={deleteUser} disabled={btnDisabled} >
                 Submit
             </ProfileScreenButton>
         </div>
