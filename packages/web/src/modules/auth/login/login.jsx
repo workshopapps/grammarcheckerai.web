@@ -62,63 +62,63 @@ const Index = () => {
   };
 
   React.useEffect(() => {
-    if (location?.search && location?.search?.includes('code')) {
-      authFacebook
-        .mutateAsync({})
-        .then((res) => {
-          success('Login Successful! Redirecting in 5 seconds');
-          const resId = res.data.data._id;
-          const resToken = res.data.data.token;
-          setUserId(resId);
-          setUserToken(resToken);
-          localStorage.setItem('grittyuserid', userId);
-          localStorage.setItem('grittyusertoken', userToken);
-          localStorage.setItem('isdashboard', true);
-        })
-        .then(() => {
-          setTimeout(() => {
-            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
-          }, 2000);
-        })
-        .then(() => {
-          setTimeout(() => {
-            window.location.replace('/me/home');
-            navigate('/me/home', { replace: true });
-          }, 5000);
-        })
-        .catch((err) => {
-          error(err.message);
-        });
-    }
+    // if (location?.search && location?.search?.includes('code')) {
+    //   authFacebook
+    //     .mutateAsync({})
+    //     .then((res) => {
+    //       success('Login Successful! Redirecting in 5 seconds');
+    //       const resId = res.data.data._id;
+    //       const resToken = res.data.data.token;
+    //       setUserId(resId);
+    //       setUserToken(resToken);
+    //       localStorage.setItem('grittyuserid', userId);
+    //       localStorage.setItem('grittyusertoken', userToken);
+    //       localStorage.setItem('isdashboard', true);
+    //     })
+    //     .then(() => {
+    //       setTimeout(() => {
+    //         getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+    //       }, 2000);
+    //     })
+    //     .then(() => {
+    //       setTimeout(() => {
+    //         window.location.replace('/me/home');
+    //         navigate('/me/home', { replace: true });
+    //       }, 5000);
+    //     })
+    //     .catch((err) => {
+    //       error(err.message);
+    //     });
+    // }
 
-    if (location?.search && location?.search?.includes('code')) {
-      authLinkedIn
-        .mutateAsync({})
-        .then((res) => {
-          success('Login Successful! Redirecting in 5 seconds');
-          const resId = res.data.data._id;
-          const resToken = res.data.data.token;
-          setUserId(resId);
-          setUserToken(resToken);
-          localStorage.setItem('grittyuserid', userId);
-          localStorage.setItem('grittyusertoken', userToken);
-          localStorage.setItem('isdashboard', true);
-        })
-        .then(() => {
-          setTimeout(() => {
-            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
-          }, 2000);
-        })
-        .then(() => {
-          setTimeout(() => {
-            window.location.replace('/me/home');
-            navigate('/me/home', { replace: true });
-          }, 5000);
-        })
-        .catch((err) => {
-          error(err.message);
-        });
-    }
+    // if (location?.search && location?.search?.includes('code')) {
+    //   authLinkedIn
+    //     .mutateAsync({})
+    //     .then((res) => {
+    //       success('Login Successful! Redirecting in 5 seconds');
+    //       const resId = res.data.data._id;
+    //       const resToken = res.data.data.token;
+    //       setUserId(resId);
+    //       setUserToken(resToken);
+    //       localStorage.setItem('grittyuserid', userId);
+    //       localStorage.setItem('grittyusertoken', userToken);
+    //       localStorage.setItem('isdashboard', true);
+    //     })
+    //     .then(() => {
+    //       setTimeout(() => {
+    //         getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+    //       }, 2000);
+    //     })
+    //     .then(() => {
+    //       setTimeout(() => {
+    //         window.location.replace('/me/home');
+    //         navigate('/me/home', { replace: true });
+    //       }, 5000);
+    //     })
+    //     .catch((err) => {
+    //       error(err.message);
+    //     });
+    // }
     if (location?.search && location?.search?.includes('code')) {
       authGoogle
         .mutateAsync({})
@@ -126,6 +126,8 @@ const Index = () => {
           success('Login Successful! Redirecting in 5 seconds');
           const resId = res.data.data._id;
           const resToken = res.data.data.token;
+          console.log(resId, resToken)
+
           setUserId(resId);
           setUserToken(resToken);
           localStorage.setItem('grittyuserid', userId);
@@ -137,12 +139,12 @@ const Index = () => {
             getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
           }, 2000);
         })
-        .then(() => {
-          setTimeout(() => {
-            window.location.replace('/me/home');
-            navigate('/me/home', { replace: true });
-          }, 5000);
-        })
+        // .then(() => {
+        //   setTimeout(() => {
+        //     window.location.replace('/me/home');
+        //     navigate('/me/home', { replace: true });
+        //   }, 5000);
+        // })
         .catch((err) => {
           error(err.message);
         });
