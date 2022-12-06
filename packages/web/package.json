@@ -32,6 +32,7 @@
     "esbuild": "^0.15.15",
     "eslint-config-prettier": "^8.5.0",
     "framer-motion": "^7.6.5",
+    "newrelic": "^9.7.1",
     "nuka-carousel": "^5.4.1",
     "prettier": "^2.7.1",
     "prop-types": "^15.8.1",
