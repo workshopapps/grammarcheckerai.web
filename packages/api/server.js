@@ -1,3 +1,5 @@
+require('newrelic');
+
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 // import * as Sentry from "@sentry/node";
