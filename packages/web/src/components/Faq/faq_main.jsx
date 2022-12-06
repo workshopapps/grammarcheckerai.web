@@ -66,48 +66,49 @@ function FaqMain() {
             dark && 'bg-[black]'
           } grid lg:grid-cols-3 md:grid-cols-2 lg:mt-[44px] place-items-center  md:gap-10  items-center lg:m-10 justify-center m-5`}
         >
-          {data
-            .filter((obj) => {
-              if (searchTerm === '' || obj.title.toLowerCase().includes(searchTerm.toLowerCase())) {
-                return obj;
-              } else if (data.every((val) => !val.title.toLowerCase().includes(searchTerm.toLowerCase()))) {
-                // If There is no result then show all list
-                return obj;
-              }
-            })
-            .map((val) => {
-              return (
-                <>
-                  <div
-                    className=" h-full lg:w-full  block lg:px-6 px-8 md:px-6  rounded-lg  max-w-sm mt-[40px] lg:mt-[56px]"
-                    key={val.id}
-                  >
-                    <div className="lg:w-[56px] lg:h-[56px] w-[46px] h-[46px]  bg-[#E8DDF2] hover:bg-[#fff] hover:shadow-[#E8DDF2] hover:shadow-md rounded-full mt-2">
-                      <img
-                        src={val.img}
-                        className="text-[#5D387F] place-items-center lg:w-[55px] lg:h-[55px] w-[45px] h-[45px] text-x  mx-2 px-3 py-3 ml-[-1px] flex items-center justify-center"
-                        alt="tag"
-                      />
-                    </div>
+          {data.every((val) => !val.title.toLowerCase().includes(searchTerm.toLowerCase())) ? (
+            <div>No results found</div>
+          ) : (
+            data
+              .filter((obj) => {
+                if (searchTerm === '' || obj.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+                  return obj;
+                }
+              })
+              .map((val) => {
+                return (
+                  <>
+                    <div
+                      className=" h-full lg:w-full  block lg:px-6 px-8 md:px-6  rounded-lg  max-w-sm mt-[40px] lg:mt-[56px]"
+                      key={val.id}
+                    >
+                      <div className="lg:w-[56px] lg:h-[56px] w-[46px] h-[46px]  bg-[#E8DDF2] hover:bg-[#fff] hover:shadow-[#E8DDF2] hover:shadow-md rounded-full mt-2">
+                        <img
+                          src={val.img}
+                          className="text-[#5D387F] place-items-center lg:w-[55px] lg:h-[55px] w-[45px] h-[45px] text-x  mx-2 px-3 py-3 ml-[-1px] flex items-center justify-center"
+                          alt="tag"
+                        />
+                      </div>
 
-                    <h2
-                      className={` ${
-                        dark && 'text-[#c0c0c0]'
-                      } text-[#53686A] font-medium text-[16px] lg:text-[22px] lg:mt-[24px] mt-[18px] leading-[22px]  lg:leading-[30px]  lg:w-auto w-[253px] md:w-60  font-[Inter]`}
-                    >
-                      {val.title}
-                    </h2>
-                    <p
-                      className={` ${
-                        dark && 'text-[#c0c0c0]'
-                      } text-[#53686A]  text-[11px] md:text-[13px] lg:text-[17px] mt-[10px] md:mt-5 lg:mt-[12px] leading-[20px] lg:leading-[25px] font-normal w-[232px] lg:w-auto  md:w-[250px] h-auto  font-[Inter]`}
-                    >
-                      {val.para}
-                    </p>
-                  </div>{' '}
-                </>
-              );
-            })}
+                      <h2
+                        className={` ${
+                          dark && 'text-[#c0c0c0]'
+                        } text-[#53686A] font-medium text-[16px] lg:text-[22px] lg:mt-[24px] mt-[18px] leading-[22px]  lg:leading-[30px]  lg:w-auto w-[253px] md:w-60  font-[Inter]`}
+                      >
+                        {val.title}
+                      </h2>
+                      <p
+                        className={` ${
+                          dark && 'text-[#c0c0c0]'
+                        } text-[#53686A]  text-[11px] md:text-[13px] lg:text-[17px] mt-[10px] md:mt-5 lg:mt-[12px] leading-[20px] lg:leading-[25px] font-normal w-[232px] lg:w-auto  md:w-[250px] h-auto  font-[Inter]`}
+                      >
+                        {val.para}
+                      </p>
+                    </div>{' '}
+                  </>
+                );
+              })
+          )}
         </div>
       </div>
 
