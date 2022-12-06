@@ -10,6 +10,19 @@ import ScrollToTop from './ScrollToTop';
 import DarkThemeContext from './lib/context/DarkThemeContext';
 const queryClient = new QueryClient();
 
+import { BrowserTracing } from "@sentry/tracing";
+
+Sentry.init({
+  dsn: "https://18c4ae39884c459bb8e1ce9aba19be30@o4504276798144512.ingest.sentry.io/4504276833730560",
+  integrations: [new BrowserTracing()],
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
+
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <DarkThemeContext>
