@@ -49,6 +49,9 @@ const Tips = lazy(() => import('./pages/Blog/Tips'));
 const Contact = lazy(() => import('./pages/contact/index'));
 const PremiumSubs = lazy(() => import('./modules/premium/popup/premium'));
 const SubscriptionHistory = lazy(() => import('./modules/premium/index'));
+import * as Sentry from "@sentry/react";
+
+
 
 // All routes/pages must be import from ./pages folder
 const DashboardLayout = () => (
@@ -367,4 +370,4 @@ function App() {
   );
 }
 
-export default App;
+export default Sentry.withProfiler(App);
