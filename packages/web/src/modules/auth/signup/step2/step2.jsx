@@ -146,8 +146,15 @@ const index = () => {
       .catch((err) => error(err.message));
   };
 
-  const handleGoogleAuth = () => {
-    useFetch('https://speakbetter.hng.tech/api/v1/auth/google');
+  // const handleGoogleAuth = () => {
+
+  //   const res = useFetch('https://speakbetter.hng.tech/api/v1/auth/google');
+  //   console.log(res)
+  // };
+
+  const handleGoogleAuth = async () => {
+    const res = useFetch('http://127.0.0.1:5002/v1/auth/google');
+    return res.data;
   };
 
   /* 

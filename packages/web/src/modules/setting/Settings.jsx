@@ -154,22 +154,23 @@ function Settings() {
           </label>
         </div>
         <div className="flex flex-col gap-6">
-          {settingList
-            .filter((obj) => {
-              if (searchTerm === '' || obj.query.toLowerCase().includes(searchTerm.toLowerCase())) {
-                return obj;
-              } else if (settingList.every((val) => !val.query.toLowerCase().includes(searchTerm.toLowerCase()))) {
-                // If There is no result then show all list
-                return obj;
-              }
-            })
-            .map((option, index) => {
-              return (
-                <SettingOption key={index} option={option} arrowRight={arrowRightIcon} openBar={subPage}>
-                  {option.child}
-                </SettingOption>
-              );
-            })}
+          {settingList.every((val) => !val.query.toLowerCase().includes(searchTerm.toLowerCase())) ? (
+            <div>No results found</div>
+          ) : (
+            settingList
+              .filter((obj) => {
+                if (searchTerm === '' || obj.query.toLowerCase().includes(searchTerm.toLowerCase())) {
+                  return obj;
+                }
+              })
+              .map((option, index) => {
+                return (
+                  <SettingOption key={index} option={option} arrowRight={arrowRightIcon} openBar={subPage}>
+                    {option.child}
+                  </SettingOption>
+                );
+              })
+          )}
         </div>
       </div>
       {languageBar && <LanguageOption openBar={subPage} languageList={languageList} changeLanguage={changeLanguage} />}
