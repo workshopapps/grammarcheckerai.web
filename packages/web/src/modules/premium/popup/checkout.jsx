@@ -15,6 +15,7 @@ import useTheme from '../../../hooks/useTheme';
 import usePay from '../../../hooks/auth/usePay';
 import check from '../Assets/tick-square.png';
 import medal from '../Assets/medal-star-white.png';
+// import userCheckPlanVerify from '../../../hooks/account/userCheckPlanVerify';
 
 const Checkout = (props) => {
   const context = useTheme();
@@ -40,6 +41,7 @@ const Checkout = (props) => {
   const authLogin = useLogin();
   const authSignup = useSignup();
   const authPay = usePay();
+  // const authVerify = userCheckPlanVerify(JSON.parse(localStorage.getItem('isUserDetails'))?.email, '');
 
   let navigate = useNavigate();
 
@@ -83,7 +85,23 @@ const Checkout = (props) => {
       })
       .catch((error) => error('error', error));
   };
+  const useVerify = (url, token) => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        console.log(oBJ);
+      })
+      .catch((error) => error('error', error));
+  };
   const handlelogin = (e) => {
     e.preventDefault();
     if ((userEmail !== '') & (userPassword !== '')) {
@@ -169,7 +187,12 @@ const Checkout = (props) => {
 
     // Implementation for whatever you want to do with reference and after success call.
     console.log(reference.trxref);
-    authPay
+    useVerify(
+      `https://api.speakbetter.hng.tech/v1/paystack/verify?email=${user.email}&txref=${reference.trxref}`,
+      'sk_test_11cd20d24df0f472d32521e1bfb3c00608593c54',
+    );
+    if(){
+      authPay
       .mutateAsync({
         email: user.email,
         name: user.firstName + ' ' + user.lastName,
@@ -180,13 +203,17 @@ const Checkout = (props) => {
         trxref: reference.trxref,
       })
       .then(() => {
-        toast(() => (
-          <span>
-            Subscription <b>Succesfully!</b>
-            <p>Redirecting in 5 seconds...</p>
-            <button onClick={''}>Go to Dashboard</button>
-          </span>
-        ));
+        // console.log(res);
+        
+      })
+      .then(() => {
+        // toast(() => (
+        //   <span>
+        //     Subscription <b>Succesfully!</b>
+        //     <p>Redirecting in 5 seconds...</p>
+        //     <button onClick={''}>Go to Dashboard</button>
+        //   </span>
+        // ));
       })
       .then(() => {
         setTimeout(() => {
@@ -196,6 +223,7 @@ const Checkout = (props) => {
       .catch((err) => {
         error(err.message);
       });
+    }
   };
 
   // you can call this function anything

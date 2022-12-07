@@ -11,6 +11,7 @@ import check from '../Assets/tick-square.png';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Checkout from './checkout';
 import useGetUserSubscription from '../../../hooks/account/useGetUserSubscription';
+import { useState } from 'react';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -20,14 +21,18 @@ const index = (props) => {
   const matches = useMediaQuery('(max-width:694px)');
   const [interval, setInterval] = React.useState({ plan: '', amount: 0, duration: '' });
   const [userIsSubscribed, setUserIsSubscribed] = React.useState(false);
+  const [userSubsList, setUserSubsList] = useState([]);
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
+
+  const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
 
   const handleCheckout = (plan) => {
     setInterval(plan);
     if (userSubscription?.value && userSubscription?.value?.length !== 0) {
-      // console.log('User is subscribed');
-      userSubscription?.value?.map((item) => {
-        if (item.status === 'initiated') {
+      setUserSubsList(userSubscription?.value);
+      console.log(userSubsList);
+      checkForArray(userSubsList).map((item) => {
+        if (item.status === 'completed') {
           setUserIsSubscribed(true);
           return;
         }
