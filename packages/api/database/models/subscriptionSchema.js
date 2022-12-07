@@ -9,7 +9,6 @@ const subscriptionSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      unique: true,
     },
     subscriptionId: {
       type: String,
@@ -36,7 +35,7 @@ const subscriptionSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["initiated", "pending", "succesful", "failed"],
+      enum: ["initiated", "pending", "success", "failed"],
       default: "initiated",
     },
     currency: {
