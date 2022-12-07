@@ -92,7 +92,7 @@ export default function Testimonial() {
         >
           Rate SpeakBetter
         </Link>
-        <main className="lg:grid space-y-16 w-{150%} lg:space-y-8 grid-cols-3 gap-8 lg:mt-32 my-14 mx-8 lg:mx-32 ">
+        <main className="lg:grid space-y-16 w-{150%} md:space-y-8 md:space-y-0 grid-cols-3 gap-8 lg:mt-32 my-14 mx-8 lg:mx-32 ">
           {testimonials.map((testimony) => {
             return (
               <section
