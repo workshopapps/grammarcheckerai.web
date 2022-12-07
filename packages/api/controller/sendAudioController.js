@@ -1,3 +1,4 @@
+const { parseBuffer } = require("music-metadata");
 const UserResponse = require("../database/models/userResponseSchema");
 const BotResponse = require("../database/models/botResponseSchema");
 const Message = require("../database/models/messageSchema");
@@ -39,7 +40,8 @@ async function getBotResponse(req, res) {
         message: "Attach an audio file",
       });
     }
-
+    const metadata = await parseBuffer(audioFile.buffer, audioFile.mimetype);
+    console.log(metadata.format.duration.toFixed(2));
     // checks if specified language is not available
     if (!languageMap[language]) {
       return res.status(400).send({
@@ -105,6 +107,7 @@ async function getBotResponse(req, res) {
       chatLog
     );
     req.session.chatLog = chatLog; // set updated chat log to session
+    console.log(req.session.chatLog);
 
     // await file upload to aws s3 bucket to get file url
     audioUrl = await audioUrl;
