@@ -79,15 +79,9 @@ export default function profileScreen() {
   };
 
 
-  const onSignOut = () => {
-    localStorage.clear();
-    window.location.replace('/signin');
-    location.reload();
-  };
-
 
   return (
-    <main className="bg-white h-screen pt-2 sm:pt-16">
+    <main className="bg-white h-full pt-2 sm:pt-16">
       {data && (
         <div className="w-[90%] md:w-[80%] h-[95%] flex flex-col m-auto">
           <div className="flex flex-col sm:flex-row justify-between items-center pb-3 border-none sm:border-b-[3px] border-[#d2d2d2]/50 relative">
@@ -151,7 +145,7 @@ export default function profileScreen() {
               <input
                 type="password"
                 name="password"
-                value={data.password.substring(0, 10)}
+                value={data.password === null ? '' : data.password.substring(0, 10)}
                 disabled
                 className="text-xl bg-transparent"
               />
@@ -168,7 +162,6 @@ export default function profileScreen() {
             <ProfileScreenButton onClick={() => navigate('/me/profile/deleteaccount')} variant="danger">
               Delete Account
             </ProfileScreenButton>
-            <ProfileScreenButton onClick={onSignOut}>Sign Out</ProfileScreenButton>
           </div>
         </div>
       )}

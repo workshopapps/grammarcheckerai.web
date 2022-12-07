@@ -10,12 +10,12 @@ const quickTranscribe = require("./quickTranscribeRouter");
 const newsletter = require("../routes/newsLetterRoute");
 const reviewRating = require("../routes/reviewRatingRoute");
 const leaderBoardRouter = require("../routes/leaderboardrouter");
-const paystackRouter = require("./paystackRouter");
 const chatHistoryRouter = require("./chatHistory");
 const payRoute = require("../routes/payRoute");
-const newsletterSubscription = require("../routes/newsLetterSubscriptionRoute");
+const isSubscribeRoute = require("./newsLetterSubscriptionRoute");
+const logoutRoute = require("./logoutRoute");
+const unSubscribeRoute = require("./unSubscribeRoute")
 
-routeHandler.use("/subscribe", payRoute);
 routeHandler.use("/auth", auth);
 routeHandler.use("/user", verify, userHandler);
 routeHandler.use("/conversation", conversationRouter);
@@ -24,13 +24,13 @@ routeHandler.use("/quiz", quizRoute);
 routeHandler.use("/quickTranscribe", quickTranscribe);
 routeHandler.use("/contact", contactRoute);
 routeHandler.use("/newsletter", newsletter);
-
 routeHandler.use("/rating", reviewRating);
-
 routeHandler.use("/leaderboard", leaderBoardRouter);
-routeHandler.use("/paystack", paystackRouter);
+routeHandler.use("/paystack", payRoute);
 routeHandler.use("/chathistory", chatHistoryRouter);
+routeHandler.use("/subscribe", isSubscribeRoute);
+routeHandler.use("/unsubscribe", unSubscribeRoute);
+routeHandler.use("/logout", logoutRoute)
 
-routeHandler.use("/subscribe", newsletterSubscription);
 
 module.exports = { routeHandler };

@@ -134,7 +134,7 @@ function Settings() {
 
   return (
     <div className="px-6 font-semibold max-w-screen-lg mx-auto">
-      <div className="z-[150] relative">
+      <div className=" relative">
         <div className="flex flex-col gap-4 mb-7 md:flex-row justify-between md:items-center">
           <h1 className="text-center sm:border-b border-gray-400 py-4 text-2xl font-semibold md:border-0">Settings</h1>
           <label
@@ -154,22 +154,23 @@ function Settings() {
           </label>
         </div>
         <div className="flex flex-col gap-6">
-          {settingList
-            .filter((obj) => {
-              if (searchTerm === '' || obj.query.toLowerCase().includes(searchTerm.toLowerCase())) {
-                return obj;
-              } else if (settingList.every((val) => !val.query.toLowerCase().includes(searchTerm.toLowerCase()))) {
-                // If There is no result then show all list
-                return obj;
-              }
-            })
-            .map((option, index) => {
-              return (
-                <SettingOption key={index} option={option} arrowRight={arrowRightIcon} openBar={subPage}>
-                  {option.child}
-                </SettingOption>
-              );
-            })}
+          {settingList.every((val) => !val.query.toLowerCase().includes(searchTerm.toLowerCase())) ? (
+            <div>No results found</div>
+          ) : (
+            settingList
+              .filter((obj) => {
+                if (searchTerm === '' || obj.query.toLowerCase().includes(searchTerm.toLowerCase())) {
+                  return obj;
+                }
+              })
+              .map((option, index) => {
+                return (
+                  <SettingOption key={index} option={option} arrowRight={arrowRightIcon} openBar={subPage}>
+                    {option.child}
+                  </SettingOption>
+                );
+              })
+          )}
         </div>
       </div>
       {languageBar && <LanguageOption openBar={subPage} languageList={languageList} changeLanguage={changeLanguage} />}
