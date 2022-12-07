@@ -270,7 +270,7 @@ const index = () => {
           )}
           <div className={styles._gs2signupcontent}>
             <div className={styles._authback}>
-              <button onClick={handlePrev} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center">
+              <button onClick={handlePrev} className="lg:text-[#383839] md:text-[#383839] text-[#fff] font-bold lg:mt-8 lg:mb-5 md:mb-3 md:mt-5  rounded inline-flex items-center">
                <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path
                   fill="none"
