@@ -3,6 +3,7 @@ import useTheme from '../../../hooks/useTheme';
 import styles from './index.module.css';
 import { motion } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
+import Converse from './converse';
 
 function Conversation() {
   const context = useTheme();
@@ -17,6 +18,7 @@ function Conversation() {
           styles._height
         }`}
       >
+        <Converse />
         <Toaster />
       </motion.div>
     </>

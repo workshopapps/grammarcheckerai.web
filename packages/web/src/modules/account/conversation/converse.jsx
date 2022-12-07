@@ -16,8 +16,10 @@ import useMediaRecorder from '@wmik/use-media-recorder';
 import toast from 'react-hot-toast';
 import useSendAudioFile from '../../../hooks/account/useSendAudio';
 import Premium from '../../premium/popup/index';
+import useTheme from '../../../hooks/useTheme';
 
 function Converse() {
+  const context = useTheme();
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
   let {
     status,
@@ -39,6 +41,12 @@ function Converse() {
   const sendAudio = useSendAudioFile();
   const [beginRecording, setBeginRecording] = useState(false);
   const [open, setOpen] = useState(false);
+  const [language, setLanguage] = React.useState('English');
+  const error = (message) => toast.error(message);
+
+  const [chats, setChats] = React.useState([]);
+  const navigate = useNavigate();
+
   const chatRef = useRef(null);
 
   const handleScroll = () => {
@@ -54,12 +62,6 @@ function Converse() {
   const handleClosePremium = () => {
     setOpen(false);
   };
-
-  const [language, setLanguage] = React.useState('English');
-  const error = (message) => toast.error(message);
-
-  const [chats, setChats] = React.useState([]);
-  const navigate = useNavigate();
 
   const submitAudioHandler = () => {
     setCounter(0);
@@ -134,7 +136,7 @@ function Converse() {
   return (
     <>
       <Premium open={open} handleClosePremium={handleClosePremium} />
-      {isLoading && <Loader />}
+      {sendAudio.isLoading && <Loader />}
       <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center px-4 pt-2 lg:pt-6">
         <div className="text-center max-h-5/6 space-y-5 lg:space-y-10">
           {chats.length === 0 ? (
@@ -247,11 +249,5 @@ function Converse() {
     </>
   );
 }
-
-Converse.propTypes = {
-  isLoading: PropTypes.bool,
-  chats: PropTypes.Aarray,
-  deleteRecording: PropTypes.func,
-};
 
 export default Converse;
