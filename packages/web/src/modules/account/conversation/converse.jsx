@@ -93,6 +93,7 @@ function Converse({ noRive = false }) {
         })
         .catch((err) => {
           error(err?.response?.data?.message);
+          clearMediaBlob();
         });
     } else {
       setOpen(true);
@@ -123,21 +124,21 @@ function Converse({ noRive = false }) {
   }, [beginRecording, counter]);
 
   const deleteRecording = () => {
+    stopRecording();
     setSecond("00");
     setMinute("00");
     setCounter(0);
     setBeginRecording(false);
-    stopRecording();
     setChats("")
   };
 
   const sendAudioHandler = () => {
+    stopRecording();
     submitAudioHandler();
     setSecond("00");
     setMinute("00");
     setCounter(0);
     setBeginRecording(false);
-    stopRecording();
   };
 
 
