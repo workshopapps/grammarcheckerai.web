@@ -54,10 +54,17 @@ app.use(
 );
 
 //welcome note
-app.use("*", (req, res) => {
+app.get("/v1", (req, res) => {
   res.status(200).json({
-    message: "Welcome to Grit Grammarly 🙌",
+    message: "Welcome to Speak Better 🗣️ 🗣️ 🗣️", 
     user: "CORS enabled",
+  });
+});
+
+//404 error
+app.all("*",(req, res, next) => {
+  res.status(404).json({
+    message: "Ohh you are lost, path not found.",
   });
 });
 

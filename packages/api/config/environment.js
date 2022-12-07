@@ -37,7 +37,6 @@ const environment = {
   DB_PWD: process.env.DB_PWD,
   DB_HOST: process.env.DB_HOST,
   DIALECT: process.env.DIALECT,
-  BASE_URL: process.env.BASE_URL,
   DB_DB: process.env.DB_DB,
   PASSWORD_CHANGED_TEMPLATE_ID: process.env.PASSWORD_CHANGED_TEMPLATE_ID,
   TEST_EMAIL_TEMPLATE_ID: process.env.TEST_EMAIL_TEMPLATE_ID,
@@ -47,6 +46,7 @@ const environment = {
   PAYSTACK_SECRET_KEY: process.env.PAYSTACK_SECRET_KEY,
   PAYSTACK_PUBLIC_KEY: process.env.PAYSTACK_PUBLIC_KEY,
   NEWSLETTER_TEMPLATE_ID: process.env.NEWSLETTER_TEMPLATE_ID,
+  UNSUBSCRIBED_TEMPLATE_ID: process.env.UNSUBSCRIBED_TEMPLATE_ID,
 };
 
 module.exports = { environment };
