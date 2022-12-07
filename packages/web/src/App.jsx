@@ -48,6 +48,10 @@ const Ai = lazy(() => import('./pages/Blog/Ai'));
 const Grammar = lazy(() => import('./pages/Blog/Grammar'));
 const Tips = lazy(() => import('./pages/Blog/Tips'));
 const Contact = lazy(() => import('./pages/contact/index'));
+const PremiumSubs = lazy(() => import('./modules/premium/popup/premium'));
+const SubscriptionHistory = lazy(() => import('./modules/premium/index'));
+
+
 
 // All routes/pages must be import from ./pages folder
 
