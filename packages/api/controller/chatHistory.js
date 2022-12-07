@@ -9,8 +9,7 @@ async function chatHistory(req, res) {
   const conversations = await Conversation.find({ userId: user._id });
 
   if (!conversations) {
-    res.status(404);
-    res.json({ message: "No chat history found" });
+    res.status(400).send({ success: false, message: "No chat history found" });
     return;
   }
 

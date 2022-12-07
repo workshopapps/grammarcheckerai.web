@@ -1,6 +1,5 @@
 const express = require("express");
 const payRouter = express.Router();
-const { getUser } = require("../middlewares/UserRestriction/userAccessControl");
 const {
   createPayment,
   getSubscription,
