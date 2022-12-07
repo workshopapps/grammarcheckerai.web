@@ -1,63 +1,72 @@
 const Rating = require("../database/models/reviewRatingSchema");
+const { userCollection } = require("../database/models/userSchema");
 
 exports.getRating = async (req, res) => {
   try {
-    const { conversation_id } = req.params;
-
-    const response = await Rating.findOne({ conversation_id });
-
+    const response = await Rating.find().populate({
+      path: "userid",
+      select: "email username",
+    });
     return res.status(200).json({
       success: true,
-      data: response,
+      response,
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       success: false,
-      message: "An error encountered",
-      errorCode: error.code,
-      error: error.message,
     });
   }
 };
 
 exports.reviewRating = async (req, res) => {
   try {
-    const { comment, conversation_id, ratings, userid } = req.body;
+    const { comment, ratings, userid } = req.body;
 
-    if (!ratings || !conversation_id || !userid) {
+    if (!ratings) {
       return res.status(400).json({
         success: false,
-        message: "Missing field",
-        data: {},
-      });
-    }
-    const new_rating = await Rating.create({
-      comment,
-      conversation_id,
-      ratings,
-      userid,
-    });
-
-    if (!new_rating) {
-      return res.status(400).json({
-        success: false,
-        message: "Rating Unsuccessful",
-        data: {},
+        message: "Missing Rating field, please add your rating",
       });
     }
 
-    return res.status(200).json({
+    const user = await userCollection.findById(userid);
+    let rating, username;
+    if (user) {
+      username = user.username;
+      rating = await Rating.findOne({ userid });
+    }
+
+    let new_rating;
+    if (rating) {
+      rating.comment = comment ? comment : rating.comment;
+      rating.ratings = ratings;
+      new_rating = await rating.save({
+        validateBeforeSave: true,
+      });
+
+      res.status(200);
+    } else {
+      new_rating = await Rating.create({
+        comment,
+        ratings,
+        userid,
+      });
+
+      res.status(201);
+    }
+
+    return res.json({
       success: true,
       message: "rated successfully",
-      data: { new_rating },
+      username,
+      new_rating,
     });
   } catch (error) {
     console.log(error);
     return res.status(400).json({
       success: false,
       message: "Something went wrong",
-      errorCode: error.code,
-      error: error,
     });
   }
 };
