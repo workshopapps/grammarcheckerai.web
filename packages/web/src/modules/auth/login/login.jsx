@@ -240,7 +240,7 @@ const Index = () => {
   //   console.log(res.message);
   // });
 
-  const handleGoogleAuth = () => {};
+  const handleGoogleAuth = () => { };
 
   /*
       handleFacebookAuth handles the Facebook social login.
@@ -264,7 +264,7 @@ const Index = () => {
 
   // const handleLinkedInAuth = () => {
   //   useFetch('https://speakbetter.hng.tech/api/v1/auth/linkedin');
-  // };
+  // }; 
 
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
@@ -319,10 +319,12 @@ const Index = () => {
                   required
                   onChange={(e) => setUserPassword(e.target.value)}
                 />
+              </div>
                 <div className={styles._gs2logincheck}></div>
                 <div className={styles._g2loginoption}>
-                  <input type="checkbox" id="userRememberPassword" />
-                  <span style={{ lineHeight: '30px' }}>Keep me signed in</span>
+                    <input type="checkbox" id="userRememberPassword" />
+                  <span>                  
+                    Keep me signed in</span>
                 </div>
                 <div>
                   <button
@@ -334,7 +336,6 @@ const Index = () => {
                     Forgot Password?
                   </button>
                 </div>
-              </div>
               <div className={styles._gs2logincontinue}>
                 <LoadingButton size="small" type="submit" loading={authLogin.isLoading} variant="contained">
                   Login

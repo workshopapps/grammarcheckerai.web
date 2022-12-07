@@ -1,5 +1,5 @@
 import React from 'react';
-import Headerimg from '../../assets/blogimg/Frame.svg';
+import Headerimg from '../../assets/blogimg/blogimg.webp';
 import styles from './index.module.css';
 
 const Header = () => {
