@@ -37,6 +37,7 @@ const environment = {
   DB_PWD: process.env.DB_PWD,
   DB_HOST: process.env.DB_HOST,
   DIALECT: process.env.DIALECT,
+  BASE_URL: process.env.BASE_URL,
   DB_DB: process.env.DB_DB,
   PASSWORD_CHANGED_TEMPLATE_ID: process.env.PASSWORD_CHANGED_TEMPLATE_ID,
   TEST_EMAIL_TEMPLATE_ID: process.env.TEST_EMAIL_TEMPLATE_ID,

@@ -23,9 +23,9 @@ async function BotTextResponse(req, res) {
 
      // Handling OpenAI Error
      if (!grammarCheckResponse) {
-        return res.status(500).send({
+        return res.status(400).send({
             success: false,
-            message: "OpenAI internal error"
+            message: "OpenAI Error"
         });
     }
 
@@ -93,9 +93,11 @@ async function BotTextResponse(req, res) {
 
 
   } catch (error) {
-    return res.status(500).send({
+    return res.status(400).send({
         success: false,
-        message: error
+        message: "An error Occured",
+        errorCode: error.code,
+        error: error
     })  
   }
 
