@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Slide from '@mui/material/Slide';
 import Dialog from '@mui/material/Dialog';
@@ -11,7 +11,6 @@ import check from '../Assets/tick-square.png';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Checkout from './checkout';
 import useGetUserSubscription from '../../../hooks/account/useGetUserSubscription';
-import { useState } from 'react';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -32,7 +31,7 @@ const index = (props) => {
       setUserSubsList(userSubscription?.value);
       console.log(userSubsList);
       checkForArray(userSubsList).map((item) => {
-        if (item.status === 'completed') {
+        if (item.status === 'success') {
           setUserIsSubscribed(true);
           return;
         }

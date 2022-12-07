@@ -31,7 +31,7 @@ const index = () => {
     if (userSubscription?.value && userSubscription?.value.length !== 0) {
       // console.log('User is subscribed');
       userSubscription?.value?.map((item) => {
-        if (item.status === 'initiated') {
+        if (item.status === 'success') {
           setUserIsSubscribed(true);
           return;
         }

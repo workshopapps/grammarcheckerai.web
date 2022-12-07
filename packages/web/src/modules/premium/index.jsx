@@ -33,7 +33,7 @@ const Subscription = () => {
     premiumCancel
       .mutateAsync({
         email: JSON.parse(localStorage.getItem('isUserDetails'))?.email,
-        txref: JSON.parse(localStorage.getItem('isUserDetails'))?.txref,
+        txref: userSubscription?.value?.txref,
       })
       .then((res) => {
         toast.success('Subscription Cancelled Succesfully');

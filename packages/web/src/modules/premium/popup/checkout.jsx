@@ -99,6 +99,10 @@ const Checkout = (props) => {
       .then((result) => {
         const oBJ = JSON.parse(result);
         console.log(oBJ);
+        useVerify(
+          `https://api.speakbetter.hng.tech/v1/paystack/?email=${oBJ.data.data.customer.email}`,
+          'sk_test_11cd20d24df0f472d32521e1bfb3c00608593c54',
+        );
       })
       .catch((error) => error('error', error));
   };
@@ -190,12 +194,7 @@ const Checkout = (props) => {
 
     // Implementation for whatever you want to do with reference and after success call.
     console.log(reference.trxref);
-    useVerify(
-      `https://api.speakbetter.hng.tech/v1/paystack/verify?email=${user.email}&txref=${reference.trxref}`,
-      'sk_test_11cd20d24df0f472d32521e1bfb3c00608593c54',
-    );
-    if(){
-      authPay
+    authPay
       .mutateAsync({
         email: user.email,
         name: user.firstName + ' ' + user.lastName,
@@ -203,11 +202,13 @@ const Checkout = (props) => {
         interval: props.duration,
         paymentGateway: 'paystack',
         subscriptionId: props.plan,
-        trxref: reference.trxref,
+        txref: reference.trxref,
       })
       .then(() => {
-        // console.log(res);
-        
+        useVerify(
+          `https://api.speakbetter.hng.tech/v1/paystack/verify?email=${user.email}&txref=${reference.trxref}`,
+          'sk_test_11cd20d24df0f472d32521e1bfb3c00608593c54',
+        );
       })
       .then(() => {
         // toast(() => (
@@ -226,7 +227,6 @@ const Checkout = (props) => {
       .catch((err) => {
         error(err.message);
       });
-    }
   };
 
   // you can call this function anything
