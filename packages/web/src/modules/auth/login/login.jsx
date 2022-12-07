@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import LoadingButton from '@mui/lab/LoadingButton';
 import styles from './login.module.css';
-import Logo from '../../../assets/images/logo2.png';
+import Logo from '../../../assets/images/signuplogo.png';
 import Image2 from '../../../assets/Correction 1.png';
 import Image1 from '../../../assets/error 1.png';
 import Image3 from '../../../assets/steponeframeone.png';
@@ -22,6 +22,8 @@ import useAuthFacebook from '../../../hooks/auth/useAuthFacebook';
 import Loader from '../../../components/Loader';
 import useGetLinkedInLink from '../../../hooks/auth/useGetLinkedInLink';
 import useAuthLinkedIn from '../../../hooks/auth/useAuthLinkedIn';
+import useAuthGoogle from '../../../hooks/auth/useAuthGoogle';
+import useGetGoogleLink from '../../../hooks/auth/useGetGoogleLink';
 
 const Index = () => {
   const context = useTheme();
@@ -31,6 +33,9 @@ const Index = () => {
   const [userToken, setUserToken] = useState('');
 
   const location = useLocation();
+
+  const authGoogle = useAuthGoogle(location?.search);
+  const googleLink = useGetGoogleLink();
 
   const authFacebook = useAuthFacebook(location?.search);
   const facebookLink = useGetFacebookLink();
@@ -98,6 +103,33 @@ const Index = () => {
           localStorage.setItem('isdashboard', true);
         })
         .then(() => {
+          setTimeout(() => {
+            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+          }, 2000);
+        })
+        .then(() => {
+          setTimeout(() => {
+            window.location.replace('/me/home');
+            navigate('/me/home', { replace: true });
+          }, 5000);
+        })
+        .catch((err) => {
+          error(err.message);
+        });
+    }
+    if (location?.search && location?.search?.includes('code')) {
+      authGoogle
+        .mutateAsync({})
+        .then((res) => {
+          success('Login Successful! Redirecting in 5 seconds');
+          const resId = res.data.data._id;
+          const resToken = res.data.data.token;
+          localStorage.setItem('grittyuserid', resId);
+          localStorage.setItem('grittyusertoken', resToken);
+          localStorage.setItem('isdashboard', true);
+        })
+        .then(() => {
+
           setTimeout(() => {
             getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
           }, 2000);
@@ -187,6 +219,8 @@ const Index = () => {
     Then redirects to the provided URL token for user login
 
   */
+  const paramsInfo = new URLSearchParams();
+  console.log('params', paramsInfo, location);
 
   const useFetch = (url) => {
     var requestOptions = {
@@ -201,10 +235,12 @@ const Index = () => {
       })
       .catch((err) => error(err.message));
   };
+  // useEffect(() => {
+  //   const res = useFetch('https://speakbetter.hng.tech/api/v1/auth/google');
+  //   console.log(res.message);
+  // });
 
-  const handleGoogleAuth = () => {
-    useFetch('https://speakbetter.hng.tech/api/v1/auth/google');
-  };
+  const handleGoogleAuth = () => {};
 
   /*
       handleFacebookAuth handles the Facebook social login.
@@ -244,7 +280,8 @@ const Index = () => {
           )}
           <div className={styles._gs2logincontent}>
             <div className={styles._authback}>
-              <svg onClick={handlePrev} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <button onClick={handlePrev} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center">
+               <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path
                   fill="none"
                   stroke="currentColor"
@@ -253,7 +290,10 @@ const Index = () => {
                   strokeWidth="48"
                   d="M328 112L184 256l144 144"
                 />
-              </svg>
+               </svg> 
+              <span>Go back</span> 
+              </button>
+            
             </div>
             <h2 signup-theme={context.theme}>Welcome Back</h2>
             <p signup-theme={context.theme} className={styles._subtitle}>
@@ -317,8 +357,10 @@ const Index = () => {
               <div className={styles._gs2sociallogincol}>
                 <p>Alternatively, you can sign up with:</p>
                 <div className={styles._gs2sociallogins}>
-                  <button type="button" className={styles._google} onClick={handleGoogleAuth}>
-                    <img src={google} alt="google authentication" />
+                  <button type="button" className={styles._google}>
+                    <a href={googleLink?.value}>
+                      <img src={google} alt="google authentication" />
+                    </a>
                   </button>
                   <button type="button" className={styles._facebook}>
                     <a href={facebookLink?.value}>

@@ -21,7 +21,6 @@ const { slugify } = require("../../utilities/compare");
 
 const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
 
-
 const { google } = require("googleapis");
 
 const oauth2Client = new google.auth.OAuth2(
@@ -43,7 +42,9 @@ async function googleAuthURL(req, res) {
     // If you only need one scope you can pass it as a string
     scope: scopes,
   });
-  res.status(200).json(response({ message: url }));
+  res
+    .status(200)
+    .json(response({ message: "GOOGLE AUTH", data: url, success: true }));
 }
 
 async function getTokens(code) {
@@ -63,34 +64,40 @@ async function getTokens(code) {
       id_token: res.data.id_token,
       access_token: res.data.access_token,
     };
-    console.log(data);
     const googleUser = await axios.get(
       `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${data.access_token}`,
       {
         headers: {
-          'Authorization': `Bearer ${data.id_token}`,
-          'Accept-Encoding': 'application/json'
+          Authorization: `Bearer ${data.id_token}`,
+          "Accept-Encoding": "application/json",
         },
       }
     );
-    
+
     return googleUser.data;
   } catch (error) {
-    if(error.message === 'invalid_grant'){
-      return 'invalid_grant'
+    if (error.message === "invalid_grant") {
+      return res
+        .status(400)
+        .send({ success: false, message: "Invalid Grant " });
     }
-    return false;
+    return res.status(400).send({
+      success: false,
+      message: "Error Encountered",
+      errorCode: error.code,
+      error: error.message,
+    });
   }
 }
 
 const getLinkedinUrl = (req, res) => {
-	return res.status(200).json(
-		response({
-			message: "LinkedIn URL",
-			success: true,
-			data: `https://www.linkedin.com/oauth/v2/authorization?response_type=code&scope=r_liteprofile%20r_emailaddress&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${LINKEDIN_CALLBACK_URL}`,
-		})
-	);
+  return res.status(200).json(
+    response({
+      message: "LinkedIn URL",
+      success: true,
+      data: `https://www.linkedin.com/oauth/v2/authorization?response_type=code&scope=r_liteprofile%20r_emailaddress&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${LINKEDIN_CALLBACK_URL}`,
+    })
+  );
 };
 
 /*
@@ -121,8 +128,12 @@ const getLinkedinAccessToken = async ({
     },
     data: querystring.stringify(values),
   }).catch((error) => {
-    console.log(`Failed to fetch auth tokens`);
-    console.error(error);
+    return res.status(400).send({
+      success: false,
+      message: "Failed to fetch auth tokens",
+      errorCode: error.code,
+      error: error.message,
+    });
   });
 
   if (!res_value) {
@@ -145,15 +156,22 @@ const linkedinAccessToken = async (req, res) => {
       clientSecret: LINKEDIN_SECRET_ID,
     });
 
-		const linkedinUserEmail = await axios({
-			method: "GET",
-			url: `https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))`,
-			headers: {
-				Authorization: `Bearer ${token.access_token}`,
-			},
-		}).catch((error) => {
-			console.log(error)
-			return res.status(400).json({ message: `Failed to fetch token` });
+    const linkedinUserEmail = await axios({
+      method: "GET",
+      url: `https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))`,
+      headers: {
+        Authorization: `Bearer ${token.access_token}`,
+      },
+    }).catch((error) => {
+      console.log(error);
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: `Failed to fetch token`,
+          errorCode: error.code,
+          error: error.message,
+        });
     });
     const linkedinUser = await axios({
       method: "GET",
@@ -162,7 +180,12 @@ const linkedinAccessToken = async (req, res) => {
         Authorization: `Bearer ${token.access_token}`,
       },
     }).catch((error) => {
-      return res.status(400).json({ message: `Failed to fetch token` });
+      return res.status(400).json({
+        success: false,
+        message: `Failed to fetch token`,
+        errorCode: error.code,
+        error: error.message,
+      });
     });
 
     const email = linkedinUserEmail.data.elements[0]["handle~"].emailAddress;
@@ -208,22 +231,24 @@ const linkedinAccessToken = async (req, res) => {
   } catch (error) {
     return res.status(500).json(
       response({
-        message: "Something went wrong wile processing this request",
         success: false,
+        message: "Something went wrong wile processing this request",
+        errorCode: error.code,
+        error: error.message,
       })
     );
   }
 };
 
 const getFacebookURl = (req, res) => {
-	const options = {
-		client_id: FB_CLIENT_ID,
-		redirect_uri: FB_CALLBACK_URL,
-		scope: ['email', 'user_friends'].join(','), // comma seperated string
-		response_type: 'code',
-		auth_type: 'rerequest',
-		display: 'popup',
-	}
+  const options = {
+    client_id: FB_CLIENT_ID,
+    redirect_uri: FB_CALLBACK_URL,
+    scope: ["email", "user_friends"].join(","), // comma seperated string
+    response_type: "code",
+    auth_type: "rerequest",
+    display: "popup",
+  };
 
   const facebookLoginUrl = `https://www.facebook.com/v4.0/dialog/oauth?${querystring.stringify(
     options
@@ -250,7 +275,12 @@ const facebookAccessToken = async (req, res) => {
     const accessToken = await axios.get(accessTokenUrl);
 
     if (!accessToken.data.access_token) {
-      return res.status(400).json({ message: `Failed to fetch token` });
+      return res.status(400).json({
+        success: false,
+        message: `Failed to fetch token`,
+        errorCode: error.code,
+        error: error.message,
+      });
     }
     let access_token = accessToken.data.access_token;
 
@@ -291,7 +321,7 @@ const facebookAccessToken = async (req, res) => {
 
     if (!user)
       return res
-        .status(500)
+        .status(400)
         .json(response({ success: false, message: "User not created" }));
 
     return res.status(201).json(
@@ -304,8 +334,10 @@ const facebookAccessToken = async (req, res) => {
   } catch (error) {
     return res.status(500).json(
       response({
-        message: "Something went wrong wile processing this request",
         success: false,
+        message: "Something went wrong wile processing this request",
+        errorCode: error.code,
+        error: error.message,
       })
     );
   }
