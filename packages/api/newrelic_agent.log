@@ -264,3 +264,33 @@
 {"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.lan","pid":29737,"time":"2022-12-07T04:55:36.268Z","msg":"Valid event_harvest_config received. Updating harvest cycles. {\"report_period_ms\":5000,\"harvest_limits\":{\"error_event_data\":8,\"log_event_data\":833,\"analytic_event_data\":833,\"custom_event_data\":250}}"}
 {"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.lan","pid":29737,"time":"2022-12-07T04:55:36.272Z","msg":"Agent state changed from connected to started."}
 {"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.lan","pid":29737,"time":"2022-12-07T04:55:37.277Z","msg":"Starting initial 1000ms harvest."}
+{"v":0,"level":50,"name":"newrelic","hostname":"users-MBP.lan","pid":29737,"time":"2022-12-07T07:04:28.526Z","msg":"Agent endpoint metric_data returned 409 status. Restarting.","component":"collector_api"}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.lan","pid":29737,"time":"2022-12-07T07:04:28.527Z","msg":"Restarting collector.","component":"collector_api"}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.lan","pid":29737,"time":"2022-12-07T07:04:28.527Z","msg":"Shutting down collector.","component":"collector_api"}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.lan","pid":29737,"time":"2022-12-07T07:04:29.572Z","msg":"Agent state changed from started to disconnected."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.lan","pid":29737,"time":"2022-12-07T07:04:29.572Z","msg":"Disconnected from New Relic; clearing run ID BTLSZYa8YJ9sADjdE1AI1H9jkB0cAAgBAAAnIQEAAHQpAgRQGvEmAwAFOS43LjEADXVzZXJzLU1CUC5sYW4AC3NwZWFrYmV0dGVy.","component":"collector_api"}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.lan","pid":29737,"time":"2022-12-07T07:04:29.573Z","msg":"Agent state changed from disconnected to connecting."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MacBook-Pro.local","pid":30739,"time":"2022-12-07T07:11:09.120Z","msg":"Using New Relic for Node.js. Agent version: 9.7.1; Node version: v16.17.0."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MacBook-Pro.local","pid":30739,"time":"2022-12-07T07:11:09.451Z","msg":"Using LegacyContextManager"}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MacBook-Pro.local","pid":30739,"time":"2022-12-07T07:11:09.471Z","msg":"Adding destroy hook to clean up unresolved promises.","component":"async_hooks"}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MacBook-Pro.local","pid":30739,"time":"2022-12-07T07:11:09.647Z","msg":"Agent state changed from stopped to starting."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MacBook-Pro.local","pid":30739,"time":"2022-12-07T07:11:09.658Z","msg":"Starting New Relic for Node.js connection process."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MacBook-Pro.local","pid":30739,"time":"2022-12-07T07:11:09.659Z","msg":"Agent state changed from starting to connecting."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MacBook-Pro.local","pid":30845,"time":"2022-12-07T07:12:12.155Z","msg":"Using New Relic for Node.js. Agent version: 9.7.1; Node version: v16.17.0."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MacBook-Pro.local","pid":30845,"time":"2022-12-07T07:12:12.491Z","msg":"Using LegacyContextManager"}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MacBook-Pro.local","pid":30845,"time":"2022-12-07T07:12:12.498Z","msg":"Adding destroy hook to clean up unresolved promises.","component":"async_hooks"}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MacBook-Pro.local","pid":30845,"time":"2022-12-07T07:12:12.637Z","msg":"Agent state changed from stopped to starting."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MacBook-Pro.local","pid":30845,"time":"2022-12-07T07:12:12.652Z","msg":"Starting New Relic for Node.js connection process."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MacBook-Pro.local","pid":30845,"time":"2022-12-07T07:12:12.653Z","msg":"Agent state changed from starting to connecting."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.pmt.ng","pid":30904,"time":"2022-12-07T07:14:40.704Z","msg":"Using New Relic for Node.js. Agent version: 9.7.1; Node version: v16.17.0."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.pmt.ng","pid":30904,"time":"2022-12-07T07:14:45.519Z","msg":"Using LegacyContextManager"}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.pmt.ng","pid":30904,"time":"2022-12-07T07:14:45.579Z","msg":"Adding destroy hook to clean up unresolved promises.","component":"async_hooks"}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.pmt.ng","pid":30904,"time":"2022-12-07T07:14:47.400Z","msg":"Agent state changed from stopped to starting."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.pmt.ng","pid":30904,"time":"2022-12-07T07:14:47.596Z","msg":"Starting New Relic for Node.js connection process."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.pmt.ng","pid":30904,"time":"2022-12-07T07:14:47.596Z","msg":"Agent state changed from starting to connecting."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.pmt.ng","pid":30904,"time":"2022-12-07T07:16:19.203Z","msg":"Agent state changed from connecting to connected."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.pmt.ng","pid":30904,"time":"2022-12-07T07:16:19.204Z","msg":"Connected to collector-010.newrelic.com:443 with agent run ID BeIkB2flWOFdADjdE09D09ljkD4oAAgBAAAnIQEAAHi4AgRQGvEmAwAFOS43LjEAEHVzZXJzLU1CUC5wbXQubmcAC3NwZWFrYmV0dGVy.","component":"collector_api"}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.pmt.ng","pid":30904,"time":"2022-12-07T07:16:19.204Z","msg":"Reporting to: https://rpm.newrelic.com/accounts/3726611/applications/1343942950","component":"collector_api"}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.pmt.ng","pid":30904,"time":"2022-12-07T07:16:19.207Z","msg":"Valid event_harvest_config received. Updating harvest cycles. {\"report_period_ms\":5000,\"harvest_limits\":{\"error_event_data\":8,\"log_event_data\":833,\"analytic_event_data\":833,\"custom_event_data\":250}}"}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.pmt.ng","pid":30904,"time":"2022-12-07T07:16:19.211Z","msg":"Agent state changed from connected to started."}
+{"v":0,"level":30,"name":"newrelic","hostname":"users-MBP.pmt.ng","pid":30904,"time":"2022-12-07T07:16:20.216Z","msg":"Starting initial 1000ms harvest."}

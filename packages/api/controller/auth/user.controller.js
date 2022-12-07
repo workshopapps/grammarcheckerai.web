@@ -112,14 +112,14 @@ async function refreshUserToken(req, res) {
   const { _id } = req.user;
   //Check if user already exist
   const user = await userCollection.findById(_id);
-  if(!user){
+  if (!user) {
     return res.status(404).json(
       response({
         success: true,
         message: "User not found",
       })
     );
-  } 
+  }
 
   return res.status(200).json(
     response({
@@ -202,12 +202,17 @@ async function verifyMail(req, res) {
     // res.status(201).redirect("/v1/auth/signin");
     res
       .status(201)
-      .json({
+      .send({
+        success: true,
         message:
           "Email has been Successfully Confirmed, pls go back to login route",
+        data: user,
       });
   } catch (err) {
-    res.status(400).json({
+    res.status(400).send({
+      success: false,
+      message: "there was an error",
+      errorCode: err.code,
       error: err.message,
     });
   }
