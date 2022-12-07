@@ -32,7 +32,12 @@ exports.getQuiz = async (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(400).send("There is a Problem, please try again");
+      res.status(400).send({
+        success: false,
+        message: "There was a Problem, please try again",
+        errorCode: err.code,
+        error: err,
+      });
     });
 };
 
@@ -48,6 +53,6 @@ exports.sendAnswer = async (req, res) => {
     message = {
       message: `Incorrect answer, Correct answer is: ${sess.answer}, please try again!`,
     };
-  res.status(200).send(message);
+  res.status(200).send({ success: true, data: message });
   req.session.destroy();
 };

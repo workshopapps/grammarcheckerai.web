@@ -52,9 +52,11 @@ async function startConversation(req, res) {
       },
     });
   } catch (err) {
-    return res.status(500).send({
+    return res.status(400).send({
       success: false,
-      message: err,
+      message: " An error occured",
+      errorCode: err.code,
+      error: err,
     });
   }
 }
