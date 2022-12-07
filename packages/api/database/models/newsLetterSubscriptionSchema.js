@@ -2,15 +2,16 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 let schema = new mongoose.Schema(
   {
-    user_id: {
-      type: String,
-    },
     email: {
       type: String,
       required: true,
       trim: true,
       unique: true,
     },
+    subscription: {
+      type: Boolean,
+      default: true,
+    }
   },
   {
     timestamps: true,
