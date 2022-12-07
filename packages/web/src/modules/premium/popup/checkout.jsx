@@ -65,12 +65,12 @@ const Checkout = (props) => {
     // console.log(userSubscription);
   }, [userId, userToken]);
 
-  const useFetch = (url) => {
+  const useFetch = (url, token) => {
     var requestOptions = {
       method: 'GET',
       redirect: 'follow',
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('grittyusertoken')}`,
+        Authorization: `Bearer ${token}`,
       },
     };
 
@@ -102,12 +102,18 @@ const Checkout = (props) => {
             localStorage.setItem('grittyusertoken', userToken);
             success('Login Successful!');
             setTimeout(() => {
-              useFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+              useFetch(
+                `https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`,
+                localStorage.getItem('grittyusertoken'),
+              );
               setIsPaymentPage(true);
             }, 3000);
           } else {
             error('Already Logged in, proceeding...');
-            useFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+            useFetch(
+              `https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`,
+              localStorage.getItem('grittyusertoken'),
+            );
             setIsPaymentPage(true);
           }
         })
@@ -162,14 +168,16 @@ const Checkout = (props) => {
     const user = JSON.parse(localStorage.getItem('isUserDetails'));
 
     // Implementation for whatever you want to do with reference and after success call.
-    console.log(reference);
+    console.log(reference.trxref);
     authPay
       .mutateAsync({
         email: user.email,
         name: user.firstName + ' ' + user.lastName,
         amount: props.amount,
         interval: props.duration,
+        paymentGateway: 'paystack',
         subscriptionId: props.plan,
+        trxref: reference.trxref,
       })
       .then(() => {
         toast(() => (
@@ -182,7 +190,7 @@ const Checkout = (props) => {
       })
       .then(() => {
         setTimeout(() => {
-          navigate('/me/home');
+          // navigate('/me/home');
         }, 5000);
       })
       .catch((err) => {

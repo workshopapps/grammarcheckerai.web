@@ -24,7 +24,7 @@ const index = (props) => {
 
   const handleCheckout = (plan) => {
     setInterval(plan);
-    if (userSubscription?.value && userSubscription?.value.length !== 0) {
+    if (userSubscription?.value && userSubscription?.value?.length !== 0) {
       // console.log('User is subscribed');
       userSubscription?.value?.map((item) => {
         if (item.status === 'initiated') {

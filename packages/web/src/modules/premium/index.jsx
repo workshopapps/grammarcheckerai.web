@@ -29,14 +29,17 @@ const Subscription = () => {
   const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
 
   const handleProCancellation = () => {
+    console.log(userSubscription);
     premiumCancel
       .mutateAsync({
         email: JSON.parse(localStorage.getItem('isUserDetails'))?.email,
+        txref: JSON.parse(localStorage.getItem('isUserDetails'))?.txref,
       })
       .then((res) => {
-        console.log(res);
         toast.success('Subscription Cancelled Succesfully');
         userSubscription.refetch();
+        console.log('response', res);
+        console.log('new', userSubscription);
       });
   };
 
