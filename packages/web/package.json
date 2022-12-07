@@ -31,6 +31,7 @@
     "dayjs": "^1.11.6",
     "esbuild": "^0.15.15",
     "eslint-config-prettier": "^8.5.0",
+    "formik": "^2.2.9",
     "framer-motion": "^7.6.5",
     "newrelic": "^9.7.1",
     "nuka-carousel": "^5.4.1",
@@ -49,7 +50,8 @@
     "react-voice-recorder": "^2.1.2",
     "rive-react": "^3.0.33",
     "sass": "^1.56.1",
-    "socket.io-client": "^4.5.4"
+    "socket.io-client": "^4.5.4",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
