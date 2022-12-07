@@ -131,7 +131,8 @@ const index = () => {
           }, 6000);
         })
         .catch((err) => {
-          error(err.response.data.message);
+          // error(err.response.data.message);
+          error(err.response.data.data.password);
         });
     } else if (newUserPassword !== newUserConfirmPassword) {
       setIsSamePassword(false);
