@@ -169,7 +169,10 @@ const Checkout = (props) => {
           localStorage.setItem('grittyusertoken', userToken);
           success('Account Created Succesfully!');
           setTimeout(() => {
-            useFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+            useFetch(
+              `https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`,
+              localStorage.getItem('grittyusertoken'),
+            );
             setIsPaymentPage(true);
           }, 3000);
         })
