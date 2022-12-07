@@ -112,5 +112,7 @@ exports.sendMail = async (req, res) => {
       actionurl: "https://speakbetter.hng.tech/me/home",
     },
   });
-  return res.status(200).send("Email Sent successfully");
+  return res
+    .status(200)
+    .send({ success: true, message: "Email Sent successfully" });
 };

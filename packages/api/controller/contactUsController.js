@@ -19,7 +19,7 @@ async function contactUsController (req, res) {
     });
   } catch (error) {
     return res.status(400).json({
-      status: "Fail",
+      sucess: false,
       message: error.message,
     });
   }

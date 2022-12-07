@@ -89,13 +89,11 @@ const cancelSubscription = async (req, res) => {
     });
   }
   if (transaction.status == "cancelled")
-    return res
-      .status(200)
-      .send({
-        success: false,
-        message: "Subscription cancelled already!",
-        data: [],
-      });
+    return res.status(200).send({
+      success: false,
+      message: "Subscription cancelled already!",
+      data: [],
+    });
 
   const cancel = await Subscription.findByIdAndUpdate(
     transaction._id,
@@ -142,11 +140,20 @@ const verification = async (req, res) => {
         { status: success.data.data.status },
         { new: true }
       );
-      return res.status(200).send(success.data);
+      return res.status(200).send({
+        success: true,
+        message: "Verfied successfully",
+        data: success.data,
+      });
     })
     .catch((error) => {
       console.log(error);
-      return res.status(400).send(error);
+      return res.status(400).send({
+        success: false,
+        message: "Error Encountered",
+        errrorCode: error.code,
+        error: error,
+      });
     });
 };
 
