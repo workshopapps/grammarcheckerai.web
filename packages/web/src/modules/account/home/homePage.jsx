@@ -1,7 +1,4 @@
 import { Toaster } from 'react-hot-toast';
-import chirpy from '../../../assets/chirpy.svg';
-import talk from '../../../assets/talk.svg';
-import RiveBot from '../../../components/RiveBot';
 import Converse from '../conversation/converse';
 
 function HomePage() {
@@ -17,14 +14,7 @@ function HomePage() {
           {userData ? userData.firstName.charAt(0) + '' + userData.lastName.charAt(0) : ''}
         </span>
       </div>
-      <div>
-        <div className=" flex justify-center items-center">
-          <img
-            src={chirpy}
-            alt="chirpy bob"
-            className=" sm:w-[200px] sm:h-[200px] w-[120px] h-[120px] flex justify-center items-center "
-          />
-        </div>
+      <div className="w-full">
         <Converse noRive />
       </div>
       <Toaster />
