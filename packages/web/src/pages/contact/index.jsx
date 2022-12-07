@@ -42,7 +42,7 @@ const index = () => {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      setOpenModal(true);
+
       axios({
         method: 'post',
         url: 'https://api.speakbetter.hng.tech/v1/contact',
@@ -53,12 +53,17 @@ const index = () => {
           phoneNumber: phoneNumber,
           message: message
         }
-      }).then(response => {
-        console.log(response);
-        setOpenModal(false);
-      }).catch(error => {
-        console.log(error);
       })
+      .then(response => {
+        console.log(response);
+        setOpenModal(true);
+      })
+      .catch(error => {
+        console.log(error);
+        setOpenModal(false)
+      });
+      setIsSubmit(true);
+      e.target.reset();
     };
 
     return (
@@ -157,10 +162,9 @@ const index = () => {
                               type="text"
                               name='firstName'
                               id='first_name'
-                              className="w-full lg:w-{50%}"
-                              placeholder= ' Mike'
-                              value={firstName}
-                              onChange={(e) => setFirstName(event.target.value)} />
+                              className=" w-full lg:w-{50%}"
+                              placeholder='Mike'
+                              onChange={(e) => setFirstName(event.target.value)}/>
                             </div>
                         </div>
 
