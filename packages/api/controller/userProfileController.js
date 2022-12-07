@@ -128,7 +128,7 @@ const updateUser = async (req, res) => {
         success: false,
         message: "An Error Occured",
         data: {
-          error: error,
+          error: error.message,
         },
       })
     );

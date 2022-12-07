@@ -66,7 +66,9 @@ const getSubscription = async (req, res) => {
     console.log(error);
     return res.status(400).send({
       success: false,
-      message: `Error: ${error.message}`,
+      message: "Error encountered",
+      errorCode: error.code,
+      error: error.message,
     });
   }
 };
@@ -92,7 +94,7 @@ const cancelSubscription = async (req, res) => {
     return res.status(200).send({
       success: false,
       message: "Subscription cancelled already!",
-      data: [],
+      data: transaction,
     });
 
   const cancel = await Subscription.findByIdAndUpdate(
@@ -100,7 +102,7 @@ const cancelSubscription = async (req, res) => {
     { status: "cancelled" },
     { new: true }
   )
-    .then((cancel) => {
+    .then(() => {
       return res.status(200).send({
         success: true,
         message: "Subscription Cancelled",
@@ -111,7 +113,9 @@ const cancelSubscription = async (req, res) => {
       console.log(err);
       return res.status(400).send({
         success: false,
-        message: `Error: ${err}`,
+        message: "Error encountered",
+        errorCode: err.code,
+        error: err.message,
       });
     });
 };
@@ -152,7 +156,7 @@ const verification = async (req, res) => {
         success: false,
         message: "Error Encountered",
         errrorCode: error.code,
-        error: error,
+        error: error.message,
       });
     });
 };

@@ -109,8 +109,10 @@ exports.resetPassword = async (req, res) => {
   } catch (error) {
     return res.status(500).json(
       response({
-        message: "Something went wrong wile processing this request",
         success: false,
+        message: "Something went wrong wile processing this request",
+        errorCode: error.code,
+        error: error.message,
       })
     );
   }

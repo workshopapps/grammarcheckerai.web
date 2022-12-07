@@ -68,7 +68,7 @@ const quickTranscribe = async (req, res) => {
       success: false,
       message: "an Error occured",
       errorCode: err.code,
-      error: err,
+      error: err.message,
     });
   }
 };

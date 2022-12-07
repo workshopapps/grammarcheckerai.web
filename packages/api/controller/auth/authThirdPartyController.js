@@ -77,14 +77,10 @@ async function getTokens(code) {
 
     return googleUser.data;
   } catch (error) {
-    return res
-      .status(400)
-      .send({
-        success: false,
-        message: "There was an error",
-        errorCode: error.code,
-        error: error,
-      });
+    if (error.message === "invalid_grant") {
+      return "invalid_grant";
+    }
+    return false;
   }
 }
 
@@ -126,13 +122,15 @@ const getLinkedinAccessToken = async ({
     },
     data: querystring.stringify(values),
   }).catch((error) => {
-    console.log(error);
-    return res.status(400).send({
-      success: false,
-      message: "There was an error",
-      errorCode: error.code,
-      error: error,
-    });
+    console.log(`Failed to fetch auth tokens`);
+    return res
+      .status(400)
+      .send({
+        success: false,
+        message: "Failed to fetch auth tokens",
+        errorCode: error.code,
+        error: error.message,
+      });
   });
 
   if (!res_value) {
@@ -163,12 +161,7 @@ const linkedinAccessToken = async (req, res) => {
       },
     }).catch((error) => {
       console.log(error);
-      return res.status(400).send({
-        success: false,
-        message: "There was an error",
-        errorCode: error.code,
-        error: error,
-      });
+      return res.status(400).json({ message: `Failed to fetch token` });
     });
     const linkedinUser = await axios({
       method: "GET",
@@ -177,12 +170,7 @@ const linkedinAccessToken = async (req, res) => {
         Authorization: `Bearer ${token.access_token}`,
       },
     }).catch((error) => {
-      return res.status(400).send({
-        success: false,
-        message: "There was an error",
-        errorCode: error.code,
-        error: error,
-      });
+      return res.status(400).json({ message: `Failed to fetch token` });
     });
 
     const email = linkedinUserEmail.data.elements[0]["handle~"].emailAddress;
@@ -215,13 +203,8 @@ const linkedinAccessToken = async (req, res) => {
 
     if (!user)
       return res
-      .status(400)
-      .send({
-        success: false,
-        message: "User not created",
-        errorCode: error.code,
-        error: error,
-      });
+        .status(500)
+        .json(response({ success: false, message: "User not created" }));
 
     return res.status(201).json(
       response({
@@ -231,12 +214,14 @@ const linkedinAccessToken = async (req, res) => {
       })
     );
   } catch (error) {
-    return res.status(400).send({
-      success: false,
-      message: "There was an error while processing this request",
-      errorCode: error.code,
-      error: error,
-    });
+    return res.status(500).json(
+      response({
+        success: false,
+        message: "Something went wrong wile processing this request",
+        errorCode: error.code,
+        error: error.message
+      })
+    );
   }
 };
 
@@ -316,13 +301,8 @@ const facebookAccessToken = async (req, res) => {
 
     if (!user)
       return res
-      .status(400)
-      .send({
-        success: false,
-        message: "User not created",
-        errorCode: error.code,
-        error: error,
-      });
+        .status(500)
+        .json(response({ success: false, message: "User not created" }));
 
     return res.status(201).json(
       response({
@@ -332,12 +312,16 @@ const facebookAccessToken = async (req, res) => {
       })
     );
   } catch (error) {
-    return res.status(400).send({
-      success: false,
-      message: "There was an error while processing this request",
-      errorCode: error.code,
-      error: error,
-    });
+    return res
+      .status(500)
+      .json(
+        response({
+          success: false,
+          message: "Something went wrong wile processing this request",
+          errorCode: error.code,
+          error: error.message
+        })
+      );
   }
 };
 

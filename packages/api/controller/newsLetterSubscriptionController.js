@@ -31,6 +31,8 @@ exports.isSubscribe = async (req, res) => {
     res.status(400).json({
       status: false,
       message: "something went wrong while handling your request",
+      errorCode: error.code,
+      error: error.message,
     });
   }
 };

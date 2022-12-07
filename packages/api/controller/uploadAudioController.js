@@ -18,7 +18,7 @@ async function saveAudio(req, res) {
       success: false,
       message: "An error occured",
       errorCode: err.code,
-      error: err,
+      error: err.message,
     });
   }
 }
