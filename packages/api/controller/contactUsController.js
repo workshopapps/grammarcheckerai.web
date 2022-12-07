@@ -1,7 +1,7 @@
 const Contact = require("../database/models/contactUsSchema");
 
 //contact us
-async function contactUsController (req, res) {
+async function contactUsController(req, res) {
   try {
     //create a new contact
     const contact = await Contact.create({
@@ -19,10 +19,12 @@ async function contactUsController (req, res) {
     });
   } catch (error) {
     return res.status(400).json({
-      status: "Fail",
-      message: error.message,
+      sucess: false,
+      message: "Error encountered in sending this message",
+      errorCode: error.code,
+      error: error.message,
     });
   }
-};
+}
 
-module.exports = contactUsController
+module.exports = contactUsController;

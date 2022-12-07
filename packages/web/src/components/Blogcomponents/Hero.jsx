@@ -21,16 +21,7 @@ const Hero = () => {
           >
             The Time Is Now for Conversational AI
           </h1>
-
-          <p className="font-normal text-justify text-sm mb-3">
-            The ease with which we use computers substantially influences the likelihood that technology may disrupt a
-            particular element of life or business. Computers were far less user-friendly when we needed to enter code
-            into a command line only to load a software However, the mouse and graphical user interfaces made things
-            much simpler, and computers grew from specialist goods to become commonplace. Touch advanced the situation
-            further, contributing to the development of a society in which most individuals wear a computer on their
-            wrist in addition to carrying one in their pocket.
-            <br />
-            <br />
+          <p>
             What is the upcoming field that will advance human-computer interactions? conversant AI.
             <br />
             You may believe that voice interfaces are nothing new because talkative smartphone assistants have been
@@ -39,7 +30,7 @@ const Hero = () => {
             <Link
               to="/ai"
               className={`${
-                context.theme === 'dark' ? 'text-[#ffff] ' : 'text-[#f5f3f380]'
+                context.theme === 'dark' ? 'text-[#ffff] ' : 'text-header'
               } text-header text-sm font-bold mb-3 text-left hover:text-[#5d387f]`}
             >
               Read more

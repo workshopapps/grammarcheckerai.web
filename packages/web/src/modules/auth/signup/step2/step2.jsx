@@ -131,7 +131,8 @@ const index = () => {
           }, 6000);
         })
         .catch((err) => {
-          error(err.response.data.message);
+          // error(err.response.data.message);
+          error(err.response.data.data.password);
         });
     } else if (newUserPassword !== newUserConfirmPassword) {
       setIsSamePassword(false);
@@ -220,8 +221,15 @@ const index = () => {
       .catch((err) => error(err.message));
   };
 
-  const handleGoogleAuth = () => {
-    useFetch('https://speakbetter.hng.tech/api/v1/auth/google');
+  // const handleGoogleAuth = () => {
+
+  //   const res = useFetch('https://speakbetter.hng.tech/api/v1/auth/google');
+  //   console.log(res)
+  // };
+
+  const handleGoogleAuth = async () => {
+    const res = useFetch('http://127.0.0.1:5002/v1/auth/google');
+    return res.data;
   };
 
   /* 
@@ -262,7 +270,8 @@ const index = () => {
           )}
           <div className={styles._gs2signupcontent}>
             <div className={styles._authback}>
-              <svg onClick={handlePrev} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <button onClick={handlePrev} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center">
+               <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path
                   fill="none"
                   stroke="currentColor"
@@ -271,7 +280,10 @@ const index = () => {
                   strokeWidth="48"
                   d="M328 112L184 256l144 144"
                 />
-              </svg>
+               </svg> 
+              <span>Go back</span> 
+              </button>
+             
             </div>
             {isTabletorMobile && (
               <p step-theme={context.theme} className={styles._gssignuptophead}>

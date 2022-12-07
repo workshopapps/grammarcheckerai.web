@@ -61,6 +61,7 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
       ) : (
         <>
           {showQuiz ? (
+            <Link to="/startgame">
             <div className={styles.quiz}>
               <div className={styles.quiz_card}>
                 <div onClick={handleClose} className={styles.quiz_card__close}>
@@ -112,6 +113,7 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
                 </div>
               </div>
             </div>
+              </Link>
           ) : (
             ''
           )}

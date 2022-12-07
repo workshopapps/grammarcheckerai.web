@@ -7,6 +7,11 @@
   background-size: cover;
   background-position: center;
 }
+
+._height {
+  min-height: calc(100vh - 80px);
+}
+
 .convo_theme {
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.99), rgba(39, 33, 33, 0.99)),
     url('../../../assets/images/bg.webp');

@@ -1,7 +1,8 @@
 const { Router } = require("express");
 const {isSubscribe} = require("../controller/newsLetterSubscriptionController");
-const newsletterRouter = Router();
+const isSubscribeRouter = Router();
 
-newsletterRouter.post('/newsletter/confirm', isSubscribe)
+isSubscribeRouter.post('/newsletter/confirm', isSubscribe)
 
-module.exports = newsletterRouter;
+module.exports = isSubscribeRouter;
+

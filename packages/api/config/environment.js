@@ -46,6 +46,7 @@ const environment = {
   PAYSTACK_SECRET_KEY: process.env.PAYSTACK_SECRET_KEY,
   PAYSTACK_PUBLIC_KEY: process.env.PAYSTACK_PUBLIC_KEY,
   NEWSLETTER_TEMPLATE_ID: process.env.NEWSLETTER_TEMPLATE_ID,
+  UNSUBSCRIBED_TEMPLATE_ID: process.env.UNSUBSCRIBED_TEMPLATE_ID,
 };
 
 module.exports = { environment };
