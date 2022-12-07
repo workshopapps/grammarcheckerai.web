@@ -66,13 +66,13 @@ const getSubscription = async (req, res) => {
     if (!user) {
       return res.status(400).send({
         success: false,
-        message: "User not subscribed",
+        message: `${user.length} Subscription(s) found for User: ${email}!`,
         data: [],
       });
     }
     return res.status(200).send({
       success: true,
-      message: "User found",
+      message: `${user.length} Subscription(s) found for User: ${email}!`,
       data: user,
     });
   } catch (error) {
@@ -99,7 +99,7 @@ const cancelSubscription = async (req, res) => {
   if (!transaction) {
     return res.status(400).send({
       success: false,
-      message: `No subscription found for ${email}`,
+      message: `${transaction.length} Subscription(s) found for User: ${email}!`,
       data: [],
     });
   }
