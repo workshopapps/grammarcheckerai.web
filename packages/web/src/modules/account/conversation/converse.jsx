@@ -9,7 +9,6 @@ import sendImg from '../../../assets/images/send.svg';
 import pauseImg from '../../../assets/images/pause.svg';
 import { motion, AnimatePresence } from 'framer-motion';
 import Loader from '../../../components/Loader';
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import useGetUserSubscription from '../../../hooks/account/useGetUserSubscription';
 import useMediaRecorder from '@wmik/use-media-recorder';
@@ -17,8 +16,10 @@ import toast from 'react-hot-toast';
 import useSendAudioFile from '../../../hooks/account/useSendAudio';
 import Premium from '../../premium/popup/index';
 import useTheme from '../../../hooks/useTheme';
+import styles from './index.module.css';
+import PropTypes from 'prop-types';
 
-function Converse() {
+function Converse({ noRive = false }) {
   const context = useTheme();
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
   let {
@@ -141,9 +142,11 @@ function Converse() {
         <div className="text-center max-h-5/6 space-y-5 lg:space-y-10">
           {chats.length === 0 ? (
             <>
-              <div className="mx-auto w-36 flex items-center justify-center">
-                <RiveBot size="large" />
-              </div>
+              {!noRive && (
+                <div className="mx-auto w-36 flex items-center justify-center border">
+                  <RiveBot size="large" />
+                </div>
+              )}
               <div className="space-y-4">
                 <h2
                   className={`text-lg ${
@@ -245,9 +248,11 @@ function Converse() {
           </div>
         </div>
       </div>
-      ß
     </>
   );
 }
 
+Converse.propTypes = {
+  noRive: PropTypes.bool,
+};
 export default Converse;
