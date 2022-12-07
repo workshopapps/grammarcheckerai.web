@@ -1,8 +1,8 @@
-import { useContext } from "react"
-import { ThemeContext } from "../lib/context/DarkThemeContext"
+import { useContext } from 'react';
+import { ThemeContext } from '../lib/context/DarkThemeContext';
 
 const useTheme = () => {
-    return useContext(ThemeContext);
-}
+  return useContext(ThemeContext);
+};
 
-export default useTheme
+export default useTheme;
