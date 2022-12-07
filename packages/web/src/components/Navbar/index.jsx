@@ -146,7 +146,7 @@ const Navbar = () => {
               <NavLink
                 to={item.to}
                 key={item.title}
-                onClick={(e) => setActiveNav(e.target.innerText)}
+                onClick={(e) => { setActiveNav(e.target.innerText); setOpen(false); }}
                 className={`${activeNav === item.title ? 'font-bold ' : ''} flex items-center border-l-8 border-y-8 border-white  hover:bg-[#392150] hover:text-white hover:rounded-l-full`}
               >
                 {item.icon}
