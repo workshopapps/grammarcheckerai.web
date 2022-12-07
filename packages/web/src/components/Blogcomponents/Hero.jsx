@@ -8,7 +8,7 @@ const Hero = () => {
   const context = useTheme();
   return (
     <section className="mb-[40px] mt-[40px] md:px-[24px]">
-      <div className="md:flex px-4 justify-between items-center  flex-row-reverse  md:mx-auto md:px-0 xl:max-w-6xl">
+      <div className="md:flex px-4 justify-between items-center md:max-w-3xl flex-row-reverse  md:mx-auto md:px-0 xl:max-w-6xl">
         <div className={`mb-4 h-48 md:w-80 md:mb-0 md:p-0 xl:w-1/2 ${styles._img_height}`}>
           <img src={Heroimg} alt="Heroimg" className={`md:w-full h-full object-cover`} />
         </div>

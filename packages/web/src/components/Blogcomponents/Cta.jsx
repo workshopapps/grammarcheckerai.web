@@ -41,7 +41,7 @@ const Cta = () => {
   return (
     <section>
       <div className={styles._newsletter}>
-        <div className="p-4 mb-5 md:flex justify-between items-center md:max-w-2xl md:mx-auto">
+        <div className="p-4 px-10 mb-10 md:flex justify-between items-center md:max-w-3xl md:mx-auto">
           <img src={Ctaimg} alt="" className="mx-auto mb-3 md:mx-0 w-80" />
 
           <div className="md:pl-8">
