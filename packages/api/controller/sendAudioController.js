@@ -12,19 +12,19 @@ const { translateFromEnglish } = require("../scripts/translate");
 const fileUploadToS3Bucket = require("./uploadBuffer");
 
 const languageMap = {
-  "English": "en",
+  English: "en",
   "English (AU)": "en_au",
   "English (UK)": "en_uk",
   "English (US)": "en_us",
-  "Spanish": "es",
-  "French": "fr",
-  "German": "de",
-  "Italian": "it",
-  "Portuguese": "pt",
-  "Dutch": "nl",
-  "Hindi": "hi",
-  "Japanese": "ja"
-}
+  Spanish: "es",
+  French: "fr",
+  German: "de",
+  Italian: "it",
+  Portuguese: "pt",
+  Dutch: "nl",
+  Hindi: "hi",
+  Japanese: "ja",
+};
 
 async function getBotResponse(req, res) {
   try {
@@ -53,7 +53,10 @@ async function getBotResponse(req, res) {
 
     // Send audio to Assembly AI to get audio transcription
     const assemblyAIAudioUrl = await uploadFileForURL(audioFile.buffer); // upload file and get url
-    const preTranscriptId = await uploadFileUrlToInitiateTranscription(assemblyAIAudioUrl, languageMap[language]); // upload url and initiate transcription
+    const preTranscriptId = await uploadFileUrlToInitiateTranscription(
+      assemblyAIAudioUrl,
+      languageMap[language]
+    ); // upload url and initiate transcription
     const transcribedAudioText = await getTranscriptionFromAssembly(
       preTranscriptId
     ); // process and download transcript
@@ -61,7 +64,8 @@ async function getBotResponse(req, res) {
     if (!transcribedAudioText) {
       return res.status(400).send({
         success: false,
-        message: "Assembly AI: Unknown error or confirm selected language is the same as in audio",
+        message:
+          "Assembly AI: Unknown error or confirm selected language is the same as in audio",
       });
     }
 
@@ -87,7 +91,11 @@ async function getBotResponse(req, res) {
     botReply = botRes.replace("AI:", "").trim();
 
     // translate bot reply if specified language is not English
-    if (!["English", "English (AU)", "English (UK)", "English (US)"].includes(language)) {
+    if (
+      !["English", "English (AU)", "English (UK)", "English (US)"].includes(
+        language
+      )
+    ) {
       botReply = await translateFromEnglish(botReply, language);
     }
 
@@ -130,7 +138,7 @@ async function getBotResponse(req, res) {
         transcribedAudioText,
         correctedText: correctUserResponseInTxt.trim(),
         botReply,
-        language
+        language,
       });
 
       await Message.create({
@@ -150,9 +158,11 @@ async function getBotResponse(req, res) {
       },
     });
   } catch (err) {
-    return res.status(500).send({
+    return res.status(400).send({
       success: false,
-      message: err,
+      message: "An error occured",
+      errorCode: err.code,
+      error: err,
     });
   }
 }

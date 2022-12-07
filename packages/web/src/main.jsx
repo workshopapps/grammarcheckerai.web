@@ -11,8 +11,9 @@ import ScrollToTop from './ScrollToTop';
 import DarkThemeContext from './lib/context/DarkThemeContext';
 const queryClient = new QueryClient();
 
-
-
+// Set tracesSampleRate to 1.0 to capture 100%
+// of transactions for performance monitoring.
+// We recommend adjusting this value in production
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -29,4 +30,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </DarkThemeContext>
   </React.StrictMode>,
 );
-

@@ -15,30 +15,37 @@ const s3 = new AWS.S3({
 });
 
 const fileUploadToS3Bucket = async (dataBuffer) => {
-    try {
-        // Setting up S3 upload parameters
-        const params = {
-            Bucket: GRITTYBUCKETNAME,
-            Key: `${v4()}.mp3`, // File name you want to save as in S3
-            Body: dataBuffer,
-        };
-        
-        // Uploading files to the bucket
-        let promise = new Promise((resolve, reject) => {
-            s3.upload(params, function (err, data) {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    resolve(data.Location);
-                }
-            })
-        })
+  try {
+    // Setting up S3 upload parameters
+    const params = {
+      Bucket: GRITTYBUCKETNAME,
+      Key: `${v4()}.mp3`, // File name you want to save as in S3
+      Body: dataBuffer,
+    };
+
+    // Uploading files to the bucket
+    let promise = new Promise((resolve, reject) => {
+      s3.upload(params, function (err, data) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data.Location);
+        }
+      });
+    });
 
     let fileLocation = await promise;
     return fileLocation;
   } catch (err) {
-    console.error(`Error: ${err.message}`);
+    console.log(err);
+    res
+      .status(400)
+      .send({
+        success: false,
+        message: "An error occured",
+        errorCode: err.code,
+        error: err.message,
+      });
   }
 };
 

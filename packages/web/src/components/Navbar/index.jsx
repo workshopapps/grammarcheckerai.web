@@ -14,12 +14,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { BsList } from 'react-icons/bs';
-import {FaHome} from "react-icons/fa";
-import {FaBlog} from "react-icons/fa";
-import {FaEnvelopeOpenText} from "react-icons/fa";
-import {FaSignInAlt} from "react-icons/fa";
-import {FaUsers} from "react-icons/fa";
-import {FaRegComments} from "react-icons/fa";
+import {FaHome, FaBlog, FaEnvelopeOpenText, FaSignInAlt, FaUsers, FaRegComments  } from "react-icons/fa";
 
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -146,7 +141,7 @@ const Navbar = () => {
               <NavLink
                 to={item.to}
                 key={item.title}
-                onClick={(e) => setActiveNav(e.target.innerText)}
+                onClick={(e) => { setActiveNav(e.target.innerText); setOpen(false); }}
                 className={`${activeNav === item.title ? 'font-bold ' : ''} flex items-center border-l-8 border-y-8 border-white  hover:bg-[#392150] hover:text-white hover:rounded-l-full`}
               >
                 {item.icon}

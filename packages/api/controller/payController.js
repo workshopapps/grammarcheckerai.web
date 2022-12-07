@@ -19,6 +19,18 @@ const createPayment = async (req, res) => {
       currency,
       txref,
     };
+    const isActive = await Subscription.findOne({
+      $and: [{ email: email }, { status: "success" }],
+    });
+    if (isActive) {
+      console.log(isActive)
+      return res.status(200).send({
+        success: true,
+        message: `You have an Active Subscription with ID: ${isActive.txref}`,
+        data: isActive,
+      });
+    }
+
     const result = await Subscription.create(payload);
     res.status(200).send({
       success: true,
@@ -29,7 +41,8 @@ const createPayment = async (req, res) => {
     console.log(error);
     return res.status(400).send({
       success: false,
-      message: `Error: ${error.message}`,
+      message: `There was an error while carrying out this request`,
+      error: error.message
     });
   }
 };
@@ -49,7 +62,7 @@ const getSubscription = async (req, res) => {
         message: "Invalid Email",
       });
     }
-    const user = await Subscription.findOne({ email });
+    const user = await Subscription.find({ email });
     if (!user) {
       return res.status(400).send({
         success: false,
@@ -66,7 +79,9 @@ const getSubscription = async (req, res) => {
     console.log(error);
     return res.status(400).send({
       success: false,
-      message: `Error: ${error.message}`,
+      message: "Error encountered",
+      errorCode: error.code,
+      error: error.message,
     });
   }
 };
@@ -88,38 +103,57 @@ const cancelSubscription = async (req, res) => {
       data: [],
     });
   }
+  if (transaction.status == "cancelled")
+    return res.status(200).send({
+      success: false,
+      message: "Subscription cancelled already!",
+      data: transaction,
+    });
 
   const cancel = await Subscription.findByIdAndUpdate(
     transaction._id,
     { status: "cancelled" },
     { new: true }
   )
-    .then((cancel) => {
+    .then((data) => {
       return res.status(200).send({
         success: true,
         message: "Subscription Cancelled",
-        data: cancel
+        data: data,
       });
     })
     .catch((err) => {
       console.log(err);
       return res.status(400).send({
         success: false,
-        message: `Error: ${err.message}`,
+        message: "Error encountered",
+        errorCode: err.code,
+        error: err.message,
       });
     });
 };
 
 const verification = async (req, res) => {
-  const { txref, email } = req.body;
+  const { txref, email } = req.query;
   let isVerified;
   if (!txref || !email)
     return res
       .status(400)
-      .send({ success: false, message: "Invalid Reference" });
+      .send({ success: false, message: "Invalid Reference or Email" });
   const verifiedTx = await Subscription.findOne({
     $and: [{ email: email }, { txref: txref }],
   });
+  if (!verifiedTx)
+    return res.status(400).send({
+      success: false,
+      message: `No transaction for this ID: ${txref}`,
+    });
+  if (verifiedTx.status == "success")
+    return res.status(200).send({
+      success: true,
+      message: `Transaction with ID: ${txref} verified already`,
+      data: verifiedTx,
+    });
   await axios
     .get(`https://api.paystack.co/transaction/verify/${txref}`, {
       headers: {
@@ -134,13 +168,21 @@ const verification = async (req, res) => {
         { status: success.data.data.status },
         { new: true }
       );
-      return res.status(200).send(success.data);
+      return res.status(200).send({
+        success: true,
+        message: "Verfied successfully",
+        data: success.data,
+      });
     })
     .catch((error) => {
       console.log(error);
-      return res.status(400).send(error.message);
+      return res.status(400).send({
+        success: false,
+        message: "Error Encountered",
+        errrorCode: error.code,
+        error: error.message,
+      });
     });
-  console.log(isVerified);
 };
 
 module.exports = {
