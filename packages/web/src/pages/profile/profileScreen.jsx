@@ -79,12 +79,6 @@ export default function profileScreen() {
   };
 
 
-  const onSignOut = () => {
-    localStorage.clear();
-    window.location.replace('/signin');
-    location.reload();
-  };
-
 
   return (
     <main className="bg-white h-screen pt-2 sm:pt-16">
@@ -168,7 +162,6 @@ export default function profileScreen() {
             <ProfileScreenButton onClick={() => navigate('/me/profile/deleteaccount')} variant="danger">
               Delete Account
             </ProfileScreenButton>
-            <ProfileScreenButton onClick={onSignOut}>Sign Out</ProfileScreenButton>
           </div>
         </div>
       )}

@@ -1,5 +1,6 @@
 import chirpy from '../../../assets/chirpy.svg';
 import talk from '../../../assets/talk.svg';
+import { Link } from 'react-router-dom';
 
 function HomePage() {
   const userData = JSON.parse(localStorage.getItem("isUserDetails"));
@@ -10,9 +11,11 @@ function HomePage() {
         <h3 className=" text-[#393939] sm:text-[32px] font-normal text-[24px] leading-10">
           Hello <b>{userData ? userData.username : ''},</b>
         </h3>
-        <span className="w-[26px] h-[23px]  rounded-[50%] bg-[#8C54BF] p-[22px] text-white text-[18px] flex justify-center items-center font-medium">
-        {userData ? userData.firstName.charAt(0) + '' + userData.lastName.charAt(0) : ""}
-        </span>
+        <Link to="/me/profile">
+          <span className="w-[26px] h-[23px]  rounded-[50%] bg-[#8C54BF] p-[22px] text-white text-[18px] flex justify-center items-center font-medium">
+          {userData ? userData.firstName.charAt(0) + '' + userData.lastName.charAt(0) : ""}
+          </span>
+        </Link>
       </div>
       <div className="flex justify-center items-center flex-col mt-8 font-['inter']">
         <div className="chripy flex flex-col ">
