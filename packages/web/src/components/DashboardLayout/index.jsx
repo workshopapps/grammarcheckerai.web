@@ -15,7 +15,7 @@ function DashboardLayout() {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex flex-col-reverse sm:flex-row min-h-screen">
       <div className="md:w-80 h-full bg-[#F6F6F6] max-h-screen min-h-screen z-[100] hidden sm:block sm:sticky top-0">
         <div className="w-40 mx-auto py-20">
           <Link to='/'>
@@ -50,7 +50,7 @@ function DashboardLayout() {
       </div>
       <MobileMenu />
       <LogOutModal modal={modal} toggleModal={toggleModal} />
-      <div className="w-full pt-5">
+      <div className="w-full h-[90vh] sm:pt-5">
         {/* <div className="py-7 border-b border-slate-300 w-full"></div> */}
         <Outlet />
       </div>
