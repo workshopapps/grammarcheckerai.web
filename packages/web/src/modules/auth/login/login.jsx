@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import LoadingButton from '@mui/lab/LoadingButton';
 import styles from './login.module.css';
-import Logo from '../../../assets/images/signuplogo.png';
+import Logo from '../../../assets/images/logo2.png';
 import Image2 from '../../../assets/Correction 1.png';
 import Image1 from '../../../assets/error 1.png';
 import Image3 from '../../../assets/steponeframeone.png';
@@ -275,7 +275,7 @@ const Index = () => {
         <div className={styles._gs2logincol1} gs2logincol1-theme={context.theme}>
           {isTabletorMobile && (
             <div className={styles._gs2loginlogo}>
-              <img src={Logo} alt="Grammar Checker Logo" />
+              <img src={Logo} alt="Speak Better Logo" />
             </div>
           )}
           <div className={styles._gs2logincontent}>
