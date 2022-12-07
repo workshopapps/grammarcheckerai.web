@@ -1,32 +1,68 @@
-const { userCollection } = require("../database/models/userSchema");
 const newsLetterSubscription = require("../database/models/newsLetterSubscriptionSchema");
-const newsLetterService = require("../services/newsletter");
+const emailService =require("../services/email.service")
+const { environment } = require("../config/environment.js");
+const { NEWSLETTER_TEMPLATE_ID, BASE_URL, UNSUBSCRIBED_TEMPLATE_ID} = environment
 
-//query user collection
+//newsletterSubscription
 exports.isSubscribe = async (req, res) => {
   const { email } = req.body;
   try {
     const subscribed_user = await newsLetterSubscription.findOne({ email });
     if (subscribed_user) {
-      res.status(200).json({
+      return res.status(200).json({
         success: false,
         message: "You have already subscribed",
       });
     }
-    const user_exist = await userCollection.findOne({ email });
-    let user_id;
-    if (user_exist) {
-      user_id = user_exist._id;
-    }
     await newsLetterSubscription.create({
       email,
-      user_id: user_id || null,
     });
-    await newsLetterService.send(email);
+    await emailService({
+      to: {email},
+        templateId: NEWSLETTER_TEMPLATE_ID,
+        dynamic_template_data:  {actionurl:BASE_URL},
+    })
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      message: "something went wrong while handling your request",
+      errorCode: error.code,
+      error: error.message,
+    });
+  }
+};
+
+//unsubscribe as a user
+exports.unSubscribe = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const subscribed_user = await newsLetterSubscription.findOne({ email });
+    if (!subscribed_user) {
+      return res.status(200).json({
+        success: false,
+        message: "You are not a subscriber",
+      });
+    }
+    if(!subscribed_user.subscription){
+      return res.status(400).json({
+        message: "You are already unsubscribed from receiving news letter"
+      })
+    }
+    await newsLetterSubscription.findByIdAndUpdate(
+      subscribed_user._id,
+      {
+        subscription: false
+      }
+    );
+    await emailService({
+      to: {email},
+        templateId: UNSUBSCRIBED_TEMPLATE_ID,
+        dynamic_template_data:  {actionurl:BASE_URL},
+    })
     res.status(200).json({
       success: true,
-      message: "You are now subscribed to our newsletter",
-    });
+      message:"You have unsubscribed succesfully"
+    })
   } catch (error) {
     res.status(400).json({
       status: false,

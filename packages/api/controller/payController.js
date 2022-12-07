@@ -19,6 +19,18 @@ const createPayment = async (req, res) => {
       currency,
       txref,
     };
+    const isActive = await Subscription.findOne({
+      $and: [{ email: email }, { status: "success" }],
+    });
+    if (isActive) {
+      console.log(isActive)
+      return res.status(200).send({
+        success: true,
+        message: `You have an Active Subscription with ID: ${isActive.txref}`,
+        data: isActive,
+      });
+    }
+
     const result = await Subscription.create(payload);
     res.status(200).send({
       success: true,
@@ -29,7 +41,8 @@ const createPayment = async (req, res) => {
     console.log(error);
     return res.status(400).send({
       success: false,
-      message: `Error: ${error.message}`,
+      message: `There was an error while carrying out this request`,
+      error: error.message
     });
   }
 };
@@ -49,7 +62,7 @@ const getSubscription = async (req, res) => {
         message: "Invalid Email",
       });
     }
-    const user = await Subscription.findOne({ email });
+    const user = await Subscription.find({ email });
     if (!user) {
       return res.status(400).send({
         success: false,
@@ -131,47 +144,45 @@ const verification = async (req, res) => {
     $and: [{ email: email }, { txref: txref }],
   });
   if (!verifiedTx)
-    return res
-      .status(400)
-      .send({
-        success: false,
-        message: `No transaction for this ID: ${txref}`,
-      });
+    return res.status(400).send({
+      success: false,
+      message: `No transaction for this ID: ${txref}`,
+    });
   if (verifiedTx.status == "success")
-  return res.status(200).send({
-    success: true,
-    message: `Transaction with ID: ${txref} verified already`,
-    data: verifiedTx,
-  });
-    await axios
-      .get(`https://api.paystack.co/transaction/verify/${txref}`, {
-        headers: {
-          authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
-          "content-type": "application/json",
-          "cache-control": "no-cache",
-        },
-      })
-      .then(async (success) => {
-        isVerified = await Subscription.findByIdAndUpdate(
-          verifiedTx._id,
-          { status: success.data.data.status },
-          { new: true }
-        );
-        return res.status(200).send({
-          success: true,
-          message: "Verfied successfully",
-          data: success.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        return res.status(400).send({
-          success: false,
-          message: "Error Encountered",
-          errrorCode: error.code,
-          error: error.message,
-        });
+    return res.status(200).send({
+      success: true,
+      message: `Transaction with ID: ${txref} verified already`,
+      data: verifiedTx,
+    });
+  await axios
+    .get(`https://api.paystack.co/transaction/verify/${txref}`, {
+      headers: {
+        authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
+        "content-type": "application/json",
+        "cache-control": "no-cache",
+      },
+    })
+    .then(async (success) => {
+      isVerified = await Subscription.findByIdAndUpdate(
+        verifiedTx._id,
+        { status: success.data.data.status },
+        { new: true }
+      );
+      return res.status(200).send({
+        success: true,
+        message: "Verfied successfully",
+        data: success.data,
       });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(400).send({
+        success: false,
+        message: "Error Encountered",
+        errrorCode: error.code,
+        error: error.message,
+      });
+    });
 };
 
 module.exports = {
