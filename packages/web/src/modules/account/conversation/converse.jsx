@@ -24,7 +24,7 @@ function Converse({ noRive = false }) {
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
   let {
     status,
-    mediaBlob: audioResult,
+    mediaBlob,
     stopRecording,
     pauseRecording,
     startRecording,
@@ -32,9 +32,10 @@ function Converse({ noRive = false }) {
     clearMediaBlob,
   } = useMediaRecorder({
     recordScreen: false,
-    blobOptions: { type: 'audio/wav' },
+    // blobOptions: { type: 'audio/wav' },
     mediaStreamConstraints: { audio: true, video: false },
   });
+  
 
   const [second, setSecond] = useState('00');
   const [minute, setMinute] = useState('00');
@@ -64,13 +65,13 @@ function Converse({ noRive = false }) {
     setOpen(false);
   };
 
-  const submitAudioHandler = () => {
-    setCounter(0);
-    setBeginRecording(false);
-    stopRecording();
+  let blob = new Blob([mediaBlob], {
+    type: 'audio/wav'
+  });
 
+  const submitAudioHandler = () => {
     const soln = new FormData();
-    soln.append('file', audioResult);
+    soln.append('file', blob);
     soln.append('language', language);
     if (second <= '20' || (userSubscription?.value && userSubscription?.value.length !== 0)) {
       sendAudio
@@ -122,17 +123,23 @@ function Converse({ noRive = false }) {
   }, [beginRecording, counter]);
 
   const deleteRecording = () => {
+    setSecond("00");
+    setMinute("00");
+    setCounter(0);
+    setBeginRecording(false);
+    stopRecording();
+    setChats("")
+  };
+
+  const sendAudioHandler = () => {
+    submitAudioHandler();
+    setSecond("00");
+    setMinute("00");
     setCounter(0);
     setBeginRecording(false);
     stopRecording();
   };
 
-  const sendAudioHandler = () => {
-    submitAudioHandler();
-    setCounter(0);
-    setBeginRecording(false);
-    stopRecording();
-  };
 
   return (
     <>
@@ -184,7 +191,7 @@ function Converse({ noRive = false }) {
                 onClick={() => {
                   console.log(status);
                   setBeginRecording((prevstate) => !prevstate);
-                  status === 'idle' || status === 'stopped' ? startRecording() : null;
+                  status === 'idle' || status === 'stopped' || status === 'paused' ? startRecording() : stopRecording();
                 }}
                 className={`rounded-full h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
                   status === 'recording' ? styles._bot_mic : ''
@@ -203,7 +210,7 @@ function Converse({ noRive = false }) {
                   {status === 'idle' ? (
                     <>
                       {chats.length === 0 ? (
-                        <p className="text-[#262626] pt-6">Tap the Microphone to begin</p>
+                        <p className="text-[#262626] pt-6">Tap the Microphone to begin and stop recording.</p>
                       ) : (
                         <button
                           className="px-7 rounded-xl py-2 border border-[#5D387F]"
