@@ -1,10 +1,13 @@
 import React from 'react';
+import useTheme from '../../hooks/useTheme';
 import Heroimg from '../../assets/blogimg/Frame 1000001903.svg';
 import Cta from '../../components/Blogcomponents/Cta';
 import Footer from '../../modules/static/landing-page/Footer';
 import { Link } from "react-router-dom"
 
 const Ai = () => {
+  const context = useTheme();
+  const dark = context.theme === 'dark';
   return (
     <div>
     <section className="mb-10">

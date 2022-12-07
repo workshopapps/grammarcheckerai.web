@@ -26,40 +26,41 @@ function LanguageOption({ openBar, changeLanguage, languageList }) {
           <img className="absolute right-3 block" src={searchIcon} alt="Find a language" />
         </div>
         <div className="flex flex-col gap-8 h-6/12">
-          {languageList
-            .filter((obj) => {
-              if (searchTerm === '' || obj.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                return obj;
-              } else if (languageList.every((val) => !val.name.toLowerCase().includes(searchTerm.toLowerCase()))) {
-                // If There is no result then show all list
-                return obj;
-              }
-            })
-            .map((language, index) => {
-              return (
-                <div key={index} className="relative flex justify-between items-center">
-                  <button
-                    className="absolute w-full h-full"
-                    onClick={() => {
-                      changeLanguage(language);
-                    }}
-                  ></button>
-                  <div className="w-full flex items-center gap-3 font-normal">
-                    <img src={language.flag} alt={language.name} />
-                    <p>{language.name}</p>
+          {languageList.every((val) => !val.name.toLowerCase().includes(searchTerm.toLowerCase())) ? (
+            <div>No results found</div>
+          ) : (
+            languageList
+              .filter((obj) => {
+                if (searchTerm === '' || obj.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                  return obj;
+                }
+              })
+              .map((language, index) => {
+                return (
+                  <div key={index} className="relative flex justify-between items-center">
+                    <button
+                      className="absolute w-full h-full"
+                      onClick={() => {
+                        changeLanguage(language);
+                      }}
+                    ></button>
+                    <div className="w-full flex items-center gap-3 font-normal">
+                      <img src={language.flag} alt={language.name} />
+                      <p>{language.name}</p>
+                    </div>
+                    <div
+                      className={
+                        language.selected
+                          ? 'w-6 h-6 rounded-full bg-purple-500 border-2 flex justify-center items-center'
+                          : 'w-6 h-6 rounded-full bg-white border-2 border-gray-300'
+                      }
+                    >
+                      {language.selected && <img src={checkIcon} alt="check" />}
+                    </div>
                   </div>
-                  <div
-                    className={
-                      language.selected
-                        ? 'w-6 h-6 rounded-full bg-purple-500 border-2 flex justify-center items-center'
-                        : 'w-6 h-6 rounded-full bg-white border-2 border-gray-300'
-                    }
-                  >
-                    {language.selected && <img src={checkIcon} alt="check" />}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })
+          )}
         </div>
       </div>
     </div>
