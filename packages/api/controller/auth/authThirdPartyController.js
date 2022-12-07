@@ -64,7 +64,6 @@ async function getTokens(code) {
       id_token: res.data.id_token,
       access_token: res.data.access_token,
     };
-    console.log(data);
     const googleUser = await axios.get(
       `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${data.access_token}`,
       {
@@ -78,9 +77,16 @@ async function getTokens(code) {
     return googleUser.data;
   } catch (error) {
     if (error.message === "invalid_grant") {
-      return "invalid_grant";
+      return res
+        .status(400)
+        .send({ success: false, message: "Invalid Grant " });
     }
-    return false;
+    return res.status(400).send({
+      success: false,
+      message: "Error Encountered",
+      errorCode: error.code,
+      error: error.message,
+    });
   }
 }
 
@@ -122,15 +128,12 @@ const getLinkedinAccessToken = async ({
     },
     data: querystring.stringify(values),
   }).catch((error) => {
-    console.log(`Failed to fetch auth tokens`);
-    return res
-      .status(400)
-      .send({
-        success: false,
-        message: "Failed to fetch auth tokens",
-        errorCode: error.code,
-        error: error.message,
-      });
+    return res.status(400).send({
+      success: false,
+      message: "Failed to fetch auth tokens",
+      errorCode: error.code,
+      error: error.message,
+    });
   });
 
   if (!res_value) {
@@ -161,7 +164,14 @@ const linkedinAccessToken = async (req, res) => {
       },
     }).catch((error) => {
       console.log(error);
-      return res.status(400).json({ message: `Failed to fetch token` });
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: `Failed to fetch token`,
+          errorCode: error.code,
+          error: error.message,
+        });
     });
     const linkedinUser = await axios({
       method: "GET",
@@ -170,7 +180,12 @@ const linkedinAccessToken = async (req, res) => {
         Authorization: `Bearer ${token.access_token}`,
       },
     }).catch((error) => {
-      return res.status(400).json({ message: `Failed to fetch token` });
+      return res.status(400).json({
+        success: false,
+        message: `Failed to fetch token`,
+        errorCode: error.code,
+        error: error.message,
+      });
     });
 
     const email = linkedinUserEmail.data.elements[0]["handle~"].emailAddress;
@@ -219,7 +234,7 @@ const linkedinAccessToken = async (req, res) => {
         success: false,
         message: "Something went wrong wile processing this request",
         errorCode: error.code,
-        error: error.message
+        error: error.message,
       })
     );
   }
@@ -260,7 +275,12 @@ const facebookAccessToken = async (req, res) => {
     const accessToken = await axios.get(accessTokenUrl);
 
     if (!accessToken.data.access_token) {
-      return res.status(400).json({ message: `Failed to fetch token` });
+      return res.status(400).json({
+        success: false,
+        message: `Failed to fetch token`,
+        errorCode: error.code,
+        error: error.message,
+      });
     }
     let access_token = accessToken.data.access_token;
 
@@ -301,7 +321,7 @@ const facebookAccessToken = async (req, res) => {
 
     if (!user)
       return res
-        .status(500)
+        .status(400)
         .json(response({ success: false, message: "User not created" }));
 
     return res.status(201).json(
@@ -312,16 +332,14 @@ const facebookAccessToken = async (req, res) => {
       })
     );
   } catch (error) {
-    return res
-      .status(500)
-      .json(
-        response({
-          success: false,
-          message: "Something went wrong wile processing this request",
-          errorCode: error.code,
-          error: error.message
-        })
-      );
+    return res.status(500).json(
+      response({
+        success: false,
+        message: "Something went wrong wile processing this request",
+        errorCode: error.code,
+        error: error.message,
+      })
+    );
   }
 };
 

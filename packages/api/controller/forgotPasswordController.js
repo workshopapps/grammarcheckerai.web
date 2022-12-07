@@ -40,15 +40,16 @@ exports.requestForgotPassword = async (req, res) => {
 
     return res.status(200).json(
       response({
-        message: "A mail was just sent to this email address",
+        message: `An email has been sent to ${email}`,
         success: true,
       })
     );
   } catch (error) {
     return res.status(400).json(
       response({
-        message: "Something went wrong wile processing this request",
+        message: "Something went wrong while processing this request",
         success: false,
+        error: error.message,
       })
     );
   }

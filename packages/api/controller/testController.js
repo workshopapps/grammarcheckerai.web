@@ -45,7 +45,6 @@ exports.home = async (req, res) => {
     })
     .catch((err) => {
       if (err.response.status != 404) {
-        console.log(err.response);
         status.push({ sendAudio: { status: "ok" } });
       }
     });

@@ -14,7 +14,6 @@ exports.history = async (req, res) => {
   }
   if (conversation) {
     conversation_id = data[0]._id;
-    console.log(conversation_id);
   }
   messageHistory = await Message.find({
     conversationId: conversation_id,
