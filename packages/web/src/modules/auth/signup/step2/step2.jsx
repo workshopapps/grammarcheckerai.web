@@ -269,7 +269,8 @@ const index = () => {
           )}
           <div className={styles._gs2signupcontent}>
             <div className={styles._authback}>
-              <svg onClick={handlePrev} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <button onClick={handlePrev} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center">
+               <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path
                   fill="none"
                   stroke="currentColor"
@@ -278,7 +279,10 @@ const index = () => {
                   strokeWidth="48"
                   d="M328 112L184 256l144 144"
                 />
-              </svg>
+               </svg> 
+              <span>Go back</span> 
+              </button>
+             
             </div>
             {isTabletorMobile && (
               <p step-theme={context.theme} className={styles._gssignuptophead}>
