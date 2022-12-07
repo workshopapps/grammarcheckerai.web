@@ -29,22 +29,22 @@ const [anchorEl, setAnchorEl] = useState(null);
   return (
     <>
     <LogOutModal modal={modal} toggleModal={toggleModal} />
-    <div className='sm:hidden flex absolute bottom-0 w-full bg-[#F6F6F6]'>
-        <div className="w-full flex justify-between text-xs py-5 px-5">
+    <div className='sm:hidden sticky flex bottom-0 w-full bg-[#F6F6F6]'>
+        <div className="w-full flex justify-between text-xs py-3 px-5">
           <NavLink className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-[#5D387F]' : 'text-slate-700'} transition ease-in`} to="/me/home">
-            <IoHomeOutline size={36} />
+            <IoHomeOutline size={30} />
             Home
           </NavLink>
           <NavLink className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-[#5D387F]' : 'text-slate-700'} transition ease-in`} to="/me/history">
-            <BsClock size={36} />
+            <BsClock size={30} />
             History
           </NavLink>
           <NavLink className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-[#5D387F]' : 'text-slate-700'} transition ease-in`} to="/me/import">
-            <BsDownload size={36} />
+            <BsDownload size={30} />
             Import
           </NavLink>
           <NavLink className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-[#5D387F]' : 'text-slate-700'} transition ease-in`} to="/me/subscription">
-            <BsCashCoin size={36} />
+            <BsCashCoin size={30} />
             Billing
           </NavLink>
         </div>
