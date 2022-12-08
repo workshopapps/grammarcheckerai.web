@@ -131,7 +131,7 @@ const index = (props) => {
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Monthly</p>
-                    <h2>$10.90</h2>
+                    <h2>₦3500</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
                     <ul>
@@ -147,7 +147,7 @@ const index = (props) => {
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Quarterly</p>
-                    <h2>$10.90</h2>
+                    <h2>₦3333.3</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
                     <ul>
@@ -163,7 +163,7 @@ const index = (props) => {
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Annually</p>
-                    <h2>$10.90</h2>
+                    <h2>₦2916.6</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
                     <ul>
@@ -182,7 +182,7 @@ const index = (props) => {
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbInterval}>Monthly</h5>
                       <p>
-                        $10.90<span> / month</span>
+                        ₦3500<span> / month</span>
                       </p>
                       <button
                         onClick={() =>
@@ -199,10 +199,10 @@ const index = (props) => {
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbIntervalPromo}>
                         <span>Quaterly</span>
-                        <span>Billed Quaterly - $35.6</span>
+                        <span>Billed Quaterly - ₦10000</span>
                       </h5>
                       <p>
-                        $8.90<span> / month</span>
+                        ₦3333.3<span> / month</span>
                       </p>
                       <button
                         onClick={() =>
@@ -219,10 +219,10 @@ const index = (props) => {
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbIntervalPromo}>
                         <span>Quaterly</span>
-                        <span>Billed Annually - $35.6</span>
+                        <span>Billed Annually - ₦35000</span>
                       </h5>
                       <p>
-                        $5.90<span> / month</span>
+                        ₦2916.6<span> / month</span>
                       </p>
                       <button
                         onClick={() =>

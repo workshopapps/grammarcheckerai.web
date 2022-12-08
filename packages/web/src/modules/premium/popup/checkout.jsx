@@ -190,12 +190,12 @@ const Checkout = (props) => {
   };
 
   // you can call this function anything
-  const onSuccess = (reference) => {
+  const onSuccess = async (reference) => {
     const user = JSON.parse(localStorage.getItem('isUserDetails'));
 
     // Implementation for whatever you want to do with reference and after success call.
     // console.log(reference.trxref);
-    authPay
+    await authPay
       .mutateAsync({
         email: user.email,
         name: user.firstName + ' ' + user.lastName,
@@ -216,15 +216,15 @@ const Checkout = (props) => {
         toast(() => (
           <span className={styles._notifs}>
             <b>Subscription Succesfully!</b>
-            <p>Redirecting in 5 seconds...</p>
-            <button onClick={''}>Go to Dashboard</button>
+            <p>Redirecting to dashboard...</p>
+            <button onClick={handleNavigate}>Go to Dashboard</button>
           </span>
         ));
       })
       .then(() => {
         setTimeout(() => {
-          // navigate('/me/home');
-        }, 5000);
+          navigate('/me/home');
+        }, 2000);
       })
       .catch((err) => {
         error(err.message);
@@ -234,7 +234,7 @@ const Checkout = (props) => {
   // you can call this function anything
   const onClose = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
-    console.log('closed');
+    setLoading(false);
   };
   const config = {
     reference: new Date().getTime().toString(),
@@ -249,7 +249,7 @@ const Checkout = (props) => {
     toast.dismiss();
     navigate('/me/home');
   };
-  const handlePayment = () => {
+  const handlePayment = async () => {
     setUserLSEmail(JSON.parse(localStorage.getItem('isUserDetails')).email);
 
     if (props.userIsSubscribed) {
