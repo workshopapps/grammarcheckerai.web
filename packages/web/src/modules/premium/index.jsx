@@ -4,7 +4,6 @@ import { MdPayments } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import Table from '@mui/material/Table';
-import { Button } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -20,7 +19,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 const Subscription = () => {
   const navigate = useNavigate();
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails')).email);
-
+  const [loading, setLoading] = React.useState(false);
   const premiumCancel = useCancelPremium();
 
   const handlePremium = () => {
@@ -29,18 +28,26 @@ const Subscription = () => {
   const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
 
   const handleProCancellation = () => {
-    console.log(userSubscription);
-    premiumCancel
-      .mutateAsync({
-        email: JSON.parse(localStorage.getItem('isUserDetails'))?.email,
-        txref: userSubscription?.value?.txref,
-      })
-      .then((res) => {
-        toast.success('Subscription Cancelled Succesfully');
-        userSubscription.refetch();
-        console.log('response', res);
-        console.log('new', userSubscription);
+    // console.log(userSubscription?.value);
+    setLoading(true);
+    if (userSubscription?.value && userSubscription?.value.length !== 0) {
+      userSubscription?.value?.map((item) => {
+        if (item.status === 'success') {
+          premiumCancel
+            .mutateAsync({
+              email: item?.email,
+              txref: item?.txref,
+            })
+            .then(() => {
+              setLoading(false);
+              toast.success('Subscription Cancelled Succesfully');
+              userSubscription.refetch();
+              // console.log('response', res);
+              // console.log('new', userSubscription);
+            });
+        }
       });
+    }
   };
 
   return (
@@ -77,12 +84,7 @@ const Subscription = () => {
             </Table>
           </TableContainer>
           <div className={styles._sbCancel}>
-            <LoadingButton
-              loading={premiumCancel.loading}
-              variant="outlined"
-              color="secondary"
-              onClick={handleProCancellation}
-            >
+            <LoadingButton loading={loading} variant="outlined" color="secondary" onClick={handleProCancellation}>
               Cancel Subscription
             </LoadingButton>
           </div>

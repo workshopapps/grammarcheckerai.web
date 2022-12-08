@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Button, Dialog, IconButton } from '@mui/material';
+import { Button, Dialog } from '@mui/material';
 import style from './popup.module.css';
 import styles from './checkout.module.css';
 import React, { useState, useEffect } from 'react';
@@ -37,6 +37,7 @@ const Checkout = (props) => {
 
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
+  const [loading, setLoading] = useState(false);
 
   const authLogin = useLogin();
   const authSignup = useSignup();
@@ -193,7 +194,7 @@ const Checkout = (props) => {
     const user = JSON.parse(localStorage.getItem('isUserDetails'));
 
     // Implementation for whatever you want to do with reference and after success call.
-    console.log(reference.trxref);
+    // console.log(reference.trxref);
     authPay
       .mutateAsync({
         email: user.email,
@@ -211,13 +212,14 @@ const Checkout = (props) => {
         );
       })
       .then(() => {
-        // toast(() => (
-        //   <span>
-        //     Subscription <b>Succesfully!</b>
-        //     <p>Redirecting in 5 seconds...</p>
-        //     <button onClick={''}>Go to Dashboard</button>
-        //   </span>
-        // ));
+        setLoading(true);
+        toast(() => (
+          <span className={styles._notifs}>
+            <b>Subscription Succesfully!</b>
+            <p>Redirecting in 5 seconds...</p>
+            <button onClick={''}>Go to Dashboard</button>
+          </span>
+        ));
       })
       .then(() => {
         setTimeout(() => {
@@ -252,8 +254,8 @@ const Checkout = (props) => {
 
     if (props.userIsSubscribed) {
       toast(() => (
-        <span>
-          <b>User already subscribed!</b>
+        <span className={styles._notifs}>
+          <b>You are already subscribed!</b>
           <Button variant="outlined" color="secondary" onClick={handleNavigate}>
             Go to Dashboard
           </Button>
@@ -262,6 +264,7 @@ const Checkout = (props) => {
       return;
     }
     if (userLSEmail && userLSEmail !== '') {
+      setLoading(true);
       initializePayment(onSuccess, onClose);
     }
   };
@@ -303,12 +306,7 @@ const Checkout = (props) => {
                     <div className={styles._cpSummary}>
                       <h3>Plan: {props.duration}</h3>
                       <h3>Amount: NGN {props.amount}</h3>
-                      <LoadingButton
-                        loading={authPay.isLoading}
-                        variant="outlined"
-                        type="button"
-                        onClick={handlePayment}
-                      >
+                      <LoadingButton loading={loading} variant="outlined" type="button" onClick={handlePayment}>
                         Proceed to Payment
                       </LoadingButton>
                     </div>
@@ -319,12 +317,7 @@ const Checkout = (props) => {
                       <div className={styles._cpSummary}>
                         <h3>Plan: {props.duration}</h3>
                         <h3>Amount: NGN {props.amount}</h3>
-                        <LoadingButton
-                          loading={authPay.isLoading}
-                          variant="contained"
-                          type="button"
-                          onClick={handlePayment}
-                        >
+                        <LoadingButton loading={loading} variant="contained" type="button" onClick={handlePayment}>
                           Proceed to Payment
                         </LoadingButton>
                       </div>
@@ -478,12 +471,7 @@ const Checkout = (props) => {
                     <div className={styles._cpSummary}>
                       <h3>Plan: {props.duration}</h3>
                       <h3>Amount: NGN {props.amount}</h3>
-                      <LoadingButton
-                        loading={authPay.isLoading}
-                        variant="contained"
-                        type="button"
-                        onClick={handlePayment}
-                      >
+                      <LoadingButton loading={loading} variant="outlined" type="button" onClick={handlePayment}>
                         Proceed to Payment
                       </LoadingButton>
                     </div>
