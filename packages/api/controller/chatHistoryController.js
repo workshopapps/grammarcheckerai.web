@@ -1,28 +1,23 @@
-const { userResponse } = require("../database/models/userResponseSchema");
-const { conversation } = require("../database/models/conversationSchema");
-const { message } = require("../database/models/messageSchema");
-const { botResponse } = require("../database/models/botResponseSchema");
+const message = require("../database/models/messageSchema");
+const { userCollection } = require("../database/models/userSchema");
 
-exports.history = async (req, res) => {
-  const { userId } = req.params;
-  let conversation_id;
-  let conversation = await conversation.find({ userId: userId });
-  if (!conversation) {
-    return res
-      .status(400)
-      .send({ success: false, message: "No history available" });
+const chatHistory = async (req, res) => {
+  const { userId } = req.query;
+  const user = await userCollection.findById(userId);
+  if (!user) {
+    return res.status(400).send({
+      success: false,
+      message: "No user found!",
+    });
   }
-  if (conversation) {
-    conversation_id = data[0]._id;
-  }
-  messageHistory = await Message.find({
-    conversationId: conversation_id,
-  }).populate({
+  let messages = await message.find({ userId }).populate({
     path: "userResponseId botResponseId",
   });
   return res.status(200).json({
-    conversationHistory: messageHistory,
+    conversationHistory: messages,
     pageTitle: "correction history endpoint",
     status: "success",
   });
 };
+
+module.exports = chatHistory;

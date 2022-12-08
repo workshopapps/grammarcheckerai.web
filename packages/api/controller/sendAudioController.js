@@ -2,6 +2,8 @@ const { parseBuffer } = require("music-metadata");
 const UserResponse = require("../database/models/userResponseSchema");
 const BotResponse = require("../database/models/botResponseSchema");
 const Message = require("../database/models/messageSchema");
+const Subscription = require("../database/models/subscriptionSchema");
+const { userCollection } = require("../database/models/userSchema");
 const grammarCheckHandler = require("../scripts/grammarCheck");
 const { chatHandler, appendConversationToChatLog } = require("../scripts/chat");
 const {
@@ -29,7 +31,7 @@ const languageMap = {
 
 async function getBotResponse(req, res) {
   try {
-    const conversationId = req.body.conversationId;
+    const userId = req.body.userId;
     const language = req.body.language || "English";
     const audioFile = req.file; // retrieves file buffer and metadata set by multer
 
@@ -41,7 +43,23 @@ async function getBotResponse(req, res) {
       });
     }
     const metadata = await parseBuffer(audioFile.buffer, audioFile.mimetype);
-    console.log(metadata.format.duration.toFixed(2));
+    const audioLength = metadata.format.duration.toFixed(2);
+    // 1. If userId, Get user's email
+    const userEmail = userId
+      ? (await userCollection.findById(userId))?.email
+      : null;
+
+    const isSubscriber = userEmail
+      ? (await Subscription.findOne({ email: userEmail }))?.active
+      : null;
+
+    // 2. Check if user is a premiumm user
+    if (!isSubscriber && audioLength > 20) {
+      return res.status(403).send({
+        success: false,
+        message: "Recording above 20 seconds is a premium feature. Go premium!",
+      });
+    }
     // checks if specified language is not available
     if (!languageMap[language]) {
       return res.status(400).send({
@@ -116,7 +134,7 @@ async function getBotResponse(req, res) {
     let userResponse, botResponse;
 
     // for not logged in users
-    if (!conversationId) {
+    if (!userId) {
       userResponse = {
         audioURL: audioUrl,
         createdAt: new Date(),
@@ -145,7 +163,7 @@ async function getBotResponse(req, res) {
       });
 
       await Message.create({
-        conversationId,
+        userId,
         userResponseId: userResponse._id,
         botResponseId: botResponse._id,
       });
@@ -157,7 +175,7 @@ async function getBotResponse(req, res) {
       data: {
         userResponse,
         botResponse,
-        conversationId: conversationId || null,
+        userId: userId || null,
       },
     });
   } catch (err) {
@@ -165,7 +183,7 @@ async function getBotResponse(req, res) {
       success: false,
       message: "An error occured",
       errorCode: err.code,
-      error: err,
+      error: err.message,
     });
   }
 }
