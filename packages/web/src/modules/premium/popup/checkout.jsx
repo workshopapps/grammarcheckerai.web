@@ -84,7 +84,7 @@ const Checkout = (props) => {
         // console.log(oBJ.data);
         localStorage.setItem('isUserDetails', JSON.stringify(oBJ.data));
       })
-      .catch((error) => error('error', error));
+      .catch((error) => error(error));
   };
   const useVerify = async (url, token) => {
     var requestOptions = {
@@ -104,7 +104,7 @@ const Checkout = (props) => {
           'sk_test_11cd20d24df0f472d32521e1bfb3c00608593c54',
         );
       })
-      .catch((error) => error('error', error));
+      .catch((error) => error(error));
   };
   const handlelogin = (e) => {
     e.preventDefault();

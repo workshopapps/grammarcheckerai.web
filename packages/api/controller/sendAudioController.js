@@ -12,7 +12,7 @@ const {
   getTranscriptionFromAssembly,
 } = require("../scripts/assemblyAI.js");
 const { translateFromEnglish } = require("../scripts/translate");
-const fileUploadToS3Bucket = require("./uploadBuffer");
+const fileUploadToS3Bucket = require("./uploadBuffer"); 
 
 const languageMap = {
   english: "en",
@@ -34,7 +34,7 @@ async function getBotResponse(req, res) {
     const userId = req.body.userId;
     const language = req.body.language?.toLowerCase() || "english";
     const audioFile = req.file; // retrieves file buffer and metadata set by multer
-
+    
     // checks if file is available
     if (!audioFile) {
       return res.status(400).send({
@@ -113,7 +113,7 @@ async function getBotResponse(req, res) {
 
     // translate bot reply if specified language is not English
     if (
-      !["English", "English (AU)", "English (UK)", "English (US)"].includes(
+      !["english", "english (au)", "english (uk)", "english (us)"].includes(
         language
       )
     ) {
@@ -126,7 +126,6 @@ async function getBotResponse(req, res) {
       chatLog
     );
     req.session.chatLog = chatLog; // set updated chat log to session
-    console.log(req.session.chatLog);
 
     // await file upload to aws s3 bucket to get file url
     audioUrl = await audioUrl;
