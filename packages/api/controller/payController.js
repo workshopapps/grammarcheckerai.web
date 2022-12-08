@@ -1,7 +1,8 @@
 const Subscription = require("../database/models/subscriptionSchema");
+const emailService = require("../services/email.service");
 const axios = require("axios");
 const { environment } = require("../config/environment");
-const { PAYSTACK_SECRET_KEY } = environment;
+const { PAYSTACK_SECRET_KEY, BASE_URL, PREMIUM_TEMPLATE_ID } = environment;
 
 const createPayment = async (req, res) => {
   let email = req.body.email;
@@ -23,7 +24,7 @@ const createPayment = async (req, res) => {
       $and: [{ email: email }, { status: "success" }],
     });
     if (isActive) {
-      console.log(isActive)
+      console.log(isActive);
       return res.status(200).send({
         success: true,
         message: `You have an Active Subscription with ID: ${isActive.txref}`,
@@ -32,9 +33,15 @@ const createPayment = async (req, res) => {
     }
 
     const result = await Subscription.create(payload);
+    await emailService({
+      to: email,
+      templateId: PREMIUM_TEMPLATE_ID,
+      dynamic_template_data: { actionurl: BASE_URL },
+    });
     res.status(200).send({
       success: true,
-      message: "Subscription created",
+      message:
+        "You have successfully subscribed for our premium packages on SpeakBetter",
       data: result,
     });
   } catch (error) {
@@ -42,7 +49,7 @@ const createPayment = async (req, res) => {
     return res.status(400).send({
       success: false,
       message: `There was an error while carrying out this request`,
-      error: error.message
+      error: error.message,
     });
   }
 };
