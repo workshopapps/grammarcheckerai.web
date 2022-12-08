@@ -22,20 +22,12 @@ import chirpy from '../../../assets/chirpy.svg';
 function Converse({ noRive = false }) {
   const context = useTheme();
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
-  let {
-    status,
-    mediaBlob,
-    stopRecording,
-    pauseRecording,
-    startRecording,
-    resumeRecording,
-    clearMediaBlob,
-  } = useMediaRecorder({
-    recordScreen: false,
-    // blobOptions: { type: 'audio/wav' },
-    mediaStreamConstraints: { audio: true, video: false },
-  });
-  
+  let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
+    useMediaRecorder({
+      recordScreen: false,
+      // blobOptions: { type: 'audio/wav' },
+      mediaStreamConstraints: { audio: true, video: false },
+    });
 
   const [second, setSecond] = useState('00');
   const [minute, setMinute] = useState('00');
@@ -45,6 +37,7 @@ function Converse({ noRive = false }) {
   const [open, setOpen] = useState(false);
   const [language, setLanguage] = React.useState('English');
   const error = (message) => toast.error(message);
+  const [userSubsList, setUserSubsList] = React.useState([]);
 
   const [chats, setChats] = React.useState([]);
   const navigate = useNavigate();
@@ -66,39 +59,46 @@ function Converse({ noRive = false }) {
   };
 
   let blob = new Blob([mediaBlob], {
-    type: 'audio/wav'
+    type: 'audio/wav',
   });
+
+  const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
 
   const submitAudioHandler = () => {
     const soln = new FormData();
     soln.append('file', blob);
     soln.append('language', language);
-    if (second <= '20' || (userSubscription?.value && userSubscription?.value.length !== 0)) {
-      sendAudio
-        .mutateAsync(soln)
-        .then((res) => {
-          const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
-            res.data.data.botResponse;
-          setChats((prevState) => [
-            ...prevState,
-            {
-              botReply,
-              correctedText,
-              createdAt,
-              language,
-              transcribedAudioText,
-              updatedAt,
-            },
-          ]);
-        })
-        .catch((err) => {
-          error(err?.response?.data?.message);
-          clearMediaBlob();
-        });
-    } else {
-      setOpen(true);
+    if (second <= '20' || (userSubscription?.value && userSubscription?.value?.length !== 0)) {
+      setUserSubsList(userSubscription?.value);
+      checkForArray(userSubsList).map((item) => {
+        if (second <= '20' || item.status === 'success') {
+          sendAudio
+            .mutateAsync(soln)
+            .then((res) => {
+              const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
+                res.data.data.botResponse;
+              setChats((prevState) => [
+                ...prevState,
+                {
+                  botReply,
+                  correctedText,
+                  createdAt,
+                  language,
+                  transcribedAudioText,
+                  updatedAt,
+                },
+              ]);
+            })
+            .catch((err) => {
+              error(err?.response?.data?.message);
+              clearMediaBlob();
+            });
+          return;
+        } else {
+          setOpen(true);
+        }
+      });
     }
-
     clearMediaBlob();
   };
 
@@ -125,22 +125,21 @@ function Converse({ noRive = false }) {
 
   const deleteRecording = () => {
     stopRecording();
-    setSecond("00");
-    setMinute("00");
+    setSecond('00');
+    setMinute('00');
     setCounter(0);
     setBeginRecording(false);
-    setChats("")
+    setChats('');
   };
 
   const sendAudioHandler = () => {
     stopRecording();
     submitAudioHandler();
-    setSecond("00");
-    setMinute("00");
+    setSecond('00');
+    setMinute('00');
     setCounter(0);
     setBeginRecording(false);
   };
-
 
   return (
     <>
@@ -151,7 +150,7 @@ function Converse({ noRive = false }) {
           {chats.length === 0 ? (
             <>
               {!noRive ? (
-                <div className="mx-auto w-36 flex items-center justify-center border">
+                <div className="mx-auto w-36 flex items-center justify-center">
                   <RiveBot size="large" />
                 </div>
               ) : (
@@ -176,7 +175,7 @@ function Converse({ noRive = false }) {
                     context.theme === 'dark' ? 'text-[#ffffff]' : 'text-slate-600'
                   } text-md sm:text-[17px]`}
                 >
-                  Each conversation bring you closer to fluency.
+                  Each conversation brings you closer to fluency.
                 </p>
                 <div>
                   <SeletedLanguage language={language} setLanguage={setLanguage} />

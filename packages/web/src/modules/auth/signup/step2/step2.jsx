@@ -25,6 +25,8 @@ import useAuthLinkedIn from '../../../../hooks/auth/useAuthLinkedIn';
 
 import useGetFacebookLink from '../../../../hooks/auth/useGetFacebooLink';
 import useAuthFacebook from '../../../../hooks/auth/useAuthFacebook';
+import useAuthGoogle from '../../../../hooks/auth/useAuthGoogle';
+import useGetGoogleLink from '../../../../hooks/auth/useGetGoogleLink';
 import useTheme from '../../../../hooks/useTheme';
 
 const index = () => {
@@ -36,6 +38,9 @@ const index = () => {
   const success = (message) => toast.success(message);
 
   const location = useLocation();
+
+  const authGoogle = useAuthGoogle(location?.search);
+  const googleLink = useGetGoogleLink();
 
   const authFacebook = useAuthFacebook(location?.search);
   const facebookLink = useGetFacebookLink();
@@ -50,7 +55,7 @@ const index = () => {
     navigate('/home');
   };
 
-  /* 
+  /*
     handleSignUp => signs up the user if they do not exist in the database.
     The function checks for invalid fields as well as empty fields and returns an erro
     when the conditions are not according to the rule.
@@ -59,7 +64,7 @@ const index = () => {
     This is done using a setTimeout after user account creation
 
     User is given a token on account creation which monitors their existing session
-    
+
   */
   useEffect(() => {
     localStorage.setItem('grittyuserid', userId);
@@ -86,7 +91,7 @@ const index = () => {
   };
 
   /*
-    handleGoogleAuth handles the Google social login. 
+    handleGoogleAuth handles the Google social login.
 
     This redirects to the endpoint which gets a usertoken from google
     Then redirects to the provided URL token for account creation
@@ -142,7 +147,7 @@ const index = () => {
   });
 
   React.useEffect(() => {
-    if (location?.search && location?.search?.includes('code')) {
+    if (location?.search && location?.search?.includes('facebook')) {
       authFacebook
         .mutateAsync({})
         .then((res) => {
@@ -171,7 +176,7 @@ const index = () => {
         });
     }
 
-    if (location?.search && location?.search?.includes('code')) {
+    if (location?.search && location?.search?.includes('linkedin')) {
       authLinkedIn
         .mutateAsync({})
         .then((res) => {
@@ -182,6 +187,32 @@ const index = () => {
           setUserToken(resToken);
           localStorage.setItem('grittyuserid', userId);
           localStorage.setItem('grittyusertoken', userToken);
+          localStorage.setItem('isdashboard', true);
+        })
+        .then(() => {
+          setTimeout(() => {
+            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+          }, 2000);
+        })
+        .then(() => {
+          setTimeout(() => {
+            window.location.replace('/me/home');
+            navigate('/me/home', { replace: true });
+          }, 5000);
+        })
+        .catch((err) => {
+          error(err.message);
+        });
+    }
+    if (location?.search && location?.search?.includes('google')) {
+      authGoogle
+        .mutateAsync({})
+        .then((res) => {
+          success('Login Successful! Redirecting in 5 seconds');
+          const resId = res.data.data._id;
+          const resToken = res.data.data.token;
+          localStorage.setItem('grittyuserid', resId);
+          localStorage.setItem('grittyusertoken', resToken);
           localStorage.setItem('isdashboard', true);
         })
         .then(() => {
@@ -226,8 +257,8 @@ const index = () => {
     return res.data;
   };
 
-  /* 
-    handleFacebookAuth handles the Facebook social login. 
+  /*
+    handleFacebookAuth handles the Facebook social login.
 
     This redirects to the endpoint which gets a usertoken from facebook
     Then redirects to the provided URL token for account creation
@@ -238,8 +269,8 @@ const index = () => {
   //   useFetch('https://speakbetter.hng.tech/api/v1/auth/facebook');
   // };
 
-  /*  
-    handleLinkedInAuth handles the LinkedIn social login. 
+  /*
+    handleLinkedInAuth handles the LinkedIn social login.
 
     This redirects to the endpoint which gets a usertoken from linkedin
     Then redirects to the provided URL token for account creation
@@ -264,21 +295,18 @@ const index = () => {
           )}
           <div className={styles._gs2signupcontent}>
             <div className={styles._authback}>
-              <button
-                onClick={handlePrev}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                  <path
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="48"
-                    d="M328 112L184 256l144 144"
-                  />
-                </svg>
-                <span>Go back</span>
+            <button onClick={handlePrev} className="lg:text-[#383839] md:text-[#383839] text-[#fff] font-bold lg:mt-8 lg:mb-5 md:mb-3 md:mt-5  rounded inline-flex items-center">
+               <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="48"
+                  d="M328 112L184 256l144 144"
+                />
+               </svg> 
+              <span>Go back</span> 
               </button>
             </div>
             {isTabletorMobile && (
@@ -433,8 +461,10 @@ const index = () => {
               <div className={styles._gs2socialsignupcol}>
                 <p>Alternatively, you can sign up with:</p>
                 <div className={styles._gs2socialsignups}>
-                  <button type="button" className={styles._google} onClick={handleGoogleAuth}>
+                  <button type="button" className={styles._google}>
+                    <a href={googleLink?.value}>
                     <img src={google} alt="google authentication" />
+                    </a>
                   </button>
                   <button type="button" className={styles._facebook}>
                     <a href={facebookLink?.value}>

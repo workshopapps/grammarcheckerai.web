@@ -68,11 +68,15 @@
   line-height: 30px;
 }
 ._sbCancel {
-  position: fixed;
-  bottom: 30px;
+  width: fit-content;
   right: 0;
-  z-index: 9 !important;
 }
 ._sbCancel button {
   cursor: pointer;
+  font-size: 10px;
+}
+._isUserCancel {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px 0;
 }
