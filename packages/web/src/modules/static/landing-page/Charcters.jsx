@@ -51,8 +51,12 @@ const Charcters = () => {
           >
             Talk to our AI bot in different characters
           </h2>
-          <p className={`${context.theme === 'dark' ? 'text-[#fff]' : 'text-[#263238]'} md:whitespace-nowrap`}>
-            Make your learning experience more personalised and fun. Talk to{' '}
+          <p
+            className={`${
+              context.theme === 'dark' ? 'text-[#fff]' : 'text-[#263238]'
+            } md:w-[20px] md:whitespace-nowrap`}
+          >
+            Make your learning experience more personalised and fun. <br /> Talk to{' '}
             <span className={`${context.theme === 'dark' ? 'text-[#BA7CFE]' : 'text-[#263238]'}`}>Speak Better</span> in
             different voices, avatars and personalities.
           </p>

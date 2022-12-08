@@ -43,9 +43,9 @@ const subscriptionSchema = new mongoose.Schema(
       enum: ["NGN", "USD", "EUR", "YEN", "GBP"],
       default: "NGN",
     },
-    expirationDate: {
-      type: Date,
-    },
+    expirationDate:{
+      type: String
+    }
   },
   {
     timestamps: true,

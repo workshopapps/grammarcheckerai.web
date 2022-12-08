@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Button, Dialog, IconButton } from '@mui/material';
+import { Button, Dialog } from '@mui/material';
 import style from './popup.module.css';
 import styles from './checkout.module.css';
 import React, { useState, useEffect } from 'react';
@@ -15,6 +15,7 @@ import useTheme from '../../../hooks/useTheme';
 import usePay from '../../../hooks/auth/usePay';
 import check from '../Assets/tick-square.png';
 import medal from '../Assets/medal-star-white.png';
+// import userCheckPlanVerify from '../../../hooks/account/userCheckPlanVerify';
 
 const Checkout = (props) => {
   const context = useTheme();
@@ -36,10 +37,12 @@ const Checkout = (props) => {
 
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
+  const [loading, setLoading] = useState(false);
 
   const authLogin = useLogin();
   const authSignup = useSignup();
   const authPay = usePay();
+  // const authVerify = userCheckPlanVerify(JSON.parse(localStorage.getItem('isUserDetails'))?.email, '');
 
   let navigate = useNavigate();
 
@@ -65,16 +68,16 @@ const Checkout = (props) => {
     // console.log(userSubscription);
   }, [userId, userToken]);
 
-  const useFetch = (url) => {
+  const useFetch = async (url, token) => {
     var requestOptions = {
       method: 'GET',
       redirect: 'follow',
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('grittyusertoken')}`,
+        Authorization: `Bearer ${token}`,
       },
     };
 
-    fetch(url, requestOptions)
+    await fetch(url, requestOptions)
       .then((response) => response.text())
       .then((result) => {
         const oBJ = JSON.parse(result);
@@ -83,7 +86,26 @@ const Checkout = (props) => {
       })
       .catch((error) => error('error', error));
   };
+  const useVerify = async (url, token) => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
+    await fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        useVerify(
+          `https://api.speakbetter.hng.tech/v1/paystack/?email=${oBJ.data.data.customer.email}`,
+          'sk_test_11cd20d24df0f472d32521e1bfb3c00608593c54',
+        );
+      })
+      .catch((error) => error('error', error));
+  };
   const handlelogin = (e) => {
     e.preventDefault();
     if ((userEmail !== '') & (userPassword !== '')) {
@@ -102,12 +124,18 @@ const Checkout = (props) => {
             localStorage.setItem('grittyusertoken', userToken);
             success('Login Successful!');
             setTimeout(() => {
-              useFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+              useFetch(
+                `https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`,
+                localStorage.getItem('grittyusertoken'),
+              );
               setIsPaymentPage(true);
             }, 3000);
           } else {
             error('Already Logged in, proceeding...');
-            useFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+            useFetch(
+              `https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`,
+              localStorage.getItem('grittyusertoken'),
+            );
             setIsPaymentPage(true);
           }
         })
@@ -145,7 +173,10 @@ const Checkout = (props) => {
           localStorage.setItem('grittyusertoken', userToken);
           success('Account Created Succesfully!');
           setTimeout(() => {
-            useFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+            useFetch(
+              `https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`,
+              localStorage.getItem('grittyusertoken'),
+            );
             setIsPaymentPage(true);
           }, 3000);
         })
@@ -162,28 +193,37 @@ const Checkout = (props) => {
     const user = JSON.parse(localStorage.getItem('isUserDetails'));
 
     // Implementation for whatever you want to do with reference and after success call.
-    console.log(reference);
+    // console.log(reference.trxref);
     authPay
       .mutateAsync({
         email: user.email,
         name: user.firstName + ' ' + user.lastName,
         amount: props.amount,
         interval: props.duration,
+        paymentGateway: 'paystack',
         subscriptionId: props.plan,
+        txref: reference.trxref,
       })
       .then(() => {
+        useVerify(
+          `https://api.speakbetter.hng.tech/v1/paystack/verify?email=${user.email}&txref=${reference.trxref}`,
+          'sk_test_11cd20d24df0f472d32521e1bfb3c00608593c54',
+        );
+      })
+      .then(() => {
+        setLoading(true);
         toast(() => (
-          <span>
-            Subscription <b>Succesfully!</b>
-            <p>Redirecting in 5 seconds...</p>
-            <button onClick={''}>Go to Dashboard</button>
+          <span className={styles._notifs}>
+            <b>Subscription Succesfully!</b>
+            <p>Redirecting to dashboard...</p>
+            <button onClick={handleNavigate}>Go to Dashboard</button>
           </span>
         ));
       })
       .then(() => {
         setTimeout(() => {
           navigate('/me/home');
-        }, 5000);
+        }, 3000);
       })
       .catch((err) => {
         error(err.message);
@@ -193,7 +233,7 @@ const Checkout = (props) => {
   // you can call this function anything
   const onClose = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
-    console.log('closed');
+    setLoading(false);
   };
   const config = {
     reference: new Date().getTime().toString(),
@@ -208,13 +248,13 @@ const Checkout = (props) => {
     toast.dismiss();
     navigate('/me/home');
   };
-  const handlePayment = () => {
+  const handlePayment = async () => {
     setUserLSEmail(JSON.parse(localStorage.getItem('isUserDetails')).email);
 
     if (props.userIsSubscribed) {
       toast(() => (
-        <span>
-          <b>User already subscribed!</b>
+        <span className={styles._notifs}>
+          <b>You are already subscribed!</b>
           <Button variant="outlined" color="secondary" onClick={handleNavigate}>
             Go to Dashboard
           </Button>
@@ -223,6 +263,7 @@ const Checkout = (props) => {
       return;
     }
     if (userLSEmail && userLSEmail !== '') {
+      setLoading(true);
       initializePayment(onSuccess, onClose);
     }
   };
@@ -264,12 +305,7 @@ const Checkout = (props) => {
                     <div className={styles._cpSummary}>
                       <h3>Plan: {props.duration}</h3>
                       <h3>Amount: NGN {props.amount}</h3>
-                      <LoadingButton
-                        loading={authPay.isLoading}
-                        variant="outlined"
-                        type="button"
-                        onClick={handlePayment}
-                      >
+                      <LoadingButton loading={loading} variant="outlined" type="button" onClick={handlePayment}>
                         Proceed to Payment
                       </LoadingButton>
                     </div>
@@ -280,12 +316,7 @@ const Checkout = (props) => {
                       <div className={styles._cpSummary}>
                         <h3>Plan: {props.duration}</h3>
                         <h3>Amount: NGN {props.amount}</h3>
-                        <LoadingButton
-                          loading={authPay.isLoading}
-                          variant="contained"
-                          type="button"
-                          onClick={handlePayment}
-                        >
+                        <LoadingButton loading={loading} variant="contained" type="button" onClick={handlePayment}>
                           Proceed to Payment
                         </LoadingButton>
                       </div>
@@ -439,12 +470,7 @@ const Checkout = (props) => {
                     <div className={styles._cpSummary}>
                       <h3>Plan: {props.duration}</h3>
                       <h3>Amount: NGN {props.amount}</h3>
-                      <LoadingButton
-                        loading={authPay.isLoading}
-                        variant="contained"
-                        type="button"
-                        onClick={handlePayment}
-                      >
+                      <LoadingButton loading={loading} variant="outlined" type="button" onClick={handlePayment}>
                         Proceed to Payment
                       </LoadingButton>
                     </div>
