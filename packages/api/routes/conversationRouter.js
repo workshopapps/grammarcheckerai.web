@@ -12,7 +12,6 @@ const textResponse = require("../controller/sendTextController");
 const fileUploadToS3Bucket = require("../controller/uploadBuffer.js");
 const saveAudio = require("../controller/uploadAudioController.js");
 const uploadFile = require("../middlewares/audio.middleware.js");
-const getTranscription = require("../controller/getTranscriptionController.js");
 
 // conversationRouter.post("/uploadAudio", uploadAudio.single("file"), saveAudio);
 conversationRouter.post("/uploadAudio", fileUploadToS3Bucket, saveAudio);
@@ -20,6 +19,5 @@ conversationRouter.get("/start", userConversationAccess, startConversation);
 conversationRouter.get("/end", endConversation);
 conversationRouter.post("/sendAudio", uploadFile, getBotResponse);
 conversationRouter.post("/sendText", textResponse);
-conversationRouter.post("/assemblerCallback", getTranscription);
 
 module.exports = conversationRouter;

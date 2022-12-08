@@ -78,106 +78,107 @@ async function getBotResponse(req, res) {
       languageMap[language]
     );
 
-    // // upload url and initiate transcription
-    // const transcribedAudioText = await getTranscriptionFromAssembly(
-    //   preTranscriptId
-    // ); // process and download transcript
+    // upload url and initiate transcription
+    const transcribedAudioText = await getTranscriptionFromAssembly(
+      preTranscriptId
+    ); // process and download transcript
 
-    // if (!transcribedAudioText) {
-    //   return res.status(400).send({
-    //     success: false,
-    //     message: "Assembly AI error.",
-    //   });
-    // }
+    if (!transcribedAudioText) {
+      return res.status(400).send({
+        success: false,
+        message: "Assembly AI error.",
+      });
+    }
 
-    // // Send transcript to OPenAI Grammar Correction to get corrected text
-    // let grammarCheckResponse = await grammarCheckHandler(
-    //   transcribedAudioText,
-    //   language
-    // );
+    // Send transcript to OPenAI Grammar Correction to get corrected text
+    let grammarCheckResponse = await grammarCheckHandler(
+      transcribedAudioText,
+      language
+    );
 
-    // // Handling OpenAI Grammar Correction Error
-    // if (!grammarCheckResponse) {
-    //   return res.status(500).send({
-    //     success: false,
-    //     message: "OpenAI internal error",
-    //   });
-    // }
-    // let { correctUserResponseInTxt } = grammarCheckResponse;
+    // Handling OpenAI Grammar Correction Error
+    if (!grammarCheckResponse) {
+      return res.status(500).send({
+        success: false,
+        message: "OpenAI internal error",
+      });
+    }
+    let { correctUserResponseInTxt } = grammarCheckResponse;
 
-    // // Send corrected text to OpenAI GPT3 to get bot response and update chat log
-    // let chatLog, botReply;
-    // chatLog = req.session.chatLog; // get chat log from session
-    // const botRes = await chatHandler(correctUserResponseInTxt, chatLog);
-    // botReply = botRes.replace("AI:", "").trim();
+    // Send corrected text to OpenAI GPT3 to get bot response and update chat log
+    let chatLog, botReply;
+    chatLog = req.session.chatLog; // get chat log from session
+    const botRes = await chatHandler(correctUserResponseInTxt, chatLog);
+    botReply = botRes.replace("AI:", "").trim();
 
-    // // translate bot reply if specified language is not English
-    // if (
-    //   !["English", "English (AU)", "English (UK)", "English (US)"].includes(
-    //     language
-    //   )
-    // ) {
-    //   botReply = await translateFromEnglish(botReply, language);
-    // }
+    // translate bot reply if specified language is not English
+    if (
+      !["English", "English (AU)", "English (UK)", "English (US)"].includes(
+        language
+      )
+    ) {
+      botReply = await translateFromEnglish(botReply, language);
+    }
 
-    // chatLog = appendConversationToChatLog(
-    //   correctUserResponseInTxt,
-    //   botRes,
-    //   chatLog
-    // );
-    // req.session.chatLog = chatLog; // set updated chat log to session
+    chatLog = appendConversationToChatLog(
+      correctUserResponseInTxt,
+      botRes,
+      chatLog
+    );
+    req.session.chatLog = chatLog; // set updated chat log to session
+    console.log(req.session.chatLog);
 
-    // // await file upload to aws s3 bucket to get file url
-    // audioUrl = await audioUrl;
+    // await file upload to aws s3 bucket to get file url
+    audioUrl = await audioUrl;
 
-    // // construct response
-    // let userResponse, botResponse;
+    // construct response
+    let userResponse, botResponse;
 
-    // // for not logged in users
-    // if (!userId) {
-    //   userResponse = {
-    //     audioURL: audioUrl,
-    //     createdAt: new Date(),
-    //     updatedAt: new Date(),
-    //   };
+    // for not logged in users
+    if (!userId) {
+      userResponse = {
+        audioURL: audioUrl,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
 
-    //   botResponse = {
-    //     transcribedAudioText,
-    //     correctedText: correctUserResponseInTxt.trim(),
-    //     botReply,
-    //     language: language,
-    //     createdAt: new Date(),
-    //     updatedAt: new Date(),
-    //   };
-    // } else {
-    //   // for logged in users
-    //   userResponse = await UserResponse.create({
-    //     audioURL: audioUrl,
-    //   });
+      botResponse = {
+        transcribedAudioText,
+        correctedText: correctUserResponseInTxt.trim(),
+        botReply,
+        language: language,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+    } else {
+      // for logged in users
+      userResponse = await UserResponse.create({
+        audioURL: audioUrl,
+      });
 
-    //   botResponse = await BotResponse.create({
-    //     transcribedAudioText,
-    //     correctedText: correctUserResponseInTxt.trim(),
-    //     botReply,
-    //     language,
-    //   });
+      botResponse = await BotResponse.create({
+        transcribedAudioText,
+        correctedText: correctUserResponseInTxt.trim(),
+        botReply,
+        language,
+      });
 
-    //   await Message.create({
-    //     userId,
-    //     userResponseId: userResponse._id,
-    //     botResponseId: botResponse._id,
-    //   });
-    // }
+      await Message.create({
+        userId,
+        userResponseId: userResponse._id,
+        botResponseId: botResponse._id,
+      });
+    }
 
-    // res.status(200).send({
-    //   success: true,
-    //   message: "Message exchange successfully completed between user and bot",
-    //   data: {
-    //     userResponse,
-    //     botResponse,
-    //     userId: userId || null,
-    //   },
-    // });
+    res.status(200).send({
+      success: true,
+      message: "Message exchange successfully completed between user and bot",
+      data: {
+        userResponse,
+        botResponse,
+        userId: userId || null,
+      },
+    });
   } catch (err) {
     return res.status(400).send({
       success: false,
