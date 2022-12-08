@@ -240,7 +240,7 @@ const Index = () => {
   //   console.log(res.message);
   // });
 
-  const handleGoogleAuth = () => {};
+  const handleGoogleAuth = () => { };
 
   /*
       handleFacebookAuth handles the Facebook social login.
@@ -280,20 +280,20 @@ const Index = () => {
           )}
           <div className={styles._gs2logincontent}>
             <div className={styles._authback}>
-            <button onClick={handlePrev} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center">
-               <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="48"
-                  d="M328 112L184 256l144 144"
-                />
-               </svg> 
-              <span>Go back</span> 
+              <button onClick={handlePrev} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="48"
+                    d="M328 112L184 256l144 144"
+                  />
+                </svg>
+                <span>Go back</span>
               </button>
-            
+
             </div>
             <h2 signup-theme={context.theme}>Welcome Back</h2>
             <p signup-theme={context.theme} className={styles._subtitle}>
