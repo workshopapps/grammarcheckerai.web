@@ -22,7 +22,8 @@ import Carousel from 'nuka-carousel';
 import Loader from '../../../../components/Loader';
 import useGetLinkedInLink from '../../../../hooks/auth/useGetLinkedInLink';
 import useAuthLinkedIn from '../../../../hooks/auth/useAuthLinkedIn';
-
+import useAuthGoogle from '../../../../hooks/auth/useAuthGoogle';
+import useGetGoogleLink from '../../../../hooks/auth/useGetGoogleLink';
 import useGetFacebookLink from '../../../../hooks/auth/useGetFacebooLink';
 import useAuthFacebook from '../../../../hooks/auth/useAuthFacebook';
 import useTheme from '../../../../hooks/useTheme';
@@ -37,6 +38,9 @@ const index = () => {
 
   const location = useLocation();
 
+  const authGoogle = useAuthGoogle(location?.search);
+  const googleLink = useGetGoogleLink();
+
   const authFacebook = useAuthFacebook(location?.search);
   const facebookLink = useGetFacebookLink();
 
@@ -50,7 +54,7 @@ const index = () => {
     navigate('/home');
   };
 
-  /* 
+  /*
     handleSignUp => signs up the user if they do not exist in the database.
     The function checks for invalid fields as well as empty fields and returns an erro
     when the conditions are not according to the rule.
@@ -59,7 +63,7 @@ const index = () => {
     This is done using a setTimeout after user account creation
 
     User is given a token on account creation which monitors their existing session
-    
+
   */
   useEffect(() => {
     localStorage.setItem('grittyuserid', userId);
@@ -86,7 +90,7 @@ const index = () => {
   };
 
   /*
-    handleGoogleAuth handles the Google social login. 
+    handleGoogleAuth handles the Google social login.
 
     This redirects to the endpoint which gets a usertoken from google
     Then redirects to the provided URL token for account creation
@@ -142,7 +146,7 @@ const index = () => {
   });
 
   React.useEffect(() => {
-    if (location?.search && location?.search?.includes('code')) {
+    if (location?.search && location?.search?.includes('facebook')) {
       authFacebook
         .mutateAsync({})
         .then((res) => {
@@ -171,6 +175,7 @@ const index = () => {
         });
     }
 
+
     if (location?.search && location?.search?.includes('code')) {
       authLinkedIn
         .mutateAsync({})
@@ -178,13 +183,40 @@ const index = () => {
           success('Login Successful! Redirecting in 5 seconds');
           const resId = res.data.data._id;
           const resToken = res.data.data.token;
-          setUserId(resId);
-          setUserToken(resToken);
-          localStorage.setItem('grittyuserid', userId);
-          localStorage.setItem('grittyusertoken', userToken);
+          localStorage.setItem('grittyuserid', resId);
+          localStorage.setItem('grittyusertoken', resToken);
           localStorage.setItem('isdashboard', true);
         })
         .then(() => {
+
+          setTimeout(() => {
+            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+          }, 2000);
+        })
+        .then(() => {
+          setTimeout(() => {
+            window.location.replace('/me/home');
+            navigate('/me/home', { replace: true });
+          }, 5000);
+        })
+        .catch((err) => {
+          error(err.message);
+        });
+    }
+
+    if (location?.search && location?.search?.includes('google')) {
+      authGoogle
+        .mutateAsync({})
+        .then((res) => {
+          success('Login Successful! Redirecting in 5 seconds');
+          const resId = res.data.data._id;
+          const resToken = res.data.data.token;
+          localStorage.setItem('grittyuserid', resId);
+          localStorage.setItem('grittyusertoken', resToken);
+          localStorage.setItem('isdashboard', true);
+        })
+        .then(() => {
+
           setTimeout(() => {
             getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
           }, 2000);
@@ -200,6 +232,7 @@ const index = () => {
         });
     }
   }, []);
+
 
   const useFetch = (url) => {
     var requestOptions = {
@@ -226,8 +259,8 @@ const index = () => {
     return res.data;
   };
 
-  /* 
-    handleFacebookAuth handles the Facebook social login. 
+  /*
+    handleFacebookAuth handles the Facebook social login.
 
     This redirects to the endpoint which gets a usertoken from facebook
     Then redirects to the provided URL token for account creation
@@ -238,8 +271,8 @@ const index = () => {
   //   useFetch('https://speakbetter.hng.tech/api/v1/auth/facebook');
   // };
 
-  /*  
-    handleLinkedInAuth handles the LinkedIn social login. 
+  /*
+    handleLinkedInAuth handles the LinkedIn social login.
 
     This redirects to the endpoint which gets a usertoken from linkedin
     Then redirects to the provided URL token for account creation
@@ -433,8 +466,10 @@ const index = () => {
               <div className={styles._gs2socialsignupcol}>
                 <p>Alternatively, you can sign up with:</p>
                 <div className={styles._gs2socialsignups}>
-                  <button type="button" className={styles._google} onClick={handleGoogleAuth}>
+                  <button type="button" className={styles._google}>
+                    <a href={googleLink?.value}>
                     <img src={google} alt="google authentication" />
+                    </a>
                   </button>
                   <button type="button" className={styles._facebook}>
                     <a href={facebookLink?.value}>

@@ -304,7 +304,7 @@ const index = () => {
 
                         </div>
 
-                        <div className="flex gap-8 pl-8 pr-8 items-center justify-center lg:hidden p-0">
+                        <div className="flex gap-8 pl-8 pr-8 items-center justify-center lg:hidden p-0 ">
                         <button
                           className={ContactCSS.box}
                           onClick={() => setClick(4)}

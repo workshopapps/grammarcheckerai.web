@@ -260,7 +260,29 @@ textarea{
     width:87%;
   }
 }
+@media (max-width: 540px) {
 
+  .boxes{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .box {
+    gap: 12px;
+    width: 117px;
+    height:92px;
+  }
+  .lastbox {
+    gap: 12px;
+    width: 117px;
+    height: 94px;
+  }
+  .form{
+    margin: 0;
+    width:90%;
+  }
+}
 @media (max-width: 815px) {
   .hero_container{
     display:none;
