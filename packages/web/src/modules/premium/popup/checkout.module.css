@@ -565,3 +565,14 @@ input[type='checkbox']:checked + label::before {
 ._cpSummary h3 {
   padding: 10px 0;
 }
+._notifs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+._notifs b {
+  padding: 10px 0;
+}
