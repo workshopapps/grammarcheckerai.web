@@ -150,7 +150,7 @@ function Converse({ noRive = false }) {
           {chats.length === 0 ? (
             <>
               {!noRive ? (
-                <div className="mx-auto w-36 flex items-center justify-center border">
+                <div className="mx-auto w-36 flex items-center justify-center">
                   <RiveBot size="large" />
                 </div>
               ) : (
