@@ -22,19 +22,12 @@ import chirpy from '../../../assets/chirpy.svg';
 function Converse({ noRive = false }) {
   const context = useTheme();
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
-  let {
-    status,
-    mediaBlob: audioResult,
-    stopRecording,
-    pauseRecording,
-    startRecording,
-    resumeRecording,
-    clearMediaBlob,
-  } = useMediaRecorder({
-    recordScreen: false,
-    blobOptions: { type: 'audio/wav' },
-    mediaStreamConstraints: { audio: true, video: false },
-  });
+  let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
+    useMediaRecorder({
+      recordScreen: false,
+      // blobOptions: { type: 'audio/wav' },
+      mediaStreamConstraints: { audio: true, video: false },
+    });
 
   const [second, setSecond] = useState('00');
   const [minute, setMinute] = useState('00');
@@ -44,6 +37,7 @@ function Converse({ noRive = false }) {
   const [open, setOpen] = useState(false);
   const [language, setLanguage] = React.useState('English');
   const error = (message) => toast.error(message);
+  const [userSubsList, setUserSubsList] = React.useState([]);
 
   const [chats, setChats] = React.useState([]);
   const navigate = useNavigate();
@@ -64,39 +58,47 @@ function Converse({ noRive = false }) {
     setOpen(false);
   };
 
+  let blob = new Blob([mediaBlob], {
+    type: 'audio/wav',
+  });
+
+  const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
+
   const submitAudioHandler = () => {
-    setCounter(0);
-    setBeginRecording(false);
-    stopRecording();
-
     const soln = new FormData();
-    soln.append('file', audioResult);
+    soln.append('file', blob);
     soln.append('language', language);
-    if (second <= '20' || (userSubscription?.value && userSubscription?.value.length !== 0)) {
-      sendAudio
-        .mutateAsync(soln)
-        .then((res) => {
-          const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
-            res.data.data.botResponse;
-          setChats((prevState) => [
-            ...prevState,
-            {
-              botReply,
-              correctedText,
-              createdAt,
-              language,
-              transcribedAudioText,
-              updatedAt,
-            },
-          ]);
-        })
-        .catch((err) => {
-          error(err?.response?.data?.message);
-        });
-    } else {
-      setOpen(true);
+    if (second <= '20' || (userSubscription?.value && userSubscription?.value?.length !== 0)) {
+      setUserSubsList(userSubscription?.value);
+      checkForArray(userSubsList).map((item) => {
+        if (second <= '20' || item.status === 'success') {
+          sendAudio
+            .mutateAsync(soln)
+            .then((res) => {
+              const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
+                res.data.data.botResponse;
+              setChats((prevState) => [
+                ...prevState,
+                {
+                  botReply,
+                  correctedText,
+                  createdAt,
+                  language,
+                  transcribedAudioText,
+                  updatedAt,
+                },
+              ]);
+            })
+            .catch((err) => {
+              error(err?.response?.data?.message);
+              clearMediaBlob();
+            });
+          return;
+        } else {
+          setOpen(true);
+        }
+      });
     }
-
     clearMediaBlob();
   };
 
@@ -122,16 +124,21 @@ function Converse({ noRive = false }) {
   }, [beginRecording, counter]);
 
   const deleteRecording = () => {
+    stopRecording();
+    setSecond('00');
+    setMinute('00');
     setCounter(0);
     setBeginRecording(false);
-    stopRecording();
+    setChats('');
   };
 
   const sendAudioHandler = () => {
+    stopRecording();
     submitAudioHandler();
+    setSecond('00');
+    setMinute('00');
     setCounter(0);
     setBeginRecording(false);
-    stopRecording();
   };
 
   return (
@@ -184,7 +191,7 @@ function Converse({ noRive = false }) {
                 onClick={() => {
                   console.log(status);
                   setBeginRecording((prevstate) => !prevstate);
-                  status === 'idle' || status === 'stopped' ? startRecording() : null;
+                  status === 'idle' || status === 'stopped' || status === 'paused' ? startRecording() : stopRecording();
                 }}
                 className={`rounded-full h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
                   status === 'recording' ? styles._bot_mic : ''
@@ -203,7 +210,7 @@ function Converse({ noRive = false }) {
                   {status === 'idle' ? (
                     <>
                       {chats.length === 0 ? (
-                        <p className="text-[#262626] pt-6">Tap the Microphone to begin</p>
+                        <p className="text-[#262626] pt-6">Tap the Microphone to begin and stop recording.</p>
                       ) : (
                         <button
                           className="px-7 rounded-xl py-2 border border-[#5D387F]"

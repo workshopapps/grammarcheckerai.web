@@ -97,7 +97,7 @@ export default function ConfirmDeleteAccount() {
     },[reasons, password])
      
   return (
-    <div className='h-[100vh] flex flex-col w-[90%] md:w-[70%] lg:w-[70%] m-auto pt-2 sm:pt-16'>
+    <div className='h-full flex flex-col w-[90%] md:w-[70%] lg:w-[70%] m-auto pt-2 sm:pt-16'>
         <div className='flex flex-col'>
             <h1 className='text-xl sm:text-2xl text-[#393939] sm:text-center text-center font-bold'>Delete Account</h1>
             <p className='text-sm sm:text-lg mt-2 opacity-50'>Step 2/2: Please share the reasons why you no longer want to continue with Speak Better so we can improve our services further. You can make multiple selections.</p>

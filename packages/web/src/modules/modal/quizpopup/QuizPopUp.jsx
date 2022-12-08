@@ -13,10 +13,12 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
   const [answer, setAnswer] = useState(false);
   const [trivia, setTrivia] = useState({});
   const [errorMsg, setErrorMsg] = useState(false);
+  const [changeColor, setChangeColor] = useState('#e8ddf2');
+  const [selectedAnswer, setSelectedAnswer] = useState('');
 
   const getQuestions = async () => {
     try {
-      const response = await axios.get('https://speakbetter.hng.tech/api/v1/quiz');
+      const response = await axios.get('https://api.speakbetter.hng.tech/v1/quiz');
       console.log(response.data);
       const data = response.data;
       setTrivia(data);
@@ -30,28 +32,22 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
     getQuestions();
   }, []);
 
-  const handleAnswer = (e) => {
-    let option = e.target.innerText;
-    // console.log(e.target.innerText);
+  const handleAnswer = (element) => {
+    setSelectedAnswer(element);
     let tick = trivia.correctAnswer;
-    if (tick === option) {
-      setAnswer(true);
+    if (tick === element) {
+      setChangeColor('green');
+      setTimeout(() => {
+        setAnswer(true);
+      }, 1000);
+    } else {
+      setChangeColor('red');
     }
   };
 
   const removePopUp = () => {
-    console.log('bye');
+    setShowQuiz(false);
     setAnswer(false);
-    setShowQuiz(false);
-  };
-
-  const handleClose = () => {
-    setShowQuiz(false);
-    // if (showQuiz == true) {
-    //   setInterval(() => {
-    //     setShowQuiz(true);
-    //   }, 50000);
-    // }
   };
 
   return (
@@ -63,7 +59,7 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
           {showQuiz ? (
             <div className={styles.quiz}>
               <div className={styles.quiz_card}>
-                <div onClick={handleClose} className={styles.quiz_card__close}>
+                <div onClick={removePopUp} className={styles.quiz_card__close}>
                   <GrClose />
                 </div>
 
@@ -78,7 +74,7 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
                           Cancel
                         </button>
                         <button className={styles.quiz_card__check__btn2}>
-                          <Link to="/quizgame">Continue?</Link>
+                          <Link to="/startgame">Continue?</Link>
                         </button>
                       </div>
                     </div>
@@ -86,22 +82,14 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
                     <>
                       <h3 className={styles.quiz_card__content__question}>{trivia.question}</h3>
                       <ul className={styles.quiz_card__content__answers}>
-                        {/* <li value={trivia.incorrectAnswers[0]} onClick={handleAnswer}>
-                          {trivia.incorrectAnswers[0]}
-                        </li>
-                        <li value={trivia.incorrectAnswers[1]} onClick={handleAnswer}>
-                          {trivia.incorrectAnswers[1]}
-                        </li>
-                        <li value={trivia.incorrectAnswers[2]} onClick={handleAnswer}>
-                          {trivia.incorrectAnswers[2]}
-                        </li>
-                        <li value={trivia.incorrectAnswers[3]} onClick={handleAnswer}>
-                          {trivia.incorrectAnswers[3]}
-                        </li> */}
                         {trivia.incorrectAnswers &&
                           trivia.incorrectAnswers.map((element) => {
                             return (
-                              <li onClick={handleAnswer} key={element}>
+                              <li 
+                                style={{ backgroundColor: selectedAnswer === element ? changeColor : '#e8ddf2' }}
+                                onClick={()=>handleAnswer(element)} 
+                                key={element}
+                              >
                                 {element}
                               </li>
                             );
