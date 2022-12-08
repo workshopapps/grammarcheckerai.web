@@ -175,7 +175,7 @@ function Converse({ noRive = false }) {
                     context.theme === 'dark' ? 'text-[#ffffff]' : 'text-slate-600'
                   } text-md sm:text-[17px]`}
                 >
-                  Each conversation bring you closer to fluency.
+                  Each conversation brings you closer to fluency.
                 </p>
                 <div>
                   <SeletedLanguage language={language} setLanguage={setLanguage} />
