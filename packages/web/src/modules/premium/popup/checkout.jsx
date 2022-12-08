@@ -86,7 +86,7 @@ const Checkout = (props) => {
       })
       .catch((error) => error('error', error));
   };
-  const useVerify = (url, token) => {
+  const useVerify = async (url, token) => {
     var requestOptions = {
       method: 'GET',
       redirect: 'follow',
@@ -95,11 +95,10 @@ const Checkout = (props) => {
       },
     };
 
-    fetch(url, requestOptions)
+    await fetch(url, requestOptions)
       .then((response) => response.text())
       .then((result) => {
         const oBJ = JSON.parse(result);
-        console.log(oBJ);
         useVerify(
           `https://api.speakbetter.hng.tech/v1/paystack/?email=${oBJ.data.data.customer.email}`,
           'sk_test_11cd20d24df0f472d32521e1bfb3c00608593c54',
@@ -190,12 +189,12 @@ const Checkout = (props) => {
   };
 
   // you can call this function anything
-  const onSuccess = async (reference) => {
+  const onSuccess = (reference) => {
     const user = JSON.parse(localStorage.getItem('isUserDetails'));
 
     // Implementation for whatever you want to do with reference and after success call.
     // console.log(reference.trxref);
-    await authPay
+    authPay
       .mutateAsync({
         email: user.email,
         name: user.firstName + ' ' + user.lastName,
@@ -224,7 +223,7 @@ const Checkout = (props) => {
       .then(() => {
         setTimeout(() => {
           navigate('/me/home');
-        }, 2000);
+        }, 3000);
       })
       .catch((err) => {
         error(err.message);
