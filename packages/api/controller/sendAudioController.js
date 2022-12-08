@@ -14,6 +14,7 @@ const {
 const { translateFromEnglish } = require("../scripts/translate");
 const fileUploadToS3Bucket = require("./uploadBuffer");
 const emailService = require("../services/email.service");
+const { SIGNUP_TEMPLATE } = require("../utilities/email.template");
 
 const languageMap = {
   english: "en",
