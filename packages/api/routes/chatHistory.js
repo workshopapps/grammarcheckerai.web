@@ -1,7 +1,7 @@
 const express = require("express");
 const chatHistoryRouter = express.Router();
-const chatHistory = require("../controller/chatHistory");
+const chatHistoryController = require("../controller/chatHistoryController");
 
-chatHistoryRouter.get("/", chatHistory);
+chatHistoryRouter.get("/", chatHistoryController);
 
-module.exports=chatHistoryRouter
+module.exports = chatHistoryRouter;

@@ -19,8 +19,6 @@ const { userCollection } = require("../../database/models/userSchema");
 const { register } = require("../../repository/user.repository");
 const { slugify } = require("../../utilities/compare");
 
-const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
-
 const { google } = require("googleapis");
 
 const oauth2Client = new google.auth.OAuth2(
@@ -77,9 +75,7 @@ async function getTokens(code) {
     return googleUser.data;
   } catch (error) {
     if (error.message === "invalid_grant") {
-      return res
-        .status(400)
-        .send({ success: false, message: "Invalid Grant " });
+      return res.status(400).send({ success: false, message: "Invalid Grant" });
     }
     return res.status(400).send({
       success: false,
@@ -164,14 +160,12 @@ const linkedinAccessToken = async (req, res) => {
       },
     }).catch((error) => {
       console.log(error);
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: `Failed to fetch token`,
-          errorCode: error.code,
-          error: error.message,
-        });
+      return res.status(400).json({
+        success: false,
+        message: `Failed to fetch token`,
+        errorCode: error.code,
+        error: error.message,
+      });
     });
     const linkedinUser = await axios({
       method: "GET",
