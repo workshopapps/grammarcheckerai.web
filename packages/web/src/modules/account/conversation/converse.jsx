@@ -61,6 +61,8 @@ function Converse({ noRive = false }) {
     type: 'audio/wav',
   });
 
+  const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
+
   const submitAudioHandler = () => {
     const soln = new FormData();
     soln.append('file', blob);

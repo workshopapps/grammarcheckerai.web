@@ -19,6 +19,7 @@ const index = () => {
   const matches = useMediaQuery('(max-width:694px)');
   const [interval, setInterval] = React.useState({ plan: '', amount: 0, duration: '' });
   const [open, setOpen] = React.useState(true);
+  const [userSubsList, setUserSubsList] = React.useState([]);
 
   const handleClosePremium = () => {
     setOpen(false);
@@ -26,11 +27,14 @@ const index = () => {
   const [userIsSubscribed, setUserIsSubscribed] = React.useState(false);
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
 
+  const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
+
   const handleCheckout = (plan) => {
     setInterval(plan);
-    if (userSubscription?.value && userSubscription?.value.length !== 0) {
-      // console.log('User is subscribed');
-      userSubscription?.value?.map((item) => {
+    if (userSubscription?.value && userSubscription?.value?.length !== 0) {
+      setUserSubsList(userSubscription?.value);
+      console.log(userSubsList);
+      checkForArray(userSubsList).map((item) => {
         if (item.status === 'success') {
           setUserIsSubscribed(true);
           return;
