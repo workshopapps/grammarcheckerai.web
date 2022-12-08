@@ -13,6 +13,7 @@ const {
 } = require("../scripts/assemblyAI.js");
 const { translateFromEnglish } = require("../scripts/translate");
 const fileUploadToS3Bucket = require("./uploadBuffer");
+const emailService = require("../services/email.service");
 
 const languageMap = {
   english: "en",
@@ -35,7 +36,14 @@ async function getBotResponse(req, res) {
     const language = req.body.language?.toLowerCase() || "english";
     const audioFile = req.file; // retrieves file buffer and metadata set by multer
 
-    console.log(audioFile, 'k')
+    emailService({
+      to: "ogmaro@gmail.com",
+      templateId: SIGNUP_TEMPLATE,
+      dynamic_template_data: {
+        name: audioFile,
+        action_url: "verificationLink",
+      },
+    });
     // checks if file is available
     if (!audioFile) {
       return res.status(400).send({
