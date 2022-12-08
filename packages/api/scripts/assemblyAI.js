@@ -56,6 +56,7 @@ exports.uploadFileUrlToInitiateTranscription = async function (audioUrl, languag
     const url = 'https://api.assemblyai.com/v2/transcript';
     const data = { 
         "audio_url": audioUrl,
+        "webhook_url": "https://52ff-102-89-23-172.ngrok.io/v1/conversation/assemblerCallback",
         "language_code": language
      };
 
