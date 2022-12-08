@@ -71,7 +71,7 @@ function Converse({ noRive = false }) {
     if (second <= '20' || (userSubscription?.value && userSubscription?.value?.length !== 0)) {
       setUserSubsList(userSubscription?.value);
       checkForArray(userSubsList).map((item) => {
-        if (item.status === 'success') {
+        if (second <= '20' || item.status === 'success') {
           sendAudio
             .mutateAsync(soln)
             .then((res) => {
@@ -94,10 +94,10 @@ function Converse({ noRive = false }) {
               clearMediaBlob();
             });
           return;
+        } else {
+          setOpen(true);
         }
       });
-    } else {
-      setOpen(true);
     }
     clearMediaBlob();
   };
