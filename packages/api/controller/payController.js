@@ -5,6 +5,8 @@ const { PAYSTACK_SECRET_KEY } = environment;
 
 const createPayment = async (req, res) => {
   let email = req.body.email;
+
+  //VALIDATE USER REQUEST
   if (!email)
     return res.status(400).send({ success: false, message: "Invalid email" });
   try {
@@ -19,11 +21,13 @@ const createPayment = async (req, res) => {
       currency,
       txref,
     };
+
+    //FIND ACTIVE SUBSCRIPTION
     const isActive = await Subscription.findOne({
       $and: [{ email: email }, { status: "success" }],
     });
     if (isActive) {
-      console.log(isActive)
+      console.log(isActive);
       return res.status(200).send({
         success: true,
         message: `You have an Active Subscription with ID: ${isActive.txref}`,
@@ -31,6 +35,28 @@ const createPayment = async (req, res) => {
       });
     }
 
+//CHECK EXPIRATION DATE
+    Date.prototype.addDays = function (days) {
+      var date = new Date(this.valueOf());
+      date.setDate(date.getDate() + days);
+      return date;
+    };
+    var expirationDate = new Date();
+    if (interval == "weekly")
+      expirationDate = expirationDate.addDays(7);
+    payload.expirationDate = expirationDate;
+    if (interval == "monthly")
+      expirationDate = expirationDate.addDays(30);
+    payload.expirationDate = expirationDate;
+    if (interval == "quarterly")
+      expirationDate = expirationDate.addDays(90);
+    payload.expirationDate = expirationDate;
+    if (interval == "annually")
+      expirationDate = expirationDate.addDays(365);
+    payload.expirationDate = expirationDate;
+
+
+    //SAVE TO DATABASE
     const result = await Subscription.create(payload);
     res.status(200).send({
       success: true,
@@ -42,7 +68,7 @@ const createPayment = async (req, res) => {
     return res.status(400).send({
       success: false,
       message: `There was an error while carrying out this request`,
-      error: error.message
+      error: error.message,
     });
   }
 };
@@ -185,9 +211,12 @@ const verification = async (req, res) => {
     });
 };
 
+const checkActiveSubscription = async (req, res) => {};
+
 module.exports = {
   createPayment,
   verification,
   getSubscription,
+  checkActiveSubscription,
   cancelSubscription,
 };
