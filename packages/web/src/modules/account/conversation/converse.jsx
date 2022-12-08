@@ -22,20 +22,12 @@ import chirpy from '../../../assets/chirpy.svg';
 function Converse({ noRive = false }) {
   const context = useTheme();
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
-  let {
-    status,
-    mediaBlob,
-    stopRecording,
-    pauseRecording,
-    startRecording,
-    resumeRecording,
-    clearMediaBlob,
-  } = useMediaRecorder({
-    recordScreen: false,
-    // blobOptions: { type: 'audio/wav' },
-    mediaStreamConstraints: { audio: true, video: false },
-  });
-  
+  let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
+    useMediaRecorder({
+      recordScreen: false,
+      // blobOptions: { type: 'audio/wav' },
+      mediaStreamConstraints: { audio: true, video: false },
+    });
 
   const [second, setSecond] = useState('00');
   const [minute, setMinute] = useState('00');
@@ -66,39 +58,43 @@ function Converse({ noRive = false }) {
   };
 
   let blob = new Blob([mediaBlob], {
-    type: 'audio/wav'
+    type: 'audio/wav',
   });
 
   const submitAudioHandler = () => {
     const soln = new FormData();
     soln.append('file', blob);
     soln.append('language', language);
-    if (second <= '20' || (userSubscription?.value && userSubscription?.value.length !== 0)) {
-      sendAudio
-        .mutateAsync(soln)
-        .then((res) => {
-          const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
-            res.data.data.botResponse;
-          setChats((prevState) => [
-            ...prevState,
-            {
-              botReply,
-              correctedText,
-              createdAt,
-              language,
-              transcribedAudioText,
-              updatedAt,
-            },
-          ]);
-        })
-        .catch((err) => {
-          error(err?.response?.data?.message);
-          clearMediaBlob();
-        });
+    if (second <= '20' || (userSubscription?.value && userSubscription?.value?.length !== 0)) {
+      checkForArray(userSubsList).map((item) => {
+        if (item.status === 'success') {
+          sendAudio
+            .mutateAsync(soln)
+            .then((res) => {
+              const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
+                res.data.data.botResponse;
+              setChats((prevState) => [
+                ...prevState,
+                {
+                  botReply,
+                  correctedText,
+                  createdAt,
+                  language,
+                  transcribedAudioText,
+                  updatedAt,
+                },
+              ]);
+            })
+            .catch((err) => {
+              error(err?.response?.data?.message);
+              clearMediaBlob();
+            });
+          return;
+        }
+      });
     } else {
       setOpen(true);
     }
-
     clearMediaBlob();
   };
 
@@ -125,22 +121,21 @@ function Converse({ noRive = false }) {
 
   const deleteRecording = () => {
     stopRecording();
-    setSecond("00");
-    setMinute("00");
+    setSecond('00');
+    setMinute('00');
     setCounter(0);
     setBeginRecording(false);
-    setChats("")
+    setChats('');
   };
 
   const sendAudioHandler = () => {
     stopRecording();
     submitAudioHandler();
-    setSecond("00");
-    setMinute("00");
+    setSecond('00');
+    setMinute('00');
     setCounter(0);
     setBeginRecording(false);
   };
-
 
   return (
     <>
