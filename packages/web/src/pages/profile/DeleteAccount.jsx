@@ -42,7 +42,7 @@ export default function DeleteAccount() {
 
 
   return (
-    <div className='h-[100vh] w-[90%] md:w-[80%] lg:w-[70%] m-auto pt-2 sm:pt-16'>
+    <div className='h-full w-[90%] md:w-[80%] lg:w-[70%] m-auto pt-2 sm:pt-16'>
         <div className='flex flex-col'>
             <h1 className='text-xl sm:text-2xl text-[#393939] text-center md:text-start lg:text-start font-bold'>Delete Account</h1>
             <p className='text-sm sm:text-lg mt-2 opacity-50'>Step 1/2: Verify your account information.</p>
