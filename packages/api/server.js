@@ -5,7 +5,7 @@ atatus.start({
   appName: "Speakbetter",
 });
 
-require("newrelic");
+// require("newrelic");
 
 const { createServer } = require("http");
 const { Server } = require("socket.io");
