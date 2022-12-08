@@ -1,7 +1,7 @@
 import React from 'react'
 import Footer from '../../modules/static/landing-page/Footer'
 import styles from '../../modules/auth/login/login.module.css';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function PrivacyPolicy() {
     let navigate = useNavigate();
@@ -12,7 +12,7 @@ export default function PrivacyPolicy() {
         <div>
             <div className='py-10 text-center bg-[#E8DDF2] text-BLACK'>
                 <div className="goback pb-30">
-                    <button onClick={handlePrev} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 ml-10 flex items-center mt-0 absolute w-36 h-12">
+                    <button onClick={handlePrev} className="bg-purple-500 hover:bg-purple-900 text-white py-2 px-2 ml-10 flex items-center mt-0 lg:absolute w-36 h-12 sm: relative sm:float-top">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className='h-10'>
                             <path
                                 fill="none"
