@@ -60,7 +60,7 @@ const Index = () => {
   };
 
   React.useEffect(() => {
-    if (location?.search && location?.search?.includes('code')) {
+    if (location?.search && location?.search?.includes('facebook')) {
       authFacebook
         .mutateAsync({})
         .then((res) => {
@@ -89,7 +89,7 @@ const Index = () => {
         });
     }
 
-    if (location?.search && location?.search?.includes('code')) {
+    if (location?.search && location?.search?.includes('linkedin')) {
       authLinkedIn
         .mutateAsync({})
         .then((res) => {
@@ -117,7 +117,7 @@ const Index = () => {
           error(err.message);
         });
     }
-    if (location?.search && location?.search?.includes('code')) {
+    if (location?.search && location?.search?.includes('google')) {
       authGoogle
         .mutateAsync({})
         .then((res) => {
@@ -152,7 +152,7 @@ const Index = () => {
     After a succesful input, redirects the user to a Protected Route and shows the logged in user's dashboard
     -----------------------------
     If user input is unsuccesful, shows an error notification and keeps the user on the page.
- 
+
     A successful login provides a token and id which monitors user session.
   */
   useEffect(() => {
@@ -264,7 +264,7 @@ const Index = () => {
 
   // const handleLinkedInAuth = () => {
   //   useFetch('https://speakbetter.hng.tech/api/v1/auth/linkedin');
-  // }; 
+  // };
 
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (

@@ -93,7 +93,7 @@ export default function ChangePassword() {
     }
     
   return (
-    <div className='h-screen w-[90%] md:w-[70%] lg:w-[70%] m-auto pt-2 sm:pt-16'>
+    <div className='h-full w-[90%] md:w-[70%] lg:w-[70%] m-auto pt-2 sm:pt-16'>
         <h1 className='text-xl sm:text-2xl text-[#393939] text-center md:text-start font-bold'>Change your password</h1>
 
         <form onSubmit={handleSubmit} className='mt-10 h-[90%] flex flex-col gap-5'>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Culture from '../../components/Careers/culture';
-import Footer from '../../modules/static/landing-page/Footer'
+import Footer from '../../modules/static/landing-page/Footer';
 import Navbar from '../../components/Navbar';
 import teamData from '../../data/careers/teamData.json';
 import useTheme from '../../hooks/useTheme';
@@ -22,7 +22,7 @@ const Careers = () => {
     <div>
       <Navbar />
 
-      <section className="bg-purple-500 py-20 text-center space-y-14 text-dark-200" >
+      <section className="bg-purple-500 py-20 text-center space-y-14 text-dark-200">
         <h4 className="text-white text-xl">Careers and Culture</h4>
         <h1 className="text-4xl text-white font-bold max-[480px]:text-3xl max-[480px]:w-3/5 max-[480px]:mx-auto">
           A culture rooted in setting people up for success
@@ -33,8 +33,16 @@ const Careers = () => {
           </a>
         </div>
       </section>
-      <div className={`${context.theme === 'dark' ? 'bg-[#0F0E0E]' : 'bg-[#F6F6F6] '} flex justify-center items-center flex-col px-30 py-14 space-y-14 `}>
-        <h4 className={`${context.theme === 'dark' ? 'text-[#F6F6F6]' : 'text-dark-primary'} text-center text-xl font-bold `} >
+      <div
+        className={`${
+          context.theme === 'dark' ? 'bg-[#0F0E0E]' : 'bg-[#F6F6F6] '
+        } flex justify-center items-center flex-col px-30 py-14 space-y-14 `}
+      >
+        <h4
+          className={`${
+            context.theme === 'dark' ? 'text-[#F6F6F6]' : 'text-dark-primary'
+          } text-center text-xl font-bold `}
+        >
           Hear from <span className="text-purple-500">the team</span>
         </h4>
         <div
@@ -56,10 +64,18 @@ const Careers = () => {
                 <div className="flex md:w-[70%] m-auto flex-col items-center  text-center transition-all justify-center">
                   <img src={img} alt={feedback} className="rounded-full w-[100px] md:w-[180px] " />
                   <div className=" px-10">
-                    <h3 className={`${context.theme === 'dark' ? 'text-[#fff]' : 'text-[#5A5A5A]'} text-[15px] font-bold md:text-[18px] mt-[24px] leading-6 md:leading-[30px] text-[#393939] `}>
+                    <h3
+                      className={`${
+                        context.theme === 'dark' ? 'text-[#fff]' : 'text-[#5A5A5A]'
+                      } text-[15px] font-bold md:text-[18px] mt-[24px] leading-6 md:leading-[30px] text-[#393939] `}
+                    >
                       <q> {feedback} </q>
                     </h3>
-                    <p className= {`${context.theme === 'dark' ? 'text-[#fff]' : 'text-[#ffff]'}  text-[13px] md:text-[16px] mt-[16px] leading-[19px] text-[#5A5A5A] font-light italic`}>
+                    <p
+                      className={`${
+                        context.theme === 'dark' ? 'text-[#fff]' : 'text-[#ffff]'
+                      }  text-[13px] md:text-[16px] mt-[16px] leading-[19px] text-[#5A5A5A] font-light italic`}
+                    >
                       {' '}
                       {name}
                     </p>
@@ -82,7 +98,8 @@ const Careers = () => {
         </div>{' '}
       </div>
       <Culture />
-      <section className="text-center py-10 ">
+      <section className="text-center py-10">
+        <h2 className="text-2xl font-bold">Apply for Roles</h2>
         <p className="w-1/2 mx-auto py-6 max-[480px]:w-full max-[480px]:px-8 max-[480px]:pb-10 my-6">
           Every member of the team brings something unique to Speak Better which strenghtens the team. We are growing
           and we would like you to join us. Do you think you have what it takes to join the team? Find out how you can

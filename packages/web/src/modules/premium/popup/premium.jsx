@@ -19,6 +19,7 @@ const index = () => {
   const matches = useMediaQuery('(max-width:694px)');
   const [interval, setInterval] = React.useState({ plan: '', amount: 0, duration: '' });
   const [open, setOpen] = React.useState(true);
+  const [userSubsList, setUserSubsList] = React.useState([]);
 
   const handleClosePremium = () => {
     setOpen(false);
@@ -26,12 +27,14 @@ const index = () => {
   const [userIsSubscribed, setUserIsSubscribed] = React.useState(false);
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
 
+  const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
+
   const handleCheckout = (plan) => {
     setInterval(plan);
-    if (userSubscription?.value && userSubscription?.value.length !== 0) {
-      // console.log('User is subscribed');
-      userSubscription?.value?.map((item) => {
-        if (item.status === 'initiated') {
+    if (userSubscription?.value && userSubscription?.value?.length !== 0) {
+      setUserSubsList(userSubscription?.value);
+      checkForArray(userSubsList).map((item) => {
+        if (item.status === 'success') {
           setUserIsSubscribed(true);
           return;
         }
@@ -121,7 +124,7 @@ const index = () => {
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Monthly</p>
-                    <h2>$10.90</h2>
+                    <h2>₦3500</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
                     <ul>
@@ -137,7 +140,7 @@ const index = () => {
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Quarterly</p>
-                    <h2>$10.90</h2>
+                    <h2>₦3333.3</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
                     <ul>
@@ -153,7 +156,7 @@ const index = () => {
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Annually</p>
-                    <h2>$10.90</h2>
+                    <h2>₦2916.6</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
                     <ul>
@@ -172,7 +175,7 @@ const index = () => {
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbInterval}>Monthly</h5>
                       <p>
-                        $10.90<span> / month</span>
+                        ₦3500<span> / month</span>
                       </p>
                       <button
                         onClick={() =>
@@ -189,10 +192,10 @@ const index = () => {
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbIntervalPromo}>
                         <span>Quaterly</span>
-                        <span>Billed Quaterly - $35.6</span>
+                        <span>Billed Quaterly - ₦10000</span>
                       </h5>
                       <p>
-                        $8.90<span> / month</span>
+                        ₦3333.3<span> / month</span>
                       </p>
                       <button
                         onClick={() =>
@@ -209,10 +212,10 @@ const index = () => {
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbIntervalPromo}>
                         <span>Quaterly</span>
-                        <span>Billed Annually - $35.6</span>
+                        <span>Billed Annually - ₦35000</span>
                       </h5>
                       <p>
-                        $5.90<span> / month</span>
+                        ₦2916.6<span> / month</span>
                       </p>
                       <button
                         onClick={() =>
