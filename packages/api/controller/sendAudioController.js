@@ -15,31 +15,31 @@ const { translateFromEnglish } = require("../scripts/translate");
 const fileUploadToS3Bucket = require("./uploadBuffer");
 
 const languageMap = {
-  English: "en",
-  "English (AU)": "en_au",
-  "English (UK)": "en_uk",
-  "English (US)": "en_us",
-  Spanish: "es",
-  French: "fr",
-  German: "de",
-  Italian: "it",
-  Portuguese: "pt",
-  Dutch: "nl",
-  Hindi: "hi",
-  Japanese: "ja",
+  english: "en",
+  "english (au)": "en_au",
+  "english (uk)": "en_uk",
+  "english (us)": "en_us",
+  spanish: "es",
+  french: "fr",
+  german: "de",
+  italian: "it",
+  portuguese: "pt",
+  dutch: "nl",
+  hindi: "hi",
+  japanese: "ja",
 };
 
 async function getBotResponse(req, res) {
   try {
     const userId = req.body.userId;
-    const language = req.body.language || "English";
+    const language = req.body.language.toLowwerCase() || "english";
     const audioFile = req.file; // retrieves file buffer and metadata set by multer
 
     // checks if file is available
     if (!audioFile) {
       return res.status(400).send({
         success: false,
-        message: "Attach an audio file",
+        message: "Please attach an audio file",
       });
     }
     const metadata = await parseBuffer(audioFile.buffer, audioFile.mimetype);
@@ -76,7 +76,9 @@ async function getBotResponse(req, res) {
     const preTranscriptId = await uploadFileUrlToInitiateTranscription(
       assemblyAIAudioUrl,
       languageMap[language]
-    ); // upload url and initiate transcription
+    );
+
+    // upload url and initiate transcription
     const transcribedAudioText = await getTranscriptionFromAssembly(
       preTranscriptId
     ); // process and download transcript
