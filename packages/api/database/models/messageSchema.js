@@ -7,9 +7,9 @@ let schema = new mongoose.Schema(
       type: String,
       default: () => v4(),
     },
-    conversationId: {
+    userId: {
       type: String,
-      ref: "conversation",
+      ref: "user",
     },
     userResponseId: {
       type: String,

@@ -32,7 +32,7 @@ const subscriptionSchema = new mongoose.Schema(
     },
     txref: {
       type: String,
-      unique: true
+      unique: true,
     },
     status: {
       type: String,
@@ -44,9 +44,13 @@ const subscriptionSchema = new mongoose.Schema(
       enum: ["NGN", "USD", "EUR", "YEN", "GBP"],
       default: "NGN",
     },
-    nextSubscriptionDate:{
-      type: String
-    }
+    nextSubscriptionDate: {
+      type: String,
+    },
+    active: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

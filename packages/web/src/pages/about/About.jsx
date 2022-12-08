@@ -1,7 +1,7 @@
 import React from 'react';
 import useTheme from '../../hooks/useTheme';
 import { Values, Teams } from '../../pages/about/data/data';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import illustration1 from '../../assets/abt_images/illustration1.png';
 import illustration2 from '../../assets/abt_images/Illustration2.png';
 import illustration4 from '../../assets/abt_images/illustration4.png';
@@ -11,7 +11,7 @@ import Footer from '../../modules/static/landing-page/Footer';
 
 const About = () => {
   const context = useTheme();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dark = context.theme === 'dark';
   return (
     <>
@@ -38,7 +38,12 @@ const About = () => {
             </h2>
             <div className="overflow-scroll scrollbar-hide flex justify-between gap-x-16">
               {['catalog', 'spherule', 'lightbox', 'luminous', 'altshift'].map((brand, idx) => (
-                <img src={`/images/${brand}.svg`} alt="brand" key={idx} />
+                <img
+                  src={`/images/${brand}.svg`}
+                  alt="brand"
+                  key={idx}
+                  className="md:first:pl-[26px] md:last:pr-[26px]"
+                />
               ))}
             </div>
           </div>
@@ -161,9 +166,7 @@ const About = () => {
         >
           <div>
             <p className=" text-purple-500  text-center text-3xl font-semibold">Try Quick Transcribe for free</p>
-            <p
-              className={`${dark && 'text-[#fff]'} text-center font-light text-sm lg:w-80 mx-auto mt-2`}
-            >
+            <p className={`${dark && 'text-[#fff]'} text-center font-light text-sm lg:w-80 mx-auto mt-2`}>
               Set up your personal account, free forever and never worry about a error in your speech again
             </p>
           </div>
