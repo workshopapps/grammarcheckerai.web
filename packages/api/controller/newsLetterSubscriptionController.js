@@ -59,7 +59,7 @@ exports.unSubscribe = async (req, res) => {
     await emailService({
       to: {email},
         templateId: UNSUBSCRIBED_TEMPLATE_ID,
-        dynamic_template_data: {actionurl: "/unsubscribe"},
+        dynamic_template_data: {actionurl: `${BASE_URL}/unsubscribe`},
     })
     res.status(200).json({
       success: true,
