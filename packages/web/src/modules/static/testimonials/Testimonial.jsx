@@ -71,33 +71,33 @@ export default function Testimonial() {
   ];
 
   const context = useContext(ThemeContext);
-  
+
   return (
     <div>
       <div>
         <div
-          className={`${styles._header} lg:bg-purple-500 lg:text-white flex flex-col justify-center items-center lg:py-32`}
+          className={`${styles._header} md:bg-[#5D387F] md:text-white flex flex-col justify-center items-center md:py-32`}
           nav-theme={context.theme}
         >
-          <h1 className="text-center font-bold text-xl my-4 sm:text-2xl lg:text-5xl">Users Love What We Do</h1>
-          <p className="text-center font-[500] text-sm lg:text-lg md:w-1/2">
+          <h1 className="text-center font-bold text-xl my-4 sm:text-2xl sm:mt-16 sm:p-2 lg:mt-4 lg:text-5xl">Users Love What We Do</h1>
+          <p className="text-center font-[500] text-sm p-4 lg:p-0 lg:text-lg md:w-1/2">
             Read the stories of our users who have relied on our product to improve their grammer. Join Speak Better
             today and be a part of the team.
           </p>
         </div>
         <Link
-          className="text-center bg-purple-500 text-white w-64 flex justify-center py-4 rounded-xl my-6 mx-auto"
+          className="text-center bg-[#5D387F] text-white w-48 flex justify-center py-2 rounded-xl my-6 mx-auto"
           //onClick={() => setOpenReviewModal(true)}
           to="/ratings"
         >
           Rate SpeakBetter
         </Link>
-        <main className="lg:grid space-y-6 lg:space-y-0 grid-cols-3 gap-8 lg:mt-32 my-14 mx-16 lg:mx-32 ">
+        <main className="lg:grid space-y-16 md:space-y-12 lg:space-y-0 grid-cols-3 gap-8 lg:mt-32 my-14 mx-8 lg:mx-32 ">
           {testimonials.map((testimony) => {
             return (
               <section
                 key={testimony.id}
-                className={`lg:flex px-4 py-6 lg:p-0 shadow-md rounded-xl col-span-2 lg:h-56  bg-white ${
+                className={`lg:flex px-4 py-6 lg:p-0 shadow-md rounded-xl col-span-2 lg:h-56 bg-white ${
                   testimony.id % 2 === 0 ? 'col-start-2' : ''
                 }`}
               >
@@ -115,8 +115,8 @@ export default function Testimonial() {
                     className="h-20 w-20 rounded-full lg:relative lg:h-full lg:w-full lg:rounded-none z-30"
                   />
                   <div className={`lg:hidden ml-6 ${styles._header}`}>
-                    <p className="font-bold">{testimony.name}</p>
-                    <span className="flex lg:float-right lg:ml-4">
+                    <p className="font-bold mb-2">{testimony.name}</p>
+                    <span className="flex mb-2 lg:float-right lg:ml-4">
                       {[...Array(5)].map((it, index) => {
                         return <img src={stars} key={index} alt="" />;
                       })}
@@ -126,7 +126,7 @@ export default function Testimonial() {
                 </div>
                 <div className="lg:w-2/3 space-y-4 lg:relative ">
                   <div className="space-y-4 p-4 lg:relative z-40 lg:h-full bg-white">
-                    <div className="hidden lg:block">
+                    <div className=" hidden lg:block">
                       <span className="flex lg:float-right">
                         {[...Array(5)].map((it, index) => {
                           return <img src={stars} key={index} alt="" />;
