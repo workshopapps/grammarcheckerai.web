@@ -68,7 +68,7 @@ const Checkout = (props) => {
     // console.log(userSubscription);
   }, [userId, userToken]);
 
-  const useFetch = (url, token) => {
+  const useFetch = async (url, token) => {
     var requestOptions = {
       method: 'GET',
       redirect: 'follow',
@@ -77,7 +77,7 @@ const Checkout = (props) => {
       },
     };
 
-    fetch(url, requestOptions)
+    await fetch(url, requestOptions)
       .then((response) => response.text())
       .then((result) => {
         const oBJ = JSON.parse(result);
