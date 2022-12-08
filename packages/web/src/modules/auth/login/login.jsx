@@ -34,14 +34,6 @@ const Index = () => {
 
   const location = useLocation();
 
-  // const authGoogle = useAuthGoogle(location?.search);
-  // const googleLink = useGetGoogleLink();
-
-  // const authFacebook = useAuthFacebook(location?.search);
-  // const facebookLink = useGetFacebookLink();
-
-  // const authLinkedIn = useAuthLinkedIn(location?.search);
-  // const linkedInLink = useGetLinkedInLink();
   const search = location?.search;
   const whichSocailAuth = new URLSearchParams(search)?.get('from');
 
@@ -96,74 +88,18 @@ const Index = () => {
         .then(() => {
           setTimeout(() => {
             getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
-          }, 5000);
+          }, 2000);
         })
         .then(() => {
           setTimeout(() => {
             window.location.replace('/me/home');
             navigate('/me/home', { replace: true });
-          }, 9000);
+          }, 5000);
         })
         .catch((err) => {
           error(err.message);
         });
     }
-
-    // if (location?.search && location?.search?.includes('linkedin')) {
-    //   authLinkedIn
-    //     .mutateAsync({})
-    //     .then((res) => {
-    //       success('Login Successful! Redirecting in 5 seconds');
-    //       const resId = res.data.data._id;
-    //       const resToken = res.data.data.token;
-    //       setUserId(resId);
-    //       setUserToken(resToken);
-    //       localStorage.setItem('grittyuserid', userId);
-    //       localStorage.setItem('grittyusertoken', userToken);
-    //       localStorage.setItem('isdashboard', true);
-    //     })
-    //     .then(() => {
-    //       setTimeout(() => {
-    //         getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
-    //       }, 2000);
-    //     })
-    //     .then(() => {
-    //       setTimeout(() => {
-    //         window.location.replace('/me/home');
-    //         navigate('/me/home', { replace: true });
-    //       }, 5000);
-    //     })
-    //     .catch((err) => {
-    //       error(err.message);
-    //     });
-    // }
-    // if (location?.search && location?.search?.includes('google')) {
-    //   authGoogle
-    //     .mutateAsync({})
-    //     .then((res) => {
-    //       success('Login Successful! Redirecting in 5 seconds');
-    //       const resId = res.data.data._id;
-    //       const resToken = res.data.data.token;
-    //       localStorage.setItem('grittyuserid', resId);
-    //       localStorage.setItem('grittyusertoken', resToken);
-    //       localStorage.setItem('isdashboard', true);
-    //     })
-    //     .then(() => {
-
-    //       setTimeout(() => {
-    //         getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
-    //       }, 2000);
-    //     })
-    //     .then(() => {
-    //       setTimeout(() => {
-    //         window.location.replace('/me/home');
-    //         navigate('/me/home', { replace: true });
-    //       }, 5000);
-    //     })
-    //     .catch((err) => {
-    //       error(err.message);
-    //     });
-    // }
   }, []);
 
   /*
@@ -289,8 +225,7 @@ const Index = () => {
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div signup-theme={context.theme} className={styles._gs2mainlogin}>
-      {/* {authFacebook.isLoading && <Loader />}
-      {authLinkedIn.isLoading && <Loader />} */}
+      {socialAuth?.isLoading && <Loader />}
       <div className={styles._gs2login}>
         <div className={styles._gs2logincol1} gs2logincol1-theme={context.theme}>
           {isTabletorMobile && (
