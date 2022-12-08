@@ -16,11 +16,15 @@ const LandingPage = () => {
   const [showQuiz, setShowQuiz] = useState(true);
 
   // useEffect(() => {
-
   //   setInterval(() => {
   //     setShowQuiz(true);
   //   }, 4000)
   // }, [setShowQuiz]);
+
+  // setTimeout(() => {
+  //   setShowQuiz(true);
+  // }, 5000);
+
 
   return (
     <div data-theme={context.theme} className={` bg-[#bbb8b81a] `}>

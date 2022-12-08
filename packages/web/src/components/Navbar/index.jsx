@@ -102,7 +102,7 @@ const Navbar = () => {
               { title: 'About', to: '/about' },
               { title: 'Blog', to: '/blog' },
               { title: 'Contact', to: '/contact' },
-              // { title: 'Log in', to: '/signin' },
+              { title: 'Quiz', to: '/startgame' },
             ].map((item) => (
               <NavLink
                 to={item.to}
