@@ -4,7 +4,6 @@ import { MdPayments } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import Table from '@mui/material/Table';
-import { Button } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -16,12 +15,26 @@ import Skeleton from '@mui/material/Skeleton';
 import useCancelPremium from '../../hooks/auth/useCancelPremium';
 import toast, { Toaster } from 'react-hot-toast';
 import LoadingButton from '@mui/lab/LoadingButton';
+import Popover from '@mui/material/Popover';
+import { Button } from '@mui/material';
 
 const Subscription = () => {
   const navigate = useNavigate();
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails')).email);
-
+  const [loading, setLoading] = React.useState(false);
   const premiumCancel = useCancelPremium();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
   const handlePremium = () => {
     navigate('/premium');
@@ -29,15 +42,26 @@ const Subscription = () => {
   const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
 
   const handleProCancellation = () => {
-    premiumCancel
-      .mutateAsync({
-        email: JSON.parse(localStorage.getItem('isUserDetails'))?.email,
-      })
-      .then((res) => {
-        console.log(res);
-        toast.success('Subscription Cancelled Succesfully');
-        userSubscription.refetch();
+    // console.log(userSubscription?.value);
+    setLoading(true);
+    if (userSubscription?.value && userSubscription?.value.length !== 0) {
+      userSubscription?.value?.map((item) => {
+        if (item.status === 'success') {
+          premiumCancel
+            .mutateAsync({
+              email: item?.email,
+              txref: item?.txref,
+            })
+            .then(() => {
+              setLoading(false);
+              toast.success('Subscription Cancelled Succesfully');
+              userSubscription.refetch();
+              // console.log('response', res);
+              // console.log('new', userSubscription);
+            });
+        }
       });
+    }
   };
 
   return (
@@ -50,7 +74,7 @@ const Subscription = () => {
       {userSubscription.data && userSubscription?.value.length !== 0 ? (
         <div>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 300 }} aria-label="simple table">
+            <Table sx={{ minWidth: 500 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell>Date</TableCell>
@@ -67,22 +91,60 @@ const Subscription = () => {
                     </TableCell>
                     <TableCell align="left">{subs?.interval || <Skeleton animation="wave" />}</TableCell>
                     <TableCell align="left">{`NGN ${subs?.amount}` || <Skeleton animation="wave" />}</TableCell>
-                    <TableCell align="left">{subs?.status || <Skeleton animation="wave" />}</TableCell>
+                    <TableCell align="left">
+                      {subs.status === 'success' ? (
+                        <div className={styles._sbCancel}>
+                          <LoadingButton loading={loading} variant="contained" color="secondary" onClick={handleClick}>
+                            Cancel
+                          </LoadingButton>
+                          <Popover
+                            id={id}
+                            open={open}
+                            anchorEl={anchorEl}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                              vertical: 'top',
+                              horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                              vertical: 'bottom',
+                              horizontal: 'center',
+                            }}
+                          >
+                            <div style={{ padding: '25px 10px' }}>
+                              <h3>Are you sure you want to cancel?</h3>
+                              <div className={styles._isUserCancel}>
+                                <Button variant="outlined" color="secondary" onClick={handleClose}>
+                                  No
+                                </Button>
+                                <LoadingButton
+                                  loading={loading}
+                                  variant="contained"
+                                  color="error"
+                                  onClick={handleProCancellation}
+                                >
+                                  Yes
+                                </LoadingButton>
+                              </div>
+                            </div>
+                          </Popover>
+                        </div>
+                      ) : (
+                        <div>
+                          <p>{subs?.status}</p>
+                        </div>
+                      )}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
-          <div className={styles._sbCancel}>
-            <LoadingButton
-              loading={premiumCancel.loading}
-              variant="outlined"
-              color="secondary"
-              onClick={handleProCancellation}
-            >
+          {/* <div className={styles._sbCancel}>
+            <LoadingButton loading={loading} variant="outlined" color="secondary" onClick={handleProCancellation}>
               Cancel Subscription
             </LoadingButton>
-          </div>
+          </div> */}
         </div>
       ) : (
         <div className={styles.empty_state}>

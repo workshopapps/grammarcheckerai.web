@@ -28,6 +28,7 @@ const HomePages = lazy(() => import('./modules/account/home/homePage'));
 const HistoryPage = lazy(() => import('./modules/account/history/history'));
 const CorrectionPage = lazy(() => import('./modules/account/history/correction'));
 const Conversation = lazy(() => import('./modules/account/conversation'));
+const Subscription = lazy(() => import('./modules/premium/index'));
 const ConversationTry = lazy(() => import('./modules/account/conversation/chat'));
 const Landing = lazy(() => import('./modules/static/landing-page/LandingPage'));
 const Legal = lazy(() => import('./pages/Legal/index'));
@@ -48,16 +49,25 @@ const Ai = lazy(() => import('./pages/Blog/Ai'));
 const Grammar = lazy(() => import('./pages/Blog/Grammar'));
 const Tips = lazy(() => import('./pages/Blog/Tips'));
 const Contact = lazy(() => import('./pages/contact/index'));
-const PremiumSubs = lazy(() => import('./modules/premium/popup/premium'));
-const SubscriptionHistory = lazy(() => import('./modules/premium/index'));
-
-
+const Premium = lazy(() => import('./modules/premium/popup/premium'));
 
 // All routes/pages must be import from ./pages folder
 
 const DashboardLayout = () => (
   <Suspense fallback={<Fallback />}>
     <Dashboard />
+  </Suspense>
+);
+
+const Billings = () => (
+  <Suspense fallback={<Fallback />}>
+    <Subscription />
+  </Suspense>
+);
+
+const ProVersion = () => (
+  <Suspense fallback={<Fallback />}>
+    <Premium />
   </Suspense>
 );
 
@@ -330,6 +340,7 @@ function App() {
       <Route path="/newsletter" element={<NewsletterPage />} />
       <Route path="/career" element={<Careers />} />
       <Route path="/roles" element={<Roles />} />
+      <Route path="/premium" element={<ProVersion />} />
       <Route path="/apply" element={<Application />} />
       <Route path="/api-status" element={<ApiStatus />} />
       <Route path="/emailtemplate" element={<EmailTemplate />} />
@@ -358,6 +369,7 @@ function App() {
         <Route path="profile/deleteaccount-step2" element={<ConfirmDeleteAccount />} />
         <Route path="import" element={<TranscribePage />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="subscription" element={<Billings />} />
       </Route>
     </Routes>
   );
