@@ -33,7 +33,6 @@ const index = () => {
     setInterval(plan);
     if (userSubscription?.value && userSubscription?.value?.length !== 0) {
       setUserSubsList(userSubscription?.value);
-      console.log(userSubsList);
       checkForArray(userSubsList).map((item) => {
         if (item.status === 'success') {
           setUserIsSubscribed(true);

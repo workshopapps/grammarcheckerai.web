@@ -37,6 +37,7 @@ function Converse({ noRive = false }) {
   const [open, setOpen] = useState(false);
   const [language, setLanguage] = React.useState('English');
   const error = (message) => toast.error(message);
+  const [userSubsList, setUserSubsList] = React.useState([]);
 
   const [chats, setChats] = React.useState([]);
   const navigate = useNavigate();
@@ -68,6 +69,7 @@ function Converse({ noRive = false }) {
     soln.append('file', blob);
     soln.append('language', language);
     if (second <= '20' || (userSubscription?.value && userSubscription?.value?.length !== 0)) {
+      setUserSubsList(userSubscription?.value);
       checkForArray(userSubsList).map((item) => {
         if (item.status === 'success') {
           sendAudio
