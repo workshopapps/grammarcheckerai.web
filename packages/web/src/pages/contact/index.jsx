@@ -60,7 +60,7 @@ const index = () => {
       })
       .catch(error => {
         console.log(error);
-        setOpenModal(false)
+        setOpenModal(false);
       });
       setIsSubmit(true);
       e.target.reset();

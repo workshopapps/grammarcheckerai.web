@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import toast, { Toaster } from 'react-hot-toast';
+import { useFormik } from 'formik';
+import { signUpSchema } from './schema';
 import useSignup from '../../../../hooks/auth/useSignup';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PasswordMask from 'react-password-mask';
@@ -27,13 +29,6 @@ import useTheme from '../../../../hooks/useTheme';
 
 const index = () => {
   const context = useTheme();
-  const [newUserName, setNewUserName] = useState('');
-  const [newUserFirstName, setNewUserFirstName] = useState('');
-  const [newUserLastName, setNewUserLastName] = useState('');
-  const [newUserPassword, setNewUserPassword] = useState('');
-  const [newUserConfirmPassword, setNewUserConfirmPassword] = useState('');
-  const [isSamePassword, setIsSamePassword] = useState(true);
-  const [newUserEmail, setNewUserEmail] = useState('');
   const [userId, setUserId] = useState('');
   const [userToken, setUserToken] = useState('');
 
@@ -90,25 +85,33 @@ const index = () => {
       .catch((error) => error('error', error));
   };
 
-  const handleSignUp = (e) => {
-    e.preventDefault();
-    if (
-      (newUserName !== '') &
-      (newUserFirstName !== '') &
-      (newUserLastName !== '') &
-      (newUserPassword !== '') &
-      (newUserEmail !== '') &
-      (newUserConfirmPassword === newUserPassword)
-    ) {
+  /*
+    handleGoogleAuth handles the Google social login. 
+
+    This redirects to the endpoint which gets a usertoken from google
+    Then redirects to the provided URL token for account creation
+
+  */
+  const formik = useFormik({
+    initialValues: {
+      newUserName: '',
+      newUserFirstName: '',
+      newUserLastName: '',
+      newUserEmail: '',
+      newUserPassword: '',
+      newUserConfirmPassword: '',
+    },
+    validationSchema: signUpSchema,
+    onSubmit: () => {
       authSignup
         .mutateAsync({
-          email: newUserEmail,
-          firstName: newUserFirstName,
-          lastName: newUserLastName,
-          username: newUserName,
+          email: formik.values.newUserEmail,
+          firstName: formik.values.newUserFirstName,
+          lastName: formik.values.newUserLastName,
+          username: formik.values.newUserName,
           language: 'English',
-          password: newUserPassword,
-          confirm_password: newUserConfirmPassword,
+          password: formik.values.newUserPassword,
+          confirm_password: formik.values.newUserConfirmPassword,
         })
         .then((res) => {
           success("Account Created Succesfully!\nYou'll be redirected to the Dashboard in 5 seconds...");
@@ -134,18 +137,9 @@ const index = () => {
           // error(err.response.data.message);
           error(err.response.data.data.password);
         });
-    } else if (newUserPassword !== newUserConfirmPassword) {
-      setIsSamePassword(false);
-    }
-  };
-
-  /* 
-    handleGoogleAuth handles the Google social login. 
-
-    This redirects to the endpoint which gets a usertoken from google
-    Then redirects to the provided URL token for account creation
-
-  */
+      formik.resetForm();
+    },
+  });
 
   React.useEffect(() => {
     if (location?.search && location?.search?.includes('code')) {
@@ -270,20 +264,22 @@ const index = () => {
           )}
           <div className={styles._gs2signupcontent}>
             <div className={styles._authback}>
-              <button onClick={handlePrev} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center">
-               <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="48"
-                  d="M328 112L184 256l144 144"
-                />
-               </svg> 
-              <span>Go back</span> 
+              <button
+                onClick={handlePrev}
+                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="48"
+                    d="M328 112L184 256l144 144"
+                  />
+                </svg>
+                <span>Go back</span>
               </button>
-             
             </div>
             {isTabletorMobile && (
               <p step-theme={context.theme} className={styles._gssignuptophead}>
@@ -294,76 +290,136 @@ const index = () => {
             <p step-theme={context.theme} className={styles._subtitle}>
               Start your learning journey today, you can skip this process for later.
             </p>
-            <form className={styles._gs2signupform} onSubmit={(e) => handleSignUp(e)}>
+            <form className={styles._gs2signupform} onSubmit={formik.handleSubmit} noValidate>
+              {/* ### EMAIL */}
               <div className={styles._gs2signupinput}>
                 <span>Enter Your Email</span>
                 <input
                   type="email"
-                  onChange={(e) => setNewUserEmail(e.target.value)}
-                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                  placeholder="shalomtaiwo@example.com"
+                  placeholder="example@gmail.com"
                   id="signupEmail"
                   required
+                  name="newUserEmail"
+                  value={formik.values.newUserEmail}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className={`border-[1px] border-[#d7d7d7] focus:outline-1 focus:outline-gray-400 ${
+                    formik.touched.newUserEmail && formik.errors.newUserEmail && 'border-red-400'
+                  }`}
                 />
+                {formik.touched.newUserEmail && formik.errors.newUserEmail && (
+                  <p className="text-red-500 pl-2">{formik.errors.newUserEmail}</p>
+                )}
               </div>
+
+              {/* ### USERNAME */}
               <div className={styles._gs2signupinput}>
                 <span>Username</span>
                 <input
                   type="text"
-                  onChange={(e) => setNewUserName(e.target.value)}
-                  pattern="[A-Za-z_-]{1,32}"
                   placeholder="meisieshalom"
                   required
                   id="signupUserName"
+                  name="newUserName"
+                  value={formik.values.newUserName}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className={`border-[1px] border-[#d7d7d7] focus:outline-1 focus:outline-gray-400 ${
+                    formik.touched.newUserName && formik.errors.newUserName && 'border-red-400'
+                  }`}
                 />
+                {formik.touched.newUserName && formik.errors.newUserName && (
+                  <p className="text-red-500 pl-2">{formik.errors.newUserName}</p>
+                )}
               </div>
+
+              {/* ### FIRST NAME */}
               <div className={styles._gs2signupinput}>
                 <span>First Name</span>
                 <input
                   type="text"
                   required
                   placeholder="Shalom"
-                  onChange={(e) => setNewUserFirstName(e.target.value)}
                   id="signupFirstName"
+                  name="newUserFirstName"
+                  value={formik.values.newUserFirstName}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className={`border-[1px] border-[#d7d7d7] focus:outline-1 focus:outline-gray-400 ${
+                    formik.touched.newUserFirstName && formik.errors.newUserFirstName && 'border-red-400'
+                  }`}
                 />
+                {formik.touched.newUserFirstName && formik.errors.newUserFirstName && (
+                  <p className="text-red-500 pl-2">{formik.errors.newUserFirstName}</p>
+                )}
               </div>
+
+              {/* ### LAST NAME */}
               <div className={styles._gs2signupinput}>
                 <span>Last Name</span>
                 <input
                   type="text"
                   required
                   placeholder="Taiwo"
-                  onChange={(e) => setNewUserLastName(e.target.value)}
                   id="signupLastName"
+                  name="newUserLastName"
+                  value={formik.values.newUserLastName}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className={`border-[1px] border-[#d7d7d7] focus:outline-1 focus:outline-gray-400 ${
+                    formik.touched.newUserLastName && formik.errors.newUserLastName && 'border-red-400'
+                  }`}
                 />
+                {formik.touched.newUserLastName && formik.errors.newUserLastName && (
+                  <p className="text-red-500 pl-2">{formik.errors.newUserLastName}</p>
+                )}
               </div>
+
+              {/* ### PASSWORD */}
               <div className={styles._gs2signupinput}>
                 <span>Create a password</span>
                 <PasswordMask
                   type="password"
                   required
-                  onChange={(e) => setNewUserPassword(e.target.value)}
-                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                  value={newUserPassword}
-                  title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
                   id="signupCreatePassword"
+                  placeholder="Password"
+                  name="newUserPassword"
+                  value={formik.values.newUserPassword}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className={`border-[1px] rounded-lg border-[#d7d7d7] focus:outline-1 focus:outline-gray-400 ${
+                    formik.touched.newUserPassword && formik.errors.newUserPassword && 'border-red-400'
+                  }`}
                 />
+                {formik.touched.newUserPassword && formik.errors.newUserPassword && (
+                  <p className="text-red-500 pl-2">{formik.errors.newUserPassword}</p>
+                )}
               </div>
+
+              {/* ### CONFIRM PASSWORD */}
               <div className={styles._gs2signupinput}>
                 <span>Confirm password</span>
                 <PasswordMask
                   type="password"
                   required
-                  value={newUserConfirmPassword}
-                  onChange={(e) => setNewUserConfirmPassword(e.target.value)}
-                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                  title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
                   id="signupConfirmPassword"
+                  placeholder="Confirm Password"
+                  name="newUserConfirmPassword"
+                  value={formik.values.newUserConfirmPassword}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className={`border-[1px] rounded-lg border-[#d7d7d7] focus:outline-1 focus:outline-gray-400 ${
+                    formik.touched.newUserConfirmPassword && formik.errors.newUserConfirmPassword && 'border-red-400'
+                  }`}
                 />
-                <span className={styles._gs2signupvalidate}>
+                {formik.touched.newUserConfirmPassword && formik.errors.newUserConfirmPassword && (
+                  <p className="text-red-500 pl-2">{formik.errors.newUserConfirmPassword}</p>
+                )}
+                {/* <span className={styles._gs2signupvalidate}>
                   {isSamePassword === false ? 'Passwords must be the same' : ''}
-                </span>
+                </span> */}
               </div>
+
               <div className={styles._gs2signupcontinue}>
                 <LoadingButton size="small" type="submit" loading={authSignup.isLoading} variant="contained">
                   Create Account

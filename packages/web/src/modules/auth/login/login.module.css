@@ -140,8 +140,24 @@
 }
 
 ._g2loginoption {
-  display: flex;
   align-items: center;
+  font-weight: bold;
+
+}
+
+._g2loginandForgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 550px;
+}
+
+._g2loginandForgot input {
+  align-items: center;
+}
+
+._g2loginandForgot span {
+  padding-left: 6px;
 }
 
 ._gs2logininput a {
@@ -406,6 +422,7 @@ input[type='checkbox']:checked+label::before {
 
 ._gsloginforgot {
   cursor: pointer;
+  font-weight: bold;
 }
 
 ._gs2mainsignupcol2images {

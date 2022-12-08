@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import LoadingButton from '@mui/lab/LoadingButton';
 import styles from './login.module.css';
-import Logo from '../../../assets/images/signuplogo.png';
+import Logo from '../../../assets/images/logo2.png';
 import Image2 from '../../../assets/Correction 1.png';
 import Image1 from '../../../assets/error 1.png';
 import Image3 from '../../../assets/steponeframeone.png';
@@ -264,7 +264,7 @@ const Index = () => {
 
   // const handleLinkedInAuth = () => {
   //   useFetch('https://speakbetter.hng.tech/api/v1/auth/linkedin');
-  // };
+  // }; 
 
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
@@ -275,7 +275,7 @@ const Index = () => {
         <div className={styles._gs2logincol1} gs2logincol1-theme={context.theme}>
           {isTabletorMobile && (
             <div className={styles._gs2loginlogo}>
-              <img src={Logo} alt="Grammar Checker Logo" />
+              <img src={Logo} alt="Speak Better Logo" />
             </div>
           )}
           <div className={styles._gs2logincontent}>
@@ -323,10 +323,13 @@ const Index = () => {
                   required
                   onChange={(e) => setUserPassword(e.target.value)}
                 />
-                <div className={styles._gs2logincheck}></div>
+              </div>
+              <div className={styles._gs2logincheck}></div>
+              <div className={styles._g2loginandForgot}>
                 <div className={styles._g2loginoption}>
-                  <input type="checkbox" id="userRememberPassword" />
-                  <span style={{ lineHeight: '30px' }}>Keep me signed in</span>
+                  <input id="userRememberPassword" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                  <span>
+                    Keep me signed in</span>
                 </div>
                 <div>
                   <button
