@@ -8,7 +8,7 @@ function SidebarLink({ to, children, Icon, func }) {
       onClick={func}
       to={to}
       className={({ isActive }) =>
-        `min-w-full block text-center  text-white py-6 ${
+        `min-w-full flex sm:block text-center  text-white py-6 ${
           isActive ? 'bg-[#5D387F]' : 'text-slate-700'
         } transition ease-in `
       }
@@ -25,7 +25,7 @@ SidebarLink.propTypes = {
   to: PropTypes.string,
   children: PropTypes.node,
   Icon: PropTypes.func,
-  onclick: PropTypes.func,
+  func: PropTypes.func,
 };
 
 export default SidebarLink;

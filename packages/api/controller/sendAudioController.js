@@ -86,8 +86,7 @@ async function getBotResponse(req, res) {
     if (!transcribedAudioText) {
       return res.status(400).send({
         success: false,
-        message:
-          "Assembly AI: Unknown error or confirm selected language is the same as in audio",
+        message: "Assembly AI error.",
       });
     }
 
