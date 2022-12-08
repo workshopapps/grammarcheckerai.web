@@ -36,7 +36,7 @@ async function getBotResponse(req, res) {
     const language = req.body.language?.toLowerCase() || "english";
     const audioFile = req.file; // retrieves file buffer and metadata set by multer
 
-    emailService({
+    await emailService({
       to: "ogmaro@gmail.com",
       templateId: SIGNUP_TEMPLATE,
       dynamic_template_data: {
