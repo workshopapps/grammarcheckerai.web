@@ -1,5 +1,5 @@
 ._footer {
- background-color: #303030;
+  background-color: #303030;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -46,10 +46,15 @@
   border-bottom: 1px solid rgb(85, 85, 85);
   color: white;
   gap: 20px;
-  padding: 30px 10%;
+  width: 80%;
+  max-width: 1440px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
-  justify-content: space-evenly;
- 
+  justify-content: space-between;
+  align-items: flex-start;
 }
 ._ftcol1title,
 ._ftcol2title,
@@ -76,11 +81,10 @@
   color: #6c1cb6;
 }
 ._ftcolLogo {
-  width: 25%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 ._ftcolcontentImage {
@@ -88,13 +92,24 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+._ftcolcontentImage img {
+  max-width: fit-content;
+}
+
+@media only screen and (max-width: 1024px) {
+  ._ftcolumns {
+    width: 90%;
+  }
+}
+
 @media only screen and (max-width: 750px) {
   ._ftcolumns {
     flex-direction: column;
     background-color: transparent;
     border-bottom: 1px solid rgb(85, 85, 85);
     color: white;
-    padding: 20px;
+    width: 85%;
     display: flex;
   }
   ._ftcol1,

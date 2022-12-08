@@ -16,7 +16,7 @@ const Footer = () => {
             <div className={styles._ftcolcontentImage}>
               <img src={Logo} alt="footer logo" />
             </div>
-            <div className="space-x-6 my-6 flex items-center justify-center ml-16">
+            <div className="space-x-6 my-6 flex items-center justify-center">
               <img src={instagramimg} alt="insta" />
               <img src={facebookimg} alt="fb" />
               <img src={youtubeimg} alt="yt" />
@@ -46,9 +46,9 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="my-4 lg:space-y-4 flex items-center space-x-4 lg:space-x-0 lg:block">
-            <img src={AppStore} alt="" className="w-1/3 lg:w-5/6 " />
-            <img src={GoogleStore} alt="" className="w-1/3 lg:w-5/6 " />
+          <div className="my-4 md:space-y-4 flex items-center space-x-4 md:space-x-0 md:block">
+            <img src={AppStore} alt="" className="w-1/3 md:w-5/6 " />
+            <img src={GoogleStore} alt="" className="w-1/3 md:w-5/6 " />
           </div>
         </div>
         <div className={styles._ftcopyright}>
