@@ -2236,3 +2236,7 @@
 {"v":0,"level":30,"name":"newrelic","hostname":"DESKTOP-GMU808N","pid":2544,"time":"2022-12-08T10:07:00.059Z","msg":"Valid event_harvest_config received. Updating harvest cycles. {\"report_period_ms\":5000,\"harvest_limits\":{\"error_event_data\":8,\"log_event_data\":833,\"analytic_event_data\":833,\"custom_event_data\":250}}"}
 {"v":0,"level":30,"name":"newrelic","hostname":"DESKTOP-GMU808N","pid":2544,"time":"2022-12-08T10:07:00.066Z","msg":"Agent state changed from connected to started."}
 {"v":0,"level":30,"name":"newrelic","hostname":"DESKTOP-GMU808N","pid":2544,"time":"2022-12-08T10:07:01.072Z","msg":"Starting initial 1000ms harvest."}
+{"v":0,"level":40,"name":"newrelic","hostname":"DESKTOP-GMU808N","pid":2544,"time":"2022-12-08T10:24:05.280Z","msg":"Merging 2 (of 2) errors for next delivery.","component":"error_tracer"}
+{"v":0,"level":40,"name":"newrelic","hostname":"DESKTOP-GMU808N","pid":2544,"time":"2022-12-08T10:24:05.480Z","msg":"Merging 1 of 1 events into ErrorEventAggregator for next harvest","component":"event_aggregator"}
+{"v":0,"level":40,"name":"newrelic","hostname":"DESKTOP-GMU808N","pid":2544,"time":"2022-12-08T10:24:05.481Z","msg":"Merging 28 of 28 events into SpanEventAggregator for next harvest","component":"event_aggregator"}
+{"v":0,"level":40,"name":"newrelic","hostname":"DESKTOP-GMU808N","pid":2544,"time":"2022-12-08T10:24:27.110Z","msg":"Merging 1 of 1 events into ErrorEventAggregator for next harvest","component":"event_aggregator"}
