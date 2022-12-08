@@ -32,7 +32,7 @@ const languageMap = {
 async function getBotResponse(req, res) {
   try {
     const userId = req.body.userId;
-    const language = req.body.language.toLowwerCase() || "english";
+    const language = req.body.language?.toLowerCase() || "english";
     const audioFile = req.file; // retrieves file buffer and metadata set by multer
 
     // checks if file is available
