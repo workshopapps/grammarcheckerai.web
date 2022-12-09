@@ -1,4 +1,4 @@
-const mongoose = require("mongoose"); 
+const mongoose = require("mongoose");
 const { environment } = require("../config/environment.js");
 
 const { NODE_ENV, DATABASE_URI_DEVELOP, DATABASE_URI_TEST, DATABASE_URI_PROD } =
