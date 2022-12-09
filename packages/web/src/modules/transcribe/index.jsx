@@ -5,6 +5,7 @@ import { PropTypes } from 'prop-types';
 import SentAudio from '../../components/SentAudio/index';
 import React, { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
+import useSendAudio from '../../hooks/account/useSendAudio'
 
 const dummyBotMessages = [
   {
@@ -16,6 +17,9 @@ const dummyBotMessages = [
 
 const Transcribe = () => {
   const [messages, setMessages] = useState(dummyBotMessages);
+  const error = (message) => toast.error(message);
+  const sendAudio = useSendAudio()
+  const [language, setLanguage] = React.useState('English');
 
   const [isError, setIsError] = useState(false);
   const [isAudio, setIsAudio] = useState(false);
@@ -63,6 +67,39 @@ const Transcribe = () => {
       console.log('audio', URL.createObjectURL(event.target.files[0]));
       console.log('messgaes', messages);
     }
+  };
+
+  let blob = new Blob([audio], {
+    type: 'audio/mp3',
+  });
+
+  console.log(blob);
+
+  const submitAudioHandler = async() => {
+    const soln = new FormData();
+    soln.append('file', blob);
+    soln.append('language', language);
+          sendAudio
+            .mutateAsync(soln)
+            .then((res) => {
+              const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
+                res.data.data.botResponse;
+              setChats((prevState) => [
+                ...prevState,
+                {
+                  botReply,
+                  correctedText,
+                  createdAt,
+                  language,
+                  transcribedAudioText,
+                  updatedAt,
+                },
+              ]);
+            })
+            .catch((err) => {
+              error(err?.response?.data?.message);
+            });
+          return;
   };
 
   return (
@@ -122,6 +159,7 @@ const Transcribe = () => {
         </div>
 
         {isError ? <ErrorOverlay setIsError={setIsError} /> : null}
+        <button onClick={submitAudioHandler}>Quick Transcribe</button>
       </div>
     </div>
   );
