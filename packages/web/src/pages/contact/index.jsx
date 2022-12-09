@@ -92,7 +92,7 @@ const index = () => {
             </div>
           </div>
 
-          <div className="flex justify-between gap-20 m-2 p-4 ml-8">
+          <div className="lg:flex justify-between lg:gap-20 m-2 p-4 lg:ml-8">
             <div className="hidden lg:flex lg:flex-col mt-8 ">
               <div className={ContactCSS.reach}>
                 <h2 contact-theme={context.theme} className={ContactCSS.h2}>
@@ -169,10 +169,10 @@ const index = () => {
             </div>
 
             <div className="mt-0 lg:mt-8 mx-auto">
-              <form onSubmit={handleSubmit} encType="application/json" className="sm:w-[100%] sm:m-2 lg:w-full">
+              <form onSubmit={handleSubmit} encType="application/json" className="w-full sm:m-2 lg:w-full">
                 <div className={ContactCSS.form}>
-                  <div>
-                    <div className="flex flex-col lg:flex-row">
+                  <div className='w-full'>
+                    <div className="flex flex-col lg:flex-row ">
                       <div className={ContactCSS.element}>
                         <label contact-theme={context.theme}>First Name</label>
                         <div className={ContactCSS.input_container}>
