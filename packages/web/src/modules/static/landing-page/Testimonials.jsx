@@ -31,9 +31,7 @@ const Testimonials = () => {
     },
     {
       testimony:
-        'I like how fast it corrects my\
-            mistakes and the fact that\
-            it makes corrections in the language I am learning',
+        'Speak Better has helped my students improve their   communication skills in different languages.  It has boosted their confidence level',
       name: 'Chris Hampton',
       img: chris,
       occupation: 'Teacher',

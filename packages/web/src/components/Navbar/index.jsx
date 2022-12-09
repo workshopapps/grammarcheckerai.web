@@ -108,6 +108,7 @@ const Navbar = () => {
               { title: 'Converse', to: '/converse' },
               { title: 'About', to: '/about' },
               { title: 'Blog', to: '/blog' },
+              { title: 'Premium', to: '/premium' },
               { title: 'Contact', to: '/contact' },
               { title: 'Quiz', to: '/startgame' },
             ].map((item) => (
