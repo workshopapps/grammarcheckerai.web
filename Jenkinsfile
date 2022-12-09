@@ -37,7 +37,7 @@ pipeline {
 				sh "sudo chown devineer /home/devineer/frontend"
 				sh "sudo rm -rf /home/devineer/backend/node_modules && sudo rm -f /home/devineer/backend/package-lock.json"
 				sh "sudo chown devineer /home/devineer/backend"
-				sh "sudo npm install --prefix /home/devineer/backend"
+				sh "sudo npm install --force --prefix /home/devineer/backend"
 				
 				//sh "sudo ls /home/devineer/backend"
 				//sh "sudo pm2 delete all"
