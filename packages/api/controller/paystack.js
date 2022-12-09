@@ -1,7 +1,6 @@
 const {environment} = require("../config/environment");
 const {PAYSTACK_SECRET_KEY} =  environment;
 
-
 const verify = (request) => {
   const verifyPayment = (ref, mycallback) => {
     const option = {

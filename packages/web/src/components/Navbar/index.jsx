@@ -14,7 +14,15 @@ import { Drawer } from '@mui/material';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Switch from '@mui/material/Switch';
 import { BsList } from 'react-icons/bs';
-import { FaHome, FaBlog, FaEnvelopeOpenText, FaSignInAlt, FaUsers, FaRegComments } from 'react-icons/fa';
+import {
+  FaHome,
+  FaBlog,
+  FaMoneyBillWave,
+  FaEnvelopeOpenText,
+  FaSignInAlt,
+  FaUsers,
+  FaRegComments,
+} from 'react-icons/fa';
 
 // MUI TOGGLE-SWITCH
 
@@ -108,6 +116,7 @@ const Navbar = () => {
               { title: 'Converse', to: '/converse' },
               { title: 'About', to: '/about' },
               { title: 'Blog', to: '/blog' },
+              { title: 'Premium', to: '/premium' },
               { title: 'Contact', to: '/contact' },
               { title: 'Quiz', to: '/startgame' },
             ].map((item) => (
@@ -136,12 +145,43 @@ const Navbar = () => {
             </button>
           )}
           <Drawer open={open} onClose={() => setOpen(false)} className={styles.DrawerNav}>
+            <div className="flex justify-between px-6 pt-3">
+              <Link to="/">
+                <img src={logoImg} alt="speak better" className="" />
+              </Link>
+              <button onClick={() => setOpen(false)}>
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M12.2266 19.7732L19.7732 12.2266"
+                    stroke="#393939"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M19.7732 19.7732L12.2266 12.2266"
+                    stroke="#393939"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M12.0001 29.3337H20.0001C26.6667 29.3337 29.3334 26.667 29.3334 20.0003V12.0003C29.3334 5.33366 26.6667 2.66699 20.0001 2.66699H12.0001C5.33341 2.66699 2.66675 5.33366 2.66675 12.0003V20.0003C2.66675 26.667 5.33341 29.3337 12.0001 29.3337Z"
+                    stroke="#393939"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
             <div className={styles._nvnav}>
               {[
                 { icon: <FaHome className="mx-3" />, title: 'Home', to: '/home' },
                 { icon: <FaRegComments className="mx-3" />, title: 'Converse', to: '/converse' },
                 { icon: <FaUsers className="mx-3" />, title: 'About', to: '/about' },
                 { icon: <FaBlog className="mx-3" />, title: 'Blog', to: '/blog' },
+                { icon: <FaMoneyBillWave className="mx-3" />, title: 'Premium', to: '/premium' },
                 { icon: <FaEnvelopeOpenText className="mx-3" />, title: 'Contact', to: '/contact' },
                 { icon: <FaSignInAlt className="mx-3" />, title: 'Log in', to: '/signin' },
                 // { title: 'Sign Up', to: '/signup' },
@@ -155,7 +195,7 @@ const Navbar = () => {
                   }}
                   className={`${
                     activeNav === item.title ? 'font-bold ' : ''
-                  } flex items-center border-l-8 border-y-8 border-white  hover:bg-[#392150] hover:text-white hover:rounded-l-full`}
+                  } flex items-center border-8 border-white font-medium text-[#392150] hover:bg-[#392150] hover:text-white hover:rounded-full`}
                 >
                   {item.icon}
                   {item.title}

@@ -310,6 +310,7 @@ function App() {
   const [isDashboard, setIsDashboard] = useState(false);
 
   useEffect(() => {
+    localStorage.setItem('theme', 'light');
     if (localStorage.getItem('grittyuserid') !== null && localStorage.getItem('grittyuserid') !== '') {
       setisLoggedin(true);
     }

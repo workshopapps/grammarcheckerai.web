@@ -1,7 +1,8 @@
 const Subscription = require("../database/models/subscriptionSchema");
+const emailService = require("../services/email.service");
 const axios = require("axios");
 const { environment } = require("../config/environment");
-const { PAYSTACK_SECRET_KEY } = environment;
+const { PAYSTACK_SECRET_KEY, BASE_URL, PREMIUM_TEMPLATE_ID } = environment;
 
 const createPayment = async (req, res) => {
   let email = req.body.email;
@@ -35,32 +36,33 @@ const createPayment = async (req, res) => {
       });
     }
 
-//CHECK EXPIRATION DATE
+    //CHECK EXPIRATION DATE
     Date.prototype.addDays = function (days) {
       var date = new Date(this.valueOf());
       date.setDate(date.getDate() + days);
       return date;
     };
     var expirationDate = new Date();
-    if (interval == "weekly")
-      expirationDate = expirationDate.addDays(7);
+    if (interval == "weekly") expirationDate = expirationDate.addDays(7);
     payload.expirationDate = expirationDate;
-    if (interval == "monthly")
-      expirationDate = expirationDate.addDays(30);
+    if (interval == "monthly") expirationDate = expirationDate.addDays(30);
     payload.expirationDate = expirationDate;
-    if (interval == "quarterly")
-      expirationDate = expirationDate.addDays(90);
+    if (interval == "quarterly") expirationDate = expirationDate.addDays(90);
     payload.expirationDate = expirationDate;
-    if (interval == "annually")
-      expirationDate = expirationDate.addDays(365);
+    if (interval == "annually") expirationDate = expirationDate.addDays(365);
     payload.expirationDate = expirationDate;
-
 
     //SAVE TO DATABASE
     const result = await Subscription.create(payload);
+    await emailService({
+      to: email,
+      templateId: PREMIUM_TEMPLATE_ID,
+      dynamic_template_data: { actionurl: BASE_URL },
+    });
     res.status(200).send({
       success: true,
-      message: "Subscription created",
+      message:
+        "You have successfully subscribed for our premium packages on SpeakBetter",
       data: result,
     });
   } catch (error) {
