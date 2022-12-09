@@ -32,13 +32,15 @@ const NewsletterPage = () => {
       method: 'post',
       url: 'https://api.speakbetter.hng.tech/v1/subscribe/newsletter/confirm',
       data: {
-        email: userEmail
-      }
-    }).then(response => {
-      console.log(response);
-    }).catch(error => {
-      console.log(error);
+        email: userEmail,
+      },
     })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     if (email.current.value !== '') {
       localStorage.setItem('emailData', email.current.value);
@@ -52,39 +54,41 @@ const NewsletterPage = () => {
     <div className={styles.newsletterPage}>
       <section className={styles.newsletter}>
         <aside className={styles.newsletter_left}>
-            <div className={styles.newsletter_left__logo}>
-              <button onClick={() => navigate(-1)} className="text-[#5D387F]">
+          <div
+            className={`${styles.newsletter_left__logo} md:-translate-x-12 md:scale-150 lg:scale-100 lg:translate-x-0`}
+          >
+            <button onClick={() => navigate(-1)} className="text-[#5D387F]">
               {' '}
               &lt; Back{' '}
+            </button>
+          </div>
+          <div className={styles.newsletter_left__text}>
+            <img src={letter} alt="Email icon" />
+
+            <div>
+              <h3>Subscribe To Our Newsletter</h3>
+              <p>
+                Sign-up for our weekly newsletter to get the latest news, updates and amazing offers delivered directly
+                in your inbox
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} encType="application/json">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                ref={email}
+                onChange={(event) => setUserEmail(event.target.value)}
+                id="email"
+                name="Email"
+                placeholder="Youremail@example.com"
+                required
+              />
+              <button id="submit" value={isSubmit} type="submit">
+                Subscribe
               </button>
-            </div>
-            <div className={styles.newsletter_left__text}>
-              <img src={letter} alt="Email icon" />
-
-              <div>
-                <h3>Subscribe To Our Newsletter</h3>
-                <p>
-                  Sign-up for our weekly newsletter to get the latest news, updates and amazing offers delivered
-                  directly in your inbox
-                </p>
-              </div>
-
-              <form onSubmit={handleSubmit} encType="application/json">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  ref={email}
-                  onChange={(event) => setUserEmail(event.target.value)}
-                  id="email"
-                  name="Email"
-                  placeholder="Youremail@example.com"
-                  required
-                />
-                <button id="submit" value={isSubmit} type="submit">
-                  Subscribe
-                </button>
-              </form>
-            </div>
+            </form>
+          </div>
         </aside>
 
         <aside className={styles.newsletter_right}>

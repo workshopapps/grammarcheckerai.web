@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton';
 import { useNavigate } from 'react-router-dom';
+import { BsChevronLeft } from 'react-icons/bs';
 import toast, { Toaster } from 'react-hot-toast';
 import { ENDPOINTS } from '../../lib/constants';
 
@@ -97,13 +98,14 @@ export default function ConfirmDeleteAccount() {
     },[reasons, password])
      
   return (
-    <div className='h-[100vh] flex flex-col w-[90%] md:w-[70%] lg:w-[70%] m-auto pt-2 sm:pt-16'>
+    <div className='h-full flex flex-col w-[90%] md:w-[70%] lg:w-[70%] m-auto pt-5 sm:pt-16'>
+        <BsChevronLeft className='absolute top-5 sm:hidden' size={28} onClick={() => history(-1)} />
         <div className='flex flex-col'>
             <h1 className='text-xl sm:text-2xl text-[#393939] sm:text-center text-center font-bold'>Delete Account</h1>
-            <p className='text-sm sm:text-lg mt-2 opacity-50'>Step 2/2: Please share the reasons why you no longer want to continue with Speak Better so we can improve our services further. You can make multiple selections.</p>
+            <p className='text-sm sm:text-lg mt-5 opacity-50'>Step 2/2: Please share the reasons why you no longer want to continue with Speak Better so we can improve our services further. You can make multiple selections.</p>
         </div>
 
-        <ul className='mt-10 flex flex-wrap gap-6'>
+        <ul className='mt-10 flex flex-wrap gap-2 sm:gap-6'>
             {reasonsArray.map((item) => (
                 <button 
                     onClick={() => addReason(item.text)}
@@ -122,9 +124,7 @@ export default function ConfirmDeleteAccount() {
         </form>
 
         <div className="_btnContainer">
-            <ProfileScreenButton onClick={() => history(-1)} variant="secondary">
-                Cancel
-            </ProfileScreenButton>
+        <ProfileScreenButton className="hidden sm:block" onClick={() => history(-1)} variant="secondary">Cancel</ProfileScreenButton>
             <ProfileScreenButton onClick={deleteUser} disabled={btnDisabled} >
                 Submit
             </ProfileScreenButton>

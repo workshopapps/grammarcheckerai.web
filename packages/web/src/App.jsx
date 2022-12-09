@@ -5,6 +5,7 @@ import { Route, Routes, Outlet, Navigate } from 'react-router-dom';
 // import StartGame from './modules/static/quizgame/startgame/StartGame';
 import Layout from './modules/static/quizgame/layout/Layout';
 // import ProtectedRoute from './components/ProtectedRoute';
+const SocialPage = lazy(() => import('./modules/auth/social-auth-redirect/social'));
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
 const SigninPage = lazy(() => import('./modules/auth/login/login'));
 const ProfilePage = lazy(() => import('./pages/profile/profileScreen'));
@@ -20,6 +21,7 @@ const Review = lazy(() => import('./modules/static/testimonials/Testimonial'));
 const Rates = lazy(() => import('./modules/static/testimonials/Ratings'));
 const Dashboard = lazy(() => import('./components/DashboardLayout'));
 const Newsletter = lazy(() => import('./modules/static/newsletter/NewsletterPage'));
+const Unsubscribe = lazy(() => import('./components/Unsubscribe/index'))
 const EmailTemp = lazy(() => import('./modules/static/emailtemplate/EmailTemplate'));
 const NewsletterEmailTemplate = lazy(() => import('./modules/static/emailtemplate/newsletterTemplate'));
 const SignInEmailTemplate = lazy(() => import('./modules/static/emailtemplate/signInTemplate'));
@@ -27,6 +29,7 @@ const HomePages = lazy(() => import('./modules/account/home/homePage'));
 const HistoryPage = lazy(() => import('./modules/account/history/history'));
 const CorrectionPage = lazy(() => import('./modules/account/history/correction'));
 const Conversation = lazy(() => import('./modules/account/conversation'));
+const Subscription = lazy(() => import('./modules/premium/index'));
 const ConversationTry = lazy(() => import('./modules/account/conversation/chat'));
 const Landing = lazy(() => import('./modules/static/landing-page/LandingPage'));
 const Legal = lazy(() => import('./pages/Legal/index'));
@@ -47,32 +50,37 @@ const Ai = lazy(() => import('./pages/Blog/Ai'));
 const Grammar = lazy(() => import('./pages/Blog/Grammar'));
 const Tips = lazy(() => import('./pages/Blog/Tips'));
 const Contact = lazy(() => import('./pages/contact/index'));
-const PremiumSubs = lazy(() => import('./modules/premium/popup/premium'));
-const SubscriptionHistory = lazy(() => import('./modules/premium/index'));
-import * as Sentry from "@sentry/react";
-
-
+const Premium = lazy(() => import('./modules/premium/popup/premium'));
 
 // All routes/pages must be import from ./pages folder
+
 const DashboardLayout = () => (
   <Suspense fallback={<Fallback />}>
     <Dashboard />
   </Suspense>
 );
 
+const Billings = () => (
+  <Suspense fallback={<Fallback />}>
+    <Subscription />
+  </Suspense>
+);
+
+const ProVersion = () => (
+  <Suspense fallback={<Fallback />}>
+    <Premium />
+  </Suspense>
+);
+
+const Social = () => (
+  <Suspense fallback={<Fallback />}>
+    <SocialPage />
+  </Suspense>
+);
+
 const Signuptwo = () => (
   <Suspense fallback={<Fallback />}>
     <SignupTwoPage />
-  </Suspense>
-);
-const Premium = () => (
-  <Suspense fallback={<Fallback />}>
-    <PremiumSubs />
-  </Suspense>
-);
-const Subscription = () => (
-  <Suspense fallback={<Fallback />}>
-    <SubscriptionHistory />
   </Suspense>
 );
 
@@ -143,6 +151,12 @@ const NewsletterPage = () => (
     <Newsletter />
   </Suspense>
 );
+
+const NewsletterUnsubscribe = () => (
+  <Suspense fallback={<Fallback />}>
+    <Unsubscribe />
+  </Suspense>
+)
 
 const EmailTemplate = () => (
   <Suspense fallback={<Fallback />}>
@@ -308,7 +322,6 @@ function App() {
     <Routes>
       <Route path="/converse/try" element={<ConversationTryPage />} />
       <Route path="/history" element={<h2>History</h2>} />
-      <Route path="/premium" element={<Premium />} />
       <Route element={<LandingLayout />}>
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<LandingPage />} />
@@ -321,7 +334,7 @@ function App() {
         <Route path="/grammar" element={<GrammarPage />} />
         <Route path="/ai" element={<AiPage />} />
         <Route path="/tips" element={<TipsPage />} />
-        <Route path="/termsOfUse" element={<TermsOfUse />} />
+        <Route path="/terms-of-use" element={<TermsOfUse />} />
         <Route path="/testimonials" element={<Testimonial />} />
         <Route path="/ratings" element={<Ratings />} />
         <Route path="/legal" element={<LegalPage />} />
@@ -332,8 +345,10 @@ function App() {
       </Route>
       <Route path="/startgame" element={<Layout />}></Route>
       <Route path="/newsletter" element={<NewsletterPage />} />
+      <Route path="/unsubscribe" element={<NewsletterUnsubscribe />} />
       <Route path="/career" element={<Careers />} />
       <Route path="/roles" element={<Roles />} />
+      <Route path="/premium" element={<ProVersion />} />
       <Route path="/apply" element={<Application />} />
       <Route path="/api-status" element={<ApiStatus />} />
       <Route path="/emailtemplate" element={<EmailTemplate />} />
@@ -346,11 +361,9 @@ function App() {
           </div>
         }
       >
-        <Route path="/signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} >
-          
-        </Route>
+        <Route path="/social" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Social />} />
+        <Route path="/signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
         <Route path="signup" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signuptwo />} />
-        {/* <Route path="/social" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Social />} /> */}
         <Route path="forgot-password" element={<Forgotpassword />} />
         <Route path="password-reset" element={<ResetLink />} />
       </Route>
@@ -364,10 +377,10 @@ function App() {
         <Route path="profile/deleteaccount-step2" element={<ConfirmDeleteAccount />} />
         <Route path="import" element={<TranscribePage />} />
         <Route path="settings" element={<Settings />} />
-        <Route path="subscription" element={<Subscription />} />
+        <Route path="subscription" element={<Billings />} />
       </Route>
     </Routes>
   );
 }
 
-export default Sentry.withProfiler(App);
+export default App;

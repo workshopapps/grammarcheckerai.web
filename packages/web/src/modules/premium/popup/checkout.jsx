@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Button, Dialog, IconButton } from '@mui/material';
+import { Button, Dialog } from '@mui/material';
 import style from './popup.module.css';
 import styles from './checkout.module.css';
 import React, { useState, useEffect } from 'react';
@@ -15,6 +15,7 @@ import useTheme from '../../../hooks/useTheme';
 import usePay from '../../../hooks/auth/usePay';
 import check from '../Assets/tick-square.png';
 import medal from '../Assets/medal-star-white.png';
+// import userCheckPlanVerify from '../../../hooks/account/userCheckPlanVerify';
 
 const Checkout = (props) => {
   const context = useTheme();
@@ -36,21 +37,20 @@ const Checkout = (props) => {
 
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
+  const [loading, setLoading] = useState(false);
 
   const authLogin = useLogin();
   const authSignup = useSignup();
   const authPay = usePay();
+  // const authVerify = userCheckPlanVerify(JSON.parse(localStorage.getItem('isUserDetails'))?.email, '');
 
   let navigate = useNavigate();
 
-  const handleLoginAccount = () => {
-    setIsCreateAccount(false);
-  };
   const handleForgotPassword = () => {
     navigate('/forgot-password');
   };
   const handleCreateAccount = () => {
-    setIsCreateAccount(true);
+    navigate('/signup');
   };
 
   useEffect(() => {
@@ -65,25 +65,44 @@ const Checkout = (props) => {
     // console.log(userSubscription);
   }, [userId, userToken]);
 
-  const useFetch = (url) => {
+  const useFetch = async (url, token) => {
     var requestOptions = {
       method: 'GET',
       redirect: 'follow',
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('grittyusertoken')}`,
+        Authorization: `Bearer ${token}`,
       },
     };
 
-    fetch(url, requestOptions)
+    await fetch(url, requestOptions)
       .then((response) => response.text())
       .then((result) => {
         const oBJ = JSON.parse(result);
         // console.log(oBJ.data);
         localStorage.setItem('isUserDetails', JSON.stringify(oBJ.data));
       })
-      .catch((error) => error('error', error));
+      .catch((error) => error(error));
   };
+  const useVerify = async (url, token) => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
+    await fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        useVerify(
+          `https://api.speakbetter.hng.tech/v1/paystack/?email=${oBJ.data.data.customer.email}`,
+          'sk_test_11cd20d24df0f472d32521e1bfb3c00608593c54',
+        );
+      })
+      .catch((error) => error(error));
+  };
   const handlelogin = (e) => {
     e.preventDefault();
     if ((userEmail !== '') & (userPassword !== '')) {
@@ -102,12 +121,18 @@ const Checkout = (props) => {
             localStorage.setItem('grittyusertoken', userToken);
             success('Login Successful!');
             setTimeout(() => {
-              useFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+              useFetch(
+                `https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`,
+                localStorage.getItem('grittyusertoken'),
+              );
               setIsPaymentPage(true);
             }, 3000);
           } else {
             error('Already Logged in, proceeding...');
-            useFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
+            useFetch(
+              `https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`,
+              localStorage.getItem('grittyusertoken'),
+            );
             setIsPaymentPage(true);
           }
         })
@@ -116,74 +141,43 @@ const Checkout = (props) => {
         });
     }
   };
-  const handleSignUp = (e) => {
-    e.preventDefault();
-    if (
-      (newUserName !== '') &
-      (newUserFirstName !== '') &
-      (newUserLastName !== '') &
-      (newUserPassword !== '') &
-      (newUserEmail !== '') &
-      (newUserConfirmPassword === newUserPassword)
-    ) {
-      authSignup
-        .mutateAsync({
-          email: newUserEmail,
-          firstName: newUserFirstName,
-          lastName: newUserLastName,
-          username: newUserName,
-          language: 'English',
-          password: newUserPassword,
-          confirm_password: newUserConfirmPassword,
-        })
-        .then((res) => {
-          const resId = res.data.data._id;
-          const resToken = res.data.data.token;
-          setUserId(resId);
-          setUserToken(resToken);
-          localStorage.setItem('grittyuserid', userId);
-          localStorage.setItem('grittyusertoken', userToken);
-          success('Account Created Succesfully!');
-          setTimeout(() => {
-            useFetch(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
-            setIsPaymentPage(true);
-          }, 3000);
-        })
-        .catch((err) => {
-          error(err.response.data.message);
-        });
-    } else if (newUserPassword !== newUserConfirmPassword) {
-      setIsSamePassword(false);
-    }
-  };
 
   // you can call this function anything
   const onSuccess = (reference) => {
     const user = JSON.parse(localStorage.getItem('isUserDetails'));
 
     // Implementation for whatever you want to do with reference and after success call.
-    console.log(reference);
+    // console.log(reference.trxref);
     authPay
       .mutateAsync({
         email: user.email,
         name: user.firstName + ' ' + user.lastName,
         amount: props.amount,
         interval: props.duration,
+        paymentGateway: 'paystack',
         subscriptionId: props.plan,
+        txref: reference.trxref,
       })
       .then(() => {
+        useVerify(
+          `https://api.speakbetter.hng.tech/v1/paystack/verify?email=${user.email}&txref=${reference.trxref}`,
+          'sk_test_11cd20d24df0f472d32521e1bfb3c00608593c54',
+        );
+      })
+      .then(() => {
+        setLoading(true);
         toast(() => (
-          <span>
-            Subscription <b>Succesfully!</b>
-            <p>Redirecting in 5 seconds...</p>
-            <button onClick={''}>Go to Dashboard</button>
+          <span className={styles._notifs}>
+            <b>Subscription Succesfully!</b>
+            <p>Redirecting to dashboard...</p>
+            <button onClick={handleNavigate}>Go to Dashboard</button>
           </span>
         ));
       })
       .then(() => {
         setTimeout(() => {
           navigate('/me/home');
-        }, 5000);
+        }, 3000);
       })
       .catch((err) => {
         error(err.message);
@@ -193,7 +187,7 @@ const Checkout = (props) => {
   // you can call this function anything
   const onClose = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
-    console.log('closed');
+    setLoading(false);
   };
   const config = {
     reference: new Date().getTime().toString(),
@@ -206,15 +200,18 @@ const Checkout = (props) => {
 
   const handleNavigate = () => {
     toast.dismiss();
-    navigate('/me/home');
+    setTimeout(() => {
+      navigate('/me/home');
+    }, 1000);
   };
-  const handlePayment = () => {
+
+  const handlePayment = async () => {
     setUserLSEmail(JSON.parse(localStorage.getItem('isUserDetails')).email);
 
     if (props.userIsSubscribed) {
       toast(() => (
-        <span>
-          <b>User already subscribed!</b>
+        <span className={styles._notifs}>
+          <b>You are already subscribed!</b>
           <Button variant="outlined" color="secondary" onClick={handleNavigate}>
             Go to Dashboard
           </Button>
@@ -223,6 +220,7 @@ const Checkout = (props) => {
       return;
     }
     if (userLSEmail && userLSEmail !== '') {
+      setLoading(true);
       initializePayment(onSuccess, onClose);
     }
   };
@@ -240,309 +238,115 @@ const Checkout = (props) => {
     >
       <div signup-theme={context.theme} className={styles._gs2mainlogin}>
         <div className={styles._gs2login}>
-          {!isCreateAccount ? (
-            <div className={styles._gs2logincol1} gs2logincol1-theme={context.theme}>
-              <div className={styles._gs2logincontent}>
-                <div className={styles._authback}>
-                  <svg onClick={props.handleBack} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="48"
-                      d="M328 112L184 256l144 144"
-                    />
-                  </svg>
-                </div>
-                <h2 signup-theme={context.theme}>Subscription</h2>
-                <p signup-theme={context.theme} className={styles._subtitle}>
-                  Complete the process with just few steps. You’re almost all set.
-                </p>
-                {isPaymentPage === true ? (
-                  <div>
-                    <div className={styles._cpSummary}>
-                      <h3>Plan: {props.duration}</h3>
-                      <h3>Amount: NGN {props.amount}</h3>
-                      <LoadingButton
-                        loading={authPay.isLoading}
-                        variant="outlined"
-                        type="button"
-                        onClick={handlePayment}
-                      >
-                        Proceed to Payment
-                      </LoadingButton>
-                    </div>
-                  </div>
-                ) : (
-                  <div>
-                    {isAlreadyLoggedIn === true ? (
-                      <div className={styles._cpSummary}>
-                        <h3>Plan: {props.duration}</h3>
-                        <h3>Amount: NGN {props.amount}</h3>
-                        <LoadingButton
-                          loading={authPay.isLoading}
-                          variant="contained"
-                          type="button"
-                          onClick={handlePayment}
-                        >
-                          Proceed to Payment
-                        </LoadingButton>
-                      </div>
-                    ) : (
-                      <form onSubmit={(e) => handlelogin(e)} className={styles._gs2loginform}>
-                        <div>
-                          <div className={styles._gs2logininput}>
-                            <span>Email</span>
-                            <input
-                              type="email"
-                              placeholder="shalomtaiwo@example.com"
-                              defaultValue=""
-                              id="userName"
-                              required
-                              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                              onChange={(e) => setUserEmail(e.target.value)}
-                            />
-                          </div>
-                          <div className={styles._gs2logininput}>
-                            <span>Password</span>
-                            <PasswordMask
-                              type="password"
-                              value={userPassword}
-                              id="userPassword"
-                              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                              title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
-                              required
-                              onChange={(e) => setUserPassword(e.target.value)}
-                            />
-                          </div>
-                          {!isMobile && (
-                            <div className={styles._gs2logincheck}>
-                              <div className={styles._gs2loginsignin} signup-theme={context.theme}>
-                                <a href="#/" className={styles._gsloginforgot} onClick={handleCreateAccount}>
-                                  Create an account?
-                                </a>
-                              </div>
-                              <div>
-                                <button
-                                  signup-theme={context.theme}
-                                  type="button"
-                                  className={styles._gsloginforgot}
-                                  onClick={handleForgotPassword}
-                                >
-                                  Forgot Password?
-                                </button>
-                              </div>
-                            </div>
-                          )}
-                          <div className={styles._gs2logincontinue}>
-                            <LoadingButton size="small" type="submit" loading={authLogin.isLoading} variant="contained">
-                              Login
-                            </LoadingButton>
-                          </div>
-                          {isMobile && (
-                            <div className={styles._gs2logincheck}>
-                              <div className={styles._gs2loginsignin} signup-theme={context.theme}>
-                                <a href="#/" className={styles._gsloginforgot} onClick={handleCreateAccount}>
-                                  Create an account?
-                                </a>
-                              </div>
-                              <div>
-                                <button
-                                  signup-theme={context.theme}
-                                  type="button"
-                                  className={styles._gsloginforgot}
-                                  onClick={handleForgotPassword}
-                                >
-                                  Forgot Password?
-                                </button>
-                              </div>
-                            </div>
-                          )}
-                          {/* <div className={styles._gs2sociallogincol}>
-                  <p>Alternatively, you can sign up with:</p>
-                  <div className={styles._gs2sociallogins}>
-                  <button type="button" className={styles._google} onClick={handleGoogleAuth}>
-                    <img src={google} alt="google authentication" />
-                  </button>
-                  <button type="button" className={styles._facebook} onClick={handleFacebookAuth}>
-                    <img src={facebook} alt="facebook authentication" />
-                  </button>
-                  <button type="button" className={styles._apple} onClick={handleLinkedInAuth}>
-                    <img src={apple} alt="apple authentication" />
-                  </button>
-                </div>
-                </div> */}
-                        </div>
-                      </form>
-                    )}
-                  </div>
-                )}
+          <div className={styles._gs2logincol1} gs2logincol1-theme={context.theme}>
+            <div className={styles._gs2logincontent}>
+              <div className={styles._authback}>
+                <svg onClick={props.handleBack} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="48"
+                    d="M328 112L184 256l144 144"
+                  />
+                </svg>
               </div>
-              {!isTabletorMobile && (
-                <div className={styles._gs2logincol2}>
-                  <div className={styles._sbmodalCol1}>
-                    <div className={styles._sbmodalHeaderCol1}>
-                      <div className={styles._sbmodalTitle}>
-                        <img src={medal} alt="medal" />
-                        <h2>Upgrade to premium</h2>
-                      </div>
-                    </div>
-                    <div className={styles._sbmodalCol1Body}>
-                      <div className={styles._sbmodalText}>
-                        <p>You can get a lot more out of Speak Better by upgrading to premium. Get all features:</p>
-                      </div>
-                      <div className={styles._sbmodalList}>
-                        <div>
-                          <img src={check} alt="check" className={styles._sbListIcon} />
-                          <p>Unlimited audio length</p>
-                        </div>
-                        <div>
-                          <img src={check} alt="check" className={styles._sbListIcon} />
-                          <p>Access to transcription history</p>
-                        </div>
-                        <div>
-                          <img src={check} alt="check" className={styles._sbListIcon} />
-                          <p>Variety of AI bot</p>
-                        </div>
-                        <div>
-                          <img src={check} alt="check" />
-                          <p>Grammer corrections</p>
-                        </div>
-                      </div>
-                    </div>
+              <h2 signup-theme={context.theme}>Subscription</h2>
+              <p signup-theme={context.theme} className={styles._subtitle}>
+                Complete the process with just few steps. You’re almost all set.
+              </p>
+              {isPaymentPage === true ? (
+                <div>
+                  <div className={styles._cpSummary}>
+                    <h3>Plan: {props.duration}</h3>
+                    <h3>Amount: NGN {props.amount}</h3>
+                    <LoadingButton loading={loading} variant="contained" type="button" onClick={handlePayment}>
+                      Proceed to Payment
+                    </LoadingButton>
                   </div>
                 </div>
-              )}
-            </div>
-          ) : (
-            <div className={styles._gs2logincol1} gs2logincol1-theme={context.theme}>
-              <div className={styles._gs2logincontent}>
-                <div className={styles._authback}>
-                  <svg onClick={props.handleBack} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="48"
-                      d="M328 112L184 256l144 144"
-                    />
-                  </svg>
-                </div>
+              ) : (
                 <div>
-                  <h2 signup-theme={context.theme}>Subscription</h2>
-                  <p signup-theme={context.theme} className={styles._subtitle}>
-                    Complete the process with just few steps. You’re almost all set.
-                  </p>
-                  {isPaymentPage === true ? (
+                  {isAlreadyLoggedIn === true ? (
                     <div className={styles._cpSummary}>
                       <h3>Plan: {props.duration}</h3>
                       <h3>Amount: NGN {props.amount}</h3>
-                      <LoadingButton
-                        loading={authPay.isLoading}
-                        variant="contained"
-                        type="button"
-                        onClick={handlePayment}
-                      >
+                      <LoadingButton loading={loading} variant="contained" type="button" onClick={handlePayment}>
                         Proceed to Payment
                       </LoadingButton>
                     </div>
                   ) : (
-                    <form onSubmit={(e) => handleSignUp(e)} className={styles._gs2loginform}>
-                      <div className={styles._gs2logininput}>
-                        <span>Enter Your Email</span>
-                        <input
-                          type="email"
-                          onChange={(e) => setNewUserEmail(e.target.value)}
-                          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                          placeholder="shalomtaiwo@example.com"
-                          id="signupEmail"
-                          required
-                        />
-                      </div>
-                      <div className={styles._gs2logininput}>
-                        <span>Username</span>
-                        <input
-                          type="text"
-                          onChange={(e) => setNewUserName(e.target.value)}
-                          pattern="[A-Za-z_-]{1,32}"
-                          placeholder="meisieshalom"
-                          required
-                          id="signupUserName"
-                        />
-                      </div>
-                      <div className={styles._gs2logininput}>
-                        <span>First Name</span>
-                        <input
-                          type="text"
-                          required
-                          placeholder="Shalom"
-                          onChange={(e) => setNewUserFirstName(e.target.value)}
-                          id="signupFirstName"
-                        />
-                      </div>
-                      <div className={styles._gs2logininput}>
-                        <span>Last Name</span>
-                        <input
-                          type="text"
-                          required
-                          placeholder="Taiwo"
-                          onChange={(e) => setNewUserLastName(e.target.value)}
-                          id="signupLastName"
-                        />
-                      </div>
-                      <div className={styles._gs2logininput}>
-                        <span>Create a password</span>
-                        <PasswordMask
-                          type="password"
-                          required
-                          onChange={(e) => setNewUserPassword(e.target.value)}
-                          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                          value={newUserPassword}
-                          title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
-                          id="signupCreatePassword"
-                        />
-                      </div>
-                      <div className={styles._gs2logininput}>
-                        <span>Confirm password</span>
-                        <PasswordMask
-                          type="password"
-                          required
-                          value={newUserConfirmPassword}
-                          onChange={(e) => setNewUserConfirmPassword(e.target.value)}
-                          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                          title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
-                          id="signupConfirmPassword"
-                        />
-                        <span className={styles._gs2signupvalidate}>
-                          {isSamePassword === false ? 'Passwords must be the same' : ''}
-                        </span>
-                      </div>
-                      {!isMobile && (
-                        <div className={styles._gs2logincheck}>
-                          <div className={styles._gs2loginsignin} signup-theme={context.theme}>
-                            <a href="#/" className={styles._gsloginforgot} onClick={handleLoginAccount}>
-                              Log in instead?
-                            </a>
-                          </div>
+                    <form onSubmit={(e) => handlelogin(e)} className={styles._gs2loginform}>
+                      <div>
+                        <div className={styles._gs2logininput}>
+                          <span>Email</span>
+                          <input
+                            type="email"
+                            placeholder="shalomtaiwo@example.com"
+                            defaultValue=""
+                            id="userName"
+                            required
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                            onChange={(e) => setUserEmail(e.target.value)}
+                          />
                         </div>
-                      )}
-                      <div className={styles._gs2logincontinue}>
-                        <LoadingButton size="small" type="submit" loading={authSignup.isLoading} variant="contained">
-                          Create Account
-                        </LoadingButton>
-                      </div>
-                      {isMobile && (
-                        <div className={styles._gs2logincheck}>
-                          <div className={styles._gs2loginsignin} signup-theme={context.theme}>
-                            <a href="#/" className={styles._gsloginforgot} onClick={handlelogin}>
-                              Log in instead?
-                            </a>
-                          </div>
+                        <div className={styles._gs2logininput}>
+                          <span>Password</span>
+                          <PasswordMask
+                            type="password"
+                            value={userPassword}
+                            id="userPassword"
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                            title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
+                            required
+                            onChange={(e) => setUserPassword(e.target.value)}
+                          />
                         </div>
-                      )}
-                      {/* <div className={styles._gs2sociallogincol}>
+                        {!isMobile && (
+                          <div className={styles._gs2logincheck}>
+                            <div className={styles._gs2loginsignin} signup-theme={context.theme}>
+                              <a href="#/" className={styles._gsloginforgot} onClick={handleCreateAccount}>
+                                Create an account?
+                              </a>
+                            </div>
+                            <div>
+                              <button
+                                signup-theme={context.theme}
+                                type="button"
+                                className={styles._gsloginforgot}
+                                onClick={handleForgotPassword}
+                              >
+                                Forgot Password?
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                        <div className={styles._gs2logincontinue}>
+                          <LoadingButton size="small" type="submit" loading={authLogin.isLoading} variant="contained">
+                            Login
+                          </LoadingButton>
+                        </div>
+                        {isMobile && (
+                          <div className={styles._gs2logincheck}>
+                            <div className={styles._gs2loginsignin} signup-theme={context.theme}>
+                              <a href="#/" className={styles._gsloginforgot} onClick={handleCreateAccount}>
+                                Create an account?
+                              </a>
+                            </div>
+                            <div>
+                              <button
+                                signup-theme={context.theme}
+                                type="button"
+                                className={styles._gsloginforgot}
+                                onClick={handleForgotPassword}
+                              >
+                                Forgot Password?
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                        {/* <div className={styles._gs2sociallogincol}>
                   <p>Alternatively, you can sign up with:</p>
                   <div className={styles._gs2sociallogins}>
                   <button type="button" className={styles._google} onClick={handleGoogleAuth}>
@@ -556,12 +360,49 @@ const Checkout = (props) => {
                   </button>
                 </div>
                 </div> */}
+                      </div>
                     </form>
                   )}
                 </div>
-              </div>
+              )}
             </div>
-          )}
+            {!isTabletorMobile && (
+              <div className={styles._gs2logincol2}>
+                <div className={styles._sbmodalCol1}>
+                  <div className={styles._sbmodalHeaderCol1}>
+                    <div className={styles._sbmodalTitle}>
+                      <img src={medal} alt="medal" />
+                      <h2>Upgrade to premium</h2>
+                    </div>
+                  </div>
+                  <div className={styles._sbmodalCol1Body}>
+                    <div className={styles._sbmodalText}>
+                      <p>You can get a lot more out of Speak Better by upgrading to premium. Get all features:</p>
+                    </div>
+                    <div className={styles._sbmodalList}>
+                      <div>
+                        <img src={check} alt="check" className={styles._sbListIcon} />
+                        <p>Unlimited audio length</p>
+                      </div>
+                      <div>
+                        <img src={check} alt="check" className={styles._sbListIcon} />
+                        <p>Access to transcription history</p>
+                      </div>
+                      <div>
+                        <img src={check} alt="check" className={styles._sbListIcon} />
+                        <p>Variety of AI bot</p>
+                      </div>
+                      <div>
+                        <img src={check} alt="check" />
+                        <p>Grammer corrections</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
           {isTabletorMobile && (
             <div className={styles._gs2logincol2}>
               <div className={styles._sbmodalCol1}>
