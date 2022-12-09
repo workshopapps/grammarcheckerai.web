@@ -6,7 +6,7 @@
   "info": {
     "title": "Speak Better",
     "version": "1.0",
-    "description": "API endpoint test for the grammarcheckerai app"
+    "description": "API endpoint test for the Speak Better app"
   },
   "servers": [
     {
@@ -460,7 +460,7 @@
         ]
       }
     },
-    "/api/v1/auth/getBot": {
+    "/v1/auth/getBot": {
       "get": {
         "summary": "Unscripted Route",
         "responses": {
@@ -497,41 +497,7 @@
       },
       "parameters": []
     },
-    "auth/v1/auth/failed": {
-      "get": {
-        "summary": "Unscripted Route",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/success"
-          },
-          "201": {
-            "$ref": "#/components/responses/success"
-          },
-          "400": {
-            "$ref": "#/components/responses/error"
-          },
-          "401": {
-            "$ref": "#/components/responses/error"
-          },
-          "403": {
-            "$ref": "#/components/responses/error"
-          },
-          "404": {
-            "$ref": "#/components/responses/error"
-          },
-          "500": {
-            "$ref": "#/components/responses/error"
-          }
-        },
-        "operationId": "get-getBot",
-        "description": "Converting Audio to text",
-        "tags": [
-          "Unscripted"
-        ]
-      },
-      "parameters": []
-    },
-    "/api/v1/auth/getText": {
+    "/v1/auth/getText": {
       "get": {
         "summary": "Unscripted Route",
         "responses": {
@@ -565,9 +531,9 @@
       },
       "parameters": []
     },
-    "/api/1/auth/request-reset-password": {
+    "/v1/auth/resetPassword": {
       "post": {
-        "summary": "Unscripted Route",
+        "summary": "User can request for password reset",
         "operationId": "post-request-reset-password",
         "responses": {
           "200": {
@@ -594,17 +560,18 @@
         },
         "description": "Request for reseting user password",
         "requestBody": {
-          "$ref": "#/components/requestBodies/reset_password_request"
+          "$ref": "#/components/requestBodies/rest_password"
         },
+        "parameters": [],
         "tags": [
-          "Unscripted"
+          "Unscripted "
         ]
       },
       "parameters": []
     },
-    "/api/1/auth/resetPassword": {
+    "/v1/auth/password-reset": {
       "post": {
-        "summary": "Unscripted Route",
+        "summary": "User can reset password",
         "operationId": "post-request-reset-password",
         "responses": {
           "200": {
@@ -629,7 +596,7 @@
             "$ref": "#/components/responses/error"
           }
         },
-        "description": "reseting password",
+        "description": "user password reset confirmation",
         "requestBody": {
           "$ref": "#/components/requestBodies/rest_password"
         },
@@ -640,7 +607,7 @@
             },
             "in": "query",
             "name": "Token",
-            "description": "Get the user generated token"
+            "description": "Bearer Token"
           }
         ],
         "tags": [
@@ -649,41 +616,7 @@
       },
       "parameters": []
     },
-    "/api/v1/auth/linkedin/callback": {
-      "parameters": [],
-      "get": {
-        "summary": "LinkedIn Authentication",
-        "operationId": "get-auth-google-auth",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/success"
-          },
-          "201": {
-            "$ref": "#/components/responses/success"
-          },
-          "400": {
-            "$ref": "#/components/responses/error"
-          },
-          "401": {
-            "$ref": "#/components/responses/error"
-          },
-          "403": {
-            "$ref": "#/components/responses/error"
-          },
-          "404": {
-            "$ref": "#/components/responses/error"
-          },
-          "500": {
-            "$ref": "#/components/responses/error"
-          }
-        },
-        "description": "Get Linkedin authentication callback Route",
-        "tags": [
-          "Linkedin Auth"
-        ]
-      }
-    },
-    "/api/v1/auth/facebook/callback": {
+    "/v1/auth/facebook/callback": {
       "get": {
         "summary": "Facebook Authentication",
         "responses": {
