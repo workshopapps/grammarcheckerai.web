@@ -67,6 +67,13 @@ const index = () => {
 
   */
   useEffect(() => {
+    if (
+      (localStorage.getItem('grittyuserid') && localStorage.getItem('grittyuserid') !== null) ||
+      localStorage.getItem('grittyuserid') !== ''
+    ) {
+      navigate('/me/home');
+      return;
+    }
     localStorage.setItem('grittyuserid', userId);
     localStorage.setItem('grittyusertoken', userToken);
   }, [userId, userToken]);
@@ -118,25 +125,13 @@ const index = () => {
           password: formik.values.newUserPassword,
           confirm_password: formik.values.newUserConfirmPassword,
         })
-        .then((res) => {
-          success("Account Created Succesfully!\nYou'll be redirected to the Dashboard in 5 seconds...");
-          const resId = res.data.data._id;
-          const resToken = res.data.data.token;
-          setUserId(resId);
-          setUserToken(resToken);
-          localStorage.setItem('grittyuserid', userId);
-          localStorage.setItem('grittyusertoken', userToken);
-          localStorage.setItem('isdashboard', true);
+        .then(() => {
+          success('Account Created Succesfully! Please sign in.');
         })
         .then(() => {
           setTimeout(() => {
-            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
-          }, 4000);
-        })
-        .then(() => {
-          setTimeout(() => {
-            navigate('/me/home', { replace: true });
-          }, 6000);
+            navigate('/signin');
+          }, 2000);
         })
         .catch((err) => {
           // error(err.response.data.message);
@@ -295,18 +290,21 @@ const index = () => {
           )}
           <div className={styles._gs2signupcontent}>
             <div className={styles._authback}>
-            <button onClick={handlePrev} className="lg:text-[#383839] md:text-[#383839] text-[#fff] font-bold lg:mt-8 lg:mb-5 md:mb-3 md:mt-5  rounded inline-flex items-center">
-               <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="48"
-                  d="M328 112L184 256l144 144"
-                />
-               </svg> 
-              <span>Go back</span> 
+              <button
+                onClick={handlePrev}
+                className="lg:text-[#383839] md:text-[#383839] text-[#fff] font-bold lg:mt-8 lg:mb-5 md:mb-3 md:mt-5  rounded inline-flex items-center"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="48"
+                    d="M328 112L184 256l144 144"
+                  />
+                </svg>
+                <span>Go back</span>
               </button>
             </div>
             {isTabletorMobile && (
@@ -463,7 +461,7 @@ const index = () => {
                 <div className={styles._gs2socialsignups}>
                   <button type="button" className={styles._google}>
                     <a href={googleLink?.value}>
-                    <img src={google} alt="google authentication" />
+                      <img src={google} alt="google authentication" />
                     </a>
                   </button>
                   <button type="button" className={styles._facebook}>

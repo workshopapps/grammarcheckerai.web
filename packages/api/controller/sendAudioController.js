@@ -1,4 +1,4 @@
-const { parseBuffer } = require("music-metadata");
+// const { parseBuffer } = require("music-metadata");
 const UserResponse = require("../database/models/userResponseSchema");
 const BotResponse = require("../database/models/botResponseSchema");
 const Message = require("../database/models/messageSchema");
@@ -42,24 +42,24 @@ async function getBotResponse(req, res) {
         message: "Please attach an audio file",
       });
     }
-    const metadata = await parseBuffer(audioFile.buffer, audioFile.mimetype);
-    const audioLength = metadata.format.duration.toFixed(2);
-    // 1. If userId, Get user's email
-    const userEmail = userId
-      ? (await userCollection.findById(userId))?.email
-      : null;
+    // const metadata = await parseBuffer(audioFile.buffer, audioFile.mimetype);
+    // const audioLength = metadata.format.duration.toFixed(2);
+    // // 1. If userId, Get user's email
+    // const userEmail = userId
+    //   ? (await userCollection.findById(userId))?.email
+    //   : null;
 
-    const isSubscriber = userEmail
-      ? (await Subscription.findOne({ email: userEmail }))?.active
-      : null;
+    // const isSubscriber = userEmail
+    //   ? (await Subscription.findOne({ email: userEmail }))?.active
+    //   : null;
 
-    // 2. Check if user is a premiumm user
-    if (!isSubscriber && audioLength > 20) {
-      return res.status(403).send({
-        success: false,
-        message: "Recording above 20 seconds is a premium feature. Go premium!",
-      });
-    }
+    // // 2. Check if user is a premiumm user
+    // if (!isSubscriber && audioLength > 20) {
+    //   return res.status(403).send({
+    //     success: false,
+    //     message: "Recording above 20 seconds is a premium feature. Go premium!",
+    //   });
+    // }
     // checks if specified language is not available
     if (!languageMap[language]) {
       return res.status(400).send({
@@ -78,38 +78,38 @@ async function getBotResponse(req, res) {
       languageMap[language]
     );
 
-    // // upload url and initiate transcription
-    // const transcribedAudioText = await getTranscriptionFromAssembly(
-    //   preTranscriptId
-    // ); // process and download transcript
+    // upload url and initiate transcription
+    const transcribedAudioText = await getTranscriptionFromAssembly(
+      preTranscriptId
+    ); // process and download transcript
 
-    // if (!transcribedAudioText) {
-    //   return res.status(400).send({
-    //     success: false,
-    //     message: "Assembly AI error.",
-    //   });
-    // }
+    if (!transcribedAudioText) {
+      return res.status(400).send({
+        success: false,
+        message: "Assembly AI error.",
+      });
+    }
 
-    // // Send transcript to OPenAI Grammar Correction to get corrected text
-    // let grammarCheckResponse = await grammarCheckHandler(
-    //   transcribedAudioText,
-    //   language
-    // );
+    // Send transcript to OPenAI Grammar Correction to get corrected text
+    let grammarCheckResponse = await grammarCheckHandler(
+      transcribedAudioText,
+      language
+    );
 
-    // // Handling OpenAI Grammar Correction Error
-    // if (!grammarCheckResponse) {
-    //   return res.status(500).send({
-    //     success: false,
-    //     message: "OpenAI internal error",
-    //   });
-    // }
-    // let { correctUserResponseInTxt } = grammarCheckResponse;
+    // Handling OpenAI Grammar Correction Error
+    if (!grammarCheckResponse) {
+      return res.status(500).send({
+        success: false,
+        message: "OpenAI internal error",
+      });
+    }
+    let { correctUserResponseInTxt } = grammarCheckResponse;
 
-    // // Send corrected text to OpenAI GPT3 to get bot response and update chat log
-    // let chatLog, botReply;
-    // chatLog = req.session.chatLog; // get chat log from session
-    // const botRes = await chatHandler(correctUserResponseInTxt, chatLog);
-    // botReply = botRes.replace("AI:", "").trim();
+    // Send corrected text to OpenAI GPT3 to get bot response and update chat log
+    let chatLog, botReply;
+    chatLog = req.session.chatLog; // get chat log from session
+    const botRes = await chatHandler(correctUserResponseInTxt, chatLog);
+    botReply = botRes.replace("AI:", "").trim();
 
     // translate bot reply if specified language is not English
     if (
@@ -127,57 +127,57 @@ async function getBotResponse(req, res) {
     );
     req.session.chatLog = chatLog; // set updated chat log to session
 
-    // // await file upload to aws s3 bucket to get file url
-    // audioUrl = await audioUrl;
+    // await file upload to aws s3 bucket to get file url
+    audioUrl = await audioUrl;
 
-    // // construct response
-    // let userResponse, botResponse;
+    // construct response
+    let userResponse, botResponse;
 
-    // // for not logged in users
-    // if (!userId) {
-    //   userResponse = {
-    //     audioURL: audioUrl,
-    //     createdAt: new Date(),
-    //     updatedAt: new Date(),
-    //   };
+    // for not logged in users
+    if (!userId) {
+      userResponse = {
+        audioURL: audioUrl,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
 
-    //   botResponse = {
-    //     transcribedAudioText,
-    //     correctedText: correctUserResponseInTxt.trim(),
-    //     botReply,
-    //     language: language,
-    //     createdAt: new Date(),
-    //     updatedAt: new Date(),
-    //   };
-    // } else {
-    //   // for logged in users
-    //   userResponse = await UserResponse.create({
-    //     audioURL: audioUrl,
-    //   });
+      botResponse = {
+        transcribedAudioText,
+        correctedText: correctUserResponseInTxt.trim(),
+        botReply,
+        language: language,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+    } else {
+      // for logged in users
+      userResponse = await UserResponse.create({
+        audioURL: audioUrl,
+      });
 
-    //   botResponse = await BotResponse.create({
-    //     transcribedAudioText,
-    //     correctedText: correctUserResponseInTxt.trim(),
-    //     botReply,
-    //     language,
-    //   });
+      botResponse = await BotResponse.create({
+        transcribedAudioText,
+        correctedText: correctUserResponseInTxt.trim(),
+        botReply,
+        language,
+      });
 
-    //   await Message.create({
-    //     userId,
-    //     userResponseId: userResponse._id,
-    //     botResponseId: botResponse._id,
-    //   });
-    // }
+      await Message.create({
+        userId,
+        userResponseId: userResponse._id,
+        botResponseId: botResponse._id,
+      });
+    }
 
-    // res.status(200).send({
-    //   success: true,
-    //   message: "Message exchange successfully completed between user and bot",
-    //   data: {
-    //     userResponse,
-    //     botResponse,
-    //     userId: userId || null,
-    //   },
-    // });
+    res.status(200).send({
+      success: true,
+      message: "Message exchange successfully completed between user and bot",
+      data: {
+        userResponse,
+        botResponse,
+        userId: userId || null,
+      },
+    });
   } catch (err) {
     return res.status(400).send({
       success: false,

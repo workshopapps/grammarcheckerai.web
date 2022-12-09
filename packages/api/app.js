@@ -1,5 +1,4 @@
 const express = require("express");
-const app = express();
 const cors = require("cors");
 const session = require("express-session");
 const Memorystore = require("memorystore")(session);
@@ -14,6 +13,8 @@ require("./services/facebookStrategy");
 const { routeHandler } = require("./routes/index.route"),
   swaggerUi = require("swagger-ui-express"),
   swaggerDocument = require("./Tests/test.json");
+
+const app = express();
 
 //Passport Initialized
 app

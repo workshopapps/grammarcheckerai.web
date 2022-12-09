@@ -9,11 +9,11 @@ import HowToUse from './HowToUse';
 import NewsLetter from './NewsLetter';
 import Testimonials from './Testimonials';
 import Utilise from './Utilise';
-import QuizPopUp from '../../modal/quizpopup/QuizPopUp';
+// import QuizPopUp from '../../modal/quizpopup/QuizPopUp';
 
 const LandingPage = () => {
   const context = useTheme();
-  const [showQuiz, setShowQuiz] = useState(true);
+  // const [showQuiz, setShowQuiz] = useState(true);
 
   // useEffect(() => {
   //   setInterval(() => {
@@ -24,7 +24,6 @@ const LandingPage = () => {
   // setTimeout(() => {
   //   setShowQuiz(true);
   // }, 5000);
-
 
   return (
     <div data-theme={context.theme} className={` bg-[#bbb8b81a] `}>
@@ -37,7 +36,7 @@ const LandingPage = () => {
       <Utilise />
       <NewsLetter />
       <Footer />
-      <QuizPopUp showQuiz={showQuiz} setShowQuiz={setShowQuiz} />
+      {/* <QuizPopUp showQuiz={showQuiz} setShowQuiz={setShowQuiz} /> */}
     </div>
   );
 };
