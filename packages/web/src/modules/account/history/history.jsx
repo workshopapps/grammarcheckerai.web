@@ -15,6 +15,7 @@ import { Typography } from '@mui/material';
 function History() {
   const [history, setHistory] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+
   const userId = localStorage.getItem('grittyuserid');
   const URL = `https://api.speakbetter.hng.tech/v1/chatHistory?userId=${userId}`;
 
@@ -40,7 +41,7 @@ function History() {
       <div className="flex flex-col pt-16 xl:ml-[62px] xl:mr-[9rem] lg:ml-[52px] lg:mx-[4rem] md:mx-[42px] sm:mx-[30px] mx-6">
         <div className="flex items-center sm:justify-between justify-end">
           <h1 className="text-[#393939] sm:text-[32px] text-[24px] font-bold font-['DM_Sans'] leading-10">History</h1>
-          <div className="sm:flex-[.95] flex-[.7] w-full relative">
+          <div className="sm:flex-[.95] flex-[.7] w-full relative max-w-2xl">
             <input
               type="search"
               name="search"
@@ -66,7 +67,7 @@ function History() {
           <div className="w-full">
             {history?.map((data) => (
               <div key={data.botResponseId._id} className="flex justify-between items-center mb-6">
-                <Accordion className="w-full">
+                <Accordion className="w-full max-w-2xl">
                   <AccordionSummary expandIcon={<FaChevronDown />}>
                     <Typography>{formattedDate(data.botResponseId.createdAt)}</Typography>
                   </AccordionSummary>

@@ -7,8 +7,6 @@ import HistoryEmpty from './historyEmpty';
 
 function Correction() {
   const navigate = useNavigate();
-  const [openModal, setOpenModal] = useState(false);
-  const [history, setHistory] = useState([]);
 
   const userId = localStorage.getItem('grittyuserid');
   const URL = `https://api.speakbetter.hng.tech/v1/chatHistory?userId=${userId}`;
@@ -25,6 +23,8 @@ function Correction() {
     };
     getHistory();
   }, []);
+  const [openModal, setOpenModal] = useState(false);
+  const [history, setHistory] = useState([]);
 
   const formattedDate = (date) => {
     return new Date(date).toDateString();
@@ -45,7 +45,7 @@ function Correction() {
 
           {history.map((data) => {
             return (
-              <div key={data.botResponseId._id} className=" md:ml-[5rem] mt-12">
+              <div key={data.botResponseId._id} className=" md:ml-[5rem] mt-12 max-w-2xl">
                 <div className="flex justify-between items-center">
                   <p className="text-[#5A5A5A] sm:text-base text-[12px] font-normal leading-5 font-['Inter']">
                     {formattedDate(data.botResponseId.createdAt)}
