@@ -90,104 +90,107 @@ const index = () => {
           </div>
         </div>
 
-        <div className="flex justify-between gap-20 m-2 p-4 ml-8">
-          <div className="hidden lg:flex lg:flex-col mt-8 ">
-            <div className={ContactCSS.reach}>
-              <h2 contact-theme={context.theme} className={ContactCSS.h2}>
-                {' '}
-                Get in touch with us
-              </h2>
-              <div className="Numbers">
-                <p contact-theme={context.theme} className={ContactCSS.p4}>
+          <div className="lg:flex justify-between lg:gap-20 m-2 p-4 lg:ml-8">
+            <div className="hidden lg:flex lg:flex-col mt-8 ">
+              <div className={ContactCSS.reach}>
+                <h2 contact-theme={context.theme} className={ContactCSS.h2}>
                   {' '}
-                  Phone Number
-                </p>
-                <p contact-theme={context.theme} className={ContactCSS.p5}>
-                  (603) 555-0123
-                </p>
-                <p contact-theme={context.theme} className={ContactCSS.p5}>
-                  (239) 555-0108
-                </p>
-              </div>
-              <div className="Email">
-                <p contact-theme={context.theme} className={ContactCSS.p4}>
-                  Email
-                </p>
-                <p contact-theme={context.theme} className={ContactCSS.p5}>
-                  Enquiries@SpeakBetter.com
-                </p>
-                <p contact-theme={context.theme} className={ContactCSS.p5}>
-                  Complaints@Speakbetter.com
-                </p>
-              </div>
-              <div className="Office">
-                <p contact-theme={context.theme} className={ContactCSS.p4}>
-                  Nigerian Office
-                </p>
-                <p contact-theme={context.theme} className={ContactCSS.p5}>
-                  6391 Elgin St. Celina, Delaware 10299
-                </p>
-                <p contact-theme={context.theme} className={ContactCSS.p5}>
-                  1901 Thornridge Cir. Shiloh, Hawaii 81063
-                </p>
-              </div>
-              <div className="Socials">
-                <p contact-theme={context.theme} className={ContactCSS.p4}>
-                  Socials Media
-                </p>
-                <p contact-theme={context.theme} className={ContactCSS.p6}>
-                  <IconContext.Provider value={{ className: 'mr-2' }}>
-                    <div>
-                      <AiFillInstagram />
-                    </div>
-                  </IconContext.Provider>
-                  @SpeakBetter
-                </p>
-                <p contact-theme={context.theme} className={ContactCSS.p6}>
-                  <IconContext.Provider value={{ color: 'red', className: 'mr-2' }}>
-                    <div>
-                      <AiFillYoutube />
-                    </div>
-                  </IconContext.Provider>
-                  @SpeakBetter
-                </p>
-                <p contact-theme={context.theme} className={ContactCSS.p6}>
-                  <IconContext.Provider value={{ color: 'blue', className: 'mr-2' }}>
-                    <div>
-                      <FaFacebookSquare />
-                    </div>
-                  </IconContext.Provider>
-                  @SpeakBetter
-                </p>
+                  Get in touch with us
+                </h2>
+                <div className="Numbers">
+                  <p contact-theme={context.theme} className={ContactCSS.p4}>
+                    {' '}
+                    Phone Number
+                  </p>
+                  <p contact-theme={context.theme} className={ContactCSS.p5}>
+                    (603) 555-0123
+                  </p>
+                  <p contact-theme={context.theme} className={ContactCSS.p5}>
+                    (239) 555-0108
+                  </p>
+                </div>
+                <div className="Email">
+                  <p contact-theme={context.theme} className={ContactCSS.p4}>
+                    Email
+                  </p>
+                  <p contact-theme={context.theme} className={ContactCSS.p5}>
+                    manhhachkt08@gmail.com
+                  </p>
+                  <p contact-theme={context.theme} className={ContactCSS.p5}>
+                    tienlapspktnd@gmail.com
+                  </p>
+                  <p contact-theme={context.theme} className={ContactCSS.p5}>
+                    vuhaithuongnute@gmail.com
+                  </p>
+                </div>
+                <div className="Office">
+                  <p contact-theme={context.theme} className={ContactCSS.p4}>
+                    Nigerian Office
+                  </p>
+                  <p contact-theme={context.theme} className={ContactCSS.p5}>
+                    6391 Elgin St. Celina, Delaware 10299
+                  </p>
+                  <p contact-theme={context.theme} className={ContactCSS.p5}>
+                    1901 Thornridge Cir. Shiloh, Hawaii 81063
+                  </p>
+                </div>
+                <div className="Socials">
+                  <p contact-theme={context.theme} className={ContactCSS.p4}>
+                    Socials Media
+                  </p>
+                  <p contact-theme={context.theme} className={ContactCSS.p6}>
+                    <IconContext.Provider value={{ className: 'mr-2' }}>
+                      <div>
+                        <AiFillInstagram />
+                      </div>
+                    </IconContext.Provider>
+                    @SpeakBetter
+                  </p>
+                  <p contact-theme={context.theme} className={ContactCSS.p6}>
+                    <IconContext.Provider value={{ color: 'red', className: 'mr-2' }}>
+                      <div>
+                        <AiFillYoutube />
+                      </div>
+                    </IconContext.Provider>
+                    @SpeakBetter
+                  </p>
+                  <p contact-theme={context.theme} className={ContactCSS.p6}>
+                    <IconContext.Provider value={{ color: 'blue', className: 'mr-2' }}>
+                      <div>
+                        <FaFacebookSquare />
+                      </div>
+                    </IconContext.Provider>
+                    @SpeakBetter
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="mt-0 lg:mt-8 mx-auto">
-            <form onSubmit={handleSubmit} encType="application/json" className="sm:w-[100%] sm:m-2 lg:w-full">
-              <div className={ContactCSS.form}>
-                <div>
-                  <div className="flex flex-col lg:flex-row">
-                    <div className={ContactCSS.element}>
-                      <label contact-theme={context.theme}>First Name</label>
-                      <div className={ContactCSS.input_container}>
-                        <IconContext.Provider value={{ color: '#8C54BF', className: 'm-2' }}>
-                          <div>
-                            <FaUserAlt />
-                          </div>
-                        </IconContext.Provider>
-                        <input
-                          contact-theme={context.theme}
-                          required
-                          type="text"
-                          name="firstName"
-                          id="first_name"
-                          className=" w-full lg:w-{50%}"
-                          placeholder="Mike"
-                          onChange={(e) => setFirstName(event.target.value)}
-                        />
+            <div className="mt-0 lg:mt-8 mx-auto">
+              <form onSubmit={handleSubmit} encType="application/json" className="w-full sm:m-2 lg:w-full">
+                <div className={ContactCSS.form}>
+                  <div className='w-full'>
+                    <div className="flex flex-col lg:flex-row ">
+                      <div className={ContactCSS.element}>
+                        <label contact-theme={context.theme}>First Name</label>
+                        <div className={ContactCSS.input_container}>
+                          <IconContext.Provider value={{ color: '#8C54BF', className: 'm-2' }}>
+                            <div>
+                              <FaUserAlt />
+                            </div>
+                          </IconContext.Provider>
+                          <input
+                            contact-theme={context.theme}
+                            required
+                            type="text"
+                            name="firstName"
+                            id="first_name"
+                            className=" w-full lg:w-{50%}"
+                            placeholder="Mike"
+                            onChange={(e) => setFirstName(event.target.value)}
+                          />
+                        </div>
                       </div>
-                    </div>
 
                     <div className={ContactCSS.element}>
                       <label contact-theme={context.theme}>Last Name</label>
