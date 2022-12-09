@@ -34,14 +34,26 @@ const Index = () => {
 
   const location = useLocation();
 
-  const authGoogle = useAuthGoogle(location?.search);
+  const search = location?.search;
+  const whichSocailAuth = new URLSearchParams(search)?.get('from');
+
   const googleLink = useGetGoogleLink();
-
-  const authFacebook = useAuthFacebook(location?.search);
   const facebookLink = useGetFacebookLink();
-
-  const authLinkedIn = useAuthLinkedIn(location?.search);
   const linkedInLink = useGetLinkedInLink();
+
+  const handleSocialAuthLogin = () => {
+    if (location?.search && location?.search?.includes('google')) {
+      return useAuthGoogle(location?.search);
+    } else if (whichSocailAuth === 'facebook') {
+      return useAuthFacebook(location?.search);
+    } else if (whichSocailAuth === 'linkedin') {
+      return useAuthLinkedIn(location?.search);
+    } else {
+      return null;
+    }
+  };
+  const socialAuth = handleSocialAuthLogin();
+
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
 
@@ -60,8 +72,8 @@ const Index = () => {
   };
 
   React.useEffect(() => {
-    if (location?.search && location?.search?.includes('code')) {
-      authFacebook
+    if (socialAuth) {
+      socialAuth
         .mutateAsync({})
         .then((res) => {
           success('Login Successful! Redirecting in 5 seconds');
@@ -74,62 +86,6 @@ const Index = () => {
           localStorage.setItem('isdashboard', true);
         })
         .then(() => {
-          setTimeout(() => {
-            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
-          }, 2000);
-        })
-        .then(() => {
-          setTimeout(() => {
-            window.location.replace('/me/home');
-            navigate('/me/home', { replace: true });
-          }, 5000);
-        })
-        .catch((err) => {
-          error(err.message);
-        });
-    }
-
-    if (location?.search && location?.search?.includes('code')) {
-      authLinkedIn
-        .mutateAsync({})
-        .then((res) => {
-          success('Login Successful! Redirecting in 5 seconds');
-          const resId = res.data.data._id;
-          const resToken = res.data.data.token;
-          setUserId(resId);
-          setUserToken(resToken);
-          localStorage.setItem('grittyuserid', userId);
-          localStorage.setItem('grittyusertoken', userToken);
-          localStorage.setItem('isdashboard', true);
-        })
-        .then(() => {
-          setTimeout(() => {
-            getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
-          }, 2000);
-        })
-        .then(() => {
-          setTimeout(() => {
-            window.location.replace('/me/home');
-            navigate('/me/home', { replace: true });
-          }, 5000);
-        })
-        .catch((err) => {
-          error(err.message);
-        });
-    }
-    if (location?.search && location?.search?.includes('code')) {
-      authGoogle
-        .mutateAsync({})
-        .then((res) => {
-          success('Login Successful! Redirecting in 5 seconds');
-          const resId = res.data.data._id;
-          const resToken = res.data.data.token;
-          localStorage.setItem('grittyuserid', resId);
-          localStorage.setItem('grittyusertoken', resToken);
-          localStorage.setItem('isdashboard', true);
-        })
-        .then(() => {
-
           setTimeout(() => {
             getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
           }, 2000);
@@ -152,7 +108,7 @@ const Index = () => {
     After a succesful input, redirects the user to a Protected Route and shows the logged in user's dashboard
     -----------------------------
     If user input is unsuccesful, shows an error notification and keeps the user on the page.
- 
+
     A successful login provides a token and id which monitors user session.
   */
   useEffect(() => {
@@ -240,7 +196,7 @@ const Index = () => {
   //   console.log(res.message);
   // });
 
-  const handleGoogleAuth = () => { };
+  const handleGoogleAuth = () => {};
 
   /*
       handleFacebookAuth handles the Facebook social login.
@@ -264,13 +220,12 @@ const Index = () => {
 
   // const handleLinkedInAuth = () => {
   //   useFetch('https://speakbetter.hng.tech/api/v1/auth/linkedin');
-  // }; 
+  // };
 
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   return (
     <div signup-theme={context.theme} className={styles._gs2mainlogin}>
-      {authFacebook.isLoading && <Loader />}
-      {authLinkedIn.isLoading && <Loader />}
+      {socialAuth?.isLoading && <Loader />}
       <div className={styles._gs2login}>
         <div className={styles._gs2logincol1} gs2logincol1-theme={context.theme}>
           {isTabletorMobile && (
@@ -280,7 +235,10 @@ const Index = () => {
           )}
           <div className={styles._gs2logincontent}>
             <div className={styles._authback}>
-              <button onClick={handlePrev} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center">
+              <button
+                onClick={handlePrev}
+                className="lg:text-[#383839] md:text-[#383839] text-[#fff] font-bold rounded inline-flex items-center"
+              >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                   <path
                     fill="none"
@@ -293,7 +251,6 @@ const Index = () => {
                 </svg>
                 <span>Go back</span>
               </button>
-
             </div>
             <h2 signup-theme={context.theme}>Welcome Back</h2>
             <p signup-theme={context.theme} className={styles._subtitle}>
@@ -327,9 +284,13 @@ const Index = () => {
               <div className={styles._gs2logincheck}></div>
               <div className={styles._g2loginandForgot}>
                 <div className={styles._g2loginoption}>
-                  <input id="userRememberPassword" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                  <span>
-                    Keep me signed in</span>
+                  <input
+                    id="userRememberPassword"
+                    type="checkbox"
+                    value=""
+                    class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <span>Keep me signed in</span>
                 </div>
                 <div>
                   <button

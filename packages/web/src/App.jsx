@@ -21,6 +21,7 @@ const Review = lazy(() => import('./modules/static/testimonials/Testimonial'));
 const Rates = lazy(() => import('./modules/static/testimonials/Ratings'));
 const Dashboard = lazy(() => import('./components/DashboardLayout'));
 const Newsletter = lazy(() => import('./modules/static/newsletter/NewsletterPage'));
+const Unsubscribe = lazy(() => import('./components/Unsubscribe/index'))
 const EmailTemp = lazy(() => import('./modules/static/emailtemplate/EmailTemplate'));
 const NewsletterEmailTemplate = lazy(() => import('./modules/static/emailtemplate/newsletterTemplate'));
 const SignInEmailTemplate = lazy(() => import('./modules/static/emailtemplate/signInTemplate'));
@@ -28,6 +29,7 @@ const HomePages = lazy(() => import('./modules/account/home/homePage'));
 const HistoryPage = lazy(() => import('./modules/account/history/history'));
 const CorrectionPage = lazy(() => import('./modules/account/history/correction'));
 const Conversation = lazy(() => import('./modules/account/conversation'));
+const Subscription = lazy(() => import('./modules/premium/index'));
 const ConversationTry = lazy(() => import('./modules/account/conversation/chat'));
 const Landing = lazy(() => import('./modules/static/landing-page/LandingPage'));
 const Legal = lazy(() => import('./pages/Legal/index'));
@@ -48,12 +50,25 @@ const Ai = lazy(() => import('./pages/Blog/Ai'));
 const Grammar = lazy(() => import('./pages/Blog/Grammar'));
 const Tips = lazy(() => import('./pages/Blog/Tips'));
 const Contact = lazy(() => import('./pages/contact/index'));
+const Premium = lazy(() => import('./modules/premium/popup/premium'));
 
 // All routes/pages must be import from ./pages folder
 
 const DashboardLayout = () => (
   <Suspense fallback={<Fallback />}>
     <Dashboard />
+  </Suspense>
+);
+
+const Billings = () => (
+  <Suspense fallback={<Fallback />}>
+    <Subscription />
+  </Suspense>
+);
+
+const ProVersion = () => (
+  <Suspense fallback={<Fallback />}>
+    <Premium />
   </Suspense>
 );
 
@@ -136,6 +151,12 @@ const NewsletterPage = () => (
     <Newsletter />
   </Suspense>
 );
+
+const NewsletterUnsubscribe = () => (
+  <Suspense fallback={<Fallback />}>
+    <Unsubscribe />
+  </Suspense>
+)
 
 const EmailTemplate = () => (
   <Suspense fallback={<Fallback />}>
@@ -324,8 +345,10 @@ function App() {
       </Route>
       <Route path="/startgame" element={<Layout />}></Route>
       <Route path="/newsletter" element={<NewsletterPage />} />
+      <Route path="/unsubscribe" element={<NewsletterUnsubscribe />} />
       <Route path="/career" element={<Careers />} />
       <Route path="/roles" element={<Roles />} />
+      <Route path="/premium" element={<ProVersion />} />
       <Route path="/apply" element={<Application />} />
       <Route path="/api-status" element={<ApiStatus />} />
       <Route path="/emailtemplate" element={<EmailTemplate />} />
@@ -354,6 +377,7 @@ function App() {
         <Route path="profile/deleteaccount-step2" element={<ConfirmDeleteAccount />} />
         <Route path="import" element={<TranscribePage />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="subscription" element={<Billings />} />
       </Route>
     </Routes>
   );

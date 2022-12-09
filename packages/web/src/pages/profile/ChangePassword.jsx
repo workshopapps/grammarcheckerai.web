@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton'
 import { useNavigate } from 'react-router-dom';
+import { BsChevronLeft } from 'react-icons/bs';
 import toast, { Toaster } from 'react-hot-toast';
 import { ENDPOINTS } from '../../lib/constants';
 
@@ -93,7 +94,8 @@ export default function ChangePassword() {
     }
     
   return (
-    <div className='h-screen w-[90%] md:w-[70%] lg:w-[70%] m-auto pt-2 sm:pt-16'>
+    <div className='h-full w-[90%] md:w-[70%] lg:w-[70%] m-auto pt-5 sm:pt-16'>
+         <BsChevronLeft className='absolute top-5 sm:hidden' size={28} onClick={() => history(-1)} />
         <h1 className='text-xl sm:text-2xl text-[#393939] text-center md:text-start font-bold'>Change your password</h1>
 
         <form onSubmit={handleSubmit} className='mt-10 h-[90%] flex flex-col gap-5'>
@@ -109,7 +111,7 @@ export default function ChangePassword() {
                     value={formValues.newPassword}
                     onChange={handleChange} 
                     />
-                    <p className="mt-2 text-[#c51717] text-lg">
+                    <p className="mt-2 text-[#c51717] text-xs">
                      {formErrors.newPassword}
                     </p>
             </label>
@@ -124,13 +126,13 @@ export default function ChangePassword() {
                     value={formValues.confirmNewPassword}
                     onChange={handleChange} 
                     />
-                <p className="mt-2 text-[#c51717] text-lg">
+                <p className="mt-2 text-[#c51717] text-xs">
                      {formErrors.confirmNewPassword}
                 </p>
             </label>
 
             <div className="_btnContainer">
-                <ProfileScreenButton onClick={() => history(-1)} variant="secondary">Cancel</ProfileScreenButton>
+                <ProfileScreenButton className="hidden sm:block" onClick={() => history(-1)} variant="secondary">Cancel</ProfileScreenButton>
                 <ProfileScreenButton disabled={btnActive} onClick={handleSubmit}>Reset</ProfileScreenButton>
             </div>
         </form>

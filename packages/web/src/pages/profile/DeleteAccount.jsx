@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import {  useNavigate } from 'react-router-dom';
+import { BsChevronLeft } from 'react-icons/bs';
 import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton';
 
 
@@ -42,10 +43,11 @@ export default function DeleteAccount() {
 
 
   return (
-    <div className='h-[100vh] w-[90%] md:w-[80%] lg:w-[70%] m-auto pt-2 sm:pt-16'>
+    <div className='h-full w-[90%] md:w-[80%] lg:w-[70%] m-auto pt-5 sm:pt-16'>
+         <BsChevronLeft className='absolute top-5 sm:hidden' size={28} onClick={() => history(-1)} />
         <div className='flex flex-col'>
             <h1 className='text-xl sm:text-2xl text-[#393939] text-center md:text-start lg:text-start font-bold'>Delete Account</h1>
-            <p className='text-sm sm:text-lg mt-2 opacity-50'>Step 1/2: Verify your account information.</p>
+            <p className='text-sm sm:text-lg mt-5 opacity-50'>Step 1/2: Verify your account information.</p>
         </div>
 
         <div className='sm:border-[1px] mt-10 border-[#d7d7d7] rounded-lg px-5'>
@@ -80,7 +82,7 @@ export default function DeleteAccount() {
 
 
                 <div className="_btnContainer">
-                    <ProfileScreenButton onClick={() => history(-1)} variant="secondary">Cancel</ProfileScreenButton>
+                    <ProfileScreenButton className="hidden sm:block" onClick={() => history(-1)} variant="secondary">Cancel</ProfileScreenButton>
                     <ProfileScreenButton disabled={btnActive} onClick={handleSubmit}>Continue</ProfileScreenButton>
                 </div>
             </form>
