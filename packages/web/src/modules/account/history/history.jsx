@@ -1,43 +1,40 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Errors from './errors';
 import HistoryModal from './modal';
 import HistoryEmpty from './historyEmpty';
 import search from '../../../assets/search.svg';
-import arrowDown from '../../../assets/arrowDown.svg';
-import arrowUp from '../../../assets/arrowUp.svg';
+import { FaChevronDown } from 'react-icons/fa';
 
-const historyDays = [
-  { id: '1', date: 'Today - Thursday, 19 September 2022' },
-  { id: '2', date: 'Yesterday - Wednesday, 18 September 2022' },
-  { id: '3', date: 'Last week' },
-  { id: '4', date: 'Last month' },
-];
-
-
-const url = "https://grittygrammar.hng.tech/api/v1/chathistory/:6d04fa09-1ccf-42d0-83db-d61cd8af270c"
-
+// MUI
+import { Accordion } from '@mui/material';
+import { AccordionSummary } from '@mui/material';
+import { AccordionDetails } from '@mui/material';
+import { Typography } from '@mui/material';
 
 function History() {
-  const [history, setHistory] = useState(historyDays);
-  // const [historyDays, setHistoryDays] = useState(null)
-  useEffect(() => {
-
-    const fetchData = async () => {
-      try{
-        const response = await fetch(url);
-        const json = await response.json();
-        console.log(json);
-        // setHistory(json)
-      } catch (error) {
-        console.log("error", error);
-      }
-    }
-    fetchData();
-  }, []);
-  
-
-  const [openId, setOpenId] = useState(null);
+  const [history, setHistory] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const userId = localStorage.getItem('grittyuserid');
+  const URL = `https://api.speakbetter.hng.tech/v1/chatHistory?userId=${userId}`;
+
+  useEffect(() => {
+    const getHistory = async () => {
+      try {
+        const res = await axios.get(URL);
+        const historyData = res.data.conversationHistory;
+        setHistory(historyData);
+      } catch (e) {
+        console.log('An error occured', e);
+      }
+    };
+    getHistory();
+  }, []);
+
+  const formattedDate = (date) => {
+    return new Date(date).toDateString();
+  };
+
   if (history?.length) {
     return (
       <div className="flex flex-col pt-16 xl:ml-[62px] xl:mr-[9rem] lg:ml-[52px] lg:mx-[4rem] md:mx-[42px] sm:mx-[30px] mx-6">
@@ -67,23 +64,17 @@ function History() {
             Clear history
           </button>
           <div className="w-full">
-            {history?.map((days) => (
-              <>
-                <div key={days.id} className="flex justify-between items-center mb-6">
-                  <p className="text-[#5A5A5A] sm:text-base text-[12px] font-normal leading-5 font-['Inter']">
-                    {days.date}
-                  </p>
-                  <button
-                    className="p-[5px]"
-                    onClick={() => {
-                      setOpenId(days.id === openId ? null : days.id);
-                    }}
-                  >
-                    <img src={openId === days.id ? arrowUp : arrowDown} alt="" className="w-[35px] h-[7px]" />
-                  </button>
-                </div>
-                {openId === days.id && <Errors id={days.id} />}
-              </>
+            {history?.map((data) => (
+              <div key={data.botResponseId._id} className="flex justify-between items-center mb-6">
+                <Accordion className="w-full">
+                  <AccordionSummary expandIcon={<FaChevronDown />}>
+                    <Typography>{formattedDate(data.botResponseId.createdAt)}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Errors errors={data.botResponseId} />
+                  </AccordionDetails>
+                </Accordion>
+              </div>
             ))}
           </div>
         </div>

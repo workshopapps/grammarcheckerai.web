@@ -21,7 +21,7 @@ const Review = lazy(() => import('./modules/static/testimonials/Testimonial'));
 const Rates = lazy(() => import('./modules/static/testimonials/Ratings'));
 const Dashboard = lazy(() => import('./components/DashboardLayout'));
 const Newsletter = lazy(() => import('./modules/static/newsletter/NewsletterPage'));
-const Unsubscribe = lazy(() => import('./components/Unsubscribe/index'))
+const Unsubscribe = lazy(() => import('./components/Unsubscribe/index'));
 const EmailTemp = lazy(() => import('./modules/static/emailtemplate/EmailTemplate'));
 const NewsletterEmailTemplate = lazy(() => import('./modules/static/emailtemplate/newsletterTemplate'));
 const SignInEmailTemplate = lazy(() => import('./modules/static/emailtemplate/signInTemplate'));
@@ -156,7 +156,7 @@ const NewsletterUnsubscribe = () => (
   <Suspense fallback={<Fallback />}>
     <Unsubscribe />
   </Suspense>
-)
+);
 
 const EmailTemplate = () => (
   <Suspense fallback={<Fallback />}>
