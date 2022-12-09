@@ -7,30 +7,19 @@ import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import LoadingButton from '@mui/lab/LoadingButton';
 import useLogin from '../../../hooks/auth/useLogin';
-import useSignup from '../../../hooks/auth/useSignup';
 import toast from 'react-hot-toast';
 import PasswordMask from 'react-password-mask';
 import { usePaystackPayment } from 'react-paystack';
-import useTheme from '../../../hooks/useTheme';
 import usePay from '../../../hooks/auth/usePay';
 import check from '../Assets/tick-square.png';
 import medal from '../Assets/medal-star-white.png';
 // import userCheckPlanVerify from '../../../hooks/account/userCheckPlanVerify';
 
 const Checkout = (props) => {
-  const context = useTheme();
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [userId, setUserId] = useState('');
   const [userToken, setUserToken] = useState('');
-  const [isCreateAccount, setIsCreateAccount] = useState(false);
-  const [newUserName, setNewUserName] = useState('');
-  const [newUserFirstName, setNewUserFirstName] = useState('');
-  const [newUserLastName, setNewUserLastName] = useState('');
-  const [newUserPassword, setNewUserPassword] = useState('');
-  const [newUserConfirmPassword, setNewUserConfirmPassword] = useState('');
-  const [isSamePassword, setIsSamePassword] = useState(true);
-  const [newUserEmail, setNewUserEmail] = useState('');
   const [isPaymentPage, setIsPaymentPage] = useState(false);
   const [isAlreadyLoggedIn, setIsAlreadyLoggedIn] = useState(false);
   const [userLSEmail, setUserLSEmail] = useState('');
@@ -40,7 +29,6 @@ const Checkout = (props) => {
   const [loading, setLoading] = useState(false);
 
   const authLogin = useLogin();
-  const authSignup = useSignup();
   const authPay = usePay();
   // const authVerify = userCheckPlanVerify(JSON.parse(localStorage.getItem('isUserDetails'))?.email, '');
 
@@ -208,7 +196,7 @@ const Checkout = (props) => {
   const handlePayment = async () => {
     setUserLSEmail(JSON.parse(localStorage.getItem('isUserDetails')).email);
 
-    if (props.userIsSubscribed) {
+    if (props.userIsSubscribed === true) {
       toast(() => (
         <span className={styles._notifs}>
           <b>You are already subscribed!</b>
@@ -217,11 +205,11 @@ const Checkout = (props) => {
           </Button>
         </span>
       ));
-      return;
-    }
-    if (userLSEmail && userLSEmail !== '') {
+    } else if (props.userIsSubscribed === false && userLSEmail && userLSEmail !== '') {
       setLoading(true);
-      initializePayment(onSuccess, onClose);
+      setTimeout(() => {
+        initializePayment(onSuccess, onClose);
+      }, 1000);
     }
   };
 
@@ -236,9 +224,9 @@ const Checkout = (props) => {
       TransitionComponent={props.Transition}
       className={style._sbDialog}
     >
-      <div signup-theme={context.theme} className={styles._gs2mainlogin}>
+      <div className={styles._gs2mainlogin}>
         <div className={styles._gs2login}>
-          <div className={styles._gs2logincol1} gs2logincol1-theme={context.theme}>
+          <div className={styles._gs2logincol1}>
             <div className={styles._gs2logincontent}>
               <div className={styles._authback}>
                 <svg onClick={props.handleBack} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -252,16 +240,20 @@ const Checkout = (props) => {
                   />
                 </svg>
               </div>
-              <h2 signup-theme={context.theme}>Subscription</h2>
-              <p signup-theme={context.theme} className={styles._subtitle}>
-                Complete the process with just few steps. You’re almost all set.
-              </p>
+              <h2>Subscription</h2>
+              <p className={styles._subtitle}>Complete the process with just few steps. You’re almost all set.</p>
               {isPaymentPage === true ? (
                 <div>
                   <div className={styles._cpSummary}>
                     <h3>Plan: {props.duration}</h3>
                     <h3>Amount: NGN {props.amount}</h3>
-                    <LoadingButton loading={loading} variant="contained" type="button" onClick={handlePayment}>
+                    <LoadingButton
+                      loading={loading}
+                      color="secondary"
+                      variant="outlined"
+                      type="button"
+                      onClick={handlePayment}
+                    >
                       Proceed to Payment
                     </LoadingButton>
                   </div>
@@ -272,7 +264,13 @@ const Checkout = (props) => {
                     <div className={styles._cpSummary}>
                       <h3>Plan: {props.duration}</h3>
                       <h3>Amount: NGN {props.amount}</h3>
-                      <LoadingButton loading={loading} variant="contained" type="button" onClick={handlePayment}>
+                      <LoadingButton
+                        loading={loading}
+                        color="secondary"
+                        variant="outlined"
+                        type="button"
+                        onClick={handlePayment}
+                      >
                         Proceed to Payment
                       </LoadingButton>
                     </div>
@@ -305,18 +303,13 @@ const Checkout = (props) => {
                         </div>
                         {!isMobile && (
                           <div className={styles._gs2logincheck}>
-                            <div className={styles._gs2loginsignin} signup-theme={context.theme}>
+                            <div className={styles._gs2loginsignin}>
                               <a href="#/" className={styles._gsloginforgot} onClick={handleCreateAccount}>
                                 Create an account?
                               </a>
                             </div>
                             <div>
-                              <button
-                                signup-theme={context.theme}
-                                type="button"
-                                className={styles._gsloginforgot}
-                                onClick={handleForgotPassword}
-                              >
+                              <button type="button" className={styles._gsloginforgot} onClick={handleForgotPassword}>
                                 Forgot Password?
                               </button>
                             </div>
@@ -329,18 +322,13 @@ const Checkout = (props) => {
                         </div>
                         {isMobile && (
                           <div className={styles._gs2logincheck}>
-                            <div className={styles._gs2loginsignin} signup-theme={context.theme}>
+                            <div className={styles._gs2loginsignin}>
                               <a href="#/" className={styles._gsloginforgot} onClick={handleCreateAccount}>
                                 Create an account?
                               </a>
                             </div>
                             <div>
-                              <button
-                                signup-theme={context.theme}
-                                type="button"
-                                className={styles._gsloginforgot}
-                                onClick={handleForgotPassword}
-                              >
+                              <button type="button" className={styles._gsloginforgot} onClick={handleForgotPassword}>
                                 Forgot Password?
                               </button>
                             </div>

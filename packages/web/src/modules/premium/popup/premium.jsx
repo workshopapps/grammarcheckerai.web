@@ -1,6 +1,5 @@
 import React from 'react';
 import Slide from '@mui/material/Slide';
-import Dialog from '@mui/material/Dialog';
 import styles from './popup.module.css';
 import medal from '../Assets/medal-star.png';
 import ranking from '../Assets/ranking.png';
@@ -19,7 +18,6 @@ const index = () => {
   const matches = useMediaQuery('(max-width:694px)');
   const [interval, setInterval] = React.useState({ plan: '', amount: 0, duration: '' });
   const [open, setOpen] = React.useState(true);
-  const [userSubsList, setUserSubsList] = React.useState([]);
 
   const handleClosePremium = () => {
     setOpen(false);
@@ -32,17 +30,13 @@ const index = () => {
   const handleCheckout = (plan) => {
     setInterval(plan);
     if (userSubscription?.value && userSubscription?.value?.length !== 0) {
-      setUserSubsList(userSubscription?.value);
-      checkForArray(userSubsList).map((item) => {
+      checkForArray(userSubscription?.value).map((item) => {
         if (item.status === 'success') {
           setUserIsSubscribed(true);
-          return;
+        } else {
+          setUserIsSubscribed(false);
         }
-        setUserIsSubscribed(false);
       });
-    } else {
-      // console.log('User is not subscribed');
-      setUserIsSubscribed(false);
     }
   };
 
@@ -67,7 +61,7 @@ const index = () => {
       </>
     );
   return (
-    <Dialog fullScreen open={true} TransitionComponent={Transition} className={styles._sbDialog}>
+    <div className={styles._sbDialog}>
       <div className={styles._sbpopup}>
         <Navbar />
         {matches ? null : (
@@ -233,7 +227,7 @@ const index = () => {
         </div>
       </div>
       <Toaster />
-    </Dialog>
+    </div>
   );
 };
 

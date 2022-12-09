@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Slide from '@mui/material/Slide';
 import Dialog from '@mui/material/Dialog';
@@ -20,7 +20,6 @@ const index = (props) => {
   const matches = useMediaQuery('(max-width:694px)');
   const [interval, setInterval] = React.useState({ plan: '', amount: 0, duration: '' });
   const [userIsSubscribed, setUserIsSubscribed] = React.useState(false);
-  const [userSubsList, setUserSubsList] = useState([]);
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
 
   const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
@@ -28,17 +27,13 @@ const index = (props) => {
   const handleCheckout = (plan) => {
     setInterval(plan);
     if (userSubscription?.value && userSubscription?.value?.length !== 0) {
-      setUserSubsList(userSubscription?.value);
-      checkForArray(userSubsList).map((item) => {
+      checkForArray(userSubscription?.value).map((item) => {
         if (item.status === 'success') {
           setUserIsSubscribed(true);
-          return;
+        } else {
+          setUserIsSubscribed(false);
         }
-        setUserIsSubscribed(false);
       });
-    } else {
-      // console.log('User is not subscribed');
-      setUserIsSubscribed(false);
     }
   };
 
