@@ -14,7 +14,15 @@ import { Drawer } from '@mui/material';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Switch from '@mui/material/Switch';
 import { BsList } from 'react-icons/bs';
-import { FaHome, FaBlog, FaEnvelopeOpenText, FaSignInAlt, FaUsers, FaRegComments } from 'react-icons/fa';
+import {
+  FaHome,
+  FaBlog,
+  FaMoneyBillWave,
+  FaEnvelopeOpenText,
+  FaSignInAlt,
+  FaUsers,
+  FaRegComments,
+} from 'react-icons/fa';
 
 // MUI TOGGLE-SWITCH
 
@@ -173,7 +181,7 @@ const Navbar = () => {
                 { icon: <FaRegComments className="mx-3" />, title: 'Converse', to: '/converse' },
                 { icon: <FaUsers className="mx-3" />, title: 'About', to: '/about' },
                 { icon: <FaBlog className="mx-3" />, title: 'Blog', to: '/blog' },
-                { icon: <FaBlog className="mx-3" />, title: 'Premium', to: '/premium' },
+                { icon: <FaMoneyBillWave className="mx-3" />, title: 'Premium', to: '/premium' },
                 { icon: <FaEnvelopeOpenText className="mx-3" />, title: 'Contact', to: '/contact' },
                 { icon: <FaSignInAlt className="mx-3" />, title: 'Log in', to: '/signin' },
                 // { title: 'Sign Up', to: '/signup' },
