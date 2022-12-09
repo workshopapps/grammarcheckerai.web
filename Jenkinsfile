@@ -32,7 +32,7 @@ pipeline {
 		
 			steps {
 				sh "sudo cp -fr ${WORKSPACE}/packages/api/* /home/devineer/backend"
-				sh "ls ${WORKSPACE}/packages/api/ && sudo cp -f ${WORKSPACE}/packages/api/package-lock.json /home/devineer/backend"
+				sh "sudo npm cache clean && sudo cp -f ${WORKSPACE}/packages/api/package-lock.json /home/devineer/backend"
 				sh "sudo cp -fr ${WORKSPACE}/packages/web/* /home/devineer/frontend"
 				sh "sudo chown devineer /home/devineer/frontend"
 				sh "sudo chown devineer /home/devineer/backend"
