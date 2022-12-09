@@ -22,7 +22,7 @@ pipeline {
 		
 			steps {
 				sh "unset NODE_ENV"
-				sh "cd packages/api"
+				sh "cd packages/api && sudo rm -rf node_modules/"
 				sh "cd packages/api && sudo npm install --force"
 			
 			}
