@@ -10,10 +10,10 @@ const Hero = () => {
   return (
     <section data-theme={context.theme} className={`${styles.hero__bg} mt-[0em] pt-10 transition-all `}>
       <div className=" w-[80%] mx-auto py-16 text-center text-[#262626] flex flex-col justify-center items-center gap-32 md:flex-row md:text-left  lg:gap-96">
-        <div className={`max-w-4xl relative ${context.theme === 'light' ? 'text-black' : 'text-white'}`}>
+        <div className={`max-w-4xl relative`}>
           <div
             className={` ${styles.hero__header} relative z-10 max-w-xs mx-auto md:ml-2`}
-            hero-head-theme={context.theme}
+            // hero-head-theme={context.theme}
           >
             <h2 className={` pb-1 text-3xl text-white ${styles.font_w} ${styles.ff_inter} whitespace-nowrap`}>
               Speak Better
