@@ -16,6 +16,7 @@ function uploadFile(req, res, next) {
 
   // Handle multer specific errors
   upload(req, res, function (err) {
+    console.log("❌❌❌", err);
     if (err instanceof multer.MulterError) {
       return res.status(400).send({
         success: false,
