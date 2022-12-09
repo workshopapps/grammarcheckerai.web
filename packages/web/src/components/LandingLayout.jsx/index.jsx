@@ -4,10 +4,10 @@ import Navbar from '../Navbar';
 import useTheme from '../../hooks/useTheme';
 
 function LandingLayout() {
-  const context = useTheme();
-  const dark = context.theme === 'dark';
+  // const context = useTheme();
+  // const dark = context.theme === 'dark';
   return (
-    <div className={` ${dark && 'bg-[black]'}`}>
+    <div>
       <Navbar />
       <Outlet />
     </div>

@@ -13,7 +13,7 @@ const Hero = () => {
         <div className={`max-w-4xl relative ${context.theme === 'light' && 'text-black'}`}>
           <div
             className={` ${styles.hero__header} relative z-10 max-w-xs mx-auto md:ml-2`}
-            hero-head-theme={context.theme}
+            // hero-head-theme={context.theme}
           >
             <h2 className={` pb-1 text-3xl text-white ${styles.font_w} ${styles.ff_inter} whitespace-nowrap`}>
               Speak Better
