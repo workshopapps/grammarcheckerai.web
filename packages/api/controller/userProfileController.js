@@ -1,6 +1,6 @@
-const { userCollection } = require("../database/models/userSchema");
-const { response } = require("../utilities/response");
-const bcrypt = require("bcryptjs");
+const { userCollection } = require('../database/models/userSchema');
+const { response } = require('../utilities/response');
+const bcrypt = require('bcryptjs');
 
 async function comparePassword(password, hash) {
   return await bcrypt.compare(password, hash);
@@ -17,7 +17,7 @@ const userProfile = async (req, res) => {
       return res.status(404).json(
         response({
           success: false,
-          message: "User Not Found",
+          message: 'User Not Found',
           data: {},
         })
       );
@@ -26,7 +26,7 @@ const userProfile = async (req, res) => {
     return res.status(200).json(
       response({
         success: true,
-        message: "User found",
+        message: 'User found',
         data: user,
       })
     );
@@ -35,7 +35,7 @@ const userProfile = async (req, res) => {
     return res.status(400).json(
       response({
         success: false,
-        message: "An Error Occured",
+        message: 'An Error Occured',
         data: {
           error,
         },
@@ -53,7 +53,7 @@ const deleteUser = async (req, res) => {
     // checking if all required field are provided.
     if (!email || !password) {
       res.status(400);
-      res.json({ message: "please provide user email and password" });
+      res.json({ message: 'please provide user email and password' });
       return;
     }
 
@@ -63,7 +63,7 @@ const deleteUser = async (req, res) => {
     // if user does not exist
     if (!user) {
       res.status(404);
-      res.json({ message: "no user found with the email provided" });
+      res.json({ message: 'no user found with the email provided' });
       return;
     }
 
@@ -73,7 +73,7 @@ const deleteUser = async (req, res) => {
     // if password is not correct
     if (!isCorrect) {
       res.status(401);
-      res.json({ message: "you are not authorized to delete this account" });
+      res.json({ message: 'you are not authorized to delete this account' });
       return;
     }
 
@@ -81,11 +81,11 @@ const deleteUser = async (req, res) => {
     if (isCorrect) {
       await userCollection.deleteOne({ email });
       res.status(200);
-      res.json({ message: "you have successfully deleted your account" });
+      res.json({ message: 'you have successfully deleted your account' });
     }
   } catch (error) {
     res.status(500);
-    res.json({ message: "Something went wrong" });
+    res.json({ message: 'Something went wrong' });
   }
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,12 +93,18 @@ const deleteUser = async (req, res) => {
 //Updates a User profile.
 const updateUser = async (req, res) => {
   try {
-    const profilePicture = req.file ? req.file.location : "";
-
-    const data = {
-      ...req.body,
-      profilePicture: profilePicture,
-    };
+    let data = {};
+    if (req.file) {
+      const profilePicture = req.file.location;
+      data = {
+        ...req.body,
+        profilePicture: profilePicture,
+      };
+    } else {
+      data = {
+        ...req.body,
+      };
+    }
 
     const user = await userCollection.findByIdAndUpdate(req.user._id, data, {
       new: true,
@@ -109,7 +115,7 @@ const updateUser = async (req, res) => {
       return res.status(400).json(
         response({
           success: false,
-          message: "User Not Found",
+          message: 'User Not Found',
           data: {},
         })
       );
@@ -117,7 +123,7 @@ const updateUser = async (req, res) => {
     return res.status(200).json(
       response({
         success: true,
-        message: "user updated successfully.",
+        message: 'user updated successfully.',
         data: {},
       })
     );
@@ -126,7 +132,7 @@ const updateUser = async (req, res) => {
     return res.status(400).json(
       response({
         success: false,
-        message: "An Error Occured",
+        message: 'An Error Occured',
         data: {
           error: error.message,
         },
