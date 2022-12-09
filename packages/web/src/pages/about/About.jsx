@@ -165,7 +165,7 @@ const About = () => {
           } flex flex-col items-center justify-center py-12 px-8 md:w-full space-y-7`}
         >
           <div>
-            <p className=" text-purple-500  text-center text-3xl font-semibold">Try Quick Transcribe for free</p>
+            <p className=" text-purple-500  text-center text-3xl font-semibold">Try Speak Better for free</p>
             <p className={`${dark && 'text-[#fff]'} text-center font-light text-sm lg:w-80 mx-auto mt-2`}>
               Set up your personal account, free forever and never worry about a error in your speech again
             </p>

@@ -17,7 +17,7 @@ const data = [
     id: 3,
     img: 'https://res.cloudinary.com/dpokiomqq/image/upload/v1668864588/tag_yrgahs.png',
     title: 'Can Speak Better translate all languages?',
-    para: 'Yes, Speak Better is avaliable to translate into  all languages.',
+    para: 'No, speak better is only available to translate in French, Spanish, German, Chinese, Russian and Italian.',
   },
 
   {
@@ -45,7 +45,7 @@ const data = [
     id: 7,
     img: 'https://res.cloudinary.com/dpokiomqq/image/upload/v1668864588/tag_yrgahs.png',
     title: 'Can i use Speak Better Offline?',
-    para: 'Yes, You can.',
+    para: 'No, it requires network connection.',
   },
 
   {
