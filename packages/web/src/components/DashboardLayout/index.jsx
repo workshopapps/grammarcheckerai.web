@@ -16,7 +16,7 @@ function DashboardLayout() {
   };
 
   return (
-    <div className="flex flex-col-reverse justify-between sm:flex-row min-h-screen">
+    <div className="flex flex-col-reverse justify-between sm:flex-row  min-h-screen">
       <div className="md:w-80 h-full bg-[#F6F6F6] max-h-full min-h-screen z-[100] hidden sm:block sm:sticky top-0">
         <div className="w-40 mx-auto py-20">
           <Link to='/'>
