@@ -6,6 +6,8 @@ const { PAYSTACK_SECRET_KEY, BASE_URL, PREMIUM_TEMPLATE_ID } = environment;
 
 const createPayment = async (req, res) => {
   let email = req.body.email;
+
+  //VALIDATE USER REQUEST
   if (!email)
     return res.status(400).send({ success: false, message: "Invalid email" });
   try {
@@ -20,6 +22,8 @@ const createPayment = async (req, res) => {
       currency,
       txref,
     };
+
+    //FIND ACTIVE SUBSCRIPTION
     const isActive = await Subscription.findOne({
       $and: [{ email: email }, { status: "success" }],
     });
@@ -32,6 +36,23 @@ const createPayment = async (req, res) => {
       });
     }
 
+    //CHECK EXPIRATION DATE
+    Date.prototype.addDays = function (days) {
+      var date = new Date(this.valueOf());
+      date.setDate(date.getDate() + days);
+      return date;
+    };
+    var expirationDate = new Date();
+    if (interval == "weekly") expirationDate = expirationDate.addDays(7);
+    payload.expirationDate = expirationDate;
+    if (interval == "monthly") expirationDate = expirationDate.addDays(30);
+    payload.expirationDate = expirationDate;
+    if (interval == "quarterly") expirationDate = expirationDate.addDays(90);
+    payload.expirationDate = expirationDate;
+    if (interval == "annually") expirationDate = expirationDate.addDays(365);
+    payload.expirationDate = expirationDate;
+
+    //SAVE TO DATABASE
     const result = await Subscription.create(payload);
     await emailService({
       to: email,
@@ -73,13 +94,13 @@ const getSubscription = async (req, res) => {
     if (!user) {
       return res.status(400).send({
         success: false,
-        message: "User not subscribed",
+        message: `${user.length} Subscription(s) found for User: ${email}!`,
         data: [],
       });
     }
     return res.status(200).send({
       success: true,
-      message: "User found",
+      message: `${user.length} Subscription(s) found for User: ${email}!`,
       data: user,
     });
   } catch (error) {
@@ -106,7 +127,7 @@ const cancelSubscription = async (req, res) => {
   if (!transaction) {
     return res.status(400).send({
       success: false,
-      message: `No subscription found for ${email}`,
+      message: `${transaction.length} Subscription(s) found for User: ${email}!`,
       data: [],
     });
   }
@@ -192,9 +213,12 @@ const verification = async (req, res) => {
     });
 };
 
+const checkActiveSubscription = async (req, res) => {};
+
 module.exports = {
   createPayment,
   verification,
   getSubscription,
+  checkActiveSubscription,
   cancelSubscription,
 };
