@@ -36,6 +36,7 @@ pipeline {
 				sh "sudo cp -fr ${WORKSPACE}/packages/web/* /home/devineer/frontend"
 				sh "sudo chown devineer /home/devineer/frontend"
 				sh "sudo rm -rf /home/devineer/backend/node_modules/ && sudo rm -f /home/devineer/backend/package-lock.json"
+				sh "sudo npm cache clean --force"
 				sh "sudo chown devineer /home/devineer/backend"
 				sh "sudo npm install --force --prefix /home/devineer/backend"
 				
