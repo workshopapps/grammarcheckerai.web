@@ -30,12 +30,10 @@
 }
 .mainContainer {
   padding: 0 1rem;
-  margin-top: 7rem;
+ 
 }
 
-.mainHeader {
-  margin: 2rem 0;
-}
+
 
 .title {
   font-weight: 700;
@@ -55,7 +53,7 @@
 
 @media screen and (min-width: 600px) {
   .mainContainer {
-    margin-top: 8.5rem;
+    margin-top: 0.5rem;
   }
   .mainHeader {
     margin: 5rem;

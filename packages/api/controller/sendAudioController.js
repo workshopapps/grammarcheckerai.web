@@ -1,4 +1,4 @@
-const { parseBuffer } = require("music-metadata");
+// const { parseBuffer } = require("music-metadata");
 const UserResponse = require("../database/models/userResponseSchema");
 const BotResponse = require("../database/models/botResponseSchema");
 const Message = require("../database/models/messageSchema");
@@ -42,24 +42,24 @@ async function getBotResponse(req, res) {
         message: "Please attach an audio file",
       });
     }
-    const metadata = await parseBuffer(audioFile.buffer, audioFile.mimetype);
-    const audioLength = metadata.format.duration.toFixed(2);
-    // 1. If userId, Get user's email
-    const userEmail = userId
-      ? (await userCollection.findById(userId))?.email
-      : null;
+    // const metadata = await parseBuffer(audioFile.buffer, audioFile.mimetype);
+    // const audioLength = metadata.format.duration.toFixed(2);
+    // // 1. If userId, Get user's email
+    // const userEmail = userId
+    //   ? (await userCollection.findById(userId))?.email
+    //   : null;
 
-    const isSubscriber = userEmail
-      ? (await Subscription.findOne({ email: userEmail }))?.active
-      : null;
+    // const isSubscriber = userEmail
+    //   ? (await Subscription.findOne({ email: userEmail }))?.active
+    //   : null;
 
-    // 2. Check if user is a premiumm user
-    if (!isSubscriber && audioLength > 20) {
-      return res.status(403).send({
-        success: false,
-        message: "Recording above 20 seconds is a premium feature. Go premium!",
-      });
-    }
+    // // 2. Check if user is a premiumm user
+    // if (!isSubscriber && audioLength > 20) {
+    //   return res.status(403).send({
+    //     success: false,
+    //     message: "Recording above 20 seconds is a premium feature. Go premium!",
+    //   });
+    // }
     // checks if specified language is not available
     if (!languageMap[language]) {
       return res.status(400).send({
@@ -113,7 +113,7 @@ async function getBotResponse(req, res) {
 
     // translate bot reply if specified language is not English
     if (
-      !["English", "English (AU)", "English (UK)", "English (US)"].includes(
+      !["english", "english (au)", "english (uk)", "english (us)"].includes(
         language
       )
     ) {
@@ -126,7 +126,6 @@ async function getBotResponse(req, res) {
       chatLog
     );
     req.session.chatLog = chatLog; // set updated chat log to session
-    console.log(req.session.chatLog);
 
     // await file upload to aws s3 bucket to get file url
     audioUrl = await audioUrl;

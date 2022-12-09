@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const { v4 } = require("uuid");
 const { environment } = require("../../config/environment");
-const { JWT_SECRET } = environment;
 
 const subscriptionSchema = new mongoose.Schema(
   {
@@ -9,7 +8,6 @@ const subscriptionSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      unique: true,
     },
     subscriptionId: {
       type: String,
@@ -44,12 +42,8 @@ const subscriptionSchema = new mongoose.Schema(
       enum: ["NGN", "USD", "EUR", "YEN", "GBP"],
       default: "NGN",
     },
-    nextSubscriptionDate: {
+    expirationDate: {
       type: String,
-    },
-    active: {
-      type: Boolean,
-      default: false,
     },
   },
   {

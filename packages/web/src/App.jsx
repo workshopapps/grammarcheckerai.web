@@ -21,6 +21,7 @@ const Review = lazy(() => import('./modules/static/testimonials/Testimonial'));
 const Rates = lazy(() => import('./modules/static/testimonials/Ratings'));
 const Dashboard = lazy(() => import('./components/DashboardLayout'));
 const Newsletter = lazy(() => import('./modules/static/newsletter/NewsletterPage'));
+const Unsubscribe = lazy(() => import('./components/Unsubscribe/index'));
 const EmailTemp = lazy(() => import('./modules/static/emailtemplate/EmailTemplate'));
 const NewsletterEmailTemplate = lazy(() => import('./modules/static/emailtemplate/newsletterTemplate'));
 const SignInEmailTemplate = lazy(() => import('./modules/static/emailtemplate/signInTemplate'));
@@ -148,6 +149,12 @@ const Ratings = () => (
 const NewsletterPage = () => (
   <Suspense fallback={<Fallback />}>
     <Newsletter />
+  </Suspense>
+);
+
+const NewsletterUnsubscribe = () => (
+  <Suspense fallback={<Fallback />}>
+    <Unsubscribe />
   </Suspense>
 );
 
@@ -303,6 +310,7 @@ function App() {
   const [isDashboard, setIsDashboard] = useState(false);
 
   useEffect(() => {
+    localStorage.setItem('theme', 'light');
     if (localStorage.getItem('grittyuserid') !== null && localStorage.getItem('grittyuserid') !== '') {
       setisLoggedin(true);
     }
@@ -338,6 +346,7 @@ function App() {
       </Route>
       <Route path="/startgame" element={<Layout />}></Route>
       <Route path="/newsletter" element={<NewsletterPage />} />
+      <Route path="/unsubscribe" element={<NewsletterUnsubscribe />} />
       <Route path="/career" element={<Careers />} />
       <Route path="/roles" element={<Roles />} />
       <Route path="/premium" element={<ProVersion />} />
