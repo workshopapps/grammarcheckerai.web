@@ -36,7 +36,7 @@ pipeline {
 				sh "sudo chown devineer /home/devineer/frontend"
 				sh "sudo chown devineer /home/devineer/backend"
 				sh "sudo npm install --prefix /home/devineer/backend"
-				sh "ls /home/devineer/backend"
+				sh "sudo ls /home/devineer/backend"
 				//sh "sudo pm2 delete all"
 				//sh "pm2 start npm /home/devineer/frontend 3333"
 				//sh "sudo npm install && pm2 start /home/devineer/backend/server.js -- --port 5555"
