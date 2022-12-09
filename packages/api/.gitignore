@@ -1,4 +1,4 @@
 node_modules
 .env
-./package-lock.json
+package-lock.json
 /middlewares/.S3-KEYS.js
