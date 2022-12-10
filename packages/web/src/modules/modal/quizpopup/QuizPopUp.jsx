@@ -15,6 +15,7 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
   const [errorMsg, setErrorMsg] = useState(false);
   const [changeColor, setChangeColor] = useState('#e8ddf2');
   const [selectedAnswer, setSelectedAnswer] = useState('');
+  const [color, setColor] = useState('#e8ddf2');
 
   const getQuestions = async () => {
     try {
@@ -22,6 +23,7 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
       console.log(response.data);
       const data = response.data;
       setTrivia(data);
+      setColor('white');
     } catch (error) {
       setErrorMsg(true);
       console.log('Error', error);
@@ -42,6 +44,7 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
       }, 1000);
     } else {
       setChangeColor('red');
+      setAnswer(true);
     }
   };
 
@@ -57,7 +60,9 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
       ) : (
         <>
           {showQuiz ? (
-            <div className={styles.quiz}>
+            <div className={styles.quiz} 
+            style={{backgroundColor: color }}
+            >
               <div className={styles.quiz_card}>
                 <div onClick={removePopUp} className={styles.quiz_card__close}>
                   <GrClose />
