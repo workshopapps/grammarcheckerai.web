@@ -4,13 +4,18 @@
 import React, { useEffect } from 'react';
 import styles from '../totalscores/TotalScore.module.scss';
 
-const TotalScores = ({winnerMsg, setStart, setWinner}) => {
+const TotalScores = ({setColor, winnerMsg, setStart, setWinner}) => {
 
   useEffect(() => {
     setInterval(() => {
       setWinner(false);
     }, 7000)
   })
+
+  const handleQuit =() => {
+    setStart(false);
+    setColor('#CACACA');
+  }
   
   return (
     <section className={styles.total_score}>
@@ -23,7 +28,7 @@ const TotalScores = ({winnerMsg, setStart, setWinner}) => {
 
         <div className={styles.total_score__card__btn}>
           <button onClick={() => setWinner(false)}>Continue</button>
-          <button onClick={() => setStart(false)}>Quit Round</button>
+          <button onClick={() => handleQuit}>Quit Round</button>
         </div>
 
       </div>
