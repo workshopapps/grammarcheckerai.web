@@ -24,7 +24,7 @@ pipeline {
 				//sh "unset NODE_ENV"
 				//sh "sudo rm -rf "
 				sh "cd packages/api && sudo npm cache clean --force"
-				sh "cd packages/api && sudo npm install --force --unsafe-perm=true --allow-root"
+				sh "cd packages/api && sudo npm install --force --unsafe-perm=true --allow-root && ls"
 			
 			}
 		}
