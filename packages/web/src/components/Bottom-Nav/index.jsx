@@ -30,65 +30,67 @@ export default function SimpleBottomNavigation() {
   };
 
   return (
-    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, padding: '10px 0' }} elevation={3}>
-      <Menu
-        id="fade-menu"
-        MenuListProps={{
-          'aria-labelledby': 'fade-button',
-        }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Fade}
-      >
-        <MenuItem onClick={handleClose}>
-          <NavLink className="flex items-center gap-2" to="/">
-            <HiGlobeEuropeAfrica />
-            Go home
-          </NavLink>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <NavLink className="flex items-center gap-2" to="/me/profile">
-            <BsFillPersonLinesFill />
-            Profile
-          </NavLink>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <NavLink className="flex items-center gap-2" to="/me/settings">
-            <IoSettingsOutline /> Settings
-          </NavLink>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <NavLink className="flex items-center gap-2" to="/me/settings">
-            <AiFillWechat /> Quiz
-          </NavLink>
-        </MenuItem>
-        <MenuItem className="flex items-center gap-2" onClick={toggleModal}>
-          <BsArrowBarRight />
-          Logout
-        </MenuItem>
-      </Menu>
-      <BottomNavigation
-        showLabels
-        value={value}
-        sx={{ height: '40px' }}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      >
-        <BottomNavigationAction label="Home" icon={<IoHomeOutline />} />
-        <BottomNavigationAction label="History" icon={<BsClock />} />
-        <BottomNavigationAction label="Import" icon={<BsDownload />} />
-        <BottomNavigationAction label="Profile" icon={<AiOutlineUser />} />
-        <BottomNavigationAction
-          id="fade-button"
-          aria-controls={open ? 'fade-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
-          onClick={handleClick}
-          icon={<BsThreeDotsVertical />}
-        />
-      </BottomNavigation>
-    </Paper>
+    <div className="block md:hidden">
+      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, padding: '10px 0' }} elevation={3}>
+        <Menu
+          id="fade-menu"
+          MenuListProps={{
+            'aria-labelledby': 'fade-button',
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Fade}
+        >
+          <MenuItem onClick={handleClose}>
+            <NavLink className="flex items-center gap-2" to="/">
+              <HiGlobeEuropeAfrica />
+              Go home
+            </NavLink>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <NavLink className="flex items-center gap-2" to="/me/profile">
+              <BsFillPersonLinesFill />
+              Profile
+            </NavLink>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <NavLink className="flex items-center gap-2" to="/me/settings">
+              <IoSettingsOutline /> Settings
+            </NavLink>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <NavLink className="flex items-center gap-2" to="/me/settings">
+              <AiFillWechat /> Quiz
+            </NavLink>
+          </MenuItem>
+          <MenuItem className="flex items-center gap-2" onClick={toggleModal}>
+            <BsArrowBarRight />
+            Logout
+          </MenuItem>
+        </Menu>
+        <BottomNavigation
+          showLabels
+          value={value}
+          sx={{ height: '40px' }}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+        >
+          <BottomNavigationAction label="Home" icon={<IoHomeOutline />} />
+          <BottomNavigationAction label="History" icon={<BsClock />} />
+          <BottomNavigationAction label="Import" icon={<BsDownload />} />
+          <BottomNavigationAction label="Profile" icon={<AiOutlineUser />} />
+          <BottomNavigationAction
+            id="fade-button"
+            aria-controls={open ? 'fade-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+            icon={<BsThreeDotsVertical />}
+          />
+        </BottomNavigation>
+      </Paper>
+    </div>
   );
 }
