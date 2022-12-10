@@ -90,7 +90,7 @@ const Subscription = () => {
                       {subs?.createdAt ? dayjs(subs?.createdAt).format('DD/MM/YYYY') : <Skeleton animation="wave" />}
                     </TableCell>
                     <TableCell align="left">{subs?.interval || <Skeleton animation="wave" />}</TableCell>
-                    <TableCell align="left">{`NGN ${subs?.amount}` || <Skeleton animation="wave" />}</TableCell>
+                    <TableCell align="left">{`ZAR ${subs?.amount}` || <Skeleton animation="wave" />}</TableCell>
                     <TableCell align="left">
                       {subs.status === 'success' ? (
                         <div className={styles._sbCancel}>

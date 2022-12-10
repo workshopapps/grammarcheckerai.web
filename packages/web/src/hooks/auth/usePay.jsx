@@ -7,7 +7,7 @@ const usePay = () => {
     queryKey: 'pay',
     origin: 'https://localhost:5000',
     headers: {
-      Authorization: 'Bearer pk_test_79b1560168d893e4e503c39acdc3b49f02db69c3',
+      Authorization: 'Bearer pk_test_5180356679e878fa241701e8c9b8a8d27a6db5c0',
       'Content-Type': 'application/json',
     },
     showSuccessToast: false,
