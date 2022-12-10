@@ -9,7 +9,7 @@ function SidebarLink({ to, children, Icon, func }) {
       to={to}
       className={({ isActive }) =>
         `min-w-full flex sm:block text-left text-slate-800 text-sm border-r-4 py-5 hover:border-[#5D387F33] ${
-          isActive ? 'bg-[#5D387F33] border-[#5D387F]' : 'text-slate-700 border-[#5D387F00]'
+          isActive ? 'bg-[#5D387F33] border-[#5D387F] hover:border-[#5D387F]' : 'text-slate-700 border-[#5D387F00]'
         } transition ease-in `
       }
     >
