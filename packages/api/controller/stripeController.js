@@ -3,10 +3,9 @@ const Subscription = require("../database/models/subscriptionSchema");
 const { STRIPE_SECRET_KEY, JWT_SECRET } = environment;
 const stripe = require("stripe")(STRIPE_SECRET_KEY);
 
-
 exports.checkout = async (req, res, next) => {
-  const { plan, interval, amount, currency, txref,} = req.body;
-  const {email} = req.user;
+  const { plan, interval, amount, currency, txref } = req.body;
+  const { email } = req.user;
 
   //CHECK IF USER HAS ACTIVE SUBSCRIPTION
   const isActive = await Subscription.findOne({
@@ -44,30 +43,26 @@ exports.checkout = async (req, res, next) => {
       cancel_url: `https://speakbetter.hng.tech`,
     })
     .then((data) => {
-      return res
-        .status(200)
-        .json({
-          success: true,
-          message: "subscription initiated",
-          redirectUrl: data.url,
-          session: data,
-        });
+      return res.status(200).json({
+        success: true,
+        message: "subscription initiated",
+        redirectUrl: data.url,
+        session: data,
+      });
     })
     .catch((error) => {
       console.log(error);
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "There was an error",
-          error: error.message,
-        });
+      return res.status(400).json({
+        success: false,
+        message: "There was an error",
+        error: error.message,
+      });
     });
 };
 
 exports.create = async (req, res) => {
-  const { plan, interval, amount, currency, txref, } = req.body;
-  const {email} = req.user;
+  const { plan, interval, amount, currency, txref } = req.body;
+  const { email } = req.user;
   const isActive = await Subscription.findOne({
     $and: [
       { email: email },
@@ -105,18 +100,16 @@ exports.create = async (req, res) => {
 
   await Subscription.create(payload).catch((error) => {
     console.log(error);
-    return res
-      .status(400)
-      .json({
-        success: false,
-        message: "There was an error",
-        error: error.message,
-      });
+    return res.status(400).json({
+      success: false,
+      message: "There was an error",
+      error: error.message,
+    });
   });
 };
 exports.cancel = async (req, res) => {
   const { txref } = req.body;
-  const {email} = req.user;
+  const { email } = req.user;
   if (!email || !txref)
     return res.status(400).send({
       success: false,
@@ -160,5 +153,26 @@ exports.cancel = async (req, res) => {
         errorCode: err.code,
         error: err.message,
       });
+    });
+};
+
+exports.get = async (req, res) => {
+  const {email} = req.user;
+  const transaction = await Subscription.find({
+    $and: [{ email: email }, { paymentGateway: "stripe" }],
+  });
+  if (!transaction) {
+    return res.status(400).send({
+      success: false,
+      message: `${transaction.length} Subscription(s) found for User: ${email}!`,
+      data: [],
+    });
+  }
+  return res
+    .status(200)
+    .json({
+      success: true,
+      message: `${transaction.length} Subscription(s) found for User: ${email}!`,
+      data: transaction,
     });
 };

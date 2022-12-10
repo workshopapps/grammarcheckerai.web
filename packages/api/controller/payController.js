@@ -5,12 +5,10 @@ const { environment } = require("../config/environment");
 const { PAYSTACK_SECRET_KEY, BASE_URL, PREMIUM_TEMPLATE_ID } = environment;
 
 const createPayment = async (req, res) => {
-  const {email} = req.user;
-
+  const { email } = req.user;
 
   try {
-    const { subscriptionId, interval, amount, currency, txref } =
-      req.body;
+    const { subscriptionId, interval, amount, currency, txref } = req.body;
     const payload = {
       email,
       subscriptionId,
@@ -107,7 +105,7 @@ const getSubscription = async (req, res) => {
 
 const cancelSubscription = async (req, res) => {
   const { txref } = req.body;
-  const {email} = req.user;
+  const { email } = req.user;
   if (!txref)
     return res.status(400).send({
       success: false,
@@ -155,8 +153,8 @@ const cancelSubscription = async (req, res) => {
 
 const verification = async (req, res) => {
   const { txref } = req.query;
-  const {email}  = req.user
-  if ( !txref )
+  const { email } = req.user;
+  if (!txref)
     return res
       .status(400)
       .send({ success: false, message: "Invalid Reference ID" });
