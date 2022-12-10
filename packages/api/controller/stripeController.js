@@ -1,40 +1,23 @@
-const axios = require("./axios");
 const { environment } = require("../config/environment");
 const Subscription = require("../database/models/subscriptionSchema");
 const { STRIPE_SECRET_KEY, JWT_SECRET } = environment;
 const stripe = require("stripe")(STRIPE_SECRET_KEY);
-const { promisify } = require("util");
-const jwt = require("jsonwebtoken");
+
 
 exports.checkout = async (req, res, next) => {
-  const { plan, interval, amount, price, currency, txref, token } = req.body;
-  //CHECK IF TOKEN IS PRESENT
-  if (!token) {
-    return res
-      .status(401)
-      .json({
-        success: false,
-        message: "You are not Logged in, Please Login to view this page",
-      });
-  }
-
-  //CHECK IF TOKEN IS VALID
-  const decoded = await promisify(jwt.verify)(token, JWT_SECRET);
-  if (!decoded)
-    return res
-      .status(401)
-      .json({ success: false, message: "Token expired! Please log in again" });
+  const { plan, interval, amount, currency, txref,} = req.body;
+  const {email} = req.user;
 
   //CHECK IF USER HAS ACTIVE SUBSCRIPTION
   const isActive = await Subscription.findOne({
     $and: [
-      { email: decoded.email },
+      { email: email },
       { status: "success" },
       { paymentGateway: "stripe" },
     ],
   });
   var payload = { txref, plan, interval, amount, currency };
-  payload.email = decoded.email;
+  payload.email = email;
   payload.subscriptionId = plan;
 
   if (isActive) {
@@ -55,7 +38,7 @@ exports.checkout = async (req, res, next) => {
         },
       ],
       mode: "subscription",
-      customer_email: decoded.email,
+      customer_email: email,
       client_reference_id: txref,
       success_url: `https://speakbetter.hng.tech/me/home?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `https://speakbetter.hng.tech`,
@@ -83,16 +66,17 @@ exports.checkout = async (req, res, next) => {
 };
 
 exports.create = async (req, res) => {
-  const { plan, interval, amount, price, currency, txref, token } = req.body;
+  const { plan, interval, amount, currency, txref, } = req.body;
+  const {email} = req.user;
   const isActive = await Subscription.findOne({
     $and: [
-      { email: decoded.email },
+      { email: email },
       { status: "success" },
       { paymentGateway: "stripe" },
     ],
   });
   var payload = { txref, plan, interval, amount, currency };
-  payload.email = decoded.email;
+  payload.email = email;
   payload.subscriptionId = plan;
 
   if (isActive) {
@@ -131,7 +115,8 @@ exports.create = async (req, res) => {
   });
 };
 exports.cancel = async (req, res) => {
-  const { email, txref } = req.body;
+  const { txref } = req.body;
+  const {email} = req.user;
   if (!email || !txref)
     return res.status(400).send({
       success: false,
