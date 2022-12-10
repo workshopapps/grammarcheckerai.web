@@ -1,11 +1,10 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+import React, { useRef, useState, useEffect } from 'react';
 import ErrorIcon from '../../assets/error.svg';
 import ImportIcon from '../../assets/import.svg';
 import { PropTypes } from 'prop-types';
 import SentAudio from '../../components/SentAudio/index';
-// import ChatContainer from './chat-container';
-import React, { useRef, useState, useEffect } from 'react';
-import toast from 'react-hot-toast';
+import ChatContainer from '../account/conversation/chat-container'
+import toast, { Toaster } from 'react-hot-toast';
 import useSendAudio from '../../hooks/account/useSendAudio'
 
 const dummyBotMessages = [
@@ -19,14 +18,14 @@ const dummyBotMessages = [
 const Transcribe = () => {
   const [messages, setMessages] = useState(dummyBotMessages);
   const error = (message) => toast.error(message);
+  const success = (message) => toast.success(message);
   const sendAudio = useSendAudio()
   const [language, setLanguage] = React.useState('English');
-
   const [isError, setIsError] = useState(false);
   const [isAudio, setIsAudio] = useState(false);
   const [uploadingAudio, setUploadingAudio] = useState(false);
   const [audio, setAudio] = useState();
-
+  const [playAudio, setPlayAudio] = useState();
   const hiddenFileInput = useRef(null);
 
   const handleUploadClick = () => {
@@ -47,7 +46,7 @@ const Transcribe = () => {
       setUploadingAudio(true);
 
       if (file.type !== 'audio/mpeg') {
-        toast.error(`Please upload an audio file instead of a ${file.type} file`);
+        error(`Please upload an audio file instead of a ${file.type} file`);
         return;
       }
 
@@ -56,6 +55,7 @@ const Transcribe = () => {
 
       setIsAudio(true);
       setAudio((event.target.files[0]));
+      setPlayAudio(URL.createObjectURL(event.target.files[0]));
       setMessages([
         ...messages,
         {
@@ -64,26 +64,11 @@ const Transcribe = () => {
           userAudio: URL.createObjectURL(event.target.files[0]),
         },
       ]);
-
       console.log('audio', URL.createObjectURL(event.target.files[0]));
-     
     }
   };
+  const [chats, setChats] = React.useState([]);
  
-  console.log(audio)
-
-  let fD = new FormData();
-  fD.append("file", audio);
-            
-  fetch("https://88dc-154-68-195-210.eu.ngrok.io/v1/conversation/sendAudio", {
-  method: "POST",
-   body: fD
-   })
-     .then(res=>res.json())
-     .then(data=>console.log(data))
-     .catch(err=>console.log(err));
- 
-
   const submitAudioHandler = () => {
     const soln = new FormData();
     soln.append('file', audio);
@@ -104,24 +89,17 @@ const Transcribe = () => {
                   updatedAt,
                 },
               ]);
+              success(res.data.message)
             })
             .catch((err) => {
-              error(err?.response?.data?.message);
+              error(err.message);
             });
-          return;
   };
 
   return (
     <div>
-      {/* <button
-        onClick={() => {
-          setIsError(!isError);
-        }}
-      >
-        Toggle Error Overlay
-      </button> */}
-
       <div className="px-3 md:px-10 relative mt-5">
+        <div>
         <div role="presentation" onClick={handleUploadClick} className="py-3 flex justify-end cursor-pointer">
           <img src={ImportIcon} alt="import audio" />
           <input
@@ -158,18 +136,24 @@ const Transcribe = () => {
                         <p>Audio file getting imported</p>
                       </div>
                     )}
-
-                    {isAudio && !uploadingAudio ? <SentAudio audio={audio} /> : null}
+                    
+                      {isAudio && !uploadingAudio ? <SentAudio audio={playAudio} /> : null}
                   </div>
-                ) : null}
+                ) :null }
               </div>
             </React.Fragment>
           ))}
         </div>
+        <div>
+          <div className="mt-4 w-48 mr-auto mb-8">
+            <button className="p-4 bg-[#5D387F] text-white w-full rounded-lg border-0" onClick={submitAudioHandler}>Quick Transcribe</button>
+          </div>
+          <ChatContainer chats={chats} />
+        </div>
 
         {isError ? <ErrorOverlay setIsError={setIsError} /> : null}
-        <button onClick={submitAudioHandler}>Quick Transcribe</button>
-        {/* <ChatContainer chats={chats} /> */}
+        <Toaster />
+        </div>
       </div>
     </div>
   );
