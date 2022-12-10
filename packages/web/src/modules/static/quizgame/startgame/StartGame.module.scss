@@ -1,89 +1,142 @@
 @import '../../../../assets/styles/variables.scss';
 
-.startgame {
-    width: 100vw;
-    height: 100vh;
+.nav {
+    overflow-y: hidden;
+    height: 80px;
     @include flexCenter(row);
+    justify-content: flex-start;
+    padding-left: 20px;
+    border-bottom: 1px solid #f3f3f3;
+    background-image: url(../../../../assets/newsletterImages/background2.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.main {
+    height: 100vh;
     padding: 20px;
-    overflow: hidden;
+    @include flexCenter(row);
+    // overflow-y: hidden;
 
-    &_card {
-        height: inherit;
-        color: $greyColor;
-        @include flexCenter(column);
-        justify-content: space-around;
+    .startgame {
+        background-color: #fff;
+        width: 100vw;
+        height: 100%;
+        border-radius: 24px;
+        @include flexCenter(row);
+        padding: 0px 20px;
 
-        h1 {
-            font-weight: 700;
-            font-size: 44px;
-            text-shadow: 1px 15px 5px #e8ddf2;
-            font-family: $fontFamily1;
-        }
-
-        p {
-            text-align: center;
-            font-size: 28px;
-            font-family: $fontFamily2;
-        }
-
-        &__btn {
-            width: 300px;
-            @include flexCenter(row);
+        &_card {
+            height: inherit;
+            color: $greyColor;
+            @include flexCenter(column);
             justify-content: space-around;
 
-            button {
-                color: $white;
-                border: 1px solid;
-                border-radius: 8px;
-                padding: 10px 15px;
-                background-color: $purpleBackground;
+            &__img {
+                width: 100%;
+                @include flexCenter(row);
+                justify-content: flex-end;
             }
-        }
 
-        &__exit {
-            width: 100%;
-            @include flexCenter(row);
-            justify-content: flex-end;
-            
-            a {
-                background-color: crimson;
-                border: 1px solid crimson;
-                padding: 10px;
-                border-radius: 10px;
-                width: 100px;
-                font-weight: 500;
-                color: $white;
+            h1 {
+                font-weight: 700;
+                font-size: 40px;
+                color: $headingColor;
+                font-family: $fontFamily1;
+            }
+
+            p {
+                color: #303030;
+                text-align: center;
+                font-size: 24px;
+                font-family: $fontFamily2;
+            }
+
+            &__btn {
+                width: 350px;
+                @include flexCenter(row);
+                justify-content: space-around;
+
+                button {
+                    // width: 98px;
+                    height: 52px;
+                    color: $white;
+                    font-family: $fontFamily2;
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 19px;
+                    border-radius: 12px;
+                    padding: 16px 32px;
+                    background-color: $btnColor;
+                }
+            }
+
+            &__exit {
+                width: 100%;
+                @include flexCenter(row);
+                justify-content: flex-end;
+
+                a {
+                    width: 148px;
+                    height: 51px;
+                    border: 1px solid #EC1B1B;
+                    @include flexCenter(row);
+                    // padding: 16px 40px;
+                    border-radius: 10px;
+                    width: 100px;
+                    font-weight: 400;
+                    color: #EC1B1B;
+                }
             }
         }
     }
-}
 
-.logged {
-    width: 100vw;
-    height: 100vh;
-    padding: 20px;
-    @include flexCenter(column);
+    .logged {
+        width: 100vw;
+        height: 100vh;
+        padding: 20px;
+        @include flexCenter(column);
 
-    &_text {
-        margin-bottom: 50px;
-        font-size: 34px;
-        font-family: $fontFamily1;
+        &_text {
+            margin-bottom: 50px;
+            font-size: 34px;
+            font-family: $fontFamily1;
+        }
     }
 }
 
 /****************** media queries *****************************/
 
 @media (min-width: $md) {
-    .startgame {
-        padding: 50px;
 
-        &_card {
-            border: 1px solid $greyColor;
-            border-radius: 30px 30px 30px 0px;
-            box-shadow: 3px 3px 10px 0px $purpleBackground;
-            height: 90%;
-            padding: 30px;
-            justify-content: space-between;
+    .nav {
+        height: 80px;
+    }
+
+    .main {
+        overflow: hidden;
+
+        .startgame {
+            height: 70vh;
+            width: 80vw;
+
+            &_card {
+                padding: 30px;
+                justify-content: space-between;
+
+                p {
+                    font-size: 28px;
+                }
+
+                &__exit {
+    
+                    a {
+                        width: 160px;
+                        padding: 16px 40px;
+                    }
+                }
+            }
         }
     }
+
 }
