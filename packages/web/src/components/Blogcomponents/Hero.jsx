@@ -1,6 +1,6 @@
 import React from 'react';
 import useTheme from '../../hooks/useTheme';
-import Heroimg from '../../assets/blogimg/blogFrame.webp';
+import Heroimg from '../../assets/blogimg/Frame 1000001903.svg';
 import { Link } from 'react-router-dom';
 import styles from './index.module.css';
 
