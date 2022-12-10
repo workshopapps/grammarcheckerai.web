@@ -3,9 +3,9 @@ import ErrorIcon from '../../assets/error.svg';
 import ImportIcon from '../../assets/import.svg';
 import { PropTypes } from 'prop-types';
 import SentAudio from '../../components/SentAudio/index';
-import ChatContainer from '../account/conversation/chat-container'
+import ChatContainer from '../account/conversation/chat-container';
 import toast, { Toaster } from 'react-hot-toast';
-import useSendAudio from '../../hooks/account/useSendAudio'
+import useSendAudio from '../../hooks/account/useSendAudio';
 
 const dummyBotMessages = [
   {
@@ -19,7 +19,7 @@ const Transcribe = () => {
   const [messages, setMessages] = useState(dummyBotMessages);
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
-  const sendAudio = useSendAudio()
+  const sendAudio = useSendAudio();
   const [language, setLanguage] = React.useState('English');
   const [isError, setIsError] = useState(false);
   const [isAudio, setIsAudio] = useState(false);
@@ -54,7 +54,7 @@ const Transcribe = () => {
       setTimeout(() => setUploadingAudio(false), 1000);
 
       setIsAudio(true);
-      setAudio((event.target.files[0]));
+      setAudio(event.target.files[0]);
       setPlayAudio(URL.createObjectURL(event.target.files[0]));
       setMessages([
         ...messages,
@@ -68,91 +68,93 @@ const Transcribe = () => {
     }
   };
   const [chats, setChats] = React.useState([]);
- 
+
   const submitAudioHandler = () => {
     const soln = new FormData();
     soln.append('file', audio);
     soln.append('language', language);
-          sendAudio
-            .mutateAsync(soln)
-            .then((res) => {
-              const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
-                res.data.data.botResponse;
-              setChats((prevState) => [
-                ...prevState,
-                {
-                  botReply,
-                  correctedText,
-                  createdAt,
-                  language,
-                  transcribedAudioText,
-                  updatedAt,
-                },
-              ]);
-              success(res.data.message)
-            })
-            .catch((err) => {
-              error(err.message);
-            });
+    sendAudio
+      .mutateAsync(soln)
+      .then((res) => {
+        const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
+          res.data.data.botResponse;
+        setChats((prevState) => [
+          ...prevState,
+          {
+            botReply,
+            correctedText,
+            createdAt,
+            language,
+            transcribedAudioText,
+            updatedAt,
+          },
+        ]);
+        success(res.data.message);
+      })
+      .catch((err) => {
+        error(err.message);
+      });
   };
 
   return (
-    <div>
+    <div className="block w-full h-full">
       <div className="px-3 md:px-10 relative mt-5">
         <div>
-        <div role="presentation" onClick={handleUploadClick} className="py-3 flex justify-end cursor-pointer">
-          <img src={ImportIcon} alt="import audio" />
-          <input
-            ref={hiddenFileInput}
-            onChange={handleFileClick}
-            className="hidden"
-            type="file"
-            accept="audio/*"
-            name="audio_file"
-            id="audio_file"
-          />
-        </div>
-
-        <div className="grid place-items-center md:hidden">
-          <h1>Quick Transcribe</h1>
-        </div>
-
-        <div className={`${isError ? 'fixed bg-white brightness-50 w-full' : ''}`}>
-          {messages.map((data, index) => (
-            <React.Fragment key={index}>
-              <div className="pb-20 md:pb-16 px-2 mt-5 relative">
-                {data.botMsg !== null ? (
-                  <div className="ai__msg w-52">
-                    <h1 className="text-base font-medium ">Speak Better</h1>
-                    <p className="bg-gray-100 font-normal leading-5 p-2 rounded">{data.botMsg}</p>
-                    <p className="mt-1 text-xs text-left">{new Date().toLocaleTimeString()}</p>
-                  </div>
-                ) : null}
-
-                {data.userAudio !== null ? (
-                  <div className="user__msg p-0 absolute mt-0 right-0 bottom-0">
-                    {uploadingAudio && (
-                      <div className="border-2 border-dashed border-green-300 bg-green-100 px-5 py-1 text-sm">
-                        <p>Audio file getting imported</p>
-                      </div>
-                    )}
-                    
-                      {isAudio && !uploadingAudio ? <SentAudio audio={playAudio} /> : null}
-                  </div>
-                ) :null }
-              </div>
-            </React.Fragment>
-          ))}
-        </div>
-        <div>
-          <div className="mt-4 w-48 mr-auto mb-8">
-            <button className="p-4 bg-[#5D387F] text-white w-full rounded-lg border-0" onClick={submitAudioHandler}>Quick Transcribe</button>
+          <div role="presentation" onClick={handleUploadClick} className="py-3 flex justify-end cursor-pointer">
+            <img src={ImportIcon} alt="import audio" />
+            <input
+              ref={hiddenFileInput}
+              onChange={handleFileClick}
+              className="hidden"
+              type="file"
+              accept="audio/*"
+              name="audio_file"
+              id="audio_file"
+            />
           </div>
-          <ChatContainer chats={chats} />
-        </div>
 
-        {isError ? <ErrorOverlay setIsError={setIsError} /> : null}
-        <Toaster />
+          <div className="grid place-items-center md:hidden">
+            <h1>Quick Transcribe</h1>
+          </div>
+
+          <div className={`${isError ? 'fixed bg-white brightness-50 w-full' : ''}`}>
+            {messages.map((data, index) => (
+              <React.Fragment key={index}>
+                <div className="pb-20 md:pb-16 px-2 mt-5 relative">
+                  {data.botMsg !== null ? (
+                    <div className="ai__msg w-52">
+                      <h1 className="text-base font-medium ">Speak Better</h1>
+                      <p className="bg-gray-100 font-normal leading-5 p-2 rounded">{data.botMsg}</p>
+                      <p className="mt-1 text-xs text-left">{new Date().toLocaleTimeString()}</p>
+                    </div>
+                  ) : null}
+
+                  {data.userAudio !== null ? (
+                    <div className="user__msg p-0 absolute mt-0 right-0 bottom-0">
+                      {uploadingAudio && (
+                        <div className="border-2 border-dashed border-green-300 bg-green-100 px-5 py-1 text-sm">
+                          <p>Audio file getting imported</p>
+                        </div>
+                      )}
+
+                      {isAudio && !uploadingAudio ? <SentAudio audio={playAudio} /> : null}
+                    </div>
+                  ) : null}
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
+          <div>
+            <div className="mt-4 w-48 mr-auto mb-8">
+              <button className="p-4 bg-[#5D387F] text-white w-full rounded-lg border-0" onClick={submitAudioHandler}>
+                Quick Transcribe
+              </button>
+            </div>
+            <ChatContainer chats={chats} />
+          </div>
+
+          {isError ? <ErrorOverlay setIsError={setIsError} /> : null}
+          <Toaster />
         </div>
       </div>
     </div>
