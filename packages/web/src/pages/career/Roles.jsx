@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Footer from '../../components/Careers/footer';
+import Footer from '../../modules/static/landing-page/Footer';
 import Navbar from '../../components/Navbar';
 
 import SelectDropdown from '../../components/Select/select';
@@ -14,7 +14,7 @@ const Roles = () => {
 
   return (
     <div>
-       <Navbar />
+      <Navbar />
       <div className=" py-10 space-y-6 px-72 max-[480px]:px-4 text-dark-200">
         <h3 className="font-bold text-purple-500 text-4xl text-center">Open Roles</h3>
         <p className="py-8 text-dark-200">
@@ -31,8 +31,8 @@ const Roles = () => {
 
           {selectedRole === 'Sales' && (
             <p className="text-center w-3/5 mx-auto py-16 text-gray-500 max-[480px]:w-full">
-              Speak Better does not have any open roles for sales at the moment. However, if you feel you have
-              something to bring to the table - send an email to{' '}
+              Speak Better does not have any open roles for sales at the moment. However, if you feel you have something
+              to bring to the table - send an email to{' '}
               <a href="recruitment@speakbetter.com" className="text-blue-500">
                 recruitment@speakbetter.com
               </a>
@@ -65,7 +65,7 @@ const Roles = () => {
           )}
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

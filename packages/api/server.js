@@ -4,35 +4,17 @@ atatus.start({
   licenseKey: "lic_apm_2c415fffd3d94ee68e8daf25b02ae5ee",
   appName: "Speakbetter",
 });
-
-// require("newrelic");
+ 
 
 const { createServer } = require("http");
-const { Server } = require("socket.io");
-// import * as Sentry from "@sentry/node";
-// import * as Tracing from "@sentry/tracing";
+const mongoose = require("mongoose");
+const { Server } = require("socket.io"); 
 
+mongoose.set("strictQuery", true); // to suppress this warning the DeprecationWarning
 const app = require("./app");
 const { environment } = require("./config/environment.js");
-// Sentry.init({
-//   dsn: "https://b7ec4b5cbc6844ecb1af364fb81b308f@o4504276798144512.ingest.sentry.io/4504276833730561",
-
-//   environment: params.INSTANCE_NAME,
-//   integrations: [
-//     // enable HTTP calls tracing
-//     new Sentry.Integrations.Http({ tracing: true }),
-//     // enable Express.js middleware tracing
-//     new Tracing.Integrations.Express({ app }),
-//   ],
-
-//   tracesSampleRate: 1.0,
-
-// });
-
-// app.use(Sentry.Handlers.requestHandler());
-// // TracingHandler creates a trace for every incoming request
-// app.use(Sentry.Handlers.tracingHandler());
-
+ 
+ 
 const quizFlow = require("./multiplayerQuiz/socket.io");
 
 const { PORT, HOST, NODE_ENV } = environment;
@@ -48,8 +30,9 @@ const io = new Server(httpServer, {
 
 io.on("connection", (socket) => {
   quizFlow(io, socket);
-});
-// app.use(Sentry.Handlers.errorHandler());
+}); 
+
+
 httpServer.listen(PORT, () => {
   console.log(`server running on http://${HOST}:${PORT} in ${NODE_ENV} mode`);
 });

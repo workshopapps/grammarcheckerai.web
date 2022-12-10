@@ -29,7 +29,7 @@ const Charcters = () => {
       description:
         'Bob is a jovial bot and active,\
             always ready to help with your\
-            speech needs 23/7.',
+            speech needs 24/7.',
     },
     {
       img: pensiveMark,

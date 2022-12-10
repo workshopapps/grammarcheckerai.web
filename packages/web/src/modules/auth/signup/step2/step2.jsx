@@ -67,6 +67,13 @@ const index = () => {
 
   */
   useEffect(() => {
+    if (
+      (localStorage.getItem('grittyuserid') && localStorage.getItem('grittyuserid') !== null) ||
+      localStorage.getItem('grittyuserid') !== ''
+    ) {
+      navigate('/me/home');
+      return;
+    }
     localStorage.setItem('grittyuserid', userId);
     localStorage.setItem('grittyusertoken', userToken);
   }, [userId, userToken]);
@@ -120,19 +127,7 @@ const index = () => {
         })
         .then(() => {
           success('Account Created Succesfully! Please sign in.');
-          // const resId = res.data.data._id;
-          // const resToken = res.data.data.token;
-          // setUserId(resId);
-          // setUserToken(resToken);
-          // localStorage.setItem('grittyuserid', userId);
-          // localStorage.setItem('grittyusertoken', userToken);
-          // localStorage.setItem('isdashboard', true);
         })
-        // .then(() => {
-        //   setTimeout(() => {
-        //     getUserDetails(`https://api.speakbetter.hng.tech/v1/user/profile/${localStorage.getItem('grittyuserid')}`);
-        //   }, 4000);
-        // })
         .then(() => {
           setTimeout(() => {
             navigate('/signin');

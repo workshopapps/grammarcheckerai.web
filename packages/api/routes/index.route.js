@@ -12,6 +12,7 @@ const reviewRating = require("../routes/reviewRatingRoute");
 const leaderBoardRouter = require("../routes/leaderboardrouter");
 const chatHistoryRouter = require("./chatHistory");
 const payRoute = require("../routes/payRoute");
+const stripeRouter = require("../routes/stripeRoutes");
 const isSubscribeRoute = require("./newsLetterSubscriptionRoute");
 const logoutRoute = require("./logoutRoute");
 const unSubscribeRoute = require("./unSubscribeRoute")
@@ -26,7 +27,8 @@ routeHandler.use("/contact", contactRoute);
 routeHandler.use("/newsletter", newsletter);
 routeHandler.use("/rating", reviewRating);
 routeHandler.use("/leaderboard", leaderBoardRouter);
-routeHandler.use("/paystack", payRoute);
+routeHandler.use("/paystack", verify, payRoute);
+routeHandler.use("/stripe", verify, stripeRouter);
 routeHandler.use("/chathistory", chatHistoryRouter);
 routeHandler.use("/subscribe", isSubscribeRoute);
 routeHandler.use("/unsubscribe", unSubscribeRoute);

@@ -42,11 +42,11 @@ const Index = () => {
   const linkedInLink = useGetLinkedInLink();
 
   const handleSocialAuthLogin = () => {
-    if (whichSocailAuth === 'google') {
+    if (location?.search && location?.search?.includes('google')) {
       return useAuthGoogle(location?.search);
     } else if (whichSocailAuth === 'facebook') {
       return useAuthFacebook(location?.search);
-    } else if (whichSocailAuth === 'linkedIn') {
+    } else if (whichSocailAuth === 'linkedin') {
       return useAuthLinkedIn(location?.search);
     } else {
       return null;

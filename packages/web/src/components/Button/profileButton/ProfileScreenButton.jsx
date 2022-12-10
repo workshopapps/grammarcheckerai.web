@@ -6,14 +6,14 @@ const classes = {
   base: 'focus:outline-none transition ease-in-out duration-300',
   disabled: 'opacity-50 cursor-not-allowed',
   size: {
-    small: 'px-2 py-1 text-sm',
+    small: 'px-3 py-2 text-xs',
     normal: 'h-[56px] px-[25px]',
     large: 'px-[40px] py-[24px] text-xl',
   },
   variant: {
-    primary: 'text-lg md:text-xl lg:text-xl bg-[#5d387f] text-white rounded-lg hover:bg-[#2f1c40]',
+    primary: 'text-lg md:text-md lg:text-md bg-[#5d387f] text-white rounded-lg hover:bg-[#2f1c40]',
     secondary:
-      'text-lg md:text-xl lg:text-xl text-[black] border-2 rounded-lg border-[#d2d2d2] hover:bg-[#e8ddf2] hover:text-black',
+      'text-lg md:text-md lg:text-md text-[black] border-2 rounded-lg border-[#d2d2d2] hover:bg-[#e8ddf2] hover:text-black',
     danger:
       'text-lg md:text-xl lg:text-xl text-[#ec1b1b] border-2 rounded-lg border-[#ec2b1b] hover:bg-[#ec1b1b]/50 hover:text-black',
   },
