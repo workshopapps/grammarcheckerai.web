@@ -6,7 +6,6 @@ import close from '../../../../assets/newsletterImages/close-square.png';
 import { QuizContext } from '../QuizContext';
 import QuizGame from '../QuizGame';
 import Rank from '../rank/Rank';
-// import background from '../../../../assets/newsletterImages/background2.png';
 import styles from '../startgame/StartGame.module.scss';
 
 const StartGame = () => {
@@ -19,9 +18,7 @@ const StartGame = () => {
 
   const handleStart = () => {
     const userId = localStorage.getItem('grittyuserid');
-    // if (userId
-    //   && (userId !== null || userId !== '')
-    //   ) {
+    if (userId && (userId !== null || userId !== '')) {
     socket.connect();
     socket.on('update-players', (count) => {
       setPlayers(count);
@@ -29,11 +26,11 @@ const StartGame = () => {
     socket.emit('start-quiz', userId);
     setStart(true);
     setColor('white');
-    // } else if (userId === null || userId === '') {
-    //   console.log('Only logged in users can play quiz');
-    //   setLoggedIn(true);
-    //   socket.disconnect();
-    // }
+    } else if (userId === null || userId === '') {
+      console.log('Only logged in users can play quiz');
+      setLoggedIn(true);
+      socket.disconnect();
+    }
   };
 
   return (
