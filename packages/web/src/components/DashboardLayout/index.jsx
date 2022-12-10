@@ -1,15 +1,14 @@
 import React from 'react';
-import MobileMenu from './MobileMenu';
 import { Outlet, Link } from 'react-router-dom';
 import logoImg from '../../assets/simple_logo.svg';
 import SidebarLink from '../SidebarLink';
 import { IoHomeOutline, IoSettingsOutline } from 'react-icons/io5';
 import { BsDownload, BsClock, BsFillPersonLinesFill, BsCashCoin, BsArrowBarRight } from 'react-icons/bs';
-import { HiMenuAlt2 } from 'react-icons/hi';
 import { AiFillWechat } from 'react-icons/ai';
 import LogOutModal from './LogOutModal';
 import { Avatar } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
+import SimpleBottomNavigation from '../Bottom-Nav';
+import logoImgWhite from '../../assets/images/logo2.png';
 
 function DashboardLayout() {
   const [open, setOpen] = React.useState(false);
@@ -56,16 +55,18 @@ function DashboardLayout() {
           </button>
         </div>
       </div>
-      {/* <div className="h-[10%]">
-        <MobileMenu />
-      </div> */}
+
       <LogOutModal handleClose={handleClose} open={open} />
       <div className="w-full flex flex-col">
         <div className="py-4 border-b border-[#0000000d] bg-[#F6F6F6] w-full sm:sticky top-0 z-30">
-          <div className="max-w-[1100px] mx-auto flex justify-between px-4">
-            <IconButton aria-label="delete" color="primary">
-              <HiMenuAlt2 />
-            </IconButton>
+          <div className="max-w-[1050px] mx-auto flex justify-between px-6">
+            <div>
+              <div className="h-10 mx-auto block md:hidden">
+                <Link to="/me/home">
+                  <img src={logoImgWhite} alt="" className="h-full" />
+                </Link>
+              </div>
+            </div>
 
             <Link to="/me/profile">
               <Avatar
@@ -81,6 +82,7 @@ function DashboardLayout() {
         <div className="flex-1 flex px-6 justify-center items-center">
           <Outlet />
         </div>
+        <SimpleBottomNavigation handleOpen={handleOpen} />
       </div>
     </div>
   );
