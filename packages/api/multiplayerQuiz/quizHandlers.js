@@ -50,7 +50,7 @@ exports.userQuizProfileUpdateHandler = async (userId, isCorrect) => {
     // fetching user quiz info
     const userQuizProfile = await quizLeaderBoard.findOne({ userId });
     // update questions attempted count
-    userQuizProfile.totalQuestion += 1;
+    userQuizProfile.totalQuestions += 1;
 
     // if the user's answer is Correct
     if (isCorrect) userQuizProfile.totalPoints += 10;
