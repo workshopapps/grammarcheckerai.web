@@ -146,7 +146,7 @@ function Converse({ noRive = false }) {
       <Premium open={open} handleClosePremium={handleClosePremium} />
       {sendAudio.isLoading && <Loader />}
       <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center  pt-2 lg:pt-6">
-        <div className="text-center max-h-5/6 space-y-5 lg:space-y-10">
+        <div className="text-center max-h-5/6 space-y-5 lg:space-y-8">
           {chats.length === 0 ? (
             <>
               {!noRive ? (
