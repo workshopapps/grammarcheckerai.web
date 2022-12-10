@@ -23,7 +23,8 @@ pipeline {
 			steps {
 				//sh "unset NODE_ENV"
 				//sh "sudo rm -rf "
-				sh "cd packages/api && sudo npm install --force"
+				sh "cd packages/api && sudo npm cache clean --force"
+				sh "cd packages/api && sudo npm install --force --unsafe-perm=true --allow-root"
 			
 			}
 		}
@@ -35,8 +36,7 @@ pipeline {
 				//sh "sudo npm cache clean --force && sudo cp -f ${WORKSPACE}/packages/api/package-lock.json /home/devineer/backend"
 				sh "sudo cp -fr ${WORKSPACE}/packages/web/* /home/devineer/frontend"
 				sh "sudo chown devineer /home/devineer/frontend"
-				sh "sudo rm -rf /home/devineer/backend/node_modules/ && sudo rm -f /home/devineer/backend/package-lock.json"
-				sh "sudo npm cache clean --force"
+				//sh "sudo rm -rf /home/devineer/backend/node_modules/ && sudo rm -f /home/devineer/backend/package-lock.json"
 				sh "sudo chown devineer /home/devineer/backend"
 				sh "sudo npm install --force --prefix /home/devineer/backend"
 				
