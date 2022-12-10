@@ -16,7 +16,7 @@
     "@banana-dev/banana-dev": "^4.0.0",
     "@sendgrid/mail": "^7.7.0",
     "@sentry/node": "^7.23.0",
-    "@sentry/tracing": "^7.23.0", 
+    "@sentry/tracing": "^7.23.0",
     "atatus-nodejs": "^1.5.5",
     "aws-sdk": "^2.1266.0",
     "axios": "^1.2.0",
