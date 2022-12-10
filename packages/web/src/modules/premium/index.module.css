@@ -1,5 +1,6 @@
 ._subsPage {
   height: 100%;
+  width: 100%;
 }
 .empty_state {
   position: relative;
@@ -50,7 +51,6 @@
 }
 
 ._subsPage {
-  margin-top: 40px;
   padding: 20px;
   z-index: 1;
   position: relative;

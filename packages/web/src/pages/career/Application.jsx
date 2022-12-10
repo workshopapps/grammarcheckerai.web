@@ -1,6 +1,6 @@
 import React from 'react';
 import FileUploader from '../../components/Careers/fileUpload';
-import Footer from '../../components/Careers/footer';
+import Footer from '../../modules/static/landing-page/Footer';
 import Navbar from '../../components/Navbar';
 
 const Application = () => {
@@ -21,7 +21,8 @@ const Application = () => {
           <p className="py-6">
             We are looking for an Analyst Relations Manager to join our Communications team. The Analyst Relations
             Manager will be critical in building awareness of and sustaining Speak Better’s category leadership while
-            driving a high-touch program that creates leverage for our ambitious vision. Working closely with Speak Better’s Brand and Product Communications Lead, the person in this role will be directly responsible for
+            driving a high-touch program that creates leverage for our ambitious vision. Working closely with Speak
+            Better’s Brand and Product Communications Lead, the person in this role will be directly responsible for
             helping to establish and grow our category through validation from major analyst firms, including Gartner
             and Forrester, as well as boutique firms.
           </p>
