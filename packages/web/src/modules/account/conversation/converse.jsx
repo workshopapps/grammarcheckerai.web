@@ -25,7 +25,7 @@ function Converse({ noRive = false }) {
   let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
     useMediaRecorder({
       recordScreen: false,
-      // blobOptions: { type: 'audio/wav' },
+      blobOptions: { type: 'audio/wav' },
       mediaStreamConstraints: { audio: true, video: false },
     });
 
@@ -51,6 +51,7 @@ function Converse({ noRive = false }) {
   };
 
   useEffect(() => {
+    if (chats.length === 0) return;
     handleScroll();
   }, [chats]);
 
@@ -129,11 +130,10 @@ function Converse({ noRive = false }) {
     setMinute('00');
     setCounter(0);
     setBeginRecording(false);
-    setChats('');
+    setChats([]);
   };
 
   const sendAudioHandler = () => {
-    stopRecording();
     submitAudioHandler();
     setSecond('00');
     setMinute('00');
@@ -146,7 +146,7 @@ function Converse({ noRive = false }) {
       <Premium open={open} handleClosePremium={handleClosePremium} />
       {sendAudio.isLoading && <Loader />}
       <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center  pt-2 lg:pt-6">
-        <div className="text-center max-h-5/6 space-y-5 lg:space-y-10">
+        <div className="text-center max-h-5/6 space-y-5 lg:space-y-8">
           {chats.length === 0 ? (
             <>
               {!noRive ? (
@@ -204,9 +204,9 @@ function Converse({ noRive = false }) {
                 <span style={{ '--i': 3 }}></span>
               </button>
             </div>
-            <div className="pt-1 h-28">
+            <div className="py-1 h-28">
               <AnimatePresence mode="wait">
-                <motion.div key={status} e initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <motion.div key={status} e initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 1 }}>
                   {status === 'idle' ? (
                     <>
                       {chats.length === 0 ? (
@@ -221,13 +221,13 @@ function Converse({ noRive = false }) {
                       )}
                     </>
                   ) : (
-                    <div className="pb-10">
+                    <div className="mb-10">
                       <div className="flex justify-center items-center mt-8">
                         <span>{minute}</span>
                         <span>:</span>
                         <span>{second}</span>
                       </div>
-                      <div className="flex items-center justify-center space-x-6 pt-5">
+                      <div className="flex items-center justify-center space-x-6 py-6">
                         <button
                           className="h-6 w-6 rounded-full flex justify-center items-center"
                           onClick={deleteRecording}

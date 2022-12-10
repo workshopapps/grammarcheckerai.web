@@ -1,5 +1,4 @@
 import useTheme from '../../../hooks/useTheme';
-import { useState } from 'react';
 import Charcters from './Charcters';
 import Cta from './Cta';
 import Faq from './Faq';
