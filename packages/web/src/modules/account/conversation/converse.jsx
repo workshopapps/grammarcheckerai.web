@@ -25,7 +25,7 @@ function Converse({ noRive = false }) {
   let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
     useMediaRecorder({
       recordScreen: false,
-      // blobOptions: { type: 'audio/wav' },
+      blobOptions: { type: 'audio/wav' },
       mediaStreamConstraints: { audio: true, video: false },
     });
 
@@ -130,11 +130,10 @@ function Converse({ noRive = false }) {
     setMinute('00');
     setCounter(0);
     setBeginRecording(false);
-    setChats('');
+    setChats([]);
   };
 
   const sendAudioHandler = () => {
-    stopRecording();
     submitAudioHandler();
     setSecond('00');
     setMinute('00');
@@ -207,7 +206,7 @@ function Converse({ noRive = false }) {
             </div>
             <div className="py-1 h-28">
               <AnimatePresence mode="wait">
-                <motion.div key={status} e initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <motion.div key={status} e initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 1 }}>
                   {status === 'idle' ? (
                     <>
                       {chats.length === 0 ? (
