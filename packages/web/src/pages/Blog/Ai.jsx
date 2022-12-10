@@ -1,6 +1,6 @@
 import React from 'react';
 import useTheme from '../../hooks/useTheme';
-import Heroimg from '../../assets/blogimg/blogFrame.webp';
+import Heroimg from '../../assets/blogimg/blog-ai.svg';
 import Cta from '../../components/Blogcomponents/Cta';
 import Footer from '../../modules/static/landing-page/Footer';
 import { Link } from 'react-router-dom';
