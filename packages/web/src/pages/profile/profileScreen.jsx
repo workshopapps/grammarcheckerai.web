@@ -78,10 +78,8 @@ export default function profileScreen() {
     setNewUsername('');
   };
 
-
-
   return (
-    <main className="bg-white h-full pt-2 sm:pt-16">
+    <main className="bg-white h-full pt-2 w-full block sm:pt-16">
       {data && (
         <div className="w-[90%] md:w-[80%] h-[95%] flex flex-col m-auto">
           <div className="flex flex-col sm:flex-row justify-between items-center pb-3 border-none sm:border-b-[3px] border-[#d2d2d2]/50 relative">

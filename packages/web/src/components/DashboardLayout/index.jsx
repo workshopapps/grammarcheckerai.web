@@ -19,7 +19,7 @@ function DashboardLayout() {
 
   return (
     <div className="flex flex-col-reverse sm:flex-row  sm:min-h-screen">
-      <div className="md:w-80 h-full bg-[#F6F6F6] max-h-full min-h-screen z-[40] hidden md:block sm:sticky top-0 border-r border-[#0000000d]">
+      <div className="md:w-80 h-full bg-[#F6F6F6] max-h-full min-h-screen z-[40] hidden md:block sticky left-0 top-0 border-r border-[#0000000d]">
         <div className="w-14 mx-auto py-10 animate-pulse">
           <Link to="/me/home">
             <img src={logoImg} alt="" className="w-full" />
@@ -61,7 +61,7 @@ function DashboardLayout() {
       </div> */}
       <LogOutModal handleClose={handleClose} open={open} />
       <div className="w-full flex flex-col">
-        <div className="py-4 border-b border-[#0000000d] bg-[#F6F6F6] w-full sm:sticky top-0">
+        <div className="py-4 border-b border-[#0000000d] bg-[#F6F6F6] w-full sm:sticky top-0 z-30">
           <div className="max-w-[1100px] mx-auto flex justify-between px-4">
             <IconButton aria-label="delete" color="primary">
               <HiMenuAlt2 />
