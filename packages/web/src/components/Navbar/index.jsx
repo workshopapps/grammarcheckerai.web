@@ -4,9 +4,7 @@ import { NavLink, useNavigate, Link } from 'react-router-dom';
 import logoImg from '../../assets/images/logo2.png';
 import logoImgWhite from '../../assets/images/wlogo.png';
 import styles from './navbar.module.css';
-// eslint-disable-next-line import/no-unresolved
 import useMediaQuery from '@mui/material/useMediaQuery';
-// eslint-disable-next-line import/no-unresolved
 import { Drawer } from '@mui/material';
 import { BsList } from 'react-icons/bs';
 import {
@@ -27,9 +25,6 @@ const Navbar = () => {
 
   const context = useContext(ThemeContext);
   localStorage.setItem('theme', context.theme);
-  const toggleDarkMode = () => {
-    context.toggle();
-  };
 
   const handleNavigate = () => {
     navigate('/signup');
@@ -39,7 +34,7 @@ const Navbar = () => {
   const ismobile = useMediaQuery('(max-width: 700px)');
 
   return (
-    <header className={`${styles._header} dark:bg-header bg-white `} nav-theme={context.theme}>
+    <header className={`${styles._header} dark:bg-header bg-white `}>
       <button className={styles._nvlogo} onClick={() => navigate('/home')}>
         {context.theme === 'dark' ? <img src={logoImgWhite} alt="gritty" /> : <img src={logoImg} alt="gritty" />}
       </button>

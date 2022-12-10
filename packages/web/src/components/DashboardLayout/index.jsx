@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import MobileMenu from './MobileMenu';
 import { Outlet, Link } from 'react-router-dom';
 import logoImg from '../../assets/images/logo2.png';

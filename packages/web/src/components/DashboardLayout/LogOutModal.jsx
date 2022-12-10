@@ -17,13 +17,15 @@ export default function LogOutModal({ handleClose, open }) {
       aria-describedby="modal-modal-description"
     >
       <div
-        className="w-[90%] sm:w-[50%] flex flex-col items-center bg-white my-auto rounded p-5 py-8 absolute"
+        className="w-[90%] sm:w-[500px] flex flex-col items-center bg-white my-auto rounded-lg p-5 py-8 absolute"
         style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
       >
         <h3 className="text-xl">Are you sure you want to log out?</h3>
         <div className="w-full flex flex-col sm:flex-row lg:flex-row justify-center gap-5 mt-10">
-          <ProfileScreenButton onClick={onSignOut}>Yes, log me out.</ProfileScreenButton>
-          <ProfileScreenButton onClick={handleClose} variant="danger">
+          <ProfileScreenButton size="small" onClick={onSignOut}>
+            Yes, log me out.
+          </ProfileScreenButton>
+          <ProfileScreenButton size="small" onClick={handleClose} variant="danger">
             Cancel
           </ProfileScreenButton>
         </div>
