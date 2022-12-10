@@ -8,12 +8,14 @@ import { Paper } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { HiGlobeEuropeAfrica } from 'react-icons/hi2';
+import PropTypes from 'prop-types';
 
-export default function SimpleBottomNavigation() {
+export default function SimpleBottomNavigation({ handleOpen }) {
   const [value, setValue] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,12 +24,7 @@ export default function SimpleBottomNavigation() {
     setAnchorEl(null);
   };
 
-  const [modal, setModal] = React.useState(false);
-
-  const toggleModal = () => {
-    handleClose();
-    setModal(!modal);
-  };
+  const routes = ['/me/home', '/me/history', '/me/import', '/me/profile'];
 
   return (
     <div className="block md:hidden">
@@ -64,7 +61,13 @@ export default function SimpleBottomNavigation() {
               <AiFillWechat /> Quiz
             </NavLink>
           </MenuItem>
-          <MenuItem className="flex items-center gap-2" onClick={toggleModal}>
+          <MenuItem
+            className="flex items-center gap-2"
+            onClick={() => {
+              handleOpen();
+              handleClose();
+            }}
+          >
             <BsArrowBarRight />
             Logout
           </MenuItem>
@@ -75,6 +78,8 @@ export default function SimpleBottomNavigation() {
           sx={{ height: '40px' }}
           onChange={(event, newValue) => {
             setValue(newValue);
+            navigate(routes[newValue]);
+            console.log(newValue);
           }}
         >
           <BottomNavigationAction label="Home" icon={<IoHomeOutline />} />
@@ -94,3 +99,7 @@ export default function SimpleBottomNavigation() {
     </div>
   );
 }
+
+SimpleBottomNavigation.propTypes = {
+  handleOpen: PropTypes.func,
+};

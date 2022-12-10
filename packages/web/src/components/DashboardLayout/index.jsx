@@ -82,7 +82,7 @@ function DashboardLayout() {
         <div className="flex-1 flex px-6 justify-center items-center">
           <Outlet />
         </div>
-        <SimpleBottomNavigation />
+        <SimpleBottomNavigation handleOpen={handleOpen} />
       </div>
     </div>
   );
