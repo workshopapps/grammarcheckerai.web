@@ -56,11 +56,11 @@ function DashboardLayout() {
           </button>
         </div>
       </div>
-      <div className="h-[10%]">
+      {/* <div className="h-[10%]">
         <MobileMenu />
-      </div>
+      </div> */}
       <LogOutModal handleClose={handleClose} open={open} />
-      <div className="w-full">
+      <div className="w-full flex flex-col">
         <div className="py-4 border-b border-[#0000000d] bg-[#F6F6F6] w-full sm:sticky top-0">
           <div className="max-w-[1100px] mx-auto flex justify-between px-4">
             <IconButton aria-label="delete" color="primary">
@@ -78,7 +78,9 @@ function DashboardLayout() {
             </Link>
           </div>
         </div>
-        <Outlet />
+        <div className="flex-1 flex px-6 justify-center items-center">
+          <Outlet />
+        </div>
       </div>
     </div>
   );
