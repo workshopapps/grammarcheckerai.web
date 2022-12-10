@@ -10,6 +10,7 @@ import { AiFillWechat } from 'react-icons/ai';
 import LogOutModal from './LogOutModal';
 import { Avatar } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
+import SimpleBottomNavigation from '../Bottom-Nav';
 
 function DashboardLayout() {
   const [open, setOpen] = React.useState(false);
@@ -81,6 +82,7 @@ function DashboardLayout() {
         <div className="flex-1 flex px-6 justify-center items-center">
           <Outlet />
         </div>
+        <SimpleBottomNavigation />
       </div>
     </div>
   );
