@@ -51,6 +51,7 @@ function Converse({ noRive = false }) {
   };
 
   useEffect(() => {
+    if (chats.length === 0) return;
     handleScroll();
   }, [chats]);
 
@@ -204,7 +205,7 @@ function Converse({ noRive = false }) {
                 <span style={{ '--i': 3 }}></span>
               </button>
             </div>
-            <div className="pt-1 h-28">
+            <div className="py-1 h-28">
               <AnimatePresence mode="wait">
                 <motion.div key={status} e initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                   {status === 'idle' ? (
@@ -221,13 +222,13 @@ function Converse({ noRive = false }) {
                       )}
                     </>
                   ) : (
-                    <div className="pb-10">
+                    <div className="mb-10">
                       <div className="flex justify-center items-center mt-8">
                         <span>{minute}</span>
                         <span>:</span>
                         <span>{second}</span>
                       </div>
-                      <div className="flex items-center justify-center space-x-6 pt-5">
+                      <div className="flex items-center justify-center space-x-6 py-6">
                         <button
                           className="h-6 w-6 rounded-full flex justify-center items-center"
                           onClick={deleteRecording}

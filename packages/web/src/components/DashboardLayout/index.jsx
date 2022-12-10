@@ -1,29 +1,27 @@
-import React, { useState } from 'react';
-import MobileMenu from './MobileMenu'
+import React from 'react';
+import MobileMenu from './MobileMenu';
 import { Outlet, Link } from 'react-router-dom';
 import logoImg from '../../assets/images/logo2.png';
 import SidebarLink from '../SidebarLink';
 import { IoHomeOutline, IoSettingsOutline } from 'react-icons/io5';
 import { BsDownload, BsClock, BsFillPersonLinesFill, BsCashCoin, BsArrowBarRight } from 'react-icons/bs';
-import { AiFillWechat } from "react-icons/ai";
+import { AiFillWechat } from 'react-icons/ai';
 import LogOutModal from './LogOutModal';
 
 function DashboardLayout() {
-  const [modal, setModal] = useState(false);
-
-  const toggleModal = () => {
-    setModal(!modal);
-  };
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
-    <div className="flex flex-col-reverse justify-between sm:flex-row  min-h-screen">
-      <div className="md:w-80 h-full bg-[#F6F6F6] max-h-full min-h-screen z-[100] hidden sm:block sm:sticky top-0">
-        <div className="w-40 mx-auto py-20">
-          <Link to='/'>
+    <div className="flex flex-col-reverse sm:flex-row  min-h-screen">
+      <div className="md:w-80 h-full bg-[#F6F6F6] max-h-full min-h-screen z-[40] hidden sm:block sm:sticky top-0">
+        <div className="w-40 mx-auto pt-10 pb-20">
+          <Link to="/me/home">
             <img src={logoImg} alt="" className="w-full" />
           </Link>
         </div>
-        <div className="w-full h-full space-y-3">
+        <div className="w-full h-full space-y-1">
           <SidebarLink Icon={IoHomeOutline} to="/me/home">
             Home
           </SidebarLink>
@@ -45,19 +43,21 @@ function DashboardLayout() {
           <SidebarLink Icon={AiFillWechat} to="/startgame">
             Quiz
           </SidebarLink>
-          <button onClick={() => toggleModal()} className='mt-10 flex w-full border-[#5d387f] py-4 justify-center items-center gap-5 m-auto hover:bg-[#5d387f] hover:text-white'>
-            <BsArrowBarRight className='' />
+          <button
+            onClick={() => handleOpen()}
+            className="mt-10 flex w-full  pl-16 border-r-4 py-5 border-[#5D387F00] hover:border-[#5D387F33] items-center gap-5 m-auto"
+          >
+            <BsArrowBarRight className="" />
             <span>Log out</span>
           </button>
-         
         </div>
       </div>
-      <div className='h-[10%]'>
+      <div className="h-[10%]">
         <MobileMenu />
       </div>
-      <LogOutModal modal={modal} toggleModal={toggleModal} />
+      <LogOutModal handleClose={handleClose} open={open} />
       <div className="w-full h-[90%] sm:pt-5">
-        {/* <div className="py-7 border-b border-slate-300 w-full"></div> */}
+        {/* <div className="py-4 border-b border-slate-300 w-full"></div> */}
         <Outlet />
       </div>
     </div>

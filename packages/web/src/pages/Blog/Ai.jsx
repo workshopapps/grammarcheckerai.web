@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const Ai = () => {
   const context = useTheme();
-  const dark = context.theme === 'dark';
+
   return (
     <div>
       <section className="mb-10">
