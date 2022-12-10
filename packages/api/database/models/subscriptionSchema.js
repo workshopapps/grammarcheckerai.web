@@ -8,7 +8,6 @@ const subscriptionSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      unique: true,
     },
     subscriptionId: {
       type: String,
@@ -42,9 +41,9 @@ const subscriptionSchema = new mongoose.Schema(
       enum: ["NGN", "USD", "EUR", "YEN", "GBP"],
       default: "NGN",
     },
-    expirationDate:{
-      type: String
-    }
+    expirationDate: {
+      type: String,
+    },
   },
   {
     timestamps: true,

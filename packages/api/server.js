@@ -8,10 +8,12 @@
 // require("newrelic");
 
 const { createServer } = require("http");
+const mongoose = require("mongoose");
 const { Server } = require("socket.io");
 // import * as Sentry from "@sentry/node";
 // import * as Tracing from "@sentry/tracing";
 
+mongoose.set("strictQuery", true); // to suppress this warning the DeprecationWarning
 const app = require("./app");
 const { environment } = require("./config/environment.js");
 // Sentry.init({
