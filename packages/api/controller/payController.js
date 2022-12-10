@@ -24,7 +24,7 @@ const createPayment = async (req, res) => {
 
     //FIND ACTIVE SUBSCRIPTION
     const isActive = await Subscription.findOne({
-      $and: [{ email: email }, { status: "success" }],
+      $and: [{ email: email }, { status: "success" }, {paymentGateway: "paystack"}],
     });
     if (isActive) {
       console.log(isActive);
@@ -161,7 +161,6 @@ const cancelSubscription = async (req, res) => {
 
 const verification = async (req, res) => {
   const { txref, email } = req.query;
-  let isVerified;
   if (!txref || !email)
     return res
       .status(400)

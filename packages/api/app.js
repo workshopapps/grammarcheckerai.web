@@ -53,15 +53,15 @@ app.use(
 );
 
 //welcome note
-app.get("/v1", (req, res) => {
-  res.status(200).json({
-    message: "Welcome to Speak Better 🗣️ 🗣️ 🗣️",
-    user: "CORS enabled",
-  });
-});
+// app.get("/v1", (req, res) => {
+//   res.status(200).json({
+//     message: "Welcome to Speak Better 🗣️ 🗣️ 🗣️",
+//     user: "CORS enabled",
+//   });
+// });
 
 //404 error
-app.all("*", (req, res, next) => {
+app.all("*", (req, res) => {
   res.status(404).json({
     message: "Ohh you are lost, path not found.",
   });
