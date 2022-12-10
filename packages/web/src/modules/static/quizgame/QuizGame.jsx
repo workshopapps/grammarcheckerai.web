@@ -25,7 +25,7 @@ function shuffle(array) {
   return array;
 }
 
-const QuizGame = ({ players, setPlayers, setStart }) => {
+const QuizGame = ({ setColor, players, setPlayers, setStart }) => {
   const { socket } = useContext(QuizContext);
   const timeRef = useRef(null);
   const [winnerMsg, setWinnerMsg] = useState('');
@@ -47,6 +47,7 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
       setPlayers(count);
     });
     setStart(false);
+    setColor('#CACACA');
   };
 
   let tick = triviaQuestion.answer;
@@ -191,7 +192,7 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
           </>
         )}
 
-        {winner ? <TotalScores winnerMsg={winnerMsg} setStart={setStart} setWinner={setWinner} /> : ''}
+        {winner ? <TotalScores setColor={setColor} winnerMsg={winnerMsg} setStart={setStart} setWinner={setWinner} /> : ''}
       </section>
     </>
   );

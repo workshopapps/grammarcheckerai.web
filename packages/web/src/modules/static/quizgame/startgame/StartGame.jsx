@@ -55,7 +55,7 @@ const StartGame = () => {
         ) : (
           <>
             {start ? (
-              <QuizGame players={players} setPlayers={setPlayers} setStart={setStart} />
+              <QuizGame setColor={setColor} players={players} setPlayers={setPlayers} setStart={setStart} />
             ) : (
                 <section className={styles.startgame}>
                   <div className={styles.startgame_card}>
