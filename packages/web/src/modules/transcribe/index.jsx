@@ -3,7 +3,8 @@ import ErrorIcon from '../../assets/error.svg';
 import ImportIcon from '../../assets/import.svg';
 import { PropTypes } from 'prop-types';
 import SentAudio from '../../components/SentAudio/index';
-import React, { useRef, useState } from 'react';
+// import ChatContainer from './chat-container';
+import React, { useRef, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import useSendAudio from '../../hooks/account/useSendAudio'
 
@@ -54,7 +55,7 @@ const Transcribe = () => {
       setTimeout(() => setUploadingAudio(false), 1000);
 
       setIsAudio(true);
-      setAudio(URL.createObjectURL(event.target.files[0]));
+      setAudio((event.target.files[0]));
       setMessages([
         ...messages,
         {
@@ -65,19 +66,27 @@ const Transcribe = () => {
       ]);
 
       console.log('audio', URL.createObjectURL(event.target.files[0]));
-      console.log('messgaes', messages);
+     
     }
   };
+ 
+  console.log(audio)
 
-  let blob = new Blob([audio], {
-    type: 'audio/mp3',
-  });
+  let fD = new FormData();
+  fD.append("file", audio);
+            
+  fetch("https://88dc-154-68-195-210.eu.ngrok.io/v1/conversation/sendAudio", {
+  method: "POST",
+   body: fD
+   })
+     .then(res=>res.json())
+     .then(data=>console.log(data))
+     .catch(err=>console.log(err));
+ 
 
-  console.log(blob);
-
-  const submitAudioHandler = async() => {
+  const submitAudioHandler = () => {
     const soln = new FormData();
-    soln.append('file', blob);
+    soln.append('file', audio);
     soln.append('language', language);
           sendAudio
             .mutateAsync(soln)
@@ -160,6 +169,7 @@ const Transcribe = () => {
 
         {isError ? <ErrorOverlay setIsError={setIsError} /> : null}
         <button onClick={submitAudioHandler}>Quick Transcribe</button>
+        {/* <ChatContainer chats={chats} /> */}
       </div>
     </div>
   );
