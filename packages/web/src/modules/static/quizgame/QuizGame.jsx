@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import { QuizContext } from './QuizContext';
+import timer from '../../../assets/newsletterImages/timer.png';
 import { Link } from 'react-router-dom';
 import styles from '../quizgame/QuizGame.module.scss';
 import TotalScores from './totalscores/TotalScore';
@@ -32,12 +33,11 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
   const [seconds, setSeconds] = useState(30);
   const [triviaQuestion, setTriviaQuestion] = useState([]);
   const [questionAnswer, setQuestionAnswer] = useState(0);
-  const [questionNumber, setQuestionNumber] = useState(0);
+  const [questionNumber, setQuestionNumber] = useState(1);
   const [winner, setWinner] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [score, setScore] = useState(0);
   const [errorMsg, setErrorMsg] = useState(false);
-  const [timeOut, setTimeOut] = useState(false);
   const [changeColor, setChangeColor] = useState('#e8ddf2');
 
   const handleExit = () => {
@@ -50,15 +50,21 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
   };
 
   let tick = triviaQuestion.answer;
+  let isCorrect;
 
   const handleSubmit = () => {
-    const isCorrect = selectedAnswer === tick;
+    isCorrect = selectedAnswer === tick;
     const userId = localStorage.getItem('grittyuserid');
     socket.emit('update-quizProfile', userId, isCorrect);
     if (isCorrect) {
       socket.emit('get-roundWinner', userId);
-      setTimeOut(false);
       setWinner(true);
+      setScore(score + 1);
+    }
+    if (!isCorrect && players === 1) {
+      socket.emit('get-roundWinner', userId);
+      setWinner(true);
+      getQuestion();
       setScore(score + 1);
     }
     socket.on('receive-roundWinner', (roundWinnerMessage) => {
@@ -76,7 +82,7 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
 
   const handleAnswer = (element) => {
     setSelectedAnswer(element);
-    setChangeColor('yellow');
+    setChangeColor('#e8ddf2');
   };
 
   const countPlayers = () => {
@@ -92,6 +98,8 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
       socket.emit('get-question');
       socket.on('receive-question', (question) => {
         setTriviaQuestion(question);
+        setSeconds(30);
+        setQuestionNumber(questionNumber + 1);
         let correctAnswer = question.answer;
         let incorrectAnswers = question.incorrectAnswers;
         const options = shuffle([...incorrectAnswers, correctAnswer]);
@@ -104,15 +112,13 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
   };
 
   useEffect(() => {
-    setSeconds(30);
-    setQuestionNumber(questionNumber + 1);
     getQuestion();
   }, [score]);
 
   let countdown;
   useEffect(() => {
     if (seconds === 0) {
-      return setTimeOut(true);
+      getQuestion();
     }
     countdown = setInterval(() => {
       setSeconds(seconds - 1);
@@ -120,29 +126,29 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
         setSeconds(30);
       }
       if (seconds <= 10) {
-        timeRef.current.style.backgroundColor = 'red';
+        timeRef.current.style.color = 'red';
       } else {
-        timeRef.current.style.backgroundColor = 'grey';
+        timeRef.current.style.color = 'black';
       }
     }, 3000);
 
     return () => clearInterval(countdown);
-  }, [seconds, setTimeOut]);
+  }, [seconds]);
 
   return (
     <>
       <section id="game" className={styles.quizgame}>
         <div className={styles.quizgame__img}>
-          {timeOut ? (
-            ''
-          ) : (
-            <>
-              <div ref={timeRef} className={styles.quizgame__img__timer}>
-                <h2>{seconds}</h2>
+          <>
+            <div  className={styles.quizgame__img__timer}>
+              <p>TIME SPENT</p>
+              <div>
+                <img src={timer} alt="" />
+                <h2 ref={timeRef}><span>00:</span>{seconds}s</h2>
               </div>
-              <p>{countPlayers()}</p>
-            </>
-          )}
+            </div>
+            <button onClick={handleExit} className={styles.quizgame__btn__end}>End Quiz</button>
+          </>
         </div>
         {errorMsg ? (
           <div className={styles.quizgame__err}>
@@ -152,15 +158,10 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
           </div>
         ) : (
           <>
-            {timeOut ? (
-              <div className={styles.quizgame__end}>
-                <h1>You Lost </h1>
-              </div>
-            ) : (
-              <>
-                <div className={styles.quizgame_card}>
+            <>
+              <div className={styles.quizgame_card}>
                   <div className={styles.quizgame_card__content}>
-                    <h1 className={styles.quizgame_card__content__heading}>Test your skills with this Trivia</h1>
+                    <p className={styles.quizgame_card__content__heading}>Question #{questionNumber}</p>
                     <>
                       <h3 className={styles.quizgame_card__content__question}>{triviaQuestion.question}</h3>
                       <ul id="mainList" className={styles.quizgame_card__content__answers}>
@@ -168,7 +169,7 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
                           answerList.map(function (element, index) {
                             return (
                               <li
-                                style={{ backgroundColor: selectedAnswer === element ? changeColor : '#e8ddf2' }}
+                                style={{ backgroundColor: selectedAnswer === element ? changeColor : '' }}
                                 id="mainOptions"
                                 onClick={() => handleAnswer(element)}
                                 key={index}
@@ -180,13 +181,12 @@ const QuizGame = ({ players, setPlayers, setStart }) => {
                       </ul>
                     </>
                   </div>
-                </div>
-              </>
-            )}
+              </div>
+            </>
 
             <div className={styles.quizgame__btn}>
-              <button onClick={handleExit}>End Quiz</button>
-              {timeOut ? '' : <button onClick={handleSubmit}>Submit</button>}
+              <p>{countPlayers()}</p>
+              <button onClick={handleSubmit} className={styles.quizgame__btn__next}>Next Question</button>
             </div>
           </>
         )}

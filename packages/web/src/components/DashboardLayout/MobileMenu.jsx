@@ -71,7 +71,7 @@ const [anchorEl, setAnchorEl] = useState(null);
                 <MenuItem onClick={handleClose}><NavLink className='flex items-center gap-2' to="/"><HiGlobeEuropeAfrica />Go home</NavLink></MenuItem>
                 <MenuItem onClick={handleClose}><NavLink className='flex items-center gap-2' to='/me/profile'><BsFillPersonLinesFill />Profile</NavLink></MenuItem>
                 <MenuItem onClick={handleClose}><NavLink className='flex items-center gap-2'  to='/me/settings'><IoSettingsOutline/> Settings</NavLink></MenuItem>
-                <MenuItem onClick={handleClose}><NavLink className='flex items-center gap-2'  to='/me/settings'><AiFillWechat/> Quiz</NavLink></MenuItem>
+                <MenuItem onClick={handleClose}><NavLink className='flex items-center gap-2'  to='/me/startgame'><AiFillWechat/> Quiz</NavLink></MenuItem>
                 <MenuItem className='flex items-center gap-2' onClick={toggleModal}><BsArrowBarRight />Logout</MenuItem>
             </Menu>
         
