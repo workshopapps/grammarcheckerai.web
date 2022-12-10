@@ -4,7 +4,7 @@ function SettingOption({ option, arrowRight, children, openBar }) {
     <div
       className={
         option.route
-          ? 'relative flex items-center justify-between border-b-2 border-gray-300 pb-3 cursor-pointer flex-row sm:flex-col sm:items-stretch md:cursor-default gap-4 sm:border-0'
+          ? 'relative flex items-center w-full justify-between border-b-2 border-gray-300 pb-3 cursor-pointer flex-row sm:flex-col sm:items-stretch md:cursor-default gap-4 sm:border-0'
           : 'flex flex-col gap-4'
       }
     >
