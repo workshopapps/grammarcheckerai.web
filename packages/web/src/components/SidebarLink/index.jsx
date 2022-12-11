@@ -2,10 +2,9 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-function SidebarLink({ to, children, Icon, func }) {
+function SidebarLink({ to, children, Icon }) {
   return (
     <NavLink
-      onClick={func}
       to={to}
       className={({ isActive }) =>
         `min-w-full flex sm:block text-left text-slate-800 text-sm border-r-4 py-5 hover:border-[#5D387F33] ${
@@ -25,7 +24,6 @@ SidebarLink.propTypes = {
   to: PropTypes.string,
   children: PropTypes.node,
   Icon: PropTypes.func,
-  func: PropTypes.func,
 };
 
 export default SidebarLink;

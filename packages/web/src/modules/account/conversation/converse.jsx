@@ -58,7 +58,7 @@ function Converse({ noRive = false }) {
     setOpen(false);
   };
 
-  // const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
+  const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
 
   const submitAudioHandler = () => {
     setCounter(0);
@@ -86,18 +86,6 @@ function Converse({ noRive = false }) {
         error(err?.response?.data?.message);
       });
     clearMediaBlob();
-
-    // if (counter <= 20 || (userSubscription?.value && userSubscription?.value?.length !== 0)) {
-    //   setUserSubsList(userSubscription?.value);
-    //   checkForArray(userSubsList).map((item) => {
-    //     if (counter <= 20 || item.status === 'success') {
-
-    //       return;
-    //     } else {
-    //       setOpen(true);
-    //     }
-    //   });
-    // }
   };
 
   useEffect(() => {
@@ -106,7 +94,6 @@ function Converse({ noRive = false }) {
     if (status === 'recording') {
       intervalId = setInterval(() => {
         setCounter((counter) => counter + 1);
-        console.log(status);
       }, 1000);
     }
     if (status === 'stopped') {
@@ -116,9 +103,22 @@ function Converse({ noRive = false }) {
   }, [status]);
 
   useEffect(() => {
+    if (counter > 20 && userSubscription?.value && userSubscription?.value?.length !== 0) {
+      checkForArray(userSubscription?.value).map((item) => {
+        if (counter <= 20 || item.status === 'success') {
+          return;
+        } else {
+          setOpen(true);
+          stopRecording();
+          setCounter(0);
+          return;
+        }
+      });
+    }
     if (counter > 20) {
       setOpen(true);
       stopRecording();
+      setCounter(0);
     }
   }, [counter]);
 
@@ -128,10 +128,8 @@ function Converse({ noRive = false }) {
   };
 
   const onMicHandler = () => {
-    console.log(status);
     if (status === 'idle' || status === 'stopped') {
       startRecording();
-      console.log(status, 'after button click');
     }
     if (status === 'paused') {
       resumeRecording();
