@@ -34,6 +34,7 @@ async function getBotResponse(req, res) {
     const userId = req.body.userId;
     const language = req.body.language?.toLowerCase() || "english";
     const audioFile = req.file; // retrieves file buffer and metadata set by multer
+    
     // checks if file is available
     if (!audioFile) {
       return res.status(400).send({
@@ -42,7 +43,7 @@ async function getBotResponse(req, res) {
       });
     }
     const metadata = await parseBuffer(audioFile.buffer, audioFile.mimetype);
-    const audioLength = metadata.format.duration.toFixed(2);
+    const audioLength = metadata.format.duration.toFixed();
     // 1. If userId, Get user's email
     const userEmail = userId
       ? (await userCollection.findById(userId))?.email
