@@ -78,17 +78,12 @@ export default function profileScreen() {
     setNewUsername('');
   };
 
-
-
   return (
-    <main className="bg-white h-full pt-2 sm:pt-16">
+    <main className="bg-white h-full pt-2 w-full block sm:pt-16">
       {data && (
         <div className="w-[90%] md:w-[80%] h-[95%] flex flex-col m-auto">
           <div className="flex flex-col sm:flex-row justify-between items-center pb-3 border-none sm:border-b-[3px] border-[#d2d2d2]/50 relative">
             <h3 className="text-2xl font-bold">User Profile</h3>
-            <span className="font-bold flex justify-center items-center text-center bg-[#5d387f] text-white rounded-full text-3xl sm:text-2xl h-24 w-24 mt-3 md:mt-0 sm:h-12 sm:w-12 uppercase">
-              {data.firstName.charAt(0) + '' + data.lastName.charAt(0)}
-            </span>
           </div>
           <div className="flex flex-col text-center sm:hidden">
             <h1 className="text-xl font-bold text-[#393939]">{data.firstName + ' ' + data.lastName}</h1>

@@ -25,9 +25,10 @@ function Converse({ noRive = false }) {
   let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
     useMediaRecorder({
       recordScreen: false,
-      // blobOptions: { type: 'audio/wav' },
+      blobOptions: { type: 'audio/wav' },
       mediaStreamConstraints: { audio: true, video: false },
     });
+  const userData = JSON.parse(localStorage.getItem('isUserDetails'));
 
   const [second, setSecond] = useState('00');
   const [minute, setMinute] = useState('00');
@@ -130,11 +131,10 @@ function Converse({ noRive = false }) {
     setMinute('00');
     setCounter(0);
     setBeginRecording(false);
-    setChats('');
+    setChats([]);
   };
 
   const sendAudioHandler = () => {
-    stopRecording();
     submitAudioHandler();
     setSecond('00');
     setMinute('00');
@@ -147,7 +147,7 @@ function Converse({ noRive = false }) {
       <Premium open={open} handleClosePremium={handleClosePremium} />
       {sendAudio.isLoading && <Loader />}
       <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center  pt-2 lg:pt-6">
-        <div className="text-center max-h-5/6 space-y-5 lg:space-y-10">
+        <div className="text-center max-h-5/6 space-y-5 lg:space-y-8">
           {chats.length === 0 ? (
             <>
               {!noRive ? (
@@ -155,7 +155,7 @@ function Converse({ noRive = false }) {
                   <RiveBot size="large" />
                 </div>
               ) : (
-                <div className=" flex justify-center items-center pb-10">
+                <div className=" flex justify-center items-center pb-6">
                   <img
                     src={chirpy}
                     alt="chirpy bob"
@@ -169,7 +169,9 @@ function Converse({ noRive = false }) {
                     context.theme === 'dark' ? 'text-[#ffffff]' : 'text-[#262626]'
                   }  leading-relaxed sm:text-3xl`}
                 >
-                  What would you like to say today?
+                  {userData?.firstName
+                    ? `${userData?.firstName}, how are you today?`
+                    : 'What would you like to say today?'}
                 </h2>
                 <p
                   className={` ${
@@ -207,11 +209,11 @@ function Converse({ noRive = false }) {
             </div>
             <div className="py-1 h-28">
               <AnimatePresence mode="wait">
-                <motion.div key={status} e initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <motion.div key={status} e initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 1 }}>
                   {status === 'idle' ? (
                     <>
                       {chats.length === 0 ? (
-                        <p className="text-[#262626] pt-6">Tap the Microphone to begin and stop recording.</p>
+                        <p className="text-[#262626] text-sm pt-6">Tap the Microphone to begin and stop recording.</p>
                       ) : (
                         <button
                           className="px-7 rounded-xl py-2 border border-[#5D387F]"

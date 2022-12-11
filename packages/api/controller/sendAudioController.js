@@ -34,7 +34,6 @@ async function getBotResponse(req, res) {
     const userId = req.body.userId;
     const language = req.body.language?.toLowerCase() || "english";
     const audioFile = req.file; // retrieves file buffer and metadata set by multer
-    console.log("🎯🎯🎯", audioFile);
     // checks if file is available
     if (!audioFile) {
       return res.status(400).send({
