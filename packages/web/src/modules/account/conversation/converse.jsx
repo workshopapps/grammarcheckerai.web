@@ -28,6 +28,7 @@ function Converse({ noRive = false }) {
       blobOptions: { type: 'audio/wav' },
       mediaStreamConstraints: { audio: true, video: false },
     });
+  const userData = JSON.parse(localStorage.getItem('isUserDetails'));
 
   const [second, setSecond] = useState('00');
   const [minute, setMinute] = useState('00');
@@ -154,7 +155,7 @@ function Converse({ noRive = false }) {
                   <RiveBot size="large" />
                 </div>
               ) : (
-                <div className=" flex justify-center items-center pb-10">
+                <div className=" flex justify-center items-center pb-6">
                   <img
                     src={chirpy}
                     alt="chirpy bob"
@@ -168,7 +169,9 @@ function Converse({ noRive = false }) {
                     context.theme === 'dark' ? 'text-[#ffffff]' : 'text-[#262626]'
                   }  leading-relaxed sm:text-3xl`}
                 >
-                  What would you like to say today?
+                  {userData?.firstName
+                    ? `${userData?.firstName}, how are you today?`
+                    : 'What would you like to say today?'}
                 </h2>
                 <p
                   className={` ${
@@ -210,7 +213,7 @@ function Converse({ noRive = false }) {
                   {status === 'idle' ? (
                     <>
                       {chats.length === 0 ? (
-                        <p className="text-[#262626] pt-6">Tap the Microphone to begin and stop recording.</p>
+                        <p className="text-[#262626] text-sm pt-6">Tap the Microphone to begin and stop recording.</p>
                       ) : (
                         <button
                           className="px-7 rounded-xl py-2 border border-[#5D387F]"

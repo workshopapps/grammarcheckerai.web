@@ -5,12 +5,7 @@ import HistoryModal from './modal';
 import HistoryEmpty from './historyEmpty';
 import search from '../../../assets/search.svg';
 import { FaChevronDown } from 'react-icons/fa';
-
-// MUI
-import { Accordion } from '@mui/material';
-import { AccordionSummary } from '@mui/material';
-import { AccordionDetails } from '@mui/material';
-import { Typography } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material';
 
 function History() {
   const [history, setHistory] = useState([]);

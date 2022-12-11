@@ -4,7 +4,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from '../rank/Rank.module.scss';
-import { GrClose } from 'react-icons/gr';
+import rank from '../../../../assets/newsletterImages/rank.png';
+import close from '../../../../assets/newsletterImages/close-square.png';
 
 const Rank = ({ setRank }) => {
   const [ranks, setRanks] = useState([]);
@@ -25,13 +26,20 @@ const Rank = ({ setRank }) => {
     <section className={styles.rank}>
       <div className={styles.rank_card}>
         <div className={styles.rank_card__img} onClick={() => setRank(false)}>
-          <GrClose />
+          <img src={close} alt="" />
         </div>
         <div className={styles.rank_card__content}>
-          <h2>✨ Top Players ✨</h2>
+          <div className={styles.rank_card__content__top}>
+            <img src={rank} alt="" />
+            <div className={styles.rank_card__content__top__text}>
+              <h2>Leaderboard</h2>
+              <p>See the top users on the lead.</p>
+            </div>
+          </div>
+
           <table>
             <thead>
-              <tr>
+              <tr style={{ color: '#8C54BF' }}>
                 <th>Rank</th>
                 <th>Username</th>
                 <th>Total Questions</th>
@@ -42,7 +50,7 @@ const Rank = ({ setRank }) => {
               return (
                 <tbody key={element}>
                   <tr>
-                    <td>{element.rank}</td>
+                    <td style={{ color: '#8C54BF' }}>#{element.rank}</td>
                     <td>{element.username}</td>
                     <td>{element.totalQuestions}</td>
                     <td>{element.totalPoints}</td>

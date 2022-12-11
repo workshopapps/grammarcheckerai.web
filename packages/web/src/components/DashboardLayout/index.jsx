@@ -1,5 +1,4 @@
 import React from 'react';
-import MobileMenu from './MobileMenu';
 import { Outlet, Link } from 'react-router-dom';
 import logoImg from '../../assets/simple_logo.svg';
 import SidebarLink from '../SidebarLink';
@@ -8,6 +7,8 @@ import { BsDownload, BsClock, BsFillPersonLinesFill, BsCashCoin, BsArrowBarRight
 import { AiFillWechat } from 'react-icons/ai';
 import LogOutModal from './LogOutModal';
 import { Avatar } from '@mui/material';
+import SimpleBottomNavigation from '../Bottom-Nav';
+import logoImgWhite from '../../assets/images/logo2.png';
 
 function DashboardLayout() {
   const [open, setOpen] = React.useState(false);
@@ -17,8 +18,8 @@ function DashboardLayout() {
 
   return (
     <div className="flex flex-col-reverse sm:flex-row  sm:min-h-screen">
-      <div className="md:w-80 h-full bg-[#F6F6F6] max-h-full min-h-screen z-[40] hidden md:block sm:sticky top-0 border-r">
-        <div className="w-14 mx-auto py-10">
+      <div className="md:w-80 h-full bg-[#F6F6F6] max-h-full min-h-screen z-[40] hidden md:block sticky left-0 top-0 border-r border-[#0000000d]">
+        <div className="w-14 mx-auto py-10 animate-pulse">
           <Link to="/me/home">
             <img src={logoImg} alt="" className="w-full" />
           </Link>
@@ -54,14 +55,18 @@ function DashboardLayout() {
           </button>
         </div>
       </div>
-      <div className="h-[10%]">
-        <MobileMenu />
-      </div>
+
       <LogOutModal handleClose={handleClose} open={open} />
-      <div className="w-full">
-        <div className="py-4 border-b bg-[#F6F6F6] w-full sm:sticky top-0">
-          <div className="max-w-[1050px] mx-auto flex justify-between px-4">
-            <p></p>
+      <div className="w-full flex flex-col">
+        <div className="py-4 border-b border-[#0000000d] bg-[#F6F6F6] w-full sm:sticky top-0 z-30">
+          <div className="max-w-[1050px] mx-auto flex justify-between px-6">
+            <div>
+              <div className="h-10 mx-auto block md:hidden">
+                <Link to="/me/home">
+                  <img src={logoImgWhite} alt="" className="h-full" />
+                </Link>
+              </div>
+            </div>
 
             <Link to="/me/profile">
               <Avatar
@@ -74,7 +79,10 @@ function DashboardLayout() {
             </Link>
           </div>
         </div>
-        <Outlet />
+        <div className="flex-1 flex px-6 justify-center items-center">
+          <Outlet />
+        </div>
+        <SimpleBottomNavigation handleOpen={handleOpen} />
       </div>
     </div>
   );

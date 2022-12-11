@@ -1,14 +1,12 @@
 @import '../../../assets/styles/variables.scss';
 
 .quizgame {
-  margin-top: 0px;
   width: 100%;
-//   height: 100vh;
-  overflow: hidden;
   @include flexCenter(column);
-  justify-content: space-between;
   color: black;
   padding: 10px 20px;
+  // margin: 100px 0px;
+  // overflow-x: hidden;
 
   &__img {
     width: 100%;
@@ -20,25 +18,33 @@
     }
 
     &__timer {
-        border-radius: 50%;
-        padding: 10px;
+      @include flexCenter(column);
+
+      p {
+        color: $purpleBackground;
+        width: 102px;
+        height: 23px;
+        font-family: $fontFamily1;
+        font-size: 14px;
+        line-height: 23px;
+        text-transform: uppercase;
+        color: #8C54BF;
+      }
+
+      div {
+        @include flexCenter(row);
 
         h2 {
-            color: $white;
+          margin-left: 5px;
+          color: black;
+          font-size: 20px;
+
+          span {
+            color: #D7D7D7;
+          }
         }
-    }
-  }
+      }
 
-  &__end {
-    height: 80vh;
-    width: 100vw;
-    @include flexCenter(row);
-    padding: 50px;
-
-    h1 {
-        font-size: 36px;
-        font-weight: 700;
-        font-family: $fontFamily1;
     }
   }
 
@@ -55,20 +61,25 @@
       text-align: center;
 
       &__heading {
-        color: $greyColor;
-        text-shadow: 1px 15px 5px #e8ddf2;
-        font-size: 35px;
         font-family: $fontFamily1;
         font-weight: 700;
+        font-size: 14px;
+        line-height: 23px;
+        text-align: center;
+        text-transform: uppercase;
+        color: #8C54BF;
       }
 
       &__question {
-        font-family: $fontFamily2;
-        margin: 20px 0px;
-        font-size: 24px;
-        width: inherit;
+        font-family: $fontFamily1;
+        margin: 10px 0px;
         letter-spacing: -1px;
         word-spacing: 3px;
+        font-weight: 700;
+        font-size: 24px;
+        text-align: center;
+        color: #393939;
+        width: 100%;
       }
 
       &__answers {
@@ -86,9 +97,9 @@
           font-family: $fontFamily2;
           cursor: pointer;
           list-style: none;
-          border: 1px solid #e8ddf2;
+          border: 1px solid #D7D7D7;
           border-radius: 8px;
-          background-color: #e8ddf2;
+          // background-color: #e8ddf2;
           padding: 15px;
           font-size: 20px;
 
@@ -105,6 +116,7 @@
       @include flexCenter(row);
       justify-content: flex-start;
       margin-top: 30px;
+      margin-bottom: 150px;
 
       p {
         width: 250px;
@@ -131,20 +143,27 @@
   }
 
   &__btn {
-    margin-top: 20px;
+    margin-top: 50px;
     width: 100%;
     @include flexCenter(row);
     justify-content: space-between;
 
-    button {
-      background-color: $purpleBackground;
-      border: 1px solid $purpleBackground;
+    &__next {
+      background-color: #5D387F;
       border-radius: 12px;
-      width: 150px;
-      font-size: 20px;
-      font-weight: 500;
+      font-size: 16px;
+      font-weight: 400;
       color: $white;
-      padding: 10px;
+      width: 200px;
+      padding: 16px 40px;
+    }
+
+    &__end {
+      color: $white;
+      padding: 16px 40px;
+      width: 150px;
+      background-color: #EC1B1B;
+      border-radius: 12px;
     }
   }
 
@@ -176,19 +195,25 @@
 
 @media (min-width: $md) {
   .quizgame {
-    padding: 20px 50px;
-    overflow: hidden;
+    padding: 0px 50px;
+    // height: 90vh;
 
     &_card {
       max-width: 800px;
 
       &__content {
-        &__heading {
-          font-size: 44px;
-        }
 
         &__question {
+          font-family: $fontFamily1;
+          // margin: 30px 0px;
           margin-bottom: 50px;
+          letter-spacing: -1px;
+          word-spacing: 3px;
+          font-weight: 700;
+          font-size: 32px;
+          // line-height: 62px;
+          text-align: center;
+          color: #393939;
         }
 
         &__answers {
@@ -213,25 +238,13 @@
 
 @media (min-width: $lg) {
   .quizgame {
-    height: 100vh;
-    overflow: hidden;
     justify-content: space-around;
 
     &_card {
-      max-width: 800px;
       margin-top: 0px;
 
       &__content {
         margin-top: 0px;
-
-        &__heading {
-          font-size: 44px;
-          margin-top: 0px;
-        }
-
-        &__question {
-          margin-bottom: 20px;
-        }
 
         &__answers {
           width: 100%;
@@ -252,22 +265,6 @@
             overflow-y: hidden;
           }
         }
-      }
-    }
-
-    &__btn {
-      margin-top: 0px;
-      width: 100%;
-
-      button {
-        background-color: $purpleBackground;
-        border: 1px solid $purpleBackground;
-        border-radius: 8px;
-        width: 150px;
-        font-size: 20px;
-        font-weight: 500;
-        color: $white;
-        padding: 10px;
       }
     }
   }
