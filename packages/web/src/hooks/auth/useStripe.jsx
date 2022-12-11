@@ -1,13 +1,14 @@
 import { ENDPOINTS } from '../../lib/constants';
 import useCustomPlan from '../useCustomPlan';
-const usePremium = () => {
+const useStripe = () => {
   return useCustomPlan({
     method: 'post',
-    endpoint: ENDPOINTS.API_PAYSTACK_URL,
-    queryKey: 'plan',
+    endpoint: ENDPOINTS.API_STRIPE_PAY,
+    queryKey: 'stripe_pay',
     port: 443,
     headers: {
-      Authorization: 'Bearer sk_test_30c6122a460a1b8e03c16a44f331ffdfab463c3e',
+      Authorization:
+        'Bearer sk_test_51LHctJCwY1P88UifjNhHz5DTsWpGnkzN0H2RPp543jIXq8KsQxp41mtZwZVrMBtQnm0L5GpsFvOGjPUDCl5cxW2900Bysdpxpj',
       'Content-Type': 'application/json',
     },
     showSuccessToast: false,
@@ -19,4 +20,4 @@ const usePremium = () => {
   });
 };
 
-export default usePremium;
+export default useStripe;

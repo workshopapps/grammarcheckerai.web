@@ -7,9 +7,6 @@ import styles from './premiumcheck.module.css';
 import { IconButton } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
 import medal from '../Assets/medal-star.png';
-import ranking from '../Assets/ranking.png';
-import check from '../Assets/tick-square.png';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
