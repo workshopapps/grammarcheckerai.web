@@ -1,12 +1,12 @@
 import { ENDPOINTS } from '../../lib/constants';
 import useCustomQuery from '../useCustomQuery';
 
-const useGetFacebookLink = () => {
+const useGetApiStatus = () => {
   return useCustomQuery({
     method: 'get',
-    endpoint: ENDPOINTS.API_AUTH_FACEBOOK,
-    queryKey: 'facebook',
+    endpoint: ENDPOINTS.API_STATUS_URL,
+    queryKey: ['api-status'],
   });
 };
 
-export default useGetFacebookLink;
+export default useGetApiStatus;

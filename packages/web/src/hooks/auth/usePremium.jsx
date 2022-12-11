@@ -11,11 +11,6 @@ const usePremium = () => {
       'Content-Type': 'application/json',
     },
     showSuccessToast: false,
-    onSettled: (res, err) => {
-      if (!err) {
-        console.log(res);
-      }
-    },
   });
 };
 

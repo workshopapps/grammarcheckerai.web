@@ -7,11 +7,6 @@ const usePay = () => {
     queryKey: 'pay',
     origin: 'https://localhost:5000',
     showSuccessToast: false,
-    onSettled: (res, err) => {
-      if (!err) {
-        console.log(res);
-      }
-    },
   });
 };
 

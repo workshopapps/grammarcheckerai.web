@@ -8,11 +8,6 @@ const useResetPassword = (token) => {
     endpoint: ENDPOINTS.API_AUTH_RESET_PASSWORD(token),
     queryKey: [token],
     showSuccessToast: false,
-    onSettled: (res, err) => {
-      if (!err) {
-        console.log(res);
-      }
-    },
   });
 };
 

@@ -6,11 +6,6 @@ const useSignup = () => {
     endpoint: ENDPOINTS.API_INITIATE_SIGNUP,
     queryKey: 'signup',
     showSuccessToast: false,
-    onSettled: (res, err) => {
-      if (!err) {
-        console.log(res);
-      }
-    },
   });
 };
 
