@@ -4,7 +4,6 @@ import ChatContainer from './chat-container';
 import SeletedLanguage from '../../../components/SelectedLanguage';
 import RiveBot from '../../../components/RiveBot';
 import micImg from '../../../assets/images/mic.svg';
-import { motion, AnimatePresence } from 'framer-motion';
 import Loader from '../../../components/Loader';
 import { useNavigate } from 'react-router-dom';
 import useGetUserSubscription from '../../../hooks/account/useGetUserSubscription';
@@ -62,7 +61,7 @@ function Converse({ noRive = false }) {
   // const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
 
   const submitAudioHandler = () => {
-    console.log(mediaBlob);
+    setCounter(0);
     const soln = new FormData();
     soln.append('file', mediaBlob);
     soln.append('language', language);
@@ -85,8 +84,9 @@ function Converse({ noRive = false }) {
       })
       .catch((err) => {
         error(err?.response?.data?.message);
-        clearMediaBlob();
       });
+    clearMediaBlob();
+
     // if (counter <= 20 || (userSubscription?.value && userSubscription?.value?.length !== 0)) {
     //   setUserSubsList(userSubscription?.value);
     //   checkForArray(userSubsList).map((item) => {
@@ -98,7 +98,6 @@ function Converse({ noRive = false }) {
     //     }
     //   });
     // }
-    clearMediaBlob();
   };
 
   useEffect(() => {
@@ -116,13 +115,15 @@ function Converse({ noRive = false }) {
     return () => clearInterval(intervalId);
   }, [status]);
 
+  useEffect(() => {
+    if (counter > 20) {
+      setOpen(true);
+      stopRecording();
+    }
+  }, [counter]);
+
   const deleteRecording = () => {
     stopRecording();
-    setCounter(0);
-  };
-
-  const sendAudioHandler = () => {
-    submitAudioHandler();
     setCounter(0);
   };
 
@@ -210,65 +211,63 @@ function Converse({ noRive = false }) {
               </button>
             </div>
             <div className="py-1 h-28">
-              <AnimatePresence mode="wait">
-                <motion.div key={status} e initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 1 }}>
-                  {status === 'idle' ? (
-                    <>
-                      {chats.length === 0 ? (
-                        <p className="text-[#262626] text-sm pt-6">Tap the Microphone to begin and stop recording.</p>
-                      ) : (
-                        <button
-                          className="px-7 rounded-xl py-2 border border-[#5D387F]"
-                          onClick={() => navigate('/signin')}
+              <div>
+                {status === 'idle' ? (
+                  <>
+                    {chats.length === 0 ? (
+                      <p className="text-[#262626] text-sm pt-6">Tap the Microphone to begin and stop recording.</p>
+                    ) : (
+                      <button
+                        className="px-7 rounded-xl py-2 border border-[#5D387F]"
+                        onClick={() => navigate('/signin')}
+                      >
+                        Exit
+                      </button>
+                    )}
+                  </>
+                ) : (
+                  <div className="mb-10">
+                    <div className="flex justify-center items-center mt-10">{convertSecToMin(counter)}</div>
+                    <div className="flex items-center justify-center space-x-3 py-6">
+                      <Tooltip arrow title="Delete">
+                        <IconButton color="error" aria-label="add an alarm" onClick={deleteRecording}>
+                          <MdReplay size={20} />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip arrow title={status === 'recording' ? 'pause' : 'resume'}>
+                        <IconButton
+                          onClick={onPauseHandler}
+                          disabled={status === 'idle' || status === 'stopped'}
+                          aria-label="add an alarm"
+                          color="primary"
                         >
-                          Exit
-                        </button>
-                      )}
-                    </>
-                  ) : (
-                    <div className="mb-10">
-                      <div className="flex justify-center items-center mt-10">{convertSecToMin(counter)}</div>
-                      <div className="flex items-center justify-center space-x-3 py-6">
-                        <Tooltip arrow title="Delete">
-                          <IconButton color="error" aria-label="add an alarm" onClick={deleteRecording}>
-                            <MdReplay size={20} />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip arrow title="pause">
-                          <IconButton
-                            onClick={onPauseHandler}
-                            disabled={status === 'idle' || status === 'stopped'}
-                            aria-label="add an alarm"
-                            color="primary"
-                          >
-                            <IoMdPause size={20} />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip arrow title="pause">
-                          <IconButton
-                            onClick={stopRecording}
-                            disabled={status === 'idle' || status === 'stopped'}
-                            aria-label="add an alarm"
-                          >
-                            <IoStopSharp size={20} />
-                          </IconButton>
-                        </Tooltip>
+                          <IoMdPause size={20} />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip arrow title="Stop">
+                        <IconButton
+                          onClick={stopRecording}
+                          disabled={status === 'idle' || status === 'stopped'}
+                          aria-label="add an alarm"
+                        >
+                          <IoStopSharp size={20} />
+                        </IconButton>
+                      </Tooltip>
 
-                        <Tooltip arrow title="send recording">
-                          <IconButton
-                            onClick={sendAudioHandler}
-                            color="success"
-                            aria-label="add an alarm"
-                            disabled={status === 'recording' || status === 'paused'}
-                          >
-                            <IoSendSharp size={20} />
-                          </IconButton>
-                        </Tooltip>
-                      </div>
+                      <Tooltip arrow title="send recording">
+                        <IconButton
+                          onClick={submitAudioHandler}
+                          color="success"
+                          aria-label="add an alarm"
+                          disabled={status === 'recording' || status === 'paused'}
+                        >
+                          <IoSendSharp size={20} />
+                        </IconButton>
+                      </Tooltip>
                     </div>
-                  )}
-                </motion.div>
-              </AnimatePresence>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

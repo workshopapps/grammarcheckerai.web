@@ -7,26 +7,26 @@ import RiveBot from '../RiveBot';
 function Chat({ isBot, isCorrection, createdAt = '11:20 AM', text, isLastReply }) {
   return (
     <div
-      className={`flex max-w-md  w-full text-left align-text-bottom space-x-1 ${isBot ? 'mr-auto' : 'ml-auto '} ${
+      className={`flex max-w-lg w-full text-left align-text-bottom space-x-1 ${isBot ? 'mr-auto' : 'ml-auto '} ${
         isLastReply ? 'pl-0' : 'pl-14'
       }`}
     >
       <div className="order-1 w-full">
         <div
-          className={`p-4 rounded-xl  border border-[#5D387F] space-y-2 ${
+          className={`p-4 rounded-lg bg-white shadow-sm border border-[#5D387F31] space-y-2 ${
             isBot ? 'rounded-bl-none' : 'rounded-br-none'
           }`}
         >
           {isCorrection && <p className="font-bold text-lg">Correction</p>}
-          <p className={`text-[15px] ${isCorrection ? 'text-[#279371]' : ''}`}>{text}</p>
+          <p className={`text-[15px] ${isCorrection ? 'text-[#279371]' : 'text-slate-700'}`}>{text}</p>
         </div>
-        <p className={`text-sm mb-2 text-slate-800 pt-1 ${isBot ? 'text-right' : 'text-left'}`}>
+        <p className={`text-xs mb-2 text-slate-800 pt-1 ${isBot ? 'text-right' : 'text-left'}`}>
           {dayjs(createdAt).format('h:mm A')}
         </p>
       </div>
 
       {isLastReply && (
-        <div className={`mt-auto ${isBot ? 'w-16' : 'order-1 w-12'} `}>
+        <div className={`mt-auto ${isBot ? 'w-16 sm:w-12' : 'order-1 w-6 sm:w-8'} `}>
           {isBot ? <RiveBot size="small" /> : <img src={userImg} alt="" className="max-w-full" />}
         </div>
       )}
