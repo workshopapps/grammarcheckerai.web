@@ -1,4 +1,3 @@
-const { parseBuffer } = require("music-metadata");
 const UserResponse = require("../database/models/userResponseSchema");
 const BotResponse = require("../database/models/botResponseSchema");
 const Message = require("../database/models/messageSchema");
@@ -34,16 +33,14 @@ async function getBotResponse(req, res) {
     const userId = req.body.userId;
     const language = req.body.language?.toLowerCase() || "english";
     const audioFile = req.file; // retrieves file buffer and metadata set by multer
-    
     // checks if file is available
     if (!audioFile) {
       return res.status(400).send({
         success: false,
         message: "Please attach an audio file",
       });
-    }
-    const metadata = await parseBuffer(audioFile.buffer, audioFile.mimetype);
-    const audioLength = metadata.format.duration.toFixed();
+    } 
+
     // 1. If userId, Get user's email
     const userEmail = userId
       ? (await userCollection.findById(userId))?.email
@@ -53,13 +50,6 @@ async function getBotResponse(req, res) {
       ? (await Subscription.findOne({ email: userEmail }))?.active
       : null;
 
-    // 2. Check if user is a premiumm user
-    if (!isSubscriber && audioLength > 20) {
-      return res.status(403).send({
-        success: false,
-        message: "Recording above 20 seconds is a premium feature. Go Premium!",
-      });
-    }
     // checks if specified language is not available
 
     if (!languageMap[language]) {
@@ -82,8 +72,16 @@ async function getBotResponse(req, res) {
     // upload url and initiate transcription
     const transcribedAudio = await getTranscriptionFromAssembly(
       preTranscriptId
-    ); // process and download transcript
-    console.log(transcribedAudio.text);
+    );  
+    
+    // 2. Check if user is a premiumm user
+    if (!isSubscriber && Number(transcribedAudio.audio_duration) > 20) {
+      return res.status(403).send({
+        success: false,
+        message: "Recording above 20 seconds is a premium feature. Go Premium!",
+      });
+    }
+
     //If assembly ai fail to return a response
     if (!transcribedAudio) {
       return res.status(400).send({
@@ -91,7 +89,7 @@ async function getBotResponse(req, res) {
         message: "Assembly AI error.",
       });
     }
-console.log(!transcribedAudio.words.length)
+
     // If they were no voice or translatable sound found
     if (!transcribedAudio.words.length) {
       return res.status(400).send({
