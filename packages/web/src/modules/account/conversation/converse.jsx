@@ -191,7 +191,7 @@ function Converse({ noRive = false }) {
               </div>
             </>
           ) : (
-            <ChatContainer chats={chats} />
+            <ChatContainer noRive={noRive} chats={chats} />
           )}
           <div>
             <div className="mx-auto flex items-center justify-center" ref={chatRef}>
