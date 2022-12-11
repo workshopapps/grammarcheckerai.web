@@ -4,10 +4,6 @@ import ChatContainer from './chat-container';
 import SeletedLanguage from '../../../components/SelectedLanguage';
 import RiveBot from '../../../components/RiveBot';
 import micImg from '../../../assets/images/mic.svg';
-import trashImg from '../../../assets/images/trash.svg';
-import sendImg from '../../../assets/images/send.svg';
-import pauseImg from '../../../assets/images/pause.svg';
-import { motion, AnimatePresence } from 'framer-motion';
 import Loader from '../../../components/Loader';
 import { useNavigate } from 'react-router-dom';
 import useGetUserSubscription from '../../../hooks/account/useGetUserSubscription';
@@ -19,6 +15,12 @@ import useTheme from '../../../hooks/useTheme';
 import styles from './index.module.css';
 import PropTypes from 'prop-types';
 import chirpy from '../../../assets/chirpy.svg';
+import { IconButton, Tooltip } from '@mui/material';
+import { IoMdPause } from 'react-icons/io';
+import { IoSendSharp, IoStopSharp } from 'react-icons/io5';
+import { MdReplay } from 'react-icons/md';
+import { convertSecToMin } from '../../../lib/utils';
+
 function Converse({ noRive = false }) {
   const context = useTheme();
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
@@ -30,15 +32,11 @@ function Converse({ noRive = false }) {
     });
   const userData = JSON.parse(localStorage.getItem('isUserDetails'));
 
-  const [second, setSecond] = useState('00');
-  const [minute, setMinute] = useState('00');
   const [counter, setCounter] = useState(0);
   const sendAudio = useSendAudioFile();
-  const [beginRecording, setBeginRecording] = useState(false);
   const [open, setOpen] = useState(false);
   const [language, setLanguage] = React.useState('English');
   const error = (message) => toast.error(message);
-  const [userSubsList, setUserSubsList] = React.useState([]);
 
   const [chats, setChats] = React.useState([]);
   const navigate = useNavigate();
@@ -60,93 +58,100 @@ function Converse({ noRive = false }) {
     setOpen(false);
   };
 
-  let blob = new Blob([mediaBlob], {
-    type: 'audio/wav',
-  });
-
   const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
 
   const submitAudioHandler = () => {
+    setCounter(0);
     const soln = new FormData();
-    soln.append('file', blob);
+    soln.append('file', mediaBlob);
     soln.append('language', language);
-    if (second <= '20' || (userSubscription?.value && userSubscription?.value?.length !== 0)) {
-      setUserSubsList(userSubscription?.value);
-      checkForArray(userSubsList).map((item) => {
-        if (second <= '20' || item.status === 'success') {
-          sendAudio
-            .mutateAsync(soln)
-            .then((res) => {
-              const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
-                res.data.data.botResponse;
-              setChats((prevState) => [
-                ...prevState,
-                {
-                  botReply,
-                  correctedText,
-                  createdAt,
-                  language,
-                  transcribedAudioText,
-                  updatedAt,
-                },
-              ]);
-            })
-            .catch((err) => {
-              error(err?.response?.data?.message);
-              clearMediaBlob();
-            });
-          return;
-        } else {
-          setOpen(true);
-        }
+    sendAudio
+      .mutateAsync(soln)
+      .then((res) => {
+        const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
+          res.data.data.botResponse;
+        setChats((prevState) => [
+          ...prevState,
+          {
+            botReply,
+            correctedText,
+            createdAt,
+            language,
+            transcribedAudioText,
+            updatedAt,
+          },
+        ]);
+      })
+      .catch((err) => {
+        error(err?.response?.data?.message);
       });
-    }
     clearMediaBlob();
   };
 
   useEffect(() => {
     let intervalId;
-
-    if (beginRecording) {
+    if (status === 'idle') return;
+    if (status === 'recording') {
       intervalId = setInterval(() => {
-        const secondCounter = counter % 60;
-        const minuteCounter = Math.floor(counter / 60);
-
-        let computedSecond = String(secondCounter).length === 1 ? `0${secondCounter}` : secondCounter;
-
-        let computedMinute = String(minuteCounter).length === 1 ? `0${minuteCounter}` : minuteCounter;
-
-        setSecond(computedSecond);
-        setMinute(computedMinute);
-
         setCounter((counter) => counter + 1);
       }, 1000);
     }
+    if (status === 'stopped') {
+      clearInterval(intervalId);
+    }
     return () => clearInterval(intervalId);
-  }, [beginRecording, counter]);
+  }, [status]);
+
+  useEffect(() => {
+    if (counter > 20 && userSubscription?.value && userSubscription?.value?.length !== 0) {
+      checkForArray(userSubscription?.value).map((item) => {
+        if (counter <= 20 || item.status === 'success') {
+          return;
+        } else {
+          setOpen(true);
+          stopRecording();
+          setCounter(0);
+          return;
+        }
+      });
+    }
+    if (counter > 20) {
+      setOpen(true);
+      stopRecording();
+      setCounter(0);
+    }
+  }, [counter]);
 
   const deleteRecording = () => {
     stopRecording();
-    setSecond('00');
-    setMinute('00');
     setCounter(0);
-    setBeginRecording(false);
-    setChats([]);
   };
 
-  const sendAudioHandler = () => {
-    submitAudioHandler();
-    setSecond('00');
-    setMinute('00');
-    setCounter(0);
-    setBeginRecording(false);
+  const onMicHandler = () => {
+    if (status === 'idle' || status === 'stopped') {
+      startRecording();
+    }
+    if (status === 'paused') {
+      resumeRecording();
+    }
+    if (status === 'recording') {
+      pauseRecording();
+    }
   };
 
+  const onPauseHandler = () => {
+    if (status === 'recording') {
+      pauseRecording();
+    }
+    if (status === 'paused') {
+      resumeRecording();
+    }
+  };
   return (
     <>
       <Premium open={open} handleClosePremium={handleClosePremium} />
       {sendAudio.isLoading && <Loader />}
-      <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center  pt-2 lg:pt-6">
+      <div className="flex-1 w-full max-w-8xl mx-auto flex flex-col justify-center  pt-2 lg:pt-0 pb-7">
         <div className="text-center max-h-5/6 space-y-5 lg:space-y-8">
           {chats.length === 0 ? (
             <>
@@ -186,16 +191,12 @@ function Converse({ noRive = false }) {
               </div>
             </>
           ) : (
-            <ChatContainer chats={chats} />
+            <ChatContainer noRive={noRive} chats={chats} />
           )}
           <div>
             <div className="mx-auto flex items-center justify-center" ref={chatRef}>
               <button
-                onClick={() => {
-                  console.log(status);
-                  setBeginRecording((prevstate) => !prevstate);
-                  status === 'idle' || status === 'stopped' || status === 'paused' ? startRecording() : stopRecording();
-                }}
+                onClick={onMicHandler}
                 className={`rounded-full h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
                   status === 'recording' ? styles._bot_mic : ''
                 }`}
@@ -208,60 +209,63 @@ function Converse({ noRive = false }) {
               </button>
             </div>
             <div className="py-1 h-28">
-              <AnimatePresence mode="wait">
-                <motion.div key={status} e initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 1 }}>
-                  {status === 'idle' ? (
-                    <>
-                      {chats.length === 0 ? (
-                        <p className="text-[#262626] text-sm pt-6">Tap the Microphone to begin and stop recording.</p>
-                      ) : (
-                        <button
-                          className="px-7 rounded-xl py-2 border border-[#5D387F]"
-                          onClick={() => navigate('/signin')}
+              <div>
+                {status === 'idle' ? (
+                  <>
+                    {chats.length === 0 ? (
+                      <p className="text-[#262626] text-sm pt-6">Tap the Microphone to begin and stop recording.</p>
+                    ) : (
+                      <button
+                        className="px-7 rounded-xl py-2 border border-[#5D387F]"
+                        onClick={() => navigate('/signin')}
+                      >
+                        Exit
+                      </button>
+                    )}
+                  </>
+                ) : (
+                  <div className="mb-10">
+                    <div className="flex justify-center items-center mt-10">{convertSecToMin(counter)}</div>
+                    <div className="flex items-center justify-center space-x-3 py-6">
+                      <Tooltip arrow title="Delete">
+                        <IconButton color="error" aria-label="add an alarm" onClick={deleteRecording}>
+                          <MdReplay size={20} />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip arrow title={status === 'recording' ? 'pause' : 'resume'}>
+                        <IconButton
+                          onClick={onPauseHandler}
+                          disabled={status === 'idle' || status === 'stopped'}
+                          aria-label="add an alarm"
+                          color="primary"
                         >
-                          Exit
-                        </button>
-                      )}
-                    </>
-                  ) : (
-                    <div className="mb-10">
-                      <div className="flex justify-center items-center mt-8">
-                        <span>{minute}</span>
-                        <span>:</span>
-                        <span>{second}</span>
-                      </div>
-                      <div className="flex items-center justify-center space-x-6 py-6">
-                        <button
-                          className="h-6 w-6 rounded-full flex justify-center items-center"
-                          onClick={deleteRecording}
+                          <IoMdPause size={20} />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip arrow title="Stop">
+                        <IconButton
+                          onClick={stopRecording}
+                          disabled={status === 'idle' || status === 'stopped'}
+                          aria-label="add an alarm"
                         >
-                          <img src={trashImg} alt="" className="w-full" />
-                        </button>
-                        <button
-                          className="h-6 w-6 rounded-full flex justify-center items-center"
-                          onClick={() => {
-                            if (status === 'recording') {
-                              setBeginRecording(false);
-                              pauseRecording();
-                            } else if (status === 'idle') {
-                              setBeginRecording(true);
-                              resumeRecording();
-                            }
-                          }}
+                          <IoStopSharp size={20} />
+                        </IconButton>
+                      </Tooltip>
+
+                      <Tooltip arrow title="send recording">
+                        <IconButton
+                          onClick={submitAudioHandler}
+                          color="success"
+                          aria-label="add an alarm"
+                          disabled={status === 'recording' || status === 'paused'}
                         >
-                          <img src={pauseImg} alt="" className="w-full" />
-                        </button>
-                        <button
-                          className="h-6 w-6 rounded-full flex justify-center items-center"
-                          onClick={sendAudioHandler}
-                        >
-                          <img src={sendImg} alt="" className="w-full" />
-                        </button>
-                      </div>
+                          <IoSendSharp size={20} />
+                        </IconButton>
+                      </Tooltip>
                     </div>
-                  )}
-                </motion.div>
-              </AnimatePresence>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
