@@ -8,11 +8,6 @@ const useAuthFacebook = (params) => {
     queryKey: [params],
     redirect: 'follow',
     showSuccessToast: false,
-    onSettled: (res, err) => {
-      if (!err) {
-        console.log(res);
-      }
-    },
   });
 };
 

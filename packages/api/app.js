@@ -16,6 +16,8 @@ const { routeHandler } = require("./routes/index.route"),
 
 const app = express();
 
+app.use(express.static("public"));
+
 //Passport Initialized
 app
   .use(passport.initialize())

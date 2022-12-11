@@ -50,12 +50,7 @@ const Navbar = () => {
               { title: 'Contact', to: '/contact' },
               { title: 'Quiz', to: '/startgame' },
             ].map((item) => (
-              <NavLink
-                to={item.to}
-                key={item.title}
-                onClick={(e) => setActiveNav(e.target.innerText)}
-                className={`${activeNav === item.title ? 'font-bold ' : ''} `}
-              >
+              <NavLink to={item.to} key={item.title} className={({ isActive }) => `${isActive ? 'font-bold' : ''}`}>
                 {item.title}
               </NavLink>
             ))}

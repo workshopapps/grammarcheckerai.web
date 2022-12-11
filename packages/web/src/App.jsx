@@ -355,6 +355,7 @@ function App() {
       <Route path="/emailtemplate" element={<EmailTemplate />} />
       <Route path="/newsletter-template" element={<NewsletterTemplate />} />
       <Route path="/signin-template" element={<SignInTemplate />} />
+      <Route path="/.well-known/assetlinks.json" element={<p>omo</p>} />
       <Route
         element={
           <div>
@@ -368,7 +369,7 @@ function App() {
         <Route path="forgot-password" element={<Forgotpassword />} />
         <Route path="password-reset" element={<ResetLink />} />
       </Route>
-      <Route path="/me" element={<DashboardLayout />}>
+      <Route path="/me" element={isDashboard === false ? <Navigate to="/signin" /> : <DashboardLayout />}>
         <Route path="home" element={<HomePage />} />
         <Route path="history" element={<History />} />
         <Route path="history/correction" element={<Correction />} />

@@ -133,7 +133,7 @@ function Settings() {
   }
 
   return (
-    <div className="px-6 font-semibold max-w-screen-lg mx-auto">
+    <div className="px-6 font-semibold w-full h-full py-10 max-w-screen-lg mx-auto">
       <div className=" relative">
         <div className="flex flex-col gap-4 mb-7 md:flex-row justify-between md:items-center">
           <h1 className="text-center sm:border-b border-gray-400 py-4 text-2xl font-semibold md:border-0">Settings</h1>
@@ -153,7 +153,7 @@ function Settings() {
             <img className="" src={searchIcon} alt="search for a setting" />
           </label>
         </div>
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 w-full">
           {settingList.every((val) => !val.query.toLowerCase().includes(searchTerm.toLowerCase())) ? (
             <div>No results found</div>
           ) : (

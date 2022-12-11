@@ -110,9 +110,9 @@ exports.getTranscriptionFromAssembly = async function (id) {
                 endTime = new Date();
                 console.log("transcript download time - success: ", (transcriptStartTime - endTime)/1000);
                 console.log("Transcription processing time - success: ", (endTime - startTime)/1000);
-                return jsonResponse.text;
+                return jsonResponse;
             }
-        } catch (error) {
+        } catch (error) { 
             throw new Error(error);
         }
     }
