@@ -4,9 +4,6 @@ import ChatContainer from './chat-container';
 import SeletedLanguage from '../../../components/SelectedLanguage';
 import RiveBot from '../../../components/RiveBot';
 import micImg from '../../../assets/images/mic.svg';
-import trashImg from '../../../assets/images/trash.svg';
-import sendImg from '../../../assets/images/send.svg';
-import pauseImg from '../../../assets/images/pause.svg';
 import { motion, AnimatePresence } from 'framer-motion';
 import Loader from '../../../components/Loader';
 import { useNavigate } from 'react-router-dom';
@@ -19,6 +16,11 @@ import useTheme from '../../../hooks/useTheme';
 import styles from './index.module.css';
 import PropTypes from 'prop-types';
 import chirpy from '../../../assets/chirpy.svg';
+import IconButton from '@mui/material/IconButton';
+import { IoMdPause } from 'react-icons/io';
+import { IoSendSharp } from 'react-icons/io5';
+import { MdReplay } from 'react-icons/md';
+import { convertSecToMin } from '../../../lib/utils';
 
 function Converse({ noRive = false }) {
   const context = useTheme();
@@ -26,14 +28,13 @@ function Converse({ noRive = false }) {
   let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
     useMediaRecorder({
       recordScreen: false,
-      // blobOptions: { type: 'audio/wav' },
+      blobOptions: { type: 'audio/wav' },
       mediaStreamConstraints: { audio: true, video: false },
     });
   const userData = JSON.parse(localStorage.getItem('isUserDetails'));
 
   const [counter, setCounter] = useState(0);
   const sendAudio = useSendAudioFile();
-  const [beginRecording, setBeginRecording] = useState(false);
   const [open, setOpen] = useState(false);
   const [language, setLanguage] = React.useState('English');
   const error = (message) => toast.error(message);
@@ -108,7 +109,7 @@ function Converse({ noRive = false }) {
       }, 1000);
     }
     return () => clearInterval(intervalId);
-  }, [beginRecording, counter]);
+  }, [counter]);
 
   const deleteRecording = () => {
     stopRecording();
@@ -127,7 +128,7 @@ function Converse({ noRive = false }) {
     <>
       <Premium open={open} handleClosePremium={handleClosePremium} />
       {sendAudio.isLoading && <Loader />}
-      <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center  pt-2 lg:pt-6">
+      <div className="flex-1 w-full max-w-7xl mx-auto flex flex-col justify-center  pt-2 lg:pt-0 pb-7">
         <div className="text-center max-h-5/6 space-y-5 lg:space-y-8">
           {chats.length === 0 ? (
             <>
@@ -206,16 +207,12 @@ function Converse({ noRive = false }) {
                     </>
                   ) : (
                     <div className="mb-10">
-                      <div className="flex justify-center items-center mt-8">00:00</div>
-                      <div className="flex items-center justify-center space-x-6 py-6">
-                        <button
-                          className="h-6 w-6 rounded-full flex justify-center items-center"
-                          onClick={deleteRecording}
-                        >
-                          <img src={trashImg} alt="" className="w-full" />
-                        </button>
-                        <button
-                          className="h-6 w-6 rounded-full flex justify-center items-center"
+                      <div className="flex justify-center items-center mt-8">{convertSecToMin(counter)}</div>
+                      <div className="flex items-center justify-center space-x-3 py-6">
+                        <IconButton color="error" aria-label="add an alarm" onClick={deleteRecording}>
+                          <MdReplay size={20} />
+                        </IconButton>
+                        <IconButton
                           onClick={() => {
                             if (status === 'recording') {
                               setBeginRecording(false);
@@ -225,15 +222,13 @@ function Converse({ noRive = false }) {
                               resumeRecording();
                             }
                           }}
+                          aria-label="add an alarm"
                         >
-                          <img src={pauseImg} alt="" className="w-full" />
-                        </button>
-                        <button
-                          className="h-6 w-6 rounded-full flex justify-center items-center"
-                          onClick={sendAudioHandler}
-                        >
-                          <img src={sendImg} alt="" className="w-full" />
-                        </button>
+                          <IoMdPause size={20} color="#444" />
+                        </IconButton>
+                        <IconButton onClick={sendAudioHandler} color="success" aria-label="add an alarm">
+                          <IoSendSharp size={20} />
+                        </IconButton>
                       </div>
                     </div>
                   )}
