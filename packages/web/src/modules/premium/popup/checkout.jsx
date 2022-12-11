@@ -18,6 +18,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+// import useStripe from '../../../hooks/auth/useStripe';
 // import userCheckPlanVerify from '../../../hooks/account/userCheckPlanVerify';
 
 const Checkout = (props) => {
@@ -222,6 +223,51 @@ const Checkout = (props) => {
       setLoading(true);
       setTimeout(() => {
         initializePayment(onSuccess, onClose);
+      }, 1000);
+    }
+  };
+
+  const useStripe = async (url, token) => {
+    var requestOptions = {
+      method: 'POST',
+      body: {
+        plan: 'price_1MD8wPDsYRsW1yFuyTdES0Mb',
+        amount: '5.00',
+        currency: 'USD',
+        interval: 'weekly',
+        txref: 'str-0565hgg40002',
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    await fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        console.log(oBJ);
+        // localStorage.setItem('isUserDetails', JSON.stringify(oBJ.data));
+      })
+      .catch((error) => error(error));
+  };
+
+  const handleStripe = async () => {
+    setUserLSEmail(JSON.parse(localStorage.getItem('isUserDetails')).email);
+    setLoading(true);
+    if (props.userIsSubscribed === true) {
+      toast(() => (
+        <span className={styles._notifs}>
+          <b>You are already subscribed!</b>
+          <Button variant="outlined" color="secondary" onClick={handleNavigate}>
+            Go to Dashboard
+          </Button>
+        </span>
+      ));
+    } else if (props.userIsSubscribed === false && userLSEmail && userLSEmail !== '') {
+      setLoading(true);
+      setTimeout(() => {
+        useStripe('https://api.speakbetter.hng.tech/v1/stripe/checkout', localStorage.getItem('grittyusertoken'));
       }, 1000);
     }
   };
@@ -533,10 +579,25 @@ const Checkout = (props) => {
                         variant="outlined"
                         type="button"
                         className={styles._paymentButton}
-                        onClick={handlePaystack}
+                        onClick={handleStripe}
                       >
                         Pay with Stripe
                       </LoadingButton>
+                    )}
+                    {value === 'flutterwave' && (
+                      <h3>Coming soon...</h3>
+                      // <LoadingButton
+                      //   loading={loading}
+                      //   sx={{
+                      //     color: 'white',
+                      //   }}
+                      //   variant="outlined"
+                      //   type="button"
+                      //   className={styles._paymentButton}
+                      //   onClick={handleStripe}
+                      // >
+                      //   Pay with Stripe
+                      // </LoadingButton>
                     )}
                   </div>
                 )}
