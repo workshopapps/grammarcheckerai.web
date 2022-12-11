@@ -630,6 +630,7 @@ input[type='checkbox']:checked + label::before {
   top: 0;
   text-align: left;
   width: 100%;
+  z-index: 2;
 }
 ._paymentChoice {
   height: 100%;
@@ -669,4 +670,10 @@ input[type='checkbox']:checked + label::before {
   text-transform: capitalize;
   background-color: #d6d6d6;
   width: fit-content;
+}
+._sbCurrency {
+  width: 350px;
+  z-index: 1;
+  margin-bottom: 20px;
+  padding-top: 60px;
 }

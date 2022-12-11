@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Button, Dialog } from '@mui/material';
 import style from './popup.module.css';
 import styles from './checkout.module.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -18,27 +18,32 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-// import useStripe from '../../../hooks/auth/useStripe';
+import { Listbox, Transition } from '@headlessui/react';
+import { useFlutterwave } from 'react-flutterwave';
+import useStripe from '../../../hooks/auth/useStripe';
 // import userCheckPlanVerify from '../../../hooks/account/userCheckPlanVerify';
+
+const Currency = [
+  { id: 1, name: 'USD' },
+  { id: 2, name: 'NGN' },
+];
 
 const Checkout = (props) => {
   const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [userId, setUserId] = useState('');
   const [userToken, setUserToken] = useState('');
-  const [isPaymentPage, setIsPaymentPage] = useState(false);
   const [isAlreadyLoggedIn, setIsAlreadyLoggedIn] = useState(false);
   const [userLSEmail, setUserLSEmail] = useState('');
-  const [isPaymentMethod, setIsPaymentMethod] = useState(true);
+  const [selectedCurrency, setSelectedCurrency] = useState(Currency[0]);
 
   const success = (message) => toast.success(message);
   const error = (message) => toast.error(message);
   const [loading, setLoading] = useState(false);
 
   const authLogin = useLogin();
-  const authPay = usePay();
-  // const authVerify = userCheckPlanVerify(JSON.parse(localStorage.getItem('isUserDetails'))?.email, '');
-
+  const authStripe = useStripe;
   let navigate = useNavigate();
 
   const handleForgotPassword = () => {
@@ -56,7 +61,10 @@ const Checkout = (props) => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('grittyuserid') === null || localStorage.getItem('grittyuserid') === '') {
+    if (
+      (!localStorage.getItem('grittyuserid') && localStorage.getItem('grittyuserid') === null) ||
+      localStorage.getItem('grittyuserid') === ''
+    ) {
       localStorage.setItem('grittyuserid', userId);
       localStorage.setItem('grittyusertoken', userToken);
     } else {
@@ -85,26 +93,26 @@ const Checkout = (props) => {
       })
       .catch((error) => error(error));
   };
-  const useVerify = async (url, token) => {
-    var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+  // const useVerify = async (url, token) => {
+  //   var requestOptions = {
+  //     method: 'GET',
+  //     redirect: 'follow',
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   };
 
-    await fetch(url, requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        const oBJ = JSON.parse(result);
-        useVerify(
-          `https://api.speakbetter.hng.tech/v1/paystack/?email=${oBJ.data.data.customer.email}`,
-          'sk_test_30c6122a460a1b8e03c16a44f331ffdfab463c3e',
-        );
-      })
-      .catch((error) => error(error));
-  };
+  //   await fetch(url, requestOptions)
+  //     .then((response) => response.text())
+  //     .then((result) => {
+  //       const oBJ = JSON.parse(result);
+  //       useVerify(
+  //         `https://api.speakbetter.hng.tech/v1/paystack/?email=${oBJ.data.data.customer.email}`,
+  //         'sk_test_30c6122a460a1b8e03c16a44f331ffdfab463c3e',
+  //       );
+  //     })
+  //     .catch((error) => error(error));
+  // };
   const handlelogin = (e) => {
     e.preventDefault();
     if ((userEmail !== '') & (userPassword !== '')) {
@@ -144,61 +152,25 @@ const Checkout = (props) => {
     }
   };
 
-  // you can call this function anything
-  const onSuccess = (reference) => {
-    const user = JSON.parse(localStorage.getItem('isUserDetails'));
-
-    // Implementation for whatever you want to do with reference and after success call.
-    // console.log(reference.trxref);
-    authPay
-      .mutateAsync({
-        email: user.email,
-        name: user.firstName + ' ' + user.lastName,
-        amount: props.amount,
-        interval: props.duration,
-        paymentGateway: 'paystack',
-        subscriptionId: props.plan,
-        txref: reference.trxref,
-      })
-      .then(() => {
-        useVerify(
-          `https://api.speakbetter.hng.tech/v1/paystack/verify?email=${user.email}&txref=${reference.trxref}`,
-          'sk_test_30c6122a460a1b8e03c16a44f331ffdfab463c3e',
-        );
-      })
-      .then(() => {
-        setLoading(true);
-        toast(() => (
-          <span className={styles._notifs}>
-            <b>Subscription Succesfully!</b>
-            <p>Redirecting to dashboard...</p>
-            <button onClick={handleNavigate}>Go to Dashboard</button>
-          </span>
-        ));
-      })
-      .then(() => {
-        setTimeout(() => {
-          navigate('/me/home');
-        }, 3000);
-      })
-      .catch((err) => {
-        error(err.message);
-      });
-  };
-
-  // you can call this function anything
-  const onClose = () => {
-    // implementation for  whatever you want to do when the Paystack dialog closed.
-    setLoading(false);
-  };
   const config = {
-    reference: new Date().getTime().toString(),
-    email: userLSEmail,
-    amount: props.amount * 100,
-    publicKey: 'pk_test_5180356679e878fa241701e8c9b8a8d27a6db5c0',
+    public_key: 'FLWPUBK_TEST-2e1fdd9734036594eb776d8603318f21-X',
+    tx_ref: 'fgjfjgjfgjksds',
+    amount: props.ngn,
+    currency: 'NGN',
+    payment_options: 'card,mobilemoney,ussd',
+    payment_plan: props.ngnplan,
+    customer: {
+      email: userLSEmail,
+      name: userName,
+    },
+    customizations: {
+      title: 'Speak Better',
+      description: 'Subscription Payment',
+      logo: 'https://assets.piedpiper.com/logo.png',
+    },
   };
 
-  const initializePayment = usePaystackPayment(config);
+  const FlutterPayment = useFlutterwave(config);
 
   const handleNavigate = () => {
     toast.dismiss();
@@ -207,53 +179,9 @@ const Checkout = (props) => {
     }, 1000);
   };
 
-  const handlePaystack = async () => {
+  const handleStripe = () => {
     setUserLSEmail(JSON.parse(localStorage.getItem('isUserDetails')).email);
-
-    if (props.userIsSubscribed === true) {
-      toast(() => (
-        <span className={styles._notifs}>
-          <b>You are already subscribed!</b>
-          <Button variant="outlined" color="secondary" onClick={handleNavigate}>
-            Go to Dashboard
-          </Button>
-        </span>
-      ));
-    } else if (props.userIsSubscribed === false && userLSEmail && userLSEmail !== '') {
-      setLoading(true);
-      setTimeout(() => {
-        initializePayment(onSuccess, onClose);
-      }, 1000);
-    }
-  };
-
-  const useStripe = async (url, token) => {
-    var requestOptions = {
-      method: 'POST',
-      body: {
-        plan: 'price_1MD8wPDsYRsW1yFuyTdES0Mb',
-        amount: '5.00',
-        currency: 'USD',
-        interval: 'weekly',
-        txref: 'str-0565hgg40002',
-      },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    await fetch(url, requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        const oBJ = JSON.parse(result);
-        console.log(oBJ);
-        // localStorage.setItem('isUserDetails', JSON.stringify(oBJ.data));
-      })
-      .catch((error) => error(error));
-  };
-
-  const handleStripe = async () => {
-    setUserLSEmail(JSON.parse(localStorage.getItem('isUserDetails')).email);
+    console.log(userLSEmail);
     setLoading(true);
     if (props.userIsSubscribed === true) {
       toast(() => (
@@ -265,10 +193,49 @@ const Checkout = (props) => {
         </span>
       ));
     } else if (props.userIsSubscribed === false && userLSEmail && userLSEmail !== '') {
+      console.log('checking stripe');
+      authStripe
+        .mutateAsync({
+          plan: 'price_1MD8wPDsYRsW1yFuyTdES0Mb',
+          amount: '5.00',
+          currency: 'USD',
+          interval: 'weekly',
+          txref: 'str-006fg550002',
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    }
+  };
+
+  const handleFlutterPayment = () => {
+    const user = JSON.parse(localStorage.getItem('isUserDetails'));
+
+    setUserName(`${user?.firstName} ${user?.lastName}`);
+    setUserLSEmail(JSON.parse(localStorage.getItem('isUserDetails')).email);
+
+    // console.log(userName);
+    console.log(config);
+    if (props.userIsSubscribed === true) {
+      toast(() => (
+        <span className={styles._notifs}>
+          <b>You are already subscribed!</b>
+          <Button variant="outlined" color="secondary" onClick={handleNavigate}>
+            Go to Dashboard
+          </Button>
+        </span>
+      ));
+    } else if (props.userIsSubscribed === false && userLSEmail && userLSEmail !== '') {
       setLoading(true);
-      setTimeout(() => {
-        useStripe('https://api.speakbetter.hng.tech/v1/stripe/checkout', localStorage.getItem('grittyusertoken'));
-      }, 1000);
+      FlutterPayment({
+        callback: (response) => {
+          console.log(response);
+          setTimeout(() => {}, 2000);
+        },
+        onClose: () => {
+          setLoading(false);
+        },
+      });
     }
   };
 
@@ -308,6 +275,49 @@ const Checkout = (props) => {
                       <span>back</span>
                     </button>
                   </div>
+                  <div className={styles._sbCurrency}>
+                    <Listbox value={selectedCurrency} onChange={setSelectedCurrency}>
+                      <div className="relative mt-1">
+                        <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                          <span className="block truncate">{selectedCurrency.name}</span>
+                          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"></span>
+                        </Listbox.Button>
+                        <Transition
+                          as={Fragment}
+                          leave="transition ease-in duration-100"
+                          leaveFrom="opacity-100"
+                          leaveTo="opacity-0"
+                        >
+                          <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                            {Currency.map((person, personIdx) => (
+                              <Listbox.Option
+                                key={personIdx}
+                                className={({ active }) =>
+                                  `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                    active ? 'bg-purple-100 text-amber-900' : 'text-gray-900'
+                                  }`
+                                }
+                                value={person}
+                              >
+                                {({ selected }) => (
+                                  <>
+                                    <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>
+                                      {person.name}
+                                    </span>
+                                    {selected ? (
+                                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                                        {/* <CheckIcon className="h-5 w-5" aria-hidden="true" /> */}
+                                      </span>
+                                    ) : null}
+                                  </>
+                                )}
+                              </Listbox.Option>
+                            ))}
+                          </Listbox.Options>
+                        </Transition>
+                      </div>
+                    </Listbox>
+                  </div>
                   <RadioGroup
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
@@ -315,7 +325,7 @@ const Checkout = (props) => {
                     onChange={handleChange}
                   >
                     <button className="focus:outline-none focus:ring focus:ring-violet-300"></button>
-                    <FormControlLabel
+                    {/* <FormControlLabel
                       className={`${styles._paystack}`}
                       value="paystack"
                       sx={{
@@ -336,7 +346,7 @@ const Checkout = (props) => {
                         />
                       }
                       label="Paystack"
-                    ></FormControlLabel>
+                    ></FormControlLabel> */}
                     <FormControlLabel
                       className={styles._stripe}
                       value="stripe"
@@ -554,22 +564,13 @@ const Checkout = (props) => {
                 ) : (
                   <div className={styles._cpSummary}>
                     <h3>Plan: {props.duration}</h3>
-                    <h3>Amount: ZAR {props.amount}</h3>
-                    <h3 className={styles._cpSummarypayment}>Payment Method: {value}</h3>
-                    {value === 'paystack' && (
-                      <LoadingButton
-                        loading={loading}
-                        sx={{
-                          color: 'white',
-                        }}
-                        variant="outlined"
-                        type="button"
-                        className={styles._paymentButton}
-                        onClick={handlePaystack}
-                      >
-                        Pay with PayStack
-                      </LoadingButton>
+                    {selectedCurrency.id && (
+                      <h3>
+                        Amount: {selectedCurrency.name} {selectedCurrency.id === 2 && props.zar}
+                        {selectedCurrency.id === 1 && props.usd}
+                      </h3>
                     )}
+                    <h3 className={styles._cpSummarypayment}>Payment Method: {value}</h3>
                     {value === 'stripe' && (
                       <LoadingButton
                         loading={loading}
@@ -585,19 +586,19 @@ const Checkout = (props) => {
                       </LoadingButton>
                     )}
                     {value === 'flutterwave' && (
-                      <h3>Coming soon...</h3>
-                      // <LoadingButton
-                      //   loading={loading}
-                      //   sx={{
-                      //     color: 'white',
-                      //   }}
-                      //   variant="outlined"
-                      //   type="button"
-                      //   className={styles._paymentButton}
-                      //   onClick={handleStripe}
-                      // >
-                      //   Pay with Stripe
-                      // </LoadingButton>
+                      // <h3>Coming soon...</h3>
+                      <LoadingButton
+                        loading={loading}
+                        sx={{
+                          color: 'white',
+                        }}
+                        variant="outlined"
+                        type="button"
+                        className={styles._paymentButton}
+                        onClick={handleFlutterPayment}
+                      >
+                        Pay with Flutterwave
+                      </LoadingButton>
                     )}
                   </div>
                 )}
@@ -616,8 +617,11 @@ Checkout.propTypes = {
   handleBack: PropTypes.func,
   Transition: PropTypes.object,
   duration: PropTypes.node,
-  amount: PropTypes.number,
+  zar: PropTypes.number,
+  usd: PropTypes.number,
+  ngn: PropTypes.number,
   plan: PropTypes.string,
+  ngnplan: PropTypes.string,
   userIsSubscribed: PropTypes.bool,
 };
 

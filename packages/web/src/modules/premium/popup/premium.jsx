@@ -16,7 +16,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const index = () => {
   const matches = useMediaQuery('(max-width:694px)');
-  const [interval, setInterval] = React.useState({ plan: '', amount: 0, duration: '' });
+  const [interval, setInterval] = React.useState({ ngnplan: '', plan: '', usd: 0, ngn: 0, zar: 0, duration: '' });
   const [open, setOpen] = React.useState(true);
 
   const handleClosePremium = () => {
@@ -53,7 +53,10 @@ const index = () => {
           handleClosePremium={handleClosePremium}
           Transition={Transition}
           handleBack={handleBack}
-          amount={interval.amount}
+          zar={interval.zar}
+          usd={interval.usd}
+          ngn={interval.ngn}
+          ngnplan={interval.ngnplan}
           plan={interval.plan}
           userIsSubscribed={userIsSubscribed}
         />
@@ -114,11 +117,20 @@ const index = () => {
               <div className={styles._sbmobile}>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() => handleCheckout({ plan: 'PLN_2cqf3nx11trbn4b', amount: 3500, duration: 'monthly' })}
+                  onClick={() =>
+                    handleCheckout({
+                      ngnplan: '31053',
+                      plan: 'PLN_9zw487te50by978',
+                      usd: 5,
+                      ngn: 200,
+                      zar: 35,
+                      duration: 'monthly',
+                    })
+                  }
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Monthly</p>
-                    <h2>₦3500</h2>
+                    <h2>$35</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
                     <ul>
@@ -130,11 +142,20 @@ const index = () => {
                 </button>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() => handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 10000, duration: 'quarterly' })}
+                  onClick={() =>
+                    handleCheckout({
+                      ngnplan: '31054',
+                      plan: 'PLN_eva5gn1da06tvvb',
+                      usd: 10,
+                      ngn: 200,
+                      zar: 100,
+                      duration: 'quarterly',
+                    })
+                  }
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Quarterly</p>
-                    <h2>₦3333.3</h2>
+                    <h2>$3333.3</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
                     <ul>
@@ -146,11 +167,20 @@ const index = () => {
                 </button>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() => handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 35000, duration: 'annually' })}
+                  onClick={() =>
+                    handleCheckout({
+                      ngnplan: '31055',
+                      plan: 'PLN_frkuo2irbdtjft3',
+                      usd: 20,
+                      ngn: 3500,
+                      zar: 350,
+                      duration: 'annually',
+                    })
+                  }
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Annually</p>
-                    <h2>₦2916.6</h2>
+                    <h2>$2916.6</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
                     <ul>
@@ -169,11 +199,18 @@ const index = () => {
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbInterval}>Monthly</h5>
                       <p>
-                        ₦3500<span> / month</span>
+                        $35<span> / month</span>
                       </p>
                       <button
                         onClick={() =>
-                          handleCheckout({ plan: 'PLN_2cqf3nx11trbn4b', amount: 3500, duration: 'monthly' })
+                          handleCheckout({
+                            ngnplan: '31053',
+                            plan: 'PLN_9zw487te50by978',
+                            usd: 5,
+                            ngn: 30,
+                            zar: 35,
+                            duration: 'monthly',
+                          })
                         }
                       >
                         Select
@@ -186,14 +223,21 @@ const index = () => {
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbIntervalPromo}>
                         <span>Quaterly</span>
-                        <span>Billed Quaterly - ₦10000</span>
+                        <span>Billed Quaterly - $100</span>
                       </h5>
                       <p>
-                        ₦3333.3<span> / month</span>
+                        $33<span> / month</span>
                       </p>
                       <button
                         onClick={() =>
-                          handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 10000, duration: 'quarterly' })
+                          handleCheckout({
+                            ngnplan: '31054',
+                            plan: 'PLN_eva5gn1da06tvvb',
+                            usd: 10,
+                            ngn: 50,
+                            zar: 100,
+                            duration: 'quarterly',
+                          })
                         }
                       >
                         Select
@@ -206,14 +250,21 @@ const index = () => {
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbIntervalPromo}>
                         <span>Quaterly</span>
-                        <span>Billed Annually - ₦35000</span>
+                        <span>Billed Annually - $50</span>
                       </h5>
                       <p>
-                        ₦2916.6<span> / month</span>
+                        $716<span> / month</span>
                       </p>
                       <button
                         onClick={() =>
-                          handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 35000, duration: 'annually' })
+                          handleCheckout({
+                            ngnplan: '31055',
+                            plan: 'PLN_frkuo2irbdtjft3',
+                            usd: 20,
+                            ngn: 3500,
+                            zar: 350,
+                            duration: 'annually',
+                          })
                         }
                       >
                         Select
