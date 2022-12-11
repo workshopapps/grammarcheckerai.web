@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import useTheme from '../../../hooks/useTheme';
 import Charcters from './Charcters';
 import Cta from './Cta';
@@ -8,21 +9,11 @@ import HowToUse from './HowToUse';
 import NewsLetter from './NewsLetter';
 import Testimonials from './Testimonials';
 import Utilise from './Utilise';
-// import QuizPopUp from '../../modal/quizpopup/QuizPopUp';
+import QuizPopUp from '../../modal/quizpopup/QuizPopUp';
 
 const LandingPage = () => {
   const context = useTheme();
-  // const [showQuiz, setShowQuiz] = useState(true);
-
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     setShowQuiz(true);
-  //   }, 4000)
-  // }, [setShowQuiz]);
-
-  // setTimeout(() => {
-  //   setShowQuiz(true);
-  // }, 5000);
+  const [showQuiz, setShowQuiz] = useState(true);
 
   return (
     <div data-theme={context.theme} className={` bg-[#bbb8b81a] `}>
@@ -35,7 +26,7 @@ const LandingPage = () => {
       <Utilise />
       <NewsLetter />
       <Footer />
-      {/* <QuizPopUp showQuiz={showQuiz} setShowQuiz={setShowQuiz} /> */}
+      <QuizPopUp showQuiz={showQuiz} setShowQuiz={setShowQuiz} />
     </div>
   );
 };
