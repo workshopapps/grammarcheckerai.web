@@ -57,7 +57,7 @@ function DashboardLayout() {
       </div>
 
       <LogOutModal handleClose={handleClose} open={open} />
-      <div className="w-full flex flex-col">
+      <div className="w-full flex flex-col pb-20 sm:pb-0">
         <div className="py-4 border-b border-[#0000000d] bg-[#F6F6F6] w-full sm:sticky top-0 z-30">
           <div className="max-w-[1050px] mx-auto flex justify-between px-6">
             <div>
