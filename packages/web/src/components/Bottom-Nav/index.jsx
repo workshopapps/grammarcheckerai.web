@@ -2,8 +2,15 @@ import * as React from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { IoHomeOutline, IoSettingsOutline } from 'react-icons/io5';
-import { BsDownload, BsClock, BsFillPersonLinesFill, BsThreeDotsVertical, BsArrowBarRight } from 'react-icons/bs';
-import { AiFillWechat, AiOutlineUser } from 'react-icons/ai';
+import {
+  BsDownload,
+  BsCashCoin,
+  BsClock,
+  BsFillPersonLinesFill,
+  BsThreeDotsVertical,
+  BsArrowBarRight,
+} from 'react-icons/bs';
+import { AiFillWechat } from 'react-icons/ai';
 import { Paper } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -24,7 +31,7 @@ export default function SimpleBottomNavigation({ handleOpen }) {
     setAnchorEl(null);
   };
 
-  const routes = ['/me/home', '/me/history', '/me/import', '/me/profile'];
+  const routes = ['/me/home', '/me/history', '/me/import', '/me/subscription'];
 
   return (
     <div className="block md:hidden">
@@ -85,7 +92,7 @@ export default function SimpleBottomNavigation({ handleOpen }) {
           <BottomNavigationAction label="Home" icon={<IoHomeOutline />} />
           <BottomNavigationAction label="History" icon={<BsClock />} />
           <BottomNavigationAction label="Import" icon={<BsDownload />} />
-          <BottomNavigationAction label="Profile" icon={<AiOutlineUser />} />
+          <BottomNavigationAction label="Billing" icon={<BsCashCoin />} />
           <BottomNavigationAction
             id="fade-button"
             aria-controls={open ? 'fade-menu' : undefined}
