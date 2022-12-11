@@ -42,7 +42,7 @@ async function getBotResponse(req, res) {
       });
     }
     const metadata = await parseBuffer(audioFile.buffer, audioFile.mimetype);
-    const audioLength = metadata.format.duration.toFixed(2);
+    const audioLength = metadata.format.duration.toFixed();
     // 1. If userId, Get user's email
     const userEmail = userId
       ? (await userCollection.findById(userId))?.email
