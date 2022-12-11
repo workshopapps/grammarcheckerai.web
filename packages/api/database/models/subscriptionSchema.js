@@ -38,7 +38,7 @@ const subscriptionSchema = new mongoose.Schema(
     },
     currency: {
       type: String,
-      enum: ["NGN", "USD", "EUR", "YEN", "GBP"],
+      enum: ["NGN", "USD", "EUR", "YEN", "GBP", "ZAR"],
       default: "NGN",
     },
     expirationDate: {
