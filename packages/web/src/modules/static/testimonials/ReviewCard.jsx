@@ -40,26 +40,24 @@ export const ReviewCard = ({ closeModal }) => {
     const handleInput = (e) => {
         const { name, value } = e.target;
         setFormvalue({ ...formvalue, [name]: value });
-        console.log(formvalue);
+      
     };
     
       const handleFormsubmit = async (e) => {
           e.preventDefault();
           try {
             const response = await fetch('https://api.speakbetter.hng.tech/v1/rating', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              conversation_id: Math.floor(Math.random()*1000),
-              ratings: currentValue,
-              userid: '914d5fc6-887a-4264-8e66-cd41232cb46f',
-              comment: formvalue.comment,
-            }),
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                ratings: currentValue,
+                userid: localStorage.getItem('grittyuserid'),
+                comment: formvalue.comment,
+              }),
             });
-              
           if (response.ok) {
-              setSuccessMessage('Thank you for rating SpeakBetter!');
-              
+           await setSuccessMessage('Thank you for rating SpeakBetter!')
+           await  closeModal()
           } else {
             setSuccessMessage('There was an error processing your review');
           }
@@ -69,14 +67,14 @@ export const ReviewCard = ({ closeModal }) => {
               console.log(error)
           }
 
-        //console.log(localStorage.getItem("grittyuserid"))
+        console.log(localStorage.getItem("grittyuserid"))
         //console.log(formvalue.comment);
-      };
-
+  };
+   
   return (
     <div className="flex justify-center ">
       <div className="fixed bg-gray-300 top-0 h-screen w-screen z-60" />
-      <div className="fixed bg-white m-auto w-96 lg:w-1/3 h-96 top-64 lg:top-32 rounded-2xl z-60 overflow-hidden">
+      <div className="fixed bg-white m-auto w-[98vw] md:w-96 lg:w-1/3 h-96 top-32 lg:top-40 rounded-2xl z-60 overflow-hidden">
         <img src={emblem} className="mx-auto my-6" />
         {neutral && (
           <main className="">
@@ -131,8 +129,8 @@ export const ReviewCard = ({ closeModal }) => {
                   })}
                 </div>
                 <div className="my-4">
-                  <input
-                    className="w-full h-12 border-t py-2 outline-none border-slate-800"
+                  <textarea
+                    className="w-full border-t px-3 py-2 outline-none border-slate-800"
                     placeholder="Describe your experience(optional)"
                     type="text"
                     name="comment"
