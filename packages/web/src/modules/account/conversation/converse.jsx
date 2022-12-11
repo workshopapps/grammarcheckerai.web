@@ -19,19 +19,18 @@ import useTheme from '../../../hooks/useTheme';
 import styles from './index.module.css';
 import PropTypes from 'prop-types';
 import chirpy from '../../../assets/chirpy.svg';
+
 function Converse({ noRive = false }) {
   const context = useTheme();
   const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
   let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
     useMediaRecorder({
       recordScreen: false,
-      blobOptions: { type: 'audio/wav' },
+      // blobOptions: { type: 'audio/wav' },
       mediaStreamConstraints: { audio: true, video: false },
     });
   const userData = JSON.parse(localStorage.getItem('isUserDetails'));
 
-  const [second, setSecond] = useState('00');
-  const [minute, setMinute] = useState('00');
   const [counter, setCounter] = useState(0);
   const sendAudio = useSendAudioFile();
   const [beginRecording, setBeginRecording] = useState(false);
@@ -60,20 +59,17 @@ function Converse({ noRive = false }) {
     setOpen(false);
   };
 
-  let blob = new Blob([mediaBlob], {
-    type: 'audio/wav',
-  });
-
   const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
 
   const submitAudioHandler = () => {
+    console.log(mediaBlob);
     const soln = new FormData();
-    soln.append('file', blob);
+    soln.append('file', mediaBlob);
     soln.append('language', language);
-    if (second <= '20' || (userSubscription?.value && userSubscription?.value?.length !== 0)) {
+    if (counter <= 20 || (userSubscription?.value && userSubscription?.value?.length !== 0)) {
       setUserSubsList(userSubscription?.value);
       checkForArray(userSubsList).map((item) => {
-        if (second <= '20' || item.status === 'success') {
+        if (counter <= 20 || item.status === 'success') {
           sendAudio
             .mutateAsync(soln)
             .then((res) => {
@@ -106,19 +102,8 @@ function Converse({ noRive = false }) {
 
   useEffect(() => {
     let intervalId;
-
     if (beginRecording) {
       intervalId = setInterval(() => {
-        const secondCounter = counter % 60;
-        const minuteCounter = Math.floor(counter / 60);
-
-        let computedSecond = String(secondCounter).length === 1 ? `0${secondCounter}` : secondCounter;
-
-        let computedMinute = String(minuteCounter).length === 1 ? `0${minuteCounter}` : minuteCounter;
-
-        setSecond(computedSecond);
-        setMinute(computedMinute);
-
         setCounter((counter) => counter + 1);
       }, 1000);
     }
@@ -127,8 +112,6 @@ function Converse({ noRive = false }) {
 
   const deleteRecording = () => {
     stopRecording();
-    setSecond('00');
-    setMinute('00');
     setCounter(0);
     setBeginRecording(false);
     setChats([]);
@@ -136,8 +119,6 @@ function Converse({ noRive = false }) {
 
   const sendAudioHandler = () => {
     submitAudioHandler();
-    setSecond('00');
-    setMinute('00');
     setCounter(0);
     setBeginRecording(false);
   };
@@ -225,11 +206,7 @@ function Converse({ noRive = false }) {
                     </>
                   ) : (
                     <div className="mb-10">
-                      <div className="flex justify-center items-center mt-8">
-                        <span>{minute}</span>
-                        <span>:</span>
-                        <span>{second}</span>
-                      </div>
+                      <div className="flex justify-center items-center mt-8">00:00</div>
                       <div className="flex items-center justify-center space-x-6 py-6">
                         <button
                           className="h-6 w-6 rounded-full flex justify-center items-center"
