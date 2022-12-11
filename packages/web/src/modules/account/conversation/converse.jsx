@@ -16,7 +16,7 @@ import styles from './index.module.css';
 import PropTypes from 'prop-types';
 import chirpy from '../../../assets/chirpy.svg';
 import { IconButton, Tooltip } from '@mui/material';
-import { IoMdPause } from 'react-icons/io';
+import { IoMdPause, IoMdPlay } from 'react-icons/io';
 import { IoSendSharp, IoStopSharp } from 'react-icons/io5';
 import { MdReplay } from 'react-icons/md';
 import { convertSecToMin } from '../../../lib/utils';
@@ -151,7 +151,7 @@ function Converse({ noRive = false }) {
     <>
       <Premium open={open} handleClosePremium={handleClosePremium} />
       {sendAudio.isLoading && <Loader />}
-      <div className="flex-1 w-full max-w-8xl mx-auto flex flex-col justify-center  pt-2 lg:pt-0 pb-7">
+      <div className="flex-1 w-full max-w-8xl mx-auto flex flex-col justify-center pt-3 lg:pt-0 pb-7">
         <div className="text-center max-h-5/6 space-y-5 lg:space-y-8">
           {chats.length === 0 ? (
             <>
@@ -239,7 +239,7 @@ function Converse({ noRive = false }) {
                           aria-label="add an alarm"
                           color="primary"
                         >
-                          <IoMdPause size={20} />
+                          {status === 'paused' ? <IoMdPlay size={20} /> : <IoMdPause size={20} />}
                         </IconButton>
                       </Tooltip>
                       <Tooltip arrow title="Stop">

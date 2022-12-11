@@ -8,9 +8,9 @@ import chirpy from '../../assets/chirpy.svg';
 function Chat({ isBot, isCorrection, createdAt = '11:20 AM', text, isLastReply, noRive }) {
   return (
     <div
-      className={`flex max-w-lg w-full text-left align-text-bottom space-x-1 ${isBot ? 'mr-auto' : 'ml-auto '} ${
-        isLastReply ? 'pl-0' : 'pl-14'
-      }`}
+      className={`flex max-w-xs xs:max-w-sm sm:max-w-lg w-full text-left align-text-bottom space-x-1 ${
+        isBot ? 'mr-auto' : 'ml-auto '
+      } ${isLastReply ? 'pl-0' : 'pl-14'}`}
     >
       <div className="order-1 w-full">
         <div
@@ -27,7 +27,7 @@ function Chat({ isBot, isCorrection, createdAt = '11:20 AM', text, isLastReply, 
       </div>
 
       {isLastReply && (
-        <div className={`mt-auto ${isBot ? 'ml-auto w-8 sm:w-12' : 'order-1 w-6 sm:w-8'}`}>
+        <div className={`mt-auto ${isBot ? 'w-12 sm:w-12' : 'order-1 w-6 sm:w-8'}`}>
           {isBot ? (
             noRive ? (
               <img src={chirpy} alt="" className="w-full" />
