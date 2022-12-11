@@ -43,7 +43,7 @@ const Checkout = (props) => {
   const [loading, setLoading] = useState(false);
 
   const authLogin = useLogin();
-  const authStripe = useStripe;
+  const authStripe = useStripe();
   let navigate = useNavigate();
 
   const handleForgotPassword = () => {
@@ -180,8 +180,9 @@ const Checkout = (props) => {
   };
 
   const handleStripe = () => {
-    setUserLSEmail(JSON.parse(localStorage.getItem('isUserDetails')).email);
-    console.log(userLSEmail);
+    const user = JSON.parse(localStorage.getItem('isUserDetails'));
+    setUserLSEmail(user?.email);
+    console.log(props.userIsSubscribed);
     setLoading(true);
     if (props.userIsSubscribed === true) {
       toast(() => (
@@ -192,7 +193,7 @@ const Checkout = (props) => {
           </Button>
         </span>
       ));
-    } else if (props.userIsSubscribed === false && userLSEmail && userLSEmail !== '') {
+    } else if (props.userIsSubscribed === false) {
       console.log('checking stripe');
       authStripe
         .mutateAsync({
@@ -203,7 +204,8 @@ const Checkout = (props) => {
           txref: 'str-006fg550002',
         })
         .then((res) => {
-          console.log(res);
+          window.location = res.data.redirectUrl;
+          setLoading(false);
         });
     }
   };
@@ -579,7 +581,7 @@ const Checkout = (props) => {
                         }}
                         variant="outlined"
                         type="button"
-                        className={styles._paymentButton}
+                        // className={styles._paymentButton}
                         onClick={handleStripe}
                       >
                         Pay with Stripe
@@ -594,7 +596,7 @@ const Checkout = (props) => {
                         }}
                         variant="outlined"
                         type="button"
-                        className={styles._paymentButton}
+                        // className={styles._paymentButton}
                         onClick={handleFlutterPayment}
                       >
                         Pay with Flutterwave
