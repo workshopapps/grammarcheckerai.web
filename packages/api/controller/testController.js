@@ -1,23 +1,23 @@
 const axios = require("./axios");
 const { environment } = require("../config/environment");
-const { SENDGRID_API_KEY, TEST_EMAIL_TEMPLATE_ID, EMAIL_FROM } = environment;
+const { SENDGRID_API_KEY, TEST_EMAIL_TEMPLATE_ID } = environment;
 const emailService = require("../services/email.service");
 const sendgrid = require("@sendgrid/mail");
 sendgrid.setApiKey(SENDGRID_API_KEY);
 
 exports.home = async (req, res) => {
   var status = [];
-  const home = await axios
-    .get("/")
+  await axios
+    .get("/v1")
     .then((home) => {
       if (home.status == 200) {
         status.push({ home: { status: "ok" } });
       }
     })
-    .catch((err) => {
+    .catch((error) => {
       status.push({ home: { status: "down" } });
     });
-  const updateUser = await axios({
+  await axios({
     method: "POST",
     url: "v1/user/profile/update",
     data: {
@@ -36,8 +36,8 @@ exports.home = async (req, res) => {
       }
     });
 
-  const sendAudio = await axios
-    .get("/v1/conversation/sendAudio")
+  await axios
+    .post("/v1/conversation/sendAudio")
     .then((sendAudio) => {
       if (sendAudio.status == 200) {
         status.push({ sendAudio: { status: "ok" } });
@@ -49,7 +49,7 @@ exports.home = async (req, res) => {
       }
     });
 
-  const apiDocs = await axios
+  await axios
     .get("/api-docs")
     .then((apiDocs) => {
       if (apiDocs.status === 200) {
@@ -62,8 +62,8 @@ exports.home = async (req, res) => {
       }
     });
 
-  const logoutPage = await axios
-    .get("v1/auth/logout")
+  await axios
+    .post("v1/auth/logout")
     .then((response) => {
       if (response.status == 200) {
         status.push({ logoutPage: { status: "ok" } });
@@ -73,7 +73,7 @@ exports.home = async (req, res) => {
       status.push({ logoutPage: { status: "down" } });
     });
 
-  const loginPage = await axios
+  await axios
     .post("/v1/auth/login")
     .then((response) => {
       if (response.status == 200) {
@@ -85,8 +85,8 @@ exports.home = async (req, res) => {
         status.push({ loginPage: { status: "ok" } });
       }
     });
-  const conversation = await axios
-    .post("/v1/conversation/start")
+  await axios
+    .get("/v1/conversation/start")
     .then((response) => {
       if (response.status == 200) {
         status.push({ conversation: { status: "ok" } });
@@ -97,7 +97,67 @@ exports.home = async (req, res) => {
         status.push({ conversation: { status: "ok" } });
       }
     });
-  return res.status(200).send(status);
+
+  await axios
+    .get("/v1/quiz")
+    .then((response) => {
+      if (response.status == 200) {
+        status.push({ quiz: { status: "ok" } });
+      }
+    })
+    .catch((err) => {
+      if (err.response.status != 404) {
+        status.push({ quiz: { status: "ok" } });
+      } else {
+        status.push({ quiz: { status: "down" } });
+      }
+    });
+  await axios
+    .post("/v1/contact")
+    .then((response) => {
+      if (response.status == 200) {
+        status.push({ contact: { status: "ok" } });
+      }
+    })
+    .catch((err) => {
+      console.log(err.response);
+      if (err.response.status != 404) {
+        status.push({ contact: { status: "ok" } });
+      } else {
+        status.push({ contact: { status: "down" } });
+      }
+    });
+  await axios
+    .get("/v1/rating")
+    .then((response) => {
+      if (response.status == 200) {
+        status.push({ rating: { status: "ok" } });
+      }
+    })
+    .catch((err) => {
+      console.log(err.response);
+      if (err.response.status != 404) {
+        status.push({ rating: { status: "ok" } });
+      } else {
+        status.push({ rating: { status: "down" } });
+      }
+    });
+  await axios
+    .post("/v1/newsletter/signupNewsletterEmail")
+    .then((response) => {
+      if (response.status == 200) {
+        status.push({ newsletter: { status: "ok" } });
+      }
+    })
+    .catch((err) => {
+      console.log(err.response);
+      if (err.response.status != 404) {
+        status.push({ newsletter: { status: "ok" } });
+      } else {
+        status.push({ newsletter: { status: "down" } });
+      }
+    });
+  return res.status(200).json(status);
 };
 
 exports.sendMail = async (req, res) => {
@@ -108,7 +168,7 @@ exports.sendMail = async (req, res) => {
     templateId: TEST_EMAIL_TEMPLATE_ID,
     dynamic_template_data: {
       name: name,
-      actionurl: "https://speakbetter.hng.tech/me/home",
+      actionurl: "https://speakbetter.hng.tech",
     },
   });
   return res

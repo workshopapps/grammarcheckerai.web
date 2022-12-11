@@ -1,6 +1,6 @@
 const { environment } = require("../config/environment");
 const Subscription = require("../database/models/subscriptionSchema");
-const { STRIPE_SECRET_KEY, JWT_SECRET } = environment;
+const { STRIPE_SECRET_KEY } = environment;
 const stripe = require("stripe")(STRIPE_SECRET_KEY);
 
 exports.checkout = async (req, res, next) => {
@@ -39,7 +39,7 @@ exports.checkout = async (req, res, next) => {
       mode: "subscription",
       customer_email: email,
       client_reference_id: txref,
-      success_url: `https://speakbetter.hng.tech/me/home?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `http://localhost:5000/premium?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `https://speakbetter.hng.tech`,
     })
     .then((data) => {
