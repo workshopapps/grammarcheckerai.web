@@ -140,6 +140,7 @@ async function getBotResponse(req, res) {
 
     // construct response
     let userResponse, botResponse;
+    let transcribedAudioText = transcribedAudio.text;
 
     // for not logged in users
     if (!userId) {
@@ -148,7 +149,6 @@ async function getBotResponse(req, res) {
         createdAt: new Date(),
         updatedAt: new Date(),
       };
-      let transcribedAudioText = transcribedAudio.text;
       botResponse = {
         transcribedAudioText,
         correctedText: correctUserResponseInTxt.trim(),
