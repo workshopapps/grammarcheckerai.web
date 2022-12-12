@@ -94,7 +94,7 @@ const index = () => {
         console.log(oBJ.data);
         localStorage.setItem('isUserDetails', JSON.stringify(oBJ.data));
       })
-      .catch((error) => error('error', error));
+      .catch((error) => error(error?.message));
   };
 
   /*
