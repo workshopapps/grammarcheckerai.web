@@ -389,7 +389,17 @@ input[type='checkbox']:checked + label::before {
   width: 100%;
   max-width: 406.5px;
 }
-@media only screen and (min-width: 849px) and (max-width: 1200px) {
+@media only screen and (max-width: 850px) {
+  ._paymentHeader {
+    position: relative !important;
+    top: 0;
+    text-align: left;
+    width: 100%;
+    z-index: 2;
+  }
+  ._paymentMethod {
+    padding: 10px 20px;
+  }
 }
 
 @media only screen and (max-width: 389px) {

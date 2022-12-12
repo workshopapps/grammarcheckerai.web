@@ -520,29 +520,71 @@ const Checkout = (props) => {
                       <h2>Upgrade to premium</h2>
                     </div>
                   </div>
-                  <div className={styles._sbmodalCol1Body}>
-                    <div className={styles._sbmodalText}>
-                      <p>You can get a lot more out of Speak Better by upgrading to premium. Get all features:</p>
+                  {value === '' ? (
+                    <div className={styles._sbmodalCol1Body}>
+                      <div className={styles._sbmodalText}>
+                        <p>You can get a lot more out of Speak Better by upgrading to premium. Get all features:</p>
+                      </div>
+                      <div className={styles._sbmodalList}>
+                        <div>
+                          <img src={check} alt="check" className={styles._sbListIcon} />
+                          <p>Unlimited audio length</p>
+                        </div>
+                        <div>
+                          <img src={check} alt="check" className={styles._sbListIcon} />
+                          <p>Access to transcription history</p>
+                        </div>
+                        <div>
+                          <img src={check} alt="check" className={styles._sbListIcon} />
+                          <p>Variety of AI bot</p>
+                        </div>
+                        <div>
+                          <img src={check} alt="check" />
+                          <p>Grammer corrections</p>
+                        </div>
+                      </div>
                     </div>
-                    <div className={styles._sbmodalList}>
-                      <div>
-                        <img src={check} alt="check" className={styles._sbListIcon} />
-                        <p>Unlimited audio length</p>
-                      </div>
-                      <div>
-                        <img src={check} alt="check" className={styles._sbListIcon} />
-                        <p>Access to transcription history</p>
-                      </div>
-                      <div>
-                        <img src={check} alt="check" className={styles._sbListIcon} />
-                        <p>Variety of AI bot</p>
-                      </div>
-                      <div>
-                        <img src={check} alt="check" />
-                        <p>Grammer corrections</p>
-                      </div>
+                  ) : (
+                    <div className={styles._cpSummary}>
+                      <h3>Plan: {props.duration}</h3>
+                      {selectedCurrency.id && (
+                        <h3>
+                          Amount: {selectedCurrency.name} {selectedCurrency.id === 2 && props.ngn}
+                          {selectedCurrency.id === 1 && props.usd}
+                        </h3>
+                      )}
+                      <h3 className={styles._cpSummarypayment}>Payment Method: {value}</h3>
+                      {value === 'stripe' && (
+                        <LoadingButton
+                          loading={loading}
+                          sx={{
+                            color: 'white',
+                          }}
+                          variant="outlined"
+                          type="button"
+                          className={styles._paymentButton}
+                          onClick={handleStripe}
+                        >
+                          Pay with Stripe
+                        </LoadingButton>
+                      )}
+                      {value === 'flutterwave' && (
+                        // <h3>Coming soon...</h3>
+                        <LoadingButton
+                          loading={loading}
+                          sx={{
+                            color: 'white',
+                          }}
+                          variant="outlined"
+                          type="button"
+                          className={styles._paymentButton}
+                          onClick={handleFlutterPayment}
+                        >
+                          Pay with Flutterwave
+                        </LoadingButton>
+                      )}
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             )}
