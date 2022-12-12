@@ -7,7 +7,7 @@ const usePremium = () => {
     queryKey: 'plan',
     port: 443,
     headers: {
-      Authorization: 'Bearer sk_test_7c8d4865357e9ee081faf517549b011044a8cd12',
+      Authorization: 'Bearer sk_test_30c6122a460a1b8e03c16a44f331ffdfab463c3e',
       'Content-Type': 'application/json',
     },
     showSuccessToast: false,

@@ -6,7 +6,6 @@ import RiveBot from '../../../components/RiveBot';
 import micImg from '../../../assets/images/mic.svg';
 import Loader from '../../../components/Loader';
 import { useNavigate } from 'react-router-dom';
-import useGetUserSubscription from '../../../hooks/account/useGetUserSubscription';
 import useMediaRecorder from '@wmik/use-media-recorder';
 import toast from 'react-hot-toast';
 import useSendAudioFile from '../../../hooks/account/useSendAudio';
@@ -23,25 +22,52 @@ import { convertSecToMin } from '../../../lib/utils';
 
 function Converse({ noRive = false }) {
   const context = useTheme();
-  const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
   let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
     useMediaRecorder({
       recordScreen: false,
       blobOptions: { type: 'audio/wav' },
       mediaStreamConstraints: { audio: true, video: false },
     });
-  const userData = JSON.parse(localStorage.getItem('isUserDetails'));
 
+  const userData = JSON.parse(localStorage.getItem('isUserDetails'));
+  const [userSubscription, setUserSubscription] = React.useState('');
   const [counter, setCounter] = useState(0);
   const sendAudio = useSendAudioFile();
   const [open, setOpen] = useState(false);
   const [language, setLanguage] = React.useState('English');
+  const userId = localStorage.getItem('grittyuserid');
   const error = (message) => toast.error(message);
 
   const [chats, setChats] = React.useState([]);
   const navigate = useNavigate();
 
   const chatRef = useRef(null);
+
+  const useFetch = (url, token) => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        setUserSubscription(oBJ);
+      })
+      .then(() => {
+        // console.log(userSubscription);
+      })
+      .catch((error) => error(error));
+  };
+
+  React.useEffect(() => {
+    useFetch('https://api.speakbetter.hng.tech/v1/subscription', localStorage.getItem('grittyusertoken'));
+    // console.log(userSubscription.status);
+  }, []);
 
   const handleScroll = () => {
     setTimeout(() => {
@@ -65,6 +91,7 @@ function Converse({ noRive = false }) {
     const soln = new FormData();
     soln.append('file', mediaBlob);
     soln.append('language', language);
+    if (userId) soln.append('userId', userId);
     sendAudio
       .mutateAsync(soln)
       .then((res) => {
@@ -103,19 +130,15 @@ function Converse({ noRive = false }) {
   }, [status]);
 
   useEffect(() => {
-    if (counter > 20 && userSubscription?.value && userSubscription?.value?.length !== 0) {
-      checkForArray(userSubscription?.value).map((item) => {
-        if (counter <= 20 || item.status === 'success') {
-          return;
-        } else {
-          setOpen(true);
-          stopRecording();
-          setCounter(0);
+    if (counter > 10 && userSubscription?.data && userSubscription?.data?.length !== 0) {
+      checkForArray(userSubscription?.data).map((item) => {
+        if (item.status === 'successful') {
           return;
         }
       });
+      return;
     }
-    if (counter > 20) {
+    if (counter > 10) {
       setOpen(true);
       stopRecording();
       setCounter(0);
@@ -160,7 +183,7 @@ function Converse({ noRive = false }) {
                   <RiveBot size="large" />
                 </div>
               ) : (
-                <div className=" flex justify-center items-center pb-6">
+                <div className="flex justify-center items-center pb-6">
                   <img
                     src={chirpy}
                     alt="chirpy bob"
@@ -257,7 +280,7 @@ function Converse({ noRive = false }) {
                           onClick={submitAudioHandler}
                           color="success"
                           aria-label="add an alarm"
-                          disabled={status === 'recording' || status === 'paused'}
+                          disabled={status === 'recording' || status === 'idle' || status === 'paused'}
                         >
                           <IoSendSharp size={20} />
                         </IconButton>

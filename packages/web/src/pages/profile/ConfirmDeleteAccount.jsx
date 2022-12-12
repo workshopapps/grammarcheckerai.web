@@ -82,11 +82,12 @@ export default function ConfirmDeleteAccount() {
         }
       };
 
-    const addReason = (text) => {
-        if(reasons.includes(text)) {
-           setReasons([...reasons])
+    const addReason = (item) => {
+        if(reasons.includes(item)) {
+           setReasons(reasons.filter(r => r.id !== item.id))
+          
         } else {
-            setReasons([...reasons, text]);
+            setReasons([...reasons, item]);
         }
     }
     useEffect(() => {
@@ -94,11 +95,12 @@ export default function ConfirmDeleteAccount() {
             setBtnDisabled(true)
         } else {
             setBtnDisabled(false)
-        }
-    },[reasons, password])
+        };
+        //console.log(reasons);
+    },[reasons])
      
   return (
-    <div className='h-full flex flex-col w-[90%] md:w-[70%] lg:w-[70%] m-auto pt-5 sm:pt-16'>
+    <div className='h-full flex flex-col w-[90%] md:w-[70%] lg:w-[70%] m-auto py-5 sm:pt-16'>
         <BsChevronLeft className='absolute top-5 sm:hidden' size={28} onClick={() => history(-1)} />
         <div className='flex flex-col'>
             <h1 className='text-xl sm:text-2xl text-[#393939] sm:text-center text-center font-bold'>Delete Account</h1>
@@ -108,8 +110,8 @@ export default function ConfirmDeleteAccount() {
         <ul className='mt-10 flex flex-wrap gap-2 sm:gap-6'>
             {reasonsArray.map((item) => (
                 <button 
-                    onClick={() => addReason(item.text)}
-                    className='cursor-pointer px-4 py-2 rounded-3xl bg-[#eeeeee] text-sm sm:text-base' key={item.id}
+                    onClick={() => addReason(item)}
+                    className={!reasons.includes(item) ? 'cursor-pointer px-4 py-2 rounded-3xl bg-[#eeeeee] text-sm sm:text-base hover:bg-[#5d387f]/50' : 'cursor-pointer px-4 py-2 rounded-3xl text-sm sm:text-base bg-[#5d387f] text-white'} key={item.id}
                     >
                         {item.text}
                     </button>
@@ -118,7 +120,7 @@ export default function ConfirmDeleteAccount() {
 
         <form className='mt-5'>
             <label className='flex flex-col'>
-                <span className='text-lg'>password:</span>
+                <span className='text-base sm:text-lg'>password:</span>
                 <input type="password" value={password} className='_input' onChange={(e) => setPassword(e.target.value)} />
             </label>
         </form>

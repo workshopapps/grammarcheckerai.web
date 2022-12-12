@@ -1,12 +1,13 @@
-* {
+/* * {
   font-family: 'Inter', sans-serif;
-}
+} */
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+* {
   font-family: 'DM Sans', sans-serif;
 }
 :root {
@@ -83,4 +84,7 @@ html {
 }
 .css-1twrztz-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root {
   background-color: #5d387f !important;
+}
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  border-radius: 16px !important;
 }

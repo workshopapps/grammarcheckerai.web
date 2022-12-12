@@ -90,7 +90,7 @@ const index = () => {
           </div>
         </div>
 
-          <div className="lg:flex justify-between lg:gap-20 m-2 p-4 lg:ml-8">
+          <div className="lg:flex justify-between lg:gap-20 m-2 p-4 lg:ml-8 w-full">
             <div className="hidden lg:flex lg:flex-col mt-8 ">
               <div className={ContactCSS.reach}>
                 <h2 contact-theme={context.theme} className={ContactCSS.h2}>
@@ -208,7 +208,7 @@ const index = () => {
                           id="last_name"
                           className=" w-full lg:w-{50%}"
                           placeholder="Type Name"
-                          onChange={(e) => setLastName(event.target.value)}
+                          onChange={(e) => setLastName(e.target.value)}
                         />
                       </div>
                     </div>
@@ -231,7 +231,7 @@ const index = () => {
                       id="email"
                       className="w-full"
                       placeholder="Type Email"
-                      onChange={(e) => setUserEmail(event.target.value)}
+                      onChange={(e) => setUserEmail(e.target.value)}
                     />
                   </div>
                 </div>
@@ -260,7 +260,7 @@ const index = () => {
                       id="phone_number"
                       className="w-full ml-8 lg:ml-4"
                       placeholder="800 000 0000"
-                      onChange={(e) => setPhoneNumber(event.target.value)}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
                     />
                   </div>
                 </div>

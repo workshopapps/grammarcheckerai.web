@@ -47,7 +47,7 @@ async function getBotResponse(req, res) {
       : null;
 
     const isSubscriber = userEmail
-      ? (await Subscription.findOne({ email: userEmail }))?.active
+      ? (await Subscription.findOne({ email: userEmail }))?.status
       : null;
 
     // checks if specified language is not available
@@ -75,7 +75,7 @@ async function getBotResponse(req, res) {
     );  
     
     // 2. Check if user is a premiumm user
-    if (!isSubscriber && Number(transcribedAudio.audio_duration) > 20) {
+    if ((isSubscriber === 'succesful') && Number(transcribedAudio.audio_duration) > 20) {
       return res.status(403).send({
         success: false,
         message: "Recording above 20 seconds is a premium feature. Go Premium!",

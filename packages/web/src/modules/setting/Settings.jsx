@@ -102,12 +102,12 @@ function Settings() {
       query: 'language, english, french, spanish, german, russian, italian, chinese',
       child: <Languages openBar={subPage} universalLanguage={languageList} />,
     },
-    {
-      name: 'Font Size Adjustment',
-      icon: maximizeIcon,
-      query: 'font size adjustment',
-      child: <FontAdjustment />,
-    },
+//     {
+//       name: 'Font Size Adjustment',
+//       icon: maximizeIcon,
+//       query: 'font size adjustment',
+//       child: <FontAdjustment />,
+//     },
     {
       route: 'help',
       name: 'Help & Support',

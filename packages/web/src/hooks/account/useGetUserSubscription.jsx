@@ -1,12 +1,12 @@
 import { ENDPOINTS } from '../../lib/constants';
 import useCustomQuery from '../useCustomQuery';
 
-const useGetUserSubscription = (email) => {
+const useGetUserSubscription = () => {
   return useCustomQuery({
     method: 'get',
-    endpoint: ENDPOINTS.API_USER_SUBSCRIPTION(email),
+    endpoint: ENDPOINTS.API_USER_SUBSCRIPTION,
     // isCreathorsApi: false,
-    queryKey: [email],
+    queryKey: 'getSubs',
     showSuccessToast: false,
   });
 };

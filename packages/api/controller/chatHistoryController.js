@@ -1,8 +1,8 @@
-const message = require("../database/models/messageSchema");
+const Message = require("../database/models/messageSchema");
 const { userCollection } = require("../database/models/userSchema");
 
 const chatHistory = async (req, res) => {
-  const { userId } = req.query;
+  const { userId } = req.params;
   const user = await userCollection.findById(userId);
   if (!user) {
     return res.status(400).send({
@@ -10,13 +10,12 @@ const chatHistory = async (req, res) => {
       message: "No user found!",
     });
   }
-  let messages = await message.find({ userId }).populate({
+  let messages = await Message.find({ userId }).populate({
     path: "userResponseId botResponseId",
   });
   return res.status(200).json({
+    success: true,
     conversationHistory: messages,
-    pageTitle: "correction history endpoint",
-    status: "success",
   });
 };
 
