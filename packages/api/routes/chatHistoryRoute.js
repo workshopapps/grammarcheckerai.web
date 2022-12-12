@@ -1,7 +1,9 @@
-const express = require('express')
-const router = express.Router()
-const historyController = require('../controller/chatHistoryController')
+const express = require("express");
+const chatHistoryRouter = express.Router();
+const chatHistoryController = require("../controller/chatHistoryController");
+const deleteChatHistoryController = require("../controller/deleteChatHistoryController");
 
-router.get('/chathistory/:userId', historyController )
+chatHistoryRouter.get("/", chatHistoryController);
+chatHistoryRouter.delete("/", deleteChatHistoryController);
 
-module.exports = router
+module.exports = chatHistoryRouter;
