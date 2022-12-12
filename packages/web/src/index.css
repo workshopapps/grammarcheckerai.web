@@ -49,3 +49,6 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(0, 0, 0);
 }
+.css-1qzj4eg-MuiFormControlLabel-root {
+  margin-left: 0 !important;
+}
