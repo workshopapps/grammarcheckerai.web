@@ -25,9 +25,9 @@ const Subscription = () => {
   const premiumCancel = useCancelPremium();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  React.useEffect(() => {
-    console.log(userSubscription?.value);
-  }, []);
+  // React.useEffect(() => {
+  //   console.log(userSubscription?.value);
+  // }, []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
