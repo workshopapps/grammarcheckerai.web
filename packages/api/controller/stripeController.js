@@ -41,7 +41,7 @@ exports.checkout = async (req, res) => {
       mode: "subscription",
       customer_email: email,
       client_reference_id: txref,
-      success_url: `http://localhost:5000/premium?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `https://speakbetter.hng.tech/premium?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `https://speakbetter.hng.tech`,
     })
     .then(async (data) => {
