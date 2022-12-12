@@ -1,9 +1,9 @@
 // It must be placed above all other 'require' statements
-// var atatus = require("atatus-nodejs");
-// atatus.start({
-//   licenseKey: "lic_apm_2c415fffd3d94ee68e8daf25b02ae5ee",
-//   appName: "Speakbetter",
-// });
+var atatus = require("atatus-nodejs");
+atatus.start({
+  licenseKey: "lic_apm_2c415fffd3d94ee68e8daf25b02ae5ee",
+  appName: "Speakbetter",
+});
  
 
 const { createServer } = require("http");

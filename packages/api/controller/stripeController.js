@@ -1,9 +1,10 @@
 const { environment } = require("../config/environment");
 const Subscription = require("../database/models/subscriptionSchema");
-const { STRIPE_SECRET_KEY } = environment;
+const emailService = require("../services/email.service");
+const { STRIPE_SECRET_KEY, BASE_URL, PREMIUM_TEMPLATE_ID } = environment;
 const stripe = require("stripe")(STRIPE_SECRET_KEY);
 
-exports.checkout = async (req, res, next) => {
+exports.checkout = async (req, res) => {
   const { plan, interval, amount, currency, txref } = req.body;
   const { email } = req.user;
 
@@ -43,7 +44,7 @@ exports.checkout = async (req, res, next) => {
       success_url: `http://localhost:5000/premium?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `https://speakbetter.hng.tech`,
     })
-    .then((data) => {
+    .then(async (data) => {
       return res.status(200).json({
         success: true,
         message: "subscription initiated",
@@ -59,54 +60,6 @@ exports.checkout = async (req, res, next) => {
         error: error.message,
       });
     });
-};
-
-exports.create = async (req, res) => {
-  const { plan, interval, amount, currency, txref } = req.body;
-  const { email } = req.user;
-  const isActive = await Subscription.findOne({
-    $and: [
-      { email: email },
-      { status: "success" },
-      { paymentGateway: "stripe" },
-    ],
-  });
-  var payload = { txref, plan, interval, amount, currency };
-  payload.email = email;
-  payload.subscriptionId = plan;
-
-  if (isActive) {
-    console.log(isActive);
-    return res.status(200).send({
-      success: true,
-      message: `You have an Active Subscription with ID: ${isActive.txref}`,
-      data: isActive,
-    });
-  }
-  //CHECK EXPIRATION DATE
-  Date.prototype.addDays = function (days) {
-    var date = new Date(this.valueOf());
-    date.setDate(date.getDate() + days);
-    return date;
-  };
-  var expirationDate = new Date();
-  if (interval == "weekly") expirationDate = expirationDate.addDays(7);
-  payload.expirationDate = expirationDate;
-  if (interval == "monthly") expirationDate = expirationDate.addDays(30);
-  payload.expirationDate = expirationDate;
-  if (interval == "quarterly") expirationDate = expirationDate.addDays(90);
-  payload.expirationDate = expirationDate;
-  if (interval == "annually") expirationDate = expirationDate.addDays(365);
-  payload.expirationDate = expirationDate;
-
-  await Subscription.create(payload).catch((error) => {
-    console.log(error);
-    return res.status(400).json({
-      success: false,
-      message: "There was an error",
-      error: error.message,
-    });
-  });
 };
 
 exports.cancel = async (req, res) => {
@@ -219,15 +172,23 @@ exports.verify = async (req, res) => {
       payload.expirationDate = expirationDate;
       if (interval == "annually") expirationDate = expirationDate.addDays(365);
       payload.expirationDate = expirationDate;
-      const isVerified = await Subscription.findOne({txref: txref})
-      if(isVerified) {
+
+      //CHECK IF VERIFIED ALREADY
+      const isVerified = await Subscription.findOne({ txref: txref });
+      if (isVerified) {
         return res.status(400).json({
           success: false,
           message: `Subscription with reference: ${txref}, verified already`,
           data: payload,
-        session: data,
+          session: data,
         });
       }
+      //SEND EMAIL TO USER
+      await emailService({
+        to: email,
+        templateId: PREMIUM_TEMPLATE_ID,
+        dynamic_template_data: { actionurl: `${BASE_URL}/premium` },
+      });
       await Subscription.create(payload);
       return res.status(200).json({
         success: true,
