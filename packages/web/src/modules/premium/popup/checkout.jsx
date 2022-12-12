@@ -168,7 +168,7 @@ const Checkout = (props) => {
         }, 3000);
       })
       .catch((err) => {
-        error(err.message);
+        error(err?.response?.data?.message);
       });
   };
 

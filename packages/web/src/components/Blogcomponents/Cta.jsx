@@ -7,7 +7,7 @@ import styles from './index.module.css';
 
 const Cta = () => {
   const [userEmail, setUserEmail] = useState('');
-  const [unsubscribedEmail, setUnsubscribedEmail] = useState('')
+  const [unsubscribedEmail, setUnsubscribedEmail] = useState('');
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
   const url = `https://api.speakbetter.hng.tech/v1/subscribe/newsletter/confirm`;
@@ -22,24 +22,23 @@ const Cta = () => {
     if (userEmail === '') {
       error('Please enter a valid email!');
       return;
-    } 
-    else {
-      axios.post(url, {
+    } else {
+      axios
+        .post(url, {
           email: userEmail,
-          unsubscribed : unsubscribedEmail,
+          unsubscribed: unsubscribedEmail,
         })
         .then((res) => {
           if (userEmail || unsubscribedEmail) {
-          console.log(res);
-          success(res.data.message);
-        }
-        else {
-          error('Already subscribed')
-        }
-      })
+            console.log(res);
+            success(res.data.message);
+          } else {
+            error('Already subscribed');
+          }
+        })
         .catch((err) => {
           console.log(err);
-          error(err.message);
+          error(err?.response?.data?.message);
         });
     }
   };
