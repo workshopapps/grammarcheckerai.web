@@ -249,7 +249,7 @@ const Checkout = (props) => {
       fullScreen
       open={props.open}
       onClose={props.handleClosePremium}
-      TransitionComponent={props.Transition}
+      TransitionComponent={props.Slider}
       className={style._sbDialog}
     >
       <div className={styles._gs2mainlogin}>
@@ -581,7 +581,7 @@ const Checkout = (props) => {
                         }}
                         variant="outlined"
                         type="button"
-                        // className={styles._paymentButton}
+                        className={styles._paymentButton}
                         onClick={handleStripe}
                       >
                         Pay with Stripe
@@ -596,7 +596,7 @@ const Checkout = (props) => {
                         }}
                         variant="outlined"
                         type="button"
-                        // className={styles._paymentButton}
+                        className={styles._paymentButton}
                         onClick={handleFlutterPayment}
                       >
                         Pay with Flutterwave
@@ -617,7 +617,7 @@ Checkout.propTypes = {
   open: PropTypes.bool,
   handleClosePremium: PropTypes.func,
   handleBack: PropTypes.func,
-  Transition: PropTypes.object,
+  Slider: PropTypes.object,
   duration: PropTypes.node,
   zar: PropTypes.number,
   usd: PropTypes.number,
@@ -625,6 +625,7 @@ Checkout.propTypes = {
   plan: PropTypes.string,
   ngnplan: PropTypes.string,
   userIsSubscribed: PropTypes.bool,
+  session_query: PropTypes.func,
 };
 
 export default Checkout;

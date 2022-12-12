@@ -653,8 +653,7 @@ input[type='checkbox']:checked + label::before {
   margin-top: 10px;
 }
 ._paymentButton {
-  color: white !important;
-  background-color: #5d387f !important;
+  color: #7202db !important;
   border-color: #7202db !important;
   width: 100%;
 }

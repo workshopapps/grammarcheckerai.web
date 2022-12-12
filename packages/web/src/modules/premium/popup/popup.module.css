@@ -242,3 +242,6 @@
     padding-left: 5px;
   }
 }
+._sbSuccess {
+  color: #5d387f !important;
+}

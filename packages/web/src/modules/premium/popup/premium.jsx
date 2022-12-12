@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Slide from '@mui/material/Slide';
 import styles from './popup.module.css';
 import medal from '../Assets/medal-star.png';
@@ -9,6 +10,13 @@ import Checkout from './checkout';
 import Navbar from '../../../components/Navbar';
 import useGetUserSubscription from '../../../hooks/account/useGetUserSubscription';
 import { Toaster } from 'react-hot-toast';
+import useStripeVerify from '../../../hooks/auth/useStripeVerify';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { Button } from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -18,6 +26,10 @@ const index = () => {
   const matches = useMediaQuery('(max-width:694px)');
   const [interval, setInterval] = React.useState({ ngnplan: '', plan: '', usd: 0, ngn: 0, zar: 0, duration: '' });
   const [open, setOpen] = React.useState(true);
+  const [successOpen, setSuccessOpen] = React.useState(false);
+  const [paymentOpen, setPaymentOpen] = React.useState(true);
+  const authVerify = useStripeVerify();
+  const navigate = useNavigate();
 
   const handleClosePremium = () => {
     setOpen(false);
@@ -43,6 +55,19 @@ const index = () => {
   const handleBack = () => {
     setInterval('');
   };
+  const params = new URLSearchParams(window.location.search);
+
+  React.useEffect(() => {
+    authVerify
+      .mutateAsync({
+        sessionId: params.get('session_id'),
+      })
+      .then((res) => {
+        if (res.data.message) {
+          setSuccessOpen(true);
+        }
+      });
+  }, []);
 
   if (interval.duration)
     return (
@@ -63,8 +88,37 @@ const index = () => {
         <Toaster />
       </>
     );
+
+  const handleClose = () => {
+    setPaymentOpen(false);
+    navigate('/me/home');
+  };
   return (
     <div className={styles._sbDialog}>
+      {successOpen && (
+        <>
+          <Dialog
+            open={paymentOpen}
+            onClose={handleClose}
+            TransitionComponent={Transition}
+            keepMounted
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{'Payment Successful'}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Thank you subscribing to SpeakBetter. We appreciate you and will continue to bring you better services.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} className={styles._sbSuccess}>
+                Start conversing now...
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </>
+      )}
       <div className={styles._sbpopup}>
         <Navbar />
         {matches ? null : (

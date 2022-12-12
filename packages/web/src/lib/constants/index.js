@@ -19,6 +19,7 @@ export const ENDPOINTS = {
   API_PREMIUM_CANCEL: 'paystack/cancel',
   API_AUTH_FORGOT_PASSWORD: 'auth/request-password-reset',
   API_STRIPE_PAY: 'stripe/checkout',
+  API_STRIPE_VERIFY: 'stripe/verify',
   API_AUTH_RESET_PASSWORD: (token) => `auth/password-reset?token=${token}`,
   API_USER_SUBSCRIPTION: (email) => `paystack?email=${email}`,
   API_USER_PROFILE: (userId) => `user/profile/${userId}`,
