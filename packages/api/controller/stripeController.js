@@ -41,7 +41,7 @@ exports.checkout = async (req, res) => {
       mode: "subscription",
       customer_email: email,
       client_reference_id: txref,
-      success_url: `http://localhost:5000/premium?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `https://speakbetter.hng.tech/premium?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `https://speakbetter.hng.tech`,
     })
     .then(async (data) => {
@@ -156,8 +156,8 @@ exports.verify = async (req, res) => {
           message: "Payment not successful",
           session: data,
         });
-      //CHECK EXPIRATION DATE
 
+      //CHECK EXPIRATION DATE
       Date.prototype.addDays = function (days) {
         var date = new Date(this.valueOf());
         date.setDate(date.getDate() + days);
@@ -186,8 +186,12 @@ exports.verify = async (req, res) => {
       //SEND EMAIL TO USER
       await emailService({
         to: email,
+        subject: "Speak Better: Premium!",
         templateId: PREMIUM_TEMPLATE_ID,
-        dynamic_template_data: { actionurl: `${BASE_URL}/premium` },
+        dynamic_template_data: {
+          name: "Premium User",
+          actionurl: `${BASE_URL}/me/home`,
+        },
       });
       await Subscription.create(payload);
       return res.status(200).json({
