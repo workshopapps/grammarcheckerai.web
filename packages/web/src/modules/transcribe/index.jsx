@@ -115,8 +115,9 @@ const Transcribe = () => {
                   {data.userAudio !== null ? (
                     <div className="user__msg p-0 max-w-xs ml-auto">
                       {uploadingAudio && (
-                        <div className="border-2 border-dashed border-green-300 bg-green-100 px-5 py-1 text-sm">
-                          <p>Audio file getting imported</p>
+                        <div className="border border-dashed text-center border-green-300 bg-green-100 px-5 py-2 text-sm">
+                          <BeatLoader size={12} color="#8C54BF" />
+                          <p>Loading media...</p>
                         </div>
                       )}
 
