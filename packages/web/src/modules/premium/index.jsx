@@ -91,6 +91,7 @@ const Subscription = () => {
             .then(() => {
               setLoading(false);
               setSuccessOpen(true);
+              location.reload();
             });
         }
       });

@@ -19,6 +19,7 @@ export const ENDPOINTS = {
   API_PREMIUM_CANCEL: 'stripe/cancel',
   API_AUTH_FORGOT_PASSWORD: 'auth/request-password-reset',
   API_STRIPE_PAY: 'stripe/checkout',
+  API_FLUTTER_PAY: 'subscription/create-pay',
   API_STRIPE_VERIFY: 'stripe/verify',
   API_AUTH_RESET_PASSWORD: (token) => `auth/password-reset?token=${token}`,
   API_USER_SUBSCRIPTION: () => 'subscription',

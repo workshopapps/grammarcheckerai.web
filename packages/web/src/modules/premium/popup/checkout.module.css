@@ -614,6 +614,7 @@ input[type='checkbox']:checked + label::before {
   margin: 20px 0;
   font-size: 25px !important;
   width: 100%;
+  color: black;
 }
 ._paymentTitle label {
   width: 100%;

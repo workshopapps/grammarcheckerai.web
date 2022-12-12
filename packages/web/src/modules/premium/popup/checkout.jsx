@@ -22,11 +22,12 @@ import { Listbox, Transition } from '@headlessui/react';
 import { useFlutterwave } from 'react-flutterwave';
 import useStripe from '../../../hooks/auth/useStripe';
 import { v4 as uuidv4 } from 'uuid';
+import useFlutter from '../../../hooks/auth/useFlutter';
 
 // import userCheckPlanVerify from '../../../hooks/account/userCheckPlanVerify';
 const Currency = [
   { id: 1, name: 'USD' },
-  { id: 2, name: 'NGN' },
+  // { id: 2, name: 'NGN' },
 ];
 
 const Checkout = (props) => {
@@ -45,6 +46,8 @@ const Checkout = (props) => {
 
   const authLogin = useLogin();
   const authStripe = useStripe();
+  const authFlutter = useFlutter();
+
   let navigate = useNavigate();
 
   const handleForgotPassword = () => {
@@ -154,7 +157,7 @@ const Checkout = (props) => {
 
   const config = {
     public_key: 'FLWPUBK_TEST-2e1fdd9734036594eb776d8603318f21-X',
-    tx_ref: 'fgjfjgjfgjksds',
+    tx_ref: uuidv4(),
     amount: props.ngn,
     currency: 'NGN',
     payment_options: 'card,mobilemoney,ussd',
@@ -166,7 +169,7 @@ const Checkout = (props) => {
     customizations: {
       title: 'Speak Better',
       description: 'Subscription Payment',
-      logo: 'https://assets.piedpiper.com/logo.png',
+      // logo: 'https://assets.piedpiper.com/logo.png',
     },
   };
 
@@ -232,7 +235,20 @@ const Checkout = (props) => {
       FlutterPayment({
         callback: (response) => {
           console.log(response);
-          setTimeout(() => {}, 2000);
+          setTimeout(() => {
+            authFlutter
+              .mutateAsync({
+                name: response.customer.name,
+                currency: 'NGN',
+                interval: props.ngnplan,
+                amount: response.amount,
+                txref: response.tx_ref,
+                flw_re: response.flw_ref,
+              })
+              .then((res) => {
+                console.log(res);
+              });
+          }, 2000);
         },
         onClose: () => {
           setLoading(false);
@@ -259,9 +275,9 @@ const Checkout = (props) => {
               <div className={styles._paymentMethod}>
                 <FormControl className={styles._paymentChoice}>
                   <div className={styles._paymentHeader}>
-                    <FormLabel className={styles._paymentTitle} id="demo-controlled-radio-buttons-group">
+                    <h2 className={styles._paymentTitle} id="demo-controlled-radio-buttons-group">
                       Payment Methods
-                    </FormLabel>
+                    </h2>
                     <hr className={styles._divider} />
                     <button className={styles._paymentback} onClick={props.handleBack}>
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -327,28 +343,6 @@ const Checkout = (props) => {
                     onChange={handleChange}
                   >
                     <button className="focus:outline-none focus:ring focus:ring-violet-300"></button>
-                    {/* <FormControlLabel
-                      className={`${styles._paystack}`}
-                      value="paystack"
-                      sx={{
-                        color: 'black',
-                        bgcolor: 'white',
-                        '&.Mui-checked': {
-                          color: 'white',
-                        },
-                      }}
-                      control={
-                        <Radio
-                          sx={{
-                            color: 'black',
-                            '&.Mui-checked': {
-                              color: 'purple',
-                            },
-                          }}
-                        />
-                      }
-                      label="Paystack"
-                    ></FormControlLabel> */}
                     <FormControlLabel
                       className={styles._stripe}
                       value="stripe"
@@ -372,6 +366,29 @@ const Checkout = (props) => {
                       label="Stripe"
                     ></FormControlLabel>
                     <FormControlLabel
+                      className={`${styles._paystack}`}
+                      value="paystack"
+                      sx={{
+                        color: 'black',
+                        bgcolor: 'white',
+                        '&.Mui-checked': {
+                          color: 'white',
+                        },
+                      }}
+                      control={
+                        <Radio
+                          sx={{
+                            color: 'black',
+                            '&.Mui-checked': {
+                              color: 'purple',
+                            },
+                          }}
+                          disabled
+                        />
+                      }
+                      label="Paystack (Coming soon)"
+                    ></FormControlLabel>
+                    <FormControlLabel
                       className={styles._flutterwave}
                       value="flutterwave"
                       sx={{
@@ -389,9 +406,10 @@ const Checkout = (props) => {
                               color: 'purple',
                             },
                           }}
+                          disabled
                         />
                       }
-                      label="Flutterwave"
+                      label="Flutterwave (Coming soon)"
                     ></FormControlLabel>
                   </RadioGroup>
                 </FormControl>
@@ -568,7 +586,7 @@ const Checkout = (props) => {
                     <h3>Plan: {props.duration}</h3>
                     {selectedCurrency.id && (
                       <h3>
-                        Amount: {selectedCurrency.name} {selectedCurrency.id === 2 && props.zar}
+                        Amount: {selectedCurrency.name} {selectedCurrency.id === 2 && props.ngn}
                         {selectedCurrency.id === 1 && props.usd}
                       </h3>
                     )}
