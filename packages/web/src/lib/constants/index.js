@@ -21,6 +21,8 @@ export const ENDPOINTS = {
   API_AUTH_RESET_PASSWORD: (token) => `auth/password-reset?token=${token}`,
   API_USER_SUBSCRIPTION: (email) => `paystack?email=${email}`,
   API_USER_PROFILE: (userId) => `user/profile/${userId}`,
+
+  API_STATUS_URL: 'test',
 };
 
 // http://api.speakbetter.hng.tech/v1/auth/password-reset?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIyZTQ4MDcyZC05NjIxLTRmNzYtYTQ5NS0xYzk1OGNhMGZjYmIiLCJlbWFpbCI6Im9nbWFyb0BnbWFpbC5jb20iLCJpYXQiOjE2Njk5NzM0NDcsImV4cCI6MTY3MDIzMjY0N30.5eFreMaOMwtbF_ZqsuSrVA9cIArw4yJUcs99At2cUTY

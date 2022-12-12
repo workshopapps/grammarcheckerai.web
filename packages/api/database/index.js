@@ -3,7 +3,7 @@ const { environment } = require("../config/environment.js");
 
 const { NODE_ENV, DATABASE_URI_DEVELOP, DATABASE_URI_TEST, DATABASE_URI_PROD } =
   environment;
-
+mongoose.set("strictQuery", true);
 const db = (URi) => {
   mongoose
     .connect(URi, {

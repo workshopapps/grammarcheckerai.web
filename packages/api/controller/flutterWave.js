@@ -1,6 +1,6 @@
 const Flutterwave = require("flutterwave-node-v3");
 require("dotenv").config();
-const got = require("got");
+const axios = require("axios");
 const { response } = require("express");
 const Subscription = require("../database/models/subscriptionSchema");
 const emailService = require("../services/email.service");
@@ -11,13 +11,13 @@ const flw = new Flutterwave( FLW_PUBLIC_KEY,  FLW_SECRET_KEY);
 
 
 const flutPay = async (req, res) => {
-    let email = req.body.email;
+     const { email } = req.user;
   
     //VALIDATE USER REQUEST
     if (!email)
       return res.status(400).send({ success: false, message: "Invalid email" });
     try {
-      const {  email, flw_re, interval, amount, currency, txref } =
+      const {  flw_re, interval, amount, currency, txref } =
         req.body;
       const payload = {
         email,
@@ -30,7 +30,7 @@ const flutPay = async (req, res) => {
   
       //FIND ACTIVE SUBSCRIPTION
       const isActive = await Subscription.findOne({
-        $and: [{ email: email }, { status: "success" }],
+        $and: [{ email: email }, { status: "success" }, { paymentGateway: "flutterwave" }],
       });
       if (isActive) {
         console.log(isActive);
@@ -80,7 +80,7 @@ const flutPay = async (req, res) => {
     }
   };
 
-  const flutToken = "FLWSECK_TEST-d9bca844bd11eba144a5430ba30d687d-X";
+
 
   const verification = async (req, res) => {
     const { txref, email } = req.query;
@@ -106,7 +106,7 @@ const flutPay = async (req, res) => {
     await axios
       .get(`https://api.flutterwave.com/v3/transactions/${txref}`, {
         headers: {
-          authorization: `Bearer ${lutToken}`,
+          authorization: `Bearer ${FLW_SECRET_KEY}`,
           "content-type": "application/json",
           "cache-control": "no-cache",
         },
@@ -114,7 +114,7 @@ const flutPay = async (req, res) => {
       .then(async (success) => {
         isVerified = await Subscription.findByIdAndUpdate(
           verifiedTx._id,
-          { status: success.data.data.status },
+          { status: "succesful" },
           { new: true }
         );
         return res.status(200).send({
@@ -133,45 +133,41 @@ const flutPay = async (req, res) => {
         });
       });
   };
+  const getSubscription = async (req, res) => {
+    try {
+      const { email } = req.user;
+      
+      const userSub = await Subscription.find({ email });
+      if (!userSub) {
+        return res.status(400).send({
+          success: false,
+          message: `${userSub.length} Subscription(s) found for User: ${email}!`,
+          data: [],
+        });
+      }
+      return res.status(200).send({
+        success: true,
+        message: `${userSub.length} Subscription(s) found for User: ${email}!`,
+        data: userSub,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send({
+        success: false,
+        message: "Error encountered",
+        errorCode: error.code,
+        error: error.message,
+      });
+    }
+  };
+  
   
 
-  
 
-
-const activateSubscription = async () => {
-  try {
-    const payload = {
-        card_number: "4556052704172643",
-        expiry_month: "01",
-        expiry_year: "23",
-        currency: "USD",
-        amount: 4,
-        email: "khayceesdike@gmail.com",
-        phonenumber: "07032044217",
-        fullname: "kelechi nwaji",
-        tx_ref: "MC-3243f",
-        redirect_url: "https://speakbetter.hng.tech",
-        enckey: "FLWSECK_TESTb780896f15ad",
-        customer: { email: "khayceesdike@gmail.com", phonenumber: "07032044217" },
-        payment_plan: 31036,
-        authorization: {
-        mode: 'avs_noauth',
-        city: "AMAC",
-        address: "My Addess",
-        state: "Abuja",
-        country: "Nigeria",
-        zipcode: 30001,
-      },
-    };
-    const response = await flw.CheckOut.card(payload);
-    console.log(response);
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 module.exports = {
     flutPay,
-    verification
+    verification,
+    getSubscription
   };
 

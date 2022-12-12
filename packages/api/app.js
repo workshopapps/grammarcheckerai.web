@@ -16,6 +16,8 @@ const { routeHandler } = require("./routes/index.route"),
 
 const app = express();
 
+app.use(express.static("public"));
+
 //Passport Initialized
 app
   .use(passport.initialize())
@@ -53,7 +55,7 @@ app.use(
   })
 );
 
-//welcome note
+// welcome note
 app.get("/v1", (req, res) => {
   res.status(200).json({
     message: "Welcome to Speak Better 🗣️ 🗣️ 🗣️",
@@ -62,7 +64,7 @@ app.get("/v1", (req, res) => {
 });
 
 //404 error
-app.all("*", (req, res, next) => {
+app.all("*", (req, res) => {
   res.status(404).json({
     message: "Ohh you are lost, path not found.",
   });

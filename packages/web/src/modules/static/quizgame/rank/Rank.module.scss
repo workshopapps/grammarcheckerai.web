@@ -2,7 +2,7 @@
 
 .rank {
     background-color: $greyColor;
-    position: absolute;
+    position: fixed;
     width: 100vw;
     height: 100vh;
     padding: 15px;
@@ -12,11 +12,12 @@
     @include flexCenter(row);
     z-index: 2;
     color: $greyColor;
-    @include flexCenter(row);
 
     &_card {
+        max-height: 50vh;
         width: 380px;
-        height: auto;
+        // height: auto;
+        overflow-y: scroll;
         padding: 15px;
         background-color: $white;
         border-radius: 10px;
@@ -31,33 +32,52 @@
         &__content {
             width: 100%;
 
-            h2 {
-                text-align: center;
-                color: $greenColor;
-                font-size: 20px;
-                font-family: $fontFamily1;
-                margin: 10px 0px;
+            &__top {
+                @include flexCenter(row);
+                justify-content: flex-start;
+                margin-bottom: 50px;
+
+                &__text {
+                    margin-left: 15px;
+                    @include flexCenter(column);
+                    align-items: flex-start;
+                    width: 80%;
+                    color: $greyColor;
+
+                    h2 {
+                        font-size: 24px;
+                        font-weight: 700;
+                    }
+                }
             }
 
             table {
-                margin-top: 10px;
+                margin: 10px 0px;
                 width: inherit;
-                text-align: left;
+                border-collapse: collapse;
                 font-family: $fontFamily2;
 
-                tr {
-                    width: 100%;
-                    @include flexCenter(row);
-                    justify-content: space-between;
+                th {
+                    text-align: center;
+                    font-size: 14px;
+                    border-right: 1px solid #dddddd;
+                    border-bottom: 1px solid black;
                 }
 
                 td {
-                    // width: 100%;
-                    padding-right: 50px;
-                   
-                    text-align: center;
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                    text-align: left;
                 }
             }
+        }
+    }
+}
+
+@media (min-width: $md) {
+    .rank {
+        &_card {
+            width: 50vw;
         }
     }
 }

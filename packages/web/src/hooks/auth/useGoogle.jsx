@@ -7,11 +7,6 @@ const useGoogle = () => {
     queryKey: 'google',
     redirect: 'follow',
     showSuccessToast: false,
-    onSettled: (res, err) => {
-      if (!err) {
-        console.log(res);
-      }
-    },
   });
 };
 

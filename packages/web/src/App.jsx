@@ -355,6 +355,7 @@ function App() {
       <Route path="/emailtemplate" element={<EmailTemplate />} />
       <Route path="/newsletter-template" element={<NewsletterTemplate />} />
       <Route path="/signin-template" element={<SignInTemplate />} />
+      <Route path="/.well-known/assetlinks.json" element={<p>omo</p>} />
       <Route
         element={
           <div>

@@ -22,10 +22,9 @@ const subscriptionSchema = new mongoose.Schema(
     paymentGateway: {
       type: String,
       enum: ["paystack", "flutterwave", "stripe"],
-      default: "paystack",
     },
     amount: {
-      type: Number,
+      type: mongoose.Types.Decimal128,
       required: [true, "A subscription must have a price"],
     },
     txref: {
@@ -39,7 +38,7 @@ const subscriptionSchema = new mongoose.Schema(
     },
     currency: {
       type: String,
-      enum: ["NGN", "USD", "EUR", "YEN", "GBP"],
+      enum: ["NGN", "USD", "EUR", "YEN", "GBP", "ZAR"],
       default: "NGN",
     },
     expirationDate: {

@@ -19,7 +19,7 @@ async function contactUsController(req, res) {
     });
   } catch (error) {
     return res.status(400).json({
-      sucess: false,
+      success: false,
       message: "Error encountered in sending this message",
       errorCode: error.code,
       error: error.message,
