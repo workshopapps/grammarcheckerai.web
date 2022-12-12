@@ -1,7 +1,7 @@
 const Message = require("../database/models/messageSchema");
 const { userCollection } = require("../database/models/userSchema");
 
-const chatHistory = async (req, res) => {
+const deleteChatHistory = async (req, res) => {
   const { userId } = req.query;
   const user = await userCollection.findById(userId);
   if (!user) {
@@ -10,13 +10,11 @@ const chatHistory = async (req, res) => {
       message: "No user found!",
     });
   }
-  let messages = await Message.find({ userId }).populate({
-    path: "userResponseId botResponseId",
-  });
+  await Message.deleteMany({ userId });
   return res.status(200).json({
     success: true,
-    conversationHistory: messages,
+    message: "Conversation history deleted successfully.",
   });
 };
 
-module.exports = chatHistory;
+module.exports = deleteChatHistory;

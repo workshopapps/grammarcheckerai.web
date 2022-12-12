@@ -10,12 +10,12 @@ const quickTranscribe = require("./quickTranscribeRouter");
 const newsletter = require("../routes/newsLetterRoute");
 const reviewRating = require("../routes/reviewRatingRoute");
 const leaderBoardRouter = require("../routes/leaderboardrouter");
-const chatHistoryRouter = require("./chatHistory");
+const chatHistoryRouter = require("./chatHistoryRoute");
 const payRoute = require("../routes/payRoute");
 const stripeRouter = require("../routes/stripeRoutes");
 const isSubscribeRoute = require("./newsLetterSubscriptionRoute");
 const logoutRoute = require("./logoutRoute");
-const unSubscribeRoute = require("./unSubscribeRoute")
+const unSubscribeRoute = require("./unSubscribeRoute");
 
 routeHandler.use("/auth", auth);
 routeHandler.use("/user", verify, userHandler);
@@ -32,7 +32,6 @@ routeHandler.use("/stripe", verify, stripeRouter);
 routeHandler.use("/chathistory", chatHistoryRouter);
 routeHandler.use("/subscribe", isSubscribeRoute);
 routeHandler.use("/unsubscribe", unSubscribeRoute);
-routeHandler.use("/logout", logoutRoute)
-
+routeHandler.use("/logout", logoutRoute);
 
 module.exports = { routeHandler };
