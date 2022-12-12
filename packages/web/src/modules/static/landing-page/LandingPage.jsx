@@ -13,7 +13,7 @@ import QuizPopUp from '../../modal/quizpopup/QuizPopUp';
 
 const LandingPage = () => {
   const context = useTheme();
-  const [showQuiz, setShowQuiz] = useState(true);
+  // const [showQuiz, setShowQuiz] = useState(true);
 
   return (
     <div data-theme={context.theme} className={` bg-[#bbb8b81a] `}>
@@ -26,7 +26,7 @@ const LandingPage = () => {
       <Utilise />
       <NewsLetter />
       <Footer />
-      <QuizPopUp showQuiz={showQuiz} setShowQuiz={setShowQuiz} />
+      {/* <QuizPopUp showQuiz={showQuiz} setShowQuiz={setShowQuiz} /> */}
     </div>
   );
 };
