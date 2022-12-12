@@ -1,11 +1,13 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import ErrorIcon from '../../assets/error.svg';
-import ImportIcon from '../../assets/import.svg';
 import { PropTypes } from 'prop-types';
 import SentAudio from '../../components/SentAudio/index';
 import ChatContainer from '../account/conversation/chat-container';
 import toast, { Toaster } from 'react-hot-toast';
 import useSendAudio from '../../hooks/account/useSendAudio';
+import dayjs from 'dayjs';
+import { IconButton, Tooltip } from '@mui/material';
+import { MdSend } from 'react-icons/md';
 
 const dummyBotMessages = [
   {
@@ -20,24 +22,16 @@ const Transcribe = () => {
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
   const sendAudio = useSendAudio();
-  const [language, setLanguage] = React.useState('English');
   const [isError, setIsError] = useState(false);
   const [isAudio, setIsAudio] = useState(false);
   const [uploadingAudio, setUploadingAudio] = useState(false);
   const [audio, setAudio] = useState();
   const [playAudio, setPlayAudio] = useState();
   const hiddenFileInput = useRef(null);
+  const userId = localStorage.getItem('grittyuserid');
 
   const handleUploadClick = () => {
     hiddenFileInput.current.click();
-  };
-
-  const fakeWaiting = (time) => {
-    return new Promise((resolve) => {
-      return setTimeout(() => {
-        resolve();
-      }, time);
-    });
   };
 
   const handleFileClick = async (event) => {
@@ -50,7 +44,6 @@ const Transcribe = () => {
         return;
       }
 
-      await fakeWaiting(3000);
       setTimeout(() => setUploadingAudio(false), 1000);
 
       setIsAudio(true);
@@ -72,7 +65,7 @@ const Transcribe = () => {
   const submitAudioHandler = () => {
     const soln = new FormData();
     soln.append('file', audio);
-    soln.append('language', language);
+    soln.append('userId', userId);
     sendAudio
       .mutateAsync(soln)
       .then((res) => {
@@ -107,26 +100,37 @@ const Transcribe = () => {
           <div className={`${isError ? 'fixed bg-white brightness-50 w-full' : ''}`}>
             {messages.map((data, index) => (
               <React.Fragment key={index}>
-                <div className="pb-20 md:pb-16 px-2 mt-5 relative">
+                <div className="pb-20 md:pb-10 px-2 mt-5 relative">
                   {data.botMsg !== null ? (
                     <div className="ai__msg w-full max-w-xs">
                       <h1 className="text-base font-medium pb-2">Speak Better</h1>
-                      <p className="bg-gray-100 px-6 py-3 text-slate-700 font-normal leading-5 p-2 rounded">
+                      <p className="bg-gray-100 px-6 py-3 text-slate-700 font-normal leading-5 rounded">
                         {data.botMsg}
                       </p>
-                      <p className="mt-1 text-xs text-left">{new Date().toLocaleTimeString()}</p>
+                      <p className="mt-1 text-xs text-left">{dayjs().format('h:mm A')}</p>
                     </div>
                   ) : null}
 
                   {data.userAudio !== null ? (
-                    <div className="user__msg p-0 absolute mt-0 right-0 bottom-0">
+                    <div className="user__msg p-0 max-w-xs ml-auto">
                       {uploadingAudio && (
                         <div className="border-2 border-dashed border-green-300 bg-green-100 px-5 py-1 text-sm">
                           <p>Audio file getting imported</p>
                         </div>
                       )}
 
-                      {isAudio && !uploadingAudio ? <SentAudio audio={playAudio} /> : null}
+                      {isAudio && !uploadingAudio ? (
+                        <div className="flex space-x-2 items-center">
+                          <SentAudio audio={playAudio} />
+                          <div>
+                            <Tooltip title="Transcribe audio" arrow>
+                              <IconButton onClick={submitAudioHandler} color="primary">
+                                <MdSend />
+                              </IconButton>
+                            </Tooltip>
+                          </div>
+                        </div>
+                      ) : null}
                     </div>
                   ) : null}
                 </div>
@@ -144,7 +148,7 @@ const Transcribe = () => {
       <div className="pb-4">
         <button
           onClick={handleUploadClick}
-          className="w-full  bg-[#E8DDF2] border-4 py-6 border-dashed text-md md:text-xl text-[#8C54BF] border-[#8C54BF]"
+          className="w-full mt-6 bg-[#E8DDF2] border-4 py-6 border-dashed text-md md:text-xl text-[#8C54BF] border-[#8C54BF]"
         >
           Click here to upload an audio
           <input
