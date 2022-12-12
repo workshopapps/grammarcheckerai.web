@@ -42,8 +42,8 @@ const index = () => {
       .then(() => {
         setOpenModal(true);
       })
-      .catch((error) => {
-        error(error?.response?.data?.message);
+      .catch((err) => {
+        error(err?.response?.data?.message);
         setOpenModal(false);
       });
     setIsSubmit(true);
@@ -177,7 +177,7 @@ const index = () => {
                           id="first_name"
                           className=" w-full lg:w-{50%}"
                           placeholder="Mike"
-                          onChange={(e) => setFirstName(event.target.value)}
+                          onChange={(e) => setFirstName(e.target.value)}
                         />
                       </div>
                     </div>
@@ -197,7 +197,7 @@ const index = () => {
                           id="last_name"
                           className=" w-full lg:w-{50%}"
                           placeholder="Type Name"
-                          onChange={(e) => setLastName(event.target.value)}
+                          onChange={(e) => setLastName(e.target.value)}
                         />
                       </div>
                     </div>
@@ -219,7 +219,7 @@ const index = () => {
                       id="email"
                       className="w-full"
                       placeholder="Type Email"
-                      onChange={(e) => setUserEmail(event.target.value)}
+                      onChange={(e) => setUserEmail(e.target.value)}
                     />
                   </div>
                 </div>
@@ -245,7 +245,7 @@ const index = () => {
                       id="phone_number"
                       className="w-full ml-8 lg:ml-4"
                       placeholder="800 000 0000"
-                      onChange={(e) => setPhoneNumber(event.target.value)}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
                     />
                   </div>
                 </div>
@@ -279,7 +279,7 @@ const index = () => {
                         id="message"
                         placeholder="Type message"
                         className="m-1"
-                        onChange={(e) => setUserMessage(event.target.value)}
+                        onChange={(e) => setUserMessage(e.target.value)}
                       ></textarea>
                     </div>
                   </div>
