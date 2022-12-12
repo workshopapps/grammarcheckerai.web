@@ -167,7 +167,7 @@ const index = () => {
           }, 5000);
         })
         .catch((err) => {
-          error(err.message);
+          error(err?.response?.data?.message);
         });
     }
 
@@ -196,7 +196,7 @@ const index = () => {
           }, 5000);
         })
         .catch((err) => {
-          error(err.message);
+          error(err?.response?.data?.message);
         });
     }
     if (location?.search && location?.search?.includes('google')) {
@@ -222,7 +222,7 @@ const index = () => {
           }, 5000);
         })
         .catch((err) => {
-          error(err.message);
+          error(err?.response?.data?.message);
         });
     }
   }, []);

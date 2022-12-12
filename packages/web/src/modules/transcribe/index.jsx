@@ -8,6 +8,7 @@ import useSendAudio from '../../hooks/account/useSendAudio';
 import dayjs from 'dayjs';
 import { IconButton, Tooltip } from '@mui/material';
 import { MdSend } from 'react-icons/md';
+import { BeatLoader } from 'react-spinners';
 
 const dummyBotMessages = [
   {
@@ -85,7 +86,7 @@ const Transcribe = () => {
         success(res.data.message);
       })
       .catch((err) => {
-        error(err.message);
+        error(err?.response?.data?.message);
       });
   };
 
@@ -120,15 +121,18 @@ const Transcribe = () => {
                       )}
 
                       {isAudio && !uploadingAudio ? (
-                        <div className="flex space-x-2 items-center">
-                          <SentAudio audio={playAudio} />
-                          <div>
-                            <Tooltip title="Transcribe audio" arrow>
-                              <IconButton onClick={submitAudioHandler} color="primary">
-                                <MdSend />
-                              </IconButton>
-                            </Tooltip>
+                        <div className="space-y-2">
+                          <div className="flex space-x-2 items-center">
+                            <SentAudio audio={playAudio} />
+                            <div>
+                              <Tooltip title="Transcribe audio" arrow>
+                                <IconButton onClick={submitAudioHandler} color="primary">
+                                  <MdSend />
+                                </IconButton>
+                              </Tooltip>
+                            </div>
                           </div>
+                          {sendAudio.isLoading && <BeatLoader size={12} color="#8C54BF" />}
                         </div>
                       ) : null}
                     </div>
