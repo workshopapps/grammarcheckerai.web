@@ -16,7 +16,7 @@
   @apply border-2 py-4 px-2 rounded focus:outline-none;
 }
 ._btnContainer {
-  @apply w-full flex flex-col sm:flex-row justify-end gap-5 mt-16;
+  @apply w-full text-xs sm:text-base flex flex-col sm:flex-row justify-end gap-5 mt-16;
 }
 ._legalcard {
   @apply bg-[#e8ddf2] py-8 px-4 flex gap-3 md:gap-0 md:flex-col md:text-center justify-center md:justify-start items-center rounded-xl;
@@ -48,4 +48,7 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(0, 0, 0);
+}
+.css-1qzj4eg-MuiFormControlLabel-root {
+  margin-left: 0 !important;
 }

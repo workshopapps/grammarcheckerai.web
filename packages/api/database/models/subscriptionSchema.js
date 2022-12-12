@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const { v4 } = require("uuid");
-const { environment } = require("../../config/environment");
 
 const subscriptionSchema = new mongoose.Schema(
   {
@@ -12,6 +10,7 @@ const subscriptionSchema = new mongoose.Schema(
     subscriptionId: {
       type: String,
       required: true,
+      unique: true,
     },
     interval: {
       type: String,
@@ -30,6 +29,7 @@ const subscriptionSchema = new mongoose.Schema(
     txref: {
       type: String,
       unique: true,
+      required: true,
     },
     status: {
       type: String,
