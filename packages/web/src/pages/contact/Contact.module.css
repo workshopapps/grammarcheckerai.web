@@ -11,7 +11,7 @@ textarea {
 }
 .main_container {
   font-family: 'DM Sans', sans-serif;
-  width: 100vw;
+
 }
 .mini_container {
   margin: 1.5rem;
@@ -20,6 +20,7 @@ textarea {
   background-color: #5d387f;
   padding-top: 6rem;
   padding-bottom: 6rem;
+  width: 100%;
 }
 .container {
   width: 100%;

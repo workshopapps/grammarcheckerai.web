@@ -162,7 +162,7 @@ function Converse({ noRive = false }) {
                   <RiveBot size="large" />
                 </div>
               ) : (
-                <div className=" flex justify-center items-center pb-6">
+                <div className="flex justify-center items-center pb-6">
                   <img
                     src={chirpy}
                     alt="chirpy bob"
