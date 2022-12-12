@@ -36,6 +36,7 @@ function Converse({ noRive = false }) {
   const sendAudio = useSendAudioFile();
   const [open, setOpen] = useState(false);
   const [language, setLanguage] = React.useState('English');
+  const userId = localStorage.getItem('grittyuserid');
   const error = (message) => toast.error(message);
 
   const [chats, setChats] = React.useState([]);
@@ -65,6 +66,7 @@ function Converse({ noRive = false }) {
     const soln = new FormData();
     soln.append('file', mediaBlob);
     soln.append('language', language);
+    if (userId) soln.append('userId', userId);
     sendAudio
       .mutateAsync(soln)
       .then((res) => {
@@ -257,7 +259,7 @@ function Converse({ noRive = false }) {
                           onClick={submitAudioHandler}
                           color="success"
                           aria-label="add an alarm"
-                          disabled={status === 'recording' || status === 'paused'}
+                          disabled={status === 'recording' || status === 'idle' || status === 'paused'}
                         >
                           <IoSendSharp size={20} />
                         </IconButton>
