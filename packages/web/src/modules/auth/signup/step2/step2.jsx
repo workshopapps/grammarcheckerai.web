@@ -94,7 +94,7 @@ const index = () => {
         console.log(oBJ.data);
         localStorage.setItem('isUserDetails', JSON.stringify(oBJ.data));
       })
-      .catch((error) => error('error', error));
+      .catch((error) => error(error?.message));
   };
 
   /*
@@ -167,7 +167,7 @@ const index = () => {
           }, 5000);
         })
         .catch((err) => {
-          error(err.message);
+          error(err?.response?.data?.message);
         });
     }
 
@@ -196,7 +196,7 @@ const index = () => {
           }, 5000);
         })
         .catch((err) => {
-          error(err.message);
+          error(err?.response?.data?.message);
         });
     }
     if (location?.search && location?.search?.includes('google')) {
@@ -222,7 +222,7 @@ const index = () => {
           }, 5000);
         })
         .catch((err) => {
-          error(err.message);
+          error(err?.response?.data?.message);
         });
     }
   }, []);

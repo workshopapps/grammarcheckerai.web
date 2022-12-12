@@ -90,7 +90,7 @@ const index = () => {
           </div>
         </div>
 
-          <div className="lg:flex justify-between lg:gap-20 m-2 p-4 lg:ml-8">
+          <div className="lg:flex justify-between lg:gap-20 m-2 p-4 lg:ml-8 w-full">
             <div className="hidden lg:flex lg:flex-col mt-8 ">
               <div className={ContactCSS.reach}>
                 <h2 contact-theme={context.theme} className={ContactCSS.h2}>
