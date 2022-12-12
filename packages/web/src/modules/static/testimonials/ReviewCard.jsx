@@ -134,7 +134,7 @@ export const ReviewCard = ({ closeModal, postReview }) => {
                     );
                   })}
                 </div>
-                <input
+                <textarea
                   className="w-full border-t px-6 py-3 outline-none border-slate-800 mt-4"
                   placeholder="Describe your experience(optional)"
                   type="text"
