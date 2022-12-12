@@ -29,7 +29,7 @@
   width: 60%;
   z-index: 999;
   display: flex;
-  justify-content: center;
+  justify-content: left;
 }
 ._nvnav {
   width: 80%;
