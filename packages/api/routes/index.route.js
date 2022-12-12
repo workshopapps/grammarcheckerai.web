@@ -12,6 +12,7 @@ const reviewRating = require("../routes/reviewRatingRoute");
 const leaderBoardRouter = require("../routes/leaderboardrouter");
 const chatHistoryRouter = require("./chatHistory");
 const payRoute = require("../routes/payRoute");
+const flutRoute = require("../routes/flutRoute");
 const isSubscribeRoute = require("./newsLetterSubscriptionRoute");
 const logoutRoute = require("./logoutRoute");
 const unSubscribeRoute = require("./unSubscribeRoute")
@@ -30,7 +31,8 @@ routeHandler.use("/paystack", payRoute);
 routeHandler.use("/chathistory", chatHistoryRouter);
 routeHandler.use("/subscribe", isSubscribeRoute);
 routeHandler.use("/unsubscribe", unSubscribeRoute);
-routeHandler.use("/logout", logoutRoute)
+routeHandler.use("/logout", logoutRoute);
+routeHandler.use("/subscription", flutRoute)
 
 
 module.exports = { routeHandler };

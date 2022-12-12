@@ -1,5 +1,6 @@
 const express = require("express");
 const payRouter = express.Router();
+const {flutPay} = require("../controller/flutterWave")
 const {
   createPayment,
   getSubscription,
@@ -7,6 +8,7 @@ const {
   verification,
   cancelSubscription,
 } = require("../controller/payController");
+
 
 payRouter.post("/create", createPayment);
 payRouter.post("/checkActive", checkActiveSubscription);
