@@ -36,7 +36,7 @@ function Correction() {
   if (history) {
     return (
       <>
-        <div className="flex flex-col pt-16 md:ml-[62px] md:mr-[9rem] sm:mx-[70px] mx-6">
+        <div className="flex flex-col w-full h-full pt-16 pb-10 mx-6">
           <div className="flex items-center  justify-start gap-10">
             <button onClick={() => navigate(-1)} className="outline-none">
               <img src={back} alt="" />

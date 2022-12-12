@@ -34,7 +34,7 @@ function History() {
   if (history?.length) {
     return (
       <div className="flex flex-col h-full w-full pt-16 mx-0">
-        <div className="flex items-center sm:justify-between justify-end">
+        <div className="flex items-center max-w-5xl mx-auto w-full sm:justify-between justify-end">
           <h1 className="text-[#393939] sm:text-[32px] text-[24px] font-bold font-['DM_Sans'] leading-10">History</h1>
           <div className="sm:flex-[.95] flex-[.7] w-full relative max-w-2xl">
             <input
