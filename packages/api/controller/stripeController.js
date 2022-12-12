@@ -36,6 +36,7 @@ exports.checkout = async (req, res, next) => {
           quantity: 1,
         },
       ],
+      metadata: { email: email, interval: interval },
       mode: "subscription",
       customer_email: email,
       client_reference_id: txref,
@@ -157,7 +158,7 @@ exports.cancel = async (req, res) => {
 };
 
 exports.get = async (req, res) => {
-  const {email} = req.user;
+  const { email } = req.user;
   const transaction = await Subscription.find({
     $and: [{ email: email }, { paymentGateway: "stripe" }],
   });
@@ -168,11 +169,72 @@ exports.get = async (req, res) => {
       data: [],
     });
   }
-  return res
-    .status(200)
-    .json({
-      success: true,
-      message: `${transaction.length} Subscription(s) found for User: ${email}!`,
-      data: transaction,
+  return res.status(200).json({
+    success: true,
+    message: `${transaction.length} Subscription(s) found for User: ${email}!`,
+    data: transaction,
+  });
+};
+
+exports.verify = async (req, res) => {
+  const { sessionId } = req.body;
+  if (!sessionId)
+    return res
+      .status(400)
+      .json({ success: false, message: "No Session ID sent " });
+  const verificationSession = await stripe.checkout.sessions
+    .retrieve(sessionId)
+    .then(async (data) => {
+      const txref = data.client_reference_id;
+      const currency = data.currency.toUpperCase();
+      const amount = data.amount_total / 100;
+      const { email } = req.user;
+      const subscriptionId = data.subscription;
+      const interval = data.metadata.interval;
+      const paymentGateway = "stripe";
+      const payload = {
+        txref,
+        currency,
+        amount,
+        email,
+        subscriptionId,
+        interval,
+        paymentGateway,
+      };
+      if (!subscriptionId)
+        return res.status(400).send({
+          success: false,
+          message: "Payment not successful",
+          session: data,
+        });
+      //CHECK EXPIRATION DATE
+      Date.prototype.addDays = function (days) {
+        var date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+      };
+      var expirationDate = new Date();
+      if (interval == "weekly") expirationDate = expirationDate.addDays(7);
+      payload.expirationDate = expirationDate;
+      if (interval == "monthly") expirationDate = expirationDate.addDays(30);
+      payload.expirationDate = expirationDate;
+      if (interval == "quarterly") expirationDate = expirationDate.addDays(90);
+      payload.expirationDate = expirationDate;
+      if (interval == "annually") expirationDate = expirationDate.addDays(365);
+      payload.expirationDate = expirationDate;
+      await Subscription.create(payload);
+      return res.status(200).json({
+        success: true,
+        message: data.payment_status,
+        session: data,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(400).json({
+        success: false,
+        message: "There was an error",
+        error: error.message,
+      });
     });
 };

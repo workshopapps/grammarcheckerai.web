@@ -9,6 +9,7 @@ const createPayment = async (req, res) => {
 
   try {
     const { subscriptionId, interval, amount, currency, txref } = req.body;
+    const paymentGateway = "paystack";
     const payload = {
       email,
       subscriptionId,
@@ -16,6 +17,7 @@ const createPayment = async (req, res) => {
       amount,
       currency,
       txref,
+      paymentGateway
     };
 
     //FIND ACTIVE SUBSCRIPTION
