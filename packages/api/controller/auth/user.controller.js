@@ -90,13 +90,13 @@ async function login(req, res) {
   if (!user) {
     return res
       .status(401)
-      .json({ msg: `User with email ${email} does not exist.` });
+      .json({ message: `User with email ${email} does not exist.` });
   }
 
   // comparing password
   const validPassword = await user.comparePassword(password);
   if (!validPassword) {
-    return res.status(401).json({ msg: "Invalid email or password" });
+    return res.status(401).json({ message: "Invalid email or password" });
   }
 
   return res.status(200).json(
