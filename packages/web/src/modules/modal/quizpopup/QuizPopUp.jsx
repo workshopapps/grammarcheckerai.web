@@ -12,7 +12,7 @@ const QuizPopUp = ({ showQuiz, setShowQuiz }) => {
   // eslint-disable-next-line no-unused-vars
   const [answer, setAnswer] = useState(false);
   const [trivia, setTrivia] = useState({});
-  const [errorMsg, setErrorMsg] = useState(false);
+  // const [errorMsg, setErrorMsg] = useState(false);
   const [changeColor, setChangeColor] = useState('#e8ddf2');
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [color, setColor] = useState('#e8ddf2');
