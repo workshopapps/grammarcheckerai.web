@@ -62,9 +62,9 @@ export const ReviewCard = ({ closeModal }) => {
             setSuccessMessage('There was an error processing your review');
           }
           }
-          
           catch (error) {
               console.log(error)
+              setSuccessMessage('There was an error processing your review');
           }
 
         console.log(localStorage.getItem("grittyuserid"))
