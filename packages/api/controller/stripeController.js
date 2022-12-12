@@ -219,6 +219,15 @@ exports.verify = async (req, res) => {
       payload.expirationDate = expirationDate;
       if (interval == "annually") expirationDate = expirationDate.addDays(365);
       payload.expirationDate = expirationDate;
+      const isVerified = await Subscription.findOne({txref: txref})
+      if(isVerified) {
+        return res.status(400).json({
+          success: false,
+          message: `Subscription with reference: ${txref}, verified already`,
+          data: payload,
+        session: data,
+        });
+      }
       await Subscription.create(payload);
       return res.status(200).json({
         success: true,
