@@ -34,7 +34,7 @@ const Navbar = () => {
   const ismobile = useMediaQuery('(max-width: 700px)');
 
   return (
-    <header className={`${styles._header} dark:bg-header bg-white `}>
+    <header className={`${styles._header} dark:bg-header bg-white shadow-sm`}>
       <button className={styles._nvlogo} onClick={() => navigate('/home')}>
         {context.theme === 'dark' ? <img src={logoImgWhite} alt="gritty" /> : <img src={logoImg} alt="gritty" />}
       </button>

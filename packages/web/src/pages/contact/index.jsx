@@ -1,13 +1,10 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import axios from 'axios';
 import ContactCSS from './Contact.module.css';
-import user from '../../assets/user.svg';
+import PropTypes from 'prop-types';
 import flag from '../../assets/flag/NG.png';
 import chat from '../../assets/chat/messages-2.png';
-import stickynote from '../../assets/stickynote.svg';
-import deviceMessage from '../../assets/device-message.svg';
-import danger from '../../assets/danger.svg';
-import archive from '../../assets/archive.svg';
 import Modal from './Contact_modal/Modal.jsx';
 import Footer from '../../modules/static/landing-page/Footer';
 import { IconContext } from 'react-icons';
@@ -16,6 +13,7 @@ import { FaFacebookSquare, FaUserAlt, FaPhoneAlt } from 'react-icons/fa';
 import { MdEmail, MdLogin } from 'react-icons/md';
 import { BsChatSquareQuote, BsClipboardPlus } from 'react-icons/bs';
 import { IoWarningOutline, IoBriefcaseOutline } from 'react-icons/io5';
+import toast, { Toaster } from 'react-hot-toast';
 
 const index = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -26,14 +24,7 @@ const index = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [message, setUserMessage] = useState('');
   const [active, setActive] = useState(0);
-
-  const setClick = (num) => {
-    if (active === num) {
-      setActive(0);
-    } else {
-      setActive(num);
-    }
-  };
+  const error = (message) => toast.error(message);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,12 +39,11 @@ const index = () => {
         message: message,
       },
     })
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         setOpenModal(true);
       })
       .catch((error) => {
-        console.log(error);
+        error(error?.response?.data?.message);
         setOpenModal(false);
       });
     setIsSubmit(true);
@@ -93,21 +83,6 @@ const index = () => {
     },
   ];
 
-  const IconCard = ({ state, Icon, title }) => (
-    <button
-      className={ContactCSS.box}
-      onClick={() => setClick(state)}
-      style={{
-        transition: 'all 0.2s ease-in',
-        backgroundColor: +active === +state ? '#5D387F' : '#F6F6F6',
-        color: +active === +state ? 'white' : 'black',
-      }}
-    >
-      <Icon size={24} color={+active === +state ? 'white' : 'black'} />
-      <p className="text-sm">{title}</p>
-    </button>
-  );
-
   return (
     <div className={ContactCSS.main_container}>
       <div className={ContactCSS.container}>
@@ -126,8 +101,8 @@ const index = () => {
             <p className={ContactCSS.p2}>Talk to our support team</p>
             <p className={ContactCSS.p3}>
               {' '}
-              If you Have Any Questions Or Feedback, Please Don't Hesitate To Reach Out To Us. We Are Always Happy To
-              Help!
+              If you Have Any Questions Or Feedback, Please Don&apos;t Hesitate To Reach Out To Us. We Are Always Happy
+              To Help!
             </p>
           </div>
         </div>
@@ -277,13 +252,17 @@ const index = () => {
 
                 <div className={ContactCSS.extra_areas}>
                   <label>Subject</label>
-
                   <div className="">
                     <div className={ContactCSS.boxes}>
                       <div className="flex flex-col mt-2">
                         <div className={`${ContactCSS._grid_layout} grid  m-0 p-0`}>
                           {subjects.map((subject) => (
-                            <IconCard key={subject.title} {...subject} />
+                            <IconCard
+                              key={subject.title}
+                              {...subject}
+                              active={active}
+                              onClick={() => setActive(subject.state)}
+                            />
                           ))}
                         </div>
                       </div>
@@ -317,8 +296,31 @@ const index = () => {
         </div>
       </div>
       <Footer />
+      <Toaster />
     </div>
   );
 };
 
+export const IconCard = ({ state, Icon, title, active, onClick }) => (
+  <button
+    className={ContactCSS.box}
+    onClick={onClick}
+    style={{
+      transition: 'all 0.2s ease-in',
+      backgroundColor: +active === +state ? '#5D387F' : '#F6F6F6',
+      color: +active === +state ? 'white' : 'black',
+    }}
+  >
+    <Icon size={24} color={+active === +state ? 'white' : 'black'} />
+    <p className="text-sm">{title}</p>
+  </button>
+);
+
+IconCard.propTypes = {
+  title: PropTypes.string,
+  Icon: PropTypes.func,
+  onClick: PropTypes.func,
+  state: PropTypes.number,
+  active: PropTypes.number,
+};
 export default index;
