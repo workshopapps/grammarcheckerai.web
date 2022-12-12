@@ -25,7 +25,7 @@ const Faq = () => {
             />
             <FaqBox
               question="Can Speak Better translate in all languages? "
-              details="Yes, Speak Better is avaliable to translate into all languages."
+              details="No Speak Better is only available to translate in French, Spanish, German, Chinese, Russian and Italian."
             />
             <FaqBox
               question="How does Speak Better correct grammatical errors quickly? "

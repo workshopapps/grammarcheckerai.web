@@ -48,7 +48,7 @@ const Cta = () => {
   return (
     <section>
       <div className={styles._newsletter}>
-        <div className="p-4 px-10 mb-10 md:flex justify-between items-center md:max-w-3xl md:mx-auto">
+        <div className="p-4 md:px-10 mb-10 md:flex justify-between items-center md:max-w-3xl md:mx-auto">
           <img src={Ctaimg} alt="" className="mx-auto mb-3 md:mx-0 w-80" />
 
           <div className="md:pl-8">
@@ -64,7 +64,7 @@ const Cta = () => {
               Join our monthly newsletter for helpful tips on how to learn languages fluently and AI tecnology.
             </p>
 
-            <div className="w-80 mx-auto">
+            <div className="w-64 mx-auto md:w-80">
               <form onSubmit={handleSubmit}>
                 <input
                   className="border border-solid border-input_border bg-input p-2 w-2/3 rounded-l outline-none "

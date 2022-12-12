@@ -9,19 +9,19 @@ export default function Trademark() {
   };
   return (
     <div>
-      <div className='py-14 text-center bg-[#E8DDF2] text-BLACK'>
-        <div className="goback pb-30">
-          <button onClick={handlePrev} className="bg-purple-500 hover:bg-purple-600 text-white py-2 px-2 ml-10 flex items-center mt-0 lg:absolute w-36 h-12 sm: relative sm:float-top">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className='h-10'>
-              <path
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="48"
-                d="M328 112L184 256l144 144"
-              />
-            </svg>
+      <div className='py-14 px-4 text-center bg-[#E8DDF2] text-BLACK'>
+      <div className="goback pb-30">
+                    <button onClick={handlePrev} className="bg-purple-500 hover:bg-purple-600 text-white pl-2 ml-2 flex items-center mt-0 lg:absolute w-36 h-12 sm: relative mb-8 rounded xl:mb-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className='h-8' >
+                            <path
+                                fill="none"
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="48"
+                                d="M328 112L184 256l144 144"
+                            />
+                        </svg>
             <span>Go back</span>
           </button>
         </div>
