@@ -33,7 +33,7 @@ const subscriptionSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["initiated", "pending", "succesful", "failed"],
+      enum: ["initiated", "pending", "successful", "failed"],
       default: "initiated",
     },
     currency: {

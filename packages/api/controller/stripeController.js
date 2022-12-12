@@ -36,7 +36,7 @@ exports.checkout = async (req, res, next) => {
           quantity: 1,
         },
       ],
-      metadata: { email: email, interval: interval },
+      metadata: { email: email, interval: interval, txref: txref },
       mode: "subscription",
       customer_email: email,
       client_reference_id: txref,
@@ -108,21 +108,22 @@ exports.create = async (req, res) => {
     });
   });
 };
+
 exports.cancel = async (req, res) => {
   const { txref } = req.body;
   const { email } = req.user;
   if (!email || !txref)
     return res.status(400).send({
       success: false,
-      message: "Invalid email or reference sent",
+      message: "Invalid reference sent",
     });
   const transaction = await Subscription.findOne({
     $and: [{ email: email }, { txref: txref }],
   });
-  if (!transaction) {
+  if (transaction == null) {
     return res.status(400).send({
       success: false,
-      message: `${transaction.length} Subscription(s) found for User: ${email}!`,
+      message: `0 Subscription found for User: ${email}!`,
       data: [],
     });
   }
@@ -133,14 +134,26 @@ exports.cancel = async (req, res) => {
       data: transaction,
     });
 
-  const deleted = await stripe.subscriptions.del(txref);
-  const cancel = await Subscription.findByIdAndUpdate(
+  await stripe.subscriptions
+    .del(transaction.subscriptionId)
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      return res.status(400).json({
+        success: false,
+        message: "Error encountered",
+        error: error.message,
+      });
+    });
+
+  await Subscription.findByIdAndUpdate(
     transaction._id,
     { status: "cancelled" },
     { new: true }
   )
     .then((data) => {
-      return res.status(200).send({
+      return res.status(200).json({
         success: true,
         message: "Subscription Cancelled",
         data: data,
@@ -148,32 +161,13 @@ exports.cancel = async (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      return res.status(400).send({
+      return res.status(400).json({
         success: false,
         message: "Error encountered",
         errorCode: err.code,
         error: err.message,
       });
     });
-};
-
-exports.get = async (req, res) => {
-  const { email } = req.user;
-  const transaction = await Subscription.find({
-    $and: [{ email: email }, { paymentGateway: "stripe" }],
-  });
-  if (!transaction) {
-    return res.status(400).send({
-      success: false,
-      message: `${transaction.length} Subscription(s) found for User: ${email}!`,
-      data: [],
-    });
-  }
-  return res.status(200).json({
-    success: true,
-    message: `${transaction.length} Subscription(s) found for User: ${email}!`,
-    data: transaction,
-  });
 };
 
 exports.verify = async (req, res) => {
@@ -192,14 +186,16 @@ exports.verify = async (req, res) => {
       const subscriptionId = data.subscription;
       const interval = data.metadata.interval;
       const paymentGateway = "stripe";
+      const status = "successful";
       const payload = {
+        email,
         txref,
         currency,
         amount,
-        email,
         subscriptionId,
         interval,
         paymentGateway,
+        status,
       };
       if (!subscriptionId)
         return res.status(400).send({
@@ -208,6 +204,7 @@ exports.verify = async (req, res) => {
           session: data,
         });
       //CHECK EXPIRATION DATE
+
       Date.prototype.addDays = function (days) {
         var date = new Date(this.valueOf());
         date.setDate(date.getDate() + days);
@@ -226,6 +223,7 @@ exports.verify = async (req, res) => {
       return res.status(200).json({
         success: true,
         message: data.payment_status,
+        data: payload,
         session: data,
       });
     })

@@ -78,32 +78,6 @@ const createPayment = async (req, res) => {
   }
 };
 
-const getSubscription = async (req, res) => {
-  try {
-    const { email } = req.user;
-    const userSub = await Subscription.find({ email });
-    if (!userSub) {
-      return res.status(400).send({
-        success: false,
-        message: `${userSub.length} Subscription(s) found for User: ${email}!`,
-        data: [],
-      });
-    }
-    return res.status(200).send({
-      success: true,
-      message: `${userSub.length} Subscription(s) found for User: ${email}!`,
-      data: userSub,
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(400).send({
-      success: false,
-      message: "Error encountered",
-      errorCode: error.code,
-      error: error.message,
-    });
-  }
-};
 
 const cancelSubscription = async (req, res) => {
   const { txref } = req.body;
@@ -205,12 +179,10 @@ const verification = async (req, res) => {
     });
 };
 
-const checkActiveSubscription = async (req, res) => {};
+
 
 module.exports = {
   createPayment,
   verification,
-  getSubscription,
-  checkActiveSubscription,
   cancelSubscription,
 };
