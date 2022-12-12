@@ -16,7 +16,7 @@ import styles from './index.module.css';
 import PropTypes from 'prop-types';
 import chirpy from '../../../assets/chirpy.svg';
 import { IconButton, Tooltip } from '@mui/material';
-import { IoMdPause } from 'react-icons/io';
+import { IoMdPause, IoMdPlay } from 'react-icons/io';
 import { IoSendSharp, IoStopSharp } from 'react-icons/io5';
 import { MdReplay } from 'react-icons/md';
 import { convertSecToMin } from '../../../lib/utils';
@@ -36,6 +36,7 @@ function Converse({ noRive = false }) {
   const sendAudio = useSendAudioFile();
   const [open, setOpen] = useState(false);
   const [language, setLanguage] = React.useState('English');
+  const userId = localStorage.getItem('grittyuserid');
   const error = (message) => toast.error(message);
 
   const [chats, setChats] = React.useState([]);
@@ -65,6 +66,7 @@ function Converse({ noRive = false }) {
     const soln = new FormData();
     soln.append('file', mediaBlob);
     soln.append('language', language);
+    if (userId) soln.append('userId', userId);
     sendAudio
       .mutateAsync(soln)
       .then((res) => {
@@ -151,7 +153,7 @@ function Converse({ noRive = false }) {
     <>
       <Premium open={open} handleClosePremium={handleClosePremium} />
       {sendAudio.isLoading && <Loader />}
-      <div className="flex-1 w-full max-w-8xl mx-auto flex flex-col justify-center  pt-2 lg:pt-0 pb-7">
+      <div className="flex-1 w-full max-w-8xl mx-auto flex flex-col justify-center pt-3 lg:pt-0 pb-7">
         <div className="text-center max-h-5/6 space-y-5 lg:space-y-8">
           {chats.length === 0 ? (
             <>
@@ -160,7 +162,7 @@ function Converse({ noRive = false }) {
                   <RiveBot size="large" />
                 </div>
               ) : (
-                <div className=" flex justify-center items-center pb-6">
+                <div className="flex justify-center items-center pb-6">
                   <img
                     src={chirpy}
                     alt="chirpy bob"
@@ -239,7 +241,7 @@ function Converse({ noRive = false }) {
                           aria-label="add an alarm"
                           color="primary"
                         >
-                          <IoMdPause size={20} />
+                          {status === 'paused' ? <IoMdPlay size={20} /> : <IoMdPause size={20} />}
                         </IconButton>
                       </Tooltip>
                       <Tooltip arrow title="Stop">
@@ -257,7 +259,7 @@ function Converse({ noRive = false }) {
                           onClick={submitAudioHandler}
                           color="success"
                           aria-label="add an alarm"
-                          disabled={status === 'recording' || status === 'paused'}
+                          disabled={status === 'recording' || status === 'idle' || status === 'paused'}
                         >
                           <IoSendSharp size={20} />
                         </IconButton>

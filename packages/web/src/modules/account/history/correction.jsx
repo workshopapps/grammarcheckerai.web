@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import back from '../../../assets/arrow-left.svg';
 import trash from '../../../assets/trash.svg';
-import { useState } from 'react';
 import HistoryModal from './modal';
 import HistoryEmpty from './historyEmpty';
+import React from 'react';
+import axios from 'axios';
 
 function Correction() {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ function Correction() {
   const userId = localStorage.getItem('grittyuserid');
   const URL = `https://api.speakbetter.hng.tech/v1/chatHistory?userId=${userId}`;
 
-  useEffect(() => {
+  React.useEffect(() => {
     const getHistory = async () => {
       try {
         const res = await axios.get(URL);
@@ -23,8 +24,8 @@ function Correction() {
     };
     getHistory();
   }, []);
-  const [openModal, setOpenModal] = useState(false);
-  const [history, setHistory] = useState([]);
+  const [openModal, setOpenModal] = React.useState(false);
+  const [history, setHistory] = React.useState([]);
 
   const formattedDate = (date) => {
     return new Date(date).toDateString();
@@ -35,7 +36,7 @@ function Correction() {
   if (history) {
     return (
       <>
-        <div className="flex flex-col pt-16 md:ml-[62px] md:mr-[9rem] sm:mx-[70px] mx-6">
+        <div className="flex flex-col w-full h-full pt-16 pb-10 mx-6">
           <div className="flex items-center  justify-start gap-10">
             <button onClick={() => navigate(-1)} className="outline-none">
               <img src={back} alt="" />

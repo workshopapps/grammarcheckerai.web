@@ -1,6 +1,6 @@
 import React from 'react';
 import useTheme from '../../hooks/useTheme';
-import Heroimg from '../../assets/blogimg/blog-ai.svg';
+import Heroimg from '../../assets/blogimg/aiblog.jpg';
 import Cta from '../../components/Blogcomponents/Cta';
 import Footer from '../../modules/static/landing-page/Footer';
 import { Link } from 'react-router-dom';
@@ -32,7 +32,7 @@ const Ai = () => {
             <span className="text-blog">The Time Is Now for Conversational AI</span>
           </div>
           <div className="p-4 mb-10 md:w-full md:h-full md:mb-10 xl:w-full">
-            <img src={Heroimg} alt="" className="md:w-full md:h-full" />
+            <img src={Heroimg} alt="" className="w-full md:h-full" />
           </div>
 
           <div className={` ${context.theme === 'dark' ? 'text-white' : null} p-4 py-4`}>

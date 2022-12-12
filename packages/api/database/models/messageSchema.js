@@ -25,4 +25,4 @@ let schema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("message", schema);
+module.exports = mongoose.model("Message", schema);

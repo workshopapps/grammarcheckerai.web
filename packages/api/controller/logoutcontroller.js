@@ -4,9 +4,10 @@ exports.logout = (req, res) => {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
   });
-  res.status(200).json({
+  return res.status(200).json({
     pageTitle: "logout endpoint",
     success: true,
-    message: "You have Logged out successfully, we hope to see you come around again.",
+    message:
+      "You have Logged out successfully, we hope to see you come around again.",
   });
 };

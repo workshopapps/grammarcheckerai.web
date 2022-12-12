@@ -33,12 +33,12 @@ const subscriptionSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["initiated", "pending", "succesful", "failed"],
+      enum: ["initiated", "pending", "successful", "failed"],
       default: "initiated",
     },
     currency: {
       type: String,
-      enum: ["NGN", "USD", "EUR", "YEN", "GBP"],
+      enum: ["NGN", "USD", "EUR", "YEN", "GBP", "ZAR"],
       default: "NGN",
     },
     expirationDate: {

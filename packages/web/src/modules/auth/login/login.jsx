@@ -97,7 +97,7 @@ const Index = () => {
           }, 5000);
         })
         .catch((err) => {
-          error(err.message);
+          error(err?.response?.data?.message);
         });
     }
   }, []);
@@ -164,7 +164,7 @@ const Index = () => {
           }, 5000);
         })
         .catch((err) => {
-          error(err.message);
+          error(err?.response?.data?.message);
         });
     }
   };
