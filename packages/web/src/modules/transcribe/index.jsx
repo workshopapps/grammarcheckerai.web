@@ -97,22 +97,9 @@ const Transcribe = () => {
   };
 
   return (
-    <div className="block w-full h-full">
-      <div className="px-3 md:px-10 relative mt-5">
+    <div className="flex w-full flex-col h-full">
+      <div className="px-3 flex-1 md:px-10 relative mt-5">
         <div>
-          <div role="presentation" onClick={handleUploadClick} className="py-3 flex justify-end cursor-pointer">
-            <img src={ImportIcon} alt="import audio" />
-            <input
-              ref={hiddenFileInput}
-              onChange={handleFileClick}
-              className="hidden"
-              type="file"
-              accept="audio/*"
-              name="audio_file"
-              id="audio_file"
-            />
-          </div>
-
           <div className="grid place-items-center md:hidden">
             <h1>Quick Transcribe</h1>
           </div>
@@ -122,9 +109,11 @@ const Transcribe = () => {
               <React.Fragment key={index}>
                 <div className="pb-20 md:pb-16 px-2 mt-5 relative">
                   {data.botMsg !== null ? (
-                    <div className="ai__msg w-52">
-                      <h1 className="text-base font-medium ">Speak Better</h1>
-                      <p className="bg-gray-100 font-normal leading-5 p-2 rounded">{data.botMsg}</p>
+                    <div className="ai__msg w-full max-w-xs">
+                      <h1 className="text-base font-medium pb-2">Speak Better</h1>
+                      <p className="bg-gray-100 px-6 py-3 text-slate-700 font-normal leading-5 p-2 rounded">
+                        {data.botMsg}
+                      </p>
                       <p className="mt-1 text-xs text-left">{new Date().toLocaleTimeString()}</p>
                     </div>
                   ) : null}
@@ -145,17 +134,29 @@ const Transcribe = () => {
             ))}
           </div>
           <div>
-            <div className="mt-4 w-48 mr-auto mb-8">
-              <button className="p-4 bg-[#5D387F] text-white w-full rounded-lg border-0" onClick={submitAudioHandler}>
-                Quick Transcribe
-              </button>
-            </div>
             <ChatContainer chats={chats} />
           </div>
 
           {isError ? <ErrorOverlay setIsError={setIsError} /> : null}
           <Toaster />
         </div>
+      </div>
+      <div className="pb-4">
+        <button
+          onClick={handleUploadClick}
+          className="w-full  bg-[#E8DDF2] border-4 py-6 border-dashed text-md md:text-xl text-[#8C54BF] border-[#8C54BF]"
+        >
+          Click here to upload an audio
+          <input
+            ref={hiddenFileInput}
+            onChange={handleFileClick}
+            className="hidden"
+            type="file"
+            accept="audio/*"
+            name="audio_file"
+            id="audio_file"
+          />
+        </button>
       </div>
     </div>
   );
