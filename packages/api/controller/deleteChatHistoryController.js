@@ -2,7 +2,7 @@ const Message = require("../database/models/messageSchema");
 const { userCollection } = require("../database/models/userSchema");
 
 const deleteChatHistory = async (req, res) => {
-  const { userId } = req.query;
+  const { userId } = req.params;
   const user = await userCollection.findById(userId);
   if (!user) {
     return res.status(400).send({
