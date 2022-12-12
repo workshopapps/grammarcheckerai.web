@@ -53,6 +53,7 @@
     "rive-react": "^3.0.33",
     "sass": "^1.56.1",
     "socket.io-client": "^4.5.4",
+    "uuid": "^9.0.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {

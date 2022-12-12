@@ -10,30 +10,62 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import useGetUserSubscription from '../../hooks/account/useGetUserSubscription';
 import Skeleton from '@mui/material/Skeleton';
 import useCancelPremium from '../../hooks/auth/useCancelPremium';
-import toast, { Toaster } from 'react-hot-toast';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Popover from '@mui/material/Popover';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from '@mui/material';
 
 const Subscription = () => {
   const navigate = useNavigate();
-  const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails')).email);
+  const [userSubscription, setUserSubscription] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const premiumCancel = useCancelPremium();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [successOpen, setSuccessOpen] = React.useState(false);
+  const [cancelOpen, setCancelOpen] = React.useState(true);
 
-  // React.useEffect(() => {
-  //   console.log(userSubscription?.value);
-  // }, []);
+  const useFetch = (url, token) => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        setUserSubscription(oBJ);
+      })
+      .then(() => {
+        // console.log(userSubscription);
+      })
+      .catch((error) => error(error));
+  };
+
+  React.useEffect(() => {
+    useFetch('https://api.speakbetter.hng.tech/v1/subscription', localStorage.getItem('grittyusertoken'));
+    // console.log(userSubscription.status);
+  }, []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleCancelClose = () => {
+    setCancelOpen(false);
     setAnchorEl(null);
   };
 
@@ -48,9 +80,9 @@ const Subscription = () => {
   const handleProCancellation = () => {
     // console.log(userSubscription?.value);
     setLoading(true);
-    if (userSubscription?.value && userSubscription?.value.length !== 0) {
-      userSubscription?.value?.map((item) => {
-        if (item.status === 'success') {
+    if (userSubscription?.data && userSubscription?.data.length !== 0) {
+      userSubscription?.data?.map((item) => {
+        if (item.status === 'successful') {
           premiumCancel
             .mutateAsync({
               email: item?.email,
@@ -58,10 +90,7 @@ const Subscription = () => {
             })
             .then(() => {
               setLoading(false);
-              toast.success('Subscription Cancelled Succesfully');
-              userSubscription.refetch();
-              // console.log('response', res);
-              // console.log('new', userSubscription);
+              setSuccessOpen(true);
             });
         }
       });
@@ -70,12 +99,33 @@ const Subscription = () => {
 
   return (
     <div className={styles._subsPage}>
+      {successOpen && (
+        <>
+          <Dialog
+            open={cancelOpen}
+            onClose={handleCancelClose}
+            keepMounted
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{'Subscription Cancelled'}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">Subscription Cancelled Successfully</DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCancelClose} className={styles._sbSuccess} color="error">
+                Okay!
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </>
+      )}
       <div className={styles._subsMain}>
         <h2>Subscription History</h2>
         <p>Manage Subscription information here</p>
       </div>
 
-      {userSubscription.data && userSubscription?.value.length !== 0 ? (
+      {userSubscription.data && userSubscription?.data?.length !== 0 ? (
         <div>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 500 }} aria-label="simple table">
@@ -88,7 +138,7 @@ const Subscription = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {checkForArray(userSubscription?.value).map((subs) => (
+                {checkForArray(userSubscription?.data).map((subs) => (
                   <TableRow key={subs?._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                     <TableCell component="th" scope="row">
                       {subs?.createdAt ? dayjs(subs?.createdAt).format('DD/MM/YYYY') : <Skeleton animation="wave" />}
@@ -98,7 +148,7 @@ const Subscription = () => {
                       {`${subs?.currency} ${subs?.amount.$numberDecimal}` || <Skeleton animation="wave" />}
                     </TableCell>
                     <TableCell align="left">
-                      {subs.status === 'success' ? (
+                      {subs?.status === 'success' || subs?.status === 'successful' ? (
                         <div className={styles._sbCancel}>
                           <LoadingButton loading={loading} variant="contained" color="secondary" onClick={handleClick}>
                             Cancel
@@ -160,7 +210,6 @@ const Subscription = () => {
           <button onClick={handlePremium}>Upgrade Now</button>
         </div>
       )}
-      <Toaster />
     </div>
   );
 };

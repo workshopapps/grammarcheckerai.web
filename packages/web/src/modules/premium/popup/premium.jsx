@@ -8,7 +8,7 @@ import check from '../Assets/tick-square.png';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Checkout from './checkout';
 import Navbar from '../../../components/Navbar';
-import useGetUserSubscription from '../../../hooks/account/useGetUserSubscription';
+// import useGetUserSubscription from '../../../hooks/account/useGetUserSubscription';
 import { Toaster } from 'react-hot-toast';
 import useStripeVerify from '../../../hooks/auth/useStripeVerify';
 import Dialog from '@mui/material/Dialog';
@@ -17,7 +17,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from '@mui/material';
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
@@ -35,14 +34,39 @@ const index = () => {
     setOpen(false);
   };
   const [userIsSubscribed, setUserIsSubscribed] = React.useState(false);
-  const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
+  const [userSubscription, setUserSubscription] = React.useState('');
+
+  const useFetch = (url, token) => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        setUserSubscription(oBJ);
+      })
+      .then(() => {
+        // console.log(userSubscription);
+      })
+      .catch((error) => error(error));
+  };
+
+  React.useEffect(() => {
+    useFetch('https://api.speakbetter.hng.tech/v1/subscription', localStorage.getItem('grittyusertoken'));
+  }, []);
 
   const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
 
   const handleCheckout = (plan) => {
     setInterval(plan);
-    if (userSubscription?.value && userSubscription?.value?.length !== 0) {
-      checkForArray(userSubscription?.value).map((item) => {
+    if (userSubscription?.data && userSubscription?.data?.length !== 0) {
+      checkForArray(userSubscription?.data).map((item) => {
         if (item.status === 'success') {
           setUserIsSubscribed(true);
         } else {
@@ -57,16 +81,24 @@ const index = () => {
   };
   const params = new URLSearchParams(window.location.search);
 
+  const handleVerifycation = React.useCallback(() => {
+    const sessionId = params.get('session_id');
+    console.log(authVerify?.value);
+    if (sessionId && !authVerify?.value) {
+      authVerify
+        .mutateAsync({
+          sessionId,
+        })
+        .then((res) => {
+          if (res.data.message) {
+            setSuccessOpen(true);
+          }
+        });
+    }
+  }, []);
+
   React.useEffect(() => {
-    authVerify
-      .mutateAsync({
-        sessionId: params.get('session_id'),
-      })
-      .then((res) => {
-        if (res.data.message) {
-          setSuccessOpen(true);
-        }
-      });
+    handleVerifycation();
   }, []);
 
   if (interval.duration)
@@ -174,8 +206,8 @@ const index = () => {
                   onClick={() =>
                     handleCheckout({
                       ngnplan: '31053',
-                      plan: 'PLN_9zw487te50by978',
-                      usd: 5,
+                      plan: 'price_1MDCl7DsYRsW1yFupJ9WGYn5',
+                      usd: 18.99,
                       ngn: 200,
                       zar: 35,
                       duration: 'monthly',
@@ -184,7 +216,7 @@ const index = () => {
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Monthly</p>
-                    <h2>$35</h2>
+                    <h2>$18.99</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
                     <ul>
@@ -199,17 +231,17 @@ const index = () => {
                   onClick={() =>
                     handleCheckout({
                       ngnplan: '31054',
-                      plan: 'PLN_eva5gn1da06tvvb',
-                      usd: 10,
+                      plan: 'price_1MD8wPDsYRsW1yFuyTdES0Mb',
+                      usd: 59.99,
                       ngn: 200,
-                      zar: 100,
+                      // zar: 100,
                       duration: 'quarterly',
                     })
                   }
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Quarterly</p>
-                    <h2>$3333.3</h2>
+                    <h2>$59.99</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
                     <ul>
@@ -224,17 +256,17 @@ const index = () => {
                   onClick={() =>
                     handleCheckout({
                       ngnplan: '31055',
-                      plan: 'PLN_frkuo2irbdtjft3',
+                      plan: 'price_1MDDBZDsYRsW1yFu6omANT0d',
                       usd: 20,
-                      ngn: 3500,
-                      zar: 350,
+                      ngn: 249.99,
+                      // zar: 350,
                       duration: 'annually',
                     })
                   }
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Annually</p>
-                    <h2>$2916.6</h2>
+                    <h2>$249.99</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
                     <ul>
@@ -253,16 +285,16 @@ const index = () => {
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbInterval}>Monthly</h5>
                       <p>
-                        $35<span> / month</span>
+                        $18.99<span> / month</span>
                       </p>
                       <button
                         onClick={() =>
                           handleCheckout({
                             ngnplan: '31053',
-                            plan: 'PLN_9zw487te50by978',
-                            usd: 5,
+                            plan: 'price_1MDCl7DsYRsW1yFupJ9WGYn5',
+                            usd: 18.99,
                             ngn: 30,
-                            zar: 35,
+                            // zar: 35,
                             duration: 'monthly',
                           })
                         }
@@ -277,19 +309,19 @@ const index = () => {
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbIntervalPromo}>
                         <span>Quaterly</span>
-                        <span>Billed Quaterly - $100</span>
+                        <span>Billed Quaterly - $59.99</span>
                       </h5>
                       <p>
-                        $33<span> / month</span>
+                        $59.99<span> / 3 months</span>
                       </p>
                       <button
                         onClick={() =>
                           handleCheckout({
                             ngnplan: '31054',
-                            plan: 'PLN_eva5gn1da06tvvb',
-                            usd: 10,
+                            plan: 'price_1MD8wPDsYRsW1yFuyTdES0Mb',
+                            usd: 59.99,
                             ngn: 50,
-                            zar: 100,
+                            // zar: 100,
                             duration: 'quarterly',
                           })
                         }
@@ -303,20 +335,20 @@ const index = () => {
                     <h6>Best Value:</h6>
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbIntervalPromo}>
-                        <span>Quaterly</span>
-                        <span>Billed Annually - $50</span>
+                        <span>Annually</span>
+                        <span>Billed Annually - $249.99</span>
                       </h5>
                       <p>
-                        $716<span> / month</span>
+                        $249.99<span> / year</span>
                       </p>
                       <button
                         onClick={() =>
                           handleCheckout({
                             ngnplan: '31055',
-                            plan: 'PLN_frkuo2irbdtjft3',
-                            usd: 20,
+                            plan: 'price_1MDDBZDsYRsW1yFu6omANT0d',
+                            usd: 249.99,
                             ngn: 3500,
-                            zar: 350,
+                            // zar: 350,
                             duration: 'annually',
                           })
                         }

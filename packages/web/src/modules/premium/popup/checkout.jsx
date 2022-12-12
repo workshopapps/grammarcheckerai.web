@@ -21,8 +21,9 @@ import FormLabel from '@mui/material/FormLabel';
 import { Listbox, Transition } from '@headlessui/react';
 import { useFlutterwave } from 'react-flutterwave';
 import useStripe from '../../../hooks/auth/useStripe';
-// import userCheckPlanVerify from '../../../hooks/account/userCheckPlanVerify';
+import { v4 as uuidv4 } from 'uuid';
 
+// import userCheckPlanVerify from '../../../hooks/account/userCheckPlanVerify';
 const Currency = [
   { id: 1, name: 'USD' },
   { id: 2, name: 'NGN' },
@@ -57,7 +58,6 @@ const Checkout = (props) => {
 
   const handleChange = (event) => {
     setValue(event.target.value);
-    console.log(value);
   };
 
   useEffect(() => {
@@ -197,11 +197,11 @@ const Checkout = (props) => {
       console.log('checking stripe');
       authStripe
         .mutateAsync({
-          plan: 'price_1MD8wPDsYRsW1yFuyTdES0Mb',
-          amount: '5.00',
+          plan: props.plan,
+          amount: props.usd * 100,
           currency: 'USD',
-          interval: 'weekly',
-          txref: 'str-006fg550002',
+          interval: props.duration,
+          txref: uuidv4(),
         })
         .then((res) => {
           window.location = res.data.redirectUrl;
@@ -217,7 +217,7 @@ const Checkout = (props) => {
     setUserLSEmail(JSON.parse(localStorage.getItem('isUserDetails')).email);
 
     // console.log(userName);
-    console.log(config);
+    // console.log(config);
     if (props.userIsSubscribed === true) {
       toast(() => (
         <span className={styles._notifs}>
