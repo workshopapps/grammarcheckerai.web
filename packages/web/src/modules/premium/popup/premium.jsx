@@ -17,6 +17,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from '@mui/material';
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
@@ -81,24 +82,16 @@ const index = () => {
   };
   const params = new URLSearchParams(window.location.search);
 
-  const handleVerifycation = React.useCallback(() => {
-    const sessionId = params.get('session_id');
-    console.log(authVerify?.value);
-    if (sessionId && !authVerify?.value) {
-      authVerify
-        .mutateAsync({
-          sessionId,
-        })
-        .then((res) => {
-          if (res.data.message) {
-            setSuccessOpen(true);
-          }
-        });
-    }
-  }, []);
-
   React.useEffect(() => {
-    handleVerifycation();
+    authVerify
+      .mutateAsync({
+        sessionId: params.get('session_id'),
+      })
+      .then((res) => {
+        if (res.data.message) {
+          setSuccessOpen(true);
+        }
+      });
   }, []);
 
   if (interval.duration)
