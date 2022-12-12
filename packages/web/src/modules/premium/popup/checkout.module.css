@@ -389,7 +389,17 @@ input[type='checkbox']:checked + label::before {
   width: 100%;
   max-width: 406.5px;
 }
-@media only screen and (min-width: 849px) and (max-width: 1200px) {
+@media only screen and (max-width: 850px) {
+  ._paymentHeader {
+    position: relative !important;
+    top: 0;
+    text-align: left;
+    width: 100%;
+    z-index: 2;
+  }
+  ._paymentMethod {
+    padding: 10px 20px;
+  }
 }
 
 @media only screen and (max-width: 389px) {
@@ -563,7 +573,8 @@ input[type='checkbox']:checked + label::before {
   padding: 5% 0;
 }
 ._cpSummary h3 {
-  padding: 10px 0;
+  padding: 10px;
+  margin: 25px 0;
 }
 ._notifs {
   display: flex;
@@ -575,4 +586,104 @@ input[type='checkbox']:checked + label::before {
 }
 ._notifs b {
   padding: 10px 0;
+}
+._paystack {
+  width: 350px;
+  padding: 10px 0;
+  border-radius: 10px;
+  margin: 15px 0;
+  border: 1px outset rgba(217, 217, 217, 0.788);
+  background-image: url(../Assets//paystack.jfif);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+}
+._stripe {
+  width: 350px;
+  padding: 10px 0;
+  border-radius: 10px;
+  margin: 15px 0;
+  border: 1px outset rgba(217, 217, 217, 0.788);
+  background-image: url(../Assets//stripe.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+}
+._flutterwave {
+  width: 350px;
+  padding: 10px 0;
+  border-radius: 10px;
+  margin: 15px 0;
+  border: 1px outset rgba(217, 217, 217, 0.788);
+  background-image: url(../Assets//flutterwave.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+}
+._paymentTitle {
+  margin: 20px 0;
+  font-size: 25px !important;
+  width: 100%;
+  color: black;
+}
+._paymentTitle label {
+  width: 100%;
+}
+._paymentMethod {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  width: 100%;
+  padding-top: 30px;
+}
+._paymentHeader {
+  position: absolute;
+  top: 0;
+  text-align: left;
+  width: 100%;
+  z-index: 2;
+}
+._paymentChoice {
+  height: 100%;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+}
+._paymentback {
+  width: fit-content;
+  display: flex;
+  margin-top: 20px;
+  cursor: pointer;
+}
+._paymentback svg {
+  width: 25px;
+}
+._divider {
+  margin-top: 10px;
+}
+._paymentButton {
+  color: #7202db !important;
+  border-color: #7202db !important;
+  width: 100%;
+}
+._cpSummary {
+  color: rgb(0, 0, 0);
+  background-color: white;
+  padding: 30px 10px;
+  margin-top: 30px;
+  border-radius: 20px;
+}
+._cpSummarypayment {
+  color: #522081;
+  text-transform: capitalize;
+  background-color: #d6d6d6;
+  width: fit-content;
+}
+._sbCurrency {
+  width: 350px;
+  z-index: 1;
+  margin-bottom: 20px;
+  padding-top: 60px;
 }

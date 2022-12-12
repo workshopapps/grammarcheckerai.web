@@ -208,7 +208,7 @@ const index = () => {
                           id="last_name"
                           className=" w-full lg:w-{50%}"
                           placeholder="Type Name"
-                          onChange={(e) => setLastName(event.target.value)}
+                          onChange={(e) => setLastName(e.target.value)}
                         />
                       </div>
                     </div>
@@ -231,7 +231,7 @@ const index = () => {
                       id="email"
                       className="w-full"
                       placeholder="Type Email"
-                      onChange={(e) => setUserEmail(event.target.value)}
+                      onChange={(e) => setUserEmail(e.target.value)}
                     />
                   </div>
                 </div>
@@ -260,7 +260,7 @@ const index = () => {
                       id="phone_number"
                       className="w-full ml-8 lg:ml-4"
                       placeholder="800 000 0000"
-                      onChange={(e) => setPhoneNumber(event.target.value)}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
                     />
                   </div>
                 </div>

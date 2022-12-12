@@ -85,3 +85,6 @@ html {
 .css-1twrztz-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root {
   background-color: #5d387f !important;
 }
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  border-radius: 16px !important;
+}

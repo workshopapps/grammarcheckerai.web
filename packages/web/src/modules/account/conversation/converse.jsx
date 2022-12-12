@@ -6,7 +6,6 @@ import RiveBot from '../../../components/RiveBot';
 import micImg from '../../../assets/images/mic.svg';
 import Loader from '../../../components/Loader';
 import { useNavigate } from 'react-router-dom';
-import useGetUserSubscription from '../../../hooks/account/useGetUserSubscription';
 import useMediaRecorder from '@wmik/use-media-recorder';
 import toast from 'react-hot-toast';
 import useSendAudioFile from '../../../hooks/account/useSendAudio';
@@ -23,15 +22,15 @@ import { convertSecToMin } from '../../../lib/utils';
 
 function Converse({ noRive = false }) {
   const context = useTheme();
-  const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
   let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
     useMediaRecorder({
       recordScreen: false,
       blobOptions: { type: 'audio/wav' },
       mediaStreamConstraints: { audio: true, video: false },
     });
-  const userData = JSON.parse(localStorage.getItem('isUserDetails'));
 
+  const userData = JSON.parse(localStorage.getItem('isUserDetails'));
+  const [userSubscription, setUserSubscription] = React.useState('');
   const [counter, setCounter] = useState(0);
   const sendAudio = useSendAudioFile();
   const [open, setOpen] = useState(false);
@@ -43,6 +42,32 @@ function Converse({ noRive = false }) {
   const navigate = useNavigate();
 
   const chatRef = useRef(null);
+
+  const useFetch = (url, token) => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        setUserSubscription(oBJ);
+      })
+      .then(() => {
+        // console.log(userSubscription);
+      })
+      .catch((error) => error(error));
+  };
+
+  React.useEffect(() => {
+    useFetch('https://api.speakbetter.hng.tech/v1/subscription', localStorage.getItem('grittyusertoken'));
+    // console.log(userSubscription.status);
+  }, []);
 
   const handleScroll = () => {
     setTimeout(() => {
@@ -105,19 +130,15 @@ function Converse({ noRive = false }) {
   }, [status]);
 
   useEffect(() => {
-    if (counter > 20 && userSubscription?.value && userSubscription?.value?.length !== 0) {
-      checkForArray(userSubscription?.value).map((item) => {
-        if (counter <= 20 || item.status === 'success') {
-          return;
-        } else {
-          setOpen(true);
-          stopRecording();
-          setCounter(0);
+    if (counter > 10 && userSubscription?.data && userSubscription?.data?.length !== 0) {
+      checkForArray(userSubscription?.data).map((item) => {
+        if (item.status === 'successful') {
           return;
         }
       });
+      return;
     }
-    if (counter > 20) {
+    if (counter > 10) {
       setOpen(true);
       stopRecording();
       setCounter(0);

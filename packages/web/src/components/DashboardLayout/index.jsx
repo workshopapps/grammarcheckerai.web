@@ -20,7 +20,7 @@ function DashboardLayout() {
     <div className="flex flex-col-reverse sm:flex-row  sm:min-h-screen">
       <div className="md:w-80 h-full bg-[#F6F6F6] max-h-full min-h-screen z-[40] hidden md:block sticky left-0 top-0 border-r border-[#0000000d]">
         <div className="w-14 mx-auto py-10 ">
-          <Link to="/me/home">
+          <Link to="/">
             <img src={logoImg} alt="" className="w-full" />
           </Link>
         </div>
@@ -79,7 +79,7 @@ function DashboardLayout() {
             </Link>
           </div>
         </div>
-        <div className="flex-1 flex px-6 justify-center items-center">
+        <div className="flex-1 flex sm:px-4 justify-center items-center">
           <Outlet />
         </div>
         <SimpleBottomNavigation handleOpen={handleOpen} />
