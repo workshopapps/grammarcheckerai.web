@@ -2,7 +2,7 @@ const { Configuration, OpenAIApi } = require("openai");
 const { environment } = require("../config/environment");
 
 const configuration = new Configuration({
-  apiKey: environment.OPENAI_API_KEY,
+  apiKey: environment.OPENAI_API_KEY ,
 });
 const openai = new OpenAIApi(configuration);
 
@@ -46,5 +46,5 @@ const grammarCheckHandler = async (userResponseInTxt, language = "English") => {
     }
   }
 };
-
+ 
 module.exports = grammarCheckHandler;
