@@ -25,7 +25,7 @@ exports.uploadFileUrlToInitiateTranscription = async function (
   const data = {
     audio_url: audioUrl,
     language_code: languageMap[language],
-    webhook_url: `https://c361-197-211-32-243.eu.ngrok.io/v1/conversation/assemblyAICb?language=${language}&userId=${userId}`,
+    webhook_url: `https://api.speakbetter.hng.tech/v1/conversation/assemblyAICb?language=${language}&userId=${userId}`,
   };
 
   const params = {

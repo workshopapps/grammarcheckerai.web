@@ -4,7 +4,9 @@ const { getBotResponse } = require("../controller/sendAudioController.js");
 
 const endConversation = require("../controller/endConversationController");
 const startConversation = require("../controller/startConversationController");
-const getTranscription = require("../controller/getTranscriptionController");
+const {
+  getTranscription,
+} = require("../controller/getTranscriptionController");
 const {
   userConversationAccess,
 } = require("../middlewares/UserRestriction/userAccessControl");
