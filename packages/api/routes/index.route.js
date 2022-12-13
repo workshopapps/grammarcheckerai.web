@@ -12,6 +12,7 @@ const reviewRating = require("../routes/reviewRatingRoute");
 const leaderBoardRouter = require("../routes/leaderboardrouter");
 const chatHistoryRouter = require("./chatHistoryRoute");
 const payRoute = require("../routes/payRoute");
+const flutRoute = require("../routes/flutRoute");
 const stripeRouter = require("../routes/stripeRoutes");
 const isSubscribeRoute = require("./newsLetterSubscriptionRoute");
 const logoutRoute = require("./logoutRoute");
