@@ -687,3 +687,6 @@ input[type='checkbox']:checked + label::before {
   margin-bottom: 20px;
   padding-top: 60px;
 }
+._sbmodalCol1Color {
+  color: black;
+}

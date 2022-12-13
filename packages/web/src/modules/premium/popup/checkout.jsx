@@ -26,8 +26,9 @@ import useFlutter from '../../../hooks/auth/useFlutter';
 
 // import userCheckPlanVerify from '../../../hooks/account/userCheckPlanVerify';
 const Currency = [
+  { id: 0, name: 'Select your currency' },
   { id: 1, name: 'USD' },
-  // { id: 2, name: 'NGN' },
+  { id: 2, name: 'NGN' },
 ];
 
 const Checkout = (props) => {
@@ -271,6 +272,19 @@ const Checkout = (props) => {
       <div className={styles._gs2mainlogin}>
         <div className={styles._gs2login}>
           <div className={styles._gs2logincol1}>
+            <button className={styles._paymentback} onClick={props.handleBack}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="48"
+                  d="M328 112L184 256l144 144"
+                />
+              </svg>
+              <span>Back to Payment plan</span>
+            </button>
             {isAlreadyLoggedIn && (
               <div className={styles._paymentMethod}>
                 <FormControl className={styles._paymentChoice}>
@@ -278,20 +292,6 @@ const Checkout = (props) => {
                     <h2 className={styles._paymentTitle} id="demo-controlled-radio-buttons-group">
                       Payment Methods
                     </h2>
-                    <hr className={styles._divider} />
-                    <button className={styles._paymentback} onClick={props.handleBack}>
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                        <path
-                          fill="none"
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="48"
-                          d="M328 112L184 256l144 144"
-                        />
-                      </svg>
-                      <span>back</span>
-                    </button>
                   </div>
                   <div className={styles._sbCurrency}>
                     <Listbox value={selectedCurrency} onChange={setSelectedCurrency}>
@@ -361,11 +361,12 @@ const Checkout = (props) => {
                               color: 'purple',
                             },
                           }}
+                          disabled={selectedCurrency.id === 0 || selectedCurrency.id === 2 ? true : false}
                         />
                       }
                       label="Stripe"
                     ></FormControlLabel>
-                    <FormControlLabel
+                    {/* <FormControlLabel
                       className={`${styles._paystack}`}
                       value="paystack"
                       sx={{
@@ -387,7 +388,7 @@ const Checkout = (props) => {
                         />
                       }
                       label="Paystack (Coming soon)"
-                    ></FormControlLabel>
+                    ></FormControlLabel> */}
                     <FormControlLabel
                       className={styles._flutterwave}
                       value="flutterwave"
@@ -406,10 +407,10 @@ const Checkout = (props) => {
                               color: 'purple',
                             },
                           }}
-                          disabled
+                          disabled={selectedCurrency.id === 0 || selectedCurrency.id === 1 ? true : false}
                         />
                       }
-                      label="Flutterwave (Coming soon)"
+                      label="Flutterwave"
                     ></FormControlLabel>
                   </RadioGroup>
                 </FormControl>
@@ -625,42 +626,70 @@ const Checkout = (props) => {
                   </div>
                 ) : (
                   <div className={styles._cpSummary}>
-                    <h3>Plan: {props.duration}</h3>
-                    {selectedCurrency.id && (
-                      <h3>
-                        Amount: {selectedCurrency.name} {selectedCurrency.id === 2 && props.ngn}
-                        {selectedCurrency.id === 1 && props.usd}
-                      </h3>
-                    )}
-                    <h3 className={styles._cpSummarypayment}>Payment Method: {value}</h3>
-                    {value === 'stripe' && (
-                      <LoadingButton
-                        loading={loading}
-                        sx={{
-                          color: 'white',
-                        }}
-                        variant="outlined"
-                        type="button"
-                        className={styles._paymentButton}
-                        onClick={handleStripe}
-                      >
-                        Pay with Stripe
-                      </LoadingButton>
-                    )}
-                    {value === 'flutterwave' && (
-                      // <h3>Coming soon...</h3>
-                      <LoadingButton
-                        loading={loading}
-                        sx={{
-                          color: 'white',
-                        }}
-                        variant="outlined"
-                        type="button"
-                        className={styles._paymentButton}
-                        onClick={handleFlutterPayment}
-                      >
-                        Pay with Flutterwave
-                      </LoadingButton>
+                    {selectedCurrency.id === 0 ? (
+                      <div className={`${styles._sbmodalCol1Body} ${styles._sbmodalCol1Color}`}>
+                        <div className={styles._sbmodalText}>
+                          <p>You can get a lot more out of Speak Better by upgrading to premium. Get all features:</p>
+                        </div>
+                        <div className={styles._sbmodalList}>
+                          <div>
+                            <img src={check} alt="check" className={styles._sbListIcon} />
+                            <p>Unlimited audio length</p>
+                          </div>
+                          <div>
+                            <img src={check} alt="check" className={styles._sbListIcon} />
+                            <p>Access to transcription history</p>
+                          </div>
+                          <div>
+                            <img src={check} alt="check" className={styles._sbListIcon} />
+                            <p>Variety of AI bot</p>
+                          </div>
+                          <div>
+                            <img src={check} alt="check" />
+                            <p>Grammer corrections</p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <h3>Plan: {props.duration}</h3>
+                        {selectedCurrency.id && (
+                          <h3>
+                            Amount: {selectedCurrency.name} {selectedCurrency.id === 2 && props.ngn}
+                            {selectedCurrency.id === 1 && props.usd}
+                          </h3>
+                        )}
+                        <h3 className={styles._cpSummarypayment}>Payment Method: {value}</h3>
+                        {value === 'stripe' && selectedCurrency.id === 1 && (
+                          <LoadingButton
+                            loading={loading}
+                            sx={{
+                              color: 'white',
+                            }}
+                            variant="outlined"
+                            type="button"
+                            className={styles._paymentButton}
+                            onClick={handleStripe}
+                          >
+                            Pay with Stripe
+                          </LoadingButton>
+                        )}
+                        {value === 'flutterwave' && selectedCurrency.id === 2 && (
+                          // <h3>Coming soon...</h3>
+                          <LoadingButton
+                            loading={loading}
+                            sx={{
+                              color: 'white',
+                            }}
+                            variant="outlined"
+                            type="button"
+                            className={styles._paymentButton}
+                            onClick={handleFlutterPayment}
+                          >
+                            Pay with Flutterwave
+                          </LoadingButton>
+                        )}
+                      </>
                     )}
                   </div>
                 )}
