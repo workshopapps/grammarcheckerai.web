@@ -10,7 +10,6 @@ import useMediaRecorder from '@wmik/use-media-recorder';
 import toast from 'react-hot-toast';
 import useSendAudioFile from '../../../hooks/account/useSendAudio';
 import Premium from '../../premium/popup/index';
-import useTheme from '../../../hooks/useTheme';
 import styles from './index.module.css';
 import PropTypes from 'prop-types';
 import chirpy from '../../../assets/chirpy.svg';
@@ -18,9 +17,9 @@ import { IconButton, Tooltip } from '@mui/material';
 import { IoSendSharp, IoStopSharp } from 'react-icons/io5';
 import { MdReplay } from 'react-icons/md';
 import { convertSecToMin } from '../../../lib/utils';
+import ChatInput from './chat-input';
 
 function Converse({ noRive = false }) {
-  const context = useTheme();
   let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
     useMediaRecorder({
       recordScreen: false,
@@ -37,7 +36,16 @@ function Converse({ noRive = false }) {
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
 
-  const [chats, setChats] = React.useState([]);
+  const [chats, setChats] = React.useState([
+    {
+      botReply: 'How are u doing todays',
+      correctedText: 'Omo Lmaos stop it joor',
+      createdAt: '12/12/34',
+      language: 'English',
+      transcribedAudioText: 'This text is transcribed from the acts of the apostles',
+      updatedAt: '12/20/2030',
+    },
+  ]);
   const navigate = useNavigate();
 
   const chatRef = useRef(null);
@@ -162,14 +170,14 @@ function Converse({ noRive = false }) {
     }
   };
 
-  const onPauseHandler = () => {
-    if (status === 'recording') {
-      pauseRecording();
-    }
-    if (status === 'paused') {
-      resumeRecording();
-    }
-  };
+  // const onPauseHandler = () => {
+  //   if (status === 'recording') {
+  //     pauseRecording();
+  //   }
+  //   if (status === 'paused') {
+  //     resumeRecording();
+  //   }
+  // };
   return (
     <>
       <Premium open={open} handleClosePremium={handleClosePremium} />
@@ -192,25 +200,17 @@ function Converse({ noRive = false }) {
                 </div>
               )}
               <div className="space-y-4">
-                <h2
-                  className={`text-lg ${
-                    context.theme === 'dark' ? 'text-[#ffffff]' : 'text-[#262626]'
-                  }  leading-relaxed sm:text-3xl`}
-                >
+                <h2 className={`text-lg text-[#262626]  leading-relaxed sm:text-3xl`}>
                   {userData?.firstName
                     ? `${userData?.firstName}, how are you today?`
                     : 'What would you like to say today?'}
                 </h2>
-                <p
-                  className={` ${
-                    context.theme === 'dark' ? 'text-[#ffffff]' : 'text-slate-600'
-                  } text-md sm:text-[17px]`}
-                >
+                <p className={` text-slate-600 text-md sm:text-[17px]`}>
                   Each conversation brings you closer to fluency.
                 </p>
-                <div>
+                {/* <div>
                   <SeletedLanguage language={language} setLanguage={setLanguage} />
-                </div>
+                </div> */}
               </div>
             </>
           ) : (
@@ -259,7 +259,7 @@ function Converse({ noRive = false }) {
                       <Tooltip arrow title="Stop">
                         <IconButton
                           onClick={stopRecording}
-                          disabled={status === 'idle' || status === 'stopped'}
+                          disabled={status === 'idle' || (status === 'stopped' && !mediaBlob)}
                           aria-label="add an alarm"
                         >
                           <IoStopSharp size={20} />
@@ -282,6 +282,7 @@ function Converse({ noRive = false }) {
               </div>
             </div>
           </div>
+          <ChatInput />
         </div>
       </div>
     </>

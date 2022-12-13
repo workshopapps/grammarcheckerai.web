@@ -11,7 +11,6 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import ScrollToTop from './ScrollToTop';
 import DarkThemeContext from './lib/context/DarkThemeContext';
-import ConverseContextProvider from './lib/context/ConverseContext';
 const queryClient = new QueryClient();
 
 // Set tracesSampleRate to 1.0 to capture 100%
@@ -23,13 +22,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <DarkThemeContext>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <ConverseContextProvider>
-            <BrowserRouter>
-              <ScrollToTop>
-                <App />
-              </ScrollToTop>
-            </BrowserRouter>
-          </ConverseContextProvider>
+          <BrowserRouter>
+            <ScrollToTop>
+              <App />
+            </ScrollToTop>
+          </BrowserRouter>
         </AuthProvider>
       </QueryClientProvider>
     </DarkThemeContext>

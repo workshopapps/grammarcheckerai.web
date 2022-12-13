@@ -8,7 +8,7 @@ function ChatContainer({ chats, noRive }) {
 
   return (
     <div
-      className="w-full max-w-7xl mx-auto flex flex-col justify-center px-0 sm:px-4 space-y-3"
+      className="w-full max-w-7xl mx-auto pt-10 relative flex flex-col justify-center px-0 sm:px-4 space-y-2"
       style={{ fontSize: `${fontSize}px` }}
     >
       {chats?.map((chat, index) => (
@@ -19,14 +19,15 @@ function ChatContainer({ chats, noRive }) {
             isLastReply={index + 1 === chats?.length}
             text={chat.transcribedAudioText}
           />
-          <Chat noRive={noRive} isBot isCorrection createdAt={chat.createdAt} text={chat.correctedText} />
           <Chat
             noRive={noRive}
             isBot
-            createdAt={chat.createdAt}
             isLastReply={index + 1 === chats?.length}
-            text={chat.botReply}
+            isCorrection
+            createdAt={chat.createdAt}
+            text={chat.correctedText}
           />
+          <Chat noRive={noRive} isBot createdAt={chat.createdAt} text={chat.botReply} />
         </Fragment>
       ))}
     </div>
