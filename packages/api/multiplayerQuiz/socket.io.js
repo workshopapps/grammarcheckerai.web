@@ -6,7 +6,7 @@ const {
 } = require("./quizHandlers");
 
 const quizFlow = function (io, socket) {
-  // console.log(`socket ${socket.id} connected`);
+  console.log(`socket ${socket.id} connected`);
   const count = io.engine.clientsCount;
   io.emit("update-players", count);
   socket.on("start-quiz", startQuizHandler);
