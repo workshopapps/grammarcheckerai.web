@@ -110,8 +110,8 @@ const About = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 justify-between  m-5  lg:m-auto  lg:px-20  lg:grid-cols-2">
-            <div className="flex flex-col p-8 justify-center mt-4 md:p-8">
+          <div className="grid grid-cols-1 justify-between  m-5  lg:m-auto lg:px-32 lg:grid-cols-2">
+            <div className="flex flex-col p-8 justify-center mt-4 md:p-8 lg:p-24">
               <p className={`${dark && 'text-[#fff]'} text-lineColor text-center  lg:text-left`}>
                 About Our Technology
               </p>
@@ -137,7 +137,7 @@ const About = () => {
         </div>
         <div className={`${dark && 'bg-[#0f0e0e]'} flex flex-col items-center justify-center py-10`}>
           <div className="space-y-2">
-            <p className={'font-bold text-primary text-center text-xl lg:text-2xl'}>Team behind of product</p>
+            <p className={'font-bold text-primary text-center text-xl lg:text-2xl'}>Team behind product</p>
             <p className="text-purple-500 text-center">Amazing heads of department at Speak Better</p>
           </div>
           <div className="grid grid-cols-1 gap-4 justify-between  m-5 p-5 md:m-4 md:p-4 md:grid-cols-4  lg:grid-cols-5">
@@ -165,7 +165,7 @@ const About = () => {
           } flex flex-col items-center justify-center py-12 px-8 md:w-full space-y-7`}
         >
           <div>
-            <p className=" text-purple-500  text-center text-3xl font-semibold">Try Quick Transcribe for free</p>
+            <p className=" text-purple-500  text-center text-3xl font-semibold">Try Speak Better for free</p>
             <p className={`${dark && 'text-[#fff]'} text-center font-light text-sm lg:w-80 mx-auto mt-2`}>
               Set up your personal account, free forever and never worry about a error in your speech again
             </p>

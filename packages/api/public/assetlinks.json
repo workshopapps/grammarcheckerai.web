@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.workshopapp.grammarcheckerai",
+            "sha256_cert_fingerprints": [
+                "9C:DC:14:EA:41:FC:57:4C:CF:B4:10:30:F0:29:81:02:1D:70:EC:90:3A:B5:68:CD:75:01:89:A4:1C:AC:4E:88"
+            ]
+        }
+    }
+]

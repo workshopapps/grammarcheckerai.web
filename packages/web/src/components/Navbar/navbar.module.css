@@ -29,7 +29,7 @@
   width: 60%;
   z-index: 999;
   display: flex;
-  justify-content: center;
+  justify-content: left;
 }
 ._nvnav {
   width: 80%;
@@ -80,7 +80,8 @@
   ._nvnav {
     display: flex;
     flex-direction: column;
-    width: 250px;
+    width: 100vw;
+    padding-top: 40px;
   }
   ._nvnav a {
     padding: 15px 5px;

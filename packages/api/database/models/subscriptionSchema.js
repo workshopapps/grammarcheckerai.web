@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const { v4 } = require("uuid");
-const { environment } = require("../../config/environment");
 
 const subscriptionSchema = new mongoose.Schema(
   {
@@ -12,6 +10,7 @@ const subscriptionSchema = new mongoose.Schema(
     subscriptionId: {
       type: String,
       required: true,
+      unique: true,
     },
     interval: {
       type: String,
@@ -22,35 +21,29 @@ const subscriptionSchema = new mongoose.Schema(
     paymentGateway: {
       type: String,
       enum: ["paystack", "flutterwave", "stripe"],
-      default: "paystack",
     },
     amount: {
-      type: Number,
+      type: mongoose.Types.Decimal128,
       required: [true, "A subscription must have a price"],
     },
     txref: {
       type: String,
       unique: true,
+      required: true,
     },
     status: {
       type: String,
-      enum: ["initiated", "pending", "succesful", "failed"],
+      enum: ["initiated", "pending", "successful", "failed"],
       default: "initiated",
     },
     currency: {
       type: String,
-      enum: ["NGN", "USD", "EUR", "YEN", "GBP"],
+      enum: ["NGN", "USD", "EUR", "YEN", "GBP", "ZAR"],
       default: "NGN",
     },
-<<<<<<< HEAD
     expirationDate: {
       type: String,
     },
-=======
-    expirationDate:{
-      type: String
-    }
->>>>>>> 6bbdb7183100dc123b5c94865d3d21f80c4b8a61
   },
   {
     timestamps: true,

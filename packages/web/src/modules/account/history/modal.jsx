@@ -1,22 +1,41 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import deleteIcon from '../../../assets/delete.svg';
-
+import { Modal } from '@mui/material';
+import axios from 'axios';
+import toast, {Toaster } from 'react-hot-toast';
 function HistoryModal({ open, onClose, setHistory }) {
-  if (!open) return null;
+
+  const success = (msg) => toast.success(msg);
+  const error = (msg) => toast.error(msg);
+  const token = localStorage.getItem('grittyusertoken');
+  const URL = `https://api.speakbetter.hng.tech/v1/chatHistory`;
+
+    const deleteHistory = async () => {
+      try {
+        const res = await axios.delete(URL, {headers: {'Authorization': `Bearer ${token}`}});
+        setHistory(res);
+        success('History deleted successfully!');
+      } catch (e) {
+        console.log('An error occured', e);
+      }
+    };
+
   return (
-    <div className="overlay bg-[#33333340] fixed w-full h-full top-0 left-0 right-0 bottom-0">
-      <div className="modal bg-white sm:rounded-[16px] max-w-[540px] w-full sm:h-[394px] h-screen sm:min-h-[unset] min-h-screen fixed sm:top-[50%] sm:left-[50%] flex flex-col justify-center items-center sm:translate-x-[-50%] sm:translate-y-[-50%]">
+    <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <div
+        className="modal bg-white sm:rounded-[16px] max-w-[540px] w-full sm:h-[394px] h-screen sm:min-h-[unset] absolute min-h-screen flex flex-col justify-center items-center"
+        style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+      >
         <div className="md:px-6 sm:px-3 px-3 sm:py-6">
           <div className="flex justify-center items-center my-6">
             <img src={deleteIcon} alt="deleteIcon" />
           </div>
-          <h3 className="font-['Inter'] text-[#393939] font-normal text-center sm:text-2xl text-[16px]">
+          <h3 className="font-['Inter'] text-[#393939] font-normal text-center sm:text-xl text-[16px]">
             Are you sure you want to delete all conversation?
           </h3>
           <button
             className="flex bg-[#EC1B1B] my-6 justify-center items-center py-3 outline-none w-full rounded-xl text-white sm:text-base text-[15px]"
-            onClick={setHistory}
+            onClick={deleteHistory}
           >
             Delete
           </button>
@@ -27,8 +46,10 @@ function HistoryModal({ open, onClose, setHistory }) {
             Cancel
           </button>
         </div>
+        <Toaster/>
       </div>
-    </div>
+      
+    </Modal>
   );
 }
 

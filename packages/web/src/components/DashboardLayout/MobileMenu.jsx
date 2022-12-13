@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { IoHomeOutline, IoSettingsOutline } from 'react-icons/io5';
 import { HiGlobeEuropeAfrica } from "react-icons/hi2";
 import { BsDownload, BsClock, BsFillPersonLinesFill, BsCashCoin, BsThreeDotsVertical, BsArrowBarRight  } from 'react-icons/bs';
-import { AiFillWechat } from "react-icons/ai";
+// import { AiFillWechat } from "react-icons/ai";
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -71,7 +71,7 @@ const [anchorEl, setAnchorEl] = useState(null);
                 <MenuItem onClick={handleClose}><NavLink className='flex items-center gap-2' to="/"><HiGlobeEuropeAfrica />Go home</NavLink></MenuItem>
                 <MenuItem onClick={handleClose}><NavLink className='flex items-center gap-2' to='/me/profile'><BsFillPersonLinesFill />Profile</NavLink></MenuItem>
                 <MenuItem onClick={handleClose}><NavLink className='flex items-center gap-2'  to='/me/settings'><IoSettingsOutline/> Settings</NavLink></MenuItem>
-                <MenuItem onClick={handleClose}><NavLink className='flex items-center gap-2'  to='/me/settings'><AiFillWechat/> Quiz</NavLink></MenuItem>
+                {/* <MenuItem onClick={handleClose}><NavLink className='flex items-center gap-2'  to='/startgame'><AiFillWechat/> Quiz</NavLink></MenuItem> */}
                 <MenuItem className='flex items-center gap-2' onClick={toggleModal}><BsArrowBarRight />Logout</MenuItem>
             </Menu>
         

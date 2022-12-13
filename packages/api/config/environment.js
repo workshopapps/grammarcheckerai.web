@@ -47,6 +47,8 @@ const environment = {
   PAYSTACK_PUBLIC_KEY: process.env.PAYSTACK_PUBLIC_KEY,
   NEWSLETTER_TEMPLATE_ID: process.env.NEWSLETTER_TEMPLATE_ID,
   UNSUBSCRIBED_TEMPLATE_ID: process.env.UNSUBSCRIBED_TEMPLATE_ID,
+  STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+  PREMIUM_TEMPLATE_ID: process.env.PREMIUM_TEMPLATE_ID,
 };
 
 module.exports = { environment };

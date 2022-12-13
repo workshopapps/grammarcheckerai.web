@@ -1,30 +1,32 @@
 const Subscription = require("../database/models/subscriptionSchema");
+const emailService = require("../services/email.service");
 const axios = require("axios");
 const { environment } = require("../config/environment");
-const { PAYSTACK_SECRET_KEY } = environment;
+const { PAYSTACK_SECRET_KEY, BASE_URL, PREMIUM_TEMPLATE_ID } = environment;
 
 const createPayment = async (req, res) => {
-  let email = req.body.email;
+  const { email } = req.user;
 
-  //VALIDATE USER REQUEST
-  if (!email)
-    return res.status(400).send({ success: false, message: "Invalid email" });
   try {
-    const { user, email, subscriptionId, interval, amount, currency, txref } =
-      req.body;
+    const { subscriptionId, interval, amount, currency, txref } = req.body;
+    const paymentGateway = "paystack";
     const payload = {
-      user,
       email,
       subscriptionId,
       interval,
       amount,
       currency,
       txref,
+      paymentGateway
     };
 
     //FIND ACTIVE SUBSCRIPTION
     const isActive = await Subscription.findOne({
-      $and: [{ email: email }, { status: "success" }],
+      $and: [
+        { email: email },
+        { status: "success" },
+        { paymentGateway: "paystack" },
+      ],
     });
     if (isActive) {
       console.log(isActive);
@@ -35,32 +37,35 @@ const createPayment = async (req, res) => {
       });
     }
 
-//CHECK EXPIRATION DATE
+    //CHECK EXPIRATION DATE
     Date.prototype.addDays = function (days) {
       var date = new Date(this.valueOf());
       date.setDate(date.getDate() + days);
       return date;
     };
     var expirationDate = new Date();
-    if (interval == "weekly")
-      expirationDate = expirationDate.addDays(7);
+    if (interval == "weekly") expirationDate = expirationDate.addDays(7);
     payload.expirationDate = expirationDate;
-    if (interval == "monthly")
-      expirationDate = expirationDate.addDays(30);
+    if (interval == "monthly") expirationDate = expirationDate.addDays(30);
     payload.expirationDate = expirationDate;
-    if (interval == "quarterly")
-      expirationDate = expirationDate.addDays(90);
+    if (interval == "quarterly") expirationDate = expirationDate.addDays(90);
     payload.expirationDate = expirationDate;
-    if (interval == "annually")
-      expirationDate = expirationDate.addDays(365);
+    if (interval == "annually") expirationDate = expirationDate.addDays(365);
     payload.expirationDate = expirationDate;
-
 
     //SAVE TO DATABASE
     const result = await Subscription.create(payload);
+
+    //SEND EMAIL TO USER
+    await emailService({
+      to: email,
+      templateId: PREMIUM_TEMPLATE_ID,
+      dynamic_template_data: { actionurl: BASE_URL },
+    });
     res.status(200).send({
       success: true,
-      message: "Subscription created",
+      message:
+        "You have successfully subscribed for our premium packages on SpeakBetter",
       data: result,
     });
   } catch (error) {
@@ -73,48 +78,11 @@ const createPayment = async (req, res) => {
   }
 };
 
-const getSubscription = async (req, res) => {
-  try {
-    const { email } = req.query;
-    if (!email) {
-      return res.status(400).send({
-        success: false,
-        message: "Invalid Email",
-      });
-    }
-    if (email == undefined || email == null || email == "undefined") {
-      return res.status(400).send({
-        success: false,
-        message: "Invalid Email",
-      });
-    }
-    const user = await Subscription.find({ email });
-    if (!user) {
-      return res.status(400).send({
-        success: false,
-        message: `${user.length} Subscription(s) found for User: ${email}!`,
-        data: [],
-      });
-    }
-    return res.status(200).send({
-      success: true,
-      message: `${user.length} Subscription(s) found for User: ${email}!`,
-      data: user,
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(400).send({
-      success: false,
-      message: "Error encountered",
-      errorCode: error.code,
-      error: error.message,
-    });
-  }
-};
 
 const cancelSubscription = async (req, res) => {
-  const { email, txref } = req.body;
-  if (!email || !txref)
+  const { txref } = req.body;
+  const { email } = req.user;
+  if (!txref)
     return res.status(400).send({
       success: false,
       message: "Invalid email or reference sent",
@@ -136,7 +104,7 @@ const cancelSubscription = async (req, res) => {
       data: transaction,
     });
 
-  const cancel = await Subscription.findByIdAndUpdate(
+  await Subscription.findByIdAndUpdate(
     transaction._id,
     { status: "cancelled" },
     { new: true }
@@ -160,12 +128,12 @@ const cancelSubscription = async (req, res) => {
 };
 
 const verification = async (req, res) => {
-  const { txref, email } = req.query;
-  let isVerified;
-  if (!txref || !email)
+  const { txref } = req.query;
+  const { email } = req.user;
+  if (!txref)
     return res
       .status(400)
-      .send({ success: false, message: "Invalid Reference or Email" });
+      .send({ success: false, message: "Invalid Reference ID" });
   const verifiedTx = await Subscription.findOne({
     $and: [{ email: email }, { txref: txref }],
   });
@@ -189,7 +157,7 @@ const verification = async (req, res) => {
       },
     })
     .then(async (success) => {
-      isVerified = await Subscription.findByIdAndUpdate(
+      await Subscription.findByIdAndUpdate(
         verifiedTx._id,
         { status: success.data.data.status },
         { new: true }
@@ -211,12 +179,10 @@ const verification = async (req, res) => {
     });
 };
 
-const checkActiveSubscription = async (req, res) => {};
+
 
 module.exports = {
   createPayment,
   verification,
-  getSubscription,
-  checkActiveSubscription,
   cancelSubscription,
 };

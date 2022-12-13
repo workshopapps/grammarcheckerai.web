@@ -94,9 +94,9 @@ const index = () => {
         console.log(oBJ.data);
         localStorage.setItem('isUserDetails', JSON.stringify(oBJ.data));
       })
-      .catch((error) => error('error', error));
+      .catch((error) => error(error?.response?.data?.message));
   };
-
+ 
   /*
     handleGoogleAuth handles the Google social login.
 
@@ -134,8 +134,8 @@ const index = () => {
           }, 2000);
         })
         .catch((err) => {
-          // error(err.response.data.message);
-          error(err.response.data.data.password);
+          error(err.response.data.message);
+          console.log(err.response.data.message);
         });
       formik.resetForm();
     },
@@ -167,7 +167,7 @@ const index = () => {
           }, 5000);
         })
         .catch((err) => {
-          error(err.message);
+          error(err?.response?.data?.message);
         });
     }
 
@@ -196,7 +196,7 @@ const index = () => {
           }, 5000);
         })
         .catch((err) => {
-          error(err.message);
+          error(err?.response?.data?.message);
         });
     }
     if (location?.search && location?.search?.includes('google')) {
@@ -222,7 +222,7 @@ const index = () => {
           }, 5000);
         })
         .catch((err) => {
-          error(err.message);
+          error(err?.response?.data?.message);
         });
     }
   }, []);

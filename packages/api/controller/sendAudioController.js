@@ -1,4 +1,3 @@
-// const { parseBuffer } = require("music-metadata");
 const UserResponse = require("../database/models/userResponseSchema");
 const BotResponse = require("../database/models/botResponseSchema");
 const Message = require("../database/models/messageSchema");
@@ -12,7 +11,7 @@ const {
   getTranscriptionFromAssembly,
 } = require("../scripts/assemblyAI.js");
 const { translateFromEnglish } = require("../scripts/translate");
-const fileUploadToS3Bucket = require("./uploadBuffer"); 
+const fileUploadToS3Bucket = require("./uploadBuffer");
 
 const languageMap = {
   english: "en",
@@ -34,7 +33,6 @@ async function getBotResponse(req, res) {
     const userId = req.body.userId;
     const language = req.body.language?.toLowerCase() || "english";
     const audioFile = req.file; // retrieves file buffer and metadata set by multer
-    
     // checks if file is available
     if (!audioFile) {
       return res.status(400).send({
@@ -42,25 +40,18 @@ async function getBotResponse(req, res) {
         message: "Please attach an audio file",
       });
     }
-    // const metadata = await parseBuffer(audioFile.buffer, audioFile.mimetype);
-    // const audioLength = metadata.format.duration.toFixed(2);
+
     // // 1. If userId, Get user's email
     // const userEmail = userId
     //   ? (await userCollection.findById(userId))?.email
     //   : null;
 
     // const isSubscriber = userEmail
-    //   ? (await Subscription.findOne({ email: userEmail }))?.active
+    //   ? (await Subscription.findOne({ email: userEmail }))?.status
     //   : null;
 
-    // // 2. Check if user is a premiumm user
-    // if (!isSubscriber && audioLength > 20) {
-    //   return res.status(403).send({
-    //     success: false,
-    //     message: "Recording above 20 seconds is a premium feature. Go premium!",
-    //   });
-    // }
     // checks if specified language is not available
+
     if (!languageMap[language]) {
       return res.status(400).send({
         success: false,
@@ -79,20 +70,37 @@ async function getBotResponse(req, res) {
     );
 
     // upload url and initiate transcription
-    const transcribedAudioText = await getTranscriptionFromAssembly(
+    const transcribedAudio = await getTranscriptionFromAssembly(
       preTranscriptId
-    ); // process and download transcript
+    );
 
-    if (!transcribedAudioText) {
+    // // 2. Check if user is a premiumm user
+    // if ((isSubscriber === 'successful') && Number(transcribedAudio.audio_duration) > 20) {
+    //   return res.status(403).send({
+    //     success: false,
+    //     message: "Recording above 20 seconds is a premium feature. Go Premium!",
+    //   });
+    // }
+
+    //If assembly ai fail to return a response
+    if (!transcribedAudio) {
       return res.status(400).send({
         success: false,
         message: "Assembly AI error.",
       });
     }
 
+    // If they were no voice or translatable sound found
+    if (!transcribedAudio.words.length) {
+      return res.status(400).send({
+        success: false,
+        message: "Audio not detected from provided audio. Please be louder.",
+      });
+    }
+
     // Send transcript to OPenAI Grammar Correction to get corrected text
     let grammarCheckResponse = await grammarCheckHandler(
-      transcribedAudioText,
+      transcribedAudio.text,
       language
     );
 
@@ -132,6 +140,7 @@ async function getBotResponse(req, res) {
 
     // construct response
     let userResponse, botResponse;
+    let transcribedAudioText = transcribedAudio.text;
 
     // for not logged in users
     if (!userId) {
@@ -140,7 +149,6 @@ async function getBotResponse(req, res) {
         createdAt: new Date(),
         updatedAt: new Date(),
       };
-
       botResponse = {
         transcribedAudioText,
         correctedText: correctUserResponseInTxt.trim(),

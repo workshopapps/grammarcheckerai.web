@@ -8,7 +8,7 @@ const userCheckPlanVerify = (email, txref) => {
     // isCreathorsApi: false,
     queryKey: [email, txref],
     headers: {
-      authorization: 'Bearer sk_test_11cd20d24df0f472d32521e1bfb3c00608593c54',
+      authorization: 'Bearer sk_test_30c6122a460a1b8e03c16a44f331ffdfab463c3e',
       'content-type': 'application/json',
       'cache-control': 'no-cache',
     },

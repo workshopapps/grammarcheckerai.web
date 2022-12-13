@@ -1,5 +1,4 @@
 const express = require("express");
-const app = express();
 const cors = require("cors");
 const session = require("express-session");
 const Memorystore = require("memorystore")(session);
@@ -14,6 +13,10 @@ require("./services/facebookStrategy");
 const { routeHandler } = require("./routes/index.route"),
   swaggerUi = require("swagger-ui-express"),
   swaggerDocument = require("./Tests/test.json");
+
+const app = express();
+
+app.use(express.static("public"));
 
 //Passport Initialized
 app
@@ -52,16 +55,16 @@ app.use(
   })
 );
 
-//welcome note
+// welcome note
 app.get("/v1", (req, res) => {
   res.status(200).json({
-    message: "Welcome to Speak Better 🗣️ 🗣️ 🗣️",
+    message: "Welcome to Speak Better 🎯🎯🎯",
     user: "CORS enabled",
   });
 });
 
 //404 error
-app.all("*", (req, res, next) => {
+app.all("*", (req, res) => {
   res.status(404).json({
     message: "Ohh you are lost, path not found.",
   });

@@ -97,7 +97,8 @@ const Index = () => {
           }, 5000);
         })
         .catch((err) => {
-          error(err.message);
+          error(err?.response?.data?.message);
+          
         });
     }
   }, []);
@@ -164,7 +165,11 @@ const Index = () => {
           }, 5000);
         })
         .catch((err) => {
-          error(err.message);
+          if(err?.response?.data?.message === "Action unsuccessful") {
+            error(err?.response?.data?.data?.password)
+          } else {
+          error(err?.response?.data?.message);
+          }
         });
     }
   };
@@ -189,7 +194,8 @@ const Index = () => {
         const oBJ = JSON.parse(result);
         window.location.href = oBJ.message;
       })
-      .catch((err) => error(err.message));
+      .catch((err) => error(err.message)
+      );
   };
   // useEffect(() => {
   //   const res = useFetch('https://speakbetter.hng.tech/api/v1/auth/google');

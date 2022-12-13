@@ -1,9 +1,11 @@
-import React, { lazy, Suspense, useState, useEffect } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import './App.css';
 import Fallback from './components/Fallback/Fallback';
-import { Route, Routes, Outlet, Navigate } from 'react-router-dom';
+import { Route, Routes, Outlet } from 'react-router-dom';
 // import StartGame from './modules/static/quizgame/startgame/StartGame';
 import Layout from './modules/static/quizgame/layout/Layout';
+import ProtectedRoute from './components/ProtectedRoute';
+import AuthRoutes from './components/ProtectedRoute/auth-routes';
 // import ProtectedRoute from './components/ProtectedRoute';
 const SocialPage = lazy(() => import('./modules/auth/social-auth-redirect/social'));
 const SignupTwoPage = lazy(() => import('./modules/auth/signup/step2/step2'));
@@ -21,7 +23,7 @@ const Review = lazy(() => import('./modules/static/testimonials/Testimonial'));
 const Rates = lazy(() => import('./modules/static/testimonials/Ratings'));
 const Dashboard = lazy(() => import('./components/DashboardLayout'));
 const Newsletter = lazy(() => import('./modules/static/newsletter/NewsletterPage'));
-const Unsubscribe = lazy(() => import('./components/Unsubscribe/index'))
+const Unsubscribe = lazy(() => import('./components/Unsubscribe/index'));
 const EmailTemp = lazy(() => import('./modules/static/emailtemplate/EmailTemplate'));
 const NewsletterEmailTemplate = lazy(() => import('./modules/static/emailtemplate/newsletterTemplate'));
 const SignInEmailTemplate = lazy(() => import('./modules/static/emailtemplate/signInTemplate'));
@@ -156,7 +158,7 @@ const NewsletterUnsubscribe = () => (
   <Suspense fallback={<Fallback />}>
     <Unsubscribe />
   </Suspense>
-)
+);
 
 const EmailTemplate = () => (
   <Suspense fallback={<Fallback />}>
@@ -306,16 +308,8 @@ const LandingLayout = () => (
 );
 
 function App() {
-  const [isLoggedin, setisLoggedin] = useState(false);
-  const [isDashboard, setIsDashboard] = useState(false);
-
   useEffect(() => {
-    if (localStorage.getItem('grittyuserid') !== null && localStorage.getItem('grittyuserid') !== '') {
-      setisLoggedin(true);
-    }
-    if (localStorage.getItem('isdashboard') !== false) {
-      setIsDashboard(true);
-    }
+    localStorage.setItem('theme', 'light');
   }, []);
 
   return (
@@ -354,6 +348,7 @@ function App() {
       <Route path="/emailtemplate" element={<EmailTemplate />} />
       <Route path="/newsletter-template" element={<NewsletterTemplate />} />
       <Route path="/signin-template" element={<SignInTemplate />} />
+      <Route path="/.well-known/assetlinks.json" element={<p>omo</p>} />
       <Route
         element={
           <div>
@@ -361,23 +356,115 @@ function App() {
           </div>
         }
       >
-        <Route path="/social" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Social />} />
-        <Route path="/signin" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signin />} />
-        <Route path="signup" element={isLoggedin === true ? <Navigate to="/me/home" /> : <Signuptwo />} />
+        <Route
+          path="/social"
+          element={
+            <AuthRoutes>
+              <Social />
+            </AuthRoutes>
+          }
+        />
+        <Route
+          path="/signin"
+          element={
+            <AuthRoutes>
+              <Signin />
+            </AuthRoutes>
+          }
+        />
+        <Route
+          path="signup"
+          element={
+            <AuthRoutes>
+              <Signuptwo />
+            </AuthRoutes>
+          }
+        />
         <Route path="forgot-password" element={<Forgotpassword />} />
         <Route path="password-reset" element={<ResetLink />} />
       </Route>
-      <Route path="/me" element={isDashboard === false ? <Navigate to="/signin" /> : <DashboardLayout />}>
-        <Route path="home" element={<HomePage />} />
-        <Route path="history" element={<History />} />
-        <Route path="history/correction" element={<Correction />} />
-        <Route path="profile" element={<ProfileScreen />} />
-        <Route path="profile/changepassword" element={<ChangePassword />} />
-        <Route path="profile/deleteaccount" element={<DeleteAccount />} />
-        <Route path="profile/deleteaccount-step2" element={<ConfirmDeleteAccount />} />
-        <Route path="import" element={<TranscribePage />} />
-        <Route path="settings" element={<Settings />} />
-        <Route path="subscription" element={<Billings />} />
+
+      <Route path="/me" element={<DashboardLayout />}>
+        <Route
+          path="home"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="history"
+          element={
+            <ProtectedRoute>
+              <History />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="history/correction"
+          element={
+            <ProtectedRoute>
+              <Correction />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <ProtectedRoute>
+              <ProfileScreen />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="profile/changepassword"
+          element={
+            <ProtectedRoute>
+              <ChangePassword />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="profile/deleteaccount"
+          element={
+            <ProtectedRoute>
+              <DeleteAccount />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="profile/deleteaccount-step2"
+          element={
+            <ProtectedRoute>
+              <ConfirmDeleteAccount />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="import"
+          element={
+            <ProtectedRoute>
+              <TranscribePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="settings"
+          element={
+            <ProtectedRoute>
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="subscription"
+          element={
+            <ProtectedRoute>
+              <Billings />
+            </ProtectedRoute>
+          }
+        />
       </Route>
     </Routes>
   );

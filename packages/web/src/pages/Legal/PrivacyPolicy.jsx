@@ -1,6 +1,5 @@
 import React from 'react'
 import Footer from '../../modules/static/landing-page/Footer'
-import styles from '../../modules/auth/login/login.module.css';
 import { useNavigate } from 'react-router-dom';
 
 export default function PrivacyPolicy() {
@@ -10,10 +9,10 @@ export default function PrivacyPolicy() {
     };
     return (
         <div>
-            <div className='py-10 text-center bg-[#E8DDF2] text-BLACK'>
-                <div className="goback pb-30">
-                    <button onClick={handlePrev} className="bg-purple-500 hover:bg-purple-900 text-white py-2 px-2 ml-10 flex items-center mt-0 lg:absolute w-36 h-12 sm: relative sm:float-top">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className='h-10'>
+            <div className='py-14 px-4 text-center relative bg-[#E8DDF2] text-BLACK'>
+            <div className="goback absolute top-2">
+                    <button onClick={handlePrev} className="text-xs sm:text-base text-[#5d387f] p-2 flex items-center rounded">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className='h-4 sm:h-5' >
                             <path
                                 fill="none"
                                 stroke="currentColor"

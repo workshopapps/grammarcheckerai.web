@@ -37,6 +37,9 @@ export default function ChangePassword() {
             "confirm_password": formValues.confirmNewPassword,
         }
         try {
+            if(formValues.newPassword !== formValues.confirmNewPassword) {
+                error("passwords do not match!")
+            } else if(formValues.newPassword === formValues.confirmNewPassword) {
             const response = await fetch(url + "update", {
             method: "POST",
             body: JSON.stringify(bodyContent),
@@ -46,6 +49,9 @@ export default function ChangePassword() {
             console.log(data);
             success('password updated!');
             setTimeout(() => navigate('/me/profile'), 3000);
+        } else {
+            error("try again")
+        }
       
         } catch (err) {
             console.log(err);
@@ -61,11 +67,11 @@ export default function ChangePassword() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setFormErrors(validate(formValues));
         updateUserData();
     };
 
     useEffect(() => {
-        setFormErrors(validate(formValues));
         if(regex.test(formValues.confirmNewPassword)) {
             setBtnActive(false);
         } else {

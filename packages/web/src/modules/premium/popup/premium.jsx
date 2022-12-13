@@ -1,6 +1,6 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Slide from '@mui/material/Slide';
-import Dialog from '@mui/material/Dialog';
 import styles from './popup.module.css';
 import medal from '../Assets/medal-star.png';
 import ranking from '../Assets/ranking.png';
@@ -8,8 +8,15 @@ import check from '../Assets/tick-square.png';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Checkout from './checkout';
 import Navbar from '../../../components/Navbar';
-import useGetUserSubscription from '../../../hooks/account/useGetUserSubscription';
+// import useGetUserSubscription from '../../../hooks/account/useGetUserSubscription';
 import { Toaster } from 'react-hot-toast';
+import useStripeVerify from '../../../hooks/auth/useStripeVerify';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { Button } from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -17,38 +24,75 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const index = () => {
   const matches = useMediaQuery('(max-width:694px)');
-  const [interval, setInterval] = React.useState({ plan: '', amount: 0, duration: '' });
+  const [interval, setInterval] = React.useState({ ngnplan: '', plan: '', usd: 0, ngn: 0, zar: 0, duration: '' });
   const [open, setOpen] = React.useState(true);
-  const [userSubsList, setUserSubsList] = React.useState([]);
+  const [successOpen, setSuccessOpen] = React.useState(false);
+  const [paymentOpen, setPaymentOpen] = React.useState(true);
+  const authVerify = useStripeVerify();
+  const navigate = useNavigate();
 
   const handleClosePremium = () => {
     setOpen(false);
   };
   const [userIsSubscribed, setUserIsSubscribed] = React.useState(false);
-  const userSubscription = useGetUserSubscription(JSON.parse(localStorage.getItem('isUserDetails'))?.email);
+  const [userSubscription, setUserSubscription] = React.useState('');
+
+  const useFetch = (url, token) => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const oBJ = JSON.parse(result);
+        setUserSubscription(oBJ);
+      })
+      .then(() => {
+        // console.log(userSubscription);
+      })
+      .catch((error) => error(error));
+  };
+
+  React.useEffect(() => {
+    useFetch('https://api.speakbetter.hng.tech/v1/subscription', localStorage.getItem('grittyusertoken'));
+  }, []);
 
   const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
 
   const handleCheckout = (plan) => {
     setInterval(plan);
-    if (userSubscription?.value && userSubscription?.value?.length !== 0) {
-      setUserSubsList(userSubscription?.value);
-      checkForArray(userSubsList).map((item) => {
+    if (userSubscription?.data && userSubscription?.data?.length !== 0) {
+      checkForArray(userSubscription?.data).map((item) => {
         if (item.status === 'success') {
           setUserIsSubscribed(true);
-          return;
+        } else {
+          setUserIsSubscribed(false);
         }
-        setUserIsSubscribed(false);
       });
-    } else {
-      // console.log('User is not subscribed');
-      setUserIsSubscribed(false);
     }
   };
 
   const handleBack = () => {
     setInterval('');
   };
+  const params = new URLSearchParams(window.location.search);
+
+  React.useEffect(() => {
+    authVerify
+      .mutateAsync({
+        sessionId: params.get('session_id'),
+      })
+      .then((res) => {
+        if (res.data.message) {
+          setSuccessOpen(true);
+        }
+      });
+  }, []);
 
   if (interval.duration)
     return (
@@ -59,15 +103,47 @@ const index = () => {
           handleClosePremium={handleClosePremium}
           Transition={Transition}
           handleBack={handleBack}
-          amount={interval.amount}
+          zar={interval.zar}
+          usd={interval.usd}
+          ngn={interval.ngn}
+          ngnplan={interval.ngnplan}
           plan={interval.plan}
           userIsSubscribed={userIsSubscribed}
         />
         <Toaster />
       </>
     );
+
+  const handleClose = () => {
+    setPaymentOpen(false);
+    navigate('/me/home');
+  };
   return (
-    <Dialog fullScreen open={true} TransitionComponent={Transition} className={styles._sbDialog}>
+    <div className={styles._sbDialog}>
+      {successOpen && (
+        <>
+          <Dialog
+            open={paymentOpen}
+            onClose={handleClose}
+            TransitionComponent={Transition}
+            keepMounted
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{'Payment Successful'}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Thank you subscribing to SpeakBetter. We appreciate you and will continue to bring you better services.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} className={styles._sbSuccess}>
+                Start conversing now...
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </>
+      )}
       <div className={styles._sbpopup}>
         <Navbar />
         {matches ? null : (
@@ -120,11 +196,20 @@ const index = () => {
               <div className={styles._sbmobile}>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() => handleCheckout({ plan: 'PLN_2cqf3nx11trbn4b', amount: 3500, duration: 'monthly' })}
+                  onClick={() =>
+                    handleCheckout({
+                      ngnplan: '31053',
+                      plan: 'price_1MDCl7DsYRsW1yFupJ9WGYn5',
+                      usd: 18.99,
+                      ngn: 200,
+                      zar: 35,
+                      duration: 'monthly',
+                    })
+                  }
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Monthly</p>
-                    <h2>₦3500</h2>
+                    <h2>$18.99</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
                     <ul>
@@ -136,11 +221,20 @@ const index = () => {
                 </button>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() => handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 10000, duration: 'quarterly' })}
+                  onClick={() =>
+                    handleCheckout({
+                      ngnplan: '31054',
+                      plan: 'price_1MD8wPDsYRsW1yFuyTdES0Mb',
+                      usd: 59.99,
+                      ngn: 200,
+                      // zar: 100,
+                      duration: 'quarterly',
+                    })
+                  }
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Quarterly</p>
-                    <h2>₦3333.3</h2>
+                    <h2>$59.99</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
                     <ul>
@@ -152,11 +246,20 @@ const index = () => {
                 </button>
                 <button
                   className={styles._sbPricingBox}
-                  onClick={() => handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 35000, duration: 'annually' })}
+                  onClick={() =>
+                    handleCheckout({
+                      ngnplan: '31055',
+                      plan: 'price_1MDDBZDsYRsW1yFu6omANT0d',
+                      usd: 20,
+                      ngn: 249.99,
+                      // zar: 350,
+                      duration: 'annually',
+                    })
+                  }
                 >
                   <div className={styles._sbPricingTitles}>
                     <p>Annually</p>
-                    <h2>₦2916.6</h2>
+                    <h2>$249.99</h2>
                   </div>
                   <div className={styles._sbPricingDetails}>
                     <ul>
@@ -175,11 +278,18 @@ const index = () => {
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbInterval}>Monthly</h5>
                       <p>
-                        ₦3500<span> / month</span>
+                        $18.99<span> / month</span>
                       </p>
                       <button
                         onClick={() =>
-                          handleCheckout({ plan: 'PLN_2cqf3nx11trbn4b', amount: 3500, duration: 'monthly' })
+                          handleCheckout({
+                            ngnplan: '31053',
+                            plan: 'price_1MDCl7DsYRsW1yFupJ9WGYn5',
+                            usd: 18.99,
+                            ngn: 30,
+                            // zar: 35,
+                            duration: 'monthly',
+                          })
                         }
                       >
                         Select
@@ -192,14 +302,21 @@ const index = () => {
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbIntervalPromo}>
                         <span>Quaterly</span>
-                        <span>Billed Quaterly - ₦10000</span>
+                        <span>Billed Quaterly - $59.99</span>
                       </h5>
                       <p>
-                        ₦3333.3<span> / month</span>
+                        $59.99<span> / 3 months</span>
                       </p>
                       <button
                         onClick={() =>
-                          handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 10000, duration: 'quarterly' })
+                          handleCheckout({
+                            ngnplan: '31054',
+                            plan: 'price_1MD8wPDsYRsW1yFuyTdES0Mb',
+                            usd: 59.99,
+                            ngn: 50,
+                            // zar: 100,
+                            duration: 'quarterly',
+                          })
                         }
                       >
                         Select
@@ -211,15 +328,22 @@ const index = () => {
                     <h6>Best Value:</h6>
                     <div className={styles._sbSubs}>
                       <h5 className={styles._sbIntervalPromo}>
-                        <span>Quaterly</span>
-                        <span>Billed Annually - ₦35000</span>
+                        <span>Annually</span>
+                        <span>Billed Annually - $249.99</span>
                       </h5>
                       <p>
-                        ₦2916.6<span> / month</span>
+                        $249.99<span> / year</span>
                       </p>
                       <button
                         onClick={() =>
-                          handleCheckout({ plan: 'PLN_gcfglkovoj8a06z', amount: 35000, duration: 'annually' })
+                          handleCheckout({
+                            ngnplan: '31055',
+                            plan: 'price_1MDDBZDsYRsW1yFu6omANT0d',
+                            usd: 249.99,
+                            ngn: 3500,
+                            // zar: 350,
+                            duration: 'annually',
+                          })
                         }
                       >
                         Select
@@ -233,7 +357,7 @@ const index = () => {
         </div>
       </div>
       <Toaster />
-    </Dialog>
+    </div>
   );
 };
 

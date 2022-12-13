@@ -1,49 +1,92 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
+import axios from 'axios';
+
+import toast, {Toaster } from 'react-hot-toast';
+
+// Mui
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import Slide from '@mui/material/Slide';
+
+import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material';
+
 import Errors from './errors';
-import HistoryModal from './modal';
 import HistoryEmpty from './historyEmpty';
 import search from '../../../assets/search.svg';
-import arrowDown from '../../../assets/arrowDown.svg';
-import arrowUp from '../../../assets/arrowUp.svg';
-
-const historyDays = [
-  { id: '1', date: 'Today - Thursday, 19 September 2022' },
-  { id: '2', date: 'Yesterday - Wednesday, 18 September 2022' },
-  { id: '3', date: 'Last week' },
-  { id: '4', date: 'Last month' },
-];
+import { FaChevronDown } from 'react-icons/fa';
+import Correction from './correction';
 
 
-const url = "https://grittygrammar.hng.tech/api/v1/chathistory/:6d04fa09-1ccf-42d0-83db-d61cd8af270c"
-
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 function History() {
-  const [history, setHistory] = useState(historyDays);
-  // const [historyDays, setHistoryDays] = useState(null)
+  const [history, setHistory] = useState([]);
+  const [open, setOpen] = useState(false);
+  const token = localStorage.getItem('grittyusertoken');
+  const URL = `https://api.speakbetter.hng.tech/v1/chatHistory`;
+
+  const success = (msg) => toast.success(msg);
+  const error = (msg) => toast.error(msg);
   useEffect(() => {
-
-    const fetchData = async () => {
-      try{
-        const response = await fetch(url);
-        const json = await response.json();
-        console.log(json);
-        // setHistory(json)
-      } catch (error) {
-        console.log("error", error);
+    const getHistory = async () => {
+      try {
+        const res = await axios.get(URL, {headers: {'Authorization': `Bearer ${token}`}});
+        const historyData = res.data.conversationHistory;
+        setHistory(historyData);
+      } catch (e) {
+        console.log('An error occured', e);
       }
-    }
-    fetchData();
+    };
+    getHistory();
   }, []);
-  
 
-  const [openId, setOpenId] = useState(null);
-  const [openModal, setOpenModal] = useState(false);
+    // const deleteHistory = async () => {
+    //   try {
+    //     const res = await axios.delete(URL, {headers: {'Authorization': `Bearer ${token}`}});
+    //     setHistory(res);
+    //     success('History deleted successfully!');
+    //   } catch (e) {
+    //     console.log('An error occured', e);
+    //   }
+    // };
+  
+  const deleteHistory = () => {
+    axios.delete(URL, { headers: { 'Authorization': `Bearer ${token}` } })
+      .then((res) => {
+        setHistory(res);
+      })
+      .then(() => {
+        setTimeout(() => {
+          success('History deleted successfully.')
+
+        }, 2000);
+        console.log("History deleted")
+      })
+      .catch((e) => {
+        setTimeout(() => {
+          error('An error occured', e.message);
+        }, 2000)
+      console.log(e)
+    })
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
+  const formattedDate = (date) => {
+    return new Date(date).toDateString();
+  };
+
   if (history?.length) {
     return (
-      <div className="flex flex-col pt-16 xl:ml-[62px] xl:mr-[9rem] lg:ml-[52px] lg:mx-[4rem] md:mx-[42px] sm:mx-[30px] mx-6">
-        <div className="flex items-center sm:justify-between justify-end">
+      <div className="flex flex-col h-full w-full pt-16 mx-0">
+        <div className="flex items-center max-w-5xl mx-auto w-full sm:justify-between justify-end">
           <h1 className="text-[#393939] sm:text-[32px] text-[24px] font-bold font-['DM_Sans'] leading-10">History</h1>
-          <div className="sm:flex-[.95] flex-[.7] w-full relative">
+          <div className="sm:flex-[.95] flex-[.7] w-full relative max-w-2xl">
             <input
               type="search"
               name="search"
@@ -62,32 +105,44 @@ function History() {
         <div className="flex flex-col items-start xl:ml-[7rem] lg:ml-[3rem] mt-16">
           <button
             className="text-[#EC1B1B] sm:text-base text-[14px] font-medium font-['DM_Sans'] leading-5 mb-7 outline-none"
-            onClick={() => setOpenModal(true)}
+            onClick={() => setOpen(true)}
           >
             Clear history
           </button>
           <div className="w-full">
-            {history?.map((days) => (
-              <>
-                <div key={days.id} className="flex justify-between items-center mb-6">
-                  <p className="text-[#5A5A5A] sm:text-base text-[12px] font-normal leading-5 font-['Inter']">
-                    {days.date}
-                  </p>
-                  <button
-                    className="p-[5px]"
-                    onClick={() => {
-                      setOpenId(days.id === openId ? null : days.id);
-                    }}
-                  >
-                    <img src={openId === days.id ? arrowUp : arrowDown} alt="" className="w-[35px] h-[7px]" />
-                  </button>
-                </div>
-                {openId === days.id && <Errors id={days.id} />}
-              </>
+            {history?.map((data) => (
+              <div key={data.botResponseId._id} className="flex justify-between items-center mb-6">
+                <Accordion className="w-full max-w-2xl">
+                  <AccordionSummary expandIcon={<FaChevronDown />}>
+                    <Typography>{formattedDate(data.botResponseId.createdAt)}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Errors errors={data.botResponseId} />
+                  </AccordionDetails>
+                </Accordion>
+              </div>
             ))}
           </div>
         </div>
-        <HistoryModal open={openModal} onClose={() => setOpenModal(false)} setHistory={() => setHistory([])} />
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              Are you sure you want to delete all conversation?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button variant='contained' color='error' onClick={() => { deleteHistory(); handleClose() }}>Delete</Button>
+          </DialogActions>
+        </Dialog>
+
+        <Toaster />
       </div>
     );
   }

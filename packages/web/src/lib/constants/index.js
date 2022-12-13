@@ -16,11 +16,16 @@ export const ENDPOINTS = {
   API_PAYSTACK_URL: 'paystack',
   API_PREMIUM_PAY: 'paystack/create',
   API_PREMIUM_VERIFY: (email, txref) => `paystack/verify?email=${email}&txref=${txref}`,
-  API_PREMIUM_CANCEL: 'paystack/cancel',
+  API_PREMIUM_CANCEL: 'stripe/cancel',
   API_AUTH_FORGOT_PASSWORD: 'auth/request-password-reset',
+  API_STRIPE_PAY: 'stripe/checkout',
+  API_FLUTTER_PAY: 'subscription/create-pay',
+  API_STRIPE_VERIFY: 'stripe/verify',
   API_AUTH_RESET_PASSWORD: (token) => `auth/password-reset?token=${token}`,
-  API_USER_SUBSCRIPTION: (email) => `paystack?email=${email}`,
+  API_USER_SUBSCRIPTION: () => 'subscription',
   API_USER_PROFILE: (userId) => `user/profile/${userId}`,
+
+  API_STATUS_URL: 'test',
 };
 
 // http://api.speakbetter.hng.tech/v1/auth/password-reset?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIyZTQ4MDcyZC05NjIxLTRmNzYtYTQ5NS0xYzk1OGNhMGZjYmIiLCJlbWFpbCI6Im9nbWFyb0BnbWFpbC5jb20iLCJpYXQiOjE2Njk5NzM0NDcsImV4cCI6MTY3MDIzMjY0N30.5eFreMaOMwtbF_ZqsuSrVA9cIArw4yJUcs99At2cUTY
