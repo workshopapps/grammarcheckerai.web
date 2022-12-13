@@ -31,7 +31,7 @@ export const Teams = [
     id: 1,
     name: 'Riri',
     imgsrc: IMG1,
-    role: 'Product Manager',
+    role: 'Business Analyst',
   },
   {
     id: 2,
@@ -41,19 +41,19 @@ export const Teams = [
   },
   {
     id: 3,
-    name: 'Phebe',
+    name: 'Jennifer',
     imgsrc: IMG3,
     role: 'Head of Operations',
   },
   {
     id: 4,
-    name: 'Jennifer',
+    name: 'Adura',
     imgsrc: IMG4,
     role: 'Accountant',
   },
   {
     id: 5,
-    name: 'Adura',
+    name: 'Phebe',
     imgsrc: IMG5,
     role: 'Human Relations Manager',
   },

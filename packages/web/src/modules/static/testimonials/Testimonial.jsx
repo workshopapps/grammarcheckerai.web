@@ -1,6 +1,5 @@
-import React, { useContext,useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { ThemeContext } from '../../../lib/context/DarkThemeContext';
 import styles from './Testimonial.module.css';
@@ -13,12 +12,9 @@ import testimonial4 from '../../../assets/raters/testimonials/testimonial4.png';
 import testimonial5 from '../../../assets/raters/testimonials/testimonial5.png';
 import ornament2 from '../../../assets/raters/testimonials/ornament2.png';
 import Footer from '../landing-page/Footer';
-
-import { ReviewCard } from './ReviewCard';
+import { useLocalStorage } from '../../../hooks/useLocalStorage';
 
 export default function Testimonial() {
-
-
   const testimonials = [
     {
       id: 1,
@@ -71,6 +67,11 @@ export default function Testimonial() {
   ];
 
   const context = useContext(ThemeContext);
+  let navigate = useNavigate();
+  const rateUs = () => {
+    localStorage.setItem('review', false);
+    navigate('/ratings');
+  };
 
   return (
     <div>
@@ -79,19 +80,20 @@ export default function Testimonial() {
           className={`${styles._header} md:bg-[#5D387F] md:text-white flex flex-col justify-center items-center md:py-32`}
           nav-theme={context.theme}
         >
-          <h1 className="text-center font-bold text-xl my-4 sm:text-2xl sm:mt-16 sm:p-2 lg:mt-4 lg:text-5xl">Users Love What We Do</h1>
+          <h1 className="text-center font-bold text-xl my-4 sm:text-2xl sm:mt-16 sm:p-2 lg:mt-4 lg:text-5xl">
+            Users Love What We Do
+          </h1>
           <p className="text-center font-[500] text-sm p-4 lg:p-0 lg:text-lg md:w-1/2">
             Read the stories of our users who have relied on our product to improve their grammer. Join Speak Better
             today and be a part of the team.
           </p>
         </div>
-        <Link
+        <div
           className="text-center bg-[#5D387F] text-white w-48 flex justify-center py-2 rounded-xl my-6 mx-auto"
-          //onClick={() => setOpenReviewModal(true)}
-          to="/ratings"
+          onClick={() => rateUs()}
         >
           Rate SpeakBetter
-        </Link>
+        </div>
         <main className="lg:grid space-y-16 md:space-y-12 lg:space-y-0 grid-cols-3 gap-8 lg:mt-32 my-14 mx-8 lg:mx-32 ">
           {testimonials.map((testimony) => {
             return (
