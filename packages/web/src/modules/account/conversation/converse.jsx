@@ -15,14 +15,11 @@ import styles from './index.module.css';
 import PropTypes from 'prop-types';
 import chirpy from '../../../assets/chirpy.svg';
 import { IconButton, Tooltip } from '@mui/material';
-import { IoMdPause, IoMdPlay } from 'react-icons/io';
 import { IoSendSharp, IoStopSharp } from 'react-icons/io5';
 import { MdReplay } from 'react-icons/md';
 import { convertSecToMin } from '../../../lib/utils';
-import { useConverseContext } from '../../../lib/context/ConverseContext';
 
 function Converse({ noRive = false }) {
-  const { socket } = useConverseContext();
   const context = useTheme();
   let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
     useMediaRecorder({
@@ -38,6 +35,7 @@ function Converse({ noRive = false }) {
   const [language, setLanguage] = React.useState('English');
   const userId = localStorage.getItem('grittyuserid');
   const error = (message) => toast.error(message);
+  const success = (message) => toast.success(message);
 
   const [chats, setChats] = React.useState([]);
   const navigate = useNavigate();
@@ -70,24 +68,6 @@ function Converse({ noRive = false }) {
     // console.log(userSubscription.status);
   }, []);
 
-  React.useEffect(() => {
-    console.log(socket, 'kdksks');
-    socket.on('connect', () => {
-      console.log('Omo');
-    });
-    socket.on('voiceNotFound', (statusCode, message) => {
-      console.log(statusCode, message);
-    });
-
-    socket.on('OpenAIError', (statusCode, message) => {
-      console.log(statusCode, message);
-    });
-
-    socket.on('receive-transcription', (statusCode, data) => {
-      console.log(statusCode, data);
-    });
-  }, []);
-
   const handleScroll = () => {
     setTimeout(() => {
       chatRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -114,6 +94,7 @@ function Converse({ noRive = false }) {
     sendAudio
       .mutateAsync(soln)
       .then((res) => {
+        success(res?.data?.message);
         const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
           res.data.data.botResponse;
         setChats((prevState) => [
@@ -252,7 +233,7 @@ function Converse({ noRive = false }) {
             </div>
             <div className="py-1 h-28">
               <div>
-                {status === 'idle' ? (
+                {status === 'idle' && !sendAudio.isLoading ? (
                   <>
                     {chats.length === 0 ? (
                       <p className="text-[#262626] text-sm pt-6">Tap the Microphone to begin and stop recording.</p>
@@ -274,16 +255,7 @@ function Converse({ noRive = false }) {
                           <MdReplay size={20} />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip arrow title={status === 'recording' ? 'pause' : 'resume'}>
-                        <IconButton
-                          onClick={onPauseHandler}
-                          disabled={status === 'idle' || status === 'stopped'}
-                          aria-label="add an alarm"
-                          color="primary"
-                        >
-                          {status === 'paused' ? <IoMdPlay size={20} /> : <IoMdPause size={20} />}
-                        </IconButton>
-                      </Tooltip>
+
                       <Tooltip arrow title="Stop">
                         <IconButton
                           onClick={stopRecording}

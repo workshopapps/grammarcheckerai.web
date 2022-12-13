@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 import React, { createContext } from 'react';
 import { io } from 'socket.io-client';
-import { ENDPOINTS } from '../constants';
 
 const ConverseContext = createContext();
 
 const ConverseContextProvider = (props) => {
-  const socket = io('https://04c2-197-211-32-243.ngrok.io', { autoConnect: false });
+  const socket = io('https://api.speakbetter.hng.tech', { autoConnect: true });
 
   React.useEffect(() => {
     socket.on('connect', () => {

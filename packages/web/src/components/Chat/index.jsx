@@ -34,9 +34,9 @@ function Chat({ isBot, isCorrection, createdAt = '11:20 AM', text, isLastReply, 
             ) : (
               <RiveBot size="small" />
             )
-          ) : (
-            <img src={userImg} alt="" className="max-w-full" />
-          )}
+          ) : null
+          // <img src={userImg} alt="" className="max-w-full" />
+          }
         </div>
       )}
     </div>

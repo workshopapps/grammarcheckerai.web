@@ -24,5 +24,5 @@ export const secureRequest = async ({ url, method = 'get', body = undefined, hea
 };
 
 export const convertSecToMin = (timer) => {
-  return timer ? new Date(Math.floor(timer) * 1000).toISOString().substring(14, 19) : '';
+  return timer ? new Date(Math.floor(timer) * 1000).toISOString().substring(14, 19) : '00:00';
 };
