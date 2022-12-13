@@ -16,12 +16,17 @@ exports.isSubscribe = async (req, res) => {
     }
     await newsLetterSubscription.create({
       email,
-    });
+    })
+    
     await emailService({
       to: {email},
         templateId: NEWSLETTER_TEMPLATE_ID,
         dynamic_template_data:  {actionurl:BASE_URL},
     })
+return res.status(200).json({
+      success: true,
+      message: "Thank you for subscribing",
+    });
   } catch (error) {
     res.status(400).json({
       status: false,
@@ -48,12 +53,13 @@ exports.unSubscribe = async (req, res) => {
         message: "You are already unsubscribed from receiving news letter"
       })
     }
-    await newsLetterSubscription.findByIdAndUpdate(
-      subscribed_user._id,
+    await newsLetterSubscription.findOneAndUpdate(
+      subscribed_user.email,
       {
         subscription: false
       }
-    );
+    ); 
+    
 
     //email service 
     await emailService({
@@ -61,6 +67,9 @@ exports.unSubscribe = async (req, res) => {
         templateId: UNSUBSCRIBED_TEMPLATE_ID,
         dynamic_template_data: {actionurl: `${BASE_URL}/unsubscribe`},
     })
+    await newsLetterSubscription.findOneAndDelete({
+      email,
+    });
     res.status(200).json({
       success: true,
       message:"You have unsubscribed succesfully"
