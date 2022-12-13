@@ -1,23 +1,41 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 import axios from 'axios';
+
+import toast, {Toaster } from 'react-hot-toast';
+
+// Mui
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import Slide from '@mui/material/Slide';
+
+import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material';
+
 import Errors from './errors';
-import HistoryModal from './modal';
 import HistoryEmpty from './historyEmpty';
 import search from '../../../assets/search.svg';
 import { FaChevronDown } from 'react-icons/fa';
-import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material';
+import Correction from './correction';
+
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 function History() {
   const [history, setHistory] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
+  const [open, setOpen] = useState(false);
+  const token = localStorage.getItem('grittyusertoken');
+  const URL = `https://api.speakbetter.hng.tech/v1/chatHistory`;
 
-  const userId = localStorage.getItem('grittyuserid');
-  const URL = `https://api.speakbetter.hng.tech/v1/chatHistory?userId=${userId}`;
-
+  const success = (msg) => toast.success(msg);
+  const error = (msg) => toast.error(msg);
   useEffect(() => {
     const getHistory = async () => {
       try {
-        const res = await axios.get(URL);
+        const res = await axios.get(URL, {headers: {'Authorization': `Bearer ${token}`}});
         const historyData = res.data.conversationHistory;
         setHistory(historyData);
       } catch (e) {
@@ -27,6 +45,38 @@ function History() {
     getHistory();
   }, []);
 
+    // const deleteHistory = async () => {
+    //   try {
+    //     const res = await axios.delete(URL, {headers: {'Authorization': `Bearer ${token}`}});
+    //     setHistory(res);
+    //     success('History deleted successfully!');
+    //   } catch (e) {
+    //     console.log('An error occured', e);
+    //   }
+    // };
+  
+  const deleteHistory = () => {
+    axios.delete(URL, { headers: { 'Authorization': `Bearer ${token}` } })
+      .then((res) => {
+        setHistory(res);
+      })
+      .then(() => {
+        setTimeout(() => {
+          success('History deleted successfully.')
+
+        }, 2000);
+        console.log("History deleted")
+      })
+      .catch((e) => {
+        setTimeout(() => {
+          error('An error occured', e.message);
+        }, 2000)
+      console.log(e)
+    })
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
   const formattedDate = (date) => {
     return new Date(date).toDateString();
   };
@@ -55,7 +105,7 @@ function History() {
         <div className="flex flex-col items-start xl:ml-[7rem] lg:ml-[3rem] mt-16">
           <button
             className="text-[#EC1B1B] sm:text-base text-[14px] font-medium font-['DM_Sans'] leading-5 mb-7 outline-none"
-            onClick={() => setOpenModal(true)}
+            onClick={() => setOpen(true)}
           >
             Clear history
           </button>
@@ -74,7 +124,25 @@ function History() {
             ))}
           </div>
         </div>
-        <HistoryModal open={openModal} onClose={() => setOpenModal(false)} setHistory={() => setHistory([])} />
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              Are you sure you want to delete all conversation?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button variant='contained' color='error' onClick={() => { deleteHistory(); handleClose() }}>Delete</Button>
+          </DialogActions>
+        </Dialog>
+
+        <Toaster />
       </div>
     );
   }

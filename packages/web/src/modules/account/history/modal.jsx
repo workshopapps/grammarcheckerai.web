@@ -1,9 +1,25 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import deleteIcon from '../../../assets/delete.svg';
 import { Modal } from '@mui/material';
-
+import axios from 'axios';
+import toast, {Toaster } from 'react-hot-toast';
 function HistoryModal({ open, onClose, setHistory }) {
+
+  const success = (msg) => toast.success(msg);
+  const error = (msg) => toast.error(msg);
+  const token = localStorage.getItem('grittyusertoken');
+  const URL = `https://api.speakbetter.hng.tech/v1/chatHistory`;
+
+    const deleteHistory = async () => {
+      try {
+        const res = await axios.delete(URL, {headers: {'Authorization': `Bearer ${token}`}});
+        setHistory(res);
+        success('History deleted successfully!');
+      } catch (e) {
+        console.log('An error occured', e);
+      }
+    };
+
   return (
     <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
       <div
@@ -19,7 +35,7 @@ function HistoryModal({ open, onClose, setHistory }) {
           </h3>
           <button
             className="flex bg-[#EC1B1B] my-6 justify-center items-center py-3 outline-none w-full rounded-xl text-white sm:text-base text-[15px]"
-            onClick={setHistory}
+            onClick={deleteHistory}
           >
             Delete
           </button>
@@ -30,7 +46,9 @@ function HistoryModal({ open, onClose, setHistory }) {
             Cancel
           </button>
         </div>
+        <Toaster/>
       </div>
+      
     </Modal>
   );
 }
