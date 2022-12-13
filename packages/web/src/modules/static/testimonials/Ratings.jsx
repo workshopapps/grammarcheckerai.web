@@ -1,64 +1,128 @@
-import React, { useState } from 'react';
-
+import { useEffect, useState } from 'react';
 import { ReviewCard } from './ReviewCard';
-
+import { FaStar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import rater1 from '../../../assets/raters/rater1.png';
 import rater2 from '../../../assets/raters/rater2.png';
 import rater3 from '../../../assets/raters/rater3.png';
 import rater4 from '../../../assets/raters/rater4.png';
+import unknownUser from '../../../assets/raters/unknown.png';
 import stars from '../../../assets/raters/star.png';
 import starbar5 from '../../../assets/raters/bars/5starbar.png';
 import starbar4 from '../../../assets/raters/bars/4starbar.png';
 import starbar3 from '../../../assets/raters/bars/3starbar.png';
 import starbar2 from '../../../assets/raters/bars/2starbar.png';
 import Footer from '../landing-page/Footer';
+import axios from 'axios';
+import { Avatar } from '@mui/material';
+import { ratingsData } from './RatingData';
+import Pagination from '../../../components/Pagination/Pagination';
+import { useLocalStorage } from '../../../hooks/useLocalStorage';
 
 export default function Ratings() {
-
-    const [openReviewModal, setOpenReviewModal] = useState(true);
-    const closeModal = () => {
-      setOpenReviewModal(false);
+  const [openReviewModal, setOpenReviewModal] = useLocalStorage('review', false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const reviewsPerPage = 6;
+  const [allReview, setAllReview] = useState([]);
+  const closeModal = () => {
+    setOpenReviewModal(true);
   };
-  
-  const ratingsData = [
-    {
-      name: 'A Google User',
-      id: 1,
-      img: rater1,
-      stars: 5,
-      date: '11/16/22',
-      review:
-        'Simply a wonderful app that corrects our errors whenever we need a little assistance. This app is great!! I love this company, its excellent interface, and execution.',
-    },
-    {
-      name: 'A Google User',
-      id: 2,
-      img: rater2,
-      stars: 5,
-      date: '11/16/22',
-      review:
-        'A great assistant! Speak Better Is my best writing buddy! I always have it check my writings. Been using it for a while now and love it!',
-    },
-    {
-      name: 'A Google User',
-      id: 3,
-      img: rater3,
-      stars: 5,
-      date: '11/16/22',
-      review:
-        "I love the app it's helping me learning how to speak with the right intonation. It saved me from sounding retarded to people many times.",
-    },
-    {
-      name: 'A Google User',
-      id: 4,
-      img: rater4,
-      stars: 4,
-      date: '11/16/22',
-      review:
-        'I have only been using the free version for about 24 hours. I appreciate how it is improving my grammar. Speak Better has improved my use of commas (my downfall), word intonation, and capitalization - in just 24 hours of use!',
-    },
-  ];
+
+  const indexOfLastCard = currentPage * reviewsPerPage;
+  const indexOfFirstCard = indexOfLastCard - reviewsPerPage;
+
+  const paginate = (pageNumber) => {
+    window.scrollTo({ top: 350, left: 0, behavior: 'smooth' });
+    setCurrentPage(pageNumber);
+  };
+
+  // Get random avatar for other users
+  const getRandomAvatar = () => {
+    return [rater1, rater2, rater3, rater4].sort(() => 0.5 - Math.random()).slice(0, 1);
+  };
+
+  useEffect(() => {
+    axios
+      .get('https://api.speakbetter.hng.tech/v1/rating') // Used my login details ID here as well
+      .then((response) => {
+        setAllReview(
+          response.data.response.filter((obj) => {
+            if (obj.comment !== '') {
+              return obj;
+            }
+          }),
+        );
+
+        setAllReview((reviews) =>
+          reviews.map((obj) => {
+            if (obj.userid === null) {
+              return { name: 'A Google User', ...obj };
+            }
+            return obj;
+          }),
+        );
+
+        if (allReview.length <= 5) {
+          setAllReview((prev) => [...prev, ...ratingsData]);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [openReviewModal]);
+
+  const formatDate = (date) => {
+    const padTo2Digits = (num) => {
+      return num.toString().padStart(2, '0');
+    };
+    return [padTo2Digits(date.getDate()), padTo2Digits(date.getMonth() + 1), date.getFullYear()].join('/');
+  };
+
+  const userToken = localStorage.getItem('grittyusertoken'); // Get bearer token
+  const addRate = async (ratings, comment, userId) => {
+    await axios
+      .get(`https://api.speakbetter.hng.tech/v1/user/profile/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`, // Token Authorization
+        },
+      }) // Used my login details ID here as well
+      .then((response) => {
+        const userDetails = response.data.data;
+        setAllReview((prev) => [
+          {
+            name: userDetails.username,
+            userid: userId,
+            imageElement: (
+              <Avatar
+                alt={`${userDetails.firstName} ${userDetails.lastName}`}
+                sx={{ bgcolor: '#8C54BF', fontSize: '0.9rem' }}
+                src="/static/images/avatar/1.jpg"
+              >
+                {userDetails ? userDetails.firstName.charAt(0) + '' + userDetails.lastName.charAt(0) : 'NA'}
+              </Avatar>
+            ),
+            ratings: ratings,
+            date: formatDate(new Date()),
+            comment: comment,
+          },
+          ...prev,
+        ]);
+      })
+      .catch(() => {
+        setAllReview((prev) => [
+          {
+            name: 'You',
+            img: unknownUser,
+            ratings: ratings,
+            date: formatDate(new Date()),
+            comment: comment,
+          },
+          ...prev,
+        ]);
+      });
+  };
+
+  const currentReview = allReview.slice(indexOfFirstCard, indexOfLastCard);
 
   return (
     <div>
@@ -66,7 +130,7 @@ export default function Ratings() {
         <div className="flex justify-between my-6">
           <Link to="/" className="text-[#5D387F] text-xs">
             {' '}
-            &lt; Back{' '}
+            &lt; Home{' '}
           </Link>
           <Link to="/testimonials" className="text-[#5D387F] text-xs">
             {' '}
@@ -81,59 +145,89 @@ export default function Ratings() {
           <div className="mr-2 lg:mr-6 space-y-2">
             <h2 className="text-3xl">4.6</h2>
             <span className="flex">
-              {[...Array(5)].map((it, index) => {
+              {[...Array(5)].map((_, index) => {
                 return <img src={stars} key={index} alt="" />;
               })}
             </span>
             <p>10,0001</p>
           </div>
           <div className="w-2/3">
-            <div className="flex lg:m-2 items-center space-x-4 text-lg">
+            <div className="flex justify-between sm:justify-start lg:m-2 items-center space-x-2 xs:space-x-4">
               <span> 5 </span>
-              <img src={starbar5} alt="" className="h-2" />
+              <img src={starbar5} alt="" className="h-2 w-11/12 xs:w-auto" />
             </div>
-            <div className="flex lg:m-2 items-center space-x-4">
+            <div className="flex justify-between sm:justify-start lg:m-2 items-center space-x-2 xs:space-x-4">
               <span> 4 </span>
-              <img src={starbar4} alt="" className="h-2" />
+              <img src={starbar4} alt="" className="h-2 w-11/12 xs:w-auto" />
             </div>
-            <div className="flex lg:m-2 items-center space-x-4">
+            <div className="flex justify-between sm:justify-start lg:m-2 items-center space-x-2 xs:space-x-4">
               <span> 3 </span>
-              <img src={starbar3} alt="" className="h-2" />
+              <img src={starbar3} alt="" className="h-2 w-11/12 xs:w-auto" />
             </div>
-            <div className="flex lg:m-2 items-center space-x-4">
+            <div className="flex justify-between sm:justify-start lg:m-2 items-center space-x-2 xs:space-x-4">
               <span> 2 </span>
-              <img src={starbar2} alt="" className="h-2" />
+              <img src={starbar2} alt="" className="h-2 w-11/12 xs:w-auto" />
             </div>
-            <div className="flex lg:m-2 items-center space-x-4">
+            <div className="flex justify-between sm:justify-start lg:m-2 items-center space-x-2 xs:space-x-4">
               <span> 1 </span>
-              <img src={starbar2} alt="" className="h-2" />
+              <img src={starbar2} alt="" className="h-2 w-11/12 xs:w-auto" />
             </div>
           </div>
         </section>
-        <main className="space-y-8 lg:space-y-4 my-12 lg:w-2/3">
-          {ratingsData.map((rating) => {
+        <main className="grid xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full justify-between my-12">
+          {currentReview.map((rating, index) => {
             return (
-              <section key={rating.id} className="space-y-2 my-6">
+              <section key={index} className="space-y-2">
                 <div className="flex items-center">
-                  <img src={rating.img} alt="" className=" mr-6" />
+                  {rating.userid === null ? (
+                    <img
+                      src={getRandomAvatar()}
+                      alt="a google user"
+                      width="50px"
+                      height="50px"
+                      className="bg-purple mr-4 xs:mr-2 sm:mr-4"
+                    />
+                  ) : rating.img ? (
+                    <img
+                      src={rating.img}
+                      alt="a google user"
+                      width="45px"
+                      height="45px"
+                      className="bg-purple mr-4 xs:mr-2 sm:mr-4"
+                    />
+                  ) : (
+                    <div className="mr-4 xs:mr-2 sm:mr-4">{rating.imageElement}</div>
+                  )}
                   <div className="space-y-1">
-                    <p className="text-xs">{rating.name}</p>
+                    <p className="text-xs">{rating.name ? rating.name : rating.userid.username}</p>
                     <span className="flex">
-                      {[...Array(rating.stars)].map((it, index) => {
-                        return <img src={stars} key={index} alt="" />;
+                      {[...Array(5)].map((_, index) => {
+                        if (rating.ratings >= index + 1) {
+                          return <img src={stars} key={index} alt="stars" />;
+                        }
+                        return <FaStar key={index} color="#a9a9a9" />;
                       })}
                     </span>
-                    <p className="text-xs">{rating.date}</p>
+                    <p className="text-xs">{rating.date ? rating.date : formatDate(new Date(rating.updatedAt))}</p>
                   </div>
                 </div>
                 <div>
-                  <p className="text-xs">{rating.review}</p>
+                  <p className="text-xs">{rating.comment}</p>
                 </div>
               </section>
             );
           })}
         </main>
-        {openReviewModal && <ReviewCard closeModal={closeModal} />}
+
+        {reviewsPerPage > 5 && (
+          <Pagination
+            cardsPerPage={reviewsPerPage}
+            page={currentPage}
+            totalCards={allReview.length}
+            paginate={paginate}
+          />
+        )}
+        {!openReviewModal && <ReviewCard postReview={addRate} closeModal={closeModal} />}
       </div>
       <Footer />
     </div>
