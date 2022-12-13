@@ -14,12 +14,12 @@ function Chat({ isBot, isCorrection, createdAt = '11:20 AM', text, isLastReply, 
     >
       <div className="order-1 w-full">
         <div
-          className={`p-4 rounded-lg bg-white shadow-sm border border-[#5D387F31] space-y-2 ${
-            isBot ? 'rounded-bl-none' : 'rounded-br-none'
+          className={`p-4 rounded-lg shadow-sm border border-[#5D387F31] space-y-2 ${
+            isBot ? 'rounded-bl-none bg-white text-slate-700' : 'rounded-br-none text-white bg-[#5D387F]'
           }`}
         >
           {isCorrection && <p className="font-bold text-lg">Correction</p>}
-          <p className={`text-[15px] ${isCorrection ? 'text-[#279371]' : 'text-slate-700'}`}>{text}</p>
+          <p className={`text-[15px] ${isCorrection ? 'text-[#279371]' : ''}`}>{text}</p>
         </div>
         <p className={`text-xs mb-2 text-slate-800 pt-1 ${isBot ? 'text-right' : 'text-left'}`}>
           {dayjs(createdAt).format('h:mm A')}

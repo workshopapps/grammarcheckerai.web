@@ -19,8 +19,10 @@ import { IoMdPause, IoMdPlay } from 'react-icons/io';
 import { IoSendSharp, IoStopSharp } from 'react-icons/io5';
 import { MdReplay } from 'react-icons/md';
 import { convertSecToMin } from '../../../lib/utils';
+import { useConverseContext } from '../../../lib/context/ConverseContext';
 
 function Converse({ noRive = false }) {
+  const { socket } = useConverseContext();
   const context = useTheme();
   let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
     useMediaRecorder({
@@ -28,7 +30,6 @@ function Converse({ noRive = false }) {
       blobOptions: { type: 'audio/wav' },
       mediaStreamConstraints: { audio: true, video: false },
     });
-
   const userData = JSON.parse(localStorage.getItem('isUserDetails'));
   const [userSubscription, setUserSubscription] = React.useState('');
   const [counter, setCounter] = useState(0);
@@ -67,6 +68,24 @@ function Converse({ noRive = false }) {
   React.useEffect(() => {
     useFetch('https://api.speakbetter.hng.tech/v1/subscription', localStorage.getItem('grittyusertoken'));
     // console.log(userSubscription.status);
+  }, []);
+
+  React.useEffect(() => {
+    console.log(socket, 'kdksks');
+    socket.on('connect', () => {
+      console.log('Omo');
+    });
+    socket.on('voiceNotFound', (statusCode, message) => {
+      console.log(statusCode, message);
+    });
+
+    socket.on('OpenAIError', (statusCode, message) => {
+      console.log(statusCode, message);
+    });
+
+    socket.on('receive-transcription', (statusCode, data) => {
+      console.log(statusCode, data);
+    });
   }, []);
 
   const handleScroll = () => {
