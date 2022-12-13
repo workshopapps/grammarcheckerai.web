@@ -4,7 +4,7 @@ const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 const signUpSchema = yup.object().shape({
     newUserFirstName: yup.string()
         .min(2, 'Too Short!')
-        .max(60, 'Too Long!')
+        .max(60, 'Too Long!') 
         .required('First Name is required.'),
 
     newUserLastName: yup.string()
