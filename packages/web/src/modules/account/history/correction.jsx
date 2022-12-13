@@ -13,7 +13,6 @@ import back from '../../../assets/arrow-left.svg';
 import trash from '../../../assets/trash.svg';
 import HistoryModal from './modal';
 import HistoryEmpty from './historyEmpty';
-import React from 'react';
 import axios from 'axios';
 
 const Transition = forwardRef(function Transition(props, ref) {
