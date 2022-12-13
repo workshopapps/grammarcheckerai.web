@@ -59,7 +59,7 @@ const NewsLetter = () => {
     >
       <h5 className="text-xl md:text-3xl font-black -mb-2">Be the first to know</h5>
       <p className="text-center md:text-left">
-        Subscribe to out newsletter and be the first to know about new updates and news, but no spam, scouts honor!
+        Subscribe to our newsletter and be the first to know about new updates and news, but no spam, scouts honor!
       </p>
 
       <form onSubmit={handleSubmit} encType="application/json" className="relative md:w-[80%] flex ">
