@@ -2,11 +2,11 @@
 import React, { createContext } from 'react';
 import { io } from 'socket.io-client';
 
-export const QuizContext = createContext();
+export const ConverseContext = createContext();
 
-const QuizContextProvider = (props) => {
+const ConverseContextProvider = (props) => {
   const userId = localStorage.getItem('grittyuserid');
-  const socket = io('https://api.speakbetter.hng.tech/', { autoConnect: false });
+  const socket = io('https://api.speakbetter.hng.tech', { autoConnect: true });
 
   if (userId && (userId !== null || userId !== '')) {
     socket.on('connect', () => {
@@ -16,7 +16,7 @@ const QuizContextProvider = (props) => {
     console.log('You must be a logged in user');
   }
 
-  return <QuizContext.Provider value={{ socket }}>{props.children}</QuizContext.Provider>;
+  return <ConverseContext.Provider value={{ socket }}>{props.children}</ConverseContext.Provider>;
 };
 
-export default QuizContextProvider;
+export default ConverseContextProvider;
