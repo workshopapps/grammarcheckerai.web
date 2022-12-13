@@ -102,6 +102,43 @@ async function userConversationAccess(req, res, next) {
   req.user = user; // Setting the user on the request object
   return next();
 }
+
+async function protectChatHistory(req, res, next) {
+  try {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || authHeader.split(" ")[0] !== "Bearer") {
+      return res
+        .status(401)
+        .json({ message: "Please provide a valid Bearer token." });
+    }
+    const token = authHeader.split(" ")[1];
+    const payload = jwt.verify(token, JWT_SECRET);
+
+    const id = payload._id;
+    const user = await userCollection.findById(id);
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: "No user associated with provided Bearer token." });
+    }
+    req.user = user;
+    next();
+  } catch (error) {
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).json({ message: "jwt expired" });
+    } else if (error.name === "JsonWebTokenError") {
+      return res.status(401).json({
+        message: "Trouble verifying jwt. Please provide a valid token",
+      });
+    } else {
+      return res.status(500).json({
+        message:
+          "Something went terribly wrong. Please try again in few minutes.",
+      });
+    }
+  }
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 module.exports = {
@@ -109,5 +146,6 @@ module.exports = {
   deleteUserAccess,
   userConversationAccess,
   updateUserAccess,
+  protectChatHistory,
   getUser,
 };

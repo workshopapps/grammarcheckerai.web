@@ -48,7 +48,7 @@ const Navbar = () => {
               { title: 'Blog', to: '/blog' },
               { title: 'Premium', to: '/premium' },
               { title: 'Contact', to: '/contact' },
-              { title: 'Quiz', to: '/startgame' },
+              // { title: 'Quiz', to: '/startgame' },
             ].map((item) => (
               <NavLink to={item.to} key={item.title} className={({ isActive }) => `${isActive ? 'font-bold' : ''}`}>
                 {item.title}

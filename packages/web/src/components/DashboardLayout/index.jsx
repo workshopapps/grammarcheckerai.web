@@ -43,9 +43,9 @@ function DashboardLayout() {
           <SidebarLink Icon={IoSettingsOutline} to="/me/settings">
             Settings
           </SidebarLink>
-          <SidebarLink Icon={AiFillWechat} to="/startgame">
+          {/* <SidebarLink Icon={AiFillWechat} to="/startgame">
             Quiz
-          </SidebarLink>
+          </SidebarLink> */}
           <button
             onClick={() => handleOpen()}
             className="mt-10 flex w-full text-md text-slate-800 pl-16 border-r-4 py-5 border-[#5D387F00] hover:border-[#5D387F33] items-center gap-5 m-auto"
