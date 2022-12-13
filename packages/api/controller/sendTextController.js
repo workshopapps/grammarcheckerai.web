@@ -4,10 +4,26 @@ const BotResponse = require("../database/models/botResponseSchema");
 const Message = require("../database/models/messageSchema");
 const { chatHandler, appendConversationToChatLog } = require("../scripts/chat");
 
+const languageMap = {
+  english: "en",
+  "english (au)": "en_au",
+  "english (uk)": "en_uk",
+  "english (us)": "en_us",
+  spanish: "es",
+  french: "fr",
+  german: "de",
+  italian: "it",
+  portuguese: "pt",
+  dutch: "nl",
+  hindi: "hi",
+  japanese: "ja",
+};
+
 async function BotTextResponse(req, res) {
   try {
     const userId = req.body.userId;
     const textInput = req.body.textInput; // retrieves chat from body
+    const language = req.body.language?.toLowerCase() || "english";
 
     // checks if  object is empty
     if (!textInput) {
@@ -17,8 +33,15 @@ async function BotTextResponse(req, res) {
       });
     }
 
+    if (!languageMap[language]) {
+      return res.status(400).send({
+        success: false,
+        message: "Specified language is not supported",
+      });
+    }
+
     // Send text transcription to Grammar Correction to get corrected text
-    let grammarCheckResponse = await grammarCheckHandler(textInput, "English");
+    let grammarCheckResponse = await grammarCheckHandler(textInput, language);
 
     // Handling OpenAI Error
     if (!grammarCheckResponse) {
