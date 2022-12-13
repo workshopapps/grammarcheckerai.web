@@ -5,6 +5,7 @@ import happy from '../../../assets/images/happy.png';
 import { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const colors = {
   orange: '#FFBA5A',
@@ -43,32 +44,23 @@ export const ReviewCard = ({ closeModal, postReview }) => {
 
   const handleFormsubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch('https://api.speakbetter.hng.tech/v1/rating', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ratings: currentValue,
-          userid: localStorage.getItem('grittyuserid'),
-          comment: formvalue.comment,
-        }),
-      });
-      if (response.ok) {
-        await setSuccessMessage('Thank you for rating SpeakBetter!');
+    await axios
+      .post('https://api.speakbetter.hng.tech/v1/rating', {
+        ratings: currentValue,
+        userid: localStorage.getItem('grittyuserid'),
+        comment: formvalue.comment,
+      })
+      .then(() => {
+        setSuccessMessage('Thank you for rating SpeakBetter!');
         if (formvalue.comment !== '') {
-          await postReview(currentValue, formvalue.comment, localStorage.getItem('grittyuserid'));
+          postReview(currentValue, formvalue.comment, localStorage.getItem('grittyuserid'));
         }
-        await closeModal();
-      } else {
+        closeModal();
+      })
+      .catch((error) => {
+        console.log(error);
         setSuccessMessage('There was an error processing your review');
-      }
-    } catch (error) {
-      console.log(error);
-      setSuccessMessage('There was an error processing your review');
-    }
-
-    //console.log(localStorage.getItem('grittyuserid'));
-    //console.log(formvalue.comment);
+      });
   };
 
   const navigate = useNavigate();

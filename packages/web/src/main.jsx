@@ -1,5 +1,5 @@
-import * as atatus from 'atatus-spa';
-atatus.config('5544d2e513804154b2abb55f9655d323').install();
+// import * as atatus from 'atatus-spa';
+// atatus.config('5544d2e513804154b2abb55f9655d323').install();
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
