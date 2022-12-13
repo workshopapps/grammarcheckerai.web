@@ -2,13 +2,13 @@ const { Configuration, OpenAIApi } = require("openai");
 const { environment } = require("../config/environment");
 
 const configuration = new Configuration({
-  apiKey: environment.OPENAI_API_KEY ,
+  apiKey: environment.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
 const GPT3 = async function (prompt) {
   const response = await openai.createCompletion({
-    model: "text-davinci-002",
+    model: "text-davinci-003",
     prompt,
     temperature: 0,
     max_tokens: 60,
@@ -46,5 +46,5 @@ const grammarCheckHandler = async (userResponseInTxt, language = "English") => {
     }
   }
 };
- 
+
 module.exports = grammarCheckHandler;
