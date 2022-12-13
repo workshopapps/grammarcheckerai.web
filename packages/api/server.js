@@ -12,6 +12,7 @@ const { Server } = require("socket.io");
 mongoose.set("strictQuery", true); // to suppress this warning the DeprecationWarning
 const app = require("./app");
 const { environment } = require("./config/environment.js");
+const { importSocket } = require("./controller/getTranscriptionController");
 
 const quizFlow = require("./multiplayerQuiz/socket.io");
 
@@ -27,6 +28,7 @@ const io = new Server(httpServer, {
 });
 
 io.on("connection", (socket) => {
+  importSocket(socket);
   quizFlow(io, socket);
 });
 

@@ -1,8 +1,12 @@
 const express = require("express");
 const conversationRouter = express.Router();
-const getBotResponse = require("../controller/sendAudioController.js");
+const { getBotResponse } = require("../controller/sendAudioController.js");
+
 const endConversation = require("../controller/endConversationController");
 const startConversation = require("../controller/startConversationController");
+const {
+  getTranscription,
+} = require("../controller/getTranscriptionController");
 const {
   userConversationAccess,
 } = require("../middlewares/UserRestriction/userAccessControl");
@@ -19,5 +23,6 @@ conversationRouter.get("/start", userConversationAccess, startConversation);
 conversationRouter.get("/end", endConversation);
 conversationRouter.post("/sendAudio", uploadFile, getBotResponse);
 conversationRouter.post("/sendText", textResponse);
+conversationRouter.post("/assemblyAICb", getTranscription);
 
 module.exports = conversationRouter;
