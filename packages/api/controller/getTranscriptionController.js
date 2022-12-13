@@ -10,7 +10,7 @@ const { translateFromEnglish } = require("../scripts/translate");
 let socket;
 const importSocket = (soc) => {
   socket = soc;
-  console.log(soc.id);
+  // console.log(soc.id);
 };
 
 const { ASSEMBLYAI_API_KEY } = environment;
@@ -34,15 +34,16 @@ async function getTranscription(req, res) {
     // If they were no voice or translatable sound found
     if (!jsonResponse.words.length) {
       // Emit voiceNotFound error
+      res.status(200).send({
+        success: false,
+        message: "Audio not detected from provided audio. Please be louder.",
+      });
       socket.emit(
         "voiceNotFound",
         400,
         "Audio not detected from provided audio. Please be louder."
       );
-      return res.status(200).send({
-        success: false,
-        message: "Audio not detected from provided audio. Please be louder.",
-      });
+      return;
     }
     const queryString = jsonResponse.webhook_url.split("?")[1];
     const searchParams = new URLSearchParams(queryString);
@@ -56,12 +57,13 @@ async function getTranscription(req, res) {
 
     //   // Handling OpenAI Grammar Correction Error
     if (!grammarCheckResponse) {
-      // Emit OpenAI error
-      socket.emit("OpenAIError", 500, "OpenAI internal error");
-      return res.status(200).send({
+      res.status(200).send({
         success: false,
         message: "OpenAI internal error",
       });
+      // Emit OpenAI error
+      socket.emit("OpenAIError", 500, "OpenAI internal error");
+      return;
     }
     let { correctUserResponseInTxt } = grammarCheckResponse;
 
