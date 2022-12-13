@@ -165,7 +165,11 @@ const Index = () => {
           }, 5000);
         })
         .catch((err) => {
+          if(err?.response?.data?.message === "Action unsuccessful") {
+            error(err?.response?.data?.data?.password)
+          } else {
           error(err?.response?.data?.message);
+          }
         });
     }
   };
