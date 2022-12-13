@@ -39,16 +39,16 @@ async function getBotResponse(req, res) {
         success: false,
         message: "Please attach an audio file",
       });
-    } 
+    }
 
-    // 1. If userId, Get user's email
-    const userEmail = userId
-      ? (await userCollection.findById(userId))?.email
-      : null;
+    // // 1. If userId, Get user's email
+    // const userEmail = userId
+    //   ? (await userCollection.findById(userId))?.email
+    //   : null;
 
-    const isSubscriber = userEmail
-      ? (await Subscription.findOne({ email: userEmail }))?.active
-      : null;
+    // const isSubscriber = userEmail
+    //   ? (await Subscription.findOne({ email: userEmail }))?.status
+    //   : null;
 
     // checks if specified language is not available
 
@@ -72,15 +72,15 @@ async function getBotResponse(req, res) {
     // upload url and initiate transcription
     const transcribedAudio = await getTranscriptionFromAssembly(
       preTranscriptId
-    );  
-    
-    // 2. Check if user is a premiumm user
-    if (!isSubscriber && Number(transcribedAudio.audio_duration) > 20) {
-      return res.status(403).send({
-        success: false,
-        message: "Recording above 20 seconds is a premium feature. Go Premium!",
-      });
-    }
+    );
+
+    // // 2. Check if user is a premiumm user
+    // if ((isSubscriber === 'successful') && Number(transcribedAudio.audio_duration) > 20) {
+    //   return res.status(403).send({
+    //     success: false,
+    //     message: "Recording above 20 seconds is a premium feature. Go Premium!",
+    //   });
+    // }
 
     //If assembly ai fail to return a response
     if (!transcribedAudio) {
