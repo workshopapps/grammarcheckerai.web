@@ -28,7 +28,7 @@ import useFlutter from '../../../hooks/auth/useFlutter';
 const Currency = [
   { id: 0, name: 'Select your currency' },
   { id: 1, name: 'USD' },
-  { id: 2, name: 'NGN' },
+  // { id: 2, name: 'NGN' },
 ];
 
 const Checkout = (props) => {
@@ -214,49 +214,46 @@ const Checkout = (props) => {
     }
   };
 
-  const handleFlutterPayment = () => {
-    const user = JSON.parse(localStorage.getItem('isUserDetails'));
+  // const handleFlutterPayment = () => {
+  //   const user = JSON.parse(localStorage.getItem('isUserDetails'));
 
-    setUserName(`${user?.firstName} ${user?.lastName}`);
-    setUserLSEmail(JSON.parse(localStorage.getItem('isUserDetails')).email);
+  //   setUserName(`${user?.firstName} ${user?.lastName}`);
+  //   setUserLSEmail(JSON.parse(localStorage.getItem('isUserDetails')).email);
 
-    // console.log(userName);
-    // console.log(config);
-    if (props.userIsSubscribed === true) {
-      toast(() => (
-        <span className={styles._notifs}>
-          <b>You are already subscribed!</b>
-          <Button variant="outlined" color="secondary" onClick={handleNavigate}>
-            Go to Dashboard
-          </Button>
-        </span>
-      ));
-    } else if (props.userIsSubscribed === false && userLSEmail && userLSEmail !== '') {
-      setLoading(true);
-      FlutterPayment({
-        callback: (response) => {
-          console.log(response);
-          setTimeout(() => {
-            authFlutter
-              .mutateAsync({
-                name: response.customer.name,
-                currency: 'NGN',
-                interval: props.ngnplan,
-                amount: response.amount,
-                txref: response.tx_ref,
-                flw_re: response.flw_ref,
-              })
-              .then((res) => {
-                console.log(res);
-              });
-          }, 2000);
-        },
-        onClose: () => {
-          setLoading(false);
-        },
-      });
-    }
-  };
+  //   // console.log(userName);
+  //   // console.log(config);
+  //   if (props.userIsSubscribed === true) {
+  //     toast(() => (
+  //       <span className={styles._notifs}>
+  //         <b>You are already subscribed!</b>
+  //         <Button variant="outlined" color="secondary" onClick={handleNavigate}>
+  //           Go to Dashboard
+  //         </Button>
+  //       </span>
+  //     ));
+  //   } else if (props.userIsSubscribed === false && userLSEmail && userLSEmail !== '') {
+  //     setLoading(true);
+  //     FlutterPayment({
+  //       callback: (response) => {
+  //         authFlutter
+  //           .mutateAsync({
+  //             name: response.customer.name,
+  //             currency: 'NGN',
+  //             interval: props.ngnplan,
+  //             amount: response.amount,
+  //             txref: response.tx_ref,
+  //             flw_re: response.flw_ref,
+  //           })
+  //           .then((res) => {
+  //             console.log(res);
+  //           });
+  //       },
+  //       onClose: () => {
+  //         setLoading(false);
+  //       },
+  //     });
+  //   }
+  // };
 
   const isTabletorMobile = useMediaQuery('(min-width:850px)');
   const isMobile = useMediaQuery('(max-width:389px)');
@@ -389,7 +386,7 @@ const Checkout = (props) => {
                       }
                       label="Paystack (Coming soon)"
                     ></FormControlLabel> */}
-                    <FormControlLabel
+                    {/* <FormControlLabel
                       className={styles._flutterwave}
                       value="flutterwave"
                       sx={{
@@ -411,7 +408,7 @@ const Checkout = (props) => {
                         />
                       }
                       label="Flutterwave"
-                    ></FormControlLabel>
+                    ></FormControlLabel> */}
                   </RadioGroup>
                 </FormControl>
               </div>
@@ -569,7 +566,7 @@ const Checkout = (props) => {
                           Pay with Stripe
                         </LoadingButton>
                       )}
-                      {value === 'flutterwave' && (
+                      {/* {value === 'flutterwave' && (
                         // <h3>Coming soon...</h3>
                         <LoadingButton
                           loading={loading}
@@ -583,7 +580,7 @@ const Checkout = (props) => {
                         >
                           Pay with Flutterwave
                         </LoadingButton>
-                      )}
+                      )} */}
                     </div>
                   )}
                 </div>
