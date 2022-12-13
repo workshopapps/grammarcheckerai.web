@@ -23,6 +23,7 @@ const NewsletterPage = () => {
   useEffect(() => {
     if (user === userEmail) {
       setIsError(true);
+      setUserEmail('')
     }
   }, [userEmail]);
 
@@ -37,9 +38,11 @@ const NewsletterPage = () => {
     })
       .then((response) => {
         console.log(response);
+        setUserEmail('')
       })
       .catch((error) => {
         console.log(error);
+        setUserEmail('')
       });
 
     if (email.current.value !== '') {
@@ -78,10 +81,11 @@ const NewsletterPage = () => {
               <input
                 type="email"
                 ref={email}
+                value={userEmail}
                 onChange={(event) => setUserEmail(event.target.value)}
                 id="email"
                 name="Email"
-                placeholder="Youremail@example.com"
+                placeholder="youremail@example.com"
                 required
               />
               <button id="submit" value={isSubmit} type="submit">
