@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Chat from '../../../components/Chat';
 import { getFontSize } from '../../../hooks/useCustomFont';
+import { compareStrings, compareCorrection } from '../../../lib/utils';
 
 function ChatContainer({ chats, noRive }) {
   const [fontSize] = getFontSize();
@@ -25,7 +26,15 @@ function ChatContainer({ chats, noRive }) {
             isLastReply={index + 1 === chats?.length}
             isCorrection
             createdAt={chat.createdAt}
-            text={chat.correctedText}
+            text={compareStrings(chat.transcribedAudioText, chat.correctedText)}
+          />
+          <Chat
+            noRive={noRive}
+            isBot
+            isCorrection
+            createdAt={chat.createdAt}
+            isCorrectionHeader
+            text={compareCorrection(chat.correctedText, chat.transcribedAudioText)}
           />
           <Chat noRive={noRive} isBot createdAt={chat.createdAt} text={chat.botReply} />
         </Fragment>

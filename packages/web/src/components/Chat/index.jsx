@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import chirpy from '../../assets/chirpy.svg';
 
-function Chat({ isBot, isCorrection, createdAt = '11:20 AM', text, isLastReply }) {
+function Chat({ isBot, isCorrection, isCorrectionHeader, createdAt = '11:20 AM', text, isLastReply }) {
+  console.log(text);
   return (
     <div
       className={`flex max-w-xs xs:max-w-sm sm:max-w-lg w-full text-left align-text-bottom space-x-1 ${
@@ -16,8 +17,8 @@ function Chat({ isBot, isCorrection, createdAt = '11:20 AM', text, isLastReply }
             isBot ? 'rounded-tl-none bg-white text-slate-700' : 'rounded-br-none text-white bg-[#5D387F]'
           }`}
         >
-          {isCorrection && <p className="font-bold text-lg">Correction</p>}
-          <p className={`text-[15px] ${isCorrection ? 'text-[#279371]' : ''}`}>{text}</p>
+          {isCorrectionHeader && <p className="font-bold text-sm">Correction</p>}
+          <p className={`text-[15px] ${isCorrection ? '' : ''}`}>{text}</p>
         </div>
         {!isCorrection && (
           <p className={`text-xs mb-2 text-slate-800 pt-1 text-right relative`}>
@@ -28,7 +29,7 @@ function Chat({ isBot, isCorrection, createdAt = '11:20 AM', text, isLastReply }
       </div>
 
       {isLastReply && (
-        <div className={`-mt-0 ${isBot ? 'w-12 sm:w-18 pr-2' : 'order-1 w-6 sm:w-8'}`}>
+        <div className={`-mt-0 ${isBot ? 'w-12 sm:w-18 pr-0 sm:pr-2' : 'order-1 w-6 sm:w-8'}`}>
           {isBot ? <img src={chirpy} alt="" className="w-full" /> : null}
         </div>
       )}
@@ -39,6 +40,7 @@ function Chat({ isBot, isCorrection, createdAt = '11:20 AM', text, isLastReply }
 Chat.propTypes = {
   isBot: PropTypes.bool,
   isCorrection: PropTypes.bool,
+  isCorrectionHeader: PropTypes.bool,
   text: PropTypes.string,
   createdAt: PropTypes.string,
   isLastReply: PropTypes.bool,

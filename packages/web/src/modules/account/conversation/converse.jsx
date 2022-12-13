@@ -39,10 +39,10 @@ function Converse({ noRive = false }) {
   const [chats, setChats] = React.useState([
     {
       botReply: 'How are u doing todays',
-      correctedText: 'Omo Lmaos stop it joor',
+      correctedText: `I don't love you too, but i shouldn't be angry`,
       createdAt: '12/12/34',
       language: 'English',
-      transcribedAudioText: 'This text is transcribed from the acts of the apostles',
+      transcribedAudioText: `I doesn't love you too, make i be angry`,
       updatedAt: '12/20/2030',
     },
   ]);
@@ -138,7 +138,7 @@ function Converse({ noRive = false }) {
   }, [status]);
 
   useEffect(() => {
-    if (counter > 10 && userSubscription?.data && userSubscription?.data?.length !== 0) {
+    if (counter > 1000000 && userSubscription?.data && userSubscription?.data?.length !== 0) {
       checkForArray(userSubscription?.data).map((item) => {
         if (item.status === 'successful') {
           return;
@@ -146,7 +146,7 @@ function Converse({ noRive = false }) {
       });
       return;
     }
-    if (counter > 10) {
+    if (counter > 1000000) {
       setOpen(true);
       stopRecording();
       setCounter(0);
