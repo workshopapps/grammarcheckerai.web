@@ -58,7 +58,7 @@ app.use(
 // welcome note
 app.get("/v1", (req, res) => {
   res.status(200).json({
-    message: "Welcome to Speak Better 🗣️ 🗣️ 🗣️",
+    message: "Welcome to Speak Better 🎯🎯🎯",
     user: "CORS enabled",
   });
 });
