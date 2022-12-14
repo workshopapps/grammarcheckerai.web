@@ -166,7 +166,7 @@ function Converse({ noRive = false }) {
     <>
       {/* <Premium open={open} handleClosePremium={handleClosePremium} /> */}
       {sendAudio.isLoading && <Loader />}
-      <div className="flex-1 bg-black w-full h-full max-w-8xl mx-auto flex flex-col pt-3 lg:pt-0">
+      <div className="flex-1  w-full h-full max-w-8xl mx-auto flex flex-col pt-3 lg:pt-0">
         <div className="text-center max-h-5/6 space-y-5 relative flex-1 flex flex-col justify-center  lg:space-y-8">
           {chats.length === 0 ? (
             <>
@@ -270,6 +270,7 @@ function Converse({ noRive = false }) {
         <div className="sticky bottom-0 left-0" ref={inputRef}>
           <ChatInput setChats={setChats} />
         </div>
+        <div ref={inputRef}></div>
       </div>
     </>
   );

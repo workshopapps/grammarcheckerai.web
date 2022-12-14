@@ -4,6 +4,7 @@ import { IconButton, Tooltip } from '@mui/material';
 import PropTypes from 'prop-types';
 import micImg from '../../../assets/images/mic.svg';
 import useSendText from '../../../hooks/account/useSendText';
+import { BeatLoader } from 'react-spinners';
 
 function ChatInput({ setChats }) {
   const userId = localStorage.getItem('grittyuserid');
@@ -45,8 +46,9 @@ function ChatInput({ setChats }) {
     }
   };
   return (
-    <div className="w-full border-t bg-white py-2">
-      <div className="w-full px-5 max-w-[1000px] mx-auto flex space-x-2">
+    <div className="w-full border-t bg-white py-2 ">
+      <div className="w-full px-5 max-w-[1000px] relative mx-auto flex space-x-2">
+        <div className="absolute -top-8 right-10">{sendText.isLoading && <BeatLoader size={12} color="#8C54BF" />}</div>
         <form className="w-full relative" onSubmit={handleTextMsg}>
           <input
             value={text}
