@@ -8,36 +8,10 @@ import audioImg from '../../assets/audio.svg';
 import React from 'react';
 
 const SentAudio = ({ audio }) => {
-  const audioRef = React.useRef(new Audio(audio));
+  const audioRef = React.useRef();
 
   const [playing, setPlaying] = useState(false);
   const [counter, setCounter] = useState(0);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCounter(
-        audioRef.current?.duration && audioRef.current?.currentTime
-          ? (audioRef.current?.currentTime / audioRef.current?.duration) * 100
-          : 0,
-      );
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    console.log(audio, 'audio');
-    if (audio) {
-      audioRef.current?.pause();
-      setPlaying(false);
-    }
-
-    if (audio) {
-      audioRef.current.onended = () => {
-        setPlaying(false);
-      };
-    }
-  }, [audio]);
 
   const playAudio = () => {
     if (playing === false) {
@@ -49,6 +23,13 @@ const SentAudio = ({ audio }) => {
     }
   };
 
+  const onLoadedMetadata = (anything) => {
+    // setAudioDuration(Math.round(audioElem.current?.duration));
+    console.log(Math.round(audioRef.current?.duration));
+  };
+
+  const onEnded = () => setPlaying(false);
+
   return (
     <div className="flex w-full px-3 max-w-[300px] text-white ml-auto py-2 shadow-sm  rounded-md border z-10 items-center relative space-x-2">
       <IconButton sx={{ mx: 1 }} onClick={playAudio}>
@@ -58,7 +39,21 @@ const SentAudio = ({ audio }) => {
         <img src={audioImg} alt="" />
       </div>
       <div>
-        <p className="text-xs text-black z-20">{convertSecToMin(audioRef.current?.duration)}</p>
+        <p className="text-xs text-black z-20">
+          {/* {console.log(audioRef.current?.duration)} */}
+          {!isNaN(audioRef.current?.duration) ||
+            (audioRef.current?.duration === Infinity && convertSecToMin(Math.floor(audioRef.current?.duration)))}
+        </p>
+      </div>
+      <div>
+        <audio
+          src={audio}
+          ref={audioRef}
+          onLoadedMetadata={onLoadedMetadata}
+          onEnded={onEnded}
+          // onTimeUpdate={onTimeUpdate}
+          // onPause={onPause}
+        />
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ function Converse({ noRive = false }) {
   let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
     useMediaRecorder({
       recordScreen: false,
-      blobOptions: { type: 'audio/wav' },
+      // blobOptions: { type: 'audio/*' },
       mediaStreamConstraints: { audio: true, video: false },
     });
   const userData = JSON.parse(localStorage.getItem('isUserDetails'));
@@ -67,7 +67,7 @@ function Converse({ noRive = false }) {
   const handleScroll = () => {
     setTimeout(() => {
       chatRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 600);
+    }, 200);
   };
 
   useEffect(() => {

@@ -4,6 +4,7 @@ export const ENDPOINTS = {
   API_INITIATE_SIGNUP: 'auth/signup',
   API_GET_PROFILE: 'user/profile',
   API_SEND_AUDIO: 'conversation/sendAudio',
+  API_SEND_TEXT: 'conversation/sendText',
   API_AUTH_GOOGLE: 'auth/google',
   API_AUTH_LINKEDIN: 'auth/linkedin',
   API_AUTH_POST_LINKEDIN: (params) => `auth/linkedin/callback${params}`,
