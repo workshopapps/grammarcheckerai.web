@@ -20,12 +20,11 @@ import { convertSecToMin } from '../../../lib/utils';
 import ChatInput from './chat-input';
 
 function Converse({ noRive = false }) {
-  let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
-    useMediaRecorder({
-      recordScreen: false,
-      // blobOptions: { type: 'audio/*' },
-      mediaStreamConstraints: { audio: true, video: false },
-    });
+  let { status, mediaBlob, stopRecording, startRecording, clearMediaBlob } = useMediaRecorder({
+    recordScreen: false,
+    // blobOptions: { type: 'audio/*' },
+    mediaStreamConstraints: { audio: true, video: false },
+  });
   const userData = JSON.parse(localStorage.getItem('isUserDetails'));
   const [userSubscription, setUserSubscription] = React.useState('');
   const [counter, setCounter] = useState(0);
@@ -78,10 +77,12 @@ function Converse({ noRive = false }) {
     console.log(chats);
   }, [chats]);
 
+  // URL.createObjectURL(mediaBlob)
   const handleClosePremium = () => {
     setOpen(false);
   };
 
+  // URL.createObjectURL(mediaBlob)
   const checkForArray = (data) => (Array.isArray(data) ? data : [data]);
 
   const submitAudioHandler = () => {
@@ -98,7 +99,7 @@ function Converse({ noRive = false }) {
         setChats((prevState) => [
           ...prevState,
           {
-            audio: URL.createObjectURL(mediaBlob),
+            audio: res?.data?.data?.userResponse?.audioURL,
             botReply,
             correctedText,
             createdAt,
@@ -153,19 +154,12 @@ function Converse({ noRive = false }) {
       clearMediaBlob();
       startRecording();
     }
-    if (status === 'paused') {
-      resumeRecording();
-    }
-    if (status === 'recording') {
-      pauseRecording();
-    }
   };
 
   console.log(status);
   return (
     <>
       {/* <Premium open={open} handleClosePremium={handleClosePremium} /> */}
-      {sendAudio.isLoading && <Loader />}
       <div className="flex-1  w-full h-full max-w-8xl mx-auto flex flex-col pt-3 lg:pt-0">
         <div className="text-center max-h-5/6 space-y-5 relative flex-1 flex flex-col justify-center  lg:space-y-8">
           {chats.length === 0 ? (
@@ -217,7 +211,7 @@ function Converse({ noRive = false }) {
             </div> */}
             {/* <div className="py-1 h-28">
               <div>
-                {status === 'idle' && !sendAudio.isLoading ? (
+                {status === 'idle'  && !sendAudio.isLoading ? (
                   <>
                     {chats.length === 0 ? (
                       <p className="text-[#262626] text-sm pt-6">Tap the Microphone to begin and stop recording.</p>
@@ -234,7 +228,7 @@ function Converse({ noRive = false }) {
                   <div className="mb-10">
                     <div className="flex justify-center items-center mt-10">{convertSecToMin(counter)}</div>
                     <div className="flex items-center justify-center space-x-3 py-6">
-                      <Tooltip arrow title="Delete">
+                      <Tooltip arrow title="Reset">
                         <IconButton color="error" aria-label="add an alarm" onClick={deleteRecording}>
                           <MdReplay size={20} />
                         </IconButton>
@@ -268,7 +262,16 @@ function Converse({ noRive = false }) {
           </div>
         </div>
         <div className="sticky bottom-0 left-0" ref={inputRef}>
-          <ChatInput setChats={setChats} />
+          <ChatInput
+            setChats={setChats}
+            status={status}
+            stopRecording={stopRecording}
+            startRecording={startRecording}
+            submitAudioHandler={submitAudioHandler}
+            clearMediaBlob={clearMediaBlob}
+            mediaBlob={mediaBlob}
+            counter={counter}
+          />
         </div>
         <div ref={inputRef}></div>
       </div>

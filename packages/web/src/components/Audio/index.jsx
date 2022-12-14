@@ -1,6 +1,6 @@
 import { PropTypes } from 'prop-types';
-import { useState, useEffect } from 'react';
-import { Stack, IconButton, Slider } from '@mui/material';
+import { useState } from 'react';
+import { IconButton } from '@mui/material';
 import { MdOutlinePause } from 'react-icons/md';
 import { IoPlayOutline } from 'react-icons/io5';
 import { convertSecToMin } from '../../lib/utils';
