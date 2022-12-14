@@ -270,6 +270,7 @@ function Converse({ noRive = false }) {
             clearMediaBlob={clearMediaBlob}
             mediaBlob={mediaBlob}
             counter={counter}
+            setCounter={setCounter}
           />
         </div>
         <div ref={inputRef}></div>

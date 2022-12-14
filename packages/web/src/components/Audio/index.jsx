@@ -31,7 +31,16 @@ const Audio = ({ audio, variant, counter }) => {
   return (
     <div className="flex w-full px-3 max-w-[300px]  bg-white ml-auto py-2 shadow-sm  rounded-md border items-center relative space-x-2">
       <IconButton
-        sx={{ mx: 1, color: variant ? '#fff' : '#393939', bgcolor: variant ? '#5D387F' : '#fff' }}
+        sx={{
+          mx: 1,
+          color: variant ? '#fff' : '#393939',
+          bgcolor: variant ? '#5D387F' : '#fff',
+          '&:hover': {
+            bgcolor: variant ? '#5D387F' : '',
+            color: variant ? '#fff' : '#393939',
+            opacity: [0.9, 0.8, 0.7],
+          },
+        }}
         onClick={playAudio}
       >
         {playing ? <MdOutlinePause size={16} /> : <IoPlayOutline size={16} />}

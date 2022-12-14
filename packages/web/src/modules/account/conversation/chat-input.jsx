@@ -1,5 +1,6 @@
 import React from 'react';
 import { AiOutlineSend, AiOutlineCheck } from 'react-icons/ai';
+import { IoCloseOutline } from 'react-icons/io5';
 import { IconButton, Tooltip, Popper } from '@mui/material';
 import PropTypes from 'prop-types';
 import micImg from '../../../assets/images/mic.svg';
@@ -19,6 +20,7 @@ function ChatInput({
   clearMediaBlob,
   mediaBlob,
   counter,
+  setCounter,
 }) {
   const userId = localStorage.getItem('grittyuserid');
   const [variant, setVariant] = React.useState('none');
@@ -89,6 +91,12 @@ function ChatInput({
     }
   };
 
+  const clearMedia = () => {
+    clearMediaBlob();
+    setVariant('none');
+    setCounter(0);
+  };
+
   return (
     <div className="w-full border-t bg-white py-3 relative">
       {status === 'recording' && (
@@ -100,6 +108,25 @@ function ChatInput({
           {variant === 'audio' && status === 'stopped' && mediaBlob ? (
             <div className="absolute top-2 left-3">
               <Audio variant counter={counter} audio={URL.createObjectURL(mediaBlob)} />
+              <div className="absolute -top-2 -right-2">
+                <IconButton
+                  onClick={clearMedia}
+                  type="button"
+                  sx={{
+                    bgcolor: '#555',
+                    color: '#fff',
+                    padding: '3px',
+                    '&:hover': {
+                      bgcolor: '#555',
+                      color: '#fff',
+                    },
+                  }}
+                  color="secondary"
+                  disabled={!text && !mediaBlob}
+                >
+                  <IoCloseOutline size={11} />
+                </IconButton>
+              </div>
             </div>
           ) : null}
           <input
@@ -171,6 +198,7 @@ ChatInput.propTypes = {
   clearMediaBlob: PropTypes.func,
   mediaBlob: PropTypes.object,
   counter: PropTypes.number,
+  setCounter: PropTypes.func,
 };
 
 export default ChatInput;
