@@ -77,7 +77,6 @@ function Converse({ noRive = false }) {
     console.log(chats);
   }, [chats]);
 
-  // URL.createObjectURL(mediaBlob)
   const handleClosePremium = () => {
     setOpen(false);
   };

@@ -8,6 +8,7 @@ import { BeatLoader } from 'react-spinners';
 import styles from './index.module.css';
 import { convertSecToMin } from '../../../lib/utils';
 import audioImg from '../../../assets/audio.svg';
+import Audio from '../../../components/Audio';
 
 function ChatInput({
   setChats,
@@ -89,13 +90,18 @@ function ChatInput({
   };
 
   return (
-    <div className="w-full border-t bg-white py-2 relative">
+    <div className="w-full border-t bg-white py-3 relative">
       {status === 'recording' && (
         <div className="w-full h-[300px] absolute bottom-0 left-0 block z-10 opacity-70 bg-gradient-to-t from-white" />
       )}
       <div className="w-full px-5 max-w-[1000px] relative mx-auto flex space-x-2">
         <div className="absolute -top-8 right-10">{sendText.isLoading && <BeatLoader size={12} color="#8C54BF" />}</div>
         <form className="w-full relative" onSubmit={handleTextMsg}>
+          {variant === 'audio' && status === 'stopped' && mediaBlob ? (
+            <div className="absolute top-2 left-3">
+              <Audio variant counter={counter} audio={URL.createObjectURL(mediaBlob)} />
+            </div>
+          ) : null}
           <input
             value={text}
             onChange={(e) => {
@@ -148,7 +154,7 @@ function ChatInput({
         </form>
 
         <div>
-          <button className="h-[60px] w-full px-8 min-w-[160px] ring-[#5D387F76] focus:ring-2 transition-all duration-200 text-[15px] max-w-[200px] font-bold text-[#5D387F] bg-[#E8DDF2] rounded-[8px]">
+          <button className="h-[65px] w-full px-8 min-w-[160px] ring-[#5D387F76] focus:ring-2 transition-all duration-200 text-[15px] max-w-[200px] font-bold text-[#5D387F] bg-[#E8DDF2] rounded-[8px]">
             Reset Chat
           </button>
         </div>

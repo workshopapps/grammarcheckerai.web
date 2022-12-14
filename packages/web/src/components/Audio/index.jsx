@@ -7,11 +7,9 @@ import { convertSecToMin } from '../../lib/utils';
 import audioImg from '../../assets/audio.svg';
 import React from 'react';
 
-const SentAudio = ({ audio }) => {
+const Audio = ({ audio, variant, counter }) => {
   const audioRef = React.useRef();
-
   const [playing, setPlaying] = useState(false);
-  const [counter, setCounter] = useState(0);
 
   const playAudio = () => {
     if (playing === false) {
@@ -31,19 +29,25 @@ const SentAudio = ({ audio }) => {
   const onEnded = () => setPlaying(false);
 
   return (
-    <div className="flex w-full px-3 max-w-[300px] text-white ml-auto py-2 shadow-sm  rounded-md border items-center relative space-x-2">
-      <IconButton sx={{ mx: 1 }} onClick={playAudio}>
-        {playing ? <MdOutlinePause size={16} color="#393939" /> : <IoPlayOutline size={16} color="#393939" />}
+    <div className="flex w-full px-3 max-w-[300px]  bg-white ml-auto py-2 shadow-sm  rounded-md border items-center relative space-x-2">
+      <IconButton
+        sx={{ mx: 1, color: variant ? '#fff' : '#393939', bgcolor: variant ? '#5D387F' : '#fff' }}
+        onClick={playAudio}
+      >
+        {playing ? <MdOutlinePause size={16} /> : <IoPlayOutline size={16} />}
       </IconButton>
       <div>
         <img src={audioImg} alt="" />
       </div>
       <div>
-        <p className="text-xs text-black z-20">
-          {/* {console.log(audioRef.current?.duration)} */}
-          {!isNaN(audioRef.current?.duration) ||
-            (audioRef.current?.duration === Infinity && convertSecToMin(Math.floor(audioRef.current?.duration)))}
-        </p>
+        {!variant && (
+          <p className="text-xs text-black z-20">
+            {/* {console.log(audioRef.current?.duration)} */}
+            {!isNaN(audioRef.current?.duration) ||
+              (audioRef.current?.duration === Infinity && convertSecToMin(Math.floor(audioRef.current?.duration)))}
+          </p>
+        )}
+        {counter && <p className="text-xs text-black z-20">{convertSecToMin(counter)}</p>}
       </div>
       <div>
         <audio
@@ -59,8 +63,10 @@ const SentAudio = ({ audio }) => {
   );
 };
 
-SentAudio.propTypes = {
+Audio.propTypes = {
   audio: PropTypes.string,
+  variant: PropTypes.bool,
+  counter: PropTypes.number,
 };
 
-export default SentAudio;
+export default Audio;
