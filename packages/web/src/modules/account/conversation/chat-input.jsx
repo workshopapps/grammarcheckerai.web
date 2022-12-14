@@ -1,13 +1,16 @@
 import React from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
 import { IconButton } from '@mui/material';
+import PropTypes from 'prop-types';
+// audioRef.current
 
-function ChatInput() {
+function ChatInput({}) {
   const [text, setText] = React.useState('');
   const handleTextMsg = (ev) => {
     ev.preventDefault();
     if (text.trim()) {
       console.log('omo');
+      // sendAudio(text);
       setText('');
     }
   };
@@ -35,5 +38,8 @@ function ChatInput() {
     </div>
   );
 }
+ChatInput.propTypes = {
+  sendAudio: PropTypes.objectOf,
+};
 
 export default ChatInput;

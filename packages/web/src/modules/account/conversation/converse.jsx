@@ -34,18 +34,8 @@ function Converse({ noRive = false }) {
   const [language, setLanguage] = React.useState('English');
   const userId = localStorage.getItem('grittyuserid');
   const error = (message) => toast.error(message);
-  const success = (message) => toast.success(message);
 
-  const [chats, setChats] = React.useState([
-    {
-      botReply: 'How are u doing todays',
-      correctedText: `I don't love you too, but i shouldn't be angry`,
-      createdAt: '12/12/34',
-      language: 'English',
-      transcribedAudioText: `I doesn't love you too, make i be angry`,
-      updatedAt: '12/20/2030',
-    },
-  ]);
+  const [chats, setChats] = React.useState([]);
   const navigate = useNavigate();
 
   const chatRef = useRef(null);
@@ -65,9 +55,7 @@ function Converse({ noRive = false }) {
         const oBJ = JSON.parse(result);
         setUserSubscription(oBJ);
       })
-      .then(() => {
-        // console.log(userSubscription);
-      })
+      .then(() => {})
       .catch((error) => error(error));
   };
 
@@ -85,6 +73,7 @@ function Converse({ noRive = false }) {
   useEffect(() => {
     if (chats.length === 0) return;
     handleScroll();
+    console.log(chats);
   }, [chats]);
 
   const handleClosePremium = () => {
@@ -102,12 +91,12 @@ function Converse({ noRive = false }) {
     sendAudio
       .mutateAsync(soln)
       .then((res) => {
-        success(res?.data?.message);
         const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
           res.data.data.botResponse;
         setChats((prevState) => [
           ...prevState,
           {
+            audio: URL.createObjectURL(mediaBlob),
             botReply,
             correctedText,
             createdAt,
@@ -120,7 +109,6 @@ function Converse({ noRive = false }) {
       .catch((err) => {
         error(err?.response?.data?.message);
       });
-    clearMediaBlob();
   };
 
   useEffect(() => {
@@ -160,6 +148,7 @@ function Converse({ noRive = false }) {
 
   const onMicHandler = () => {
     if (status === 'idle' || status === 'stopped') {
+      clearMediaBlob();
       startRecording();
     }
     if (status === 'paused') {
@@ -170,19 +159,12 @@ function Converse({ noRive = false }) {
     }
   };
 
-  // const onPauseHandler = () => {
-  //   if (status === 'recording') {
-  //     pauseRecording();
-  //   }
-  //   if (status === 'paused') {
-  //     resumeRecording();
-  //   }
-  // };
   return (
     <>
       <Premium open={open} handleClosePremium={handleClosePremium} />
       {sendAudio.isLoading && <Loader />}
       <div className="flex-1 w-full max-w-8xl mx-auto flex flex-col justify-center pt-3 lg:pt-0 pb-7">
+        <audio src={mediaBlob} />
         <div className="text-center max-h-5/6 space-y-5 lg:space-y-8">
           {chats.length === 0 ? (
             <>
@@ -214,7 +196,7 @@ function Converse({ noRive = false }) {
               </div>
             </>
           ) : (
-            <ChatContainer noRive={noRive} chats={chats} />
+            <ChatContainer chats={chats} isLoading={sendAudio.isLoading} />
           )}
           <div>
             <div className="mx-auto flex items-center justify-center" ref={chatRef}>

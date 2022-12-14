@@ -10,14 +10,18 @@ import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/
 function History() {
   const [history, setHistory] = useState([]);
   const [openModal, setOpenModal] = useState(false);
-
+  const token = localStorage.getItem('grittyusertoken');
   const userId = localStorage.getItem('grittyuserid');
   const URL = `https://api.speakbetter.hng.tech/v1/chatHistory?userId=${userId}`;
 
   useEffect(() => {
     const getHistory = async () => {
       try {
-        const res = await axios.get(URL);
+        const res = await axios.get(URL, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const historyData = res.data.conversationHistory;
         setHistory(historyData);
       } catch (e) {

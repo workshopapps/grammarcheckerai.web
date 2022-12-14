@@ -41,7 +41,7 @@ export function compareStrings(string1, string2) {
         </Tooltip>,
       );
     } else if (!item.added) {
-      output.push(<span className="text-green">{item.value}</span>);
+      output.push(<span>{item.value}</span>);
     }
   });
 
@@ -56,7 +56,7 @@ export function compareCorrection(string1, string2) {
     if (item.removed) {
       output.push(
         <Tooltip arrow title={item.value}>
-          <span className="text-[#279371] font-bold">{item.value}</span>
+          <span className="text-[#279371]">{item.value}</span>
         </Tooltip>,
       );
     } else if (!item.added) {

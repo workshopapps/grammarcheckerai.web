@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Chat from '../../../components/Chat';
 import { getFontSize } from '../../../hooks/useCustomFont';
 import { compareStrings, compareCorrection } from '../../../lib/utils';
-
-function ChatContainer({ chats, noRive }) {
+import Audio from '../../../components/Audio';
+function ChatContainer({ chats, isLoading }) {
   const [fontSize] = getFontSize();
 
   return (
@@ -14,29 +14,28 @@ function ChatContainer({ chats, noRive }) {
     >
       {chats?.map((chat, index) => (
         <Fragment key={chat.createdAt}>
-          <Chat
-            noRive={noRive}
-            createdAt={chat.createdAt}
-            isLastReply={index + 1 === chats?.length}
-            text={chat.transcribedAudioText}
-          />
-          <Chat
-            noRive={noRive}
-            isBot
-            isLastReply={index + 1 === chats?.length}
-            isCorrection
-            createdAt={chat.createdAt}
-            text={compareStrings(chat.transcribedAudioText, chat.correctedText)}
-          />
-          <Chat
-            noRive={noRive}
-            isBot
-            isCorrection
-            createdAt={chat.createdAt}
-            isCorrectionHeader
-            text={compareCorrection(chat.correctedText, chat.transcribedAudioText)}
-          />
-          <Chat noRive={noRive} isBot createdAt={chat.createdAt} text={chat.botReply} />
+          {chat.audio && <Audio audio={chat.audio} />}
+
+          {chat.transcribedAudioText === chat.correctedText ? (
+            <>
+              <Chat correct createdAt={chat.createdAt} text={chat.transcribedAudioText} />
+            </>
+          ) : (
+            <>
+              <Chat
+                isCorrection
+                createdAt={chat.createdAt}
+                text={compareStrings(chat.transcribedAudioText, chat.correctedText)}
+              />
+              <Chat
+                createdAt={chat.createdAt}
+                isCorrectionHeader
+                text={compareCorrection(chat.correctedText, chat.transcribedAudioText)}
+              />
+            </>
+          )}
+
+          <Chat isBot isLastReply={index + 1 === chats?.length} createdAt={chat.createdAt} text={chat.botReply} />
         </Fragment>
       ))}
     </div>
@@ -45,7 +44,7 @@ function ChatContainer({ chats, noRive }) {
 
 ChatContainer.propTypes = {
   chats: PropTypes.array,
-  noRive: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 export default ChatContainer;

@@ -3,26 +3,25 @@ import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import chirpy from '../../assets/chirpy.svg';
 
-function Chat({ isBot, isCorrection, isCorrectionHeader, createdAt = '11:20 AM', text, isLastReply }) {
-  console.log(text);
+function Chat({ isBot, isCorrection, correct, isCorrectionHeader, createdAt = '11:20 AM', text, isLastReply }) {
   return (
     <div
-      className={`flex max-w-xs xs:max-w-sm sm:max-w-lg w-full text-left align-text-bottom space-x-1 ${
+      className={`flex max-w-xs xs:max-w-sm sm:max-w-md w-full text-left align-text-bottom space-x-1 ${
         isBot ? 'mr-auto' : 'ml-auto '
       } ${isLastReply ? 'pl-0' : 'pl-[48px]'}`}
     >
       <div className="order-1 w-full">
         <div
           className={`p-4 py-3 rounded-[10px] border border-[#E8DDF2] space-y-2 ${
-            isBot ? 'rounded-tl-none bg-white text-slate-700' : 'rounded-br-none text-white bg-[#5D387F]'
+            isBot ? 'rounded-tl-none bg-[#E8DDF2] text-slate-700' : 'rounded-br-none  bg-white'
           }`}
         >
-          {isCorrectionHeader && <p className="font-bold text-sm">Correction</p>}
-          <p className={`text-[15px] ${isCorrection ? '' : ''}`}>{text}</p>
+          {isCorrectionHeader && <p className="font-bold text-[#393939] text-sm">Correction</p>}
+          <p className={`text-[15px] text-[#393939] ${isCorrection ? '' : ''}`}>{text}</p>
         </div>
         {!isCorrection && (
-          <p className={`text-xs mb-2 text-slate-800 pt-1 text-right relative`}>
-            {!isCorrection && !isBot && <span className="absolute bottom-0 left-0">Transcript</span>}
+          <p className={`text-xs mb-2 text-slate-800 pt-1 relative ${isBot ? 'text-left' : 'text-right'}`}>
+            {correct && <span className="absolute bottom-0 left-0 text-[#2FB087]">No correction</span>}
             {dayjs(createdAt).format('h:mm A')}
           </p>
         )}
@@ -44,6 +43,6 @@ Chat.propTypes = {
   text: PropTypes.string,
   createdAt: PropTypes.string,
   isLastReply: PropTypes.bool,
-  noRive: PropTypes.bool,
+  correct: PropTypes.bool,
 };
 export default Chat;
