@@ -30,9 +30,15 @@ const Transcribe = () => {
   const [playAudio, setPlayAudio] = useState();
   const hiddenFileInput = useRef(null);
   const userId = localStorage.getItem('grittyuserid');
+  const [chats, setChats] = React.useState([]);
 
   const handleUploadClick = () => {
-    hiddenFileInput.current.click();
+    
+     if (chats != []) {
+       setChats([]);
+      setMessages(dummyBotMessages)
+     }
+     hiddenFileInput.current.click();
   };
 
   const handleFileClick = async (event) => {
@@ -58,10 +64,10 @@ const Transcribe = () => {
           userAudio: URL.createObjectURL(event.target.files[0]),
         },
       ]);
-      console.log('audio', URL.createObjectURL(event.target.files[0]));
+      //console.log('audio', URL.createObjectURL(event.target.files[0]));
     }
   };
-  const [chats, setChats] = React.useState([]);
+  
 
   const submitAudioHandler = () => {
     const soln = new FormData();
