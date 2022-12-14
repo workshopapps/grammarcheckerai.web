@@ -35,11 +35,7 @@ export function compareStrings(string1, string2) {
   let output = [];
   results.forEach((item) => {
     if (item.removed) {
-      output.push(
-        <Tooltip arrow title={item.value}>
-          <span className="text-[#EC1B1B] underline underline-offset-2">{item.value}</span>
-        </Tooltip>,
-      );
+      output.push(<span className="text-[#EC1B1B] underline underline-offset-2">{item.value}</span>);
     } else if (!item.added) {
       output.push(<span>{item.value}</span>);
     }
@@ -54,11 +50,7 @@ export function compareCorrection(string1, string2) {
   let output = [];
   results.forEach((item) => {
     if (item.removed) {
-      output.push(
-        <Tooltip arrow title={item.value}>
-          <span className="text-[#279371]">{item.value}</span>
-        </Tooltip>,
-      );
+      output.push(<span className="text-[#279371]">{item.value}</span>);
     } else if (!item.added) {
       output.push(<span>{item.value}</span>);
     }

@@ -9,6 +9,9 @@ h5,
 h6 {
   font-family: 'DM Sans', sans-serif;
 }
+.font-Inter {
+  font-family: 'Inter', sans-serif !important;
+}
 :root {
   --successColor: #2bac76;
   --failedColor: #cd2553;

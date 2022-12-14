@@ -9,33 +9,36 @@ function ChatContainer({ chats, isLoading }) {
 
   return (
     <div
-      className="w-full max-w-7xl mx-auto pt-10 relative flex flex-col justify-center px-0 pr-2 sm:px-4 space-y-2"
+      className="w-full max-w-7xl mx-auto pt-10 pb-12 relative flex flex-col justify-center px-0 pr-2 sm:px-4 space-y-2"
       style={{ fontSize: `${fontSize}px` }}
     >
       {chats?.map((chat, index) => (
         <Fragment key={chat.createdAt}>
-          {chat.audio && <Audio audio={chat.audio} />}
+          {chat.audio && <Audio audio={chat.audio} isLoading={chat.isLoading} />}
+          {!chat.isLoading && (
+            <>
+              {chat.transcribedAudioText === chat.correctedText ? (
+                <>
+                  <Chat correct createdAt={chat.createdAt} text={chat.transcribedAudioText} />
+                </>
+              ) : (
+                <>
+                  <Chat
+                    isCorrection
+                    createdAt={chat.createdAt}
+                    text={compareStrings(chat.transcribedAudioText, chat.correctedText)}
+                  />
+                  <Chat
+                    createdAt={chat.createdAt}
+                    isCorrectionHeader
+                    text={compareCorrection(chat.correctedText, chat.transcribedAudioText)}
+                  />
+                </>
+              )}
 
-          {chat.transcribedAudioText === chat.correctedText ? (
-            <>
-              <Chat correct createdAt={chat.createdAt} text={chat.transcribedAudioText} />
-            </>
-          ) : (
-            <>
-              <Chat
-                isCorrection
-                createdAt={chat.createdAt}
-                text={compareStrings(chat.transcribedAudioText, chat.correctedText)}
-              />
-              <Chat
-                createdAt={chat.createdAt}
-                isCorrectionHeader
-                text={compareCorrection(chat.correctedText, chat.transcribedAudioText)}
-              />
+              <Chat isBot isLastReply={index + 1 === chats?.length} createdAt={chat.createdAt} text={chat.botReply} />
             </>
           )}
-
-          <Chat isBot isLastReply={index + 1 === chats?.length} createdAt={chat.createdAt} text={chat.botReply} />
         </Fragment>
       ))}
     </div>
