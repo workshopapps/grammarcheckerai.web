@@ -1,12 +1,16 @@
 const express = require("express");
 const chatHistoryRouter = express.Router();
-const chatHistoryController = require("../controller/chatHistoryController");
-const deleteChatHistoryController = require("../controller/deleteChatHistoryController");
+const {
+  getChatHistory,
+  deleteChatHistory,
+  clearChatHistory,
+} = require("../controller/chatHistoryController");
 const {
   protectChatHistory,
 } = require("../middlewares/UserRestriction/userAccessControl");
 
-chatHistoryRouter.get("/", protectChatHistory, chatHistoryController);
-chatHistoryRouter.delete("/", protectChatHistory, deleteChatHistoryController);
+chatHistoryRouter.get("/", protectChatHistory, getChatHistory);
+chatHistoryRouter.delete("/:messageId", protectChatHistory, deleteChatHistory);
+chatHistoryRouter.delete("/", protectChatHistory, clearChatHistory);
 
 module.exports = chatHistoryRouter;
