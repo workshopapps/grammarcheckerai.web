@@ -32,8 +32,10 @@ const Cta = () => {
           if (userEmail || unsubscribedEmail) {
             console.log(res);
             success(res.data.message);
+            setUserEmail('')
           } else {
             error('Already subscribed');
+            setUserEmail('')
           }
         })
         .catch((err) => {
@@ -68,8 +70,11 @@ const Cta = () => {
               <form onSubmit={handleSubmit}>
                 <input
                   className="border border-solid border-input_border bg-input p-2 w-2/3 rounded-l outline-none "
-                  placeholder="Your email"
+                  placeholder="email@example.com"
                   type="email"
+                  name="email"
+                  id="email"
+                  value={userEmail}
                   onChange={(e) => setUserEmail(e.target.value)}
                 />
                 <button className="bg-btn p-2 text-white w-1/3 rounded-r hover:bg-[#392150] ease-in-out duration-[.4s] transition-colors">
