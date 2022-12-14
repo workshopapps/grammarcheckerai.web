@@ -135,8 +135,8 @@ const Transcribe = () => {
                             {submitAudio && (
                               <div>
                                 <Tooltip title="Transcribe audio" arrow>
-                                  <IconButton onClick={submitAudioHandler} color="primary">
-                                    <MdSend />
+                                  <IconButton onClick={submitAudioHandler}>
+                                    <MdSend className="text-[#8C54BF]" />
                                   </IconButton>
                                 </Tooltip>
                               </div>
