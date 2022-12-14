@@ -31,7 +31,7 @@ const SentAudio = ({ audio }) => {
   const onEnded = () => setPlaying(false);
 
   return (
-    <div className="flex w-full px-3 max-w-[300px] text-white ml-auto py-2 shadow-sm  rounded-md border z-10 items-center relative space-x-2">
+    <div className="flex w-full px-3 max-w-[300px] text-white ml-auto py-2 shadow-sm  rounded-md border items-center relative space-x-2">
       <IconButton sx={{ mx: 1 }} onClick={playAudio}>
         {playing ? <MdOutlinePause size={16} color="#393939" /> : <IoPlayOutline size={16} color="#393939" />}
       </IconButton>

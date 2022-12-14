@@ -39,6 +39,7 @@ function Converse({ noRive = false }) {
   const navigate = useNavigate();
 
   const chatRef = useRef(null);
+  const inputRef = useRef(null);
 
   const useFetch = (url, token) => {
     var requestOptions = {
@@ -67,6 +68,7 @@ function Converse({ noRive = false }) {
   const handleScroll = () => {
     setTimeout(() => {
       chatRef.current?.scrollIntoView({ behavior: 'smooth' });
+      inputRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 200);
   };
 
@@ -159,13 +161,13 @@ function Converse({ noRive = false }) {
     }
   };
 
+  console.log(status);
   return (
     <>
-      <Premium open={open} handleClosePremium={handleClosePremium} />
+      {/* <Premium open={open} handleClosePremium={handleClosePremium} /> */}
       {sendAudio.isLoading && <Loader />}
-      <div className="flex-1 w-full max-w-8xl mx-auto flex flex-col justify-center pt-3 lg:pt-0 pb-7">
-        <audio src={mediaBlob} />
-        <div className="text-center max-h-5/6 space-y-5 lg:space-y-8">
+      <div className="flex-1 bg-black w-full h-full max-w-8xl mx-auto flex flex-col pt-3 lg:pt-0">
+        <div className="text-center max-h-5/6 space-y-5 relative flex-1 flex flex-col justify-center  lg:space-y-8">
           {chats.length === 0 ? (
             <>
               {!noRive ? (
@@ -177,7 +179,7 @@ function Converse({ noRive = false }) {
                   <img
                     src={chirpy}
                     alt="chirpy bob"
-                    className=" sm:w-[200px] sm:h-[200px] w-[120px] h-[120px] flex justify-center items-center "
+                    className=" sm:w-[200px] sm:h-[200px] w-[100px] h-[100px] flex justify-center items-center "
                   />
                 </div>
               )}
@@ -199,7 +201,7 @@ function Converse({ noRive = false }) {
             <ChatContainer chats={chats} isLoading={sendAudio.isLoading} />
           )}
           <div>
-            <div className="mx-auto flex items-center justify-center" ref={chatRef}>
+            {/* <div className="mx-auto flex items-center justify-center" ref={chatRef}>
               <button
                 onClick={onMicHandler}
                 className={`rounded-full h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
@@ -212,8 +214,8 @@ function Converse({ noRive = false }) {
                 <span style={{ '--i': 2 }}></span>
                 <span style={{ '--i': 3 }}></span>
               </button>
-            </div>
-            <div className="py-1 h-28">
+            </div> */}
+            {/* <div className="py-1 h-28">
               <div>
                 {status === 'idle' && !sendAudio.isLoading ? (
                   <>
@@ -262,9 +264,11 @@ function Converse({ noRive = false }) {
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
           </div>
-          <ChatInput />
+        </div>
+        <div className="sticky bottom-0 left-0" ref={inputRef}>
+          <ChatInput setChats={setChats} />
         </div>
       </div>
     </>

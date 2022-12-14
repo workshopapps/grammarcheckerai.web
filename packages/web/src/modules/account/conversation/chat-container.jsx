@@ -9,7 +9,7 @@ function ChatContainer({ chats, isLoading }) {
 
   return (
     <div
-      className="w-full max-w-7xl mx-auto pt-10 relative flex flex-col justify-center px-0 sm:px-4 space-y-2"
+      className="w-full max-w-7xl mx-auto pt-10 relative flex flex-col justify-center px-0 pr-2 sm:px-4 space-y-2"
       style={{ fontSize: `${fontSize}px` }}
     >
       {chats?.map((chat, index) => (
