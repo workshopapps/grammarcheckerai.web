@@ -6,11 +6,9 @@ const { userCollection } = require("../database/models/userSchema");
 const grammarCheckHandler = require("../scripts/grammarCheck");
 const { chatHandler, appendConversationToChatLog } = require("../scripts/chat");
 const {
-  uploadFileForURL,
   uploadFileUrlToInitiateTranscription,
   getTranscriptionFromAssembly,
 } = require("../scripts/assemblyAI.js");
-const { translateFromEnglish } = require("../scripts/translate");
 const fileUploadToS3Bucket = require("./uploadBuffer");
 
 const languageMap = {
@@ -60,12 +58,11 @@ async function getBotResponse(req, res) {
     }
 
     // initiate file upload to aws s3 bucket
-    let audioUrl = fileUploadToS3Bucket(audioFile.buffer);
+    const audioUrl = await fileUploadToS3Bucket(audioFile.buffer);
 
     // Send audio to Assembly AI to get audio transcription
-    const assemblyAIAudioUrl = await uploadFileForURL(audioFile.buffer); // upload file and get url
     const preTranscriptId = await uploadFileUrlToInitiateTranscription(
-      assemblyAIAudioUrl,
+      audioUrl,
       languageMap[language]
     );
 
@@ -119,24 +116,12 @@ async function getBotResponse(req, res) {
     const botRes = await chatHandler(correctUserResponseInTxt, chatLog);
     botReply = botRes.replace("AI:", "").trim();
 
-    // translate bot reply if specified language is not English
-    if (
-      !["english", "english (au)", "english (uk)", "english (us)"].includes(
-        language
-      )
-    ) {
-      botReply = await translateFromEnglish(botReply, language);
-    }
-
     chatLog = appendConversationToChatLog(
       correctUserResponseInTxt,
       botRes,
       chatLog
     );
     req.session.chatLog = chatLog; // set updated chat log to session
-
-    // await file upload to aws s3 bucket to get file url
-    audioUrl = await audioUrl;
 
     // construct response
     let userResponse, botResponse;
