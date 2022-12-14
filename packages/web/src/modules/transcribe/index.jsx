@@ -31,14 +31,15 @@ const Transcribe = () => {
   const hiddenFileInput = useRef(null);
   const userId = localStorage.getItem('grittyuserid');
   const [chats, setChats] = React.useState([]);
+  const [submitAudio, setAudioSubmitted] = useState(true);
 
   const handleUploadClick = () => {
-    
-     if (chats != []) {
-       setChats([]);
-      setMessages(dummyBotMessages)
-     }
-     hiddenFileInput.current.click();
+    if (chats != []) {
+      setChats([]);
+      setMessages(dummyBotMessages);
+    }
+    setAudioSubmitted(true);
+    hiddenFileInput.current.click();
   };
 
   const handleFileClick = async (event) => {
@@ -67,9 +68,9 @@ const Transcribe = () => {
       //console.log('audio', URL.createObjectURL(event.target.files[0]));
     }
   };
-  
 
   const submitAudioHandler = () => {
+    setAudioSubmitted(false);
     const soln = new FormData();
     soln.append('file', audio);
     soln.append('userId', userId);
@@ -131,13 +132,15 @@ const Transcribe = () => {
                         <div className="space-y-2">
                           <div className="flex space-x-2 items-center">
                             <SentAudio audio={playAudio} />
-                            <div>
-                              <Tooltip title="Transcribe audio" arrow>
-                                <IconButton onClick={submitAudioHandler} color="primary">
-                                  <MdSend />
-                                </IconButton>
-                              </Tooltip>
-                            </div>
+                            {submitAudio && (
+                              <div>
+                                <Tooltip title="Transcribe audio" arrow>
+                                  <IconButton onClick={submitAudioHandler} color="primary">
+                                    <MdSend />
+                                  </IconButton>
+                                </Tooltip>
+                              </div>
+                            )}
                           </div>
                           {sendAudio.isLoading && <BeatLoader size={12} color="#8C54BF" />}
                         </div>
