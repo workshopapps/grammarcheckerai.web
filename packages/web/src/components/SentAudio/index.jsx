@@ -4,6 +4,7 @@ import { Stack, IconButton, Slider } from '@mui/material';
 import { MdOutlinePause } from 'react-icons/md';
 import { IoMdPlay } from 'react-icons/io';
 import { convertSecToMin } from '../../lib/utils';
+import audioImg from '../../assets/audio.svg';
 let a;
 
 const SentAudio = ({ audio }) => {
@@ -54,14 +55,9 @@ const SentAudio = ({ audio }) => {
       <div className="absolute right-1 bottom-1 z-20">
         <p className="text-xs text-slate-600 z-20">{convertSecToMin(a?.duration)}</p>
       </div>
-      <Slider
-        size="small"
-        defaultValue={0}
-        value={counter}
-        aria-label="Small"
-        valueLabelDisplay="auto"
-        className="text-[#8C54BF]"
-      />
+      <div>
+        <img src={audioImg} alt="" />
+      </div>
     </div>
   );
 };

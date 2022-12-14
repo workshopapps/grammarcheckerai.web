@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import { IconButton, Tooltip } from '@mui/material';
 import { MdSend } from 'react-icons/md';
 import { BeatLoader } from 'react-spinners';
+import audioImg from '../../assets/audio.svg';
 
 const dummyBotMessages = [
   {
