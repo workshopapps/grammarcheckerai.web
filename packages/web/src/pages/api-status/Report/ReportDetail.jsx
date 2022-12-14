@@ -1,6 +1,6 @@
 import style from './ReportDetail.module.css';
 import StatusReport from '../../../components/StatusReport/StatusReport';
-import useGetApiStatus from '../../../hooks/api-status/useGetApiStatus';
+import useGetApiStatus from '../../../hooks/test/useGetApiStatus';
 
 const Detail = () => {
   const apiStatus = useGetApiStatus();

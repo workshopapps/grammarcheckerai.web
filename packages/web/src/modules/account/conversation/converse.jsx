@@ -10,25 +10,22 @@ import useMediaRecorder from '@wmik/use-media-recorder';
 import toast from 'react-hot-toast';
 import useSendAudioFile from '../../../hooks/account/useSendAudio';
 import Premium from '../../premium/popup/index';
-import useTheme from '../../../hooks/useTheme';
 import styles from './index.module.css';
 import PropTypes from 'prop-types';
 import chirpy from '../../../assets/chirpy.svg';
 import { IconButton, Tooltip } from '@mui/material';
-import { IoMdPause, IoMdPlay } from 'react-icons/io';
 import { IoSendSharp, IoStopSharp } from 'react-icons/io5';
 import { MdReplay } from 'react-icons/md';
 import { convertSecToMin } from '../../../lib/utils';
+import ChatInput from './chat-input';
 
 function Converse({ noRive = false }) {
-  const context = useTheme();
   let { status, mediaBlob, stopRecording, pauseRecording, startRecording, resumeRecording, clearMediaBlob } =
     useMediaRecorder({
       recordScreen: false,
-      blobOptions: { type: 'audio/wav' },
+      // blobOptions: { type: 'audio/*' },
       mediaStreamConstraints: { audio: true, video: false },
     });
-
   const userData = JSON.parse(localStorage.getItem('isUserDetails'));
   const [userSubscription, setUserSubscription] = React.useState('');
   const [counter, setCounter] = useState(0);
@@ -42,6 +39,7 @@ function Converse({ noRive = false }) {
   const navigate = useNavigate();
 
   const chatRef = useRef(null);
+  const inputRef = useRef(null);
 
   const useFetch = (url, token) => {
     var requestOptions = {
@@ -58,9 +56,7 @@ function Converse({ noRive = false }) {
         const oBJ = JSON.parse(result);
         setUserSubscription(oBJ);
       })
-      .then(() => {
-        // console.log(userSubscription);
-      })
+      .then(() => {})
       .catch((error) => error(error));
   };
 
@@ -72,12 +68,14 @@ function Converse({ noRive = false }) {
   const handleScroll = () => {
     setTimeout(() => {
       chatRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 600);
+      inputRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 200);
   };
 
   useEffect(() => {
     if (chats.length === 0) return;
     handleScroll();
+    console.log(chats);
   }, [chats]);
 
   const handleClosePremium = () => {
@@ -100,6 +98,7 @@ function Converse({ noRive = false }) {
         setChats((prevState) => [
           ...prevState,
           {
+            audio: URL.createObjectURL(mediaBlob),
             botReply,
             correctedText,
             createdAt,
@@ -112,7 +111,6 @@ function Converse({ noRive = false }) {
       .catch((err) => {
         error(err?.response?.data?.message);
       });
-    clearMediaBlob();
   };
 
   useEffect(() => {
@@ -130,7 +128,7 @@ function Converse({ noRive = false }) {
   }, [status]);
 
   useEffect(() => {
-    if (counter > 10 && userSubscription?.data && userSubscription?.data?.length !== 0) {
+    if (counter > 1000000 && userSubscription?.data && userSubscription?.data?.length !== 0) {
       checkForArray(userSubscription?.data).map((item) => {
         if (item.status === 'successful') {
           return;
@@ -138,7 +136,7 @@ function Converse({ noRive = false }) {
       });
       return;
     }
-    if (counter > 10) {
+    if (counter > 1000000) {
       setOpen(true);
       stopRecording();
       setCounter(0);
@@ -152,6 +150,7 @@ function Converse({ noRive = false }) {
 
   const onMicHandler = () => {
     if (status === 'idle' || status === 'stopped') {
+      clearMediaBlob();
       startRecording();
     }
     if (status === 'paused') {
@@ -162,20 +161,13 @@ function Converse({ noRive = false }) {
     }
   };
 
-  const onPauseHandler = () => {
-    if (status === 'recording') {
-      pauseRecording();
-    }
-    if (status === 'paused') {
-      resumeRecording();
-    }
-  };
+  console.log(status);
   return (
     <>
-      <Premium open={open} handleClosePremium={handleClosePremium} />
+      {/* <Premium open={open} handleClosePremium={handleClosePremium} /> */}
       {sendAudio.isLoading && <Loader />}
-      <div className="flex-1 w-full max-w-8xl mx-auto flex flex-col justify-center pt-3 lg:pt-0 pb-7">
-        <div className="text-center max-h-5/6 space-y-5 lg:space-y-8">
+      <div className="flex-1  w-full h-full max-w-8xl mx-auto flex flex-col pt-3 lg:pt-0">
+        <div className="text-center max-h-5/6 space-y-5 relative flex-1 flex flex-col justify-center  lg:space-y-8">
           {chats.length === 0 ? (
             <>
               {!noRive ? (
@@ -187,37 +179,29 @@ function Converse({ noRive = false }) {
                   <img
                     src={chirpy}
                     alt="chirpy bob"
-                    className=" sm:w-[200px] sm:h-[200px] w-[120px] h-[120px] flex justify-center items-center "
+                    className=" sm:w-[200px] sm:h-[200px] w-[100px] h-[100px] flex justify-center items-center "
                   />
                 </div>
               )}
               <div className="space-y-4">
-                <h2
-                  className={`text-lg ${
-                    context.theme === 'dark' ? 'text-[#ffffff]' : 'text-[#262626]'
-                  }  leading-relaxed sm:text-3xl`}
-                >
+                <h2 className={`text-lg text-[#262626]  leading-relaxed sm:text-3xl`}>
                   {userData?.firstName
                     ? `${userData?.firstName}, how are you today?`
                     : 'What would you like to say today?'}
                 </h2>
-                <p
-                  className={` ${
-                    context.theme === 'dark' ? 'text-[#ffffff]' : 'text-slate-600'
-                  } text-md sm:text-[17px]`}
-                >
+                <p className={` text-slate-600 text-md sm:text-[17px]`}>
                   Each conversation brings you closer to fluency.
                 </p>
-                <div>
+                {/* <div>
                   <SeletedLanguage language={language} setLanguage={setLanguage} />
-                </div>
+                </div> */}
               </div>
             </>
           ) : (
-            <ChatContainer noRive={noRive} chats={chats} />
+            <ChatContainer chats={chats} isLoading={sendAudio.isLoading} />
           )}
           <div>
-            <div className="mx-auto flex items-center justify-center" ref={chatRef}>
+            {/* <div className="mx-auto flex items-center justify-center" ref={chatRef}>
               <button
                 onClick={onMicHandler}
                 className={`rounded-full h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
@@ -230,10 +214,10 @@ function Converse({ noRive = false }) {
                 <span style={{ '--i': 2 }}></span>
                 <span style={{ '--i': 3 }}></span>
               </button>
-            </div>
-            <div className="py-1 h-28">
+            </div> */}
+            {/* <div className="py-1 h-28">
               <div>
-                {status === 'idle' ? (
+                {status === 'idle' && !sendAudio.isLoading ? (
                   <>
                     {chats.length === 0 ? (
                       <p className="text-[#262626] text-sm pt-6">Tap the Microphone to begin and stop recording.</p>
@@ -255,20 +239,11 @@ function Converse({ noRive = false }) {
                           <MdReplay size={20} />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip arrow title={status === 'recording' ? 'pause' : 'resume'}>
-                        <IconButton
-                          onClick={onPauseHandler}
-                          disabled={status === 'idle' || status === 'stopped'}
-                          aria-label="add an alarm"
-                          color="primary"
-                        >
-                          {status === 'paused' ? <IoMdPlay size={20} /> : <IoMdPause size={20} />}
-                        </IconButton>
-                      </Tooltip>
+
                       <Tooltip arrow title="Stop">
                         <IconButton
                           onClick={stopRecording}
-                          disabled={status === 'idle' || status === 'stopped'}
+                          disabled={status === 'idle' || (status === 'stopped' && !mediaBlob)}
                           aria-label="add an alarm"
                         >
                           <IoStopSharp size={20} />
@@ -289,9 +264,13 @@ function Converse({ noRive = false }) {
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
+        <div className="sticky bottom-0 left-0" ref={inputRef}>
+          <ChatInput setChats={setChats} />
+        </div>
+        <div ref={inputRef}></div>
       </div>
     </>
   );
