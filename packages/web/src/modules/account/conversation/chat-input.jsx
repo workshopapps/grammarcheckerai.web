@@ -144,7 +144,7 @@ function ChatInput({
                 type="button"
                 onClick={onMicHandler}
                 className={`rounded-full h-8 w-8 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
-                  status === 'recording' ? styles._bot_mc : ''
+                  status === 'recording' ? styles._bot_mic : ''
                 }`}
               >
                 {status === 'recording' ? (
@@ -156,8 +156,6 @@ function ChatInput({
                 )}
                 <span style={{ '--i': 0 }}></span>
                 <span style={{ '--i': 1 }}></span>
-                <span style={{ '--i': 2 }}></span>
-                <span style={{ '--i': 3 }}></span>
               </button>
             </Tooltip>
             <Popper id={id} open={open} anchorEl={anchorEl}>

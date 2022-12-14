@@ -14,28 +14,31 @@ function ChatContainer({ chats, isLoading }) {
     >
       {chats?.map((chat, index) => (
         <Fragment key={chat.createdAt}>
-          {chat.audio && <Audio audio={chat.audio} />}
+          {chat.audio && <Audio audio={chat.audio} isLoading={chat.isLoading} />}
+          {!chat.isLoading && (
+            <>
+              {chat.transcribedAudioText === chat.correctedText ? (
+                <>
+                  <Chat correct createdAt={chat.createdAt} text={chat.transcribedAudioText} />
+                </>
+              ) : (
+                <>
+                  <Chat
+                    isCorrection
+                    createdAt={chat.createdAt}
+                    text={compareStrings(chat.transcribedAudioText, chat.correctedText)}
+                  />
+                  <Chat
+                    createdAt={chat.createdAt}
+                    isCorrectionHeader
+                    text={compareCorrection(chat.correctedText, chat.transcribedAudioText)}
+                  />
+                </>
+              )}
 
-          {chat.transcribedAudioText === chat.correctedText ? (
-            <>
-              <Chat correct createdAt={chat.createdAt} text={chat.transcribedAudioText} />
-            </>
-          ) : (
-            <>
-              <Chat
-                isCorrection
-                createdAt={chat.createdAt}
-                text={compareStrings(chat.transcribedAudioText, chat.correctedText)}
-              />
-              <Chat
-                createdAt={chat.createdAt}
-                isCorrectionHeader
-                text={compareCorrection(chat.correctedText, chat.transcribedAudioText)}
-              />
+              <Chat isBot isLastReply={index + 1 === chats?.length} createdAt={chat.createdAt} text={chat.botReply} />
             </>
           )}
-
-          <Chat isBot isLastReply={index + 1 === chats?.length} createdAt={chat.createdAt} text={chat.botReply} />
         </Fragment>
       ))}
     </div>
