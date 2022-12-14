@@ -1,13 +1,13 @@
 import { ENDPOINTS } from '../../lib/constants';
 import useCustomMutation from '../useCustomMutation';
 
-const useSendAudioFile = () => {
+const useSendText = () => {
   return useCustomMutation({
     method: 'post',
-    endpoint: ENDPOINTS.API_SEND_AUDIO,
+    endpoint: ENDPOINTS.API_SEND_TEXT,
     queryKey: 'send-audio',
     showSuccessToast: false,
   });
 };
 
-export default useSendAudioFile;
+export default useSendText;

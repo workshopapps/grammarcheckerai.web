@@ -1,7 +1,7 @@
 import { useState, useEffect, forwardRef } from 'react';
 import axios from 'axios';
 
-import toast, {Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 
 // Mui
 import Button from '@mui/material/Button';
@@ -19,7 +19,6 @@ import search from '../../../assets/search.svg';
 import { FaChevronDown } from 'react-icons/fa';
 import Correction from './correction';
 
-
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -35,7 +34,7 @@ function History() {
   useEffect(() => {
     const getHistory = async () => {
       try {
-        const res = await axios.get(URL, {headers: {'Authorization': `Bearer ${token}`}});
+        const res = await axios.get(URL, { headers: { Authorization: `Bearer ${token}` } });
         const historyData = res.data.conversationHistory;
         setHistory(historyData);
       } catch (e) {
@@ -45,38 +44,38 @@ function History() {
     getHistory();
   }, []);
 
-    // const deleteHistory = async () => {
-    //   try {
-    //     const res = await axios.delete(URL, {headers: {'Authorization': `Bearer ${token}`}});
-    //     setHistory(res);
-    //     success('History deleted successfully!');
-    //   } catch (e) {
-    //     console.log('An error occured', e);
-    //   }
-    // };
-  
+  // const deleteHistory = async () => {
+  //   try {
+  //     const res = await axios.delete(URL, {headers: {'Authorization': `Bearer ${token}`}});
+  //     setHistory(res);
+  //     success('History deleted successfully!');
+  //   } catch (e) {
+  //     console.log('An error occured', e);
+  //   }
+  // };
+
   const deleteHistory = () => {
-    axios.delete(URL, { headers: { 'Authorization': `Bearer ${token}` } })
+    axios
+      .delete(URL, { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => {
         setHistory(res);
       })
       .then(() => {
         setTimeout(() => {
-          success('History deleted successfully.')
-
+          success('History deleted successfully.');
         }, 2000);
-        console.log("History deleted")
+        console.log('History deleted');
       })
       .catch((e) => {
         setTimeout(() => {
           error('An error occured', e.message);
-        }, 2000)
-      console.log(e)
-    })
-  }
+        }, 2000);
+        console.log(e);
+      });
+  };
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
   const formattedDate = (date) => {
     return new Date(date).toDateString();
   };
@@ -138,7 +137,16 @@ function History() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button variant='contained' color='error' onClick={() => { deleteHistory(); handleClose() }}>Delete</Button>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => {
+                deleteHistory();
+                handleClose();
+              }}
+            >
+              Delete
+            </Button>
           </DialogActions>
         </Dialog>
 

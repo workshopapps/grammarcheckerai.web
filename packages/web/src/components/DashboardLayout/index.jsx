@@ -4,7 +4,6 @@ import logoImg from '../../assets/simple_logo.svg';
 import SidebarLink from '../SidebarLink';
 import { IoHomeOutline, IoSettingsOutline } from 'react-icons/io5';
 import { BsDownload, BsClock, BsFillPersonLinesFill, BsCashCoin, BsArrowBarRight } from 'react-icons/bs';
-import { AiFillWechat } from 'react-icons/ai';
 import LogOutModal from './LogOutModal';
 import { Avatar } from '@mui/material';
 import SimpleBottomNavigation from '../Bottom-Nav';
@@ -18,7 +17,7 @@ function DashboardLayout() {
 
   return (
     <div className="flex flex-col-reverse sm:flex-row  sm:min-h-screen">
-      <div className="md:w-80 h-full bg-[#F6F6F6] max-h-full min-h-screen z-[40] hidden md:block sticky left-0 top-0 border-r border-[#0000000d]">
+      <div className="md:w-72 h-full bg-[#F6F6F6] max-h-full min-h-screen z-[40] hidden md:block sticky left-0 top-0 border-r border-[#0000000d]">
         <div className="w-14 mx-auto py-10 ">
           <Link to="/">
             <img src={logoImg} alt="" className="w-full" />
@@ -28,18 +27,19 @@ function DashboardLayout() {
           <SidebarLink Icon={IoHomeOutline} to="/me/home">
             Home
           </SidebarLink>
-          <SidebarLink Icon={BsClock} to="/me/history">
-            History
-          </SidebarLink>
           <SidebarLink Icon={BsDownload} to="/me/import">
             Import
           </SidebarLink>
-          <SidebarLink Icon={BsFillPersonLinesFill} to="/me/profile">
+          <SidebarLink Icon={BsClock} to="/me/history">
+            History
+          </SidebarLink>
+
+          {/* <SidebarLink Icon={BsFillPersonLinesFill} to="/me/profile">
             Profile
-          </SidebarLink>
-          <SidebarLink Icon={BsCashCoin} to="/me/subscription">
+          </SidebarLink> */}
+          {/* <SidebarLink Icon={BsCashCoin} to="/me/subscription">
             Billing
-          </SidebarLink>
+          </SidebarLink> */}
           <SidebarLink Icon={IoSettingsOutline} to="/me/settings">
             Settings
           </SidebarLink>
@@ -48,7 +48,7 @@ function DashboardLayout() {
           </SidebarLink> */}
           <button
             onClick={() => handleOpen()}
-            className="mt-10 flex w-full text-md text-slate-800 pl-16 border-r-4 py-5 border-[#5D387F00] hover:border-[#5D387F33] items-center gap-5 m-auto"
+            className="mt-10 flex w-full text-md text-red-500 pl-16 border-r-4 py-5 border-[#5D387F00] hover:border-[#5D387F33] items-center gap-5 m-auto"
           >
             <BsArrowBarRight size={18} />
             <span>Log out</span>
@@ -69,11 +69,7 @@ function DashboardLayout() {
             </div>
 
             <Link to="/me/profile">
-              <Avatar
-                alt="Remy Sharp"
-                sx={{ bgcolor: '#8C54BF', fontSize: '0.9rem' }}
-                src="/static/images/avatar/1.jpg"
-              >
+              <Avatar sx={{ bgcolor: '#8C54BF', fontSize: '0.9rem' }} src="/static/images/avatar/1.jpg">
                 {userData ? userData.firstName.charAt(0) + '' + userData.lastName.charAt(0) : 'NA'}
               </Avatar>
             </Link>
