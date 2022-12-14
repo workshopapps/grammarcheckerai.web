@@ -42,7 +42,10 @@ function Converse({ noRive = false }) {
   };
 
   useEffect(() => {
-    if (chats.length === 0) return;
+    if (chats.length === 0) {
+      setFirstTime('first');
+      return;
+    }
     handleScroll();
     setFirstTime('second');
   }, [chats]);
@@ -64,8 +67,10 @@ function Converse({ noRive = false }) {
       .then((res) => {
         const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
           res.data.data.botResponse;
+        const newArray = [...chats];
+        newArray.pop();
         setChats((prevState) => [
-          ...prevState,
+          ...newArray,
           {
             audio: res?.data?.data?.userResponse?.audioURL,
             botReply,
@@ -111,11 +116,12 @@ function Converse({ noRive = false }) {
   return (
     <>
       <div className="flex-1  w-full h-full max-w-8xl mx-auto flex flex-col pt-3 lg:pt-0">
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           <motion.div
             key={isFirstTime}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
             exit={{ opacity: 0 }}
             className="text-center max-h-5/6 space-y-5 relative flex-1 flex flex-col justify-center  lg:space-y-8"
           >
@@ -164,7 +170,6 @@ function Converse({ noRive = false }) {
                     <span style={{ '--i': 0 }}></span>
                     <span style={{ '--i': 1 }}></span>
                     <span style={{ '--i': 2 }}></span>
-                    <span style={{ '--i': 3 }}></span>
                   </button>
                 </div>
                 <div className="py-1 h-28">

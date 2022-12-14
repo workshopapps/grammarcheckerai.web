@@ -69,11 +69,7 @@ function DashboardLayout() {
             </div>
 
             <Link to="/me/profile">
-              <Avatar
-                alt="Remy Sharp"
-                sx={{ bgcolor: '#8C54BF', fontSize: '0.9rem' }}
-                src="/static/images/avatar/1.jpg"
-              >
+              <Avatar sx={{ bgcolor: '#8C54BF', fontSize: '0.9rem' }} src="/static/images/avatar/1.jpg">
                 {userData ? userData.firstName.charAt(0) + '' + userData.lastName.charAt(0) : 'NA'}
               </Avatar>
             </Link>

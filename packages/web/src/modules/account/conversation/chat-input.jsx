@@ -136,7 +136,7 @@ function ChatInput({
               setText(e.target.value);
             }}
             placeholder="Talk to chipy bob"
-            className="w-full border text-[#5A5A5A] h-full rounded-[10px] px-4 pr-28 active:shadow-sm focus:shadow-sm outline-none"
+            className="w-full h-[65px] border text-[#5A5A5A] rounded-[10px] px-4 pr-28 active:shadow-sm focus:shadow-sm outline-none"
           />
           <div className="absolute top-4 right-16 z-20">
             <Tooltip arrow title={status !== 'recording' ? 'Start recording' : null}>
@@ -179,7 +179,10 @@ function ChatInput({
         </form>
 
         <div>
-          <button className="h-[65px] w-full px-8 min-w-[160px] ring-[#5D387F76] focus:ring-2 transition-all duration-200 text-[15px] max-w-[200px] font-bold text-[#5D387F] bg-[#E8DDF2] rounded-[8px]">
+          <button
+            onClick={() => setChats([])}
+            className="h-[65px] w-full hidden sm:block px-8 min-w-[160px] ring-[#5D387F76] focus:ring-2 transition-all duration-200 text-[15px] max-w-[200px] font-bold text-[#5D387F] bg-[#E8DDF2] rounded-[8px]"
+          >
             Reset Chat
           </button>
         </div>

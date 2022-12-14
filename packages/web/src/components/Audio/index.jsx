@@ -31,7 +31,7 @@ const Audio = ({ audio, variant, counter, isLoading }) => {
 
   return (
     <>
-      <div className="flex w-full px-3 max-w-[300px] bg-white ml-auto py-2 shadow-sm  rounded-md border items-center relative space-x-2">
+      <div className="flex w-full px-3 max-w-[300px] bg-white ml-auto py-2 shadow-sm rounded-md border items-center relative space-x-2">
         <IconButton
           sx={{
             mx: 1,
@@ -63,8 +63,9 @@ const Audio = ({ audio, variant, counter, isLoading }) => {
           <audio src={audio} ref={audioRef} onLoadedMetadata={onLoadedMetadata} onEnded={onEnded} />
         </div>
         {isLoading && (
-          <div className="absolute -bottom-6 left-0">
-            <BeatLoader size={10} color="#8C54BF" />
+          <div className="absolute -bottom-6 w-full left-0 flex justify-between">
+            <BeatLoader size={8} color="#8C54BF" />
+            <p className="text-xs text-slate-600 italic pr-2">waiting for reply</p>
           </div>
         )}
       </div>
