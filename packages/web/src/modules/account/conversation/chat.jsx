@@ -181,9 +181,9 @@ function Converse({ noRive = false }) {
                     ? `${userData?.firstName}, how are you today?`
                     : 'What would you like to say today?'}
                 </h2>
-                <p className={` text-slate-600 text-md sm:text-[17px]`}>
+                {/* <p className={` text-slate-600 text-md sm:text-[17px]`}>
                   Each conversation brings you closer to fluency.
-                </p>
+                </p> */}
                 {/* <div>
                   <SeletedLanguage language={language} setLanguage={setLanguage} />
                 </div> */}

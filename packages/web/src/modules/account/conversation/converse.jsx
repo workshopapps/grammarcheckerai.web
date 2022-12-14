@@ -123,7 +123,7 @@ function Converse({ noRive = false }) {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2 }}
             exit={{ opacity: 0 }}
-            className="text-center max-h-5/6 space-y-5 relative flex-1 flex flex-col justify-center  lg:space-y-8"
+            className="text-center max-h-5/6 space-y-5 relative flex-1 flex flex-col justify-center  lg:space-y-2"
           >
             {chats.length === 0 ? (
               <>
@@ -132,26 +132,24 @@ function Converse({ noRive = false }) {
                     <RiveBot size="large" />
                   </div>
                 ) : (
-                  <div className="flex justify-center items-center pb-6">
+                  <div className="flex justify-center items-center pb-0">
                     <img
                       src={chirpy}
                       alt="chirpy bob"
-                      className=" sm:w-[200px] sm:h-[200px] w-[100px] h-[100px] flex justify-center items-center "
+                      className=" sm:w-[180px] sm:h-[180px] w-[90px] h-[90px] flex justify-center items-center "
                     />
                   </div>
                 )}
-                <div className="space-y-4">
-                  <h2 className={`text-lg text-[#262626]  leading-relaxed sm:text-3xl`}>
-                    {userData?.firstName
-                      ? `${userData?.firstName}, how are you today?`
-                      : 'What would you like to say today?'}
+                <div className="space-y-5 pb-16">
+                  <h2 className={`text-[17px] text-[#262626] font-Inter leading-relaxed sm:text-3xl`}>
+                    {userData?.firstName && `Hello, ${userData?.firstName}`}
                   </h2>
-                  <p className={` text-slate-600 text-md sm:text-[17px]`}>
+                  <h2 className={`text-lg text-[#262626] font-Inter leading-relaxed sm:text-2xl`}>
+                    What would you like to say today?
+                  </h2>
+                  {/* <p className={` text-slate-600 text-md sm:text-[17px]`}>
                     Each conversation brings you closer to fluency.
-                  </p>
-                  {/* <div>
-                  <SeletedLanguage language={language} setLanguage={setLanguage} />
-                </div> */}
+                  </p> */}
                 </div>
               </>
             ) : (
@@ -170,6 +168,7 @@ function Converse({ noRive = false }) {
                     <span style={{ '--i': 0 }}></span>
                     <span style={{ '--i': 1 }}></span>
                     <span style={{ '--i': 2 }}></span>
+                    <span style={{ '--i': 3 }}></span>
                   </button>
                 </div>
                 <div className="py-1 h-28">
@@ -190,7 +189,7 @@ function Converse({ noRive = false }) {
                     ) : (
                       <div className="mb-10">
                         <div className="flex justify-center items-center mt-10">{convertSecToMin(counter)}</div>
-                        <div className="flex items-center justify-center space-x-3 py-6">
+                        <div className="flex items-center justify-center space-x-3 pt-2 pb-6">
                           <Tooltip arrow title="Reset">
                             <IconButton color="error" aria-label="add an alarm" onClick={deleteRecording}>
                               <MdReplay size={20} />
