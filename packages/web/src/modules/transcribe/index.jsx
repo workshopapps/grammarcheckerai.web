@@ -13,7 +13,7 @@ import { BeatLoader } from 'react-spinners';
 const dummyBotMessages = [
   {
     id: 1,
-    botMsg: 'Hello there, click the icon on the top right to get a quick transcription',
+    botMsg: 'Hello there, click the button below to get a quick transcription',
     userAudio: null,
   },
 ];
