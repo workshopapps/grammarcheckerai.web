@@ -11,7 +11,7 @@ import styles from './index.module.css';
 import PropTypes from 'prop-types';
 import chirpy from '../../../assets/chirpy.svg';
 import { IconButton, Tooltip } from '@mui/material';
-// import { IoSendSharp, IoStopSharp } from 'react-icons/io5';
+import { IoSendSharp, IoStopSharp } from 'react-icons/io5';
 import { MdReplay } from 'react-icons/md';
 import { convertSecToMin } from '../../../lib/utils';
 import ChatInput from './chat-input';
@@ -61,36 +61,36 @@ function Converse({ noRive = false }) {
     soln.append('file', mediaBlob);
     console.log(mediaBlob);
     if (userId) soln.append('userId', userId);
-    // setChats((prevState) => [
-    //   ...prevState,
-    //   {
-    //     audio: URL.createObjectURL(mediaBlob),
-    //     isLoading: true,
-    //   },
-    // ]);
-    // sendAudio
-    //   .mutateAsync(soln)
-    //   .then((res) => {
-    //     const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
-    //       res.data.data.botResponse;
-    //     const newArray = [...chats];
-    //     newArray.pop();
-    //     setChats((prevState) => [
-    //       ...newArray,
-    //       {
-    //         audio: res?.data?.data?.userResponse?.audioURL,
-    //         botReply,
-    //         correctedText,
-    //         createdAt,
-    //         language,
-    //         transcribedAudioText,
-    //         updatedAt,
-    //       },
-    //     ]);
-    //   })
-    //   .catch((err) => {
-    //     error(err?.response?.data?.message);
-    //   });
+    setChats((prevState) => [
+      ...prevState,
+      {
+        audio: URL.createObjectURL(mediaBlob),
+        isLoading: true,
+      },
+    ]);
+    sendAudio
+      .mutateAsync(soln)
+      .then((res) => {
+        const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
+          res.data.data.botResponse;
+        const newArray = [...chats];
+        newArray.pop();
+        setChats((prevState) => [
+          ...newArray,
+          {
+            audio: res?.data?.data?.userResponse?.audioURL,
+            botReply,
+            correctedText,
+            createdAt,
+            language,
+            transcribedAudioText,
+            updatedAt,
+          },
+        ]);
+      })
+      .catch((err) => {
+        error(err?.response?.data?.message);
+      });
   };
   console.log(mediaBlob, 'from outside');
 
@@ -126,7 +126,7 @@ function Converse({ noRive = false }) {
     if (status === 'recording') {
       stopRecording();
       setTimeout(() => {
-        submitAudioHandler();
+        // submitAudioHandler();
       }, 3000);
     }
   };
@@ -220,7 +220,7 @@ function Converse({ noRive = false }) {
                           </Tooltip> */}
                         </div>
                         <div className="flex items-center justify-center space-x-3 pt-2 pb-6">
-                          {/* <Tooltip arrow title="Stop">
+                          <Tooltip arrow title="Stop">
                             <IconButton
                               onClick={stopRecording}
                               disabled={status === 'idle' || (status === 'stopped' && !mediaBlob)}
@@ -239,7 +239,7 @@ function Converse({ noRive = false }) {
                             >
                               <IoSendSharp size={20} />
                             </IconButton>
-                          </Tooltip> */}
+                          </Tooltip>
                         </div>
                       </div>
                     )}

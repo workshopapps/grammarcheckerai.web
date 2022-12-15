@@ -13,9 +13,10 @@ const useDeleteHistory = () => {
     showSuccessToast: false,
     onSettled: (res, err) => {
       if (!err) {
-        success('History has been cleared succesfully');
-      } else {
-        error('Something went wrong');
+        success(res?.data?.message);
+      }
+      if (!res) {
+        error(err?.response?.data?.message);
       }
     },
   });

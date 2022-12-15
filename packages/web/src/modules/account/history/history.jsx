@@ -40,7 +40,7 @@ function History() {
   const deleteSingleHistory = useDeleteSingleHistory(deleteId);
 
   const deleteHistorySingleHandler = () => {
-    deleteSingleHistory.mutateAsync({}).then((res) => {
+    deleteSingleHistory.mutateAsync({}).then(() => {
       setDeleteId(null);
       chatHistory.refetch();
       setSingleModal(false);
@@ -48,7 +48,7 @@ function History() {
   };
 
   const deleteHistoryHandler = () => {
-    deleteHistory.mutateAsync({}).then((res) => {
+    deleteHistory.mutateAsync({}).then(() => {
       chatHistory.refetch();
       handleClose();
     });
@@ -156,7 +156,12 @@ function History() {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
+              <button
+                onClick={handleClose}
+                className="text-slate-800 bg-slate-200 border border-slate-200 shadow-sm rounded-md py-2 px-3"
+              >
+                Cancel
+              </button>
               <button
                 className="text-white bg-red-500 border rounded-md py-2 px-3"
                 onClick={() => {
@@ -183,7 +188,12 @@ function History() {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => setSingleModal(false)}>Cancel</Button>
+              <button
+                onClick={() => setSingleModal(false)}
+                className="text-slate-800 bg-slate-200 border border-slate-200 shadow-sm text-sm rounded-md py-2 px-3"
+              >
+                Cancel
+              </button>
               <button
                 className="text-white bg-red-500 border text-sm rounded-md py-2 px-3"
                 onClick={() => {

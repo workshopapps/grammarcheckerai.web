@@ -147,6 +147,7 @@ function ChatInput({
           <div className="absolute top-4 right-16 z-20">
             <Tooltip arrow title={status !== 'recording' ? 'Start recording' : null}>
               <button
+                disabled={variant === 'audio' && status === 'stopped'}
                 type="button"
                 onClick={onMicHandler}
                 className={`rounded-full h-8 w-8 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
