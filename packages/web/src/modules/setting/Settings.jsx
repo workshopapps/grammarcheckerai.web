@@ -138,7 +138,7 @@ function Settings() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className="px-6 font-semibold w-full h-full py-10 max-w-screen-lg mx-auto"
+      className="px-6 font-semibold w-full min-h-fitPage h-full py-10 max-w-screen-lg mx-auto"
     >
       <div className=" relative">
         <div className="flex flex-col gap-4 mb-7 md:flex-row justify-between md:items-center">
