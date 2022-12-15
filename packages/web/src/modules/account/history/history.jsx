@@ -22,6 +22,7 @@ import { motion } from 'framer-motion';
 // import Correction from './correction';
 import useGetChatHistory from '../../../hooks/account/useGetHistory';
 import { BeatLoader } from 'react-spinners';
+import useDeleteHistory from '../../../hooks/account/useDeletHistory';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -30,29 +31,17 @@ const Transition = forwardRef(function Transition(props, ref) {
 function History() {
   const [open, setOpen] = useState(false);
   const chatHistory = useGetChatHistory();
+  const deleteHistory = useDeleteHistory();
 
   const success = (msg) => toast.success(msg);
   const error = (msg) => toast.error(msg);
 
-  // const deleteHistory = () => {
-  //   axios
-  //     .delete(URL, { headers: { Authorization: `Bearer ${token}` } })
-  //     .then((res) => {
-  //       setHistory(res);
-  //     })
-  //     .then(() => {
-  //       setTimeout(() => {
-  //         success('History deleted successfully.');
-  //       }, 2000);
-  //       console.log('History deleted');
-  //     })
-  //     .catch((e) => {
-  //       setTimeout(() => {
-  //         error('An error occured', e.message);
-  //       }, 2000);
-  //       console.log(e);
-  //     });
-  // };
+  const deleteHistoryHandler = () => {
+    deleteHistory.mutateAsync({}).then((res) => {
+      chatHistory.refetch();
+      handleClose();
+    });
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -60,7 +49,7 @@ function History() {
     return new Date(date).toDateString();
   };
 
-  if (chatHistory?.value && chatHistory?.value?.conversationHistory?.length) {
+  if (chatHistory?.value && chatHistory?.value?.conversationHistory?.length !== 0) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -145,8 +134,7 @@ function History() {
               variant="contained"
               color="error"
               onClick={() => {
-                deleteHistory();
-                handleClose();
+                deleteHistoryHandler();
               }}
             >
               Delete
@@ -159,8 +147,9 @@ function History() {
     );
   }
   if (chatHistory?.value && chatHistory?.value?.conversationHistory?.length === 0) {
-    <HistoryEmpty />;
+    return <HistoryEmpty />;
   }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
