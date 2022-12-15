@@ -34,8 +34,6 @@ function History() {
   const success = (msg) => toast.success(msg);
   const error = (msg) => toast.error(msg);
 
-  console.log(chatHistory?.value);
-
   // const deleteHistory = () => {
   //   axios
   //     .delete(URL, { headers: { Authorization: `Bearer ${token}` } })
@@ -68,7 +66,7 @@ function History() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
-        className="flex flex-col h-full min-h-fitPage w-full pt-16 mx-0"
+        className="flex flex-col h-full min-h-fitPage w-full pt-16 pb-7 mx-0"
       >
         <div className="flex items-center max-w-5xl mx-auto w-full justify-between">
           <h1 className="text-[#393939] sm:text-[32px] text-[24px] font-bold font-['DM_Sans'] leading-10">History</h1>
@@ -96,23 +94,37 @@ function History() {
             Clear history
           </button>
           <div className="w-full">
-            {chatHistory?.value?.conversationHistory?.slice(0, 3).map((data) => (
-              <div key={data.botResponseId._id} className="flex justify-between items-center mb-3">
-                <Accordion
-                  className="w-full max-w-2xl"
-                  sx={{ border: '1px solid #D7D7D7', borderRadius: '40px', boxShadow: 'none', background: '#F7F7F7' }}
-                >
-                  <AccordionSummary sx={{ fontSize: 1, fontWeight: 'light' }} expandIcon={<FaChevronDown />}>
-                    <p className="text-[#5A5A5A] text-sm sm:text-md py-1">
-                      {formattedDate(data.botResponseId.createdAt)}
-                    </p>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Errors errors={data.botResponseId} />
-                  </AccordionDetails>
-                </Accordion>
-              </div>
-            ))}
+            {chatHistory?.value?.conversationHistory
+              ?.reverse()
+              .slice(0, 8)
+              .map((data) => (
+                <div key={data.botResponseId._id} className="flex justify-between items-center mb-3">
+                  <Accordion
+                    className="w-full max-w-2xl"
+                    sx={{ border: '1px solid #D7D7D7', borderRadius: '40px', boxShadow: 'none', background: '#F7F7F7' }}
+                  >
+                    <AccordionSummary expandIcon={<FaChevronDown />}>
+                      <p className="text-[#5A5A5A] text-sm sm:text-md py-1">
+                        {formattedDate(data.botResponseId.createdAt)}
+                      </p>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Errors
+                        data={{
+                          audio: data?.userResponseId?.audioURL,
+                          botReply: data?.botResponseId?.botReply,
+                          correctedText: data?.botResponseId?.correctedText,
+                          createdAt: data?.botResponseId?.createdAt,
+                          language: data?.botResponseId?.createdAt,
+                          transcribedAudioText:
+                            data?.botResponseId?.transcribedAudioText ?? data?.userResponseId?.textInput,
+                          updatedAt: data?.botResponseId?.updatedAt,
+                        }}
+                      />
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
+              ))}
           </div>
         </div>
         <Dialog
