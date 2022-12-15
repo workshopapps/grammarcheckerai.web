@@ -20,6 +20,7 @@ import Languages from './language/languages';
 import SettingOption from './setting-list/setting-list';
 import LanguageOption from './language/language-option';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 
 function Settings() {
   const [languageList, setLanguage] = useState([
@@ -102,12 +103,12 @@ function Settings() {
       query: 'language, english, french, spanish, german, russian, italian, chinese',
       child: <Languages openBar={subPage} universalLanguage={languageList} />,
     },
-//     {
-//       name: 'Font Size Adjustment',
-//       icon: maximizeIcon,
-//       query: 'font size adjustment',
-//       child: <FontAdjustment />,
-//     },
+    //     {
+    //       name: 'Font Size Adjustment',
+    //       icon: maximizeIcon,
+    //       query: 'font size adjustment',
+    //       child: <FontAdjustment />,
+    //     },
     {
       route: 'help',
       name: 'Help & Support',
@@ -133,7 +134,12 @@ function Settings() {
   }
 
   return (
-    <div className="px-6 font-semibold w-full h-full py-10 max-w-screen-lg mx-auto">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="px-6 font-semibold w-full h-full py-10 max-w-screen-lg mx-auto"
+    >
       <div className=" relative">
         <div className="flex flex-col gap-4 mb-7 md:flex-row justify-between md:items-center">
           <h1 className="text-center sm:border-b border-gray-400 py-4 text-2xl font-semibold md:border-0">Settings</h1>
@@ -174,7 +180,7 @@ function Settings() {
         </div>
       </div>
       {languageBar && <LanguageOption openBar={subPage} languageList={languageList} changeLanguage={changeLanguage} />}
-    </div>
+    </motion.div>
   );
 }
 
