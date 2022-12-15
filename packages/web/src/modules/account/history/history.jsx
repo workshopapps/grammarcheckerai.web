@@ -2,7 +2,6 @@ import { useState, forwardRef } from 'react';
 import { Toaster } from 'react-hot-toast';
 // Mui
 import {
-  Button,
   Dialog,
   Slide,
   DialogActions,
@@ -16,10 +15,8 @@ import {
 } from '@mui/material';
 import Errors from './errors';
 import HistoryEmpty from './historyEmpty';
-import search from '../../../assets/search.svg';
 import { FaChevronDown } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-// import Correction from './correction';
 import useGetChatHistory from '../../../hooks/account/useGetHistory';
 import { BeatLoader } from 'react-spinners';
 import useDeleteHistory from '../../../hooks/account/useDeletHistory';
@@ -70,8 +67,10 @@ function History() {
         className="flex flex-col h-full min-h-fitPage w-full pt-16 pb-7 mx-0"
       >
         <div className="flex items-center max-w-5xl mx-auto w-full justify-between">
-          <h1 className="text-[#393939] sm:text-[32px] text-[24px] font-bold font-['DM_Sans'] leading-10">History</h1>
-          <div className="sm:flex-[.95] flex-[.7] w-full relative max-w-sm">
+          <h1 className="text-[#393939] sm:text-[32px] lg:ml-[3rem] text-[24px] font-bold font-['DM_Sans'] leading-10">
+            History
+          </h1>
+          {/* <div className="sm:flex-[.95] flex-[.7] w-full relative max-w-sm">
             <input
               type="search"
               name="search"
@@ -85,7 +84,7 @@ function History() {
             >
               <img src={search} alt="search icon" />
             </button>
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-col items-start xl:ml-[7rem] lg:ml-[3rem] mt-16">
           <button
