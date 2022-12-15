@@ -18,12 +18,13 @@ function DashboardLayout() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const userData = JSON.parse(localStorage.getItem('isUserDetails'));
-  const isTabletOrMobile = useMediaQuery('(max-width: 1000px)');
+  const isTabletOrMobile = useMediaQuery('(max-width: 765px)');
   const location = useLocation();
 
   React.useEffect(() => {
     setDrawerOpen(false);
   }, [location?.pathname]);
+
   return (
     <div className="flex flex-col-reverse sm:flex-row  sm:min-h-screen">
       <div className="md:w-72 h-full bg-[#F6F6F6] max-h-full min-h-screen z-[40] hidden md:block sticky left-0 top-0 border-r border-[#0000000d]">
@@ -43,9 +44,6 @@ function DashboardLayout() {
             History
           </SidebarLink>
 
-          {/* <SidebarLink Icon={BsFillPersonLinesFill} to="/me/profile">
-            Profile
-          </SidebarLink> */}
           {/* <SidebarLink Icon={BsCashCoin} to="/me/subscription">
             Billing
           </SidebarLink> */}
@@ -93,7 +91,8 @@ function DashboardLayout() {
           <Outlet />
         </div>
       </div>
-      <div className={styles._nvstarted}>
+
+      {isTabletOrMobile && (
         <Drawer open={isDrawerOpen} onClose={() => setDrawerOpen(false)} className={styles.DrawerNav}>
           <div className="flex justify-between px-6 pt-3">
             <Link to="/">
@@ -135,12 +134,13 @@ function DashboardLayout() {
             <SidebarLink Icon={BsClock} to="/me/history">
               History
             </SidebarLink>
-            <SidebarLink Icon={IoSettingsOutline} to="/me/settings">
-              Settings
-            </SidebarLink>
             <SidebarLink Icon={BsFillPersonLinesFill} to="/me/profile">
               Profile
             </SidebarLink>
+            <SidebarLink Icon={IoSettingsOutline} to="/me/settings">
+              Settings
+            </SidebarLink>
+
             <button
               onClick={() => {
                 setDrawerOpen(false);
@@ -153,7 +153,7 @@ function DashboardLayout() {
             </button>
           </div>
         </Drawer>
-      </div>
+      )}
     </div>
   );
 }
