@@ -6,7 +6,7 @@ function HistoryEmpty() {
       <img
         src={empty}
         alt="empty icon"
-        className="sm:w-[200px] sm:h-[200px] w-[120px] h-[120px] flex justify-center items-center"
+        className="sm:w-[180px] sm:h-[180px] w-[120px] h-[120px] flex justify-center items-center"
       />
       <h4 className="text-[#393939] font-[''DM_Sans'] text-center mb-2 mt-2 sm:text-[32px] text-[24px] font-bold">
         Your conversation history is empty

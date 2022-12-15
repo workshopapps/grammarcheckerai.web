@@ -1,14 +1,16 @@
-/* * {
+* {
   font-family: 'Inter', sans-serif;
-} */
+}
 h1,
 h2,
 h3,
 h4,
 h5,
-h6,
-* {
+h6 {
   font-family: 'DM Sans', sans-serif;
+}
+.font-Inter {
+  font-family: 'Inter', sans-serif !important;
 }
 :root {
   --successColor: #2bac76;
@@ -25,42 +27,37 @@ h6,
 html {
   scroll-behavior: smooth;
 }
-
-._eV_dK,
-._2N9dq {
-  display: none !important;
-}
-._3neb0 {
-  order: 2 !important;
+.min-h-fitPage {
+  min-height: calc(100vh - 73px);
 }
 
-._f2DT8 span {
-  position: relative !important;
-  animation: none !important;
-}
-._1YOWG {
-  bottom: -90px !important;
-}
-._1YOWG,
-._1Yplu {
-  position: absolute;
-  bottom: -120px;
-  transform: translateX(-50%);
-  left: 50%;
-  width: max-content;
+.bounce {
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  transform-origin: bottom;
+  animation-name: bounce-2;
+  animation-timing-function: ease;
 }
 
-._1Yplu button {
-  padding: 5px 10px;
+@keyframes bounce-2 {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
-._3neb0 {
-  left: 8px;
-  top: 8px;
-  display: block !important;
-  position: relative;
+
+.MuiAccordionSummary-content {
+  color: #5a5a5a;
+  transition: all 0.2s ease-in;
 }
-._3neb0 svg {
-  color: #fff !important;
+.MuiAccordionSummary-content.Mui-expanded {
+  color: #393939;
+  font-weight: 600;
 }
 .slide {
   padding: 30px !important;

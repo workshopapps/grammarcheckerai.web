@@ -12,7 +12,7 @@ function SidebarLink({ to, children, Icon }) {
         } transition ease-in `
       }
     >
-      <div className="max-w-10 pr-10 pl-16 flex items-center space-x-6">
+      <div className="max-w-10 pr-10 pl-8 sm:pl-16 flex items-center space-x-6">
         <Icon size={18} />
         <span>{children}</span>
       </div>

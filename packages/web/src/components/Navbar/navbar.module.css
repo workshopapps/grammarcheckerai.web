@@ -4,16 +4,16 @@
   position: sticky;
   top: 0;
   justify-content: space-between;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   align-items: center;
   color: #303030;
   z-index: 1100;
   width: 100%;
   padding: 1em 1em 1em 3em;
 }
-._header[nav-theme='dark']{
+._header[nav-theme='dark'] {
   background-color: #303030;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 ._header::before {
   z-index: 999;

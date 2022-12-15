@@ -4,11 +4,7 @@ import { secureRequest } from '../lib/utils';
 
 const getMutationAction = (mutationData) => {
   const { endpoint, method, headers, isGrittyApi = true } = mutationData;
-  const url = isGrittyApi
-    ? import.meta.env === 'development'
-      ? ENDPOINTS.API_BASE_HTTP_URL
-      : ENDPOINTS.API_BASE_HTTPS_URL + endpoint
-    : endpoint;
+  const url = isGrittyApi ? ENDPOINTS.API_BASE_URL + endpoint : endpoint;
   return {
     mutationFn: (body) =>
       secureRequest({

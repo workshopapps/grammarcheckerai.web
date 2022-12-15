@@ -12,8 +12,7 @@ const QuizContextProvider = (props) => {
     socket.on('connect', () => {
       console.log(`You connected with ${socket.id}`);
     });
-  }
-   else {
+  } else {
     console.log('You must be a logged in user');
   }
 
