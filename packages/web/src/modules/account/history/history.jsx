@@ -1,6 +1,5 @@
 import { useState, useEffect, forwardRef } from 'react';
-import axios from 'axios';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 // Mui
 import {
   Button,
@@ -12,7 +11,6 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Typography,
 } from '@mui/material';
 import Errors from './errors';
 import HistoryEmpty from './historyEmpty';
@@ -32,9 +30,6 @@ function History() {
   const [open, setOpen] = useState(false);
   const chatHistory = useGetChatHistory();
   const deleteHistory = useDeleteHistory();
-
-  const success = (msg) => toast.success(msg);
-  const error = (msg) => toast.error(msg);
 
   const deleteHistoryHandler = () => {
     deleteHistory.mutateAsync({}).then((res) => {
@@ -123,23 +118,24 @@ function History() {
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              Are you sure you want to delete all conversation?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button
-              variant="contained"
-              color="error"
-              onClick={() => {
-                deleteHistoryHandler();
-              }}
-            >
-              Delete
-            </Button>
-          </DialogActions>
+          <div className="w-full px-4 py-4 md:min-w-6xl">
+            <DialogContent>
+              <DialogContentText id="alert-dialog-slide-description">
+                Are you sure you want to clear you history?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <button
+                className="text-white bg-red-500 border rounded-md py-2 px-3"
+                onClick={() => {
+                  deleteHistoryHandler();
+                }}
+              >
+                Delete history
+              </button>
+            </DialogActions>
+          </div>
         </Dialog>
 
         <Toaster />
@@ -147,7 +143,12 @@ function History() {
     );
   }
   if (chatHistory?.value && chatHistory?.value?.conversationHistory?.length === 0) {
-    return <HistoryEmpty />;
+    return (
+      <>
+        <Toaster />
+        <HistoryEmpty />
+      </>
+    );
   }
 
   return (
@@ -157,6 +158,7 @@ function History() {
       transition={{ duration: 0.4 }}
       className="w-full h-[200px] flex items-center justify-center"
     >
+      <Toaster />
       <BeatLoader size={16} color="#8C54BF" />
     </motion.div>
   );
