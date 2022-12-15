@@ -1,4 +1,4 @@
-import { useState, forwardRef } from 'react';
+import { useState, forwardRef, useRef } from 'react';
 import { Toaster } from 'react-hot-toast';
 // Mui
 import {
@@ -33,7 +33,7 @@ function History() {
   const [singleModalOpen, setSingleModal] = useState(false);
   const chatHistory = useGetChatHistory();
   const deleteHistory = useDeleteHistory();
-
+  const headerRef = useRef(null);
   const deleteSingleHistory = useDeleteSingleHistory(deleteId);
 
   const deleteHistorySingleHandler = () => {
@@ -41,6 +41,7 @@ function History() {
       setDeleteId(null);
       chatHistory.refetch();
       setSingleModal(false);
+      headerRef.current?.scrollIntoView({ behavior: 'smooth' });
     });
   };
 
@@ -67,7 +68,10 @@ function History() {
         className="flex flex-col h-full min-h-fitPage w-full pt-16 pb-7 mx-0"
       >
         <div className="flex items-center max-w-5xl mx-auto w-full justify-between">
-          <h1 className="text-[#393939] sm:text-[32px] lg:ml-[3rem] text-[24px] font-bold font-['DM_Sans'] leading-10">
+          <h1
+            ref={headerRef}
+            className="text-[#393939] sm:text-[32px] lg:ml-[3rem] text-[24px] font-bold font-['DM_Sans'] leading-10"
+          >
             History
           </h1>
           {/* <div className="sm:flex-[.95] flex-[.7] w-full relative max-w-sm">
