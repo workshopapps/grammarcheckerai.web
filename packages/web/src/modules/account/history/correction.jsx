@@ -10,7 +10,6 @@ import Slide from '@mui/material/Slide';
 
 import back from '../../../assets/arrow-left.svg';
 import trash from '../../../assets/trash.svg';
-import HistoryModal from './modal';
 import HistoryEmpty from './historyEmpty';
 import axios from 'axios';
 
