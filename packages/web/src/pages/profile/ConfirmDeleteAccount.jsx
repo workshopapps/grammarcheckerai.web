@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { BsChevronLeft } from 'react-icons/bs';
 import toast, { Toaster } from 'react-hot-toast';
 import { ENDPOINTS } from '../../lib/constants';
+import { motion } from 'framer-motion';
 
 const reasonsArray = [
   {
@@ -99,7 +100,12 @@ export default function ConfirmDeleteAccount() {
   }, [reasons]);
 
   return (
-    <div className="h-full flex flex-col w-[90%] md:w-[70%] lg:w-[70%] m-auto py-5 sm:pt-16">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="h-full flex flex-col w-[90%] md:w-[70%] lg:w-[70%] m-auto py-5 sm:pt-16"
+    >
       <BsChevronLeft className="absolute top-5 sm:hidden" size={28} onClick={() => history(-1)} />
       <div className="flex flex-col">
         <h1 className="text-xl sm:text-2xl text-[#393939] sm:text-center text-center font-bold">Delete Account</h1>
@@ -141,6 +147,6 @@ export default function ConfirmDeleteAccount() {
         </ProfileScreenButton>
       </div>
       <Toaster />
-    </div>
+    </motion.div>
   );
 }

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { BsChevronLeft } from 'react-icons/bs';
 import toast, { Toaster } from 'react-hot-toast';
 import { ENDPOINTS } from '../../lib/constants';
+import { motion } from 'framer-motion';
 
 export default function ChangePassword() {
   const initialValues = { newPassword: '', confirmNewPassword: '' };
@@ -95,7 +96,12 @@ export default function ChangePassword() {
   };
 
   return (
-    <div className="h-full w-[90%] md:w-[70%] lg:w-[70%] m-auto pt-5 sm:pt-16">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="h-full w-[90%] md:w-[70%] lg:w-[70%] m-auto pt-5 sm:pt-16"
+    >
       <BsChevronLeft className="absolute top-5 sm:hidden" size={28} onClick={() => history(-1)} />
       <h1 className="text-xl sm:text-2xl text-[#393939] text-center md:text-start font-bold">Change your password</h1>
 
@@ -137,6 +143,6 @@ export default function ChangePassword() {
         </div>
       </form>
       <Toaster />
-    </div>
+    </motion.div>
   );
 }
