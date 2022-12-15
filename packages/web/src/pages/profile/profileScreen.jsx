@@ -3,9 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import editicon from '../../assets/edit.svg';
 import toast, { Toaster } from 'react-hot-toast';
 import { ENDPOINTS } from '../../lib/constants';
-
 //components
-import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton';
 import Fallback from '../../components/Fallback/Fallback';
 
 export default function profileScreen() {
