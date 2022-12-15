@@ -1,11 +1,10 @@
 export const ENDPOINTS = {
   API_BASE_URL: 'https://api.speakbetter.hng.tech/v1/',
-  API_BASE_HTTP_URL: 'http://api.speakbetter.hng.tech/v1/',
-  API_BASE_HTTPS_URL: 'https://api.speakbetter.hng.tech/v1/',
   API_AUTH_LOGIN: 'auth/login',
   API_INITIATE_SIGNUP: 'auth/signup',
   API_GET_PROFILE: 'user/profile',
   API_SEND_AUDIO: 'conversation/sendAudio',
+  API_SEND_TEXT: 'conversation/sendText',
   API_AUTH_GOOGLE: 'auth/google',
   API_AUTH_LINKEDIN: 'auth/linkedin',
   API_AUTH_POST_LINKEDIN: (params) => `auth/linkedin/callback${params}`,
@@ -26,13 +25,5 @@ export const ENDPOINTS = {
   API_USER_PROFILE: (userId) => `user/profile/${userId}`,
 
   API_STATUS_URL: 'test',
+  API_CHAT_HISTORY: 'chatHistory',
 };
-
-// http://api.speakbetter.hng.tech/v1/auth/password-reset?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIyZTQ4MDcyZC05NjIxLTRmNzYtYTQ5NS0xYzk1OGNhMGZjYmIiLCJlbWFpbCI6Im9nbWFyb0BnbWFpbC5jb20iLCJpYXQiOjE2Njk5NzM0NDcsImV4cCI6MTY3MDIzMjY0N30.5eFreMaOMwtbF_ZqsuSrVA9cIArw4yJUcs99At2cUTY
-// https://speakbetter.hng.tech/reset-password
-// https://speakbetter.hng.tech/reset-password?token=ejdsjhdgsjhdgshjdgshjdvnsbvbnsvchjsvchjscsc
-// http://speakbetter.hng.tech/reset-password?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIyZTQ4MDcyZC05NjIxLTRmNzYtYTQ5NS0xYzk1OGNhMGZjYmIiLCJlbWFpbCI6Im9nbWFyb0BnbWFpbC5jb20iLCJpYXQiOjE2NzAwMjYwNTgsImV4cCI6MTY3MDI4NTI1OH0.Bo_5rvJ69ipN2tjwgWsP5XRQbsuK6YDXjrE9fJ6Ir-k
-// {
-//     "new_password": "newPAss",
-//     "confirm_password": "newPAss"
-// }

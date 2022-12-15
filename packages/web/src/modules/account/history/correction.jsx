@@ -1,6 +1,5 @@
 import { useState, useEffect, forwardRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 // Mui
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -26,11 +25,11 @@ function Correction() {
 
   const token = localStorage.getItem('grittyusertoken');
   const URL = `https://api.speakbetter.hng.tech/v1/chatHistory`;
-  
+
   useEffect(() => {
     const getHistory = async () => {
       try {
-        const res = await axios.get(URL, {headers: {'Authorization': `Bearer ${token}`}});
+        const res = await axios.get(URL, { headers: { Authorization: `Bearer ${token}` } });
         const historyData = res.data.conversationHistory;
         setHistory(historyData);
       } catch (e) {
@@ -49,8 +48,8 @@ function Correction() {
   // };
 
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
   const formattedDate = (date) => {
     return new Date(date).toDateString();
   };
@@ -76,7 +75,11 @@ function Correction() {
                     {formattedDate(data.botResponseId.createdAt)}
                   </p>
 
-                  <button onClick={() => { setOpen(true) }}>
+                  <button
+                    onClick={() => {
+                      setOpen(true);
+                    }}
+                  >
                     <img src={trash} alt="" />
                   </button>
                 </div>
@@ -112,24 +115,27 @@ function Correction() {
                   aria-describedby="alert-dialog-slide-description"
                 >
                   <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
-                      Delete history?
-                    </DialogContentText>
+                    <DialogContentText id="alert-dialog-slide-description">Delete history?</DialogContentText>
                   </DialogContent>
                   <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button
-                      variant='contained'
-                      color='error'
+                      variant="contained"
+                      color="error"
                       del-id={data.botResponseId._id}
                       // onClick={(event) => {
                       //   const idx = history.indexOf(event.currentTarget.attributes['del-id'].value);
                       //   idx > -1 && setHistory(history.splice(idx, 1)); handleClose()
                       // }}>
                       onClick={(event) => {
-                        setHistory(history.filter(element => element.botResponseId._id !== event.currentTarget.attributes['del-id'].value));
-                        handleClose()
-                      }}> 
+                        setHistory(
+                          history.filter(
+                            (element) => element.botResponseId._id !== event.currentTarget.attributes['del-id'].value,
+                          ),
+                        );
+                        handleClose();
+                      }}
+                    >
                       Delete
                     </Button>
                   </DialogActions>

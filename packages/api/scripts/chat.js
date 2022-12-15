@@ -27,7 +27,7 @@ exports.chatHandler = async function (
     if (!chatLog) chatLog = sessionPrompt; // Sets the chatlog equal the session prompt, at the start of the conversation, where the chat log is empty
     const promptText = `${chatLog}${restartSequence} ${correctUserResponseInTxt}`;
     const response = await openai.createCompletion({
-      model: "text-davinci-002",
+      model: "text-davinci-003",
       prompt: promptText,
       temperature: 0.9,
       max_tokens: 150,

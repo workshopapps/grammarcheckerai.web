@@ -5,7 +5,7 @@ exports.getRating = async (req, res) => {
   try {
     const response = await Rating.find().populate({
       path: "userid",
-      select: "email username",
+      select: "email username firstName lastName",
     });
     return res.status(200).json({
       success: true,
