@@ -21,7 +21,7 @@ const Audio = ({ audio, variant, counter, isLoading }) => {
     }
   };
 
-  const onLoadedMetadata = (anything) => {
+  const onLoadedMetadata = () => {
     // setAudioDuration(Math.round(audioElem.current?.duration));
     console.log(Math.round(audioRef.current?.duration));
   };

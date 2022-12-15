@@ -7,15 +7,7 @@ import styles from './navbar.module.css';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Drawer } from '@mui/material';
 import { BsList } from 'react-icons/bs';
-import {
-  FaHome,
-  FaBlog,
-  FaMoneyBillWave,
-  FaEnvelopeOpenText,
-  FaSignInAlt,
-  FaUsers,
-  FaRegComments,
-} from 'react-icons/fa';
+import { FaHome, FaBlog, FaEnvelopeOpenText, FaSignInAlt, FaUsers, FaRegComments } from 'react-icons/fa';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);

@@ -73,7 +73,7 @@ function Converse({ noRive = false }) {
           res.data.data.botResponse;
         const newArray = [...chats];
         newArray.pop();
-        setChats((prevState) => [
+        setChats(() => [
           ...newArray,
           {
             audio: res?.data?.data?.userResponse?.audioURL,

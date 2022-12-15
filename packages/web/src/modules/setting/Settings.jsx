@@ -8,13 +8,13 @@ import {
   RussianFlagIcon,
   infinityIcon,
   languageIcon,
-  maximizeIcon,
+  // maximizeIcon
   searchIcon,
   ChineseFlagIcon,
   GermanyFlagIcon,
   ItalianFlagIcon,
 } from '../../assets';
-import FontAdjustment from './font-adjustment/font-adjustment';
+// import FontAdjustment from './font-adjustment/font-adjustment';
 import HelpSupport from './help-support/help-support';
 import Languages from './language/languages';
 import SettingOption from './setting-list/setting-list';

@@ -70,7 +70,7 @@ function ChatInput({
             },
           ]);
         })
-        .catch((err) => {
+        .catch(() => {
           // console.log(err);
         });
       setText('');
