@@ -4,6 +4,7 @@ import { Stack, IconButton, Slider } from '@mui/material';
 import { MdOutlinePause } from 'react-icons/md';
 import { IoMdPlay } from 'react-icons/io';
 import { convertSecToMin } from '../../lib/utils';
+import audioImg from '../../assets/audio.svg';
 let a;
 
 const SentAudio = ({ audio }) => {
@@ -49,12 +50,14 @@ const SentAudio = ({ audio }) => {
   return (
     <div className="flex w-full px-3 py-3 shadow-sm  rounded-md border z-10 items-center relative space-x-2">
       <IconButton sx={{ mx: 1 }} color="primary" onClick={playAudio}>
-        {playing ? <MdOutlinePause /> : <IoMdPlay />}
+        {playing ? <MdOutlinePause className="text-[#8C54BF]" /> : <IoMdPlay className="text-[#8C54BF]" />}
       </IconButton>
       <div className="absolute right-1 bottom-1 z-20">
         <p className="text-xs text-slate-600 z-20">{convertSecToMin(a?.duration)}</p>
       </div>
-      <Slider size="small" defaultValue={0} value={counter} aria-label="Small" valueLabelDisplay="auto" />
+      <div>
+        <img src={audioImg} alt="" />
+      </div>
     </div>
   );
 };
