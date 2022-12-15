@@ -16,6 +16,7 @@ import { MdReplay } from 'react-icons/md';
 import { convertSecToMin } from '../../../lib/utils';
 import ChatInput from './chat-input';
 import { AnimatePresence, motion } from 'framer-motion';
+
 function Converse({ noRive = false }) {
   let { status, mediaBlob, stopRecording, startRecording, clearMediaBlob } = useMediaRecorder({
     recordScreen: false,
@@ -244,6 +245,7 @@ function Converse({ noRive = false }) {
                 clearMediaBlob={clearMediaBlob}
                 mediaBlob={mediaBlob}
                 counter={counter}
+                isLoading={sendAudio.isLoading}
                 setCounter={setCounter}
               />
             </motion.div>
