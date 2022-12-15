@@ -26,6 +26,9 @@ function Converse({ noRive = false }) {
   const sendAudio = useSendAudioFile();
   const userId = localStorage.getItem('grittyuserid');
   const [isFirstTime, setFirstTime] = useState('first');
+  const [stage, setStage] = useState('not-started');
+  // started || not-started
+
   const error = (message) => toast.error(message);
 
   const [chats, setChats] = React.useState([]);
@@ -91,6 +94,7 @@ function Converse({ noRive = false }) {
     let intervalId;
     if (status === 'idle') return;
     if (status === 'recording') {
+      setStage('started');
       intervalId = setInterval(() => {
         setCounter((counter) => counter + 1);
       }, 1000);
@@ -121,7 +125,7 @@ function Converse({ noRive = false }) {
             key={isFirstTime}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.4 }}
             exit={{ opacity: 0 }}
             className="text-center max-h-5/6 space-y-5 relative flex-1 flex flex-col justify-center  lg:space-y-2"
           >
@@ -170,7 +174,7 @@ function Converse({ noRive = false }) {
                 </div>
                 <div className="py-1 h-28">
                   <div>
-                    {status === 'idle' && !sendAudio.isLoading ? (
+                    {status === 'idle' && stage === 'not-started' ? (
                       <>
                         {chats.length === 0 ? (
                           <p className="text-[#262626] text-sm pt-6">Tap the Microphone to begin and stop recording.</p>
@@ -228,6 +232,7 @@ function Converse({ noRive = false }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
               className="sticky bottom-0 left-0"
             >
               <ChatInput

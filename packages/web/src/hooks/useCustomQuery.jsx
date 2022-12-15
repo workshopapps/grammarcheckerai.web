@@ -5,11 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 export const getQueryAction = (payload) => {
   const { endpoint, method, body, headers, isGrittyApi = true } = payload;
 
-  const url = isGrittyApi
-    ? import.meta.env === 'development'
-      ? ENDPOINTS.API_BASE_HTTP_URL
-      : ENDPOINTS.API_BASE_HTTPS_URL + endpoint
-    : endpoint;
+  const url = isGrittyApi ? ENDPOINTS.API_BASE_URL + endpoint : endpoint;
 
   return {
     queryFn: () => {
@@ -51,7 +47,7 @@ function useQueryActionHook(data) {
 
   return {
     ...queryResult,
-    value: queryResult.data?.data?.data,
+    value: queryResult.data?.data,
   };
 }
 

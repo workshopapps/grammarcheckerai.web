@@ -33,6 +33,12 @@ function ChatInput({
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
 
+  React.useEffect(() => {
+    if (!text.trim() && variant === 'text') {
+      setVariant('none');
+    }
+  }, [text]);
+
   const open = Boolean(anchorEl);
   const id = status === 'recording' ? 'simple-popper' : undefined;
 
@@ -171,7 +177,7 @@ function ChatInput({
           </div>
           <div className="absolute top-3 right-3">
             <Tooltip arrow title="Send">
-              <IconButton type="sumbit" color="secondary" disabled={!text && !mediaBlob}>
+              <IconButton type="sumbit" color="secondary" disabled={!text && variant === 'none'}>
                 <AiOutlineSend />
               </IconButton>
             </Tooltip>

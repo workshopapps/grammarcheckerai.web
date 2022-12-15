@@ -5,8 +5,7 @@ const useGetChatHistory = () => {
   return useCustomQuery({
     method: 'get',
     endpoint: ENDPOINTS.API_CHAT_HISTORY,
-    // isCreathorsApi: false,
-    queryKey: 'getSubs',
+    queryKey: ['history'],
     showSuccessToast: false,
   });
 };
