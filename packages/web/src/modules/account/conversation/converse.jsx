@@ -147,9 +147,6 @@ function Converse({ noRive = false }) {
                   <h2 className={`text-lg text-[#262626] font-Inter leading-relaxed sm:text-2xl`}>
                     What would you like to say today?
                   </h2>
-                  {/* <p className={` text-slate-600 text-md sm:text-[17px]`}>
-                    Each conversation brings you closer to fluency.
-                  </p> */}
                 </div>
               </>
             ) : (
