@@ -200,12 +200,6 @@ const ConversationPage = () => (
   </Suspense>
 );
 
-const ConversationTryPage = () => (
-  <Suspense fallback={<Fallback />}>
-    <ConversationTry />
-  </Suspense>
-);
-
 const LandingPage = () => (
   <Suspense fallback={<Fallback />}>
     <Landing />
@@ -314,8 +308,6 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/converse/try" element={<ConversationTryPage />} />
-      <Route path="/history" element={<h2>History</h2>} />
       <Route element={<LandingLayout />}>
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<LandingPage />} />

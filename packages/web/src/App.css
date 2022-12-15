@@ -27,7 +27,9 @@ h6 {
 html {
   scroll-behavior: smooth;
 }
-
+.min-h-fitPage {
+  min-height: calc(100vh - 73px);
+}
 ._eV_dK,
 ._2N9dq {
   display: none !important;

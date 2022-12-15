@@ -25,4 +25,5 @@ export const ENDPOINTS = {
   API_USER_PROFILE: (userId) => `user/profile/${userId}`,
 
   API_STATUS_URL: 'test',
+  API_CHAT_HISTORY: 'chatHistory',
 };

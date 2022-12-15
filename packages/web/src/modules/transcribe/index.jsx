@@ -91,7 +91,7 @@ const Transcribe = () => {
   };
 
   return (
-    <div className="flex w-full flex-col h-full">
+    <div className="flex w-full min-h-fitPage flex-col h-full">
       <div className="px-3 flex-1 md:px-10 relative mt-5">
         <div>
           <div className="grid place-items-center md:hidden">

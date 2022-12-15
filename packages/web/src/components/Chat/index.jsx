@@ -9,7 +9,7 @@ function Chat({ isBot, isCorrection, correct, isCorrectionHeader, createdAt = '1
     <div
       className={`flex max-w-xs xs:max-w-sm sm:max-w-md w-full  text-left align-text-bottom space-x-1 ${
         isBot ? 'mr-auto' : 'ml-auto '
-      } ${isLastReply ? 'pl-0' : 'pl-[10px]'}`}
+      } ${isLastReply ? 'pl-0' : 'pl-[48px]'}`}
     >
       <div className="order-1 w-full">
         <div

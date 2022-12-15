@@ -115,7 +115,7 @@ function Converse({ noRive = false }) {
 
   return (
     <>
-      <div className="flex-1  w-full h-full max-w-8xl mx-auto flex flex-col pt-3 lg:pt-0">
+      <div className="flex-1  w-full min-h-full max-w-8xl mx-auto flex flex-col pt-3 lg:pt-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={isFirstTime}

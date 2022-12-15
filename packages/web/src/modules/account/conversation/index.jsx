@@ -14,7 +14,7 @@ function Conversation() {
         initial={{ opacity: 0.1 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
-        className={`space-y-6 flex flex-col ${styles._convo} ${context.theme === 'dark' ? styles.convo_theme : null} ${
+        className={`space-y-6 flex flex-col  ${styles._convo} ${context.theme === 'dark' ? styles.convo_theme : null} ${
           styles._height
         }`}
       >

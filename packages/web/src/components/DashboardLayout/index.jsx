@@ -26,7 +26,7 @@ function DashboardLayout() {
   }, [location?.pathname, isTabletOrMobile]);
 
   return (
-    <div className="flex flex-col-reverse sm:flex-row  sm:min-h-screen">
+    <div className="flex flex-col sm:flex-row  sm:min-h-screen">
       <div className="md:w-72 h-full bg-[#F6F6F6] max-h-full min-h-screen z-[40] hidden md:block sticky left-0 top-0 border-r border-[#0000000d]">
         <div className="w-14 mx-auto py-10 ">
           <Link to="/">
@@ -64,7 +64,7 @@ function DashboardLayout() {
       </div>
 
       <LogOutModal handleClose={handleClose} open={open} />
-      <div className="w-full flex flex-col pb-4 md:pb-0">
+      <div className="w-full h-full min-h-screen flex flex-col pb-4 md:pb-0">
         <div className="py-4 border-b border-[#0000000d] bg-[#F6F6F6] w-full sm:sticky top-0 z-30">
           <div className="max-w-[1050px] mx-auto flex justify-between items-center px-6">
             <div>
@@ -87,7 +87,7 @@ function DashboardLayout() {
             )}
           </div>
         </div>
-        <div className="flex-1 flex sm:px-4 justify-center items-center">
+        <div className="flex-1 flex px-4  justify-center items-center">
           <Outlet />
         </div>
       </div>
