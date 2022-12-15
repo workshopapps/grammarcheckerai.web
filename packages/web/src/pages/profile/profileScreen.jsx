@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { ENDPOINTS } from '../../lib/constants';
 //components
 import Fallback from '../../components/Fallback/Fallback';
+import { motion } from 'framer-motion';
 
 export default function profileScreen() {
   const [data, setData] = useState(null);
@@ -77,7 +78,12 @@ export default function profileScreen() {
   };
 
   return (
-    <main className="bg-white h-full pt-2 w-full block sm:pt-16">
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="bg-white h-full pt-2 w-full block sm:pt-16"
+    >
       {data && (
         <div className="w-[90%] md:w-[80%] h-[95%] flex flex-col m-auto">
           <div className="flex flex-col sm:flex-row justify-between items-center  border-none sm:border-b-[1px] pb-2 border-[#d2d2d2]/50 relative">
@@ -163,6 +169,6 @@ export default function profileScreen() {
       )}
       {isLoading && <Fallback />}
       <Toaster />
-    </main>
+    </motion.main>
   );
 }
