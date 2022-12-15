@@ -26,4 +26,5 @@ export const ENDPOINTS = {
 
   API_STATUS_URL: 'test',
   API_CHAT_HISTORY: 'chatHistory',
+  API_SING_CHAT_HISTORY: (messageId) => `chatHistory/${messageId}`,
 };

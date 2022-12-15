@@ -11,11 +11,12 @@ import styles from './index.module.css';
 import PropTypes from 'prop-types';
 import chirpy from '../../../assets/chirpy.svg';
 import { IconButton, Tooltip } from '@mui/material';
-import { IoSendSharp, IoStopSharp } from 'react-icons/io5';
+// import { IoSendSharp, IoStopSharp } from 'react-icons/io5';
 import { MdReplay } from 'react-icons/md';
 import { convertSecToMin } from '../../../lib/utils';
 import ChatInput from './chat-input';
 import { AnimatePresence, motion } from 'framer-motion';
+import { BeatLoader } from 'react-spinners';
 function Converse({ noRive = false }) {
   let { status, mediaBlob, stopRecording, startRecording, clearMediaBlob } = useMediaRecorder({
     recordScreen: false,
@@ -27,6 +28,7 @@ function Converse({ noRive = false }) {
   const userId = localStorage.getItem('grittyuserid');
   const [isFirstTime, setFirstTime] = useState('first');
   const [stage, setStage] = useState('not-started');
+  const [isNoBtn, setIsNoBtn] = React.useState(false);
   // started || not-started
 
   const error = (message) => toast.error(message);
@@ -57,38 +59,40 @@ function Converse({ noRive = false }) {
     setCounter(0);
     const soln = new FormData();
     soln.append('file', mediaBlob);
+    console.log(mediaBlob);
     if (userId) soln.append('userId', userId);
-    setChats((prevState) => [
-      ...prevState,
-      {
-        audio: URL.createObjectURL(mediaBlob),
-        isLoading: true,
-      },
-    ]);
-    sendAudio
-      .mutateAsync(soln)
-      .then((res) => {
-        const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
-          res.data.data.botResponse;
-        const newArray = [...chats];
-        newArray.pop();
-        setChats((prevState) => [
-          ...newArray,
-          {
-            audio: res?.data?.data?.userResponse?.audioURL,
-            botReply,
-            correctedText,
-            createdAt,
-            language,
-            transcribedAudioText,
-            updatedAt,
-          },
-        ]);
-      })
-      .catch((err) => {
-        error(err?.response?.data?.message);
-      });
+    // setChats((prevState) => [
+    //   ...prevState,
+    //   {
+    //     audio: URL.createObjectURL(mediaBlob),
+    //     isLoading: true,
+    //   },
+    // ]);
+    // sendAudio
+    //   .mutateAsync(soln)
+    //   .then((res) => {
+    //     const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
+    //       res.data.data.botResponse;
+    //     const newArray = [...chats];
+    //     newArray.pop();
+    //     setChats((prevState) => [
+    //       ...newArray,
+    //       {
+    //         audio: res?.data?.data?.userResponse?.audioURL,
+    //         botReply,
+    //         correctedText,
+    //         createdAt,
+    //         language,
+    //         transcribedAudioText,
+    //         updatedAt,
+    //       },
+    //     ]);
+    //   })
+    //   .catch((err) => {
+    //     error(err?.response?.data?.message);
+    //   });
   };
+  console.log(mediaBlob, 'from outside');
 
   useEffect(() => {
     let intervalId;
@@ -100,13 +104,17 @@ function Converse({ noRive = false }) {
       }, 1000);
     }
     if (status === 'stopped') {
+      setIsNoBtn(true);
       clearInterval(intervalId);
     }
     return () => clearInterval(intervalId);
   }, [status]);
 
   const deleteRecording = () => {
+    clearMediaBlob();
     stopRecording();
+    setFirstTime('first');
+    setIsNoBtn(false);
     setCounter(0);
   };
 
@@ -115,7 +123,14 @@ function Converse({ noRive = false }) {
       clearMediaBlob();
       startRecording();
     }
+    if (status === 'recording') {
+      stopRecording();
+      setTimeout(() => {
+        submitAudioHandler();
+      }, 3000);
+    }
   };
+  console.log(status);
 
   return (
     <>
@@ -159,18 +174,25 @@ function Converse({ noRive = false }) {
             {isFirstTime === 'first' && (
               <div>
                 <div className="mx-auto flex items-center justify-center" ref={chatRef}>
-                  <button
-                    onClick={onMicHandler}
-                    className={`rounded-full h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
-                      status === 'recording' ? styles._bot_mic : ''
-                    }`}
-                  >
-                    <img src={micImg} alt="" className="max-w-full" />
-                    <span style={{ '--i': 0 }}></span>
-                    <span style={{ '--i': 1 }}></span>
-                    <span style={{ '--i': 2 }}></span>
-                    <span style={{ '--i': 3 }}></span>
-                  </button>
+                  {!isNoBtn ? (
+                    <button
+                      onClick={onMicHandler}
+                      className={`rounded-full h-20 w-20 bg-[#5D387F] flex items-center justify-center focus:outline-none focus:ring focus:border-[#5D387F] transition ease-in-out ${
+                        status === 'recording' ? styles._bot_mic : ''
+                      }`}
+                    >
+                      <img src={micImg} alt="" className="max-w-full" />
+                      <span style={{ '--i': 0 }}></span>
+                      <span style={{ '--i': 1 }}></span>
+                      <span style={{ '--i': 2 }}></span>
+                      <span style={{ '--i': 3 }}></span>
+                    </button>
+                  ) : (
+                    <div className="z-50 flex flex-col space-y-2 text-center items-center">
+                      <BeatLoader size={20} color="#5D387F" />
+                      <p className="italic text-sm text-[#777]">Loading media..</p>
+                    </div>
+                  )}
                 </div>
                 <div className="py-1 h-28">
                   <div>
@@ -189,15 +211,16 @@ function Converse({ noRive = false }) {
                       </>
                     ) : (
                       <div className="mb-10">
-                        <div className="flex justify-center items-center mt-10">{convertSecToMin(counter)}</div>
-                        <div className="flex items-center justify-center space-x-3 pt-2 pb-6">
-                          <Tooltip arrow title="Reset">
+                        <div className="flex justify-center items-center mt-10">
+                          {!isNoBtn && <p>{convertSecToMin(counter)}</p>}
+                          {/* <Tooltip arrow title="Reset">
                             <IconButton color="error" aria-label="add an alarm" onClick={deleteRecording}>
                               <MdReplay size={20} />
                             </IconButton>
-                          </Tooltip>
-
-                          <Tooltip arrow title="Stop">
+                          </Tooltip> */}
+                        </div>
+                        <div className="flex items-center justify-center space-x-3 pt-2 pb-6">
+                          {/* <Tooltip arrow title="Stop">
                             <IconButton
                               onClick={stopRecording}
                               disabled={status === 'idle' || (status === 'stopped' && !mediaBlob)}
@@ -216,7 +239,7 @@ function Converse({ noRive = false }) {
                             >
                               <IoSendSharp size={20} />
                             </IconButton>
-                          </Tooltip>
+                          </Tooltip> */}
                         </div>
                       </div>
                     )}

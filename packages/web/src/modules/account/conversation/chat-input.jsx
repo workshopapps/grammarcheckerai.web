@@ -167,7 +167,7 @@ function ChatInput({
             <Popper id={id} open={open} anchorEl={anchorEl}>
               <div className="pb-3">
                 <div className="bg-white text-slate-700 border shadow-sm py-3 rounded-md px-2 flex space-x-3 justify-between">
-                  <div className="animate-pulse">
+                  <div className="animate-pulse hidden sm:block">
                     <img src={audioImg} alt="" />
                   </div>
                   <p className="text-sm">{convertSecToMin(counter)}</p>
