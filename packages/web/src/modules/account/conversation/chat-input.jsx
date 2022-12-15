@@ -10,6 +10,7 @@ import styles from './index.module.css';
 import { convertSecToMin } from '../../../lib/utils';
 import audioImg from '../../../assets/audio.svg';
 import Audio from '../../../components/Audio';
+import { v4 as uuidv4 } from 'uuid';
 
 function ChatInput({
   setChats,

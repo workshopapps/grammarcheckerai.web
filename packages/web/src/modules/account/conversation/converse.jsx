@@ -16,6 +16,8 @@ import { MdReplay } from 'react-icons/md';
 import { convertSecToMin } from '../../../lib/utils';
 import ChatInput from './chat-input';
 import { AnimatePresence, motion } from 'framer-motion';
+import { v4 as uuidv4 } from 'uuid';
+
 function Converse({ noRive = false }) {
   let { status, mediaBlob, stopRecording, startRecording, clearMediaBlob } = useMediaRecorder({
     recordScreen: false,
@@ -54,6 +56,8 @@ function Converse({ noRive = false }) {
   }, [chats]);
 
   const submitAudioHandler = () => {
+    const currentId = uuidv4();
+
     setCounter(0);
     const soln = new FormData();
     soln.append('file', mediaBlob);
@@ -63,6 +67,7 @@ function Converse({ noRive = false }) {
       {
         audio: URL.createObjectURL(mediaBlob),
         isLoading: true,
+        id: currentId,
       },
     ]);
     sendAudio
@@ -70,20 +75,23 @@ function Converse({ noRive = false }) {
       .then((res) => {
         const { botReply, correctedText, createdAt, transcribedAudioText, updatedAt, language } =
           res.data.data.botResponse;
-        const newArray = [...chats];
-        newArray.pop();
-        setChats((prevState) => [
-          ...newArray,
-          {
-            audio: res?.data?.data?.userResponse?.audioURL,
-            botReply,
-            correctedText,
-            createdAt,
-            language,
-            transcribedAudioText,
-            updatedAt,
-          },
-        ]);
+
+        const newChats = chats.map((chat) => {
+          if (chat.id === currentId) {
+            return {
+              audio: res?.data?.data?.userResponse?.audioURL,
+              botReply,
+              correctedText,
+              createdAt,
+              language,
+              transcribedAudioText,
+              updatedAt,
+              id: res?.data?.data?._id,
+            };
+          }
+          return chat;
+        });
+        setChats(newChats);
       })
       .catch((err) => {
         error(err?.response?.data?.message);
