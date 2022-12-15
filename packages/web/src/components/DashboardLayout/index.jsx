@@ -94,9 +94,9 @@ function DashboardLayout() {
 
       {isTabletOrMobile && (
         <Drawer open={isDrawerOpen} onClose={() => setDrawerOpen(false)} className={styles.DrawerNav}>
-          <div className="flex justify-between px-6 pt-3">
-            <Link to="/">
-              <img src={logoImg} alt="speak better" className="" />
+          <div className="flex justify-between px-6 sm:pl-[50px] pt-5">
+            <Link to="/me/home">
+              <img src={logoImgWhite} alt="speak better" className="h-10" />
             </Link>
             <button onClick={() => setDrawerOpen(false)}>
               <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
