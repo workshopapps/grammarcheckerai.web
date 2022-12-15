@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import { IconButton, Tooltip } from '@mui/material';
 import { MdSend } from 'react-icons/md';
 import { BeatLoader } from 'react-spinners';
+import { motion } from 'framer-motion';
 
 const dummyBotMessages = [
   {
@@ -91,7 +92,12 @@ const Transcribe = () => {
   };
 
   return (
-    <div className="flex w-full min-h-fitPage flex-col h-full">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="flex w-full min-h-fitPage flex-col h-full"
+    >
       <div className="px-3 flex-1 md:px-10 relative mt-5">
         <div>
           <div className="grid place-items-center md:hidden">
@@ -167,7 +173,7 @@ const Transcribe = () => {
           />
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

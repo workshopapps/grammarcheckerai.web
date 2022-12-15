@@ -18,6 +18,7 @@ import Errors from './errors';
 import HistoryEmpty from './historyEmpty';
 import search from '../../../assets/search.svg';
 import { FaChevronDown } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 // import Correction from './correction';
 import useGetChatHistory from '../../../hooks/account/useGetHistory';
 import { BeatLoader } from 'react-spinners';
@@ -63,7 +64,12 @@ function History() {
 
   if (chatHistory?.value && chatHistory?.value?.conversationHistory?.length) {
     return (
-      <div className="flex flex-col h-full min-h-fitPage w-full pt-16 mx-0">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
+        className="flex flex-col h-full min-h-fitPage w-full pt-16 mx-0"
+      >
         <div className="flex items-center max-w-5xl mx-auto w-full justify-between">
           <h1 className="text-[#393939] sm:text-[32px] text-[24px] font-bold font-['DM_Sans'] leading-10">History</h1>
           <div className="sm:flex-[.95] flex-[.7] w-full relative max-w-sm">
@@ -96,7 +102,7 @@ function History() {
                   className="w-full max-w-2xl"
                   sx={{ border: '1px solid #D7D7D7', borderRadius: '40px', boxShadow: 'none', background: '#F7F7F7' }}
                 >
-                  <AccordionSummary sx={{ fontSize: 14, fontWeight: 'light' }} expandIcon={<FaChevronDown />}>
+                  <AccordionSummary sx={{ fontSize: 1, fontWeight: 'light' }} expandIcon={<FaChevronDown />}>
                     <p className="text-[#5A5A5A] text-sm sm:text-md py-1">
                       {formattedDate(data.botResponseId.createdAt)}
                     </p>
@@ -137,16 +143,21 @@ function History() {
         </Dialog>
 
         <Toaster />
-      </div>
+      </motion.div>
     );
   }
   if (chatHistory?.value && chatHistory?.value?.conversationHistory?.length === 0) {
     <HistoryEmpty />;
   }
   return (
-    <div className="w-full h-[200px] flex items-center justify-center">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 4 }}
+      transition={{ duration: 0.4 }}
+      className="w-full h-[200px] flex items-center justify-center"
+    >
       <BeatLoader size={16} color="#8C54BF" />
-    </div>
+    </motion.div>
   );
 }
 

@@ -24,7 +24,7 @@ function Languages({ openBar, universalLanguage }) {
       </div>
       <div>
         <p>I speak</p>
-        <button onClick={() => openBar('language')} className="mt-4 flex gap-3 items-center">
+        <button onClick={() => openBar('language')} className="mt-4 flex gap-3 h-[4rem] items-center">
           <img src={language.flag} alt={language.name} />
           <p className="font-normal">{language.name}</p>
         </button>

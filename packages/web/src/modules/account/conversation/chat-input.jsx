@@ -108,7 +108,7 @@ function ChatInput({
       {status === 'recording' && (
         <div className="w-full h-[300px] absolute bottom-0 left-0 block z-10 opacity-70 bg-gradient-to-t from-white" />
       )}
-      <div className="w-full px-5 max-w-[1000px] relative mx-auto flex space-x-2">
+      <div className="w-full sm:px-5 max-w-[1000px] relative mx-auto flex space-x-2">
         <div className="absolute -top-8 right-10">{sendText.isLoading && <BeatLoader size={12} color="#8C54BF" />}</div>
         <form className="w-full relative" onSubmit={handleTextMsg}>
           {variant === 'audio' && status === 'stopped' && mediaBlob ? (
