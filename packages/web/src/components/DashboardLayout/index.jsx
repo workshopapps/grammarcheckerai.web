@@ -23,7 +23,7 @@ function DashboardLayout() {
 
   React.useEffect(() => {
     setDrawerOpen(false);
-  }, [location?.pathname]);
+  }, [location?.pathname, isTabletOrMobile]);
 
   return (
     <div className="flex flex-col-reverse sm:flex-row  sm:min-h-screen">
