@@ -50,6 +50,15 @@ html {
     transform: translateY(0);
   }
 }
+
+.MuiAccordionSummary-content {
+  color: #5a5a5a;
+  transition: all 0.2s ease-in;
+}
+.MuiAccordionSummary-content.Mui-expanded {
+  color: #393939;
+  font-weight: 600;
+}
 .slide {
   padding: 30px !important;
 }

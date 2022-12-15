@@ -1,6 +1,5 @@
-import { useState, useEffect, forwardRef } from 'react';
-import axios from 'axios';
-import toast, { Toaster } from 'react-hot-toast';
+import { useState, forwardRef } from 'react';
+import { Toaster } from 'react-hot-toast';
 // Mui
 import {
   Button,
@@ -11,8 +10,9 @@ import {
   DialogContentText,
   Accordion,
   AccordionSummary,
+  IconButton,
+  Tooltip,
   AccordionDetails,
-  Typography,
 } from '@mui/material';
 import Errors from './errors';
 import HistoryEmpty from './historyEmpty';
@@ -22,39 +22,38 @@ import { motion } from 'framer-motion';
 // import Correction from './correction';
 import useGetChatHistory from '../../../hooks/account/useGetHistory';
 import { BeatLoader } from 'react-spinners';
+import useDeleteHistory from '../../../hooks/account/useDeletHistory';
+import { BsTrash } from 'react-icons/bs';
+import useDeleteSingleHistory from '../../../hooks/account/useDeleteSingleHistory';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 function History() {
+  const [deleteId, setDeleteId] = useState(null);
   const [open, setOpen] = useState(false);
+  const [singleModalOpen, setSingleModal] = useState(false);
   const chatHistory = useGetChatHistory();
+  const deleteHistory = useDeleteHistory();
 
-  const success = (msg) => toast.success(msg);
-  const error = (msg) => toast.error(msg);
+  const deleteSingleHistory = useDeleteSingleHistory(deleteId);
 
-  console.log(chatHistory?.value);
+  const deleteHistorySingleHandler = () => {
+    deleteSingleHistory.mutateAsync({}).then(() => {
+      setDeleteId(null);
+      chatHistory.refetch();
+      setSingleModal(false);
+    });
+  };
 
-  // const deleteHistory = () => {
-  //   axios
-  //     .delete(URL, { headers: { Authorization: `Bearer ${token}` } })
-  //     .then((res) => {
-  //       setHistory(res);
-  //     })
-  //     .then(() => {
-  //       setTimeout(() => {
-  //         success('History deleted successfully.');
-  //       }, 2000);
-  //       console.log('History deleted');
-  //     })
-  //     .catch((e) => {
-  //       setTimeout(() => {
-  //         error('An error occured', e.message);
-  //       }, 2000);
-  //       console.log(e);
-  //     });
-  // };
+  const deleteHistoryHandler = () => {
+    deleteHistory.mutateAsync({}).then(() => {
+      chatHistory.refetch();
+      handleClose();
+    });
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -62,13 +61,13 @@ function History() {
     return new Date(date).toDateString();
   };
 
-  if (chatHistory?.value && chatHistory?.value?.conversationHistory?.length) {
+  if (chatHistory?.value && chatHistory?.value?.conversationHistory?.length !== 0) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
-        className="flex flex-col h-full min-h-fitPage w-full pt-16 mx-0"
+        className="flex flex-col h-full min-h-fitPage w-full pt-16 pb-7 mx-0"
       >
         <div className="flex items-center max-w-5xl mx-auto w-full justify-between">
           <h1 className="text-[#393939] sm:text-[32px] text-[24px] font-bold font-['DM_Sans'] leading-10">History</h1>
@@ -96,23 +95,51 @@ function History() {
             Clear history
           </button>
           <div className="w-full">
-            {chatHistory?.value?.conversationHistory?.slice(0, 3).map((data) => (
-              <div key={data.botResponseId._id} className="flex justify-between items-center mb-3">
-                <Accordion
-                  className="w-full max-w-2xl"
-                  sx={{ border: '1px solid #D7D7D7', borderRadius: '40px', boxShadow: 'none', background: '#F7F7F7' }}
-                >
-                  <AccordionSummary sx={{ fontSize: 1, fontWeight: 'light' }} expandIcon={<FaChevronDown />}>
-                    <p className="text-[#5A5A5A] text-sm sm:text-md py-1">
-                      {formattedDate(data.botResponseId.createdAt)}
-                    </p>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Errors errors={data.botResponseId} />
-                  </AccordionDetails>
-                </Accordion>
-              </div>
-            ))}
+            {chatHistory?.value?.conversationHistory
+              ?.reverse()
+              .slice(0, 16)
+              .map((data) => (
+                <div key={data.botResponseId._id} className="flex justify-between items-center mb-3">
+                  <Accordion
+                    className="w-full max-w-2xl"
+                    sx={{ border: '1px solid #D7D7D7', borderRadius: '40px', boxShadow: 'none', background: '#F2F2F2' }}
+                  >
+                    <AccordionSummary expandIcon={<FaChevronDown />}>
+                      <p className="text-[inherit] text-sm sm:text-md py-1">
+                        {formattedDate(data.botResponseId.createdAt)}
+                      </p>
+                    </AccordionSummary>
+                    <AccordionDetails sx={{ background: '#fcfcfc', position: 'relative' }}>
+                      <Errors
+                        data={{
+                          audio: data?.userResponseId?.audioURL,
+                          botReply: data?.botResponseId?.botReply,
+                          correctedText: data?.botResponseId?.correctedText,
+                          createdAt: data?.botResponseId?.createdAt,
+                          language: data?.botResponseId?.createdAt,
+                          transcribedAudioText:
+                            data?.botResponseId?.transcribedAudioText ?? data?.userResponseId?.textInput,
+                          updatedAt: data?.botResponseId?.updatedAt,
+                        }}
+                      />
+                      <div className="flex w-full text-right justify-end">
+                        <Tooltip arrow title="Delete this history">
+                          <IconButton
+                            type="sumbit"
+                            color="error"
+                            onClick={() => {
+                              setDeleteId(data._id);
+                              setSingleModal(true);
+                            }}
+                          >
+                            <BsTrash size={14} />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
+              ))}
           </div>
         </div>
         <Dialog
@@ -122,24 +149,61 @@ function History() {
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              Are you sure you want to delete all conversation?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button
-              variant="contained"
-              color="error"
-              onClick={() => {
-                deleteHistory();
-                handleClose();
-              }}
-            >
-              Delete
-            </Button>
-          </DialogActions>
+          <div className="w-full px-4 py-4 md:min-w-6xl">
+            <DialogContent>
+              <DialogContentText id="alert-dialog-slide-description">
+                Are you sure you want to clear you history?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <button
+                onClick={handleClose}
+                className="text-slate-800 bg-slate-200 border border-slate-200 shadow-sm rounded-md py-2 px-3"
+              >
+                Cancel
+              </button>
+              <button
+                className="text-white bg-red-500 border rounded-md py-2 px-3"
+                onClick={() => {
+                  deleteHistoryHandler();
+                }}
+              >
+                Delete history
+              </button>
+            </DialogActions>
+          </div>
+        </Dialog>
+
+        <Dialog
+          open={singleModalOpen}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={() => setSingleModal(false)}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <div className="w-full px-4 py-4 md:min-w-6xl">
+            <DialogContent>
+              <DialogContentText id="alert-dialog-slide-description">
+                Are you sure you want to delele chat with the id of #{deleteId}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <button
+                onClick={() => setSingleModal(false)}
+                className="text-slate-800 bg-slate-200 border border-slate-200 shadow-sm text-sm rounded-md py-2 px-3"
+              >
+                Cancel
+              </button>
+              <button
+                className="text-white bg-red-500 border text-sm rounded-md py-2 px-3"
+                onClick={() => {
+                  deleteHistorySingleHandler();
+                }}
+              >
+                {deleteSingleHistory.isLoading ? <BeatLoader size={9} color="#fff" /> : 'Delete'}
+              </button>
+            </DialogActions>
+          </div>
         </Dialog>
 
         <Toaster />
@@ -147,8 +211,14 @@ function History() {
     );
   }
   if (chatHistory?.value && chatHistory?.value?.conversationHistory?.length === 0) {
-    <HistoryEmpty />;
+    return (
+      <>
+        <Toaster />
+        <HistoryEmpty />
+      </>
+    );
   }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -156,6 +226,7 @@ function History() {
       transition={{ duration: 0.4 }}
       className="w-full h-[200px] flex items-center justify-center"
     >
+      <Toaster />
       <BeatLoader size={16} color="#8C54BF" />
     </motion.div>
   );

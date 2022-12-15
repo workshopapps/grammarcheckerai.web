@@ -14,7 +14,7 @@ export default function profileScreen() {
   const [newUsername, setNewUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const endpoint = ENDPOINTS.API_BASE_HTTPS_URL;
+  const endpoint = ENDPOINTS.API_BASE_URL;
   const url = endpoint + 'user/profile/';
   const error = (message) => toast.error(message);
   const success = (message) => toast.success(message);
@@ -82,7 +82,7 @@ export default function profileScreen() {
     <main className="bg-white h-full pt-2 w-full block sm:pt-16">
       {data && (
         <div className="w-[90%] md:w-[80%] h-[95%] flex flex-col m-auto">
-          <div className="flex flex-col sm:flex-row justify-between items-center pb-3 border-none sm:border-b-[3px] border-[#d2d2d2]/50 relative">
+          <div className="flex flex-col sm:flex-row justify-between items-center  border-none sm:border-b-[1px] pb-2 border-[#d2d2d2]/50 relative">
             <h3 className="text-2xl font-bold">User Profile</h3>
           </div>
           <div className="flex flex-col text-center sm:hidden">
@@ -90,13 +90,13 @@ export default function profileScreen() {
             <p className="text-[#9c9c9c]">{data.email}</p>
           </div>
 
-          <div className="flex flex-col gap-10 mt-5">
-            <div className="hidden sm:block border-b-[3px] border-[#d2d2d2]/50">
+          <div className="flex flex-col gap-10 space-y-3 mt-5">
+            <div className="hidden sm:block border-b-[1px] pb-2 border-[#d2d2d2]/50">
               <span className="text-sm opacity-50">Full Name</span>
               <p className="text-lg">{data.firstName + ' ' + data.lastName}</p>
             </div>
 
-            <div className="relative border-b-[3px] border-[#d2d2d2]/50">
+            <div className="relative border-b-[1px] pb-2 space-y-3 border-[#d2d2d2]/50">
               <span className="text-sm opacity-50">Display Name</span>
               {!openEdit ? (
                 <p className="text-lg">{data.username}</p>
@@ -130,12 +130,12 @@ export default function profileScreen() {
               </button>
             </div>
 
-            <div className="hidden sm:block  border-b-[3px] border-[#d2d2d2]/50">
+            <div className="hidden sm:block space-y-3 border-b-[1px] pb-2 border-[#d2d2d2]/50">
               <span className="text-sm opacity-50">Email Address</span>
               <p className="text-lg">{data.email}</p>
             </div>
 
-            <div className="relative flex flex-col border-b-[3px] border-[#d2d2d2]/50">
+            <div className="relative flex flex-col space-y-3 border-b-[1px] pb-2 border-[#d2d2d2]/50">
               <span className="text-sm opacity-50">Password</span>
               <input
                 type="password"
@@ -154,9 +154,12 @@ export default function profileScreen() {
           </div>
 
           <div className="_btnContainer">
-            <ProfileScreenButton onClick={() => navigate('/me/profile/deleteaccount')} variant="danger">
+            <button
+              className="text-[#ec2b1b] bg-transparent border-[#ec2b1b] hover:bg-[ec2b1b22] outline-none focus:ring-2 ring-[#ec2b1b55] border text-md rounded-md py-2 px-3"
+              onClick={() => navigate('/me/profile/deleteaccount')}
+            >
               Delete Account
-            </ProfileScreenButton>
+            </button>
           </div>
         </div>
       )}
