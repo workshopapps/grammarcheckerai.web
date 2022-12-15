@@ -88,3 +88,7 @@ html {
 .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
   border-radius: 16px !important;
 }
+
+#fade-button:hover {
+  background-color: transparent;
+}

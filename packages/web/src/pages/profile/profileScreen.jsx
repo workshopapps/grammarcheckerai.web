@@ -3,13 +3,15 @@ import { useNavigate, Link } from 'react-router-dom';
 import editicon from '../../assets/edit.svg';
 import toast, { Toaster } from 'react-hot-toast';
 import { ENDPOINTS } from '../../lib/constants';
+import { MdOutlineCreate } from "react-icons/md";
 
 //components
 import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton';
 import Fallback from '../../components/Fallback/Fallback';
+import { Avatar, Button, Fade, Menu, MenuItem } from '@mui/material';
 
 export default function profileScreen() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(JSON.parse(localStorage.getItem('isUserDetails')));
   const [openEdit, setOpenEdit] = useState(false);
   const [newUsername, setNewUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -20,6 +22,15 @@ export default function profileScreen() {
   const success = (message) => toast.success(message);
   const token = localStorage.getItem('grittyusertoken');
   const id = localStorage.getItem('grittyuserid');
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const headersList = {
     Authorization: `Bearer ${token}`,
@@ -59,17 +70,34 @@ export default function profileScreen() {
       });
       const data = await response.json();
       console.log(data);
+      getProfileData();
       success('display name updated! Refreshing...');
-      setTimeout(() => location.reload(), 2000);
+      //setTimeout(() => location.reload(), 2000);
     } catch (err) {
       console.log(err);
       error('error updating data.');
     }
   };
 
-  useEffect(() => {
-    getProfileData();
-  }, []);
+  const updateProfileImage = async (img) => {
+    let bodyContent = {
+      imageFile: img,
+    };
+    try {
+      const response = await fetch(url + 'update', {
+        method: 'POST',
+        body: JSON.stringify(bodyContent),
+        headers: { ...headersList, 'Content-Type': 'application/json; charset=utf-8' },
+      });
+      const data = await response.json();
+      console.log(data);
+      success('profile picture updated! Refreshing...');
+      //setTimeout(() => location.reload(), 2000);
+    } catch (err) {
+      console.log(err);
+      error('error updating data');
+    }
+  };
 
   const ChangeUsername = (e) => {
     e.preventDefault();
@@ -84,6 +112,39 @@ export default function profileScreen() {
         <div className="w-[90%] md:w-[80%] h-[95%] flex flex-col m-auto">
           <div className="flex flex-col sm:flex-row justify-between items-center pb-3 border-none sm:border-b-[3px] border-[#d2d2d2]/50 relative">
             <h3 className="text-2xl font-bold">User Profile</h3>
+            <div className='relative mt-4 sm:mt-0 cursor-pointer'>
+            <Avatar
+                alt="Remy Sharp"
+                sx={{ height: '4rem', width: '4rem', bgcolor: '#8C54BF', fontSize: '0.9rem' }}
+              >
+                {data ? data.firstName.charAt(0) + '' + data.lastName.charAt(0) : 'NA'}
+              </Avatar>
+              <Button
+                className='absolute hover:bg-transparent right-0 bottom-5'
+                id="fade-button"
+                aria-controls={open ? 'fade-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+              >
+              <MdOutlineCreate size={24} className='p-1 bg-white shadow-lg rounded-full text-[#5d387f]' />
+            </Button>
+          <Menu
+                id="fade-menu"
+                MenuListProps={{
+                'aria-labelledby': 'fade-button',
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                TransitionComponent={Fade}
+            >
+                <MenuItem>
+                  <input onChange={(e) => updateProfileImage(e.target.value)} type="file" accept='image/*' placeholder='set profile picture'/>
+                </MenuItem>   
+            </Menu>
+              
+            </div>
           </div>
           <div className="flex flex-col text-center sm:hidden">
             <h1 className="text-xl font-bold text-[#393939]">{data.firstName + ' ' + data.lastName}</h1>
@@ -114,7 +175,7 @@ export default function profileScreen() {
                   <input
                     className={
                       openEdit
-                        ? 'bg-[#5d387f] text-white p-2 rounded absolute bottom-2 right-0 cursor-pointer'
+                        ? 'bg-[#5d387f] text-white p-2 rounded absolute bottom-1 right-0 cursor-pointer'
                         : 'hidden'
                     }
                     type="submit"
