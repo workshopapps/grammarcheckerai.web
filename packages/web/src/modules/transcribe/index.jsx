@@ -10,11 +10,12 @@ import { IconButton, Tooltip } from '@mui/material';
 import { MdSend } from 'react-icons/md';
 import { BeatLoader } from 'react-spinners';
 import { motion } from 'framer-motion';
+import audioImg from '../../assets/audio.svg';
 
 const dummyBotMessages = [
   {
     id: 1,
-    botMsg: 'Hello there, click the icon on the top right to get a quick transcription',
+    botMsg: 'Hello there, click the button below to get a quick transcription',
     userAudio: null,
   },
 ];
@@ -31,8 +32,15 @@ const Transcribe = () => {
   const [playAudio, setPlayAudio] = useState();
   const hiddenFileInput = useRef(null);
   const userId = localStorage.getItem('grittyuserid');
+  const [chats, setChats] = React.useState([]);
+  const [submitAudio, setAudioSubmitted] = useState(true);
 
   const handleUploadClick = () => {
+    if (chats != []) {
+      setChats([]);
+      setMessages(dummyBotMessages);
+    }
+    setAudioSubmitted(true);
     hiddenFileInput.current.click();
   };
 
@@ -59,12 +67,12 @@ const Transcribe = () => {
           userAudio: URL.createObjectURL(event.target.files[0]),
         },
       ]);
-      console.log('audio', URL.createObjectURL(event.target.files[0]));
+      //console.log('audio', URL.createObjectURL(event.target.files[0]));
     }
   };
-  const [chats, setChats] = React.useState([]);
 
   const submitAudioHandler = () => {
+    setAudioSubmitted(false);
     const soln = new FormData();
     soln.append('file', audio);
     soln.append('userId', userId);
@@ -131,13 +139,15 @@ const Transcribe = () => {
                         <div className="space-y-2">
                           <div className="flex space-x-2 items-center">
                             <SentAudio audio={playAudio} />
-                            <div>
-                              <Tooltip title="Transcribe audio" arrow>
-                                <IconButton onClick={submitAudioHandler} color="primary">
-                                  <MdSend />
-                                </IconButton>
-                              </Tooltip>
-                            </div>
+                            {submitAudio && (
+                              <div>
+                                <Tooltip title="Transcribe audio" arrow>
+                                  <IconButton onClick={submitAudioHandler}>
+                                    <MdSend className="text-[#8C54BF]" />
+                                  </IconButton>
+                                </Tooltip>
+                              </div>
+                            )}
                           </div>
                           {sendAudio.isLoading && <BeatLoader size={12} color="#8C54BF" />}
                         </div>
