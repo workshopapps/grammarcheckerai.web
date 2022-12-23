@@ -1,5 +1,5 @@
 export const ENDPOINTS = {
-  API_BASE_URL: 'https://api.speakbetter.hng.tech/v1/',
+  API_BASE_URL: 'https://api.speakbetter.fun/v1/',
   API_AUTH_LOGIN: 'auth/login',
   API_INITIATE_SIGNUP: 'auth/signup',
   API_GET_PROFILE: 'user/profile',
