@@ -162,7 +162,7 @@ exports.home = async (req, res) => {
 
 exports.sendMail = async (req, res) => {
   const { email, name } = req.body;
-  emailService({
+  await emailService({
     to: email,
     subject: "Speak Better: Welcome!",
     templateId: TEST_EMAIL_TEMPLATE_ID,
@@ -170,8 +170,20 @@ exports.sendMail = async (req, res) => {
       name: name,
       actionurl: "https://speakbetter.hng.tech",
     },
-  });
-  return res
-    .status(200)
-    .send({ success: true, message: "Email Sent successfully" });
+  })
+    .then(() => {
+      return res
+        .status(200)
+        .send({ success: true, message: "Email Sent successfully" });
+    })
+    .catch((err) => {
+      console.log(err);
+      return res
+        .status(400)
+        .send({
+          success: false,
+          message: "there was an error",
+          error: err.message,
+        });
+    });
 };
