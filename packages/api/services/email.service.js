@@ -7,7 +7,7 @@ const emailService = async ({ to, templateId, dynamic_template_data }) => {
   return new Promise(async (resolve, reject) => {
     try {
       await sendgrid.send({
-        from: `Speak Better <${SENDGRID_EMAIL_FROM}>`,
+        from: SENDGRID_EMAIL_FROM,
         to: to,
         templateId: templateId,
         dynamic_template_data: dynamic_template_data,
