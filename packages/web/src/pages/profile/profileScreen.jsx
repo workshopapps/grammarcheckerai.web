@@ -6,12 +6,12 @@ import { ENDPOINTS } from '../../lib/constants';
 import { MdOutlineCreate } from "react-icons/md";
 
 //components
-import ProfileScreenButton from '../../components/Button/profileButton/ProfileScreenButton';
 import Fallback from '../../components/Fallback/Fallback';
 import { Avatar, Button, Fade, Menu, MenuItem } from '@mui/material';
+import { motion } from 'framer-motion';
 
 export default function profileScreen() {
-  const [data, setData] = useState(JSON.parse(localStorage.getItem('isUserDetails')));
+  const [data, setData] = useState(null);
   const [openEdit, setOpenEdit] = useState(false);
   const [newUsername, setNewUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -70,7 +70,6 @@ export default function profileScreen() {
       });
       const data = await response.json();
       console.log(data);
-      getProfileData();
       success('display name updated! Refreshing...');
       //setTimeout(() => location.reload(), 2000);
     } catch (err) {
@@ -80,19 +79,20 @@ export default function profileScreen() {
   };
 
   const updateProfileImage = async (img) => {
-    let bodyContent = {
-      imageFile: img,
-    };
+    let bodyContent = new FormData();
+    bodyContent.append("imageFile", img);
+
     try {
       const response = await fetch(url + 'update', {
         method: 'POST',
-        body: JSON.stringify(bodyContent),
-        headers: { ...headersList, 'Content-Type': 'application/json; charset=utf-8' },
+        body: bodyContent,
+        headers: { ...headersList},
       });
       const data = await response.json();
       console.log(data);
       success('profile picture updated! Refreshing...');
-      //setTimeout(() => location.reload(), 2000);
+      handleClose();
+      setTimeout(() => location.reload(), 2000);
     } catch (err) {
       console.log(err);
       error('error updating data');
@@ -106,19 +106,39 @@ export default function profileScreen() {
     setNewUsername('');
   };
 
+  useEffect(() => {
+    getProfileData();
+  },[]);
+
   return (
-    <main className="bg-white h-full pt-2 w-full block sm:pt-16">
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="bg-white h-full pt-2 w-full block sm:pt-16"
+    >
       {data && (
         <div className="w-[90%] md:w-[80%] h-[95%] flex flex-col m-auto">
           <div className="flex flex-col sm:flex-row justify-between items-center  border-none sm:border-b-[1px] pb-2 border-[#d2d2d2]/50 relative">
             <h3 className="text-2xl font-bold">User Profile</h3>
             <div className='relative mt-4 sm:mt-0 cursor-pointer'>
-            <Avatar
+              <div>
+                {
+                  data.profilePicture ? 
+                  <Avatar
+                  alt="Remy Sharp"
+                  sx={{ height: '4rem', width: '4rem', bgcolor: '#8C54BF', fontSize: '0.9rem' }}
+                  src={data.profilePicture}
+                >
+                  
+                </Avatar> : 
+                <Avatar
                 alt="Remy Sharp"
                 sx={{ height: '4rem', width: '4rem', bgcolor: '#8C54BF', fontSize: '0.9rem' }}
               >
                 {data ? data.firstName.charAt(0) + '' + data.lastName.charAt(0) : 'NA'}
               </Avatar>
+                }
               <Button
                 className='absolute hover:bg-transparent right-0 bottom-5'
                 id="fade-button"
@@ -129,6 +149,7 @@ export default function profileScreen() {
               >
               <MdOutlineCreate size={24} className='p-1 bg-white shadow-lg rounded-full text-[#5d387f]' />
             </Button>
+              </div>
           <Menu
                 id="fade-menu"
                 MenuListProps={{
@@ -140,10 +161,9 @@ export default function profileScreen() {
                 TransitionComponent={Fade}
             >
                 <MenuItem>
-                  <input onChange={(e) => updateProfileImage(e.target.value)} type="file" accept='image/*' placeholder='set profile picture'/>
+                  <input onChange={(e) => updateProfileImage(e.target.files[0])} type="file" accept='image/*' placeholder='set profile picture'/>
                 </MenuItem>   
-            </Menu>
-              
+            </Menu> 
             </div>
           </div>
           <div className="flex flex-col text-center sm:hidden">
@@ -226,6 +246,6 @@ export default function profileScreen() {
       )}
       {isLoading && <Fallback />}
       <Toaster />
-    </main>
+    </motion.main>
   );
 }

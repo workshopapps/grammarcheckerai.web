@@ -1,11 +1,10 @@
 import { PropTypes } from 'prop-types';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { IconButton } from '@mui/material';
 import { MdOutlinePause } from 'react-icons/md';
 import { IoPlayOutline } from 'react-icons/io5';
 import { convertSecToMin } from '../../lib/utils';
 import audioImg from '../../assets/audio.svg';
-import React from 'react';
 import { BeatLoader } from 'react-spinners';
 
 const Audio = ({ audio, variant, counter, isLoading }) => {
@@ -47,7 +46,7 @@ const Audio = ({ audio, variant, counter, isLoading }) => {
         >
           {playing ? <MdOutlinePause size={16} /> : <IoPlayOutline size={16} />}
         </IconButton>
-        <div>
+        <div className={`${variant ? 'hidden sm:block' : ''}`}>
           <img src={audioImg} alt="" />
         </div>
         <div>
@@ -60,6 +59,7 @@ const Audio = ({ audio, variant, counter, isLoading }) => {
           {counter && <p className="text-xs text-black z-20">{convertSecToMin(counter)}</p>}
         </div>
         <div>
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <audio src={audio} ref={audioRef} onLoadedMetadata={onLoadedMetadata} onEnded={onEnded} />
         </div>
         {isLoading && (

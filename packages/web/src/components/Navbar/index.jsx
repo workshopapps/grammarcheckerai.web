@@ -48,7 +48,7 @@ const Navbar = () => {
               { title: 'Converse', to: '/converse' },
               { title: 'About', to: '/about' },
               { title: 'Blog', to: '/blog' },
-              { title: 'Premium', to: '/premium' },
+              // { title: 'Premium', to: '/premium' },
               { title: 'Contact', to: '/contact' },
               // { title: 'Quiz', to: '/startgame' },
             ].map((item) => (
@@ -109,7 +109,7 @@ const Navbar = () => {
                   { icon: <FaRegComments className="mx-3" />, title: 'Converse', to: '/converse' },
                   { icon: <FaUsers className="mx-3" />, title: 'About', to: '/about' },
                   { icon: <FaBlog className="mx-3" />, title: 'Blog', to: '/blog' },
-                  { icon: <FaMoneyBillWave className="mx-3" />, title: 'Premium', to: '/premium' },
+                  // { icon: <FaMoneyBillWave className="mx-3" />, title: 'Premium', to: '/premium' },
                   { icon: <FaEnvelopeOpenText className="mx-3" />, title: 'Contact', to: '/contact' },
                   { icon: <FaSignInAlt className="mx-3" />, title: 'Log in', to: '/signin' },
                   // { title: 'Sign Up', to: '/signup' },
